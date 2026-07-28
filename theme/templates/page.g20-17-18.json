@@ -1,0 +1,197 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 70,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 50,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "halo_product_block_2_Ft6CPt": {
+      "type": "halo-product-block-2",
+      "disabled": true,
+      "name": "t:sections.product-block.presets.name__2",
+      "settings": {
+        "display_product_block": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "SELECT YOUR CHASSIS",
+        "block_text": "",
+        "block_title_align": "center",
+        "block_layout": "grid",
+        "col": "narrow",
+        "block_collection": "wheeltire",
+        "block_limit": 3,
+        "block_image_ratio": "adapt",
+        "portrait_aspect_ratio": 133,
+        "show_add_to_cart": true,
+        "show_bottom_border": false,
+        "block_per_row": "6",
+        "block_infinite_scroll": true,
+        "block_show": "6",
+        "block_dots": false,
+        "block_arrows": true
+      }
+    },
+    "halo_collapsible_content_bkNLWr": {
+      "type": "halo-collapsible-content",
+      "blocks": {
+        "content_pjCRhV": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_nF43p6": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_Wc8jkD": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_Uex3kw": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_pjCRhV",
+        "content_nF43p6",
+        "content_Wc8jkD",
+        "content_Uex3kw"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "show_collapsible_content": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "(18X9 ET25 FRONT / 17X10 ET 35 REAR)",
+        "block_text": "An 18x9 ET25 front and 17x10 ET35 rear setup is a purpose-built, performance-oriented fitment for BMW G-chassis platforms like the G20, G22, and G42. The smaller diameters allow for increased sidewall, improving ride compliance and grip—especially under hard acceleration. The front sits clean and controlled with an OEM+ feel, while the 17x10 ET35 rear is optimized for wider, taller tire setups, making it ideal for drag or traction-focused builds. This setup is a direct bolt-on with proper clearances, offering a functional, no-compromise approach for those prioritizing performance.",
+        "block_title_align": "center",
+        "image": "shopify://shop_images/IMG_0606.jpg",
+        "desktop_layout": "image_second",
+        "open_first_collapsible_row": false,
+        "content_layout": "1"
+      }
+    },
+    "halo_collapsible_content_RAc9XN": {
+      "type": "halo-collapsible-content",
+      "blocks": {
+        "content_k9E7Le": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_qGmJxM": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_TRTB3j": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_8t7Krf": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_k9E7Le",
+        "content_qGmJxM",
+        "content_TRTB3j",
+        "content_8t7Krf"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "show_collapsible_content": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "",
+        "block_text": "",
+        "block_title_align": "center",
+        "image": "shopify://shop_images/IMG_0607.jpg",
+        "desktop_layout": "image_second",
+        "open_first_collapsible_row": false,
+        "content_layout": "1"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "halo_product_block_2_Ft6CPt",
+    "halo_collapsible_content_bkNLWr",
+    "halo_collapsible_content_RAc9XN"
+  ]
+}

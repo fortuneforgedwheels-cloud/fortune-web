@@ -1,0 +1,92 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-faqs-2-page",
+      "blocks": {
+        "35b6efac-3cb5-46b8-851d-a0c2c5b3cdbd": {
+          "type": "paragraph",
+          "settings": {
+            "title": "Shipping",
+            "question_1": "Do you offer international shipping?",
+            "answer_1": "<p>Yes, we proudly ship worldwide. For customers within North America, all shipping and handling fees are already included in the listed price—there are no surprise charges at checkout. For international customers outside North America, applicable shipping and handling fees will be calculated during checkout based on destination. Any customs duties, import taxes, or additional local charges are the responsibility of the recipient. If your country is not available at checkout, please email us at Fortuneforgedwheels@gmail.com for assistance.\n.</p>",
+            "question_2": "What are your shipping costs?",
+            "answer_2": "<p>What are your shipping costs?\nWhat you see is what you pay. There are no hidden fees, except where local/state sales tax is collected based on your address.\nFor international customers, shipping costs will be displayed during checkout. Any additional import fees or customs charges will be billed by your local customs office upon arrival.\nIf you prefer a faster delivery timeline, we offer an express shipping upgrade. The pricing for express service is:\n+$230-250 for any pair of two wheels\n\n\n+$400-495 for a full set of four wheels\nYou can select this option at checkout or contact us to update your order.\n</p>",
+            "question_3": "When will my order ship?",
+            "answer_3": "<p class=\"italic\">Because every set of Fortune Forged Wheels is custom-built to order, fulfillment timelines include both production and coordinated batch shipping:\nProduction Time: Each wheel is hand-crafted and precision-finished, with production typically taking 20–30 days to complete. This includes all machining, finishing, quality control, and final preparation.\n\n\nBatch Coordination: Once your wheels are completed, we allow an additional 7–10 days to consolidate with other orders in the same production batch. This ensures better packaging efficiency and reduces risk during transit.\n\n\nShipping Method &amp; Timeline: Standard shipping is included in your order. All wheels are shipped via freight from our production facility, which generally takes about 30 days to arrive after leaving our facility. Freight shipments travel by sea and are subject to customs inspections, which can add minor delays. While we strive for efficiency, this is a natural part of the international logistics process.\n\n\nTracking: Once your wheels reach the U.S. and clear customs, you’ll receive a UPS or FedEx tracking number via email. This number will only begin showing updates once the package is scanned by the final-mile carrier. For updates while in freight transit, contact us—we're happy to provide backend tracking.\n\n\nExpress Shipping Option: Customers looking for faster delivery can select express shipping, which reduces total lead time to approximately 4–5 weeks. Pricing and upgrade options are listed in the Shipping Costs section and can be added at checkout or by request anytime before your order ships.\n</p>",
+            "question_4": "",
+            "answer_4": "",
+            "question_5": "",
+            "answer_5": "",
+            "question_6": "",
+            "answer_6": "",
+            "question_7": "",
+            "answer_7": "",
+            "question_8": "",
+            "answer_8": "",
+            "question_9": "",
+            "answer_9": "",
+            "question_10": "",
+            "answer_10": ""
+          }
+        },
+        "2ae2f788-37c6-4cb5-ae8c-fd60994659be": {
+          "type": "paragraph",
+          "settings": {
+            "title": "Pre/Post Sales Support",
+            "question_1": "What are the lead times for Fortune Forged Wheels?",
+            "answer_1": "<p>Because each wheel is made to order with full customization, our lead times are based on your chosen shipping method:\nStandard Lead Time (Included in Price):\n\n\nTotal timeline is approximately 8 weeks from the time your order is placed.\n\n\nThis includes 20–30 days of production, 7–10 days for batch coordination, and about 30 days for sea freight delivery and customs processing.\n</p>\n<p>Express Lead Time (Optional Upgrade):\n\n\nExpress shipping reduces the lead time to 4–5 weeks.\n\n\nThis service speeds up both the production handling and international shipping timelines.\n\n\nThe cost for express service is $230 for a pair of two wheels or $415 for a full set of four.\n\n\nThis upgrade can be selected at checkout or added anytime before your wheels ship—just contact us to apply it to your order.\n\n\nWe recommend reaching out before placing your order if you're working with a tight deadline—we’ll do our best to accommodate your needs and ensure the fastest delivery possible.</p>",
+            "question_2": "Where can I find my tracking number?",
+            "answer_2": "<p>Your tracking number will be sent to the email address we have on file as soon as your wheels are ready to ship domestically. This number will be from UPS or FedEx, but please note that it will only begin updating once the freight shipment clears customs and is transferred to the local carrier.\nIf you'd like updates during the sea shipping process, feel free to reach out—we can provide freight tracking manually while your wheels are in transit.\n</p>",
+            "question_3": "Are all sales final?",
+            "answer_3": "<p>Yes. Because every set of wheels we produce is custom-built to order, all sales are final. Once your order is placed, it is entered into our production pipeline and cannot be altered or canceled. Please ensure all specifications (bolt pattern, finish, sizing, etc.) are correct before submitting your order. If you have any questions prior to ordering, our team is happy to help you confirm the perfect fit.</p>",
+            "question_4": "Do you offer discounts for military personnel or first responders?",
+            "answer_4": "<p>We do! As a small gesture of gratitude, we offer a 5% discount on any order for active-duty military members, veterans, and first responders. To apply, please email us from your official or verifiable email address and let us know which items you'd like to purchase. We’ll provide a unique discount code for your order.\n</p>",
+            "question_5": "",
+            "answer_5": "",
+            "question_6": "",
+            "answer_6": "",
+            "question_7": "",
+            "answer_7": "",
+            "question_8": "",
+            "answer_8": "",
+            "question_9": "",
+            "answer_9": "",
+            "question_10": "",
+            "answer_10": ""
+          }
+        }
+      },
+      "block_order": [
+        "35b6efac-3cb5-46b8-851d-a0c2c5b3cdbd",
+        "2ae2f788-37c6-4cb5-ae8c-fd60994659be"
+      ],
+      "settings": {
+        "show_breadcrumb": false,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 100,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 70,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 60,
+        "show_faqs_filter": true,
+        "faqs_text": "Here you will find quick, clear answers to our most common questions. Designed to streamline your experience and keep you moving forward"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

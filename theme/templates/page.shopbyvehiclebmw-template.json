@@ -1,0 +1,180 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 70,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 50,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "halo_custom_text_JyqGCe": {
+      "type": "halo-custom-text",
+      "blocks": {
+        "button_link_MhGd8R": {
+          "type": "button-link",
+          "settings": {
+            "btn": "1",
+            "btn_text": "20\" SPECS",
+            "btn_icon": "",
+            "btn_link": "shopify://pages/g8x-20-fitment-specs"
+          }
+        },
+        "button_link_fa8BGq": {
+          "type": "button-link",
+          "settings": {
+            "btn": "1",
+            "btn_text": "19\"/20\" specs",
+            "btn_icon": "",
+            "btn_link": "shopify://pages/g8x-19-20-fit-specs"
+          }
+        },
+        "button_link_8H3BYV": {
+          "type": "button-link",
+          "settings": {
+            "btn": "1",
+            "btn_text": "19\" specs",
+            "btn_icon": "",
+            "btn_link": "shopify://pages/g8x-19-fitment-specs"
+          }
+        },
+        "button_link_CaJDLJ": {
+          "type": "button-link",
+          "settings": {
+            "btn": "1",
+            "btn_text": "18\" specs",
+            "btn_icon": "",
+            "btn_link": "shopify://pages/g8x-18-fitment-specs"
+          }
+        }
+      },
+      "block_order": [
+        "button_link_MhGd8R",
+        "button_link_fa8BGq",
+        "button_link_8H3BYV",
+        "button_link_CaJDLJ"
+      ],
+      "name": "t:sections.custom-text.presets.name",
+      "settings": {
+        "show_custom_text": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "THE G8X FITMENT GUIDE",
+        "block_text": "Browse our tested wheel specs with confidence. Direct bolt-on fitments engineered for a flush, no-compromise stance. Built around proven setups for the G80 M3 / G82–G83 M4 / G87 M2 platforms, this guide simplifies fitment so you can spec your M car right the first time.",
+        "block_title_align": "left",
+        "layout_style": "1",
+        "show_customize_width": false,
+        "customize_width": 940,
+        "block_content": "",
+        "block_align": "center",
+        "show_custom_text_style": true,
+        "background_color": "",
+        "text_color": "#5a5a5a",
+        "title_color": "#ffffff",
+        "text_font": "font_1",
+        "text_font_size": 16,
+        "text_font_weight": "400",
+        "text_font_style": "normal",
+        "text_text_transform": "none"
+      }
+    },
+    "halo_image_gallery_HLUwFQ": {
+      "type": "halo-image-gallery",
+      "blocks": {
+        "image_L7wL78": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7930.jpg",
+            "btn_text": "",
+            "link": ""
+          }
+        },
+        "image_wPqBTC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0546.jpg",
+            "btn_text": "",
+            "link": ""
+          }
+        },
+        "image_Yj9kBj": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0012.jpg",
+            "btn_text": "",
+            "link": ""
+          }
+        },
+        "image_3EjWiY": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0537.jpg",
+            "btn_text": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_L7wL78",
+        "image_wPqBTC",
+        "image_Yj9kBj",
+        "image_3EjWiY"
+      ],
+      "name": "t:sections.image-gallery.presets.name",
+      "settings": {
+        "show_image_gallery": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "",
+        "block_text": "",
+        "block_title_align": "left",
+        "block_layout": "grid",
+        "block_mobile_layout": "grid",
+        "col": "strait",
+        "col_border": 0,
+        "block_action": "popup",
+        "block_btn": "2",
+        "block_view_btn": "1",
+        "block_view_btn_text": "",
+        "block_view_btn_link": "",
+        "block_per_row": "4",
+        "block_show": "4",
+        "block_dots": false,
+        "block_arrows": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "halo_custom_text_JyqGCe",
+    "halo_image_gallery_HLUwFQ"
+  ]
+}

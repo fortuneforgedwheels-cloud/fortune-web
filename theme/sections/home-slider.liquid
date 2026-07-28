@@ -1,0 +1,56 @@
+<style>
+.carousel {
+height: 80vh;
+}
+.carousel-cell {
+  width: 70%;
+  height: 100%;
+  margin-right: 10px;
+}
+
+@media screen and ( min-width: 768px ) {
+  /* half-width cells for larger devices */
+  .carousel-cell { width: 50%; }
+}
+
+.flickity-viewport {
+  transition: height 0.2s;
+}
+</style>
+
+<div class="carousel js-flickity" data-flickity='{ "autoPlay": false }' '{ "wrapAround": true }' '{ "adaptiveHeight": true  }' '{ "pauseAutoPlayOnHover": true  }' '{ "selectedAttraction": 0.01  }' '{ “friction”: 0.15  }' '{ “imagesLoaded”: true  }'>
+  <div class="carousel-cell">
+    <img src="https://cdn.shopify.com/s/files/1/0893/3507/0995/files/Bead_Mobile.jpg?v=1752047960" alt="" />
+  </div>
+  <div class="carousel-cell">
+    <img src="https://cdn.shopify.com/s/files/1/0893/3507/0995/files/Mono_Mobile.jpg?v=1752047960" alt="" />
+  </div>
+  <div class="carousel-cell">
+    <img src="https://cdn.shopify.com/s/files/1/0893/3507/0995/files/2_Piece_Mobile.jpg?v=1752047959" alt="" />
+  </div>
+
+</div>
+{% schema %}
+  {
+    "name": "Home Slider",
+    "settings": []
+  }
+{% endschema %}
+
+<!-- {{ section.settings.custom_liquid }}
+
+{
+   "name": "Custom Liquid",
+   "settings": [
+   {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "Custom Liquid",
+      "info": "Add app snippets or other liquid code to create advanced customizations."
+   }],
+   "presets": [
+   {
+      "name": "Custom Liquid"
+   }]
+}
+-->

@@ -1,0 +1,230 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "footer-0": {
+          "type": "link_list",
+          "disabled": true,
+          "settings": {
+            "heading": "SHOP",
+            "menu": "footer"
+          }
+        },
+        "link_list_Gxyebt": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Dealer inquiries",
+            "menu": "footer-menu-contact"
+          }
+        },
+        "87eae35d-3b4e-471c-abc6-db4ed7d19b47": {
+          "type": "link_list",
+          "disabled": true,
+          "settings": {
+            "heading": "SUPPORT",
+            "menu": "footer-menu-support"
+          }
+        },
+        "d214f3b2-0aee-43b9-9dfa-73991e36badc": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Information",
+            "menu": "footer-menu-company"
+          }
+        },
+        "6ed74620-a7ab-4d00-bc84-a2495034e4a7": {
+          "type": "footer_bottom",
+          "settings": {
+            "show_footer_bottom": true,
+            "footer_bottom_container": "1770",
+            "footer_bottom_bg": "#141414",
+            "footer_bottom_color": "#808080",
+            "show_separate_line": false,
+            "separate_line_color": "#929292",
+            "show_copyright": true,
+            "copyright_link": "",
+            "copyright": "Built By SetOnSocial",
+            "show_payment": true,
+            "payment_type": "custom",
+            "show_payment_visa": true,
+            "show_payment_master": true,
+            "show_payment_maestro": false,
+            "show_payment_american_express": true,
+            "show_payment_apple_pay": true,
+            "show_payment_bitcoin": false,
+            "show_payment_dankort": false,
+            "show_payment_diners_club": false,
+            "show_payment_discover": true,
+            "show_payment_paypal": true,
+            "show_payment_dogecoin": false,
+            "show_payment_dwolla": false,
+            "show_payment_forbrugsforeningen": false,
+            "show_payment_jcb": false,
+            "show_payment_litecoin": false,
+            "show_payment_afterpay": false,
+            "show_payment_google_pay": true,
+            "show_payment_ideal": false,
+            "show_payment_klarna": false,
+            "show_payment_klarna-pay-later": false,
+            "show_payment_shopify_pay": true,
+            "show_payment_sofort": false
+          }
+        }
+      },
+      "block_order": [
+        "footer-0",
+        "link_list_Gxyebt",
+        "87eae35d-3b4e-471c-abc6-db4ed7d19b47",
+        "d214f3b2-0aee-43b9-9dfa-73991e36badc",
+        "6ed74620-a7ab-4d00-bc84-a2495034e4a7"
+      ],
+      "settings": {
+        "style": "1",
+        "show_footer_middle": true,
+        "footer_middle_container": "1170",
+        "footer_middle_text_align": "center",
+        "heading_font": "font_1",
+        "heading_font_size": 18,
+        "heading_font_weight": "700",
+        "heading_text_transform": "uppercase",
+        "link_font": "font_1",
+        "link_font_size": 16,
+        "link_font_weight": "400",
+        "link_text_transform": "capitalize",
+        "footer_middle_bg": "#000000",
+        "link_color": "#929292",
+        "heading_color": "#ffffff",
+        "link_color_hover": "#ff0000",
+        "show_footer_middle_bg_img": false,
+        "footer_middle_bg_position_x": "center",
+        "footer_middle_bg_position_y": "center",
+        "footer_middle_bg_repeat": "no-repeat",
+        "footer_middle_bg_attachment": "scroll",
+        "footer_middle_bg_size": "cover"
+      }
+    },
+    "footer_8_WEr7dn": {
+      "type": "footer-8",
+      "blocks": {
+        "link_list_m7fTAt": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Top Menu",
+            "menu": ""
+          }
+        },
+        "link_list_XGwaYp": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Home & Furnitures",
+            "menu": ""
+          }
+        },
+        "link_list_M7QEXM": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Toys & Video Games",
+            "menu": ""
+          }
+        },
+        "text_YtJzpY": {
+          "type": "text",
+          "settings": {
+            "show_social": true,
+            "heading_social": "Keep in touch",
+            "social_color": "#0000a4",
+            "social_color_hover": "#ffae00",
+            "heading": "HALO App",
+            "subtext": "<div class=\"typography text-left\">\n    <a href=\"javascript:void(0)\" role=\"button\">\n        <img src=\"https://cdn.shopify.com/s/files/1/0300/9884/9928/files/logo-apple-pay.png?v=1648690041\" alt=\"App Store\" title=\"App Store\">\n    </a>\n    <a href=\"javascript:void(0)\" role=\"button\">\n        <img src=\"https://cdn.shopify.com/s/files/1/0300/9884/9928/files/logo-google-pay.png?v=1648690041\" alt=\"Google Play\" title=\"Google Play\">\n    </a>\n</div>"
+          }
+        },
+        "footer_bottom_C3XG9d": {
+          "type": "footer_bottom",
+          "settings": {
+            "show_footer_bottom": true,
+            "show_separate_line": true,
+            "separate_line_color": "#e2e2e2",
+            "footer_bottom_container": "1370",
+            "footer_bottom_bg": "#ffffff",
+            "footer_bottom_color": "#202020",
+            "show_footer_logo": true,
+            "show_copyright": true,
+            "copyright_link": "",
+            "copyright": "Templates by HaloThemes.Com.",
+            "show_payment": true,
+            "payment_type": "custom",
+            "show_payment_visa": true,
+            "show_payment_master": true,
+            "show_payment_maestro": false,
+            "show_payment_american_express": true,
+            "show_payment_apple_pay": true,
+            "show_payment_bitcoin": false,
+            "show_payment_dankort": false,
+            "show_payment_diners_club": false,
+            "show_payment_discover": true,
+            "show_payment_paypal": true,
+            "show_payment_dogecoin": false,
+            "show_payment_dwolla": false,
+            "show_payment_forbrugsforeningen": false,
+            "show_payment_jcb": false,
+            "show_payment_litecoin": false,
+            "show_payment_afterpay": false,
+            "show_payment_google_pay": false,
+            "show_payment_ideal": false,
+            "show_payment_klarna": false,
+            "show_payment_klarna-pay-later": false,
+            "show_payment_shopify_pay": false,
+            "show_payment_sofort": false
+          }
+        }
+      },
+      "block_order": [
+        "link_list_m7fTAt",
+        "link_list_XGwaYp",
+        "link_list_M7QEXM",
+        "text_YtJzpY",
+        "footer_bottom_C3XG9d"
+      ],
+      "disabled": true,
+      "settings": {
+        "show_footer_middle": true,
+        "footer_middle_container": "1370",
+        "footer_middle_text_align": "left",
+        "heading_font": "font_1",
+        "heading_font_size": 16,
+        "heading_font_weight": "600",
+        "heading_text_transform": "capitalize",
+        "link_font": "font_1",
+        "link_font_size": 14,
+        "link_font_weight": "400",
+        "link_text_transform": "capitalize",
+        "footer_middle_bg": "#ffffff",
+        "link_color": "#202020",
+        "heading_color": "#202020",
+        "link_color_hover": "#0000a4",
+        "show_footer_middle_bg_img": false,
+        "footer_middle_bg_position_x": "center",
+        "footer_middle_bg_position_y": "center",
+        "footer_middle_bg_repeat": "no-repeat",
+        "footer_middle_bg_attachment": "fixed",
+        "footer_middle_bg_size": "contain"
+      }
+    }
+  },
+  "order": [
+    "footer",
+    "footer_8_WEr7dn"
+  ]
+}

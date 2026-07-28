@@ -1,0 +1,296 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "disabled": true,
+      "settings": {
+        "show_announcement_bar": false,
+        "announcement-bar-layout": "scroll",
+        "announcement-bar-show": "home",
+        "text": "<span class=\"text\">SUMMER SALE: 14% OFF any FF STYLE Wheel &amp; 4% any OEM Style Wheel. Use Code:</span><span class=\"text-code\">SummerSavings</span>",
+        "link": "",
+        "text_transform": "uppercase",
+        "background_color": "#ff0000",
+        "color_1": "#ffffff",
+        "color_2": "#000000"
+      }
+    },
+    "halo_marquee_promotion_CcKKJE": {
+      "type": "halo-marquee-promotion",
+      "blocks": {
+        "marquee_9ARiB9": {
+          "type": "marquee",
+          "settings": {
+            "options_marquee": "text",
+            "text": "FREE SHIPPING WORLDWIDE!",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "marquee_9ARiB9"
+      ],
+      "disabled": true,
+      "name": "t:sections.marquee-promotion.presets.name",
+      "settings": {
+        "show_marquee": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "marquee_speed": 30,
+        "padding_top_bottom_item": 10,
+        "padding_top_bottom_item_mobile": 5,
+        "marquee_background_color": "#000000",
+        "marquee_text_color": "#ffffff",
+        "show_border_marquee": true,
+        "marquee_font": "font_2",
+        "marquee_font_size": 15,
+        "marquee_mobile_font_size": 10,
+        "marquee_font_weight": "400",
+        "marquee_font_style": "normal",
+        "marquee_text_transform": "uppercase"
+      }
+    },
+    "header_navigation_full_elements_cdFgad": {
+      "type": "header-navigation-full-elements",
+      "blocks": {
+        "language_currency_EbPE8z": {
+          "type": "language_currency",
+          "settings": {
+            "text_align": "left",
+            "show_language_currency": true,
+            "shoose_style_currrency": "1",
+            "show_custom_social_media_link": true,
+            "social_media_icon_1": "<!-- <svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 50 50\" aria-hidden=\"true\" focusable=\"false\" role=\"presentation\"><path d=\"M 9 4 C 6.2504839 4 4 6.2504839 4 9 L 4 41 C 4 43.749516 6.2504839 46 9 46 L 25.832031 46 A 1.0001 1.0001 0 0 0 26.158203 46 L 31.832031 46 A 1.0001 1.0001 0 0 0 32.158203 46 L 41 46 C 43.749516 46 46 43.749516 46 41 L 46 9 C 46 6.2504839 43.749516 4 41 4 L 9 4 z M 9 6 L 41 6 C 42.668484 6 44 7.3315161 44 9 L 44 41 C 44 42.668484 42.668484 44 41 44 L 33 44 L 33 30 L 36.820312 30 L 38.220703 23 L 33 23 L 33 21 C 33 20.442508 33.05305 20.398929 33.240234 20.277344 C 33.427419 20.155758 34.005822 20 35 20 L 38 20 L 38 14.369141 L 37.429688 14.097656 C 37.429688 14.097656 35.132647 13 32 13 C 29.75 13 27.901588 13.896453 26.71875 15.375 C 25.535912 16.853547 25 18.833333 25 21 L 25 23 L 22 23 L 22 30 L 25 30 L 25 44 L 9 44 C 7.3315161 44 6 42.668484 6 41 L 6 9 C 6 7.3315161 7.3315161 6 9 6 z M 32 15 C 34.079062 15 35.38736 15.458455 36 15.701172 L 36 18 L 35 18 C 33.849178 18 32.926956 18.0952 32.150391 18.599609 C 31.373826 19.104024 31 20.061492 31 21 L 31 25 L 35.779297 25 L 35.179688 28 L 31 28 L 31 44 L 27 44 L 27 28 L 24 28 L 24 25 L 27 25 L 27 21 C 27 19.166667 27.464088 17.646453 28.28125 16.625 C 29.098412 15.603547 30.25 15 32 15 z\"></path></svg> -->",
+            "social_media_link_1": "",
+            "social_media_icon_2": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 50 50\" aria-hidden=\"true\" focusable=\"false\" role=\"presentation\"><path d=\"M 16 3 C 8.8324839 3 3 8.8324839 3 16 L 3 34 C 3 41.167516 8.8324839 47 16 47 L 34 47 C 41.167516 47 47 41.167516 47 34 L 47 16 C 47 8.8324839 41.167516 3 34 3 L 16 3 z M 16 5 L 34 5 C 40.086484 5 45 9.9135161 45 16 L 45 34 C 45 40.086484 40.086484 45 34 45 L 16 45 C 9.9135161 45 5 40.086484 5 34 L 5 16 C 5 9.9135161 9.9135161 5 16 5 z M 37 11 A 2 2 0 0 0 35 13 A 2 2 0 0 0 37 15 A 2 2 0 0 0 39 13 A 2 2 0 0 0 37 11 z M 25 14 C 18.936712 14 14 18.936712 14 25 C 14 31.063288 18.936712 36 25 36 C 31.063288 36 36 31.063288 36 25 C 36 18.936712 31.063288 14 25 14 z M 25 16 C 29.982407 16 34 20.017593 34 25 C 34 29.982407 29.982407 34 25 34 C 20.017593 34 16 29.982407 16 25 C 16 20.017593 20.017593 16 25 16 z\"></path></svg>",
+            "social_media_link_2": "https://www.instagram.com/fortune_forged/",
+            "social_media_icon_3": "<!-- <svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 50 50\" aria-hidden=\"true\" focusable=\"false\" role=\"presentation\"><path d=\"M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609825 4 46 13.390175 46 25 C 46 36.609825 36.609825 46 25 46 C 22.876355 46 20.82771 45.682142 18.896484 45.097656 C 19.75673 43.659418 20.867347 41.60359 21.308594 39.90625 C 21.570728 38.899887 22.648438 34.794922 22.648438 34.794922 C 23.348841 36.132057 25.395277 37.263672 27.574219 37.263672 C 34.058123 37.263672 38.732422 31.300682 38.732422 23.890625 C 38.732422 16.78653 32.935409 11.472656 25.476562 11.472656 C 16.196831 11.472656 11.271484 17.700825 11.271484 24.482422 C 11.271484 27.636307 12.94892 31.562193 15.634766 32.8125 C 16.041611 33.001865 16.260073 32.919834 16.353516 32.525391 C 16.425459 32.226044 16.788267 30.766792 16.951172 30.087891 C 17.003269 29.871239 16.978043 29.68405 16.802734 29.470703 C 15.913793 28.392399 15.201172 26.4118 15.201172 24.564453 C 15.201172 19.822048 18.791452 15.232422 24.908203 15.232422 C 30.18976 15.232422 33.888672 18.832872 33.888672 23.980469 C 33.888672 29.796219 30.95207 33.826172 27.130859 33.826172 C 25.020554 33.826172 23.440361 32.080359 23.947266 29.939453 C 24.555054 27.38426 25.728516 24.626944 25.728516 22.78125 C 25.728516 21.130713 24.842754 19.753906 23.007812 19.753906 C 20.850369 19.753906 19.117188 21.984457 19.117188 24.974609 C 19.117187 26.877359 19.761719 28.166016 19.761719 28.166016 C 19.761719 28.166016 17.630543 37.176514 17.240234 38.853516 C 16.849091 40.52931 16.953851 42.786365 17.115234 44.466797 C 9.421139 41.352465 4 33.819328 4 25 C 4 13.390175 13.390175 4 25 4 z\"></path></svg> -->",
+            "social_media_link_3": ""
+          }
+        },
+        "logo_weFjV9": {
+          "type": "logo",
+          "settings": {
+            "logo_type": "image",
+            "logo": "shopify://shop_images/FF_Logo_-_Black_Stroke.png",
+            "logo_mobile": "shopify://shop_images/FF_Logo_-_White_Stroke.png",
+            "logo_width": 125,
+            "logo_width_mobile": 50,
+            "logo_text": "",
+            "logo_icon": "",
+            "logo_icon_width": 5,
+            "logo_icon_height": 5,
+            "logo_icon_width_mobile": 5,
+            "logo_icon_height_mobile": 1,
+            "logo_font_size": 15,
+            "logo_font_weight": "900",
+            "logo_text_transform": "uppercase",
+            "logo_color": "#ffffff"
+          }
+        },
+        "main_menu_k4dpLP": {
+          "type": "main-menu",
+          "settings": {
+            "menu": "main-menu",
+            "show_megamenu": false,
+            "show_resize_menu": false,
+            "margin_right": 30,
+            "padding_left": 20,
+            "padding_right": 20,
+            "align": "center",
+            "show_text_underline": true,
+            "text_underline": 8,
+            "letter_spacing": 50,
+            "lv_1_font": "font_1",
+            "lv_1_font_size": 18,
+            "lv_1_font_weight": "500",
+            "lv_1_text_transform": "capitalize",
+            "lv_1_color": "#ffffff",
+            "lv_1_color_hover": "#d8d8d8",
+            "lv_1_color_mobile": "#000000",
+            "lv_2_font": "font_1",
+            "lv_2_font_size": 16,
+            "lv_2_font_weight": "400",
+            "lv_2_text_transform": "capitalize",
+            "lv_2_mega_font": "font_3",
+            "lv_2_mega_font_size": 14,
+            "lv_2_mega_font_weight": "300",
+            "lv_2_mega_text_transform": "capitalize",
+            "mega_container": "1770",
+            "lv_2_bg": "#000000",
+            "lv_2_color": "#ffffff",
+            "lv_2_color_hover": "#929292",
+            "lv_2_color_mobile": "#ffffff",
+            "sale_item_1": "",
+            "sale_item_2": "",
+            "sale_item_3": "",
+            "sale_item_color": "#ff0000",
+            "show_label": false,
+            "show_label_blink": true,
+            "new_label_1": "",
+            "new_label_2": "",
+            "new_label_3": "",
+            "new_label_bg": "",
+            "new_label_color": "rgba(0,0,0,0)",
+            "sale_label_1": "",
+            "sale_label_2": "",
+            "sale_label_3": "",
+            "sale_label_bg": "",
+            "sale_label_color": "rgba(0,0,0,0)",
+            "hot_label_1": "",
+            "hot_label_2": "",
+            "hot_label_3": "",
+            "hot_label_bg": "",
+            "hot_label_color": "rgba(0,0,0,0)"
+          }
+        },
+        "function_group_TenQtk": {
+          "type": "function-group",
+          "settings": {
+            "show_wishlist": false,
+            "show_customer": true,
+            "show_search": true,
+            "search_container": "1770",
+            "header_search_style": "icon",
+            "search_bg": "rgba(0,0,0,0)",
+            "search_border": "rgba(0,0,0,0)",
+            "search_color": "rgba(0,0,0,0)",
+            "search_icon_color": "rgba(0,0,0,0)",
+            "search_button_bg_color": "",
+            "show_cart": true,
+            "show_bg_cart": true,
+            "cart_item_color": "#ffffff",
+            "cart_item_background": "#000000",
+            "show_custom_link": false,
+            "custom_link_text": "BUY THEME",
+            "custom_link_url": "",
+            "lv_1_font": "font_1",
+            "lv_1_font_size": 15,
+            "lv_1_font_weight": "700",
+            "lv_1_text_transform": "uppercase",
+            "lv_1_color": "#000000",
+            "style_function_group": "4",
+            "margin_left": 36,
+            "align_function_group": "center",
+            "function_group_size": 20,
+            "cart_count_background": "#ff0000",
+            "cart_count_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "language_currency_EbPE8z",
+        "logo_weFjV9",
+        "main_menu_k4dpLP",
+        "function_group_TenQtk"
+      ],
+      "name": "t:sections.header.name__5",
+      "settings": {
+        "container": "1770",
+        "show_line_separator": true,
+        "sticky_header_type": "up",
+        "show_header_transparent": false,
+        "style_bg_transparent": "1",
+        "color_modify": 20,
+        "color_modify_1_text": "#ffffff",
+        "color_modify_1_icon": "#ffffff",
+        "color_modify_2": 100,
+        "color_modify_2_text": "#ffffff",
+        "color_modify_2_icon": "#ffffff",
+        "icon_color_transparent": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "bottom_padding_top": 0,
+        "bottom_padding_bottom": 0,
+        "header_bg": "#000000",
+        "header_color": "#ffffff",
+        "line_separator_color": "#505050"
+      }
+    },
+    "header-mobile": {
+      "type": "header-mobile",
+      "blocks": {
+        "7de2266e-0cd4-4fda-9f09-06f75a17f944": {
+          "type": "menu",
+          "settings": {
+            "icon_color": "#ffffff"
+          }
+        },
+        "550fbd21-75fb-4051-9dee-77d91b5239f0": {
+          "type": "logo",
+          "settings": {
+            "logo_type": "image",
+            "logo_mobile": "shopify://shop_images/FF_Logo_-_White_Stroke.png",
+            "logo_width_mobile": 90,
+            "logo_text": "",
+            "logo_icon": "",
+            "logo_icon_width_mobile": 5,
+            "logo_icon_height_mobile": 1,
+            "logo_font_size": 15,
+            "logo_font_weight": "900",
+            "logo_text_transform": "uppercase",
+            "logo_color": "#000000"
+          }
+        },
+        "163e2cb5-14f2-4af6-9ac3-77193c082f53": {
+          "type": "search",
+          "disabled": true,
+          "settings": {
+            "icon_color": "#000000",
+            "header_search_style": "icon-2"
+          }
+        },
+        "cart_Gp486d": {
+          "type": "cart",
+          "settings": {
+            "cart_count_background": "#ff0000",
+            "cart_count_color": "#505050",
+            "icon_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "7de2266e-0cd4-4fda-9f09-06f75a17f944",
+        "550fbd21-75fb-4051-9dee-77d91b5239f0",
+        "163e2cb5-14f2-4af6-9ac3-77193c082f53",
+        "cart_Gp486d"
+      ],
+      "settings": {
+        "background": "#000000",
+        "gradient": "",
+        "style_function_group": "1",
+        "sticky_header_type": "up",
+        "show_header_transparent_mobile": false,
+        "color_modify": 10,
+        "color_modify_1_text": "#ffffff",
+        "color_modify_1_icon": "#ffffff",
+        "color_modify_2": 100,
+        "color_modify_2_text": "#ffffff",
+        "color_modify_2_icon": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "halo_marquee_promotion_CcKKJE",
+    "header_navigation_full_elements_cdFgad",
+    "header-mobile"
+  ]
+}

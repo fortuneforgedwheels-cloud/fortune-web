@@ -1,0 +1,295 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product-2",
+      "blocks": {
+        "5181783a-fbce-4ffc-b3ca-bc5eae0688e9": {
+          "type": "title",
+          "settings": {
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "font_family": "font_2",
+            "font_size": 35,
+            "font_weight": "500",
+            "text_transform": "capitalize",
+            "text_color": "#000000"
+          }
+        },
+        "vo_product_options_block_9B3W7X": {
+          "type": "shopify://apps/vo-product-options/blocks/block/430cbd7b-bd20-4c16-ba41-db6f4c645164",
+          "settings": {
+            "font_color": "#ffffff"
+          }
+        },
+        "f21af57e-c26c-4c76-88fc-769d32f9c1bd": {
+          "type": "price",
+          "settings": {
+            "padding_top": 0,
+            "padding_bottom": 0
+          }
+        },
+        "e1debc93-0ff2-4d75-8403-7e707a3ad165": {
+          "type": "customer_viewing",
+          "settings": {
+            "customer_viewing_number": "283, 100, 59, 11, 14, 185, 193, 165, 50, 38, 99, 112, 46, 10, 125, 200, 250, 18",
+            "customer_viewing_time": 5,
+            "padding_top": 20,
+            "padding_bottom": 0,
+            "font_family": "font_1",
+            "font_size": 15,
+            "font_weight": "400",
+            "text_transform": "none",
+            "text_color": "#000000"
+          }
+        },
+        "e3717dbe-1786-44f8-a745-344ecc4580c4": {
+          "type": "popup_information",
+          "settings": {
+            "title": "Free Shipping",
+            "content": "<p>Free standard shipping on orders over $99.</p><p>Estimated to be delivered on 12/01/2022 - 15/10/2022.</p>",
+            "icon": "<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fal\" data-icon=\"shipping-fast\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 640 512\"><path fill=\"currentColor\" d=\"M280 192c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H40c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h240zm352 192h-24V275.9c0-16.8-6.8-33.3-18.8-45.2l-83.9-83.9c-11.8-12-28.3-18.8-45.2-18.8H416V78.6c0-25.7-22.2-46.6-49.4-46.6H113.4C86.2 32 64 52.9 64 78.6V96H8c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h240c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H96V78.6c0-8.1 7.8-14.6 17.4-14.6h253.2c9.6 0 17.4 6.5 17.4 14.6V384H207.6C193 364.7 170 352 144 352c-18.1 0-34.6 6.2-48 16.4V288H64v144c0 44.2 35.8 80 80 80s80-35.8 80-80c0-5.5-.6-10.8-1.6-16h195.2c-1.1 5.2-1.6 10.5-1.6 16 0 44.2 35.8 80 80 80s80-35.8 80-80c0-5.5-.6-10.8-1.6-16H632c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8zm-488 96c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm272-320h44.1c8.4 0 16.7 3.4 22.6 9.4l83.9 83.9c.8.8 1.1 1.9 1.8 2.8H416V160zm80 320c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm80-96h-16.4C545 364.7 522 352 496 352s-49 12.7-63.6 32H416v-96h160v96zM256 248v-16c0-4.4-3.6-8-8-8H8c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h240c4.4 0 8-3.6 8-8z\"></path></svg>",
+            "content_popup": "<p>We can ship to virtually any address in the world. Note that there are restrictions on some products, and some products cannot be shipped to international destinations.</p><p>When you place an order, we will estimate shipping and delivery dates for you based on the availability of your items and the shipping options you choose. Depending on the shipping provider you choose, shipping date estimates may appear on the shipping quotes page.</p><p>Please also note that the shipping rates for many items we sell are weight-based. The weight of any such item can be found on its detail page. To reflect the policies of the shipping companies we use, all weights will be rounded up to the next full pound.</p>"
+          }
+        },
+        "a173f63e-5a97-4960-92d9-d1b0a6437e28": {
+          "type": "variant_picker",
+          "disabled": true,
+          "settings": {
+            "picker_type": "button",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "show_border_top": false,
+            "option_border_top": "dashed",
+            "picker_border_color": "#cccccc"
+          }
+        },
+        "aa29479a-0a43-479d-bb06-74a843cf94d5": {
+          "type": "custom",
+          "settings": {
+            "title": "Shipping & Return",
+            "content": "<p><strong>Returns Policy</strong><br/></p><p>You may return most new, unopened items within 30 days of delivery for a full refund. We'll also pay the return shipping costs if the return is a result of our error (you received an incorrect or defective item, etc.).<br/>You should expect to receive your refund within four weeks of giving your package to the return shipper, however, in many cases you will receive a refund more quickly. This time period includes the transit time for us to receive your return from the shipper (5 to 10 business days), the time it takes us to process your return once we receive it (3 to 5 business days), and the time it takes your bank to process our refund request (5 to 10 business days).<br/>if you need to return an item, simply login to your account, view the order using the \"Complete Orders\" link under the My Account menu and click the Return Item(s) button. We'll notify you via e-mail of your refund once we've received and processed the returned item.<br/></p><p><strong>Shipping</strong><br/></p><p>We can ship to virtually any address in the world. Note that there are restrictions on some products, and some products cannot be shipped to international destinations.<br/>When you place an order, we will estimate shipping and delivery dates for you based on the availability of your items and the shipping options you choose. Depending on the shipping provider you choose, shipping date estimates may appear on the shipping quotes page.<br/>Please also note that the shipping rates for many items we sell are weight-based. The weight of any such item can be found on its detail page. To reflect the policies of the shipping companies we use, all weights will be rounded up to the next full pound.</p>",
+            "content_html": ""
+          }
+        },
+        "58a236fc-162e-4817-8e44-e1c9f0f91bce": {
+          "type": "description",
+          "settings": {
+            "title": "Details",
+            "show_readmore": true
+          }
+        },
+        "74f41190-f44d-45a0-9e47-10770ac1bd7f": {
+          "type": "notify_form",
+          "settings": {
+            "padding_top": 10,
+            "padding_bottom": 0
+          }
+        },
+        "183c1908-c889-4d9f-9b8d-29e217e6c0d7": {
+          "type": "add_to_cart_form",
+          "settings": {
+            "enable_shake_affect": true,
+            "show_dynamic_checkout": true,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "show_subtotal": true,
+            "subtotal_style": "2",
+            "show_qty": true,
+            "qty_style": "2"
+          }
+        }
+      },
+      "block_order": [
+        "5181783a-fbce-4ffc-b3ca-bc5eae0688e9",
+        "vo_product_options_block_9B3W7X",
+        "f21af57e-c26c-4c76-88fc-769d32f9c1bd",
+        "e1debc93-0ff2-4d75-8403-7e707a3ad165",
+        "e3717dbe-1786-44f8-a745-344ecc4580c4",
+        "a173f63e-5a97-4960-92d9-d1b0a6437e28",
+        "aa29479a-0a43-479d-bb06-74a843cf94d5",
+        "58a236fc-162e-4817-8e44-e1c9f0f91bce",
+        "74f41190-f44d-45a0-9e47-10770ac1bd7f",
+        "183c1908-c889-4d9f-9b8d-29e217e6c0d7"
+      ],
+      "settings": {
+        "colors_bg": "",
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 50,
+        "thumnail_layout": "3",
+        "show_arrow_main_image": true,
+        "show_dot_main_image": true,
+        "show_custom_cursor": false,
+        "product_image_ratio": "square",
+        "portrait_aspect_ratio": 101,
+        "zoomed_image": true,
+        "product_image_object_fit": "cover",
+        "product_image_popup": "fancybox",
+        "show_badge": false,
+        "show_variant_image_group": false,
+        "show_compare_color": false,
+        "add_to_cart_font": "font_1",
+        "add_to_cart_font_size": 16,
+        "add_to_cart_font_weight": "700",
+        "add_to_cart_text_transform": "uppercase",
+        "add_to_cart_bg": "#000000",
+        "add_to_cart_color": "#ffffff",
+        "add_to_cart_border": "#000000",
+        "add_to_cart_bg_hover": "#3a8551",
+        "add_to_cart_color_hover": "#ffffff",
+        "add_to_cart_border_hover": "#3a8551",
+        "use_available_button_style": true,
+        "btn": "1",
+        "buy_it_now_bg": "",
+        "buy_it_now_color": "rgba(0,0,0,0)",
+        "buy_it_now_border": "rgba(0,0,0,0)",
+        "buy_it_now_bg_hover": "",
+        "buy_it_now_color_hover": "rgba(0,0,0,0)",
+        "buy_it_now_border_hover": "rgba(0,0,0,0)",
+        "wishlist_border_radius": 0,
+        "wishlist_btn_bg": "#ffffff",
+        "wishlist_btn_color": "#000000",
+        "wishlist_btn_border": "#c7c7c7",
+        "wishlist_btn_bg_hover": "#3a8551",
+        "wishlist_btn_color_hover": "#ffffff",
+        "wishlist_btn_border_hover": "#3a8551",
+        "show_size_chart": false,
+        "size_chart_type": "custom_image",
+        "size_chart_image_type": "jpg",
+        "show_sticky_add_to_cart": false,
+        "show_tab": true,
+        "tab_layout": "horizontal",
+        "show_custom_info": true,
+        "show_question_mark_icon": true,
+        "show_share": false
+      }
+    },
+    "product-bundle": {
+      "type": "product-bundle",
+      "disabled": true,
+      "settings": {
+        "show_product_bundle": false,
+        "background_color": "#ffffff",
+        "layout": "1",
+        "container": "1370",
+        "padding_top": 75,
+        "padding_bottom": 80,
+        "padding_top_tablet": 55,
+        "padding_bottom_tablet": 60,
+        "padding_top_mobile": 45,
+        "padding_bottom_mobile": 50,
+        "block_title": "Use It With",
+        "block_text": "",
+        "block_title_align": "center",
+        "block_dots": false,
+        "block_arrows": true,
+        "product_style": "2",
+        "block_image_ratio": "square",
+        "portrait_aspect_ratio": 148,
+        "bundle_discount": true,
+        "bundle_discount_text": "Get a [discount]% discount buying these products together",
+        "bundle_discount_text_color": "#fb561d",
+        "total_btn_bg": "#000000",
+        "total_btn_color": "#ffffff",
+        "total_btn_border": "#000000",
+        "total_btn_bg_hover": "#3a8551",
+        "total_btn_color_hover": "#ffffff",
+        "total_btn_border_hover": "#3a8551"
+      }
+    },
+    "product-review": {
+      "type": "product-review",
+      "disabled": true,
+      "settings": {
+        "show_product_reivew": true,
+        "container": "1370",
+        "padding_top": 64,
+        "padding_bottom": 40,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "Reviews",
+        "block_text": "",
+        "block_title_align": "center",
+        "layout": "2",
+        "background_color": "#fceeee",
+        "text_color_1": "#505050",
+        "text_color_2": "#808080",
+        "title_color": "#010101"
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "disabled": true,
+      "settings": {
+        "show_product_block": true,
+        "container": "1370",
+        "padding_top": 30,
+        "padding_bottom": 90,
+        "padding_top_tablet": 30,
+        "padding_bottom_tablet": 70,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 60,
+        "block_title": "Related Products",
+        "block_text": "",
+        "block_title_align": "center",
+        "block_layout": "slider",
+        "col": "narrow",
+        "block_limit": 6,
+        "block_image_ratio": "adapt",
+        "portrait_aspect_ratio": 133,
+        "show_add_to_cart": true,
+        "product_block_per_row": "5",
+        "product_block_show": "4",
+        "product_block_dots": false,
+        "product_block_arrows": true
+      }
+    },
+    "product-recently-viewed": {
+      "type": "product-recently-viewed",
+      "disabled": true,
+      "settings": {
+        "show_product_block": false,
+        "container": "1770",
+        "padding_top": 30,
+        "padding_bottom": 90,
+        "padding_top_tablet": 30,
+        "padding_bottom_tablet": 70,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 60,
+        "block_title": "Recently Viewed Products",
+        "block_text": "",
+        "block_title_align": "center",
+        "block_layout": "slider",
+        "col": "narrow",
+        "block_limit": 10,
+        "block_image_ratio": "adapt",
+        "portrait_aspect_ratio": 133,
+        "show_add_to_cart": true,
+        "product_recently_viewed_per_row": "5",
+        "product_recently_viewed_show": "5",
+        "product_recently_viewed_dots": false,
+        "product_recently_viewed_arrows": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product-bundle",
+    "product-review",
+    "product-recommendations",
+    "product-recently-viewed"
+  ]
+}

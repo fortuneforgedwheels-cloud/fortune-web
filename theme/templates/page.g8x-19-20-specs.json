@@ -1,0 +1,197 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 70,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 50,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "halo_product_block_2_Ft6CPt": {
+      "type": "halo-product-block-2",
+      "disabled": true,
+      "name": "t:sections.product-block.presets.name__2",
+      "settings": {
+        "display_product_block": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "SELECT YOUR CHASSIS",
+        "block_text": "",
+        "block_title_align": "center",
+        "block_layout": "grid",
+        "col": "narrow",
+        "block_collection": "wheeltire",
+        "block_limit": 3,
+        "block_image_ratio": "adapt",
+        "portrait_aspect_ratio": 133,
+        "show_add_to_cart": true,
+        "show_bottom_border": false,
+        "block_per_row": "6",
+        "block_infinite_scroll": true,
+        "block_show": "6",
+        "block_dots": false,
+        "block_arrows": true
+      }
+    },
+    "halo_collapsible_content_EQLf4V": {
+      "type": "halo-collapsible-content",
+      "blocks": {
+        "content_NihgJg": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_W8Uibq": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_7DhEGw": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_FtYjLQ": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_NihgJg",
+        "content_W8Uibq",
+        "content_7DhEGw",
+        "content_FtYjLQ"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "show_collapsible_content": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "(20X11 ET10 REAR / 19X10 ET12 FRONT)",
+        "block_text": "Aggressive, performance-focused staggered fitment for the G8X chassis. The 19” front wheel allows for better steering response, lighter feel, and improved ride comfort, while the wider 20” rear increases rear grip and delivers a deeper concave profile for added visual impact. The ET12 front sits close to flush without being excessive, and the ET10 rear pushes the wheel outward for a near flush stance. This setup is ideal for customers looking for a balanced combination of daily drivability and enhanced traction. without requiring spacers.",
+        "block_title_align": "center",
+        "image": "shopify://shop_images/IMG_0546.jpg",
+        "desktop_layout": "image_second",
+        "open_first_collapsible_row": false,
+        "content_layout": "1"
+      }
+    },
+    "halo_collapsible_content_rjiR3p": {
+      "type": "halo-collapsible-content",
+      "blocks": {
+        "content_QwEYac": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_daTP9A": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_FMyEFB": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_7tm9tE": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_QwEYac",
+        "content_daTP9A",
+        "content_FMyEFB",
+        "content_7tm9tE"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "show_collapsible_content": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "(20x10.5 ET15 REAR / 19x9.5 +ET18 front)",
+        "block_text": "A slightly narrower width and higher offset set up in comparison to our aggressive options. This keeps the wheels more tucked, resulting in a clean, OEM+ flush look with no poke. The 19” front improves steering feel and ride quality, while the 20” rear adds traction and a subtle increase in concavity. This setup is ideal for customers who want a direct bolt-on fitment that prioritizes drivability, proper clearance, and a clean, factory-plus stance without the need for spacers or modifications.",
+        "block_title_align": "center",
+        "image": "shopify://shop_images/IMG_0552.jpg",
+        "desktop_layout": "image_second",
+        "open_first_collapsible_row": false,
+        "content_layout": "1"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "halo_product_block_2_Ft6CPt",
+    "halo_collapsible_content_EQLf4V",
+    "halo_collapsible_content_rjiR3p"
+  ]
+}

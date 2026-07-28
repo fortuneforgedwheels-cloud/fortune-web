@@ -1,0 +1,197 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 70,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 50,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "halo_product_block_2_Ft6CPt": {
+      "type": "halo-product-block-2",
+      "disabled": true,
+      "name": "t:sections.product-block.presets.name__2",
+      "settings": {
+        "display_product_block": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "SELECT YOUR CHASSIS",
+        "block_text": "",
+        "block_title_align": "center",
+        "block_layout": "grid",
+        "col": "narrow",
+        "block_collection": "wheeltire",
+        "block_limit": 3,
+        "block_image_ratio": "adapt",
+        "portrait_aspect_ratio": 133,
+        "show_add_to_cart": true,
+        "show_bottom_border": false,
+        "block_per_row": "6",
+        "block_infinite_scroll": true,
+        "block_show": "6",
+        "block_dots": false,
+        "block_arrows": true
+      }
+    },
+    "halo_collapsible_content_XfwqGV": {
+      "type": "halo-collapsible-content",
+      "blocks": {
+        "content_3nXc9e": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_RieDHe": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_dKfmc3": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_NNGXFd": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_3nXc9e",
+        "content_RieDHe",
+        "content_dKfmc3",
+        "content_NNGXFd"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "show_collapsible_content": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "(18X11 ET15 REARS)",
+        "block_text": "The ideal drag-focused fitment for the G8X chassis, designed to accommodate wide, high-profile tires for maximum straight-line traction. The 18” diameter allows for increased sidewall, improving tire flex and grip off the line, making it perfect for beadlock setups. With an ET15 offset, this spec sits properly within the rear fender for a clean, planted look while remaining a direct bolt-on with no clearance issues. This is the go-to option for customers building a drag-oriented setup that prioritizes traction, consistency, and tire performance.",
+        "block_title_align": "center",
+        "image": "shopify://shop_images/IMG_6681.jpg",
+        "desktop_layout": "image_second",
+        "open_first_collapsible_row": false,
+        "content_layout": "1"
+      }
+    },
+    "halo_collapsible_content_3teyrW": {
+      "type": "halo-collapsible-content",
+      "blocks": {
+        "content_LX3cL7": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_nTgfHx": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_bjm7C6": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_VbXE9w": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_LX3cL7",
+        "content_nTgfHx",
+        "content_bjm7C6",
+        "content_VbXE9w"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "show_collapsible_content": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "(18X11 ET15 REAR / 18X10 ET12 FRONT)",
+        "block_text": "A fully race-oriented fitment for the G8X chassis, designed for maximum performance and tire capability. The 18” diameter allows for increased sidewall, improving grip, compliance, and consistency under hard driving. The 18x11 ET15 rear is a direct bolt-on with a strong, planted stance, while the 18x10 ET12 front pushes the limits of the platform— REQUIRING slight caliper clearance to properly seat the wheel. This setup is best suited for track-focused builds where performance takes priority over convenience, offering maximum front-end grip and ggressive geometry.",
+        "block_title_align": "center",
+        "image": "shopify://shop_images/IMG_0553.jpg",
+        "desktop_layout": "image_second",
+        "open_first_collapsible_row": false,
+        "content_layout": "1"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "halo_product_block_2_Ft6CPt",
+    "halo_collapsible_content_XfwqGV",
+    "halo_collapsible_content_3teyrW"
+  ]
+}

@@ -1,0 +1,89 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 70,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 50,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "halo_custom_text_AYKbpy": {
+      "type": "halo-custom-text",
+      "blocks": {
+        "button_link_9fgAF6": {
+          "type": "button-link",
+          "settings": {
+            "btn": "1",
+            "btn_text": "19\" specs",
+            "btn_icon": "",
+            "btn_link": "shopify://pages/e9x-19"
+          }
+        },
+        "button_link_eEmiUW": {
+          "type": "button-link",
+          "settings": {
+            "btn": "1",
+            "btn_text": "18\" specs",
+            "btn_icon": "",
+            "btn_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "button_link_9fgAF6",
+        "button_link_eEmiUW"
+      ],
+      "name": "t:sections.custom-text.presets.name",
+      "settings": {
+        "show_custom_text": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "THE E9X FITMENT GUIDE",
+        "block_text": "(E90 / E92 — M3 & Non-M) Dialing in proper fitment on the E9X chassis comes down to balancing aggressive stance with real drivability. Whether you’re building an M3 or a non-M 3 Series, here is how its done..",
+        "block_title_align": "center",
+        "layout_style": "1",
+        "show_customize_width": false,
+        "customize_width": 940,
+        "block_content": "",
+        "block_align": "center",
+        "show_custom_text_style": true,
+        "background_color": "",
+        "text_color": "#f9f9f9",
+        "title_color": "#f9f9f9",
+        "text_font": "font_1",
+        "text_font_size": 16,
+        "text_font_weight": "400",
+        "text_font_style": "normal",
+        "text_text_transform": "none"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "halo_custom_text_AYKbpy"
+  ]
+}

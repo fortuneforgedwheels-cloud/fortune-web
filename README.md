@@ -4,7 +4,7 @@ Development repo for **[fortuneforgedwheels.com](https://www.fortuneforgedwheels
 
 Live theme today: **Halo 3.0.0** (`halo-setonsocial`, theme ID `178099421459`).
 
-Theme source lives in [`theme/`](./theme). Until Shopify access is connected, that folder is empty on purpose.
+Theme source lives in [`theme/`](./theme) — live Halo snapshot pulled and ready for edits.
 
 ---
 
@@ -14,51 +14,22 @@ Theme source lives in [`theme/`](./theme). Until Shopify access is connected, th
 | --- | --- |
 | GitHub repo + Shopify CLI tooling | Ready |
 | Store identity documented | Ready |
-| Theme Access password connected | **Waiting on you** |
-| Live Halo theme pulled into `theme/` | Blocked until password is added |
+| Theme Access password connected | Ready (local `.env`) |
+| Live Halo theme pulled into `theme/` | Ready (~716 files) |
 
-Once the Theme Access password is in place, reply in this Cursor agent chat with:
-
-> Token added — pull the live theme
-
-(Do **not** paste the password into chat. Put it in `.env` or Cursor secrets only.)
+Give change requests in chat (homepage, collections, quote flow, branding, etc.). Previews use draft/dev themes; nothing goes live unless you explicitly approve a publish.
 
 ---
 
-## One-time setup (store owner)
-
-### 1. Install Theme Access
-
-1. Open Shopify Admin for Fortune Forged.
-2. Install **[Theme Access](https://apps.shopify.com/theme-access)**.
-3. In the app, click **Create theme password**.
-4. Use your own email (`torrinwitt@icloud.com` or another you control).
-5. Open the emailed link and copy the password (usually starts with `shptka_`).
-
-### 2. Add the password locally (or as a Cursor secret)
+## Auth refresh (if the token expires)
 
 ```bash
-cp .env.example .env
-# Edit .env and set:
-# SHOPIFY_CLI_THEME_TOKEN=shptka_your_password_here
-```
-
-For Cursor Cloud agents, also add a secret named `SHOPIFY_CLI_THEME_TOKEN` with the same value so future runs can pull/push without re-entering it.
-
-### 3. Install deps and verify
-
-```bash
-npm install
+# Edit .env — keep SHOPIFY_CLI_THEME_TOKEN current
 npm run setup:check
-```
-
-### 4. Pull the live theme
-
-```bash
 npm run theme:pull
 ```
 
-This downloads the published Halo theme into `theme/`. Commit that snapshot so rebuild work can begin.
+Also store `SHOPIFY_CLI_THEME_TOKEN` as a Cursor secret for future cloud agent runs.
 
 ---
 

@@ -1,0 +1,65 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-faqs-1-page",
+      "blocks": {
+        "863ee0ea-d2b6-459f-a54a-c2b5de74f3e9": {
+          "type": "paragraph",
+          "settings": {
+            "title": "Presale",
+            "question_1": "Will your template be fully compatible with Shopify?",
+            "answer_1": "<p>Yes it is.</p>",
+            "question_2": "Do you offer free trials?",
+            "answer_2": "<p>No, We don't</p>",
+            "question_3": "Do you offer refund/exchange?",
+            "answer_3": "<p class=\"italic\">All purchases at Themeforest are covered by \"Envato Market Refund Rules\". Please read more at this link: <a href=\"https://themeforest.net/page/customer_refund_policy\" target=\"_blank\">https://themeforest.net/page/customer_refund_policy</a></p>\n<p class=\"bold red\">Resolving disputes - asking Envato to help</p>\n<p>if you and an author can't come to an agreement about a refund, you can raise a dispute and have Envato investigate the matter. We may ask you to provide supporting documentation or evidence. Any refund issued by Envato is entirely discretionary. We will make a decision based on all available information and you agree that our decision is final.</p>\n<h3>Neither Envato nor authors are obliged to give policy refunds in any of the situations listed below.</h3>\n<ul>\n<li><span>You don't want it after you've downloaded it</span></li>\n<li><span>The item did not meet your expectations or you feel the item is of low quality</span></li>\n<li><span>You simply change your mind</span></li>\n<li><span>You bought an item by mistake</span></li>\n<li><span>You do not have sufficient expertise to use the item.</span></li>\n<li><span>You claim that you are entitled to a refund but do not provide sufficient information as to why you are entitled to a refund</span></li>\n<li><span>You can no longer access the item because it has been removed or the author who previously provided the item is no longer active on our platform (we advise you to download items as soon as you have purchased them to avoid this situation).</span></li>\n<li><span>Refund is not applicable on Custom Service (such as custom development works, consulting works and any order services we provide)</span></li>\n</ul>\n<h4>A REFUND MAY BE GIVEN</h4>\n<p class=\"number\"><strong>1. Item is \"not as described\" or the item doesn’t work the way it should.</strong></p>\n<p>if an item doesn’t work the way it should then the author is required to promptly fix the issue by updating the item. An item is \"not as described\" if it is materially different from the item description or preview. if the issue can’t be fixed or it turns out that the item is “not as described” then you would be entitled to a refund from the author.</p>\n<p class=\"number\"><strong>2. Item has a security vulnerability</strong></p>\n<p>if an item contains a security vulnerability and can't easily be fixed you would be entitled to a refund from the author. if the item can be fixed, then the author should do so promptly by updating the item. if the item contains a security vulnerability that is not patched in an appropriate timeframe then we would expect the author to provide a refund for the item.</p>\n<p class=\"number\"><strong>3. Item support is promised but not provided</strong></p>\n<p>if an author advertises their item as including item support, you have a current support entitlement, and you are not provided that support in accordance with the item support policy the author should provide you with a refund.</p>\n<p class=\"number\"><strong>4. Item support extension not used</strong></p>\n<p>if you purchase an item support extension and request a refund of that extension before your existing item support expires we would expect the author to provide you with a refund of that item support extension.</p>\n<p class=\"number\"><strong>5. Items that have not been downloaded</strong></p>\n<p>if you have not downloaded a purchased item within 3 months from the date of purchase, you may be eligible for a refund. You will be required to provide the author of that item your purchase code in order for the author to verify your claim that you have not downloaded an item. Although we think 3 months is a reasonable time, depending on where you are located, you might have a longer period to claim a refund if you have purchased for personal use and haven't downloaded the item.</p>",
+            "question_4": "",
+            "answer_4": "",
+            "question_5": "",
+            "answer_5": "",
+            "question_6": "",
+            "answer_6": "",
+            "question_7": "",
+            "answer_7": "",
+            "question_8": "",
+            "answer_8": "",
+            "question_9": "",
+            "answer_9": "",
+            "question_10": "",
+            "answer_10": ""
+          }
+        }
+      },
+      "block_order": [
+        "863ee0ea-d2b6-459f-a54a-c2b5de74f3e9"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "left",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 72,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 52,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 42,
+        "show_faqs_filter": true,
+        "faqs_text": "Below FAQ are some common concerns of our clients before purchasing the theme, if you have other questions, please just send it to <a class=\"link link-underline\" href=\"mailto:example@domain.com.\"><span class=\"text\">example@domain.com.</span></a>"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

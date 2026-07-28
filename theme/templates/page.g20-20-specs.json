@@ -1,0 +1,131 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 70,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 50,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "halo_product_block_2_Ft6CPt": {
+      "type": "halo-product-block-2",
+      "disabled": true,
+      "name": "t:sections.product-block.presets.name__2",
+      "settings": {
+        "display_product_block": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "SELECT YOUR CHASSIS",
+        "block_text": "",
+        "block_title_align": "center",
+        "block_layout": "grid",
+        "col": "narrow",
+        "block_collection": "wheeltire",
+        "block_limit": 3,
+        "block_image_ratio": "adapt",
+        "portrait_aspect_ratio": 133,
+        "show_add_to_cart": true,
+        "show_bottom_border": false,
+        "block_per_row": "6",
+        "block_infinite_scroll": true,
+        "block_show": "6",
+        "block_dots": false,
+        "block_arrows": true
+      }
+    },
+    "halo_collapsible_content_QzqTh9": {
+      "type": "halo-collapsible-content",
+      "blocks": {
+        "content_eJEzTw": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_AErQUT": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_8mNARd": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_FfffwR": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_eJEzTw",
+        "content_AErQUT",
+        "content_8mNARd",
+        "content_FfffwR"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "show_collapsible_content": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "(20X9 ET23 FRONT / 20X9.5 ET25 REAR)",
+        "block_text": "A 20x9 ET23 front and 20x9.5 ET25 rear setup is a clean, OEM+ staggered fitment for BMW G-chassis platforms like the G20, G22, and G42. The moderate widths and higher offsets keep the wheels properly tucked while still achieving a subtle flush stance, maintaining factory-like proportions with a more refined presence. This setup is a direct bolt-on with no clearance issues, offering excellent ride quality, balanced handling, and everyday drivability—ideal for customers looking for a simple, functional upgrade with a polished, factory-plus look.",
+        "block_title_align": "center",
+        "image": "shopify://shop_images/IMG_0605.jpg",
+        "desktop_layout": "image_second",
+        "open_first_collapsible_row": false,
+        "content_layout": "1"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "halo_product_block_2_Ft6CPt",
+    "halo_collapsible_content_QzqTh9"
+  ]
+}

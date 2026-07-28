@@ -1,0 +1,197 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 70,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 50,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "halo_product_block_2_Ft6CPt": {
+      "type": "halo-product-block-2",
+      "disabled": true,
+      "name": "t:sections.product-block.presets.name__2",
+      "settings": {
+        "display_product_block": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "SELECT YOUR CHASSIS",
+        "block_text": "",
+        "block_title_align": "center",
+        "block_layout": "grid",
+        "col": "narrow",
+        "block_collection": "wheeltire",
+        "block_limit": 3,
+        "block_image_ratio": "adapt",
+        "portrait_aspect_ratio": 133,
+        "show_add_to_cart": true,
+        "show_bottom_border": false,
+        "block_per_row": "6",
+        "block_infinite_scroll": true,
+        "block_show": "6",
+        "block_dots": false,
+        "block_arrows": true
+      }
+    },
+    "halo_collapsible_content_HTGaeJ": {
+      "type": "halo-collapsible-content",
+      "blocks": {
+        "content_38Pfhy": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_zTMrYg": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_gdHdj7": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_zVCtfN": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_38Pfhy",
+        "content_zTMrYg",
+        "content_gdHdj7",
+        "content_zVCtfN"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "show_collapsible_content": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "block_title": "(18X9.5 ET20 FRONT / 18X11 ET37 rear)",
+        "block_text": "A true performance-driven setup for the F80/F82 M3 & M4 delivering  a flush, aggressive fitment while maximizing sidewall for grip and ride quality. Ideal for spirited driving or track use, this setup provides better compliance, improved traction, and a more forgiving ride without sacrificing performance.",
+        "block_title_align": "center",
+        "image": "shopify://shop_images/IMG_0911_c3a8b98b-7aa0-4762-b75e-99639a6bc6c7.jpg",
+        "desktop_layout": "image_second",
+        "open_first_collapsible_row": false,
+        "content_layout": "1"
+      }
+    },
+    "halo_collapsible_content_d9dqDQ": {
+      "type": "halo-collapsible-content",
+      "blocks": {
+        "content_zwRB4d": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_fHzgCR": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_tVL9xe": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_Hjktb4": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_zwRB4d",
+        "content_fHzgCR",
+        "content_tVL9xe",
+        "content_Hjktb4"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "show_collapsible_content": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "block_title": "",
+        "block_text": "",
+        "block_title_align": "center",
+        "image": "shopify://shop_images/IMG_0912_bfa51a81-07ef-405c-816d-05298d947648.jpg",
+        "desktop_layout": "image_second",
+        "open_first_collapsible_row": false,
+        "content_layout": "1"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "halo_product_block_2_Ft6CPt",
+    "halo_collapsible_content_HTGaeJ",
+    "halo_collapsible_content_d9dqDQ"
+  ]
+}

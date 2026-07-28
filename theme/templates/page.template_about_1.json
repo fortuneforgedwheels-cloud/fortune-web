@@ -1,0 +1,97 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "163076055954fb127d": {
+      "type": "halo-fullwidth-banner",
+      "blocks": {
+        "163076055932ef236c-0": {
+          "type": "image",
+          "settings": {
+            "image_behavior": "none",
+            "title": "",
+            "text": "",
+            "subtitle": "",
+            "btn": "2",
+            "btn_text": "",
+            "link": "",
+            "position": "left",
+            "align": "left",
+            "show_video": false,
+            "video_style": "1",
+            "video_id": "video_youtube",
+            "video_link": "_9VUPq3SxOc",
+            "video_mp4_link": "",
+            "transparent_button": false,
+            "background_color": "",
+            "text_color": "#ffffff",
+            "title_color": "#ffffff",
+            "title_font": "font_2",
+            "title_font_size": 26,
+            "title_mobile_font_size": 20,
+            "title_font_weight": "700",
+            "title_text_transform": "none",
+            "text_font_size": 14,
+            "text_font_weight": "600",
+            "text_text_transform": "uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "163076055932ef236c-0"
+      ],
+      "disabled": true,
+      "settings": {
+        "show_fullwidth_banner": true,
+        "padding_top": 0,
+        "padding_bottom": 67,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 47,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 37,
+        "padding_top_section": 20,
+        "show_hoverImage": false
+      }
+    },
+    "main": {
+      "type": "main-about-1-page",
+      "blocks": {
+        "103f7368-502c-42b1-936c-ecb4eaa4405f": {
+          "type": "content",
+          "settings": {
+            "title": "About Us",
+            "content": "<p data-start=\"167\" data-end=\"649\">At <strong data-start=\"170\" data-end=\"188\">Fortune Forged</strong>, we’re more than just a wheel manufacturer – we’re passionate artisans, innovators, and perfectionists who believe in the beauty of custom design and unparalleled quality. As proud owners of a stake in the factory that builds every single one of our wheels, we oversee every aspect of the production process, from initial design to final completion. This hands-on approach ensures that every set of wheels leaving our factory is a masterpiece of craftsmanship.</p>\n<p data-start=\"651\" data-end=\"1027\">Our story begins with a commitment to push the boundaries of custom wheel design. We specialize in fully custom forged wheels, meticulously engineered to meet the unique needs of every driver. Whether you're looking for a performance boost, an aesthetic upgrade, or a combination of both, we create wheels that not only perform flawlessly but also reflect your personal style.</p>\n<p data-start=\"1029\" data-end=\"1400\">Because we own a stake in the factory, we take quality control to the next level. From sourcing the highest-grade materials to precision manufacturing and detailed inspections, we ensure that every wheel meets the highest standards. Our team works closely with skilled engineers and artisans, overseeing each step to guarantee flawless finishes and superior performance.</p>\n<p data-start=\"1402\" data-end=\"1833\">Every Fortune Forged wheel is designed with you in mind. We understand that a wheel is more than just a piece of equipment – it’s a statement. That’s why we offer fully customized solutions, giving you control over every detail, from size and finish to intricate design elements. Whether you’re building a one-of-a-kind luxury ride or pushing the limits of performance, we’re here to craft wheels that are as unique as your vision.</p>\n<p data-start=\"1989\" data-end=\"2186\"><strong data-start=\"1989\" data-end=\"2004\">Our Mission</strong>: To create the finest, most durable, and beautifully designed custom forged wheels on the market – backed by our commitment to quality, precision, and unparalleled customer service.</p>\n<p><br></p>",
+            "align": "center"
+          }
+        }
+      },
+      "block_order": [
+        "103f7368-502c-42b1-936c-ecb4eaa4405f"
+      ],
+      "settings": {
+        "show_breadcrumb": false,
+        "breadcrumb_alignment": "center",
+        "show_page_title": false,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 10
+      }
+    }
+  },
+  "order": [
+    "163076055954fb127d",
+    "main"
+  ]
+}

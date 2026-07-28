@@ -1,0 +1,190 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-portfolio-1-page",
+      "blocks": {
+        "207846ab-f738-49f1-80df-54dc8aa13d9d": {
+          "type": "gallery",
+          "settings": {
+            "gallery": "Accessories",
+            "title_1": "Tempor Incididunt",
+            "text_1": "Ut enim ad minima veniam dior slam.",
+            "link_1": "shopify://collections/most-popular-products-home-5",
+            "title_2": "Tempor Incididunt",
+            "text_2": "Ut enim ad minima veniam dior slam.",
+            "link_2": "",
+            "title_3": "Tempor Incididunt",
+            "text_3": "Ut enim ad minima veniam dior slam.",
+            "link_3": "",
+            "title_4": "Tempor Incididunt",
+            "text_4": "Ut enim ad minima veniam dior slam.",
+            "link_4": "",
+            "title_5": "Tempor Incididunt",
+            "text_5": "Ut enim ad minima veniam dior slam.",
+            "link_5": "",
+            "title_6": "Tempor Incididunt",
+            "text_6": "Ut enim ad minima veniam dior slam.",
+            "link_6": "",
+            "title_7": "Tempor Incididunt",
+            "text_7": "Ut enim ad minima veniam dior slam.",
+            "link_7": "",
+            "title_8": "Tempor Incididunt",
+            "text_8": "Ut enim ad minima veniam dior slam.",
+            "link_8": "",
+            "title_9": "Tempor Incididunt",
+            "text_9": "Ut enim ad minima veniam dior slam.",
+            "link_9": "",
+            "title_10": "Tempor Incididunt",
+            "text_10": "Ut enim ad minima veniam dior slam.",
+            "link_10": ""
+          }
+        },
+        "2c8f1056-3338-4af4-8cf6-192d001be102": {
+          "type": "gallery",
+          "settings": {
+            "gallery": "Shoes",
+            "title_1": "Tempor Incididunt",
+            "text_1": "Ut enim ad minima veniam dior slam.",
+            "link_1": "shopify://collections/best-sellers",
+            "title_2": "Tempor Incididunt",
+            "text_2": "Ut enim ad minima veniam dior slam.",
+            "link_2": "shopify://collections/best-sellers-men",
+            "title_3": "Tempor Incididunt",
+            "text_3": "Ut enim ad minima veniam dior slam.",
+            "link_3": "shopify://collections/pretium-condimentum",
+            "title_4": "Tempor Incididunt",
+            "text_4": "Ut enim ad minima veniam dior slam.",
+            "link_4": "",
+            "title_5": "Tempor Incididunt",
+            "text_5": "Ut enim ad minima veniam dior slam.",
+            "link_5": "",
+            "title_6": "Tempor Incididunt",
+            "text_6": "Ut enim ad minima veniam dior slam.",
+            "link_6": "",
+            "title_7": "Tempor Incididunt",
+            "text_7": "Ut enim ad minima veniam dior slam.",
+            "link_7": "",
+            "title_8": "Tempor Incididunt",
+            "text_8": "Ut enim ad minima veniam dior slam.",
+            "link_8": "",
+            "title_9": "Tempor Incididunt",
+            "text_9": "Ut enim ad minima veniam dior slam.",
+            "link_9": "",
+            "title_10": "Tempor Incididunt",
+            "text_10": "Ut enim ad minima veniam dior slam.",
+            "link_10": ""
+          }
+        },
+        "1502620b-9ef3-4dc0-b866-84dfdc979b85": {
+          "type": "gallery",
+          "settings": {
+            "gallery": "Bikini",
+            "title_1": "Tempor Incididunt",
+            "text_1": "Ut enim ad minima veniam dior slam.",
+            "link_1": "shopify://collections/all",
+            "title_2": "Tempor Incididunt",
+            "text_2": "Ut enim ad minima veniam dior slam.",
+            "link_2": "shopify://collections/best-sellers-men",
+            "title_3": "Tempor Incididunt",
+            "text_3": "Ut enim ad minima veniam dior slam.",
+            "link_3": "",
+            "title_4": "Tempor Incididunt",
+            "text_4": "Ut enim ad minima veniam dior slam.",
+            "link_4": "",
+            "title_5": "Tempor Incididunt",
+            "text_5": "Ut enim ad minima veniam dior slam.",
+            "link_5": "",
+            "title_6": "Tempor Incididunt",
+            "text_6": "Ut enim ad minima veniam dior slam.",
+            "link_6": "",
+            "title_7": "Tempor Incididunt",
+            "text_7": "Ut enim ad minima veniam dior slam.",
+            "link_7": "",
+            "title_8": "Tempor Incididunt",
+            "text_8": "Ut enim ad minima veniam dior slam.",
+            "link_8": "",
+            "title_9": "Tempor Incididunt",
+            "text_9": "Ut enim ad minima veniam dior slam.",
+            "link_9": "",
+            "title_10": "Tempor Incididunt",
+            "text_10": "Ut enim ad minima veniam dior slam.",
+            "link_10": ""
+          }
+        },
+        "5ac3c6e9-f714-453d-b3c6-af2a19ed0b29": {
+          "type": "gallery",
+          "settings": {
+            "gallery": "Dress",
+            "title_1": "Tempor Incididunt",
+            "text_1": "Ut enim ad minima veniam dior slam.",
+            "link_1": "shopify://collections/best-sellers-men",
+            "title_2": "Tempor Incididunt",
+            "text_2": "Ut enim ad minima veniam dior slam.",
+            "link_2": "",
+            "title_3": "Tempor Incididunt",
+            "text_3": "Ut enim ad minima veniam dior slam.",
+            "link_3": "",
+            "title_4": "Tempor Incididunt",
+            "text_4": "Ut enim ad minima veniam dior slam.",
+            "link_4": "",
+            "title_5": "Tempor Incididunt",
+            "text_5": "Ut enim ad minima veniam dior slam.",
+            "link_5": "",
+            "title_6": "Tempor Incididunt",
+            "text_6": "Ut enim ad minima veniam dior slam.",
+            "link_6": "",
+            "title_7": "Tempor Incididunt",
+            "text_7": "Ut enim ad minima veniam dior slam.",
+            "link_7": "",
+            "title_8": "Tempor Incididunt",
+            "text_8": "Ut enim ad minima veniam dior slam.",
+            "link_8": "",
+            "title_9": "Tempor Incididunt",
+            "text_9": "Ut enim ad minima veniam dior slam.",
+            "link_9": "",
+            "title_10": "Tempor Incididunt",
+            "text_10": "Ut enim ad minima veniam dior slam.",
+            "link_10": ""
+          }
+        }
+      },
+      "block_order": [
+        "207846ab-f738-49f1-80df-54dc8aa13d9d",
+        "2c8f1056-3338-4af4-8cf6-192d001be102",
+        "1502620b-9ef3-4dc0-b866-84dfdc979b85",
+        "5ac3c6e9-f714-453d-b3c6-af2a19ed0b29"
+      ],
+      "settings": {
+        "show_breadcrumb": false,
+        "breadcrumb_alignment": "center",
+        "show_page_title": false,
+        "page_title_alignment": "center",
+        "container": "1770",
+        "padding_top": 64,
+        "padding_bottom": 29,
+        "padding_top_tablet": 44,
+        "padding_bottom_tablet": 29,
+        "padding_top_mobile": 34,
+        "padding_bottom_mobile": 29,
+        "col": "narrow",
+        "item_per_row": "5",
+        "item_heading": "Portfolio",
+        "show_filter": true,
+        "style": "1",
+        "align": "center"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

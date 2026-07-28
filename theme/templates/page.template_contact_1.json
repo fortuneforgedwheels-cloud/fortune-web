@@ -1,0 +1,40 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-contact-1-page",
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 20,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 10,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 10,
+        "contact_form_title": "Drop Us A Line",
+        "contact_form_text": "We’re here to help! Whether you have questions about our products, need support, or just want to chat, feel free to reach out.",
+        "show_contact_info": true,
+        "contact_info_title": "Contact Information",
+        "contact_info_text": "",
+        "contact_info_address": "",
+        "contact_info_content_1": "<p><strong>Email:</strong> <br>FortuneForgedWheels@gmail.com<br><br><strong:><br><br><br></strong:></p>\n<p><strong>Business Hours:</strong><br>Monday - Friday: 9 AM - 5 PM<br>Saturday - Sunday: Closed</p>\n<br><p><strong>Follow Us:</strong><br>@Fortune_Forged</p>",
+        "contact_info_content_2": "<p>For inquiries or support, please fill out the Contact Us form, and we’ll get back to you as soon as possible. Thank you for reaching out!</p>"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

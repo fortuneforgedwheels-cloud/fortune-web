@@ -1,0 +1,230 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "header-collection": {
+      "type": "main-header-collection",
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "layout": "3"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid-3",
+      "disabled": true,
+      "settings": {
+        "colors_bg": "",
+        "container": "1770",
+        "padding_top": 25,
+        "padding_bottom": 0,
+        "padding_top_tablet": 25,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 25,
+        "padding_bottom_mobile": 0,
+        "show_infinite_scrolling": true,
+        "show_sidebar": true,
+        "sidebar_type": "vertical",
+        "show_sidebar_collapse": false,
+        "sidebar_collapse_default": "expand",
+        "sidebar_position": "left",
+        "sidebar_heading_font": "font_1",
+        "sidebar_heading_font_size": 18,
+        "sidebar_heading_font_weight": "700",
+        "sidebar_heading_text_transform": "uppercase",
+        "show_filter": true,
+        "filter_hidden_tag_list": "",
+        "filter_swatch": "Color",
+        "show_filter_swatch_name": false,
+        "filter_swatch_type": "color",
+        "filter_rectangle": "",
+        "price_range_show": "slider",
+        "show_toolbar": true,
+        "show_sorting": true,
+        "show_item_per_page": false,
+        "show_view_as": true,
+        "products_per_page": "20",
+        "layout": "5",
+        "col": "wide",
+        "image_ratio": "square",
+        "portrait_aspect_ratio": 101,
+        "show_add_to_cart": false
+      }
+    },
+    "footer-collection": {
+      "type": "main-footer-collection",
+      "disabled": true,
+      "settings": {
+        "show_bottom_content": false,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "halo_featured_collection_yi8VbV": {
+      "type": "halo-featured-collection",
+      "blocks": {
+        "collection_E8ytGy": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "Cosmopolis",
+            "text": "Lorem ipsum dolor sit amet",
+            "btn": "1",
+            "btn_text": "Shop Now"
+          }
+        },
+        "collection_NLWVJJ": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "Cosmopolis",
+            "text": "Lorem ipsum dolor sit amet",
+            "btn": "1",
+            "btn_text": "Shop Now"
+          }
+        },
+        "collection_6rtMdV": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "Cosmopolis",
+            "text": "Lorem ipsum dolor sit amet",
+            "btn": "1",
+            "btn_text": "Shop Now"
+          }
+        },
+        "collection_6GHrkc": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "Cosmopolis",
+            "text": "Lorem ipsum dolor sit amet",
+            "btn": "1",
+            "btn_text": "Shop Now"
+          }
+        },
+        "collection_7TGh6J": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "Cosmopolis",
+            "text": "Lorem ipsum dolor sit amet",
+            "btn": "1",
+            "btn_text": "Shop Now"
+          }
+        }
+      },
+      "block_order": [
+        "collection_E8ytGy",
+        "collection_NLWVJJ",
+        "collection_6rtMdV",
+        "collection_6GHrkc",
+        "collection_7TGh6J"
+      ],
+      "disabled": true,
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "show_featured_collection": true,
+        "block_bg": "",
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "Top Categories",
+        "block_text": "Give customers details about the banner image(s) or content on the template.",
+        "btn_header": "1",
+        "button_title": "",
+        "button_link": "",
+        "block_title_align": "center",
+        "block_layout": "grid",
+        "block_mobile_layout": "swipe",
+        "col": "wide",
+        "link_title": "",
+        "link_url": "",
+        "block_per_row": "4",
+        "block_show": "4",
+        "block_dots": false,
+        "block_arrows": true,
+        "block_dots_mobi": false,
+        "block_arrows_mobi": true,
+        "layout_style": "1",
+        "show_featured_collection_absolute": false,
+        "transparent_button": false,
+        "show_icon_button": false,
+        "align": "center",
+        "background_color": "",
+        "text_color": "#FF0033",
+        "title_color": "#010101",
+        "title_font": "font_2",
+        "title_font_size": 26,
+        "title_mobile_font_size": 20,
+        "title_font_weight": "700",
+        "title_text_transform": "none",
+        "text_font_size": 14,
+        "text_font_weight": "600",
+        "text_text_transform": "uppercase"
+      }
+    },
+    "halo_product_block_3tLLUb": {
+      "type": "halo-product-block",
+      "name": "t:sections.product-block.presets.name",
+      "settings": {
+        "display_product_block": true,
+        "container": "1770",
+        "boxed_container": false,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "Product Block",
+        "block_text": "Give customers details about the banner image(s) or content on the template.",
+        "block_title_align": "center",
+        "block_layout": "grid",
+        "col": "narrow",
+        "block_collection": "monoblocks",
+        "block_limit": 10,
+        "block_image_ratio": "square",
+        "portrait_aspect_ratio": 133,
+        "show_add_to_cart": true,
+        "block_per_row": "4",
+        "block_infinite_scroll": true,
+        "block_show": "4",
+        "block_dots": false,
+        "block_arrows": true
+      }
+    }
+  },
+  "order": [
+    "header-collection",
+    "product-grid",
+    "footer-collection",
+    "halo_featured_collection_yi8VbV",
+    "halo_product_block_3tLLUb"
+  ]
+}

@@ -1,0 +1,51 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "1748344250c1d69b55": {
+      "type": "apps",
+      "blocks": {
+        "c_year_make_model_search_ymm_searchbox_bEmTTg": {
+          "type": "shopify://apps/c-year-make-model-search/blocks/ymm-searchbox/ce35ea35-ef50-4f43-8cb6-7c34cae4c285",
+          "settings": {
+            "searchbox_title": "Search by Year Make & Model",
+            "searchbox_style": "horizontal"
+          }
+        }
+      },
+      "block_order": [
+        "c_year_make_model_search_ymm_searchbox_bEmTTg"
+      ],
+      "settings": {}
+    },
+    "main": {
+      "type": "main-collection-details-1-page",
+      "disabled": true,
+      "settings": {
+        "background_color": "",
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "center",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1570",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    }
+  },
+  "order": [
+    "1748344250c1d69b55",
+    "main"
+  ]
+}

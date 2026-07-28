@@ -1,0 +1,191 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "header-collection": {
+      "type": "main-header-collection",
+      "blocks": {
+        "dfb8da8e-9cca-44b9-b775-f178efdb8688": {
+          "type": "description",
+          "settings": {
+            "show_collection_description": true,
+            "show_read_more_read_less": false,
+            "collection_description_position": "relative",
+            "collection_description_align": "center",
+            "show_sub_collection": true,
+            "sub_collection_type": "all"
+          }
+        }
+      },
+      "block_order": [
+        "dfb8da8e-9cca-44b9-b775-f178efdb8688"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "layout": "3"
+      }
+    },
+    "halo_icon_with_text_c4X7LG": {
+      "type": "halo-icon-with-text",
+      "blocks": {
+        "icon_text_PRq4Fb": {
+          "type": "icon_text",
+          "settings": {
+            "icon_svg": "",
+            "heading": "PLEASE NOTE: BEADLOCK WHEELS ARE PRICED BY THE PAIR! STANDARD WHEELS ARE PRICED INDIVIDUALLY.",
+            "sub_heading": "",
+            "link_title": "",
+            "link": ""
+          }
+        },
+        "icon_text_P9Njjm": {
+          "type": "icon_text",
+          "disabled": true,
+          "settings": {
+            "icon_svg": "",
+            "heading": "Up to 90% OFF",
+            "sub_heading": "on all shoes & wallets.",
+            "link_title": "See detail",
+            "link": ""
+          }
+        },
+        "icon_text_3Pcbkn": {
+          "type": "icon_text",
+          "disabled": true,
+          "settings": {
+            "icon_svg": "",
+            "heading": "Up to 90% OFF",
+            "sub_heading": "on all shoes & wallets.",
+            "link_title": "See detail",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "icon_text_PRq4Fb",
+        "icon_text_P9Njjm",
+        "icon_text_3Pcbkn"
+      ],
+      "disabled": true,
+      "name": "t:sections.custom-icon-text.presets.name",
+      "settings": {
+        "show_icon_with_text": true,
+        "container": "full",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_layout": "grid",
+        "block_mobile_layout": "swipe",
+        "col": "wide",
+        "alignment": "center",
+        "block_per_row": "4",
+        "block_show": "4",
+        "block_dots": false,
+        "block_arrows": true,
+        "layout_style": "1",
+        "content_style": "1",
+        "icon_ratio": "medium",
+        "enable_border": false,
+        "background_color": "#646464",
+        "text_color": "#ffffff",
+        "svg_color": "",
+        "title_color": "#ffffff",
+        "title_font": "font_1",
+        "title_font_size": 40,
+        "title_mobile_font_size": 30,
+        "title_font_weight": "700",
+        "title_text_transform": "none",
+        "text_font_size": 17,
+        "text_font_weight": "400",
+        "text_text_transform": "none",
+        "show_bg_img": false,
+        "block_bg_position_x": "center",
+        "block_bg_position_y": "center",
+        "block_bg_repeat": "no-repeat",
+        "block_bg_attachment": "scroll",
+        "block_bg_size": "cover"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "custom_css": [],
+      "settings": {
+        "colors_bg": "",
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "show_infinite_scrolling": true,
+        "show_sidebar": true,
+        "sidebar_type": "horizontal",
+        "show_sidebar_collapse": true,
+        "sidebar_collapse_default": "expand",
+        "sidebar_position": "left",
+        "sidebar_heading_font": "font_1",
+        "sidebar_heading_font_size": 14,
+        "sidebar_heading_font_weight": "700",
+        "sidebar_heading_text_transform": "uppercase",
+        "show_filter": true,
+        "filter_hidden_tag_list": "",
+        "filter_swatch": "Color",
+        "show_filter_swatch_name": true,
+        "filter_swatch_type": "color",
+        "filter_rectangle": "",
+        "price_range_show": "both",
+        "show_toolbar": true,
+        "show_sorting": true,
+        "show_item_per_page": false,
+        "show_view_as": true,
+        "products_per_page": "20",
+        "layout": "4",
+        "col": "wide",
+        "image_ratio": "square",
+        "portrait_aspect_ratio": 101,
+        "show_add_to_cart": true
+      }
+    },
+    "footer-collection": {
+      "type": "main-footer-collection",
+      "disabled": true,
+      "settings": {
+        "show_bottom_content": true,
+        "container": "1770",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "padding_top_tablet": 50,
+        "padding_bottom_tablet": 50,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    }
+  },
+  "order": [
+    "header-collection",
+    "halo_icon_with_text_c4X7LG",
+    "product-grid",
+    "footer-collection"
+  ]
+}

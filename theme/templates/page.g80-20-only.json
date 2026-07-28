@@ -1,0 +1,203 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 70,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 50,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "halo_product_block_2_Ft6CPt": {
+      "type": "halo-product-block-2",
+      "disabled": true,
+      "name": "t:sections.product-block.presets.name__2",
+      "settings": {
+        "display_product_block": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "SELECT YOUR CHASSIS",
+        "block_text": "",
+        "block_title_align": "center",
+        "block_layout": "grid",
+        "col": "narrow",
+        "block_collection": "wheeltire",
+        "block_limit": 3,
+        "block_image_ratio": "adapt",
+        "portrait_aspect_ratio": 133,
+        "show_add_to_cart": true,
+        "show_bottom_border": false,
+        "block_per_row": "6",
+        "block_infinite_scroll": true,
+        "block_show": "6",
+        "block_dots": false,
+        "block_arrows": true
+      }
+    },
+    "halo_collapsible_content_KrXihg": {
+      "type": "halo-collapsible-content",
+      "blocks": {
+        "content_qVwQTr": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_kFkMHA": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_fccbdm": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_d9cxc3": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_qVwQTr",
+        "content_kFkMHA",
+        "content_fccbdm",
+        "content_d9cxc3"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "show_collapsible_content": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "(20x11 ET10 rear / 20x10 ET12 front)",
+        "block_text": "Aggressive, flush fitment for the G8X chassis. The wider widths combined with lower offsets push the wheels outward to sit nearly even with the fenders, creating a strong, planted stance with maximum concavity. This is a direct bolt-on setup with no spacers needed, though proper tire sizing  may be required to achieve a perfectly dialed-in look.",
+        "block_title_align": "center",
+        "image": "shopify://shop_images/IMG_7936.jpg",
+        "desktop_layout": "image_second",
+        "open_first_collapsible_row": false,
+        "content_layout": "1"
+      }
+    },
+    "halo_collapsible_content_rz8Ccp": {
+      "type": "halo-collapsible-content",
+      "blocks": {
+        "content_CRhBLJ": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_8rGENC": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_CGJNKi": {
+          "type": "content",
+          "disabled": true,
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "content_qPetDP": {
+          "type": "content",
+          "settings": {
+            "heading": "Collapsible Row",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_CRhBLJ",
+        "content_8rGENC",
+        "content_CGJNKi",
+        "content_qPetDP"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "show_collapsible_content": true,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "(20X10 ET12 REAR / 20X10 ET12 FRONT)",
+        "block_text": "A well-balanced squared set up for the G8X chassis. The slightly higher offset compared to ET8 most go with that calls for a bit extra camber, tucks the wheels in just enough for a cleaner, more refined flush yet super safe look while still maintaining strong concavity. This setup offers a direct bolt-on stance with minimal poke, and with proper tire sizing, can achieve a clean, dialed-in fit without the need for spacers.",
+        "block_title_align": "center",
+        "image": "shopify://shop_images/IMG_0537.jpg",
+        "desktop_layout": "image_second",
+        "open_first_collapsible_row": false,
+        "content_layout": "1"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "halo_product_block_2_Ft6CPt",
+    "halo_collapsible_content_KrXihg",
+    "halo_collapsible_content_rz8Ccp"
+  ]
+}

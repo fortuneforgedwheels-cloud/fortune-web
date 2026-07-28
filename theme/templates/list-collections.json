@@ -1,0 +1,142 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "blocks": {
+        "collection_mt6pGE": {
+          "type": "collection",
+          "settings": {
+            "collection": "beadlock-wheels",
+            "image": "shopify://shop_images/IMG_80282.png",
+            "link": "",
+            "sub_title": "B",
+            "block_title": "BB",
+            "link_title": "",
+            "url_title": ""
+          }
+        },
+        "collection_mgh8Ea": {
+          "type": "collection",
+          "settings": {
+            "collection": "ff-beadlock-wheels",
+            "link": "",
+            "sub_title": "",
+            "block_title": "",
+            "link_title": "",
+            "url_title": ""
+          }
+        },
+        "collection_fBJdhW": {
+          "type": "collection",
+          "settings": {
+            "collection": "oem-beadlock-wheels",
+            "link": "",
+            "sub_title": "",
+            "block_title": "",
+            "link_title": "",
+            "url_title": ""
+          }
+        },
+        "collection_te7UXT": {
+          "type": "collection",
+          "settings": {
+            "collection": "monoblock-wheels",
+            "link": "",
+            "sub_title": "",
+            "block_title": "",
+            "link_title": "",
+            "url_title": ""
+          }
+        },
+        "collection_pNaWUK": {
+          "type": "collection",
+          "settings": {
+            "collection": "ff-monoblock-wheels",
+            "link": "",
+            "sub_title": "",
+            "block_title": "",
+            "link_title": "",
+            "url_title": ""
+          }
+        },
+        "collection_DrrqTK": {
+          "type": "collection",
+          "settings": {
+            "collection": "oem-monoblock-wheels",
+            "link": "",
+            "sub_title": "",
+            "block_title": "",
+            "link_title": "",
+            "url_title": ""
+          }
+        },
+        "collection_rUMGJL": {
+          "type": "collection",
+          "settings": {
+            "collection": "two-piece-wheels",
+            "link": "",
+            "sub_title": "",
+            "block_title": "",
+            "link_title": "",
+            "url_title": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_mt6pGE",
+        "collection_mgh8Ea",
+        "collection_fBJdhW",
+        "collection_te7UXT",
+        "collection_pNaWUK",
+        "collection_DrrqTK",
+        "collection_rUMGJL"
+      ],
+      "settings": {
+        "colors_bg": "",
+        "layout": "masonry",
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 25,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 25,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 25,
+        "type": "custom",
+        "item_per_row": "3",
+        "masonry_col": "narrow",
+        "grid_style": "1",
+        "sort": "alphabetical",
+        "grid_col": "narrow",
+        "image_ratio": "square",
+        "portrait_aspect_ratio": 101,
+        "content_style": "2",
+        "show_collection_title": true,
+        "show_collection_product_count": true,
+        "align": "center",
+        "bg_color": "#ffffff",
+        "text_color": "#808080",
+        "title_color": "#000000",
+        "title_font": "heading_font",
+        "title_font_size": 18,
+        "title_font_weight": "800",
+        "title_text_transform": "uppercase"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,108 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_alignment": "left",
+        "show_page_title": true,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 70,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 50,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "176812888493944e02": {
+      "type": "_blocks",
+      "settings": {}
+    },
+    "halo_custom_banner_RiGRk8": {
+      "type": "halo-custom-banner",
+      "blocks": {
+        "image_MtRDKV": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_5084.jpg",
+            "title": "",
+            "text": "",
+            "btn": "7",
+            "btn_text": "ORDER NOW: 19x11 +18 R / 19x10 +15 F",
+            "link": "",
+            "align": "center",
+            "position": "center"
+          }
+        },
+        "image_gihTCV": {
+          "type": "image",
+          "settings": {
+            "title": "Cosmopolis",
+            "text": "Lorem ipsum dolor sit amet",
+            "btn": "5",
+            "btn_text": "Shop Now",
+            "link": "",
+            "align": "center",
+            "position": "center"
+          }
+        }
+      },
+      "block_order": [
+        "image_MtRDKV",
+        "image_gihTCV"
+      ],
+      "name": "t:sections.custom-banner.presets.name",
+      "settings": {
+        "show_custom_banner": true,
+        "background_color_section": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "container": "1770",
+        "column": "3",
+        "block_title": "Top Banner",
+        "block_text": "Give customers details about the banner image(s) or content on the template.",
+        "block_title_align": "center",
+        "block_mobile_layout": "grid",
+        "style": "1",
+        "col": "wide",
+        "show_custom_banner_style": true,
+        "transparent_button": false,
+        "background_color": "",
+        "text_color": "#FFFFFF",
+        "title_color": "#FFFFFF",
+        "title_font": "font_1",
+        "title_font_size": 30,
+        "title_mobile_font_size": 30,
+        "title_font_weight": "700",
+        "title_text_transform": "none",
+        "text_font_size": 14,
+        "text_mobile_font_size": 14,
+        "text_font_weight": "600",
+        "text_text_transform": "uppercase",
+        "show_hoverImage_1": false,
+        "show_hoverImage_2": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "176812888493944e02",
+    "halo_custom_banner_RiGRk8"
+  ]
+}

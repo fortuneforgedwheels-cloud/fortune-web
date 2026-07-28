@@ -1,0 +1,88 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "halo_banner_tab_dwYpFd": {
+      "type": "halo-banner-tab",
+      "blocks": {
+        "video_wX3PW4": {
+          "type": "video",
+          "settings": {
+            "title": "",
+            "select_bg": "video",
+            "link": "",
+            "video": "https://cdn.shopify.com/videos/c/o/v/8b0221a02a924c808d7d0813f1f758d7.mp4",
+            "mobile_video": "https://cdn.shopify.com/videos/c/o/v/8b0221a02a924c808d7d0813f1f758d7.mp4"
+          }
+        }
+      },
+      "block_order": [
+        "video_wX3PW4"
+      ],
+      "name": "t:sections.slideshow.presets.name__5",
+      "settings": {
+        "show_slideshow": true,
+        "container": "full",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "max_height": 800,
+        "max_height_mobile": 600,
+        "image_ratio": "adapt",
+        "portrait_aspect_ratio": 112,
+        "position": "center",
+        "alignment": "center",
+        "title_color": "#808080",
+        "title_color_active": "#FFFFFF",
+        "title_font": "font_2",
+        "title_font_size": 26,
+        "title_mobile_font_size": 20,
+        "title_font_weight": "700",
+        "title_text_transform": "none"
+      }
+    },
+    "main": {
+      "type": "main-about-3-page",
+      "blocks": {
+        "ee35f5a6-c0f6-4b74-b278-66a62c364522": {
+          "type": "content",
+          "settings": {
+            "title": "",
+            "content": "<span>At </span><span class=\"c1\">Fortune Forged Wheels</span><span class=\"c2\">, we specialize in engineered-to-order forged wheels backed by a structured approach to quality, fitment, and customer experience. Our products are positioned for a market that prioritizes accuracy, performance, and premium execution. We seek to align with partners who operate with clear processes, technical knowledge, and a commitment to representing high-end automotive solutions at scale.</span><p></p><p class=\"c4 c7\"><span class=\"c2\"></span></p><p class=\"c0\"><span class=\"c2\">We partner with businesses that share this same standard.</span></p><p class=\"c0\"><span>Our dealer network is built on </span><span class=\"c1\">expertise, trust, and long-term growth</span><span class=\"c2\">—not volume-driven discounting. Every Fortune Forged partner represents the brand at the highest level, delivering not only a product, but an experience.</span></p><hr><p class=\"c4 c7\"><span class=\"c2\"></span></p><h2 class=\"c11\" id=\"h.3ljy5jyx76jt\"><span class=\"c6 c1\">Our Philosophy</span></h2><p class=\"c0\"><span>We believe forged wheels should be </span><span class=\"c1\">properly spec’d, properly built, and properly represented</span><span class=\"c2\">.</span></p><p class=\"c0\"><span class=\"c2\">That’s why we work exclusively with dealers who:</span></p><ul class=\"c10 lst-kix_vr3wngk2tp1e-0 start\">\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Understand true fitment and custom specifications</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Value craftsmanship over shortcuts</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Deliver a premium customer experience</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Are embedded within their local automotive or motorsports community</span></li>\n</ul><p class=\"c0\"><span>This is not about selling wheels.<br>This is about </span><span class=\"c5 c1\">building reputation—together.</span></p><hr><p class=\"c4 c7\"><span class=\"c2\"></span></p><h2 class=\"c11\" id=\"h.ce088d8pmhu0\"><span class=\"c1 c6\">Dealer Tiers</span></h2><p class=\"c0\"><span class=\"c2\">We offer three levels of partnership depending on your business model, scale, and market reach.</span></p><hr><p class=\"c4 c7\"><span class=\"c2\"></span></p><h3 class=\"c9\" id=\"h.jm7qf925uj1t\"><span class=\"c8 c1\">Authorized Dealer</span></h3><p class=\"c0\"><span class=\"c2\">Designed for emerging shops and qualified businesses entering the forged wheel space.</span></p><p class=\"c0\"><span class=\"c1\">Best for:<br></span><span class=\"c2\">Shops handling occasional custom orders or building their presence in the performance market.</span></p><p class=\"c0\"><span class=\"c5 c1\">Requirements</span></p><ul class=\"c10 lst-kix_v9pom4afmdge-0 start\">\n<li class=\"c0 c3 li-bullet-0\">\n<span>Initial buy-in: </span><span class=\"c5 c1\">2 wheel sets (8 wheels)</span>\n</li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Established automotive-related business presence</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">North America-based (U.S. &amp; Canada)</span></li>\n</ul><p class=\"c0\"><span class=\"c5 c1\">Benefits</span></p><ul class=\"c10 lst-kix_ynwg7n93xtux-0 start\">\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Access to Fortune Forged dealer pricing</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Full dealer portal (live inventory, order tracking, build specs)</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Marketing support (product renders, media assets, spec sheets)</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Fitment and technical guidance from our team</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Access to new product releases and updates</span></li>\n</ul><p class=\"c0\"><span class=\"c5 c1\">Notes</span></p><ul class=\"c10 lst-kix_br63yqfpfbzc-0 start\"><li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">All orders are built-to-order and spec-specific</span></li></ul><hr><p class=\"c4 c7\"><span class=\"c2\"></span></p><h3 class=\"c9\" id=\"h.p9fo8q5hdutt\"><span class=\"c8 c1\">Performance Dealer</span></h3><p class=\"c0\"><span class=\"c2\">Our core network. Built for shops actively serving enthusiasts and performance-driven clients.</span></p><p class=\"c0\"><span class=\"c1\">Best for:<br></span><span class=\"c2\">Performance shops, tuners, installers, and builders with consistent customer flow.</span></p><p class=\"c0\"><span class=\"c5 c1\">Requirements</span></p><ul class=\"c10 lst-kix_izqd92l9j82m-0 start\">\n<li class=\"c0 c3 li-bullet-0\">\n<span>Initial buy-in: </span><span class=\"c1 c5\">5 wheel sets (20 wheels)</span>\n</li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Active involvement in performance, motorsports, or luxury automotive space</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Available for international partners</span></li>\n</ul><p class=\"c0\"><span class=\"c5 c1\">Benefits</span></p><ul class=\"c10 lst-kix_hlkqb8jv2y4m-0 start\">\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Increased dealer margin structure</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Priority production scheduling</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Customer referral opportunities</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Early access to limited finishes and new designs</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Marketing collaboration opportunities</span></li>\n</ul><p class=\"c0\"><span class=\"c5 c1\">Includes everything from Authorized Dealer, plus:</span></p><ul class=\"c10 lst-kix_t997kji6asv-0 start\">\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Project vehicle support eligibility</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Feature opportunities across Fortune Forged platforms</span></li>\n</ul><p class=\"c0\"><span class=\"c5 c1\">Notes</span></p><ul class=\"c10 lst-kix_n2gd7wg9qhsj-0 start\"><li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Must maintain brand integrity in pricing and representation</span></li></ul><hr><p class=\"c4 c7\"><span class=\"c2\"></span></p><h3 class=\"c9\" id=\"h.a1di6r1d4fu\"><span class=\"c1 c8\">Premier Dealer</span></h3><p class=\"c0\"><span class=\"c2\">Our highest level of partnership—reserved for industry leaders with strong presence both physically and digitally.</span></p><p class=\"c0\"><span class=\"c1\">Best for:<br></span><span class=\"c2\">High-volume shops, established brands, and businesses with a strong e-commerce platform and national/international reach.</span></p><p class=\"c0\"><span class=\"c5 c1\">Requirements</span></p><ul class=\"c10 lst-kix_wjg1dh25m456-0 start\">\n<li class=\"c0 c3 li-bullet-0\">\n<span>Initial buy-in: </span><span class=\"c5 c1\">25 wheel sets (100 wheels)</span>\n</li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Annual sales volume commitment</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Proven online and/or retail presence</span></li>\n</ul><p class=\"c0\"><span class=\"c5 c1\">Benefits</span></p><ul class=\"c10 lst-kix_2iw0gtipp3u4-0 start\">\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c5 c1\">Highest dealer margins</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c5 c1\">Full drop-shipping capability (no fees)</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Co-branded marketing campaigns and ad support</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Priority access to all new product launches</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Exclusive finishes, configurations, and early releases</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Dedicated account management</span></li>\n</ul><p class=\"c0\"><span class=\"c5 c1\">Includes everything from previous tiers, plus:</span></p><ul class=\"c10 lst-kix_2w81cf54qsup-0 start\">\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Featured dealer placement</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Collaborative product and content opportunities</span></li>\n</ul><hr><p class=\"c4 c7\"><span class=\"c2\"></span></p><h2 class=\"c11\" id=\"h.cibl6ivrchth\"><span class=\"c6 c1\">Why Partner with Fortune Forged</span></h2><ul class=\"c10 lst-kix_f3d1b5kcf3mz-0 start\">\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Fully custom, made-to-order forged wheels</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Precision fitment for any vehicle, any platform</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Premium finishes with industry-leading quality control</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Fast, reliable communication and support</span></li>\n<li class=\"c0 c3 li-bullet-0\">\n<span>A brand positioned at the intersection of </span><span class=\"c5 c1\">luxury and performance</span>\n</li>\n</ul><p class=\"c0\"><span>Your customers aren’t looking for “another wheel option.”<br>They’re looking for </span><span class=\"c1\">the right one</span><span class=\"c2\">.</span></p><hr><p class=\"c4 c7\"><span class=\"c2\"></span></p><h2 class=\"c11\" id=\"h.mdzxzxrhgu5o\"><span class=\"c6 c1\">Built for Long-Term Growth</span></h2><p class=\"c0\"><span class=\"c2\">We don’t believe in oversaturating markets or racing to the bottom on pricing.</span></p><p class=\"c0\"><span class=\"c2\">Our goal is simple:</span></p><ul class=\"c10 lst-kix_j5icvyau4x2o-0 start\">\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Protect dealer margins</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Maintain brand exclusivity</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Build lasting relationships</span></li>\n</ul><p class=\"c0\"><span class=\"c2\">When you grow, we grow.</span></p><hr><p class=\"c4 c7\"><span class=\"c2\"></span></p><h2 class=\"c11\" id=\"h.bmsakh44ysr\"><span class=\"c1 c14\">Apply to Become a Dealer</span></h2><p class=\"c0\"><span class=\"c2\">If your business aligns with our standards and you’re ready to represent Fortune Forged at the highest level, we invite you to apply.</span></p><p class=\"c0\"><span class=\"c1\">Contact:<br></span><span class=\"c2\">FortuneForgedWheels@gmail.com</span></p><p class=\"c0\"><span class=\"c2\">Include:</span></p><ul class=\"c10 lst-kix_gze9i8r499rl-0 start\">\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Primary owner’s first and last name</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Business name, EIN &amp; location</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Website and/or social media</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Description of your services</span></li>\n<li class=\"c0 c3 li-bullet-0\"><span class=\"c2\">Current monthly volume across all platforms</span></li>\n</ul><hr><p class=\"c4 c7\"><span class=\"c2\"></span></p><p class=\"c0\"><span class=\"c1\">Fortune Forged<br></span><span class=\"c13\">Proper specs. Proper build. Proper presence</span></p>",
+            "align": "center"
+          }
+        }
+      },
+      "block_order": [
+        "ee35f5a6-c0f6-4b74-b278-66a62c364522"
+      ],
+      "settings": {
+        "show_breadcrumb": false,
+        "breadcrumb_alignment": "center",
+        "show_page_title": false,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    }
+  },
+  "order": [
+    "halo_banner_tab_dwYpFd",
+    "main"
+  ]
+}
