@@ -1,13 +1,19 @@
 (function () {
   const HIDE_TITLES = ['WIDTH', 'OFFSET', 'LUG PATTERN'];
-  const KEEP_VISIBLE = ['FACE COLOR', 'RING COLOR', 'BOLT COLOR', 'LEAD TIME PREFERENCE'];
+  const HIDE_PROPERTY_NAMES = ['WIDTH', 'OFFSET', 'LUG PATTERN'];
 
   function normalizeTitle(text) {
     return String(text || '')
-      .replace(/:$/, '')
       .replace(/\s+/g, ' ')
       .trim()
       .toUpperCase();
+  }
+
+  function optionKeyFromLabel(text) {
+    const normalized = normalizeTitle(text);
+    // BCPO labels often look like "WIDTH: PLUG N' PLAY || KEEP OEM SPECS"
+    const beforeColon = normalized.split(':')[0].trim();
+    return beforeColon;
   }
 
   function getRoot() {
@@ -20,18 +26,67 @@
 
   function getForm(root) {
     const formId = root.getAttribute('data-form-id');
-    return (formId && document.getElementById(formId)) || root.closest('form') || document.querySelector('form[data-type="add-to-cart-form"]');
+    return (
+      (formId && document.getElementById(formId)) ||
+      root.closest('form') ||
+      document.querySelector('form[data-type="add-to-cart-form"]')
+    );
   }
 
   function findOptionWrappers() {
-    const wrappers = Array.from(document.querySelectorAll('.selector-wrapper'));
-    return wrappers
-      .map((wrapper) => {
-        const titleEl = wrapper.querySelector('.bcpo-title, label, .form__label, legend');
-        const title = normalizeTitle(titleEl ? titleEl.textContent : '');
-        return { wrapper, title };
-      })
-      .filter((item) => item.title);
+    const nodes = Array.from(
+      document.querySelectorAll(
+        '.selector-wrapper, .bcpo-dropdown, .bcpo-default, [class*="bcpo-front-dd"], .product-form__input'
+      )
+    );
+
+    const seen = new Set();
+    const results = [];
+
+    nodes.forEach((node) => {
+      if (seen.has(node)) return;
+
+      const titleEl = node.querySelector('.bcpo-title, .bcpo-label, label, .form__label, legend, span');
+      let key = optionKeyFromLabel(titleEl ? titleEl.textContent : '');
+
+      if (!HIDE_TITLES.includes(key)) {
+        const named = node.querySelector('select[name^="properties["], input[name^="properties["]');
+        if (named) {
+          const match = String(named.getAttribute('name') || '').match(/properties\[([^\]]+)\]/i);
+          if (match) key = normalizeTitle(match[1]);
+        }
+      }
+
+      if (!HIDE_TITLES.includes(key) && !HIDE_PROPERTY_NAMES.includes(key)) return;
+
+      // Prefer the closest BCPO wrapper so we hide the whole control, not just an inner input.
+      const wrapper =
+        node.closest('.selector-wrapper') ||
+        node.closest('.bcpo-dropdown') ||
+        node.closest('.bcpo-default') ||
+        node;
+
+      if (seen.has(wrapper)) return;
+      seen.add(wrapper);
+      results.push({ wrapper, title: key });
+    });
+
+    // Fallback: locate by property name even if wrappers use unexpected markup.
+    HIDE_PROPERTY_NAMES.forEach((name) => {
+      document.querySelectorAll(`[name="properties[${name}]"], [name^="properties[${name}]"]`).forEach((el) => {
+        const wrapper =
+          el.closest('.selector-wrapper') ||
+          el.closest('.bcpo-dropdown') ||
+          el.closest('.bcpo-default') ||
+          el.closest('.product-form__input') ||
+          el.parentElement;
+        if (!wrapper || seen.has(wrapper)) return;
+        seen.add(wrapper);
+        results.push({ wrapper, title: name });
+      });
+    });
+
+    return results;
   }
 
   function setSelectValue(wrapper, desired) {
@@ -46,6 +101,7 @@
       }
       if (match) {
         select.value = match.value;
+        select.dispatchEvent(new Event('input', { bubbles: true }));
         select.dispatchEvent(new Event('change', { bubbles: true }));
         return true;
       }
@@ -69,7 +125,9 @@
     const variantId = root.getAttribute('data-certified-variant-id');
     const productView = getProductView(root);
 
-    const radios = productView.querySelectorAll('.productView-variants input.product-form__radio, variant-radios input.product-form__radio');
+    const radios = productView.querySelectorAll(
+      '.productView-variants input.product-form__radio, variant-radios input.product-form__radio'
+    );
     let matched = null;
     radios.forEach((radio) => {
       const value = String(radio.value || '').replace(/\s+/g, '').toUpperCase();
@@ -91,13 +149,20 @@
     }
   }
 
-  function markSpecFields() {
+  function hideSpecFields(certified) {
     findOptionWrappers().forEach(({ wrapper, title }) => {
-      if (HIDE_TITLES.includes(title)) {
-        wrapper.setAttribute('data-ff-826m-spec-field', title);
-      } else if (KEEP_VISIBLE.includes(title)) {
-        wrapper.removeAttribute('data-ff-826m-spec-field');
-      }
+      wrapper.setAttribute('data-ff-826m-spec-field', title);
+      wrapper.style.display = certified ? 'none' : '';
+      wrapper.setAttribute('aria-hidden', certified ? 'true' : 'false');
+
+      wrapper.querySelectorAll('select, input, textarea').forEach((field) => {
+        if (certified) {
+          field.setAttribute('data-ff-826m-was-required', field.required ? '1' : '0');
+          field.required = false;
+        } else if (field.getAttribute('data-ff-826m-was-required') === '1') {
+          field.required = true;
+        }
+      });
     });
   }
 
@@ -110,6 +175,24 @@
 
     findOptionWrappers().forEach(({ wrapper, title }) => {
       if (map[title] != null) setSelectValue(wrapper, map[title]);
+    });
+
+    // Also set by property name in case wrappers were missed.
+    Object.keys(map).forEach((name) => {
+      document.querySelectorAll(`[name="properties[${name}]"]`).forEach((el) => {
+        if (el.tagName === 'SELECT') {
+          const wanted = String(map[name]).trim();
+          const options = Array.from(el.options);
+          const match =
+            options.find((opt) => opt.value === wanted || opt.text.trim() === wanted) ||
+            options.find((opt) => opt.value.includes(wanted) || opt.text.includes(wanted));
+          if (match) {
+            el.value = match.value;
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+            el.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        }
+      });
     });
 
     selectCertifiedSize(root);
@@ -138,19 +221,13 @@
     root.querySelectorAll('[data-ff-826m-required-certified]').forEach((input) => {
       input.required = certified;
       if (!certified) input.setCustomValidity('');
-      if (!certified) {
-        // Keep values out of cart when switching away from certified.
-        input.disabled = true;
-      } else {
-        input.disabled = false;
-      }
+      input.disabled = !certified;
     });
-
-    markSpecFields();
 
     if (certified) {
       applyCertifiedOptions(root);
     }
+    hideSpecFields(certified);
   }
 
   function currentMode(root) {
@@ -190,6 +267,7 @@
         (event) => {
           if (currentMode(root) === 'certified') {
             applyCertifiedOptions(root);
+            hideSpecFields(true);
             validateCertified(root, event);
           }
         },
@@ -197,17 +275,28 @@
       );
     }
 
-    // Re-apply after BCPO paints options.
+    // Keep re-applying while BCPO paints / re-renders options.
     let tries = 0;
     const timer = window.setInterval(() => {
       tries += 1;
-      markSpecFields();
-      if (currentMode(root) === 'certified') applyCertifiedOptions(root);
-      if (document.querySelectorAll('.selector-wrapper').length > 0 || tries > 40) {
+      if (currentMode(root) === 'certified') {
+        applyCertifiedOptions(root);
+        hideSpecFields(true);
+      }
+      const found = document.querySelectorAll('[name="properties[WIDTH]"], [name="properties[OFFSET]"], [name="properties[LUG PATTERN]"]').length;
+      if ((found > 0 && tries > 4) || tries > 48) {
         window.clearInterval(timer);
         setMode(root, currentMode(root));
       }
     }, 250);
+
+    const observer = new MutationObserver(() => {
+      if (currentMode(root) !== 'certified') return;
+      applyCertifiedOptions(root);
+      hideSpecFields(true);
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    root._ff826mObserver = observer;
 
     setMode(root, currentMode(root));
   }

@@ -3,6 +3,8 @@
   --ff-826m-muted: #6b675f;
   --ff-826m-line: #ddd8ce;
   --ff-826m-soft: #f6f3ec;
+  --ff-826m-gold: #c2a76b;
+  --ff-826m-gold-soft: #f7f1e3;
   --ff-826m-accent: #1a1a1a;
   margin: 0 0 22px;
   padding: 20px 0 8px;
@@ -65,13 +67,22 @@
   padding: 14px 16px;
   border: 1px solid var(--ff-826m-line);
   background: #fff;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 }
 
 .ff-826m-path__choice input:checked + .ff-826m-path__choice-card {
-  border-color: var(--ff-826m-accent);
-  background: var(--ff-826m-soft);
-  box-shadow: inset 0 0 0 1px var(--ff-826m-accent);
+  border-color: var(--ff-826m-gold);
+  background: var(--ff-826m-gold-soft);
+  box-shadow: inset 0 0 0 1px var(--ff-826m-gold), 0 0 0 1px var(--ff-826m-gold);
+}
+
+.ff-826m-path__choice input:checked + .ff-826m-path__choice-card .ff-826m-path__choice-title {
+  color: #8a6f2f;
+}
+
+.ff-826m-path__choice input:focus-visible + .ff-826m-path__choice-card {
+  outline: 2px solid var(--ff-826m-gold);
+  outline-offset: 2px;
 }
 
 .ff-826m-path__choice-title {
@@ -86,6 +97,10 @@
   color: var(--ff-826m-muted);
 }
 
+.ff-826m-path__choice input:checked + .ff-826m-path__choice-card .ff-826m-path__choice-meta {
+  color: #6f5a2d;
+}
+
 .ff-826m-path__badge {
   display: flex;
   flex-wrap: wrap;
@@ -93,8 +108,9 @@
   gap: 8px 14px;
   margin-bottom: 14px;
   padding: 12px 14px;
-  background: var(--ff-826m-ink);
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2418 55%, #3a311c 100%);
   color: #fff;
+  border: 1px solid var(--ff-826m-gold);
 }
 
 .ff-826m-path__badge span {
@@ -102,12 +118,13 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  opacity: 0.75;
+  color: var(--ff-826m-gold);
 }
 
 .ff-826m-path__badge strong {
   font-size: 1.05rem;
   letter-spacing: 0.04em;
+  color: #fff;
 }
 
 .ff-826m-path__ymm {
@@ -147,8 +164,9 @@
 }
 
 .ff-826m-path__field input:focus {
-  outline: 2px solid var(--ff-826m-ink);
+  outline: 2px solid var(--ff-826m-gold);
   outline-offset: 1px;
+  border-color: var(--ff-826m-gold);
 }
 
 .ff-826m-path__hint {
@@ -158,9 +176,9 @@
   line-height: 1.45;
 }
 
-.ff-826m-path.is-certified [data-ff-826m-hide-certified],
 .productView.is-ff-826m-certified .productView-variants,
 .productView.is-ff-826m-certified .line-item-property__field,
-body.is-ff-826m-certified .selector-wrapper[data-ff-826m-spec-field] {
+body.is-ff-826m-certified .selector-wrapper[data-ff-826m-spec-field],
+body.is-ff-826m-certified [data-ff-826m-spec-field] {
   display: none !important;
 }
