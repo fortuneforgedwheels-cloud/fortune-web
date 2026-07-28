@@ -45,115 +45,6 @@
         "height_mobile": 75
       }
     },
-    "halo_split_slideshow_gjcLKL": {
-      "type": "halo-split-slideshow",
-      "blocks": {
-        "image_qQPc4Y": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/IMG_8295.jpg",
-            "mobile_image": "shopify://shop_images/IMG_6574.jpg",
-            "title": "",
-            "subtitle": "",
-            "text": "",
-            "btn": "1",
-            "btn_text": "Shop Monoblock",
-            "link": "shopify://collections/monoblock-wheels",
-            "position": "center",
-            "alignment": "center",
-            "transparent_button": false,
-            "background_color": "",
-            "text_color": "#ffffff",
-            "title_color": "#ffffff",
-            "title_font": "font_3",
-            "title_font_size": 26,
-            "title_mobile_font_size": 20,
-            "title_font_weight": "700",
-            "title_text_transform": "none",
-            "text_font_size": 14,
-            "text_font_weight": "600",
-            "text_text_transform": "uppercase"
-          }
-        },
-        "image_PYTcRi": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/IMG_8313_2.jpg",
-            "mobile_image": "shopify://shop_images/IMG_0285.jpg",
-            "title": "",
-            "subtitle": "",
-            "text": "",
-            "btn": "1",
-            "btn_text": "Shop 2-Piece",
-            "link": "shopify://collections/two-piece-wheels",
-            "position": "center",
-            "alignment": "center",
-            "transparent_button": false,
-            "background_color": "",
-            "text_color": "#ffffff",
-            "title_color": "#ffffff",
-            "title_font": "font_3",
-            "title_font_size": 26,
-            "title_mobile_font_size": 20,
-            "title_font_weight": "700",
-            "title_text_transform": "none",
-            "text_font_size": 14,
-            "text_font_weight": "600",
-            "text_text_transform": "uppercase"
-          }
-        },
-        "image_FatjNF": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/IMG_8074.jpg",
-            "mobile_image": "shopify://shop_images/IMG_5064.jpg",
-            "title": "",
-            "subtitle": "",
-            "text": "",
-            "btn": "1",
-            "btn_text": "Shop Beadlock",
-            "link": "shopify://collections/beadlock-wheels",
-            "position": "center",
-            "alignment": "center",
-            "transparent_button": false,
-            "background_color": "",
-            "text_color": "#ffffff",
-            "title_color": "#ffffff",
-            "title_font": "font_3",
-            "title_font_size": 26,
-            "title_mobile_font_size": 20,
-            "title_font_weight": "700",
-            "title_text_transform": "none",
-            "text_font_size": 14,
-            "text_font_weight": "600",
-            "text_text_transform": "uppercase"
-          }
-        }
-      },
-      "block_order": [
-        "image_qQPc4Y",
-        "image_PYTcRi",
-        "image_FatjNF"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".slick-list {margin-bottom: -80px;}"
-      ],
-      "name": "t:sections.slideshow.presets.name__4",
-      "settings": {
-        "show_slideshow": true,
-        "container": "full",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 0,
-        "padding_bottom_tablet": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
-        "mobile_view": "below",
-        "block_dots_bg": "#000000",
-        "block_dots_border": "#f9f9f9"
-      }
-    },
     "ff_simple_build_main": {
       "type": "ff-simple-build",
       "settings": {
@@ -193,133 +84,60 @@
         "modal_thanks": "Perfect. When we follow up on your quote, we'll include media day details and help coordinate after installation."
       }
     },
-    "halo_featured_collection_5_Cf6VNC": {
-      "type": "halo-featured-collection-5",
+    "ff_value_props_main": {
+      "type": "ff-value-props",
       "blocks": {
-        "collection_wJQVmU": {
-          "type": "collection",
+        "value_tailored": {
+          "type": "value",
           "settings": {
-            "collection": "monoblock-wheels",
-            "image": "shopify://shop_images/c2ae418a-fc43-4c68-855a-52fb199bd69f.jpg",
-            "title": "",
-            "text": "",
-            "btn": "1",
-            "btn_text": "EXPLORE MONOBLOCK WHEELS",
-            "image_1": "shopify://shop_images/IMG_66872.jpg"
+            "title": "FEA ANALYZED",
+            "image": "shopify://shop_images/Screenshot_2026-07-27_at_11.35.47_PM.png",
+            "text": "Every Fortune Forged wheel is engineered from the ground up using advanced Finite Element Analysis (FEA) to optimize strength, rigidity, and weight before production ever begins. Each design is digitally tested to simulate real-world cornering, braking, impact, and load forces, allowing us to remove unnecessary material while reinforcing high-stress areas. The result is a forged wheel that delivers maximum performance, uncompromising safety, and exceptional durability\u2014custom-built for your vehicle rather than adapted from a generic off-the-shelf design.",
+            "link_label": "VIRTUALLY TESTED. REAL-WORLD PROVEN.",
+            "link": "shopify://collections/monoblock-wheels"
           }
         },
-        "collection_Yn9Mtw": {
-          "type": "collection",
+        "value_lighter": {
+          "type": "value",
           "settings": {
-            "collection": "ff-two-piece-wheels",
-            "image": "shopify://shop_images/048f3887-e190-4269-8619-1ecf522f2e72.jpg",
-            "title": "",
-            "text": "",
-            "btn": "1",
-            "btn_text": "EXPLORE TWO-PIECE WHEELS"
+            "title": "LIGHTER",
+            "image": "shopify://shop_images/IMG_2128.jpg",
+            "text": "Each wheel is machined from true aerospace grade 6061-T6 forged aluminum. Not cast or flow-formed construction. The forging process produces a denser, stronger grain structure, allowing our engineers to remove unnecessary material while maintaining exceptional structural integrity. The result is a wheel that is up to 25\u201330% lighter than a comparable cast wheel, reducing unsprung and rotational mass to improve acceleration, braking, steering response, and overall driving performance without compromising strength or durability.",
+            "link_label": "FORGED STRENGTH WITHOUT EXCESS WEIGHT",
+            "link": "shopify://collections/two-piece-wheels"
           }
         },
-        "collection_bwwP6Q": {
-          "type": "collection",
+        "value_exclusive": {
+          "type": "value",
           "settings": {
-            "collection": "beadlock-wheels",
-            "image": "shopify://shop_images/d2d90bc5-9bc0-4762-bc84-4971421200e2.jpg",
-            "title": "",
-            "text": "",
-            "btn": "1",
-            "btn_text": "EXPLORE BEADLOCK WHEELS"
+            "title": "Bespoke",
+            "image": "shopify://shop_images/IMG_2125.jpg",
+            "text": "We offer a virtually limitless customization to complement your vehicle's aesthetic. Choose from hand brushed, polished, chrome, satin, gloss, or custom powder-coated finishes, paired with bespoke hardware, center caps, and accent options. Whether configured as a monoblock, two-piece, or a beadlock design, each set is crafted to reflect your vision.",
+            "link_label": "CUSTOM FINISHES & ONE-OFF BUILDS",
+            "link": "shopify://collections/beadlock-wheels"
           }
         }
       },
       "block_order": [
-        "collection_wJQVmU",
-        "collection_Yn9Mtw",
-        "collection_bwwP6Q"
+        "value_tailored",
+        "value_lighter",
+        "value_exclusive"
       ],
-      "disabled": true,
-      "name": "t:sections.featured-collection.presets.name__5",
       "settings": {
-        "show_featured_collection": true,
-        "block_bg": "",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 40,
-        "padding_bottom_tablet": 40,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30,
-        "block_title": "",
-        "block_text": "",
-        "block_title_align": "left",
-        "col": "expand",
-        "block_show": "4",
-        "block_dots": false,
-        "block_arrows": true,
-        "transparent_button": false,
-        "align": "center",
-        "background_color": "",
-        "text_color": "#ff0033",
-        "title_color": "#010101",
-        "title_font": "font_1",
-        "title_font_size": 26,
-        "title_mobile_font_size": 20,
-        "title_font_weight": "700",
-        "title_text_transform": "none",
-        "text_font_size": 14,
-        "text_font_weight": "600",
-        "text_text_transform": "uppercase"
+        "show_section": true,
+        "heading": "THE FORTUNE FORGED EXPERIENCE",
+        "subheading": "",
+        "show_feature_media": true,
+        "video": "shopify://files/videos/414fa15f69387a7d69ecb48a51a58017_raw.MP4",
+        "youtube_id": "",
+        "background_image": "shopify://shop_images/forza-manufacturing_7.webp",
+        "padding_top": 64,
+        "padding_bottom": 64
       }
     },
     "halo_slideshow_Kd9Mbj": {
       "type": "halo-slideshow",
       "blocks": {
-        "image_Rdx6Pk": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Screenshot_2026-03-20_at_8.35.20_PM.png",
-            "mobile_image": "shopify://shop_images/IMG_0879.jpg",
-            "title": "",
-            "subtitle": "VIEW OUR:",
-            "text": "",
-            "btn": "1",
-            "btn_text": "LATEST PROJECTS",
-            "link": "shopify://pages/project-gallery",
-            "container_content": "1570",
-            "position": "center",
-            "position_y": "bottom",
-            "alignment": "left",
-            "lookbook": false,
-            "product_1": "",
-            "point_x_1": 10,
-            "point_y_1": 10,
-            "product_2": "",
-            "point_x_2": 10,
-            "point_y_2": 10,
-            "product_3": "",
-            "point_x_3": 10,
-            "point_y_3": 10,
-            "product_4": "",
-            "point_x_4": 10,
-            "point_y_4": 10,
-            "product_5": "",
-            "point_x_5": 10,
-            "point_y_5": 10,
-            "show_background_overlay": false,
-            "transparent_button": false,
-            "background_color": "",
-            "block_content_bg": "",
-            "background_overlay": "#000000",
-            "text_color": "#ffffff",
-            "title_color": "#ffffff",
-            "title_font": "font_2",
-            "title_font_size": 26,
-            "title_mobile_font_size": 20,
-            "title_font_weight": "700",
-            "title_text_transform": "none",
-            "text_font_size": 14,
-            "text_font_weight": "600",
-            "text_text_transform": "uppercase"
-          }
-        },
         "image_nPWWax": {
           "type": "image",
           "settings": {
@@ -511,6 +329,54 @@
             "text_font_weight": "600",
             "text_text_transform": "uppercase"
           }
+        },
+        "image_Rdx6Pk": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-03-20_at_8.35.20_PM.png",
+            "mobile_image": "shopify://shop_images/IMG_0879.jpg",
+            "title": "",
+            "subtitle": "VIEW OUR:",
+            "text": "",
+            "btn": "1",
+            "btn_text": "LATEST PROJECTS",
+            "link": "shopify://pages/project-gallery",
+            "container_content": "1570",
+            "position": "center",
+            "position_y": "bottom",
+            "alignment": "left",
+            "lookbook": false,
+            "product_1": "",
+            "point_x_1": 10,
+            "point_y_1": 10,
+            "product_2": "",
+            "point_x_2": 10,
+            "point_y_2": 10,
+            "product_3": "",
+            "point_x_3": 10,
+            "point_y_3": 10,
+            "product_4": "",
+            "point_x_4": 10,
+            "point_y_4": 10,
+            "product_5": "",
+            "point_x_5": 10,
+            "point_y_5": 10,
+            "show_background_overlay": false,
+            "transparent_button": false,
+            "background_color": "",
+            "block_content_bg": "",
+            "background_overlay": "#000000",
+            "text_color": "#ffffff",
+            "title_color": "#ffffff",
+            "title_font": "font_2",
+            "title_font_size": 26,
+            "title_mobile_font_size": 20,
+            "title_font_weight": "700",
+            "title_text_transform": "none",
+            "text_font_size": 14,
+            "text_font_weight": "600",
+            "text_text_transform": "uppercase"
+          }
         }
       },
       "block_order": [
@@ -533,7 +399,6 @@
         "block_title": "LATEST PROJECTS",
         "block_text": "",
         "block_title_align": "center",
-        "block_logo": "",
         "block_layout": "1",
         "block_content": "absolute",
         "block_content_style": "1",
@@ -549,6 +414,192 @@
         "block_arrows_color": "",
         "block_arrows_border": "",
         "lookbook_style": "1"
+      },
+      "disabled": true
+    },
+    "halo_split_slideshow_gjcLKL": {
+      "type": "halo-split-slideshow",
+      "blocks": {
+        "image_qQPc4Y": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8295.jpg",
+            "mobile_image": "shopify://shop_images/IMG_6574.jpg",
+            "title": "",
+            "subtitle": "",
+            "text": "",
+            "btn": "1",
+            "btn_text": "Shop Monoblock",
+            "link": "shopify://collections/monoblock-wheels",
+            "position": "center",
+            "alignment": "center",
+            "transparent_button": false,
+            "background_color": "",
+            "text_color": "#ffffff",
+            "title_color": "#ffffff",
+            "title_font": "font_3",
+            "title_font_size": 26,
+            "title_mobile_font_size": 20,
+            "title_font_weight": "700",
+            "title_text_transform": "none",
+            "text_font_size": 14,
+            "text_font_weight": "600",
+            "text_text_transform": "uppercase"
+          }
+        },
+        "image_PYTcRi": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8313_2.jpg",
+            "mobile_image": "shopify://shop_images/IMG_0285.jpg",
+            "title": "",
+            "subtitle": "",
+            "text": "",
+            "btn": "1",
+            "btn_text": "Shop 2-Piece",
+            "link": "shopify://collections/two-piece-wheels",
+            "position": "center",
+            "alignment": "center",
+            "transparent_button": false,
+            "background_color": "",
+            "text_color": "#ffffff",
+            "title_color": "#ffffff",
+            "title_font": "font_3",
+            "title_font_size": 26,
+            "title_mobile_font_size": 20,
+            "title_font_weight": "700",
+            "title_text_transform": "none",
+            "text_font_size": 14,
+            "text_font_weight": "600",
+            "text_text_transform": "uppercase"
+          }
+        },
+        "image_FatjNF": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8074.jpg",
+            "mobile_image": "shopify://shop_images/IMG_5064.jpg",
+            "title": "",
+            "subtitle": "",
+            "text": "",
+            "btn": "1",
+            "btn_text": "Shop Beadlock",
+            "link": "shopify://collections/beadlock-wheels",
+            "position": "center",
+            "alignment": "center",
+            "transparent_button": false,
+            "background_color": "",
+            "text_color": "#ffffff",
+            "title_color": "#ffffff",
+            "title_font": "font_3",
+            "title_font_size": 26,
+            "title_mobile_font_size": 20,
+            "title_font_weight": "700",
+            "title_text_transform": "none",
+            "text_font_size": 14,
+            "text_font_weight": "600",
+            "text_text_transform": "uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "image_qQPc4Y",
+        "image_PYTcRi",
+        "image_FatjNF"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".slick-list {margin-bottom: -80px;}"
+      ],
+      "name": "t:sections.slideshow.presets.name__4",
+      "settings": {
+        "show_slideshow": true,
+        "container": "full",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "mobile_view": "below",
+        "block_dots_bg": "#000000",
+        "block_dots_border": "#f9f9f9"
+      }
+    },
+    "halo_featured_collection_5_Cf6VNC": {
+      "type": "halo-featured-collection-5",
+      "blocks": {
+        "collection_wJQVmU": {
+          "type": "collection",
+          "settings": {
+            "collection": "monoblock-wheels",
+            "image": "shopify://shop_images/c2ae418a-fc43-4c68-855a-52fb199bd69f.jpg",
+            "title": "",
+            "text": "",
+            "btn": "1",
+            "btn_text": "EXPLORE MONOBLOCK WHEELS",
+            "image_1": "shopify://shop_images/IMG_66872.jpg"
+          }
+        },
+        "collection_Yn9Mtw": {
+          "type": "collection",
+          "settings": {
+            "collection": "ff-two-piece-wheels",
+            "image": "shopify://shop_images/048f3887-e190-4269-8619-1ecf522f2e72.jpg",
+            "title": "",
+            "text": "",
+            "btn": "1",
+            "btn_text": "EXPLORE TWO-PIECE WHEELS"
+          }
+        },
+        "collection_bwwP6Q": {
+          "type": "collection",
+          "settings": {
+            "collection": "beadlock-wheels",
+            "image": "shopify://shop_images/d2d90bc5-9bc0-4762-bc84-4971421200e2.jpg",
+            "title": "",
+            "text": "",
+            "btn": "1",
+            "btn_text": "EXPLORE BEADLOCK WHEELS"
+          }
+        }
+      },
+      "block_order": [
+        "collection_wJQVmU",
+        "collection_Yn9Mtw",
+        "collection_bwwP6Q"
+      ],
+      "disabled": true,
+      "name": "t:sections.featured-collection.presets.name__5",
+      "settings": {
+        "show_featured_collection": true,
+        "block_bg": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "block_title": "",
+        "block_text": "",
+        "block_title_align": "left",
+        "col": "expand",
+        "block_show": "4",
+        "block_dots": false,
+        "block_arrows": true,
+        "transparent_button": false,
+        "align": "center",
+        "background_color": "",
+        "text_color": "#ff0033",
+        "title_color": "#010101",
+        "title_font": "font_1",
+        "title_font_size": 26,
+        "title_mobile_font_size": 20,
+        "title_font_weight": "700",
+        "title_text_transform": "none",
+        "text_font_size": 14,
+        "text_font_weight": "600",
+        "text_text_transform": "uppercase"
       }
     },
     "halo_slideshow_with_simple_effect_X4zHe3": {
@@ -1266,54 +1317,106 @@
         "block_title_align": "center"
       }
     },
-    "ff_value_props_main": {
-      "type": "ff-value-props",
+    "ff_project_gallery_main": {
+      "type": "ff-project-gallery",
       "blocks": {
-        "value_tailored": {
-          "type": "value",
+        "project_1": {
+          "type": "project",
           "settings": {
-            "title": "TAILORED",
-            "image": "shopify://shop_images/c2ae418a-fc43-4c68-855a-52fb199bd69f.jpg",
-            "text": "Every Fortune Forged set is engineered around your chassis, stance goals, and finish \u2014 measured fitment, not a generic off-the-shelf size.",
-            "link_label": "BUILT-TO-ORDER FITMENT FOR YOUR VEHICLE",
-            "link": "shopify://collections/monoblock-wheels"
+            "vehicle": "BMW G80 M3",
+            "subtitle": "Track-focused street build",
+            "cover_image": "shopify://shop_images/IMG_0878.jpg",
+            "wheel_style": "FF Monoblock",
+            "construction": "Monoblock forged",
+            "sizes": "20x9.5F / 20x11R",
+            "finish": "Brushed clear",
+            "hardware": "Gold titanium",
+            "location": "Built to order",
+            "writeup": "<p>BMW G80 M3 built on Fortune Forged monoblock forged wheels. Fitment was measured around brake clearance, suspension setup, and target stance \u2014 then finished to match the car.</p><p>Swap this text in the theme editor with the real build story, owner details, and any supporting mods.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": "shopify://collections/monoblock-wheels",
+            "gallery_1": "shopify://shop_images/IMG_0878.jpg",
+            "gallery_2": "shopify://shop_images/IMG_0908.jpg",
+            "gallery_3": "shopify://shop_images/IMG_0962.jpg"
           }
         },
-        "value_lighter": {
-          "type": "value",
+        "project_2": {
+          "type": "project",
           "settings": {
-            "title": "LIGHTER",
-            "image": "shopify://shop_images/048f3887-e190-4269-8619-1ecf522f2e72.jpg",
-            "text": "Forged construction puts strength where it matters and cuts unnecessary mass for better response, braking, and feel.",
-            "link_label": "FORGED STRENGTH WITHOUT EXCESS WEIGHT",
-            "link": "shopify://collections/two-piece-wheels"
+            "vehicle": "BMW M4 Competition",
+            "subtitle": "Two-piece street setup",
+            "cover_image": "shopify://shop_images/IMG_0908.jpg",
+            "wheel_style": "FF Two-Piece",
+            "construction": "Two-piece forged",
+            "sizes": "20x9.5F / 20x11R",
+            "finish": "Polished lip",
+            "hardware": "Gold titanium",
+            "location": "Built to order",
+            "writeup": "<p>BMW M4 Competition built on Fortune Forged two-piece forged wheels. Fitment was measured around brake clearance, suspension setup, and target stance \u2014 then finished to match the car.</p><p>Swap this text in the theme editor with the real build story, owner details, and any supporting mods.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": "shopify://collections/two-piece-wheels",
+            "gallery_1": "shopify://shop_images/IMG_0908.jpg",
+            "gallery_2": "shopify://shop_images/IMG_0962.jpg",
+            "gallery_3": "shopify://shop_images/IMG_0786.jpg"
           }
         },
-        "value_exclusive": {
-          "type": "value",
+        "project_3": {
+          "type": "project",
           "settings": {
-            "title": "EXCLUSIVE",
-            "image": "shopify://shop_images/d2d90bc5-9bc0-4762-bc84-4971421200e2.jpg",
-            "text": "From brushed and polished to custom powder coats, finish your wheels to match the rest of the build \u2014 monoblock, two-piece, or beadlock.",
-            "link_label": "CUSTOM FINISHES & ONE-OFF BUILDS",
-            "link": "shopify://collections/beadlock-wheels"
+            "vehicle": "Off-road Build",
+            "subtitle": "Beadlock trail setup",
+            "cover_image": "shopify://shop_images/IMG_0962.jpg",
+            "wheel_style": "FF Beadlock",
+            "construction": "Beadlock forged",
+            "sizes": "17x9 square",
+            "finish": "Satin black",
+            "hardware": "Gold titanium",
+            "location": "Built to order",
+            "writeup": "<p>Off-road Build built on Fortune Forged beadlock forged wheels. Fitment was measured around brake clearance, suspension setup, and target stance \u2014 then finished to match the car.</p><p>Swap this text in the theme editor with the real build story, owner details, and any supporting mods.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": "shopify://collections/beadlock-wheels",
+            "gallery_1": "shopify://shop_images/IMG_0962.jpg",
+            "gallery_2": "shopify://shop_images/IMG_0786.jpg",
+            "gallery_3": "shopify://shop_images/IMG_0878.jpg"
+          }
+        },
+        "project_4": {
+          "type": "project",
+          "settings": {
+            "vehicle": "Fortune Forged Feature",
+            "subtitle": "Custom finish showcase",
+            "cover_image": "shopify://shop_images/IMG_0786.jpg",
+            "wheel_style": "FF Custom",
+            "construction": "Forged custom",
+            "sizes": "Custom sizing",
+            "finish": "Custom finish",
+            "hardware": "Gold titanium",
+            "location": "Built to order",
+            "writeup": "<p>Fortune Forged Feature built on Fortune Forged forged custom wheels. Fitment was measured around brake clearance, suspension setup, and target stance \u2014 then finished to match the car.</p><p>Swap this text in the theme editor with the real build story, owner details, and any supporting mods.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": "shopify://collections/monoblock-wheels",
+            "gallery_1": "shopify://shop_images/IMG_0786.jpg",
+            "gallery_2": "shopify://shop_images/IMG_0878.jpg",
+            "gallery_3": "shopify://shop_images/IMG_0908.jpg"
           }
         }
       },
       "block_order": [
-        "value_tailored",
-        "value_lighter",
-        "value_exclusive"
+        "project_1",
+        "project_2",
+        "project_3",
+        "project_4"
       ],
       "settings": {
         "show_section": true,
-        "heading": "THE FORTUNE FORGED EXPERIENCE",
-        "subheading": "",
-        "background_image": "shopify://shop_images/IMG_8295.jpg",
-        "padding_top": 64,
-        "padding_bottom": 64,
-        "show_feature_media": true,
-        "youtube_id": "S7oXlkAWxyo"
+        "eyebrow": "Fortune Forged",
+        "heading": "PROJECT GALLERY",
+        "subheading": "Real builds running Fortune Forged wheels. Tap a build for full specs and photos.",
+        "card_cta": "View build",
+        "quote_label": "Request a similar build",
+        "quote_link": "/#order",
+        "padding_top": 72,
+        "padding_bottom": 72
       }
     }
   },
@@ -1321,6 +1424,7 @@
     "ff_hero_lifestyle_main",
     "ff_simple_build_main",
     "ff_value_props_main",
+    "ff_project_gallery_main",
     "halo_slideshow_Kd9Mbj",
     "halo_split_slideshow_gjcLKL",
     "halo_featured_collection_5_Cf6VNC",

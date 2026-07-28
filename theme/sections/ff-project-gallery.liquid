@@ -1,0 +1,527 @@
+{{ 'ff-project-gallery.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.show_section -%}
+  <section
+    class="ff-projects"
+    id="ff-projects-{{ section.id }}"
+    data-ff-projects
+    style="
+      --ff-projects-pad-top: {{ section.settings.padding_top }}px;
+      --ff-projects-pad-bottom: {{ section.settings.padding_bottom }}px;
+    "
+  >
+    <div class="ff-projects__inner">
+      <header class="ff-projects__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ff-projects__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="ff-projects__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="ff-projects__subheading">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </header>
+
+      <div class="ff-projects__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'project' -%}
+            {%- liquid
+              assign b = block.settings
+              assign gallery_images = ''
+              assign gallery_images = b.gallery_1 | default: ''
+            -%}
+            <button
+              type="button"
+              class="ff-projects__card"
+              data-ff-project-open="{{ block.id }}"
+              aria-haspopup="dialog"
+              {{ block.shopify_attributes }}
+            >
+              <span class="ff-projects__thumb">
+                {%- if b.cover_image != blank -%}
+                  {{
+                    b.cover_image
+                    | image_url: width: 1200
+                    | image_tag:
+                      class: 'ff-projects__thumb-img ff-projects__thumb-img--desktop',
+                      loading: 'lazy',
+                      widths: '400, 600, 900, 1200',
+                      sizes: '(max-width: 749px) 100vw, 33vw',
+                      alt: b.vehicle
+                  }}
+                {%- endif -%}
+                {%- if b.cover_image_mobile != blank -%}
+                  {{
+                    b.cover_image_mobile
+                    | image_url: width: 900
+                    | image_tag:
+                      class: 'ff-projects__thumb-img ff-projects__thumb-img--mobile',
+                      loading: 'lazy',
+                      widths: '400, 600, 900',
+                      sizes: '100vw',
+                      alt: b.vehicle
+                  }}
+                {%- elsif b.cover_image != blank -%}
+                  {{
+                    b.cover_image
+                    | image_url: width: 900
+                    | image_tag:
+                      class: 'ff-projects__thumb-img ff-projects__thumb-img--mobile',
+                      loading: 'lazy',
+                      widths: '400, 600, 900',
+                      sizes: '100vw',
+                      alt: b.vehicle
+                  }}
+                {%- endif -%}
+                {%- if b.cover_image == blank and b.cover_image_mobile == blank -%}
+                  <span class="ff-projects__thumb-placeholder" aria-hidden="true"></span>
+                {%- endif -%}
+                <span class="ff-projects__thumb-shade" aria-hidden="true"></span>
+              </span>
+
+              <span class="ff-projects__card-body">
+                {%- if b.wheel_style != blank -%}
+                  <span class="ff-projects__badge">{{ b.wheel_style | escape }}</span>
+                {%- endif -%}
+                {%- if b.vehicle != blank -%}
+                  <span class="ff-projects__card-title">{{ b.vehicle | escape }}</span>
+                {%- endif -%}
+                {%- if b.spec_line != blank -%}
+                  <span class="ff-projects__card-spec">{{ b.spec_line | escape }}</span>
+                {%- endif -%}
+                <span class="ff-projects__card-cta">{{ section.settings.card_cta | escape }}</span>
+              </span>
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'project' -%}
+        {%- assign b = block.settings -%}
+        <div
+          class="ff-projects__modal"
+          data-ff-project-modal="{{ block.id }}"
+          hidden
+        >
+          <div class="ff-projects__backdrop" data-ff-project-close tabindex="-1"></div>
+          <div
+            class="ff-projects__dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-label="{{ b.vehicle | default: 'Project details' | escape }}"
+            tabindex="-1"
+            data-ff-project-dialog
+          >
+            <button type="button" class="ff-projects__close" data-ff-project-close aria-label="Close project">
+              <span aria-hidden="true">×</span>
+            </button>
+
+            <div class="ff-projects__dialog-grid">
+              <div class="ff-projects__slides" data-ff-project-slides>
+                {%- assign photos = b.gallery_1 | default: b.cover_image -%}
+                {%- for i in (1..6) -%}
+                  {%- liquid
+                    case i
+                      when 1
+                        assign photo = b.gallery_1
+                        assign photo_m = b.gallery_1_mobile
+                      when 2
+                        assign photo = b.gallery_2
+                        assign photo_m = b.gallery_2_mobile
+                      when 3
+                        assign photo = b.gallery_3
+                        assign photo_m = b.gallery_3_mobile
+                      when 4
+                        assign photo = b.gallery_4
+                        assign photo_m = b.gallery_4_mobile
+                      when 5
+                        assign photo = b.gallery_5
+                        assign photo_m = b.gallery_5_mobile
+                      when 6
+                        assign photo = b.gallery_6
+                        assign photo_m = b.gallery_6_mobile
+                    endcase
+                  -%}
+                  {%- if photo != blank or photo_m != blank -%}
+                    <figure
+                      class="ff-projects__slide{% if forloop.first %} is-active{% endif %}"
+                      data-ff-project-slide
+                      {% unless forloop.first %}hidden{% endunless %}
+                    >
+                      {%- if photo != blank -%}
+                        {{
+                          photo
+                          | image_url: width: 1800
+                          | image_tag:
+                            class: 'ff-projects__slide-img ff-projects__slide-img--desktop',
+                            loading: 'lazy',
+                            widths: '600, 900, 1200, 1800',
+                            sizes: '(max-width: 989px) 100vw, 60vw',
+                            alt: b.vehicle
+                        }}
+                      {%- endif -%}
+                      {%- if photo_m != blank -%}
+                        {{
+                          photo_m
+                          | image_url: width: 1200
+                          | image_tag:
+                            class: 'ff-projects__slide-img ff-projects__slide-img--mobile',
+                            loading: 'lazy',
+                            widths: '600, 900, 1200',
+                            sizes: '100vw',
+                            alt: b.vehicle
+                        }}
+                      {%- elsif photo != blank -%}
+                        {{
+                          photo
+                          | image_url: width: 1200
+                          | image_tag:
+                            class: 'ff-projects__slide-img ff-projects__slide-img--mobile',
+                            loading: 'lazy',
+                            widths: '600, 900, 1200',
+                            sizes: '100vw',
+                            alt: b.vehicle
+                        }}
+                      {%- endif -%}
+                    </figure>
+                  {%- endif -%}
+                {%- endfor -%}
+
+                <button type="button" class="ff-projects__slide-nav ff-projects__slide-nav--prev" data-ff-project-prev aria-label="Previous photo">
+                  <span aria-hidden="true">‹</span>
+                </button>
+                <button type="button" class="ff-projects__slide-nav ff-projects__slide-nav--next" data-ff-project-next aria-label="Next photo">
+                  <span aria-hidden="true">›</span>
+                </button>
+                <div class="ff-projects__counter" data-ff-project-counter></div>
+              </div>
+
+              <div class="ff-projects__details">
+                {%- if b.wheel_style != blank -%}
+                  <p class="ff-projects__detail-badge">{{ b.wheel_style | escape }}</p>
+                {%- endif -%}
+                {%- if b.vehicle != blank -%}
+                  <h3 class="ff-projects__detail-title">{{ b.vehicle | escape }}</h3>
+                {%- endif -%}
+                {%- if b.subtitle != blank -%}
+                  <p class="ff-projects__detail-subtitle">{{ b.subtitle | escape }}</p>
+                {%- endif -%}
+
+                <dl class="ff-projects__specs">
+                  {%- if b.wheel_style != blank -%}
+                    <div class="ff-projects__spec">
+                      <dt>Wheel style</dt>
+                      <dd>{{ b.wheel_style | escape }}</dd>
+                    </div>
+                  {%- endif -%}
+                  {%- if b.construction != blank -%}
+                    <div class="ff-projects__spec">
+                      <dt>Construction</dt>
+                      <dd>{{ b.construction | escape }}</dd>
+                    </div>
+                  {%- endif -%}
+                  {%- if b.sizes != blank -%}
+                    <div class="ff-projects__spec">
+                      <dt>Sizes</dt>
+                      <dd>{{ b.sizes | escape }}</dd>
+                    </div>
+                  {%- endif -%}
+                  {%- if b.finish != blank -%}
+                    <div class="ff-projects__spec">
+                      <dt>Finish</dt>
+                      <dd>{{ b.finish | escape }}</dd>
+                    </div>
+                  {%- endif -%}
+                  {%- if b.hardware != blank -%}
+                    <div class="ff-projects__spec">
+                      <dt>Hardware</dt>
+                      <dd>{{ b.hardware | escape }}</dd>
+                    </div>
+                  {%- endif -%}
+                  {%- if b.location != blank -%}
+                    <div class="ff-projects__spec">
+                      <dt>Build</dt>
+                      <dd>{{ b.location | escape }}</dd>
+                    </div>
+                  {%- endif -%}
+                </dl>
+
+                {%- if b.writeup != blank -%}
+                  <div class="ff-projects__writeup">{{ b.writeup }}</div>
+                {%- endif -%}
+
+                <div class="ff-projects__detail-actions">
+                  {%- if b.shop_link != blank -%}
+                    <a class="ff-projects__btn" href="{{ b.shop_link }}">
+                      {{ b.shop_label | default: 'Shop this style' | escape }}
+                    </a>
+                  {%- endif -%}
+                  {%- if section.settings.quote_link != blank -%}
+                    <a class="ff-projects__btn ff-projects__btn--ghost" href="{{ section.settings.quote_link }}">
+                      {{ section.settings.quote_label | escape }}
+                    </a>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </section>
+
+  <script src="{{ 'ff-project-gallery.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FF Project Gallery",
+  "tag": "section",
+  "class": "section-ff-project-gallery",
+  "max_blocks": 24,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Fortune Forged"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "PROJECT GALLERY"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Real builds running Fortune Forged wheels. Tap a build for full specs and photos."
+    },
+    {
+      "type": "text",
+      "id": "card_cta",
+      "label": "Card hover label",
+      "default": "View build"
+    },
+    {
+      "type": "text",
+      "id": "quote_label",
+      "label": "Quote button label",
+      "default": "Request a similar build"
+    },
+    {
+      "type": "url",
+      "id": "quote_link",
+      "label": "Quote button link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "project",
+      "name": "Project",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Vehicle"
+        },
+        {
+          "type": "text",
+          "id": "vehicle",
+          "label": "Vehicle model",
+          "default": "BMW G80 M3"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Track-focused street build"
+        },
+        {
+          "type": "header",
+          "content": "Cover image (grid square)"
+        },
+        {
+          "type": "image_picker",
+          "id": "cover_image",
+          "label": "Cover image — desktop"
+        },
+        {
+          "type": "image_picker",
+          "id": "cover_image_mobile",
+          "label": "Cover image — mobile",
+          "info": "Optional. Only affects phones."
+        },
+        {
+          "type": "header",
+          "content": "Wheel specs"
+        },
+        {
+          "type": "text",
+          "id": "wheel_style",
+          "label": "Wheel style",
+          "default": "FF-01 Monoblock"
+        },
+        {
+          "type": "text",
+          "id": "construction",
+          "label": "Construction",
+          "default": "Monoblock forged"
+        },
+        {
+          "type": "text",
+          "id": "sizes",
+          "label": "Sizes",
+          "default": "20x9.5F / 20x11R"
+        },
+        {
+          "type": "text",
+          "id": "finish",
+          "label": "Finish",
+          "default": "Brushed clear"
+        },
+        {
+          "type": "text",
+          "id": "hardware",
+          "label": "Hardware",
+          "default": "Gold titanium"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Build note",
+          "default": "Built to order"
+        },
+        {
+          "type": "header",
+          "content": "Write-up"
+        },
+        {
+          "type": "richtext",
+          "id": "writeup",
+          "label": "Project write-up",
+          "default": "<p>Tell the story of this build — goals, fitment decisions, finish choices, and how the wheels changed the car.</p>"
+        },
+        {
+          "type": "text",
+          "id": "shop_label",
+          "label": "Shop button label",
+          "default": "Shop this style"
+        },
+        {
+          "type": "url",
+          "id": "shop_link",
+          "label": "Shop button link"
+        },
+        {
+          "type": "header",
+          "content": "Gallery photos — desktop"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_1",
+          "label": "Photo 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_2",
+          "label": "Photo 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_3",
+          "label": "Photo 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_4",
+          "label": "Photo 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_5",
+          "label": "Photo 5"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_6",
+          "label": "Photo 6"
+        },
+        {
+          "type": "header",
+          "content": "Gallery photos — mobile (optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_1_mobile",
+          "label": "Photo 1 — mobile"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_2_mobile",
+          "label": "Photo 2 — mobile"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_3_mobile",
+          "label": "Photo 3 — mobile"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_4_mobile",
+          "label": "Photo 4 — mobile"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_5_mobile",
+          "label": "Photo 5 — mobile"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_6_mobile",
+          "label": "Photo 6 — mobile"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FF Project Gallery",
+      "blocks": [
+        { "type": "project" },
+        { "type": "project" },
+        { "type": "project" }
+      ]
+    }
+  ]
+}
+{% endschema %}
