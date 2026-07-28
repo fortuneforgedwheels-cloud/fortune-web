@@ -278,7 +278,7 @@
         "badge_fitment": {
           "type": "badge",
           "settings": {
-            "icon": "check",
+            "icon": "wheel",
             "heading": "Fitment Guaranteed",
             "description": "Engineered for your chassis. Professional install required. If it doesn't fit, we make it right.",
             "show_email": false
@@ -287,7 +287,7 @@
         "badge_people": {
           "type": "badge",
           "settings": {
-            "icon": "bolt",
+            "icon": "phone_person",
             "heading": "Real People, Same Day",
             "description": "Questions? We answer same day. Real enthusiasts, not call centers. ",
             "show_email": true
@@ -296,7 +296,7 @@
         "badge_secure": {
           "type": "badge",
           "settings": {
-            "icon": "lock",
+            "icon": "computer",
             "heading": "Secure Checkout",
             "description": "256-bit encryption. Affirm available. All major cards accepted.",
             "show_email": false
