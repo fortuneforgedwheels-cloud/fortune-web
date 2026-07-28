@@ -131,7 +131,8 @@
         "mobile_view": "below",
         "block_dots_bg": "#000000",
         "block_dots_border": "#f9f9f9"
-      }
+      },
+      "disabled": true
     },
     "halo_featured_collection_5_Cf6VNC": {
       "type": "halo-featured-collection-5",
@@ -1218,9 +1219,55 @@
         "modal_dismiss": "Maybe later",
         "modal_thanks": "Perfect. When we follow up on your quote, we'll include media day details and help coordinate after installation."
       }
+    },
+    "ff_hero_lifestyle_main": {
+      "type": "ff-hero-lifestyle",
+      "blocks": {
+        "slide_mono": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8295.jpg",
+            "mobile_image": "shopify://shop_images/IMG_6574.jpg",
+            "title": "Monoblock Forged",
+            "button_label": "Browse Selection",
+            "button_link": "shopify://collections/monoblock-wheels"
+          }
+        },
+        "slide_two": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8313_2.jpg",
+            "mobile_image": "shopify://shop_images/IMG_0285.jpg",
+            "title": "Two-Piece Forged",
+            "button_label": "Browse Selection",
+            "button_link": "shopify://collections/two-piece-wheels"
+          }
+        },
+        "slide_bead": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8074.jpg",
+            "mobile_image": "shopify://shop_images/IMG_5064.jpg",
+            "title": "Beadlock Forged",
+            "button_label": "Browse Selection",
+            "button_link": "shopify://collections/beadlock-wheels"
+          }
+        }
+      },
+      "block_order": [
+        "slide_mono",
+        "slide_two",
+        "slide_bead"
+      ],
+      "settings": {
+        "show_hero": true,
+        "height": 90,
+        "height_mobile": 75
+      }
     }
   },
   "order": [
+    "ff_hero_lifestyle_main",
     "halo_split_slideshow_gjcLKL",
     "ff_simple_build_main",
     "halo_featured_collection_5_Cf6VNC",
