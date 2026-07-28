@@ -1,0 +1,81 @@
+{{ 'ff-826m-spec-path.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign certified_variant_id = nil
+  for variant in product.variants
+    assign size_key = variant.option1 | upcase | replace: ' ', ''
+    if size_key == '18X11'
+      assign certified_variant_id = variant.id
+      break
+    endif
+  endfor
+-%}
+
+<div
+  class="ff-826m-path"
+  id="ff-826m-path-{{ product.id }}"
+  data-ff-826m-path
+  data-product-id="{{ product.id }}"
+  data-form-id="{{ form_id }}"
+  data-certified-variant-id="{{ certified_variant_id }}"
+  data-certified-size="18X11"
+  data-certified-width='11"'
+  data-certified-offset="+15"
+  data-certified-lug="PLUG N' PLAY || KEEP OEM SPECS"
+>
+  <p class="ff-826m-path__eyebrow">826M Beadlock checkout</p>
+  <h2 class="ff-826m-path__heading">How do you want to spec this pair?</h2>
+  <p class="ff-826m-path__intro">Choose Fortune Certified Specs for a dialed-in 18x11 ET15 package, or select your own size, width, offset, and lug pattern.</p>
+
+  <div class="ff-826m-path__choices" role="radiogroup" aria-label="Spec path">
+    <label class="ff-826m-path__choice">
+      <input type="radio" name="ff_826m_path_{{ product.id }}" value="certified" checked>
+      <span class="ff-826m-path__choice-card">
+        <span class="ff-826m-path__choice-title">Fortune Certified Specs</span>
+        <span class="ff-826m-path__choice-meta">Fixed fitment: <strong>18x11 ET15</strong></span>
+        <span class="ff-826m-path__choice-meta">You only enter vehicle year / make / model and ring, face, and bolt colors.</span>
+      </span>
+    </label>
+    <label class="ff-826m-path__choice">
+      <input type="radio" name="ff_826m_path_{{ product.id }}" value="custom">
+      <span class="ff-826m-path__choice-card">
+        <span class="ff-826m-path__choice-title">Select my own specs</span>
+        <span class="ff-826m-path__choice-meta">Choose size, width, offset, lug pattern, colors, and vehicle details yourself.</span>
+      </span>
+    </label>
+  </div>
+
+  <div class="ff-826m-path__certified" data-ff-826m-certified-panel>
+    <div class="ff-826m-path__badge">
+      <span>Certified fitment locked</span>
+      <strong>18x11 ET15</strong>
+    </div>
+
+    <div class="ff-826m-path__ymm">
+      <label class="ff-826m-path__field">
+        <span>Year</span>
+        <input type="text" name="properties[Year]" form="{{ form_id }}" autocomplete="off" placeholder="e.g. 2023" data-ff-826m-required-certified>
+      </label>
+      <label class="ff-826m-path__field">
+        <span>Make</span>
+        <input type="text" name="properties[Make]" form="{{ form_id }}" autocomplete="off" placeholder="e.g. BMW" data-ff-826m-required-certified>
+      </label>
+      <label class="ff-826m-path__field">
+        <span>Model</span>
+        <input type="text" name="properties[Model]" form="{{ form_id }}" autocomplete="off" placeholder="e.g. M3" data-ff-826m-required-certified>
+      </label>
+    </div>
+
+    <p class="ff-826m-path__hint">Next, choose ring color, face color, and bolt color below. Size, width, offset, and lug pattern are set automatically.</p>
+
+    <input type="hidden" name="properties[Spec Path]" value="Fortune Certified Specs" form="{{ form_id }}" data-ff-826m-certified-prop>
+    <input type="hidden" name="properties[Certified Fitment]" value="18x11 ET15" form="{{ form_id }}" data-ff-826m-certified-prop>
+  </div>
+
+  <div class="ff-826m-path__custom" data-ff-826m-custom-panel hidden>
+    <p class="ff-826m-path__hint">Use the size, width, offset, lug pattern, color, and vehicle fields below to build your own spec.</p>
+    <input type="hidden" name="properties[Spec Path]" value="Select my own specs" form="{{ form_id }}" data-ff-826m-custom-prop disabled>
+  </div>
+</div>
+
+<script src="{{ 'ff-826m-spec-path.js' | asset_url }}" defer></script>

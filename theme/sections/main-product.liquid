@@ -8,6 +8,17 @@
 {%- liquid
     assign current_variant = product.selected_or_first_available_variant
     assign variantCount = product.variants | size
+    assign ff_826m_beadlock = false
+    assign ff_product_title_up = product.title | upcase
+    assign ff_product_handle = product.handle | downcase
+    if ff_product_title_up contains '826M' and product.tags contains 'BEADLOCK'
+      assign ff_826m_beadlock = true
+    elsif ff_product_title_up contains '826M' and product.tags contains 'beadlock'
+      assign ff_826m_beadlock = true
+    elsif ff_product_handle == 'g80-g82-beadlock'
+      assign ff_826m_beadlock = true
+    endif
+    assign ff_826m_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
     assign colors_bg = section.settings.colors_bg
     assign padding_top = section.settings.padding_top 
     assign padding_bottom = section.settings.padding_bottom
@@ -954,6 +965,12 @@
                                             {%- endif -%}
                                         {%- endif -%}
                                     {%- when 'variant_picker' -%}
+                                        {%- if ff_826m_beadlock -%}
+                                            {% render 'ff-826m-spec-path',
+                                              product: product,
+                                              form_id: ff_826m_form_id
+                                            %}
+                                        {%- endif -%}
                                         {%- if variantCount > 0 and product.has_only_default_variant != true -%}
                                             {%- liquid
                                                 assign padding_top = block.settings.padding_top
@@ -967,6 +984,7 @@
                                             -%}
                                             <div class="productView-variants halo-productOptions element-spacing" id="product-option-{{ section.id }}-{{ product.id }}" data-type="{{ picker_type }}"
                                                 {{ block.shopify_attributes }}
+                                                data-ff-826m-hide-certified
                                                 style="--spacing-top: {{ padding_top | append: 'px' }};
                                                 --spacing-bottom: {{ padding_bottom | append: 'px' }};
                                                 --spacing-top-mobile: {{ padding_top | times: 0.5 | round: 0 | append: 'px' }};
