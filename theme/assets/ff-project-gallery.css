@@ -24,7 +24,7 @@
 }
 
 .ff-projects__eyebrow {
-  margin: 0 0 10px;
+  margin: 12px 0 0;
   color: var(--ff-gold);
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -51,10 +51,12 @@
 }
 
 .ff-projects__subheading {
-  margin: 14px auto 0;
-  max-width: 40rem;
+  margin: 20px 0 0;
+  max-width: none;
+  width: 100%;
   color: var(--ff-muted);
   line-height: 1.55;
+  text-align: left;
 }
 
 .ff-projects__grid {
