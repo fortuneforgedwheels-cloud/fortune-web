@@ -49,6 +49,9 @@
                   if heading_href == blank and heading_key contains 'affiliate'
                     assign heading_href = '/pages/become-an-affiliate'
                   endif
+                  if heading_href == blank and block.id == 'badge_secure'
+                    assign heading_href = '/pages/become-an-affiliate'
+                  endif
                 -%}
                 {%- if heading_href != blank -%}
                   <p class="ff-trust__heading">
