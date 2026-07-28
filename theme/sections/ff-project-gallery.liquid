@@ -121,74 +121,63 @@
 
             <div class="ff-projects__dialog-grid">
               <div class="ff-projects__slides" data-ff-project-slides>
-                {%- assign photos = b.gallery_1 | default: b.cover_image -%}
-                {%- for i in (1..6) -%}
-                  {%- liquid
-                    case i
-                      when 1
-                        assign photo = b.gallery_1
-                        assign photo_m = b.gallery_1_mobile
-                      when 2
-                        assign photo = b.gallery_2
-                        assign photo_m = b.gallery_2_mobile
-                      when 3
-                        assign photo = b.gallery_3
-                        assign photo_m = b.gallery_3_mobile
-                      when 4
-                        assign photo = b.gallery_4
-                        assign photo_m = b.gallery_4_mobile
-                      when 5
-                        assign photo = b.gallery_5
-                        assign photo_m = b.gallery_5_mobile
-                      when 6
-                        assign photo = b.gallery_6
-                        assign photo_m = b.gallery_6_mobile
-                    endcase
-                  -%}
-                  {%- if photo != blank or photo_m != blank -%}
-                    <figure
-                      class="ff-projects__slide{% if forloop.first %} is-active{% endif %}"
-                      data-ff-project-slide
-                      {% unless forloop.first %}hidden{% endunless %}
-                    >
-                      {%- if photo != blank -%}
+                {%- liquid
+                  assign slide_index = 0
+                  assign has_gallery_photos = false
+                  if b.gallery_1 != blank or b.gallery_2 != blank or b.gallery_3 != blank or b.gallery_4 != blank
+                    assign has_gallery_photos = true
+                  endif
+                -%}
+
+                {%- if has_gallery_photos -%}
+                  {%- for i in (1..4) -%}
+                    {%- liquid
+                      case i
+                        when 1
+                          assign photo = b.gallery_1
+                        when 2
+                          assign photo = b.gallery_2
+                        when 3
+                          assign photo = b.gallery_3
+                        when 4
+                          assign photo = b.gallery_4
+                      endcase
+                    -%}
+                    {%- if photo != blank -%}
+                      {%- assign slide_index = slide_index | plus: 1 -%}
+                      <figure
+                        class="ff-projects__slide{% if slide_index == 1 %} is-active{% endif %}"
+                        data-ff-project-slide
+                        {% if slide_index > 1 %}hidden{% endif %}
+                      >
                         {{
                           photo
                           | image_url: width: 1800
                           | image_tag:
-                            class: 'ff-projects__slide-img ff-projects__slide-img--desktop',
+                            class: 'ff-projects__slide-img',
                             loading: 'lazy',
                             widths: '600, 900, 1200, 1800',
                             sizes: '(max-width: 989px) 100vw, 60vw',
                             alt: b.vehicle
                         }}
-                      {%- endif -%}
-                      {%- if photo_m != blank -%}
-                        {{
-                          photo_m
-                          | image_url: width: 1200
-                          | image_tag:
-                            class: 'ff-projects__slide-img ff-projects__slide-img--mobile',
-                            loading: 'lazy',
-                            widths: '600, 900, 1200',
-                            sizes: '100vw',
-                            alt: b.vehicle
-                        }}
-                      {%- elsif photo != blank -%}
-                        {{
-                          photo
-                          | image_url: width: 1200
-                          | image_tag:
-                            class: 'ff-projects__slide-img ff-projects__slide-img--mobile',
-                            loading: 'lazy',
-                            widths: '600, 900, 1200',
-                            sizes: '100vw',
-                            alt: b.vehicle
-                        }}
-                      {%- endif -%}
-                    </figure>
-                  {%- endif -%}
-                {%- endfor -%}
+                      </figure>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- elsif b.cover_image != blank or b.cover_image_mobile != blank -%}
+                  <figure class="ff-projects__slide is-active" data-ff-project-slide>
+                    {%- assign fallback_photo = b.cover_image | default: b.cover_image_mobile -%}
+                    {{
+                      fallback_photo
+                      | image_url: width: 1800
+                      | image_tag:
+                        class: 'ff-projects__slide-img',
+                        loading: 'lazy',
+                        widths: '600, 900, 1200, 1800',
+                        sizes: '(max-width: 989px) 100vw, 60vw',
+                        alt: b.vehicle
+                    }}
+                  </figure>
+                {%- endif -%}
 
                 <button type="button" class="ff-projects__slide-nav ff-projects__slide-nav--prev" data-ff-project-prev aria-label="Previous photo">
                   <span aria-hidden="true">‹</span>
@@ -379,7 +368,35 @@
           "type": "image_picker",
           "id": "cover_image_mobile",
           "label": "Cover image — mobile",
-          "info": "Optional. Only affects phones."
+          "info": "Optional. Used for the grid square on phones."
+        },
+        {
+          "type": "header",
+          "content": "Popup gallery photos"
+        },
+        {
+          "type": "paragraph",
+          "content": "Add 3–4 photos shown when a visitor clicks this build. These appear in the popup carousel — separate from the cover square above."
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_1",
+          "label": "Popup photo 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_2",
+          "label": "Popup photo 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_3",
+          "label": "Popup photo 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_4",
+          "label": "Popup photo 4"
         },
         {
           "type": "header",
@@ -441,74 +458,6 @@
           "type": "url",
           "id": "shop_link",
           "label": "Shop button link"
-        },
-        {
-          "type": "header",
-          "content": "Gallery photos — desktop"
-        },
-        {
-          "type": "image_picker",
-          "id": "gallery_1",
-          "label": "Photo 1"
-        },
-        {
-          "type": "image_picker",
-          "id": "gallery_2",
-          "label": "Photo 2"
-        },
-        {
-          "type": "image_picker",
-          "id": "gallery_3",
-          "label": "Photo 3"
-        },
-        {
-          "type": "image_picker",
-          "id": "gallery_4",
-          "label": "Photo 4"
-        },
-        {
-          "type": "image_picker",
-          "id": "gallery_5",
-          "label": "Photo 5"
-        },
-        {
-          "type": "image_picker",
-          "id": "gallery_6",
-          "label": "Photo 6"
-        },
-        {
-          "type": "header",
-          "content": "Gallery photos — mobile (optional)"
-        },
-        {
-          "type": "image_picker",
-          "id": "gallery_1_mobile",
-          "label": "Photo 1 — mobile"
-        },
-        {
-          "type": "image_picker",
-          "id": "gallery_2_mobile",
-          "label": "Photo 2 — mobile"
-        },
-        {
-          "type": "image_picker",
-          "id": "gallery_3_mobile",
-          "label": "Photo 3 — mobile"
-        },
-        {
-          "type": "image_picker",
-          "id": "gallery_4_mobile",
-          "label": "Photo 4 — mobile"
-        },
-        {
-          "type": "image_picker",
-          "id": "gallery_5_mobile",
-          "label": "Photo 5 — mobile"
-        },
-        {
-          "type": "image_picker",
-          "id": "gallery_6_mobile",
-          "label": "Photo 6 — mobile"
         }
       ]
     }
