@@ -111,7 +111,8 @@
             "beadlock_design": "",
             "beadlock_spec": "20x11 ET15",
             "beadlock_note": "True flush fitment · Clears steel & CCB brakes",
-            "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal"
+            "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal",
+            "show_price_estimate": false
           }
         },
         "setup_f8x": {
@@ -132,7 +133,8 @@
             "beadlock_design": "",
             "beadlock_spec": "",
             "beadlock_note": "",
-            "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal"
+            "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal",
+            "show_price_estimate": false
           }
         },
         "setup_r8huracan": {
@@ -150,7 +152,8 @@
             "beadlock_design": "",
             "beadlock_spec": "",
             "beadlock_note": "True flush fitment",
-            "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal"
+            "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal",
+            "show_price_estimate": false
           }
         },
         "setup_c7z06": {
