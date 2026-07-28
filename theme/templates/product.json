@@ -73,7 +73,7 @@
         "text_648cT9": {
           "type": "text",
           "settings": {
-            "text": "<a href=\"#ff-fitment-ff_fitment_finder_main\" class=\"ff-fitment-teaser\">Not sure this fits your ride? Check your fitment ↓</a>",
+            "text": "",
             "padding_top": 0,
             "padding_bottom": 0,
             "font_family": "font_1",
@@ -302,87 +302,6 @@
         "show_share": false
       }
     },
-    "ff_fitment_finder_main": {
-      "type": "ff-fitment-finder",
-      "blocks": {
-        "match_g20": {
-          "type": "vehicle_match",
-          "settings": {
-            "match_label": "BMW G20/G22 3 & 4 Series",
-            "makes": "BMW",
-            "model_keywords": "3 Series,4 Series,320i,330i,340i,M340i,430i,440i,M440i,G20,G22",
-            "year_min": 2019,
-            "year_max": 2026,
-            "recommended_sizes": "Direct bolt-on fitment — front and rear sizes engineered to sit flush with a clean stance.",
-            "guide_link": "shopify://pages/g20-fitment",
-            "guide_link_label": "View full fitment guide"
-          }
-        },
-        "match_g8x": {
-          "type": "vehicle_match",
-          "settings": {
-            "match_label": "BMW G80/G82 M3 & M4",
-            "makes": "BMW",
-            "model_keywords": "M3,M4,G80,G82,G83",
-            "year_min": 2021,
-            "year_max": 2026,
-            "recommended_sizes": "Direct bolt-on fitment — clears M-brake packages with a flush, aggressive stance.",
-            "guide_link": "shopify://pages/shop-by-vehicle-bmw",
-            "guide_link_label": "View BMW fitment guides"
-          }
-        },
-        "match_f80": {
-          "type": "vehicle_match",
-          "settings": {
-            "match_label": "BMW F80/F82 M3 & M4",
-            "makes": "BMW",
-            "model_keywords": "M3,M4,F80,F82,F83",
-            "year_min": 2015,
-            "year_max": 2020,
-            "recommended_sizes": "Precision-fit to sit flush, clear brakes, and perform without compromise.",
-            "guide_link": "shopify://pages/f80-fitment",
-            "guide_link_label": "View full fitment guide"
-          }
-        },
-        "match_e9x": {
-          "type": "vehicle_match",
-          "settings": {
-            "match_label": "BMW E90/E92/E93 3 Series",
-            "makes": "BMW",
-            "model_keywords": "3 Series,328i,335i,M3,E90,E92,E93",
-            "year_min": 2006,
-            "year_max": 2013,
-            "recommended_sizes": "Balanced, direct-fit sizing for an aggressive stance without sacrificing drivability.",
-            "guide_link": "shopify://pages/e9x-fitment",
-            "guide_link_label": "View full fitment guide"
-          }
-        }
-      },
-      "block_order": [
-        "match_g20",
-        "match_g8x",
-        "match_f80",
-        "match_e9x"
-      ],
-      "settings": {
-        "show_section": true,
-        "eyebrow": "Fortune Forged",
-        "heading": "Find Your Perfect Fitment",
-        "intro": "Tell us what you drive and we'll confirm this wheel is a perfect fit before it ever leaves the shop.",
-        "model_placeholder": "e.g. M3, 428i, Corvette Z06",
-        "submit_label": "Check My Fitment",
-        "match_badge": "✓ Confirmed Fit",
-        "match_reassure": "Add to cart with confidence — our team double-checks every spec before your order ships.",
-        "custom_badge": "Built To Order",
-        "custom_heading": "We custom-fit every wheel to your exact vehicle",
-        "custom_copy": "We didn't find your exact vehicle in our guide, but every Fortune Forged wheel is built to order. Leave your info and a fitment specialist will confirm your perfect spec before you order.",
-        "custom_submit_label": "Get My Fitment Confirmed",
-        "success_message": "Got it — a Fortune Forged fitment specialist will follow up shortly to confirm your exact spec.",
-        "unsure_note": "Not sure about your specs? Our team confirms fitment on every custom order at no extra cost.",
-        "padding_top": 56,
-        "padding_bottom": 56
-      }
-    },
     "product-description": {
       "type": "product-description",
       "blocks": {
@@ -558,7 +477,6 @@
   "order": [
     "halo_marquee_promotion_QKn9KU",
     "main",
-    "ff_fitment_finder_main",
     "product-description",
     "product-bundle",
     "product-review",
