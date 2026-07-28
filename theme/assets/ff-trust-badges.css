@@ -1,0 +1,75 @@
+.ff-trust {
+  --ff-gold: #c2a76b;
+  background: #ffffff;
+  color: #111111;
+  padding: var(--ff-trust-pad-top, 56px) 20px var(--ff-trust-pad-bottom, 56px);
+}
+
+.ff-trust__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ff-trust__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.ff-trust__card {
+  padding: 36px 28px;
+  border-radius: 14px;
+  background: #f5f3ef;
+  text-align: center;
+}
+
+.ff-trust__icon {
+  display: grid;
+  place-items: center;
+  margin: 0 auto 18px;
+  width: 30px;
+  height: 30px;
+  color: var(--ff-gold);
+}
+
+.ff-trust__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ff-trust__heading {
+  margin: 0 0 10px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.ff-trust__desc {
+  margin: 0;
+  color: #6b6862;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.ff-trust__link {
+  display: inline;
+  color: #6b6862;
+  text-decoration: underline;
+}
+
+.ff-trust__link:hover {
+  color: var(--ff-gold);
+}
+
+@media (max-width: 749.98px) {
+  .ff-trust__grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .ff-trust__card {
+    padding: 28px 22px;
+  }
+}

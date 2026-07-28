@@ -149,6 +149,9 @@
             "front_spec": "20x9 ET30",
             "rear_spec": "21x11 ET26",
             "full_set_note": "True flush fitment",
+            "full_image_1": "shopify://shop_images/IMG_2195.jpg",
+            "full_image_2": "shopify://shop_images/IMG_2196.jpg",
+            "full_image_3": "shopify://shop_images/IMG_2194.jpg",
             "beadlock_design": "",
             "beadlock_spec": "",
             "beadlock_note": "True flush fitment",
@@ -267,6 +270,48 @@
         "background_image": "shopify://shop_images/forza-manufacturing_7.webp",
         "padding_top": 64,
         "padding_bottom": 64
+      }
+    },
+    "ff_trust_badges_main": {
+      "type": "ff-trust-badges",
+      "blocks": {
+        "badge_fitment": {
+          "type": "badge",
+          "settings": {
+            "icon": "check",
+            "heading": "Fitment Guaranteed",
+            "description": "Engineered for your chassis. Professional install required. If it doesn't fit, we make it right.",
+            "show_email": false
+          }
+        },
+        "badge_people": {
+          "type": "badge",
+          "settings": {
+            "icon": "bolt",
+            "heading": "Real People, Same Day",
+            "description": "Questions? We answer same day. Real enthusiasts, not call centers. ",
+            "show_email": true
+          }
+        },
+        "badge_secure": {
+          "type": "badge",
+          "settings": {
+            "icon": "lock",
+            "heading": "Secure Checkout",
+            "description": "256-bit encryption. Affirm available. All major cards accepted.",
+            "show_email": false
+          }
+        }
+      },
+      "block_order": [
+        "badge_fitment",
+        "badge_people",
+        "badge_secure"
+      ],
+      "settings": {
+        "show_section": true,
+        "padding_top": 56,
+        "padding_bottom": 56
       }
     },
     "ff_project_gallery_main": {
@@ -1700,6 +1745,7 @@
     "ff_simple_build_main",
     "ff_fan_favorites_main",
     "ff_value_props_main",
+    "ff_trust_badges_main",
     "ff_project_gallery_main",
     "halo_slideshow_Kd9Mbj",
     "halo_split_slideshow_gjcLKL",
