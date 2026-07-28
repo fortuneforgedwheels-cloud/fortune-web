@@ -72,6 +72,10 @@
           ? 'Request specialist callback'
           : 'Submit build request';
       }
+      root.querySelectorAll('.ff-quote__choice').forEach(function (label) {
+        var radio = label.querySelector('[data-help-mode]');
+        label.classList.toggle('is-selected', !!(radio && radio.checked));
+      });
     }
 
     if (manual) {

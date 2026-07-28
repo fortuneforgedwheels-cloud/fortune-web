@@ -180,21 +180,50 @@
 }
 
 .ff-quote__path {
-  border: 1px solid var(--ff-line);
+  border: 0;
   margin: 18px 0 8px;
-  padding: 14px;
+  padding: 0;
+}
+
+.ff-quote__path legend {
+  margin-bottom: 10px;
 }
 
 .ff-quote__choice {
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  margin-top: 12px;
+  margin-top: 10px;
   cursor: pointer;
+  padding: 16px 14px;
+  border: 1px solid var(--ff-line);
+  background: #0f0f0f;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ff-quote__choice:hover {
+  border-color: rgba(196, 163, 90, 0.55);
+}
+
+.ff-quote__choice.is-selected {
+  border-color: var(--ff-gold);
+  background: rgba(196, 163, 90, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(196, 163, 90, 0.45);
+}
+
+.ff-quote__choice input {
+  margin-top: 3px;
+  accent-color: var(--ff-gold);
+  flex: 0 0 auto;
 }
 
 .ff-quote__choice strong {
   display: block;
+  color: var(--ff-ink);
+}
+
+.ff-quote__choice.is-selected strong {
+  color: var(--ff-gold);
 }
 
 .ff-quote__choice em {

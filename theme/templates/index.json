@@ -1184,7 +1184,7 @@
       "type": "ff-simple-build",
       "settings": {
         "eyebrow": "Fortune Forged",
-        "title": "Order custom forged wheels",
+        "title": "Request a quote for your next forged wheels",
         "subtitle": "Three steps. Tell us your vehicle, choose a setup, request a build.",
         "step1_label": "Vehicle",
         "step2_label": "Style",
