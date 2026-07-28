@@ -25,45 +25,56 @@
           >
             <div class="ff-hero__media">
               {%- if block.settings.image != blank or block.settings.mobile_image != blank -%}
-                <div class="ff-hero__media-desktop" aria-hidden="false">
+                <div class="ff-hero__media-desktop" data-ff-desktop-layer>
                   {%- if block.settings.image != blank -%}
-                    {{
-                      block.settings.image
-                      | image_url: width: 2400
-                      | image_tag:
-                        class: 'ff-hero__image',
-                        loading: img_loading,
-                        widths: '800, 1200, 1600, 2000, 2400',
-                        sizes: '100vw',
-                        alt: block.settings.title
-                    }}
+                    <img
+                      class="ff-hero__image"
+                      src="{{ block.settings.image | image_url: width: 2400 }}"
+                      srcset="
+                        {{ block.settings.image | image_url: width: 800 }} 800w,
+                        {{ block.settings.image | image_url: width: 1200 }} 1200w,
+                        {{ block.settings.image | image_url: width: 1600 }} 1600w,
+                        {{ block.settings.image | image_url: width: 2000 }} 2000w,
+                        {{ block.settings.image | image_url: width: 2400 }} 2400w
+                      "
+                      sizes="100vw"
+                      alt="{{ block.settings.title | escape }}"
+                      loading="{{ img_loading }}"
+                      width="2400"
+                      height="1350"
+                      data-ff-desktop-image
+                    >
                   {%- else -%}
                     <div class="ff-hero__placeholder" aria-hidden="true"></div>
                   {%- endif -%}
                 </div>
-                <div class="ff-hero__media-mobile" aria-hidden="true">
+                <div class="ff-hero__media-mobile" data-ff-mobile-layer>
                   {%- if block.settings.mobile_image != blank -%}
-                    {{
-                      block.settings.mobile_image
-                      | image_url: width: 1200
-                      | image_tag:
-                        class: 'ff-hero__image',
-                        loading: img_loading,
-                        widths: '600, 900, 1200',
-                        sizes: '100vw',
-                        alt: block.settings.title
-                    }}
+                    <img
+                      class="ff-hero__image"
+                      src="{{ block.settings.mobile_image | image_url: width: 1200 }}"
+                      srcset="
+                        {{ block.settings.mobile_image | image_url: width: 600 }} 600w,
+                        {{ block.settings.mobile_image | image_url: width: 900 }} 900w,
+                        {{ block.settings.mobile_image | image_url: width: 1200 }} 1200w
+                      "
+                      sizes="100vw"
+                      alt="{{ block.settings.title | escape }}"
+                      loading="{{ img_loading }}"
+                      width="1200"
+                      height="1600"
+                      data-ff-mobile-image
+                    >
                   {%- elsif block.settings.image != blank -%}
-                    {{
-                      block.settings.image
-                      | image_url: width: 1200
-                      | image_tag:
-                        class: 'ff-hero__image',
-                        loading: img_loading,
-                        widths: '600, 900, 1200',
-                        sizes: '100vw',
-                        alt: block.settings.title
-                    }}
+                    <img
+                      class="ff-hero__image"
+                      src="{{ block.settings.image | image_url: width: 1200 }}"
+                      alt="{{ block.settings.title | escape }}"
+                      loading="{{ img_loading }}"
+                      width="1200"
+                      height="1600"
+                      data-ff-mobile-fallback
+                    >
                   {%- else -%}
                     <div class="ff-hero__placeholder" aria-hidden="true"></div>
                   {%- endif -%}
@@ -155,14 +166,14 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Desktop image",
-          "info": "Shown on desktop/tablet only. Changing this does not change the mobile image."
+          "label": "Desktop image only",
+          "info": "Large screens only. Never overwritten by the mobile upload."
         },
         {
           "type": "image_picker",
           "id": "mobile_image",
-          "label": "Mobile image",
-          "info": "Shown on phones only. Leave blank to reuse the desktop image on mobile. This never replaces the desktop image."
+          "label": "Mobile image only",
+          "info": "Phones only. Upload here to change mobile without affecting desktop. Use the phone preview icon to verify."
         },
         {
           "type": "text",

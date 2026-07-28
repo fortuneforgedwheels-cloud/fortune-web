@@ -1,29 +1,49 @@
 {
   "sections": {
-    "halo_slideshow_with_simple_effect_X4zHe3": {
-      "type": "halo-slideshow-with-simple-effect",
-      "custom_css": [],
-      "name": "t:sections.slideshow.presets.name__3",
-      "settings": {
-        "show_slideshow": true,
-        "container": "full",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 0,
-        "padding_bottom_tablet": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
-        "block_autoplay": true,
-        "block_autoplay_time": 5,
-        "block_dots": false,
-        "block_dots_bg": "",
-        "block_dots_border": "",
-        "block_arrows": true,
-        "block_arrows_bg": "",
-        "block_arrows_color": "",
-        "block_arrows_border": ""
+    "ff_hero_lifestyle_main": {
+      "type": "ff-hero-lifestyle",
+      "blocks": {
+        "slide_mono": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/IMG_2108.jpg",
+            "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
+            "title": "Monoblock Forged",
+            "button_label": "Browse Selection",
+            "button_link": "shopify://collections/monoblock-wheels"
+          }
+        },
+        "slide_two": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-07-27_at_6.58.56_PM.png",
+            "mobile_image": "shopify://shop_images/IMG_0285.jpg",
+            "title": "Two-Piece Forged",
+            "button_label": "Browse Selection",
+            "button_link": "shopify://collections/two-piece-wheels"
+          }
+        },
+        "slide_bead": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM_c0f745e4-4f88-4373-8d62-148cfcbbe059.png",
+            "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
+            "title": "Beadlock Forged",
+            "button_label": "Browse Selection",
+            "button_link": "shopify://collections/beadlock-wheels"
+          }
+        }
       },
-      "disabled": true
+      "block_order": [
+        "slide_mono",
+        "slide_two",
+        "slide_bead"
+      ],
+      "settings": {
+        "show_hero": true,
+        "height": 90,
+        "height_mobile": 75
+      }
     },
     "halo_split_slideshow_gjcLKL": {
       "type": "halo-split-slideshow",
@@ -115,6 +135,7 @@
         "image_PYTcRi",
         "image_FatjNF"
       ],
+      "disabled": true,
       "custom_css": [
         ".slick-list {margin-bottom: -80px;}"
       ],
@@ -131,8 +152,46 @@
         "mobile_view": "below",
         "block_dots_bg": "#000000",
         "block_dots_border": "#f9f9f9"
-      },
-      "disabled": true
+      }
+    },
+    "ff_simple_build_main": {
+      "type": "ff-simple-build",
+      "settings": {
+        "eyebrow": "Fortune Forged",
+        "title": "Request a quote for your next forged wheels",
+        "subtitle": "Three steps. Tell us your vehicle, choose a setup, request a build.",
+        "step1_label": "Vehicle",
+        "step2_label": "Style",
+        "step3_label": "Quote",
+        "step1_heading": "What do you drive?",
+        "step1_copy": "Enter your year, make, and model so we can size and fit the wheel correctly.",
+        "vehicle_placeholder": "e.g. 2024 BMW G80 M3",
+        "continue_label": "Continue",
+        "step2_heading": "Choose your setup",
+        "step2_copy": "Browse the hottest designs, pick Monoblock, 2-Piece, or Beadlock \u2014 or skip straight to a custom quote.",
+        "step2_hint": "Beadlock wheels are priced by the pair. Standard monoblock and two piece wheels are priced individually.",
+        "hottest_label": "Browse the hottest designs",
+        "hottest_desc": "See recent Fortune Forged builds and popular styles",
+        "hottest_link": "shopify://pages/project-gallery",
+        "quote_cta": "Skip to custom quote",
+        "monoblock_link": "shopify://collections/monoblock-wheels",
+        "monoblock_desc": "One-piece forged strength \u00b7 priced individually",
+        "twopiece_link": "shopify://collections/two-piece-wheels",
+        "twopiece_desc": "Modular fitment & finish \u00b7 priced individually",
+        "beadlock_link": "shopify://collections/beadlock-wheels",
+        "beadlock_desc": "Off-road lock-ring builds \u00b7 priced by the pair",
+        "step3_heading": "Request your build",
+        "step3_copy": "Enter the custom details you already know \u2014 or leave fitment blank and a specialist will email or call you back to help.",
+        "modal_eyebrow": "Quote received",
+        "modal_title": "You're on the list \u2014 one more thing",
+        "modal_lead": "Thanks for requesting a quote. Our team will follow up shortly with pricing, fitment, and next steps.",
+        "modal_offer_label": "Complimentary media day",
+        "modal_offer_copy": "When your new Fortune Forged wheels are installed, we'd love to host a complimentary media day for your build \u2014 fully covered by us. Professional content, your car, your new wheels.",
+        "modal_social_copy": "We're proud of every set we ship and would love the chance to show off your finished build across Fortune Forged socials.",
+        "modal_cta": "Yes \u2014 I'm interested",
+        "modal_dismiss": "Maybe later",
+        "modal_thanks": "Perfect. When we follow up on your quote, we'll include media day details and help coordinate after installation."
+      }
     },
     "halo_featured_collection_5_Cf6VNC": {
       "type": "halo-featured-collection-5",
@@ -491,6 +550,31 @@
         "lookbook_style": "1"
       }
     },
+    "halo_slideshow_with_simple_effect_X4zHe3": {
+      "type": "halo-slideshow-with-simple-effect",
+      "disabled": true,
+      "custom_css": [],
+      "name": "t:sections.slideshow.presets.name__3",
+      "settings": {
+        "show_slideshow": true,
+        "container": "full",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "block_autoplay": true,
+        "block_autoplay_time": 5,
+        "block_dots": false,
+        "block_dots_bg": "",
+        "block_dots_border": "",
+        "block_arrows": true,
+        "block_arrows_bg": "",
+        "block_arrows_color": "",
+        "block_arrows_border": ""
+      }
+    },
     "halo_custom_text_button_YwPLb3": {
       "type": "halo-custom-text-button",
       "disabled": true,
@@ -517,6 +601,7 @@
     },
     "halo_slideshow_with_simple_effect_THU7G8": {
       "type": "halo-slideshow-with-simple-effect",
+      "disabled": true,
       "name": "t:sections.slideshow.presets.name__3",
       "settings": {
         "show_slideshow": true,
@@ -536,11 +621,11 @@
         "block_arrows_bg": "",
         "block_arrows_color": "",
         "block_arrows_border": ""
-      },
-      "disabled": true
+      }
     },
     "halo_banner_with_video_dtcbfK": {
       "type": "halo-banner-with-video",
+      "disabled": true,
       "name": "t:sections.banner-with-video.presets.name",
       "settings": {
         "show_banner_with_video": true,
@@ -571,13 +656,12 @@
         "text_text_transform": "uppercase",
         "text_color": "#ffffff",
         "title_color": "#f9f9f9"
-      },
-      "disabled": true
+      }
     },
     "17738955064a1e0a50": {
       "type": "apps",
-      "settings": {},
-      "disabled": true
+      "disabled": true,
+      "settings": {}
     },
     "1773890611372b8628": {
       "type": "apps",
@@ -604,19 +688,19 @@
       "block_order": [
         "instafeed_app_block_nyd7Ge"
       ],
-      "settings": {},
-      "disabled": true
+      "disabled": true,
+      "settings": {}
     },
     "custom_liquid_WpPQRK": {
       "type": "custom-liquid",
+      "disabled": true,
       "custom_css": [
         ".content-box--absolute {top: 95% !important;}"
       ],
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "custom_liquid": ""
-      },
-      "disabled": true
+      }
     },
     "666a0ea5-3ed3-46bd-90cd-0fcfe3ff243c": {
       "type": "halo-slideshow",
@@ -944,8 +1028,8 @@
       "block_order": [
         "instafeed_app_block_aYGkF3"
       ],
-      "settings": {},
-      "disabled": true
+      "disabled": true,
+      "settings": {}
     },
     "1627285730d8d5e449": {
       "type": "halo-product-block",
@@ -1160,11 +1244,12 @@
       "block_order": [
         "instafeed_app_block_zcNpbt"
       ],
-      "settings": {},
-      "disabled": true
+      "disabled": true,
+      "settings": {}
     },
     "contact_form_C7yhEx": {
       "type": "contact-form",
+      "disabled": true,
       "name": "t:sections.contact-form.presets.name",
       "settings": {
         "show_contact_form": true,
@@ -1178,91 +1263,6 @@
         "block_title": "Request a quote",
         "block_text": "Please submit: year/make/model with your desired wheel design , the sizes Front/Rear (ie: 20x9.5F, 20x11R, etc) and the finish you need.  (brushed, polished, etc).",
         "block_title_align": "center"
-      },
-      "disabled": true
-    },
-    "ff_simple_build_main": {
-      "type": "ff-simple-build",
-      "settings": {
-        "eyebrow": "Fortune Forged",
-        "title": "Request a quote for your next forged wheels",
-        "subtitle": "Three steps. Tell us your vehicle, choose a setup, request a build.",
-        "step1_label": "Vehicle",
-        "step2_label": "Style",
-        "step3_label": "Quote",
-        "step1_heading": "What do you drive?",
-        "step1_copy": "Enter your year, make, and model so we can size and fit the wheel correctly.",
-        "vehicle_placeholder": "e.g. 2024 BMW G80 M3",
-        "continue_label": "Continue",
-        "step2_heading": "Choose your setup",
-        "step2_copy": "Browse the hottest designs, pick Monoblock, 2-Piece, or Beadlock \u2014 or skip straight to a custom quote.",
-        "step2_hint": "Beadlock wheels are priced by the pair. Standard monoblock and two piece wheels are priced individually.",
-        "hottest_label": "Browse the hottest designs",
-        "hottest_desc": "See recent Fortune Forged builds and popular styles",
-        "hottest_link": "shopify://pages/project-gallery",
-        "quote_cta": "Skip to custom quote",
-        "monoblock_link": "shopify://collections/monoblock-wheels",
-        "monoblock_desc": "One-piece forged strength \u00b7 priced individually",
-        "twopiece_link": "shopify://collections/two-piece-wheels",
-        "twopiece_desc": "Modular fitment & finish \u00b7 priced individually",
-        "beadlock_link": "shopify://collections/beadlock-wheels",
-        "beadlock_desc": "Off-road lock-ring builds \u00b7 priced by the pair",
-        "step3_heading": "Request your build",
-        "step3_copy": "Enter the custom details you already know \u2014 or leave fitment blank and a specialist will email or call you back to help.",
-        "modal_eyebrow": "Quote received",
-        "modal_title": "You're on the list \u2014 one more thing",
-        "modal_lead": "Thanks for requesting a quote. Our team will follow up shortly with pricing, fitment, and next steps.",
-        "modal_offer_label": "Complimentary media day",
-        "modal_offer_copy": "When your new Fortune Forged wheels are installed, we'd love to host a complimentary media day for your build \u2014 fully covered by us. Professional content, your car, your new wheels.",
-        "modal_social_copy": "We're proud of every set we ship and would love the chance to show off your finished build across Fortune Forged socials.",
-        "modal_cta": "Yes \u2014 I'm interested",
-        "modal_dismiss": "Maybe later",
-        "modal_thanks": "Perfect. When we follow up on your quote, we'll include media day details and help coordinate after installation."
-      }
-    },
-    "ff_hero_lifestyle_main": {
-      "type": "ff-hero-lifestyle",
-      "blocks": {
-        "slide_mono": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/IMG_8295.jpg",
-            "mobile_image": "shopify://shop_images/IMG_6574.jpg",
-            "title": "Monoblock Forged",
-            "button_label": "Browse Selection",
-            "button_link": "shopify://collections/monoblock-wheels"
-          }
-        },
-        "slide_two": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/IMG_8313_2.jpg",
-            "mobile_image": "shopify://shop_images/IMG_0285.jpg",
-            "title": "Two-Piece Forged",
-            "button_label": "Browse Selection",
-            "button_link": "shopify://collections/two-piece-wheels"
-          }
-        },
-        "slide_bead": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/IMG_8074.jpg",
-            "mobile_image": "shopify://shop_images/IMG_5064.jpg",
-            "title": "Beadlock Forged",
-            "button_label": "Browse Selection",
-            "button_link": "shopify://collections/beadlock-wheels"
-          }
-        }
-      },
-      "block_order": [
-        "slide_mono",
-        "slide_two",
-        "slide_bead"
-      ],
-      "settings": {
-        "show_hero": true,
-        "height": 90,
-        "height_mobile": 75
       }
     }
   },
