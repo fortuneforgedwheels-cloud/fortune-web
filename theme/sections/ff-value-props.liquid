@@ -1,0 +1,190 @@
+{{ 'ff-value-props.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.show_section -%}
+  <section
+    class="ff-values"
+    id="ff-values-{{ section.id }}"
+    style="
+      --ff-values-pad-top: {{ section.settings.padding_top }}px;
+      --ff-values-pad-bottom: {{ section.settings.padding_bottom }}px;
+      {% if section.settings.background_image != blank %}
+        --ff-values-bg: url({{ section.settings.background_image | image_url: width: 2400 }});
+      {% endif %}
+    "
+  >
+    <div class="ff-values__shade" aria-hidden="true"></div>
+    <div class="ff-values__inner">
+      {%- if section.settings.heading != blank -%}
+        <header class="ff-values__header">
+          <h2 class="ff-values__heading">{{ section.settings.heading | escape }}</h2>
+          {%- if section.settings.subheading != blank -%}
+            <p class="ff-values__subheading">{{ section.settings.subheading | escape }}</p>
+          {%- endif -%}
+        </header>
+      {%- endif -%}
+
+      <div class="ff-values__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'value' -%}
+            <article class="ff-values__card" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}
+                <h3 class="ff-values__title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+
+              {%- if block.settings.image != blank -%}
+                <div class="ff-values__media">
+                  {{
+                    block.settings.image
+                    | image_url: width: 900
+                    | image_tag:
+                      class: 'ff-values__image',
+                      loading: 'lazy',
+                      widths: '400, 600, 900',
+                      sizes: '(max-width: 749px) 100vw, 30vw',
+                      alt: block.settings.title
+                  }}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.text != blank -%}
+                <p class="ff-values__text">{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.link_label != blank -%}
+                {%- if block.settings.link != blank -%}
+                  <a class="ff-values__link" href="{{ block.settings.link }}">
+                    {{ block.settings.link_label | escape }}
+                  </a>
+                {%- else -%}
+                  <p class="ff-values__link ff-values__link--static">
+                    {{ block.settings.link_label | escape }}
+                  </p>
+                {%- endif -%}
+              {%- endif -%}
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FF Value Props",
+  "tag": "section",
+  "class": "section-ff-value-props",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Fortune Forged"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Custom forged wheels engineered for your build."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "TAILORED"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Every set is built around your vehicle, fitment goals, and finish — not a one-size warehouse wheel."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Bottom line",
+          "default": "BUILT-TO-ORDER FITMENT FOR YOUR VEHICLE"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Bottom line link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FF Value Props",
+      "blocks": [
+        {
+          "type": "value",
+          "settings": {
+            "title": "TAILORED",
+            "text": "Every set is built around your vehicle, fitment goals, and finish — not a one-size warehouse wheel.",
+            "link_label": "BUILT-TO-ORDER FITMENT FOR YOUR VEHICLE"
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "LIGHTER",
+            "text": "Forged construction delivers strength where it matters and sheds unnecessary mass for sharper response.",
+            "link_label": "FORGED STRENGTH WITHOUT EXCESS WEIGHT"
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "EXCLUSIVE",
+            "text": "From brushed and polished to custom powder coats, finish your wheels to match the rest of the build.",
+            "link_label": "CUSTOM FINISHES & ONE-OFF BUILDS"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

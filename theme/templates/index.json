@@ -7,7 +7,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/IMG_2108.jpg",
-            "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
+            "mobile_image": "shopify://shop_images/IMG_2114.jpg",
             "title": "Monoblock Forged",
             "button_label": "Browse Selection",
             "button_link": "shopify://collections/monoblock-wheels"
@@ -17,7 +17,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Screenshot_2026-07-27_at_6.58.56_PM.png",
-            "mobile_image": "shopify://shop_images/IMG_0285.jpg",
+            "mobile_image": "shopify://shop_images/IMG_0287_2.jpg",
             "title": "Two-Piece Forged",
             "button_label": "Browse Selection",
             "button_link": "shopify://collections/two-piece-wheels"
@@ -266,7 +266,8 @@
         "text_font_size": 14,
         "text_font_weight": "600",
         "text_text_transform": "uppercase"
-      }
+      },
+      "disabled": true
     },
     "halo_slideshow_Kd9Mbj": {
       "type": "halo-slideshow",
@@ -529,7 +530,7 @@
         "padding_bottom_tablet": 0,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 0,
-        "block_title": "",
+        "block_title": "LATEST PROJECTS",
         "block_text": "",
         "block_title_align": "center",
         "block_logo": "shopify://shop_images/IMG_0843-2.jpg",
@@ -548,7 +549,8 @@
         "block_arrows_color": "",
         "block_arrows_border": "",
         "lookbook_style": "1"
-      }
+      },
+      "disabled": false
     },
     "halo_slideshow_with_simple_effect_X4zHe3": {
       "type": "halo-slideshow-with-simple-effect",
@@ -1264,14 +1266,63 @@
         "block_text": "Please submit: year/make/model with your desired wheel design , the sizes Front/Rear (ie: 20x9.5F, 20x11R, etc) and the finish you need.  (brushed, polished, etc).",
         "block_title_align": "center"
       }
+    },
+    "ff_value_props_main": {
+      "type": "ff-value-props",
+      "blocks": {
+        "value_tailored": {
+          "type": "value",
+          "settings": {
+            "title": "TAILORED",
+            "image": "shopify://shop_images/c2ae418a-fc43-4c68-855a-52fb199bd69f.jpg",
+            "text": "Every Fortune Forged set is engineered around your chassis, stance goals, and finish \u2014 measured fitment, not a generic off-the-shelf size.",
+            "link_label": "BUILT-TO-ORDER FITMENT FOR YOUR VEHICLE",
+            "link": "shopify://collections/monoblock-wheels"
+          }
+        },
+        "value_lighter": {
+          "type": "value",
+          "settings": {
+            "title": "LIGHTER",
+            "image": "shopify://shop_images/048f3887-e190-4269-8619-1ecf522f2e72.jpg",
+            "text": "Forged construction puts strength where it matters and cuts unnecessary mass for better response, braking, and feel.",
+            "link_label": "FORGED STRENGTH WITHOUT EXCESS WEIGHT",
+            "link": "shopify://collections/two-piece-wheels"
+          }
+        },
+        "value_exclusive": {
+          "type": "value",
+          "settings": {
+            "title": "EXCLUSIVE",
+            "image": "shopify://shop_images/d2d90bc5-9bc0-4762-bc84-4971421200e2.jpg",
+            "text": "From brushed and polished to custom powder coats, finish your wheels to match the rest of the build \u2014 monoblock, two-piece, or beadlock.",
+            "link_label": "CUSTOM FINISHES & ONE-OFF BUILDS",
+            "link": "shopify://collections/beadlock-wheels"
+          }
+        }
+      },
+      "block_order": [
+        "value_tailored",
+        "value_lighter",
+        "value_exclusive"
+      ],
+      "settings": {
+        "show_section": true,
+        "heading": "Why Fortune Forged",
+        "subheading": "Custom forged wheels engineered for your build.",
+        "background_image": "shopify://shop_images/IMG_8295.jpg",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
     }
   },
   "order": [
     "ff_hero_lifestyle_main",
-    "halo_split_slideshow_gjcLKL",
     "ff_simple_build_main",
-    "halo_featured_collection_5_Cf6VNC",
+    "ff_value_props_main",
     "halo_slideshow_Kd9Mbj",
+    "halo_split_slideshow_gjcLKL",
+    "halo_featured_collection_5_Cf6VNC",
     "halo_slideshow_with_simple_effect_X4zHe3",
     "halo_custom_text_button_YwPLb3",
     "halo_slideshow_with_simple_effect_THU7G8",
