@@ -94,6 +94,10 @@
         <a class="skip-to-content-link visually-hidden" href="#MainContent">
             {{ "accessibility.skip_to_text" | t }}
         </a>
+        <!-- Fortune-Cursor-Rebuild draft marker: remove before publishing live -->
+        <div id="ff-cursor-draft-banner" role="status" style="position:sticky;top:0;z-index:99999;background:#c4a35a;color:#111;text-align:center;font:600 12px/1.4 system-ui,sans-serif;padding:8px 12px;letter-spacing:.04em;">
+          DRAFT PREVIEW — Fortune-Cursor-Rebuild · customers still see the live site
+        </div>
         {% render 'global-style' %}
         {% render 'global-script' %}
         {%- if settings.enable_preloading_screen -%}

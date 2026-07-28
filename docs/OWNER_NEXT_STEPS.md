@@ -1,26 +1,22 @@
 # Owner next steps
 
-Theme Access is connected and the live Halo theme is in `theme/`.
+Private draft theme is ready: **Fortune-Cursor-Rebuild** (`188539207955`).
 
-## You’re ready to request changes
+## Preview only you can see
 
-Examples:
+1. Open: https://bb6223-6f.myshopify.com?preview_theme_id=188539207955  
+   Or: Shopify Admin → Online Store → Themes → **Fortune-Cursor-Rebuild** → Preview  
+2. Confirm the gold **DRAFT PREVIEW** bar at the top.  
+3. Live customers still see `halo-setonsocial` until you publish.
 
-- Rebuild the homepage hero
-- Simplify navigation
-- Improve the quote / contact form
-- Clean up collection pages for Monoblock / 2-Piece / Beadlock
-- Stronger Fortune Forged branding across templates
+Do **not** use `Halo-SetOnSocial-FinalVersion-Backup` for Cursor work — that is a separate backup draft.
 
-## Safety reminders
+## Request changes
+
+Tell the agent what to rebuild (homepage, nav, collections, quote form, branding, etc.). Updates push to the draft only.
+
+## Safety
 
 - Do not paste Theme Access passwords into chat.
-- Keep `.env` local / in Cursor secrets only (gitignored).
-- Production publishes happen only when you explicitly approve them.
-- Prefer draft/unpublished theme previews first.
-
-## If auth breaks later
-
-1. Create a new password in Shopify Admin → Theme Access.
-2. Update `SHOPIFY_CLI_THEME_TOKEN` in [`.env`](../.env).
-3. Run `npm run setup:check`.
+- Keep `.env` local / in Cursor secrets only.
+- Publish live only when you explicitly approve it.

@@ -1,10 +1,15 @@
 # Shopify CLI theme environments for Fortune Forged Wheels
 # Auth uses SHOPIFY_CLI_THEME_TOKEN from your local .env or Cursor secrets.
-# Docs: https://shopify.dev/docs/storefronts/themes/tools/cli/ci-cd
+# Default development target is the unpublished draft — never the live theme.
 
 [environments.development]
 store = "bb6223-6f.myshopify.com"
-theme = "178099421459"
+theme = "188539207955"
+path = "theme"
+
+[environments.draft]
+store = "bb6223-6f.myshopify.com"
+theme = "188539207955"
 path = "theme"
 
 [environments.live]
