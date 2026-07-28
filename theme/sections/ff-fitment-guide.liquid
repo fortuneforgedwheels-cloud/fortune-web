@@ -1,0 +1,408 @@
+{{ 'ff-fitment-guide.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.show_section -%}
+  <section class="ff-guide" id="ff-guide-{{ section.id }}">
+    <div class="ff-guide__inner">
+      <header class="ff-guide__header">
+        {%- if section.settings.back_link != blank -%}
+          <a class="ff-guide__back" href="{{ section.settings.back_link }}">{{ section.settings.back_label | escape }}</a>
+        {%- endif -%}
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ff-guide__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h1 class="ff-guide__heading">{{ section.settings.heading | escape }}</h1>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <div class="ff-guide__intro">{{ section.settings.intro }}</div>
+        {%- endif -%}
+      </header>
+
+      {%- if section.blocks.size > 0 -%}
+        <nav class="ff-guide__jumplinks" aria-label="Jump to fitment tier">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'tier' -%}
+              <a href="#ff-guide-tier-{{ block.id }}">{{ block.settings.tier_title | escape }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'tier' -%}
+          {%- liquid
+            assign b = block.settings
+            assign has_b = false
+            if b.b_front != blank or b.b_rear != blank
+              assign has_b = true
+            endif
+            assign cfg_keys = 'a,b' | split: ','
+          -%}
+          <article class="ff-guide__tier" id="ff-guide-tier-{{ block.id }}" {{ block.shopify_attributes }}>
+            <div class="ff-guide__tier-head">
+              <span class="ff-guide__tier-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+              <div>
+                <h2 class="ff-guide__tier-title">{{ b.tier_title | escape }}</h2>
+                {%- if b.tier_intro != blank -%}
+                  <div class="ff-guide__tier-intro">{{ b.tier_intro }}</div>
+                {%- endif -%}
+              </div>
+            </div>
+
+            <div class="ff-guide__configs{% if has_b %} ff-guide__configs--two{% endif %}">
+              {%- for cfg in cfg_keys -%}
+                {%- liquid
+                  case cfg
+                    when 'a'
+                      assign label = b.a_label
+                      assign front = b.a_front
+                      assign rear = b.a_rear
+                      assign image = b.a_image
+                      assign notes = b.a_notes
+                      assign tire_pick = b.a_tire_pick
+                      assign tire_flags = b.a_tire_flags
+                      assign t_all = b.a_tire_allseason
+                      assign t_uhp = b.a_tire_uhp
+                      assign t_max = b.a_tire_max
+                      assign t_extreme = b.a_tire_extreme
+                      assign t_rc = b.a_tire_rcompound
+                      assign t_drag = b.a_tire_drag
+                    when 'b'
+                      assign label = b.b_label
+                      assign front = b.b_front
+                      assign rear = b.b_rear
+                      assign image = b.b_image
+                      assign notes = b.b_notes
+                      assign tire_pick = b.b_tire_pick
+                      assign tire_flags = b.b_tire_flags
+                      assign t_all = b.b_tire_allseason
+                      assign t_uhp = b.b_tire_uhp
+                      assign t_max = b.b_tire_max
+                      assign t_extreme = b.b_tire_extreme
+                      assign t_rc = b.b_tire_rcompound
+                      assign t_drag = b.b_tire_drag
+                  endcase
+                -%}
+                {%- if front != blank or rear != blank -%}
+                  <div class="ff-guide__config">
+                    {%- if image != blank -%}
+                      <div class="ff-guide__config-media">
+                        {{ image | image_url: width: 900 | image_tag: loading: 'lazy', alt: label }}
+                      </div>
+                    {%- endif -%}
+                    <div class="ff-guide__config-body">
+                      {%- if label != blank -%}
+                        <span class="ff-guide__config-label">{{ label | escape }}</span>
+                      {%- endif -%}
+
+                      <div class="ff-guide__spec-block">
+                        <p class="ff-guide__spec-heading">Wheels</p>
+                        {%- if front == rear and front != blank -%}
+                          <p class="ff-guide__spec-line">Front &amp; Rear: <strong>{{ front | escape }}</strong></p>
+                        {%- else -%}
+                          {%- if front != blank -%}
+                            <p class="ff-guide__spec-line">Front: <strong>{{ front | escape }}</strong></p>
+                          {%- endif -%}
+                          {%- if rear != blank -%}
+                            <p class="ff-guide__spec-line">Rear: <strong>{{ rear | escape }}</strong></p>
+                          {%- endif -%}
+                        {%- endif -%}
+                      </div>
+
+                      {%- if notes != blank -%}
+                        <p class="ff-guide__notes">{{ notes | escape }}</p>
+                      {%- endif -%}
+
+                      {%- if tire_pick != blank -%}
+                        <div class="ff-guide__spec-block">
+                          <p class="ff-guide__spec-heading">Tires</p>
+                          <p class="ff-guide__spec-line ff-guide__staff-pick">
+                            <span>FF Staff Pick</span> {{ tire_pick | escape }}
+                          </p>
+                          {%- if tire_flags != blank -%}
+                            <p class="ff-guide__flags">{{ tire_flags | escape }}</p>
+                          {%- endif -%}
+
+                          <dl class="ff-guide__tire-list">
+                            {%- if t_all != blank -%}
+                              <div><dt>All Season</dt><dd>{{ t_all | escape }}</dd></div>
+                            {%- endif -%}
+                            {%- if t_uhp != blank -%}
+                              <div><dt>UHP Summer</dt><dd>{{ t_uhp | escape }}</dd></div>
+                            {%- endif -%}
+                            {%- if t_max != blank -%}
+                              <div><dt>Max Perf. Summer</dt><dd>{{ t_max | escape }}</dd></div>
+                            {%- endif -%}
+                            {%- if t_extreme != blank -%}
+                              <div><dt>Extreme Perf. Summer</dt><dd>{{ t_extreme | escape }}</dd></div>
+                            {%- endif -%}
+                            {%- if t_rc != blank -%}
+                              <div><dt>R-Compound</dt><dd>{{ t_rc | escape }}</dd></div>
+                            {%- endif -%}
+                            {%- if t_drag != blank -%}
+                              <div><dt>Drag / Slick</dt><dd>{{ t_drag | escape }}</dd></div>
+                            {%- endif -%}
+                          </dl>
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if section.settings.footnote != blank -%}
+        <p class="ff-guide__footnote">{{ section.settings.footnote | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.quote_link != blank -%}
+        <div class="ff-guide__cta">
+          <a class="button button--primary" href="{{ section.settings.quote_link }}">{{ section.settings.quote_label | escape }}</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FF Fitment Guide",
+  "tag": "section",
+  "class": "section-ff-fitment-guide",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "back_label",
+      "label": "Back link label",
+      "default": "\u2190 All BMW Fitment Guides"
+    },
+    {
+      "type": "url",
+      "id": "back_link",
+      "label": "Back link"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Fortune Forged"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "BMW G8X Wheel & Tire Fitment Guide"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Footnote",
+      "default": "Tire fitment notes are general guidance based on common setups. Final tire choice, spacers, and camber requirements are confirmed by our fitment specialists for your exact build."
+    },
+    {
+      "type": "text",
+      "id": "quote_label",
+      "label": "Quote button label",
+      "default": "Get a fitment-confirmed quote"
+    },
+    {
+      "type": "url",
+      "id": "quote_link",
+      "label": "Quote button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Fitment tier",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Tier"
+        },
+        {
+          "type": "text",
+          "id": "tier_title",
+          "label": "Tier title",
+          "default": "Daily Street & OEM+ Bolt-On"
+        },
+        {
+          "type": "richtext",
+          "id": "tier_intro",
+          "label": "Tier intro"
+        },
+        {
+          "type": "header",
+          "content": "Configuration A"
+        },
+        {
+          "type": "text",
+          "id": "a_label",
+          "label": "Label",
+          "default": "Square"
+        },
+        {
+          "type": "text",
+          "id": "a_front",
+          "label": "Front size / offset",
+          "placeholder": "e.g. 20x10 ET12"
+        },
+        {
+          "type": "text",
+          "id": "a_rear",
+          "label": "Rear size / offset",
+          "placeholder": "e.g. 20x10 ET12"
+        },
+        {
+          "type": "image_picker",
+          "id": "a_image",
+          "label": "Photo"
+        },
+        {
+          "type": "textarea",
+          "id": "a_notes",
+          "label": "Fitment notes"
+        },
+        {
+          "type": "text",
+          "id": "a_tire_pick",
+          "label": "Staff pick tire size",
+          "placeholder": "e.g. 275/35-20 Front & Rear"
+        },
+        {
+          "type": "text",
+          "id": "a_tire_flags",
+          "label": "Tire flags",
+          "placeholder": "e.g. Direct Fit \u00b7 X-Drive Compatible"
+        },
+        {
+          "type": "text",
+          "id": "a_tire_allseason",
+          "label": "All Season tires"
+        },
+        {
+          "type": "text",
+          "id": "a_tire_uhp",
+          "label": "UHP Summer tires"
+        },
+        {
+          "type": "text",
+          "id": "a_tire_max",
+          "label": "Max Performance Summer tires"
+        },
+        {
+          "type": "text",
+          "id": "a_tire_extreme",
+          "label": "Extreme Performance Summer tires"
+        },
+        {
+          "type": "text",
+          "id": "a_tire_rcompound",
+          "label": "R-Compound tires"
+        },
+        {
+          "type": "text",
+          "id": "a_tire_drag",
+          "label": "Drag / Slick tires"
+        },
+        {
+          "type": "header",
+          "content": "Configuration B (optional)"
+        },
+        {
+          "type": "text",
+          "id": "b_label",
+          "label": "Label",
+          "default": "Staggered"
+        },
+        {
+          "type": "text",
+          "id": "b_front",
+          "label": "Front size / offset",
+          "placeholder": "e.g. 19x9.5 ET18"
+        },
+        {
+          "type": "text",
+          "id": "b_rear",
+          "label": "Rear size / offset",
+          "placeholder": "e.g. 20x10.5 ET15"
+        },
+        {
+          "type": "image_picker",
+          "id": "b_image",
+          "label": "Photo"
+        },
+        {
+          "type": "textarea",
+          "id": "b_notes",
+          "label": "Fitment notes"
+        },
+        {
+          "type": "text",
+          "id": "b_tire_pick",
+          "label": "Staff pick tire size",
+          "placeholder": "e.g. Front 275/35-19 // Rear 285/30-20"
+        },
+        {
+          "type": "text",
+          "id": "b_tire_flags",
+          "label": "Tire flags"
+        },
+        {
+          "type": "text",
+          "id": "b_tire_allseason",
+          "label": "All Season tires"
+        },
+        {
+          "type": "text",
+          "id": "b_tire_uhp",
+          "label": "UHP Summer tires"
+        },
+        {
+          "type": "text",
+          "id": "b_tire_max",
+          "label": "Max Performance Summer tires"
+        },
+        {
+          "type": "text",
+          "id": "b_tire_extreme",
+          "label": "Extreme Performance Summer tires"
+        },
+        {
+          "type": "text",
+          "id": "b_tire_rcompound",
+          "label": "R-Compound tires"
+        },
+        {
+          "type": "text",
+          "id": "b_tire_drag",
+          "label": "Drag / Slick tires"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FF Fitment Guide",
+      "blocks": [
+        { "type": "tier" }
+      ]
+    }
+  ]
+}
+{% endschema %}

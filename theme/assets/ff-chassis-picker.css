@@ -1,0 +1,70 @@
+.ff-chassis {
+  --ff-gold: #c2a76b;
+  background: #ffffff;
+  color: #111111;
+  padding: 48px 20px 64px;
+}
+
+.ff-chassis__inner {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.ff-chassis__heading {
+  margin: 0 0 12px;
+  font-size: clamp(1.7rem, 3.6vw, 2.4rem);
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.ff-chassis__subheading {
+  margin: 0 0 32px;
+  max-width: 46rem;
+  color: #55524a;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+.ff-chassis__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.ff-chassis__card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 96px;
+  padding: 18px 22px;
+  border: 1px solid #d8d4c8;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #111111;
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.ff-chassis__card:hover,
+.ff-chassis__card:focus-visible {
+  border-color: var(--ff-gold);
+  color: var(--ff-gold);
+  background: #fbf8f1;
+}
+
+@media (max-width: 749.98px) {
+  .ff-chassis__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ff-chassis__card {
+    min-height: 72px;
+    font-size: 0.95rem;
+  }
+}

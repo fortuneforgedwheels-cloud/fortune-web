@@ -26,155 +26,191 @@
         "padding_bottom_mobile": 40
       }
     },
-    "halo_custom_text_JyqGCe": {
-      "type": "halo-custom-text",
+    "ff_chassis_picker_bmw": {
+      "type": "ff-chassis-picker",
       "blocks": {
-        "button_link_MhGd8R": {
-          "type": "button-link",
+        "chassis_g8x": {
+          "type": "chassis",
           "settings": {
-            "btn": "1",
-            "btn_text": "20\" SPECS",
-            "btn_icon": "",
-            "btn_link": "shopify://pages/g8x-20-fitment-specs"
+            "label": "BMW G80 / G82 / G87 (G8X) Wheel & Tire Fitment Guide",
+            "link": "#ff-guide-ff_fitment_guide_g8x"
           }
         },
-        "button_link_fa8BGq": {
-          "type": "button-link",
+        "chassis_f80": {
+          "type": "chassis",
           "settings": {
-            "btn": "1",
-            "btn_text": "19\"/20\" specs",
-            "btn_icon": "",
-            "btn_link": "shopify://pages/g8x-19-20-fit-specs"
+            "label": "BMW F80 / F82 Wheel & Tire Fitment Guide",
+            "link": "shopify://pages/shop-by-vehicle-bmw-f80"
           }
         },
-        "button_link_8H3BYV": {
-          "type": "button-link",
+        "chassis_g20": {
+          "type": "chassis",
           "settings": {
-            "btn": "1",
-            "btn_text": "19\" specs",
-            "btn_icon": "",
-            "btn_link": "shopify://pages/g8x-19-fitment-specs"
+            "label": "BMW G20 / G22 / G42 Wheel & Tire Fitment Guide",
+            "link": "shopify://pages/shop-by-vehicle-bmw-g20"
           }
         },
-        "button_link_CaJDLJ": {
-          "type": "button-link",
+        "chassis_e90": {
+          "type": "chassis",
           "settings": {
-            "btn": "1",
-            "btn_text": "18\" specs",
-            "btn_icon": "",
-            "btn_link": "shopify://pages/g8x-18-fitment-specs"
+            "label": "BMW E90 / E92 / E93 Wheel & Tire Fitment Guide",
+            "link": "shopify://pages/shop-by-vehicle-bmw-e90"
           }
         }
       },
       "block_order": [
-        "button_link_MhGd8R",
-        "button_link_fa8BGq",
-        "button_link_8H3BYV",
-        "button_link_CaJDLJ"
+        "chassis_g8x",
+        "chassis_f80",
+        "chassis_g20",
+        "chassis_e90"
       ],
-      "name": "t:sections.custom-text.presets.name",
       "settings": {
-        "show_custom_text": true,
-        "container": "1770",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 40,
-        "padding_bottom_tablet": 40,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30,
-        "block_title": "THE G8X FITMENT GUIDE",
-        "block_text": "Browse our tested wheel specs with confidence. Direct bolt-on fitments engineered for a flush, no-compromise stance. Built around proven setups for the G80 M3 / G82–G83 M4 / G87 M2 platforms, this guide simplifies fitment so you can spec your M car right the first time.",
-        "block_title_align": "left",
-        "layout_style": "1",
-        "show_customize_width": false,
-        "customize_width": 940,
-        "block_content": "",
-        "block_align": "center",
-        "show_custom_text_style": true,
-        "background_color": "",
-        "text_color": "#5a5a5a",
-        "title_color": "#ffffff",
-        "text_font": "font_1",
-        "text_font_size": 16,
-        "text_font_weight": "400",
-        "text_font_style": "normal",
-        "text_text_transform": "none"
+        "show_section": true,
+        "heading": "BMW Wheel & Tire Fitment Guides",
+        "subheading": "Get the perfect wheel and tire fitment for your BMW. Select your chassis below to read our technical fitment notes and browse example builds."
       }
     },
-    "halo_image_gallery_HLUwFQ": {
-      "type": "halo-image-gallery",
+    "ff_fitment_guide_g8x": {
+      "type": "ff-fitment-guide",
       "blocks": {
-        "image_L7wL78": {
-          "type": "image",
+        "tier_daily": {
+          "type": "tier",
           "settings": {
-            "image": "shopify://shop_images/IMG_7930.jpg",
-            "btn_text": "",
-            "link": ""
+            "tier_title": "Daily Street & OEM+ Bolt-On",
+            "tier_intro": "<p>These bolt-on setups are ideal for enthusiasts enjoying their G8X day-to-day on the street, typically paired with all-season or performance-oriented summer tires. They improve the look and feel of the car without requiring modifications or changes to the factory alignment \u2014 just bolt on and enjoy.</p><p>While these fitments work fine for the occasional track day or AutoX, drivers chasing more performance should look at our Performance Street &amp; Track or Hardcore Track &amp; Race tiers below.</p>",
+            "a_label": "Square",
+            "a_front": "20x10 ET12",
+            "a_rear": "20x10 ET12",
+            "a_image": "shopify://shop_images/IMG_0537.jpg",
+            "a_notes": "A well-balanced squared setup for the G8X chassis. The higher ET12 offset tucks the wheel in just enough for a clean, flush yet safe look while still maintaining strong concavity. Direct bolt-on stance with minimal poke \u2014 no spacers needed with the right tire sizing.",
+            "a_tire_pick": "275/35-20 Front & Rear",
+            "a_tire_flags": "Direct fit \u00b7 X-Drive compatible",
+            "a_tire_allseason": "Michelin Pilot Sport AS4 (540TW), Continental ExtremeContact DWS06+ (560TW)",
+            "a_tire_uhp": "Falken Azenis FK510 (300TW), Firestone Firehawk Indy 500 (340TW)",
+            "a_tire_max": "Michelin Pilot Sport 4S (300TW), Continental ExtremeContact Sport (340TW), Yokohama Advan Apex V601 (280TW)",
+            "b_label": "Staggered",
+            "b_front": "19x9.5 ET18",
+            "b_rear": "20x10.5 ET15",
+            "b_image": "shopify://shop_images/IMG_0552.jpg",
+            "b_notes": "A slightly narrower width and higher offset setup that keeps the wheels tucked in for a clean, OEM+ flush look with no poke. The 19\" front improves steering feel and ride quality, while the 20\" rear adds traction and a subtle bump in concavity. Direct bolt-on fitment that prioritizes drivability \u2014 no spacers or modifications required.",
+            "b_tire_pick": "Front 275/35-19 // Rear 285/30-20",
+            "b_tire_flags": "X-Drive compatible \u00b7 some front rubbing possible at full lock",
+            "b_tire_allseason": "Continental ExtremeContact DWS06+ (560TW), Michelin Pilot Sport AS4 (540TW)",
+            "b_tire_uhp": "Firestone Firehawk Indy 500 (340TW), Falken Azenis FK510 (300TW)",
+            "b_tire_max": "Michelin Pilot Sport 4S (300TW), Continental ExtremeContact Sport (340TW), Yokohama Advan Apex V601 (280TW), Pirelli P Zero (220TW)"
           }
         },
-        "image_wPqBTC": {
-          "type": "image",
+        "tier_aggressive": {
+          "type": "tier",
           "settings": {
-            "image": "shopify://shop_images/IMG_0546.jpg",
-            "btn_text": "",
-            "link": ""
+            "tier_title": "Aggressive Street",
+            "tier_intro": "<p>Aggressive fitments focused on appearance \u2014 ideal for the driver who wants to fill the wheel wells with wider rubber and near-flush offsets. These setups are typically still a direct bolt-on, but some combinations benefit from a light spacer or a touch of negative camber to dial in the perfect blend of form and function. Narrower relative tire widths help move the sidewall away from the fender at more aggressive offsets \u2014 street-oriented all-season and summer tires are the most popular pairing here.</p>",
+            "a_label": "Staggered",
+            "a_front": "20x10 ET12",
+            "a_rear": "20x11 ET10",
+            "a_image": "shopify://shop_images/IMG_7936.jpg",
+            "a_notes": "Aggressive, flush fitment for the G8X chassis. Wider widths combined with lower offsets push the wheels outward to sit nearly even with the fenders, creating a strong, planted stance with maximum concavity. Direct bolt-on with no spacers needed, though proper tire sizing may be required for a perfectly dialed-in look.",
+            "a_tire_pick": "Front 275/35-20 // Rear 305/30-20",
+            "a_tire_flags": "X-Drive compatible \u00b7 some front rubbing can occur against the inner fender liner at full steering lock",
+            "a_tire_uhp": "Falken Azenis FK510 (300TW), Firestone Firehawk Indy 500 (340TW)",
+            "a_tire_max": "Michelin Pilot Sport 4S (300TW), Continental ExtremeContact Sport (340TW), Bridgestone Potenza Sport (300TW)",
+            "a_tire_extreme": "Goodyear Eagle F1 Supercar 3 (220TW)",
+            "b_label": "Staggered (mixed diameter)",
+            "b_front": "19x10 ET12",
+            "b_rear": "20x11 ET10",
+            "b_image": "shopify://shop_images/IMG_0546.jpg",
+            "b_notes": "Aggressive, performance-focused staggered fitment. The 19\" front allows for better steering response, a lighter feel, and improved ride comfort, while the wider 20\" rear increases rear grip and delivers a deeper concave profile. A balanced combination of daily drivability and enhanced traction \u2014 no spacers required.",
+            "b_tire_pick": "Front 275/35-19 // Rear 305/30-20",
+            "b_tire_flags": "Some front rubbing can occur against the inner fender liner at full steering lock",
+            "b_tire_uhp": "Falken Azenis FK510 (300TW)",
+            "b_tire_max": "Michelin Pilot Sport 4S (300TW), Continental ExtremeContact Sport (340TW), Hankook Ventus V12 Evo2 (320TW)",
+            "b_tire_extreme": "Michelin Pilot Sport Cup 2 Connect (240TW)"
           }
         },
-        "image_Yj9kBj": {
-          "type": "image",
+        "tier_performance": {
+          "type": "tier",
           "settings": {
-            "image": "shopify://shop_images/IMG_0012.jpg",
-            "btn_text": "",
-            "link": ""
+            "tier_title": "Performance Street & Track",
+            "tier_intro": "<p>Whether you enjoy spirited street driving or you're a weekend track warrior chasing lap times, these wheel and tire configurations deliver a more dramatic step up in performance \u2014 typically paired with performance-oriented summer tires or track-oriented R-compounds.</p><p>Many of these fitments can be run on the factory alignment, but if you plan to track the car we highly recommend dialing in extra negative camber to improve handling and get the most life and grip out of your tires.</p>",
+            "a_label": "Square",
+            "a_front": "19x10 ET12",
+            "a_rear": "19x10 ET12",
+            "a_notes": "Runs 19s all around to keep unsprung weight lower and improve ride compliance \u2014 a great dual-duty setup for street driving with occasional track days. Available across our Monoblock and Two-Piece designs.",
+            "a_tire_pick": "275/35-19 Front & Rear",
+            "a_tire_flags": "Direct fit \u00b7 wider alternative available at 285/35-19",
+            "a_tire_uhp": "Falken Azenis FK510 (300TW), Firestone Firehawk Indy 500 (340TW), Sumitomo HTR Z5 (320TW)",
+            "a_tire_max": "Michelin Pilot Sport 4S (300TW), Continental ExtremeContact Sport (340TW), Yokohama Advan Apex V601 (280TW), Hankook Ventus V12 Evo2 (320TW)",
+            "a_tire_extreme": "Goodyear Eagle F1 Supercar 3 (220TW)",
+            "a_tire_rcompound": "Michelin Pilot Sport Cup 2 (180TW), Toyo Proxes R888R (100TW)",
+            "b_label": "Staggered",
+            "b_front": "19x10 ET12",
+            "b_rear": "19x11 ET10",
+            "b_image": "shopify://shop_images/IMG_0539.jpg",
+            "b_notes": "An aggressive, track-inspired fitment. Running 19s all around keeps overall weight lower and improves ride compliance, ideal for spirited driving or performance use. The ET12 front sits near flush with a purposeful, planted look, while the wider 19x11 ET10 rear pushes outward to maximize rear grip and deliver a deep, concave profile. Direct bolt-on fitment with a flush-to-slight-poke stance \u2014 a motorsport-focused balance of performance, traction, and aggressive aesthetics.",
+            "b_tire_pick": "Front 275/35-19 // Rear 295/35-19",
+            "b_tire_uhp": "Falken Azenis FK510 (300TW)",
+            "b_tire_max": "Michelin Pilot Sport 4S (300TW), Continental ExtremeContact Sport (340TW), Pirelli P Zero (220TW)",
+            "b_tire_extreme": "Falken Azenis RT660 (200TW)",
+            "b_tire_rcompound": "Michelin Pilot Sport Cup 2 (180TW)"
           }
         },
-        "image_3EjWiY": {
-          "type": "image",
+        "tier_drag": {
+          "type": "tier",
           "settings": {
-            "image": "shopify://shop_images/IMG_0537.jpg",
-            "btn_text": "",
-            "link": ""
+            "tier_title": "Drag Race",
+            "tier_intro": "<p>For maximum straight-line traction and the lowest ETs. This tier pairs a standard front wheel with a Fortune Forged beadlock rear pair for confident traction under heavy load. Not recommended in cold or wet conditions.</p>",
+            "a_label": "Staggered \u00b7 beadlock rear pair",
+            "a_front": "19x9.5 ET18",
+            "a_rear": "18x11 ET15",
+            "a_image": "shopify://shop_images/IMG_6681.jpg",
+            "a_notes": "The ideal drag-focused fitment for the G8X chassis. The 18\" beadlock rear pair sits properly within the fender at ET15 for a clean, planted look and remains a direct bolt-on with no clearance issues \u2014 designed for maximum straight-line traction. Pair with any Fortune Forged front wheel design; no spacers needed.",
+            "a_tire_pick": "Front 275/35-19 // Rear 305/35-18",
+            "a_tire_flags": "Rear beadlock pair \u00b7 street-legal knurled bead alternative to full beadlocks available on request",
+            "a_tire_rcompound": "Toyo Proxes R888R (100TW), Nitto NT01 (100TW)",
+            "a_tire_drag": "Mickey Thompson Street ET S/S, Nitto NT555R2 (100TW), Toyo Proxes RR (40TW)"
+          }
+        },
+        "tier_hardcore": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Hardcore Track & Race",
+            "tier_intro": "<p>Track-focused fitments for drivers chasing lap times, where performance comes before convenience. Expect to run aftermarket suspension, additional negative camber, and trimmed or aftermarket fender liners for clearance at full lock.</p>",
+            "a_label": "Staggered",
+            "a_front": "18x10 ET12",
+            "a_rear": "18x11 ET15",
+            "a_image": "shopify://shop_images/IMG_0553.jpg",
+            "a_notes": "A fully race-oriented fitment for the G8X chassis. The 18\" diameter increases sidewall for grip, compliance, and consistency under hard driving. The 18x11 ET15 rear is a direct bolt-on with a strong, planted stance, while the 18x10 ET12 front pushes the platform's limits and requires slight caliper clearance to properly seat the wheel. Best suited for track-focused builds where performance takes priority over convenience.",
+            "a_tire_pick": "Front 285/35-18 // Rear 305/35-18",
+            "a_tire_flags": "Requires slight front caliper clearance \u00b7 aftermarket or trimmed fender liners recommended",
+            "a_tire_max": "Continental ExtremeContact Sport 02 (340TW), Michelin Pilot Super Sport (300TW)",
+            "a_tire_extreme": "Bridgestone Potenza RE-71RS (200TW), Yokohama Advan A052 (200TW)",
+            "a_tire_rcompound": "Nitto NT01 (100TW), Toyo Proxes R888R (100TW)"
           }
         }
       },
       "block_order": [
-        "image_L7wL78",
-        "image_wPqBTC",
-        "image_Yj9kBj",
-        "image_3EjWiY"
+        "tier_daily",
+        "tier_aggressive",
+        "tier_performance",
+        "tier_drag",
+        "tier_hardcore"
       ],
-      "name": "t:sections.image-gallery.presets.name",
       "settings": {
-        "show_image_gallery": true,
-        "container": "1770",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 40,
-        "padding_bottom_tablet": 40,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30,
-        "block_title": "",
-        "block_text": "",
-        "block_title_align": "left",
-        "block_layout": "grid",
-        "block_mobile_layout": "grid",
-        "col": "strait",
-        "col_border": 0,
-        "block_action": "popup",
-        "block_btn": "2",
-        "block_view_btn": "1",
-        "block_view_btn_text": "",
-        "block_view_btn_link": "",
-        "block_per_row": "4",
-        "block_show": "4",
-        "block_dots": false,
-        "block_arrows": true
+        "show_section": true,
+        "back_label": "",
+        "back_link": "",
+        "eyebrow": "Fortune Forged",
+        "heading": "BMW G8X (G80 / G82 / G87) Wheel & Tire Fitment Guide",
+        "intro": "<p>The ultimate fitment reference for the BMW G8X platform \u2014 G80 M3, G82 M4, and G87 M2. Every setup below is a direct bolt-on unless noted, with wheel sizing, offsets, and tire pairings dialed in by our team across daily street, aggressive street, dual-duty track, drag, and hardcore track builds.</p>",
+        "footnote": "Tire fitment notes are general guidance based on common setups. Final tire choice, spacers, and camber requirements are confirmed by our fitment specialists for your exact build.",
+        "quote_label": "Get a fitment-confirmed quote",
+        "quote_link": "/#order"
       }
     }
   },
   "order": [
     "main",
-    "halo_custom_text_JyqGCe",
-    "halo_image_gallery_HLUwFQ"
+    "ff_chassis_picker_bmw",
+    "ff_fitment_guide_g8x"
   ]
 }
