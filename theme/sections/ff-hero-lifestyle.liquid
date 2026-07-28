@@ -24,42 +24,52 @@
             {% unless forloop.first %}hidden{% endunless %}
           >
             <div class="ff-hero__media">
-              {%- if block.settings.image != blank -%}
-                {{
-                  block.settings.image
-                  | image_url: width: 2400
-                  | image_tag:
-                    class: 'ff-hero__image ff-hero__image--desktop',
-                    loading: img_loading,
-                    widths: '800, 1200, 1600, 2000, 2400',
-                    sizes: '100vw',
-                    alt: block.settings.title
-                }}
+              {%- if block.settings.image != blank or block.settings.mobile_image != blank -%}
+                <div class="ff-hero__media-desktop" aria-hidden="false">
+                  {%- if block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 2400
+                      | image_tag:
+                        class: 'ff-hero__image',
+                        loading: img_loading,
+                        widths: '800, 1200, 1600, 2000, 2400',
+                        sizes: '100vw',
+                        alt: block.settings.title
+                    }}
+                  {%- else -%}
+                    <div class="ff-hero__placeholder" aria-hidden="true"></div>
+                  {%- endif -%}
+                </div>
+                <div class="ff-hero__media-mobile" aria-hidden="true">
+                  {%- if block.settings.mobile_image != blank -%}
+                    {{
+                      block.settings.mobile_image
+                      | image_url: width: 1200
+                      | image_tag:
+                        class: 'ff-hero__image',
+                        loading: img_loading,
+                        widths: '600, 900, 1200',
+                        sizes: '100vw',
+                        alt: block.settings.title
+                    }}
+                  {%- elsif block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 1200
+                      | image_tag:
+                        class: 'ff-hero__image',
+                        loading: img_loading,
+                        widths: '600, 900, 1200',
+                        sizes: '100vw',
+                        alt: block.settings.title
+                    }}
+                  {%- else -%}
+                    <div class="ff-hero__placeholder" aria-hidden="true"></div>
+                  {%- endif -%}
+                </div>
               {%- else -%}
                 <div class="ff-hero__placeholder" aria-hidden="true"></div>
-              {%- endif -%}
-              {%- if block.settings.mobile_image != blank -%}
-                {{
-                  block.settings.mobile_image
-                  | image_url: width: 1200
-                  | image_tag:
-                    class: 'ff-hero__image ff-hero__image--mobile',
-                    loading: img_loading,
-                    widths: '600, 900, 1200',
-                    sizes: '100vw',
-                    alt: block.settings.title
-                }}
-              {%- elsif block.settings.image != blank -%}
-                {{
-                  block.settings.image
-                  | image_url: width: 1200
-                  | image_tag:
-                    class: 'ff-hero__image ff-hero__image--mobile',
-                    loading: img_loading,
-                    widths: '600, 900, 1200',
-                    sizes: '100vw',
-                    alt: block.settings.title
-                }}
               {%- endif -%}
               <div class="ff-hero__shade" aria-hidden="true"></div>
             </div>
@@ -145,12 +155,14 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Desktop image"
+          "label": "Desktop image",
+          "info": "Shown on desktop/tablet only. Changing this does not change the mobile image."
         },
         {
           "type": "image_picker",
           "id": "mobile_image",
-          "label": "Mobile image"
+          "label": "Mobile image",
+          "info": "Shown on phones only. Leave blank to reuse the desktop image on mobile. This never replaces the desktop image."
         },
         {
           "type": "text",
