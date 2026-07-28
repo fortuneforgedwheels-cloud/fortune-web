@@ -100,11 +100,17 @@
           "type": "vehicle_setup",
           "settings": {
             "vehicle_label": "BMW G80 / G82 / G87",
+            "card_image": "shopify://shop_images/IMG_2149_2.jpg",
+            "design_default": "",
+            "design_alt_1": "",
+            "design_alt_2": "",
+            "design_alt_3": "",
             "front_spec": "20x10 ET10",
             "rear_spec": "20x11 ET10",
             "full_set_note": "True flush fitment",
+            "beadlock_design": "",
             "beadlock_spec": "20x11 ET15",
-            "beadlock_note": "True flush fitment \u00b7 Clears steel & CCB brakes",
+            "beadlock_note": "True flush fitment · Clears steel & CCB brakes",
             "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal"
           }
         },
@@ -112,9 +118,15 @@
           "type": "vehicle_setup",
           "settings": {
             "vehicle_label": "BMW F80 / F82",
+            "card_image": "shopify://shop_images/IMG_2178.jpg",
+            "design_default": "f-05sr",
+            "design_alt_1": "",
+            "design_alt_2": "",
+            "design_alt_3": "",
             "front_spec": "20x9.5 ET15",
             "rear_spec": "20x11 ET37",
             "full_set_note": "True flush fitment",
+            "beadlock_design": "",
             "beadlock_spec": "18x11 ET40",
             "beadlock_note": "True flush fitment",
             "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal"
@@ -124,6 +136,16 @@
           "type": "vehicle_setup",
           "settings": {
             "vehicle_label": "Audi R8 / Lamborghini Huracan",
+            "design_default": "",
+            "design_alt_1": "",
+            "design_alt_2": "",
+            "design_alt_3": "",
+            "front_spec": "",
+            "rear_spec": "",
+            "full_set_note": "True flush fitment",
+            "beadlock_design": "",
+            "beadlock_spec": "",
+            "beadlock_note": "True flush fitment",
             "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal"
           }
         },
@@ -131,6 +153,14 @@
           "type": "vehicle_setup",
           "settings": {
             "vehicle_label": "Corvette C7 Z06",
+            "design_default": "",
+            "design_alt_1": "",
+            "design_alt_2": "",
+            "design_alt_3": "",
+            "front_spec": "",
+            "rear_spec": "",
+            "full_set_note": "True flush fitment",
+            "beadlock_design": "",
             "beadlock_spec": "18x12.5 ET55",
             "beadlock_note": "Fits both OEM steel & carbon ceramic brakes",
             "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal"
@@ -147,7 +177,7 @@
         "show_section": true,
         "eyebrow": "Fortune Forged",
         "heading": "Fan Favorite Setups",
-        "subheading": "Our most requested wheel and fitment combinations \u2014 sizing already dialed in for these platforms. Pick your finish and we'll build the rest.",
+        "subheading": "Our most requested wheel and fitment combinations — sizing already dialed in for these platforms. Pick your finish and we'll build the rest.",
         "card_cta": "Build this setup",
         "quote_cta": "Get a custom quote",
         "quote_link": "/#order",

@@ -28,7 +28,11 @@
           {%- if block.type == 'vehicle_setup' -%}
             {%- liquid
               assign b = block.settings
-              assign card_image = b.card_image | default: b.design_default.featured_image
+              assign design_default_product = blank
+              unless b.design_default == blank
+                assign design_default_product = all_products[b.design_default]
+              endunless
+              assign card_image = b.card_image | default: design_default_product.featured_image
             -%}
             <div class="ff-fan__item">
               <p class="ff-fan__label">{{ b.vehicle_label | escape }}</p>
@@ -72,7 +76,27 @@
       {%- if block.type == 'vehicle_setup' -%}
         {%- liquid
           assign b = block.settings
-          assign card_image = b.card_image | default: b.design_default.featured_image
+          assign design_default_product = blank
+          unless b.design_default == blank
+            assign design_default_product = all_products[b.design_default]
+          endunless
+          assign design_alt_1_product = blank
+          unless b.design_alt_1 == blank
+            assign design_alt_1_product = all_products[b.design_alt_1]
+          endunless
+          assign design_alt_2_product = blank
+          unless b.design_alt_2 == blank
+            assign design_alt_2_product = all_products[b.design_alt_2]
+          endunless
+          assign design_alt_3_product = blank
+          unless b.design_alt_3 == blank
+            assign design_alt_3_product = all_products[b.design_alt_3]
+          endunless
+          assign beadlock_design_product = blank
+          unless b.beadlock_design == blank
+            assign beadlock_design_product = all_products[b.beadlock_design]
+          endunless
+          assign card_image = b.card_image | default: design_default_product.featured_image
           assign has_full = false
           if b.front_spec != blank and b.rear_spec != blank
             assign has_full = true
@@ -134,21 +158,6 @@
                   {%- endif -%}
 
                   {%- if has_full -%}
-                    {%- liquid
-                      assign design_list = '' | split: ''
-                      if b.design_default != blank
-                        assign design_list = design_list | push: b.design_default
-                      endif
-                      if b.design_alt_1 != blank
-                        assign design_list = design_list | push: b.design_alt_1
-                      endif
-                      if b.design_alt_2 != blank
-                        assign design_list = design_list | push: b.design_alt_2
-                      endif
-                      if b.design_alt_3 != blank
-                        assign design_list = design_list | push: b.design_alt_3
-                      endif
-                    -%}
                     <div class="ff-fan__setup" data-ff-fan-setup="full">
                       <dl class="ff-fan__specs">
                         <div><dt>Front</dt><dd>{{ b.front_spec | escape }}</dd></div>
@@ -159,26 +168,71 @@
                       {%- endif -%}
 
                       <div class="ff-fan__designs" data-ff-fan-designs="full">
-                        {%- for design in design_list -%}
+                        {%- if design_default_product != blank -%}
                           <button
                             type="button"
-                            class="ff-fan__design{% if forloop.first %} is-selected{% endif %}"
+                            class="ff-fan__design is-selected"
                             data-ff-fan-design
-                            data-variant-id="{{ design.variants.first.id }}"
-                            data-title="{{ design.title | escape }}"
-                            data-price="{{ design.price | money }}"
+                            data-variant-id="{{ design_default_product.variants.first.id }}"
+                            data-title="{{ design_default_product.title | escape }}"
+                            data-price="{{ design_default_product.price | money }}"
                           >
-                            {%- if design.featured_image != blank -%}
-                              {{ design.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: design.title }}
+                            {%- if design_default_product.featured_image != blank -%}
+                              {{ design_default_product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: design_default_product.title }}
                             {%- endif -%}
-                            <span>{{ design.title | escape }}</span>
+                            <span>{{ design_default_product.title | escape }}</span>
                           </button>
-                        {%- endfor -%}
+                        {%- endif -%}
+                        {%- if design_alt_1_product != blank -%}
+                          <button
+                            type="button"
+                            class="ff-fan__design"
+                            data-ff-fan-design
+                            data-variant-id="{{ design_alt_1_product.variants.first.id }}"
+                            data-title="{{ design_alt_1_product.title | escape }}"
+                            data-price="{{ design_alt_1_product.price | money }}"
+                          >
+                            {%- if design_alt_1_product.featured_image != blank -%}
+                              {{ design_alt_1_product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: design_alt_1_product.title }}
+                            {%- endif -%}
+                            <span>{{ design_alt_1_product.title | escape }}</span>
+                          </button>
+                        {%- endif -%}
+                        {%- if design_alt_2_product != blank -%}
+                          <button
+                            type="button"
+                            class="ff-fan__design"
+                            data-ff-fan-design
+                            data-variant-id="{{ design_alt_2_product.variants.first.id }}"
+                            data-title="{{ design_alt_2_product.title | escape }}"
+                            data-price="{{ design_alt_2_product.price | money }}"
+                          >
+                            {%- if design_alt_2_product.featured_image != blank -%}
+                              {{ design_alt_2_product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: design_alt_2_product.title }}
+                            {%- endif -%}
+                            <span>{{ design_alt_2_product.title | escape }}</span>
+                          </button>
+                        {%- endif -%}
+                        {%- if design_alt_3_product != blank -%}
+                          <button
+                            type="button"
+                            class="ff-fan__design"
+                            data-ff-fan-design
+                            data-variant-id="{{ design_alt_3_product.variants.first.id }}"
+                            data-title="{{ design_alt_3_product.title | escape }}"
+                            data-price="{{ design_alt_3_product.price | money }}"
+                          >
+                            {%- if design_alt_3_product.featured_image != blank -%}
+                              {{ design_alt_3_product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: design_alt_3_product.title }}
+                            {%- endif -%}
+                            <span>{{ design_alt_3_product.title | escape }}</span>
+                          </button>
+                        {%- endif -%}
                       </div>
-                      {%- if b.design_default != blank -%}
+                      {%- if design_default_product != blank -%}
                         <p class="ff-fan__price" data-ff-fan-price="full">
-                          {{ b.design_default.price | money }} each &middot; est.
-                          {{ b.design_default.price | times: 4 | money }} for a full set of 4
+                          {{ design_default_product.price | money }} each &middot; est.
+                          {{ design_default_product.price | times: 4 | money }} for a full set of 4
                         </p>
                       {%- endif -%}
                     </div>
@@ -192,7 +246,7 @@
                       {%- if b.beadlock_note != blank -%}
                         <p class="ff-fan__note">{{ b.beadlock_note | escape }}</p>
                       {%- endif -%}
-                      {%- assign bead_design = b.beadlock_design | default: b.design_default -%}
+                      {%- assign bead_design = beadlock_design_product | default: design_default_product -%}
                       {%- if bead_design != blank -%}
                         <div class="ff-fan__designs" data-ff-fan-designs="bead">
                           <button
