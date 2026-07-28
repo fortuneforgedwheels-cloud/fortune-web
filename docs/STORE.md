@@ -9,11 +9,12 @@ Captured from the live storefront for development context.
 | Shopify domain | `bb6223-6f.myshopify.com` |
 | Shop ID | `89335070995` |
 | Currency / market | USD / US |
-| Live theme name | `halo-setonsocial` |
+| Live theme name | `Fortune-Cursor-Rebuild` |
 | Theme family | Halo `3.0.0` (Halothemes) |
-| Live theme ID | `178099421459` |
-| Draft rebuild theme | `Fortune-Cursor-Rebuild` |
-| Draft theme ID | `188539207955` |
+| Live theme ID | `188539207955` |
+| Previous live (now unpublished) | `halo-setonsocial` (`178099421459`) |
+| Draft rebuild theme | _(published — now live)_ |
+| Draft theme ID | `188539207955` (live) |
 | Draft preview | https://bb6223-6f.myshopify.com?preview_theme_id=188539207955 |
 | Draft editor | https://bb6223-6f.myshopify.com/admin/themes/188539207955/editor |
 | Appearance notes | Dark-mode-first Halo skin; product lines: Monoblock, 2-Piece, Beadlock |
