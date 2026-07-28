@@ -13,317 +13,145 @@
       "type": "main-page",
       "disabled": true,
       "settings": {
-        "show_breadcrumb": true,
-        "breadcrumb_alignment": "left",
-        "show_page_title": true,
-        "page_title_alignment": "center",
+        "show_breadcrumb": false,
+        "show_page_title": false,
         "container": "1370",
         "padding_top": 0,
-        "padding_bottom": 70,
+        "padding_bottom": 0,
         "padding_top_tablet": 0,
-        "padding_bottom_tablet": 50,
+        "padding_bottom_tablet": 0,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 40
+        "padding_bottom_mobile": 0
       }
     },
-    "halo_product_block_2_Ft6CPt": {
-      "type": "halo-product-block-2",
-      "disabled": true,
-      "name": "t:sections.product-block.presets.name__2",
-      "settings": {
-        "display_product_block": true,
-        "container": "1770",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 40,
-        "padding_bottom_tablet": 40,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30,
-        "block_title": "SELECT YOUR CHASSIS",
-        "block_text": "",
-        "block_title_align": "center",
-        "block_layout": "grid",
-        "col": "narrow",
-        "block_collection": "wheeltire",
-        "block_limit": 3,
-        "block_image_ratio": "adapt",
-        "portrait_aspect_ratio": 133,
-        "show_add_to_cart": true,
-        "show_bottom_border": false,
-        "block_per_row": "6",
-        "block_infinite_scroll": true,
-        "block_show": "6",
-        "block_dots": false,
-        "block_arrows": true
-      }
-    },
-    "halo_custom_text_kwkK6a": {
-      "type": "halo-custom-text",
+    "ff_fitment_guide_g20": {
+      "type": "ff-fitment-guide",
       "blocks": {
-        "button_link_KfFUiy": {
-          "type": "button-link",
+        "tier_street": {
+          "type": "tier",
           "settings": {
-            "btn": "1",
-            "btn_text": "20\" SPECS",
-            "btn_icon": "",
-            "btn_link": "shopify://pages/g20-20-spec-guide"
+            "tier_title": "Daily Street & OEM+ Bolt-On",
+            "tier_intro": "<p>Recommended 20\" street fitments for G20 / G22 / G42. Square setups help mitigate understeer and let you rotate tires front-to-rear for longer life. Staggered setups prioritize rear grip and traction — wheels and tires cannot be rotated front to rear, and large staggers may induce understeer.</p>",
+            "a_label": "Square · 20\"",
+            "a_front": "20x9 ET25",
+            "a_rear": "20x9 ET25",
+            "a_notes": "Popular square fitment for G2X/G4X. 3–5mm front spacers may be required with certain aftermarket suspensions that reduce inner clearance. Wider alternative tire: 255/30-20 front & rear (direct fit, X-Drive compatible; all-season / extreme options N/A on the wider size).",
+            "a_tire_pick": "245/35-20 Front & Rear",
+            "a_tire_flags": "Direct fit · X-Drive compatible · small front spacers may be needed with tire models that run wide",
+            "a_tire_allseason": "Michelin Pilot Sport AS4 (540TW), Yokohama Advan Sport A/S+ (440TW), Continental ExtremeContact DWS06+ (560TW)",
+            "a_tire_max": "Michelin Pilot Sport 4S (300TW), Continental ExtremeContact Sport 02 (340TW), Hankook Ventus V12 Evo2 (320TW), Kumho Ecsta PS91 (260TW)",
+            "a_tire_extreme": "Yokohama Advan A052 (200TW), Continental ExtremeContact Force (200TW), Goodyear Eagle F1 Supercar 3 (200TW)",
+            "b_label": "Staggered · 20\"",
+            "b_front": "20x9 ET25",
+            "b_rear": "20x10 ET38",
+            "b_notes": "Prioritizes rear-end grip/traction. Alternative #1 tire setup: 255/30-20 front // 275/30-20 rear — direct fit, RWD only (not X-Drive compatible), summer-focused.",
+            "b_tire_pick": "Front 245/35-20 // Rear 275/30-20",
+            "b_tire_flags": "X-Drive compatible · small front spacers may be required with tire models that run wide",
+            "b_tire_allseason": "Continental ExtremeContact DWS06+ (560TW), Michelin Pilot Sport All Season 4 (540TW), Yokohama Advan Sport A/S+ (440TW)",
+            "b_tire_uhp": "Falken Azenis FK510 (300TW), Toyo Proxes Sport (240TW), Nitto NT555 G2 (320TW)",
+            "b_tire_max": "Michelin Pilot Sport 4S (300TW), Continental ExtremeContact Sport 02 (340TW), Hankook Ventus V12 Evo2 (320TW), Pirelli P Zero (220TW), Bridgestone Potenza Sport (300TW)",
+            "b_tire_extreme": "Yokohama Advan Neova AD09 (200TW)"
           }
         },
-        "button_link_GA7Qkz": {
-          "type": "button-link",
+        "tier_perf_square": {
+          "type": "tier",
           "settings": {
-            "btn": "1",
-            "btn_text": "19\" SPECS",
-            "btn_icon": "",
-            "btn_link": "shopify://pages/g20-19-spec-guice"
+            "tier_title": "Performance Street & Track — Square",
+            "tier_intro": "<p>Whether you enjoy spirited street driving or you are a weekend track warrior chasing lap times, these wheel and tire configurations deliver a more dramatic step up in performance — typically paired with performance-oriented summer tires or track-oriented R-compounds.</p><p>Suspension, alignment, and tire choice can be tuned for street or track. Many fitments run on factory alignment, but if you plan to track the car we highly recommend dialing in negative camber for handling and tire life.</p><p>Square configurations help mitigate understeer and allow front/rear tire rotation. They may compromise rear-end grip versus staggered setups.</p>",
+            "a_label": "Square · 18\"",
+            "a_front": "18x9 ET25",
+            "a_rear": "18x9 ET25",
+            "a_notes": "Popular 18\" square fitment. 3–5mm front spacers may be required with certain aftermarket suspensions that reduce inner clearance. Alternative tire: 245/45-18 front & rear (direct fit, X-Drive compatible).",
+            "a_tire_pick": "255/40-18 Front & Rear",
+            "a_tire_flags": "Direct fit · X-Drive compatible",
+            "a_tire_max": "Michelin Pilot Sport 4S (300TW), Yokohama Advan Apex V601 (280TW), Continental ExtremeContact Sport 02 (340TW), Bridgestone Potenza S-04 Pole Position (280TW), Hankook Ventus V12 Evo2 (320TW), Kumho Ecsta PS91 (260TW)",
+            "a_tire_extreme": "Bridgestone Potenza RE-71RS (200TW), Falken Azenis RT660 (200TW), Goodyear Eagle F1 Supercar 3 (220TW), Yokohama Advan A052 (200TW), Yokohama Advan Neova AD09 (200TW)",
+            "b_label": "Square · 19\"",
+            "b_front": "19x9 ET25 (forged) / ET28 (flow formed)",
+            "b_rear": "19x9 ET25 (forged) / ET28 (flow formed)",
+            "b_notes": "Popular 19\" square fitment across forged and flow-formed designs. 3–5mm front spacers may be required with certain aftermarket suspensions. Narrower alternative: 245/35-19 front & rear (direct fit, X-Drive compatible) with broader extreme / R-compound options.",
+            "b_tire_pick": "255/35-19 Front & Rear",
+            "b_tire_flags": "Direct fit · X-Drive compatible · 3–5mm front spacers may be required depending on suspension",
+            "b_tire_allseason": "Continental ExtremeContact DWS06+ (560TW), Michelin Pilot Sport AS4 (540TW)",
+            "b_tire_max": "Michelin Pilot Sport 4S (300TW), Yokohama Advan Apex V601 (280TW), Continental ExtremeContact Sport (340TW), Bridgestone Potenza S-04 Pole Position (280TW), Hankook Ventus V12 Evo2 (320TW), Kumho Ecsta PS91 (260TW)",
+            "b_tire_extreme": "Yokohama Advan Neova AD08R (200TW)",
+            "b_tire_rcompound": "Michelin Pilot Sport Cup 2 (180TW)"
           }
         },
-        "button_link_k34xeW": {
-          "type": "button-link",
+        "tier_perf_aggressive": {
+          "type": "tier",
           "settings": {
-            "btn": "1",
-            "btn_text": "17\"/18\" SPECS",
-            "btn_icon": "",
-            "btn_link": "shopify://pages/g20-17-18-spec-guide"
+            "tier_title": "Performance — Aggressive Square & 18\" Stagger",
+            "tier_intro": "<p>Wider square and staggered options for drivers wanting more contact patch and a more planted look. Expect spacer and camber requirements on the more aggressive square setup.</p>",
+            "a_label": "Square · 19x9.5\"",
+            "a_front": "19x9.5 ET25",
+            "a_rear": "19x9.5 ET25",
+            "a_notes": "5mm front spacers may be required with OEM suspension and tire compounds that run wide. 5–12mm front spacers required with aftermarket coilovers that reduce inner clearance. Alternative tire: 255/35-19 front & rear (X-Drive compatible; ~3mm front spacers recommended; suggested camber about -2.2° front / -1.8° rear).",
+            "a_tire_pick": "265/35-19 Front & Rear",
+            "a_tire_flags": "X-Drive compatible · 5mm front spacers recommended for most tires · additional negative camber required (min. about -2.2° front / -2.0° rear)",
+            "a_tire_allseason": "Continental ExtremeContact DWS06+ (560TW), Michelin Pilot Sport AS4 (540TW)",
+            "a_tire_max": "Michelin Pilot Sport 4S (300TW), Yokohama Advan Apex V601 (280TW), Continental ExtremeContact Sport (340TW), Bridgestone Potenza S-04 Pole Position (280TW), Hankook Ventus V12 Evo2 (320TW), Kumho Ecsta PS91 (260TW)",
+            "a_tire_extreme": "Yokohama Advan Neova AD08R (200TW), Bridgestone Potenza RE-71R (200TW), Falken Azenis RT660 (200TW), Goodyear Eagle F1 Supercar 3 (220TW)",
+            "a_tire_rcompound": "Michelin Pilot Sport Cup 2 (180TW), Pirelli P Zero Trofeo R (60TW), Goodyear Eagle F1 Supercar 3R (100TW), Toyo Proxes R888R (100TW), Nankang AR-1 (100TW)",
+            "a_tire_drag": "Hoosier A7 / R7 (slicks & semi-slicks)",
+            "b_label": "Staggered · 18\"",
+            "b_front": "18x9 ET25",
+            "b_rear": "18x10 ET38",
+            "b_notes": "Alternative #1: 245/45-18 front // 275/40-18 rear — tight inner clearance between strut and front tire; small front spacers may be needed with wide-running tires. 3–5mm front spacers may also be required with certain aftermarket suspensions. That alt is X-Drive compatible.",
+            "b_tire_pick": "Front 255/40-18 // Rear 275/40-18",
+            "b_tire_flags": "Direct fit · not X-Drive compatible · 3–5mm front spacers may be required with certain aftermarket suspensions",
+            "b_tire_allseason": "Continental ExtremeContact DWS06+ (560TW), Michelin Pilot Sport All Season 4 (540TW)",
+            "b_tire_uhp": "Firestone Firehawk Indy 500 (340TW)",
+            "b_tire_max": "Bridgestone Potenza Sport (300TW), Continental ExtremeContact Sport (340TW), Hankook Ventus V12 Evo2 (320TW)",
+            "b_tire_extreme": "Goodyear Eagle F1 Supercar 3 (200TW), Yokohama Advan A052 (200TW), Yokohama Advan Neova AD09 (200TW)"
+          }
+        },
+        "tier_perf_stagger": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Performance Street & Track — Staggered 19\"",
+            "tier_intro": "<p>Recommended for enthusiasts that prioritize rear-end grip and traction. Wheels and tires cannot be rotated front to rear, and large staggers may induce understeer.</p>",
+            "a_label": "Staggered · 19\" · popular",
+            "a_front": "19x9 ET25 (forged) / ET28 (flow formed)",
+            "a_rear": "19x10 ET38",
+            "a_notes": "Popular staggered fitment. 3–5mm front spacers may be required with certain aftermarket suspensions that reduce inner clearance.",
+            "a_tire_pick": "Front 235/40-19 // Rear 265/35-19",
+            "a_tire_flags": "Direct fit · X-Drive compatible",
+            "a_tire_max": "Michelin Pilot Sport 4S (300TW), Yokohama Advan Apex V601 (280TW), Continental ExtremeContact Sport (340TW)",
+            "a_tire_extreme": "Bridgestone Potenza RE-71R (200TW)",
+            "b_label": "Staggered · 19\" · wider alts",
+            "b_front": "19x9 ET25 (forged) / ET28 (flow formed)",
+            "b_rear": "19x10 ET38",
+            "b_notes": "Alternative #1: 255/35-19 front // 275/35-19 rear — typically direct fit with street tires; moderate front negative camber needed with compounds that run wide. Not X-Drive compatible. Extreme: Yokohama AD08R / A052. R-compound: Michelin Pilot Sport Cup 2. Alternative #2: 255/35-19 front // 295/30-19 rear — typically direct fit with street tires; moderate front camber for wide compounds; rear may poke or rub when lowered with wide-running tires. X-Drive compatible.",
+            "b_tire_pick": "Alt #1: Front 255/35-19 // Rear 275/35-19",
+            "b_tire_flags": "Alt #1 not X-Drive · Alt #2 X-Drive compatible · camber/fitment notes apply when lowered or on wide compounds",
+            "b_tire_max": "Michelin Pilot Sport 4S (300TW), Yokohama Advan Apex V601 (280TW), Continental ExtremeContact Sport (340TW), Hankook Ventus V12 Evo2 (320TW), Kumho Ecsta PS91 (260TW)",
+            "b_tire_extreme": "Yokohama Advan Neova AD08R (200TW), Yokohama Advan A052 (200TW)",
+            "b_tire_rcompound": "Michelin Pilot Sport Cup 2 (180TW)"
           }
         }
       },
       "block_order": [
-        "button_link_KfFUiy",
-        "button_link_GA7Qkz",
-        "button_link_k34xeW"
+        "tier_street",
+        "tier_perf_square",
+        "tier_perf_aggressive",
+        "tier_perf_stagger"
       ],
-      "name": "t:sections.custom-text.presets.name",
       "settings": {
-        "show_custom_text": true,
-        "container": "1770",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 40,
-        "padding_bottom_tablet": 40,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30,
-        "block_title": "OFFICIAL G20/G42 FITMENT GUIDE",
-        "block_text": "Browse our tested wheel specs for the full range of BMW G-chassis platforms—including G20 3 Series, G22 4 Series, G42 2 Series, and more—with complete confidence. Each setup is engineered as a direct bolt-on fitment, delivering a clean, flush stance without compromise. Built around proven configurations across modern BMW platforms, this guide simplifies fitment so you can confidently spec your vehicle right the first time.",
-        "block_title_align": "center",
-        "layout_style": "1",
-        "show_customize_width": false,
-        "customize_width": 940,
-        "block_content": "",
-        "block_align": "center",
-        "show_custom_text_style": true,
-        "background_color": "",
-        "text_color": "#f9f9f9",
-        "title_color": "#f9f9f9",
-        "text_font": "font_1",
-        "text_font_size": 16,
-        "text_font_weight": "400",
-        "text_font_style": "normal",
-        "text_text_transform": "none"
-      }
-    },
-    "halo_collapsible_content_HQeAPm": {
-      "type": "halo-collapsible-content",
-      "blocks": {
-        "content_RDDHBi": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "content_hEhkRG": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "content_LBCYzm": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "content_LXAtKc": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        }
-      },
-      "block_order": [
-        "content_RDDHBi",
-        "content_hEhkRG",
-        "content_LBCYzm",
-        "content_LXAtKc"
-      ],
-      "name": "t:sections.collapsible_content.presets.name",
-      "settings": {
-        "show_collapsible_content": true,
-        "container": "1770",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 40,
-        "padding_bottom_tablet": 40,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30,
-        "block_title": "",
-        "block_text": "",
-        "block_title_align": "center",
-        "image": "shopify://shop_images/IMG_0601.jpg",
-        "desktop_layout": "image_second",
-        "open_first_collapsible_row": false,
-        "content_layout": "1"
-      }
-    },
-    "halo_collapsible_content_JxKAj7": {
-      "type": "halo-collapsible-content",
-      "blocks": {
-        "content_xAfpY3": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "content_Hkwi4c": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "content_3K6QnK": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "content_3qNDjG": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        }
-      },
-      "block_order": [
-        "content_xAfpY3",
-        "content_Hkwi4c",
-        "content_3K6QnK",
-        "content_3qNDjG"
-      ],
-      "name": "t:sections.collapsible_content.presets.name",
-      "settings": {
-        "show_collapsible_content": true,
-        "container": "1770",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 40,
-        "padding_bottom_tablet": 40,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30,
-        "block_title": "",
-        "block_text": "",
-        "block_title_align": "center",
-        "image": "shopify://shop_images/IMG_0603.jpg",
-        "desktop_layout": "image_second",
-        "open_first_collapsible_row": false,
-        "content_layout": "1"
-      }
-    },
-    "halo_collapsible_content_jxcjce": {
-      "type": "halo-collapsible-content",
-      "blocks": {
-        "content_deKi3j": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "content_xQQzKC": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "content_xWtL7D": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "content_7ndkR9": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        }
-      },
-      "block_order": [
-        "content_deKi3j",
-        "content_xQQzKC",
-        "content_xWtL7D",
-        "content_7ndkR9"
-      ],
-      "name": "t:sections.collapsible_content.presets.name",
-      "settings": {
-        "show_collapsible_content": true,
-        "container": "1770",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 40,
-        "padding_bottom_tablet": 40,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30,
-        "block_title": "",
-        "block_text": "",
-        "block_title_align": "center",
-        "image": "shopify://shop_images/IMG_0604.jpg",
-        "desktop_layout": "image_second",
-        "open_first_collapsible_row": false,
-        "content_layout": "1"
+        "show_section": true,
+        "back_label": "All BMW chassis",
+        "back_link": "/pages/shop-by-vehicle-bmw",
+        "eyebrow": "Fortune Forged",
+        "heading": "BMW G2X / G4X (G20 / G22 / G42) Wheel & Tire Fitment Guide",
+        "intro": "<p>Tested wheel and tire configurations for BMW G20 3 Series, G22 4 Series, G42 2 Series, and related G-chassis platforms. Square setups favor rotation and understeer control; staggered setups prioritize rear traction. Every setup below includes staff-pick tire sizing plus category recommendations.</p>",
+        "footnote": "Tire fitment notes are general guidance based on common setups. Final tire choice, spacers, and camber requirements are confirmed by our fitment specialists for your exact build. Suspension clearance can change with coilovers and ride height.",
+        "quote_label": "Get a fitment-confirmed quote",
+        "quote_link": "/#order"
       }
     }
   },
   "order": [
     "main",
-    "halo_product_block_2_Ft6CPt",
-    "halo_custom_text_kwkK6a",
-    "halo_collapsible_content_HQeAPm",
-    "halo_collapsible_content_JxKAj7",
-    "halo_collapsible_content_jxcjce"
+    "ff_fitment_guide_g20"
   ]
 }
