@@ -89,6 +89,10 @@
                       <div class="ff-guide__config-media">
                         {{ image | image_url: width: 900 | image_tag: loading: 'lazy', alt: label }}
                       </div>
+                    {%- else -%}
+                      <div class="ff-guide__config-media ff-guide__config-media--empty" aria-hidden="true">
+                        <span>Add optional photo in theme editor</span>
+                      </div>
                     {%- endif -%}
                     <div class="ff-guide__config-body">
                       {%- if label != blank -%}
@@ -271,7 +275,8 @@
         {
           "type": "image_picker",
           "id": "a_image",
-          "label": "Photo"
+          "label": "Optional photo",
+          "info": "Upload a car/wheel photo for this configuration. Leave blank if you do not have one yet."
         },
         {
           "type": "textarea",
@@ -345,7 +350,8 @@
         {
           "type": "image_picker",
           "id": "b_image",
-          "label": "Photo"
+          "label": "Optional photo",
+          "info": "Upload a car/wheel photo for this configuration. Leave blank if you do not have one yet."
         },
         {
           "type": "textarea",

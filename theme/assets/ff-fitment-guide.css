@@ -159,6 +159,19 @@
   display: block;
 }
 
+.ff-guide__config-media--empty {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(135deg, #f0eee9, #e4e0d6 55%, #f0eee9);
+  border-bottom: 1px solid var(--ff-line);
+  color: #8a857a;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .ff-guide__config-body {
   padding: 18px 20px 22px;
 }

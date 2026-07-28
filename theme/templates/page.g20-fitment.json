@@ -24,18 +24,18 @@
         "padding_bottom_mobile": 0
       }
     },
-    "ff_fitment_guide_g20": {
+    "ff_fitment_guide_g2x": {
       "type": "ff-fitment-guide",
       "blocks": {
         "tier_street": {
           "type": "tier",
           "settings": {
             "tier_title": "Daily Street & OEM+ Bolt-On",
-            "tier_intro": "<p>Recommended 20\" street fitments for G20 / G22 / G42. Square setups help mitigate understeer and let you rotate tires front-to-rear for longer life. Staggered setups prioritize rear grip and traction — wheels and tires cannot be rotated front to rear, and large staggers may induce understeer.</p>",
+            "tier_intro": "<p>Recommended forged 20\" street fitments for G20 / G22 / G42. Square setups help mitigate understeer and let you rotate tires front-to-rear for longer life. Staggered setups prioritize rear grip and traction — wheels and tires cannot be rotated front to rear, and large staggers may induce understeer.</p>",
             "a_label": "Square · 20\"",
             "a_front": "20x9 ET25",
             "a_rear": "20x9 ET25",
-            "a_notes": "Popular square fitment for G2X/G4X. 3–5mm front spacers may be required with certain aftermarket suspensions that reduce inner clearance. Wider alternative tire: 255/30-20 front & rear (direct fit, X-Drive compatible; all-season / extreme options N/A on the wider size).",
+            "a_notes": "Popular forged square fitment for G2X/G4X. 3–5mm front spacers may be required with certain aftermarket suspensions that reduce inner clearance. Wider alternative tire: 255/30-20 front & rear (direct fit, X-Drive compatible; all-season / extreme options N/A on the wider size).",
             "a_tire_pick": "245/35-20 Front & Rear",
             "a_tire_flags": "Direct fit · X-Drive compatible · small front spacers may be needed with tire models that run wide",
             "a_tire_allseason": "Michelin Pilot Sport AS4 (540TW), Yokohama Advan Sport A/S+ (440TW), Continental ExtremeContact DWS06+ (560TW)",
@@ -57,19 +57,19 @@
           "type": "tier",
           "settings": {
             "tier_title": "Performance Street & Track — Square",
-            "tier_intro": "<p>Whether you enjoy spirited street driving or you are a weekend track warrior chasing lap times, these wheel and tire configurations deliver a more dramatic step up in performance — typically paired with performance-oriented summer tires or track-oriented R-compounds.</p><p>Suspension, alignment, and tire choice can be tuned for street or track. Many fitments run on factory alignment, but if you plan to track the car we highly recommend dialing in negative camber for handling and tire life.</p><p>Square configurations help mitigate understeer and allow front/rear tire rotation. They may compromise rear-end grip versus staggered setups.</p>",
+            "tier_intro": "<p>Whether you enjoy spirited street driving or you are a weekend track warrior chasing lap times, these forged wheel and tire configurations deliver a more dramatic step up in performance — typically paired with performance-oriented summer tires or track-oriented R-compounds.</p><p>Suspension, alignment, and tire choice can be tuned for street or track. Many fitments run on factory alignment, but if you plan to track the car we highly recommend dialing in negative camber for handling and tire life.</p><p>Square configurations help mitigate understeer and allow front/rear tire rotation. They may compromise rear-end grip versus staggered setups.</p>",
             "a_label": "Square · 18\"",
             "a_front": "18x9 ET25",
             "a_rear": "18x9 ET25",
-            "a_notes": "Popular 18\" square fitment. 3–5mm front spacers may be required with certain aftermarket suspensions that reduce inner clearance. Alternative tire: 245/45-18 front & rear (direct fit, X-Drive compatible).",
+            "a_notes": "Popular forged 18\" square fitment. 3–5mm front spacers may be required with certain aftermarket suspensions that reduce inner clearance. Alternative tire: 245/45-18 front & rear (direct fit, X-Drive compatible).",
             "a_tire_pick": "255/40-18 Front & Rear",
             "a_tire_flags": "Direct fit · X-Drive compatible",
             "a_tire_max": "Michelin Pilot Sport 4S (300TW), Yokohama Advan Apex V601 (280TW), Continental ExtremeContact Sport 02 (340TW), Bridgestone Potenza S-04 Pole Position (280TW), Hankook Ventus V12 Evo2 (320TW), Kumho Ecsta PS91 (260TW)",
             "a_tire_extreme": "Bridgestone Potenza RE-71RS (200TW), Falken Azenis RT660 (200TW), Goodyear Eagle F1 Supercar 3 (220TW), Yokohama Advan A052 (200TW), Yokohama Advan Neova AD09 (200TW)",
             "b_label": "Square · 19\"",
-            "b_front": "19x9 ET25 (forged) / ET28 (flow formed)",
-            "b_rear": "19x9 ET25 (forged) / ET28 (flow formed)",
-            "b_notes": "Popular 19\" square fitment across forged and flow-formed designs. 3–5mm front spacers may be required with certain aftermarket suspensions. Narrower alternative: 245/35-19 front & rear (direct fit, X-Drive compatible) with broader extreme / R-compound options.",
+            "b_front": "19x9 ET25",
+            "b_rear": "19x9 ET25",
+            "b_notes": "Popular forged 19\" square fitment. 3–5mm front spacers may be required with certain aftermarket suspensions. Narrower alternative: 245/35-19 front & rear (direct fit, X-Drive compatible) with broader extreme / R-compound options.",
             "b_tire_pick": "255/35-19 Front & Rear",
             "b_tire_flags": "Direct fit · X-Drive compatible · 3–5mm front spacers may be required depending on suspension",
             "b_tire_allseason": "Continental ExtremeContact DWS06+ (560TW), Michelin Pilot Sport AS4 (540TW)",
@@ -82,7 +82,7 @@
           "type": "tier",
           "settings": {
             "tier_title": "Performance — Aggressive Square & 18\" Stagger",
-            "tier_intro": "<p>Wider square and staggered options for drivers wanting more contact patch and a more planted look. Expect spacer and camber requirements on the more aggressive square setup.</p>",
+            "tier_intro": "<p>Wider forged square and staggered options for drivers wanting more contact patch and a more planted look. Expect spacer and camber requirements on the more aggressive square setup.</p>",
             "a_label": "Square · 19x9.5\"",
             "a_front": "19x9.5 ET25",
             "a_rear": "19x9.5 ET25",
@@ -110,17 +110,17 @@
           "type": "tier",
           "settings": {
             "tier_title": "Performance Street & Track — Staggered 19\"",
-            "tier_intro": "<p>Recommended for enthusiasts that prioritize rear-end grip and traction. Wheels and tires cannot be rotated front to rear, and large staggers may induce understeer.</p>",
+            "tier_intro": "<p>Recommended for enthusiasts that prioritize rear-end grip and traction. Wheels and tires cannot be rotated front to rear, and large staggers may induce understeer. All specs below are forged only.</p>",
             "a_label": "Staggered · 19\" · popular",
-            "a_front": "19x9 ET25 (forged) / ET28 (flow formed)",
+            "a_front": "19x9 ET25",
             "a_rear": "19x10 ET38",
-            "a_notes": "Popular staggered fitment. 3–5mm front spacers may be required with certain aftermarket suspensions that reduce inner clearance.",
+            "a_notes": "Popular forged staggered fitment. 3–5mm front spacers may be required with certain aftermarket suspensions that reduce inner clearance.",
             "a_tire_pick": "Front 235/40-19 // Rear 265/35-19",
             "a_tire_flags": "Direct fit · X-Drive compatible",
             "a_tire_max": "Michelin Pilot Sport 4S (300TW), Yokohama Advan Apex V601 (280TW), Continental ExtremeContact Sport (340TW)",
             "a_tire_extreme": "Bridgestone Potenza RE-71R (200TW)",
             "b_label": "Staggered · 19\" · wider alts",
-            "b_front": "19x9 ET25 (forged) / ET28 (flow formed)",
+            "b_front": "19x9 ET25",
             "b_rear": "19x10 ET38",
             "b_notes": "Alternative #1: 255/35-19 front // 275/35-19 rear — typically direct fit with street tires; moderate front negative camber needed with compounds that run wide. Not X-Drive compatible. Extreme: Yokohama AD08R / A052. R-compound: Michelin Pilot Sport Cup 2. Alternative #2: 255/35-19 front // 295/30-19 rear — typically direct fit with street tires; moderate front camber for wide compounds; rear may poke or rub when lowered with wide-running tires. X-Drive compatible.",
             "b_tire_pick": "Alt #1: Front 255/35-19 // Rear 275/35-19",
@@ -143,8 +143,8 @@
         "back_link": "/pages/shop-by-vehicle-bmw",
         "eyebrow": "Fortune Forged",
         "heading": "BMW G2X / G4X (G20 / G22 / G42) Wheel & Tire Fitment Guide",
-        "intro": "<p>Tested wheel and tire configurations for BMW G20 3 Series, G22 4 Series, G42 2 Series, and related G-chassis platforms. Square setups favor rotation and understeer control; staggered setups prioritize rear traction. Every setup below includes staff-pick tire sizing plus category recommendations.</p>",
-        "footnote": "Tire fitment notes are general guidance based on common setups. Final tire choice, spacers, and camber requirements are confirmed by our fitment specialists for your exact build. Suspension clearance can change with coilovers and ride height.",
+        "intro": "<p>Forged-only wheel and tire configurations for BMW G20 3 Series, G22 4 Series, G42 2 Series, and related G-chassis platforms. Square setups favor rotation and understeer control; staggered setups prioritize rear traction. Every setup below includes staff-pick tire sizing plus category recommendations. Optional photos can be added to each configuration in the theme editor.</p>",
+        "footnote": "Tire fitment notes are general guidance based on common setups. Final tire choice, spacers, and camber requirements are confirmed by our fitment specialists for your exact build. Suspension clearance can change with coilovers and ride height. Fortune Forged produces forged wheels only.",
         "quote_label": "Get a fitment-confirmed quote",
         "quote_link": "/#order"
       }
@@ -152,6 +152,6 @@
   },
   "order": [
     "main",
-    "ff_fitment_guide_g20"
+    "ff_fitment_guide_g2x"
   ]
 }
