@@ -302,7 +302,7 @@
                           </button>
                         {%- endif -%}
                       </div>
-                      {%- if design_default_product != blank -%}
+                      {%- if design_default_product != blank and b.show_price_estimate -%}
                         <p class="ff-fan__price" data-ff-fan-price="full">
                           {{ design_default_product.price | money }} {{ section.settings.price_each_label | escape }} &middot; est.
                           {{ design_default_product.price | times: 4 | money }} {{ section.settings.price_full_set_label | escape }}
@@ -336,10 +336,12 @@
                             <span>{{ bead_design.title | escape }}</span>
                           </button>
                         </div>
-                        <p class="ff-fan__price" data-ff-fan-price="bead">
-                          {{ bead_design.price | money }} {{ section.settings.price_each_label | escape }} &middot; est.
-                          {{ bead_design.price | times: 2 | money }} {{ section.settings.price_pair_label | escape }}
-                        </p>
+                        {%- if b.show_price_estimate -%}
+                          <p class="ff-fan__price" data-ff-fan-price="bead">
+                            {{ bead_design.price | money }} {{ section.settings.price_each_label | escape }} &middot; est.
+                            {{ bead_design.price | times: 2 | money }} {{ section.settings.price_pair_label | escape }}
+                          </p>
+                        {%- endif -%}
                       {%- endif -%}
                     </div>
                   {%- endif -%}
@@ -729,6 +731,17 @@
           "id": "finish_options",
           "label": "Finish options (comma separated)",
           "default": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal"
+        },
+        {
+          "type": "header",
+          "content": "Pricing"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_price_estimate",
+          "label": "Show price estimate",
+          "info": "Shows the per-wheel price and an estimated total under the design picker.",
+          "default": true
         }
       ]
     }
