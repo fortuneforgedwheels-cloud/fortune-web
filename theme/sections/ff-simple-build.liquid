@@ -97,6 +97,48 @@
       <button type="button" class="ff-build__back" data-back="2">Back</button>
     </div>
   </div>
+
+  <div
+    class="ff-media-modal"
+    id="ff-media-modal-{{ section.id }}"
+    data-ff-media-modal
+    hidden
+  >
+    <div class="ff-media-modal__backdrop" data-ff-modal-close tabindex="-1"></div>
+    <div
+      class="ff-media-modal__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ff-media-modal-title-{{ section.id }}"
+      tabindex="-1"
+      data-ff-modal-dialog
+    >
+      <button type="button" class="ff-media-modal__close" data-ff-modal-close aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+      <p class="ff-media-modal__eyebrow">{{ section.settings.modal_eyebrow | escape }}</p>
+      <h2 class="ff-media-modal__title" id="ff-media-modal-title-{{ section.id }}">
+        {{ section.settings.modal_title | escape }}
+      </h2>
+      <p class="ff-media-modal__lead">{{ section.settings.modal_lead | escape }}</p>
+      <div class="ff-media-modal__offer">
+        <p class="ff-media-modal__offer-label">{{ section.settings.modal_offer_label | escape }}</p>
+        <p class="ff-media-modal__offer-copy">{{ section.settings.modal_offer_copy | escape }}</p>
+      </div>
+      <p class="ff-media-modal__social">{{ section.settings.modal_social_copy | escape }}</p>
+      <div class="ff-media-modal__actions">
+        <button type="button" class="button button--primary ff-media-modal__cta" data-ff-modal-interested>
+          {{ section.settings.modal_cta | escape }}
+        </button>
+        <button type="button" class="ff-media-modal__dismiss" data-ff-modal-close>
+          {{ section.settings.modal_dismiss | escape }}
+        </button>
+      </div>
+      <p class="ff-media-modal__thanks" data-ff-modal-thanks hidden>
+        {{ section.settings.modal_thanks | escape }}
+      </p>
+    </div>
+  </div>
 </section>
 
 <script src="{{ 'ff-simple-build.js' | asset_url }}" defer></script>
@@ -252,6 +294,64 @@
       "id": "step3_copy",
       "label": "Step 3 copy",
       "default": "Enter the custom details you already know — or leave fitment blank and a specialist will email or call you back to help."
+    },
+    {
+      "type": "header",
+      "content": "Success popup — media day"
+    },
+    {
+      "type": "text",
+      "id": "modal_eyebrow",
+      "label": "Modal eyebrow",
+      "default": "Quote received"
+    },
+    {
+      "type": "text",
+      "id": "modal_title",
+      "label": "Modal title",
+      "default": "You’re on the list — one more thing"
+    },
+    {
+      "type": "textarea",
+      "id": "modal_lead",
+      "label": "Modal lead",
+      "default": "Thanks for requesting a quote. Our team will follow up shortly with pricing, fitment, and next steps."
+    },
+    {
+      "type": "text",
+      "id": "modal_offer_label",
+      "label": "Offer label",
+      "default": "Complimentary media day"
+    },
+    {
+      "type": "textarea",
+      "id": "modal_offer_copy",
+      "label": "Offer copy",
+      "default": "When your new Fortune Forged wheels are installed, we’d love to host a complimentary media day for your build — fully covered by us. Professional content, your car, your new wheels."
+    },
+    {
+      "type": "textarea",
+      "id": "modal_social_copy",
+      "label": "Social copy",
+      "default": "We’re proud of every set we ship and would love the chance to show off your finished build across Fortune Forged socials."
+    },
+    {
+      "type": "text",
+      "id": "modal_cta",
+      "label": "Interested button",
+      "default": "Yes — I’m interested"
+    },
+    {
+      "type": "text",
+      "id": "modal_dismiss",
+      "label": "Dismiss button",
+      "default": "Maybe later"
+    },
+    {
+      "type": "textarea",
+      "id": "modal_thanks",
+      "label": "Interest confirmation",
+      "default": "Perfect. When we follow up on your quote, we’ll include media day details and help coordinate after installation."
     }
   ],
   "presets": [

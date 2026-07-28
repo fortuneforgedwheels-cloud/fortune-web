@@ -13,6 +13,12 @@
     var browseWrap = root.querySelector('[data-browse-links]');
     var assistNote = root.querySelector('[data-assist-note]');
     var submitBtn = root.querySelector('[data-submit-label]');
+    var quoteForm = root.querySelector('form.ff-quote');
+    var modal = root.querySelector('[data-ff-media-modal]');
+    var modalDialog = root.querySelector('[data-ff-modal-dialog]');
+    var modalThanks = root.querySelector('[data-ff-modal-thanks]');
+    var modalActions = root.querySelector('.ff-media-modal__actions');
+    var previousFocus = null;
 
     function setStep(n) {
       root.querySelectorAll('[data-step]').forEach(function (el) {
@@ -78,6 +84,21 @@
       });
     }
 
+    function openModal() {
+      if (!modal) return;
+      previousFocus = document.activeElement;
+      modal.hidden = false;
+      document.documentElement.classList.add('ff-modal-open');
+      if (modalDialog) modalDialog.focus();
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.hidden = true;
+      document.documentElement.classList.remove('ff-modal-open');
+      if (previousFocus && previousFocus.focus) previousFocus.focus();
+    }
+
     if (manual) {
       manual.addEventListener('input', syncVehicle);
     }
@@ -111,7 +132,53 @@
       });
     });
 
-    setHelpMode('specs');
+    root.querySelectorAll('[data-ff-modal-close]').forEach(function (el) {
+      el.addEventListener('click', closeModal);
+    });
+
+    var interestedBtn = root.querySelector('[data-ff-modal-interested]');
+    if (interestedBtn) {
+      interestedBtn.addEventListener('click', function () {
+        if (modalThanks) modalThanks.hidden = false;
+        if (modalActions) modalActions.hidden = true;
+        try {
+          sessionStorage.setItem('ff_media_day_interest', 'yes');
+        } catch (e) {}
+      });
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && modal && !modal.hidden) closeModal();
+    });
+
+    if (quoteForm) {
+      quoteForm.addEventListener('submit', function () {
+        try {
+          sessionStorage.setItem('ff_quote_submitted', '1');
+        } catch (e) {}
+      });
+    }
+
+    var success = root.querySelector('[data-ff-quote-success]');
+    var justSubmitted = false;
+    try {
+      justSubmitted = sessionStorage.getItem('ff_quote_submitted') === '1';
+      if (justSubmitted) sessionStorage.removeItem('ff_quote_submitted');
+    } catch (e) {}
+
+    if (success || justSubmitted) {
+      setStep(3);
+      openModal();
+      if (root.id) {
+        try {
+          root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } catch (e) {}
+      }
+    }
+
+    setHelpMode(
+      (root.querySelector('[data-help-mode]:checked') || {}).value || 'specs'
+    );
     syncVehicle();
   }
 

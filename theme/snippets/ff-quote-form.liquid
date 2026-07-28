@@ -2,8 +2,8 @@
 
 {%- form 'contact', id: contact_form_id, class: 'ff-quote' -%}
   {%- if form.posted_successfully? -%}
-    <div class="ff-quote__success" role="status">
-      Thanks — we received your request. If you left fitment blank, a specialist will email or call you back to help.
+    <div class="ff-quote__success" role="status" data-ff-quote-success>
+      Thanks — we received your quote request. If you left fitment blank, a specialist will email or call you back to help.
     </div>
   {%- elsif form.errors -%}
     <div class="ff-quote__error" role="alert">

@@ -1207,7 +1207,16 @@
         "beadlock_link": "shopify://collections/beadlock-wheels",
         "beadlock_desc": "Off-road lock-ring builds \u00b7 priced by the pair",
         "step3_heading": "Request your build",
-        "step3_copy": "Enter the custom details you already know \u2014 or leave fitment blank and a specialist will email or call you back to help."
+        "step3_copy": "Enter the custom details you already know \u2014 or leave fitment blank and a specialist will email or call you back to help.",
+        "modal_eyebrow": "Quote received",
+        "modal_title": "You're on the list \u2014 one more thing",
+        "modal_lead": "Thanks for requesting a quote. Our team will follow up shortly with pricing, fitment, and next steps.",
+        "modal_offer_label": "Complimentary media day",
+        "modal_offer_copy": "When your new Fortune Forged wheels are installed, we'd love to host a complimentary media day for your build \u2014 fully covered by us. Professional content, your car, your new wheels.",
+        "modal_social_copy": "We're proud of every set we ship and would love the chance to show off your finished build across Fortune Forged socials.",
+        "modal_cta": "Yes \u2014 I'm interested",
+        "modal_dismiss": "Maybe later",
+        "modal_thanks": "Perfect. When we follow up on your quote, we'll include media day details and help coordinate after installation."
       }
     }
   },
