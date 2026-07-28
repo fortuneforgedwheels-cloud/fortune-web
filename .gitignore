@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Environment / secrets — never commit these
+.env
+.env.*
+!.env.example
+.shopify/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+*.log
+npm-debug.log*
+
+# Shopify CLI local state
+.shopify
+shopify.theme.toml.bak
+
+# Temporary
+tmp/
+.tmp/
+*.zip
