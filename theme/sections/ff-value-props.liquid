@@ -1,6 +1,15 @@
 {{ 'ff-value-props.css' | asset_url | stylesheet_tag }}
 
 {%- if section.settings.show_section -%}
+  {%- liquid
+    assign video_id = section.settings.youtube_id | strip
+    assign show_feature = false
+    if section.settings.show_feature_media
+      if video_id != blank or section.settings.feature_image != blank or section.settings.video != blank
+        assign show_feature = true
+      endif
+    endif
+  -%}
   <section
     class="ff-values"
     id="ff-values-{{ section.id }}"
@@ -21,6 +30,49 @@
             <p class="ff-values__subheading">{{ section.settings.subheading | escape }}</p>
           {%- endif -%}
         </header>
+      {%- endif -%}
+
+      {%- if show_feature -%}
+        <div class="ff-values__feature">
+          {%- if section.settings.video != blank -%}
+            <div class="ff-values__feature-frame">
+              {{
+                section.settings.video
+                | video_tag:
+                  class: 'ff-values__feature-video',
+                  autoplay: true,
+                  loop: true,
+                  muted: true,
+                  controls: true,
+                  image_size: '2000x'
+              }}
+            </div>
+          {%- elsif video_id != blank -%}
+            <div class="ff-values__feature-frame ff-values__feature-frame--embed">
+              <iframe
+                class="ff-values__feature-embed"
+                src="https://www.youtube.com/embed/{{ video_id }}?rel=0&modestbranding=1"
+                title="{{ section.settings.heading | default: shop.name | escape }}"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            </div>
+          {%- elsif section.settings.feature_image != blank -%}
+            <div class="ff-values__feature-frame">
+              {{
+                section.settings.feature_image
+                | image_url: width: 2000
+                | image_tag:
+                  class: 'ff-values__feature-image',
+                  loading: 'lazy',
+                  widths: '800, 1200, 1600, 2000',
+                  sizes: '(max-width: 1200px) 100vw, 1200px',
+                  alt: section.settings.heading
+              }}
+            </div>
+          {%- endif -%}
+        </div>
       {%- endif -%}
 
       <div class="ff-values__grid">
@@ -84,14 +136,42 @@
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
-      "default": "Why Fortune Forged"
+      "label": "Large heading",
+      "default": "THE FORTUNE FORGED EXPERIENCE"
     },
     {
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
       "default": "Custom forged wheels engineered for your build."
+    },
+    {
+      "type": "header",
+      "content": "Feature video / media"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_feature_media",
+      "label": "Show rectangular media slot under heading",
+      "default": true
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Shopify-hosted video"
+    },
+    {
+      "type": "text",
+      "id": "youtube_id",
+      "label": "YouTube video ID",
+      "info": "Used if no Shopify-hosted video is set. Example: S7oXlkAWxyo",
+      "default": "S7oXlkAWxyo"
+    },
+    {
+      "type": "image_picker",
+      "id": "feature_image",
+      "label": "Fallback image",
+      "info": "Shown only if no video is set"
     },
     {
       "type": "image_picker",
