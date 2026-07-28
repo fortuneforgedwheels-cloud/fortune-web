@@ -8,15 +8,58 @@
 {%- liquid
     assign current_variant = product.selected_or_first_available_variant
     assign variantCount = product.variants | size
-    assign ff_826m_beadlock = false
+    assign ff_certified_beadlock = false
+    assign ff_certified_path_label = 'Beadlock checkout'
+    assign ff_certified_fitment = '18x11 ET15'
+    assign ff_certified_size = '18X11'
+    assign ff_certified_width = '11"'
+    assign ff_certified_offset = '+15'
+    assign ff_certified_make_ph = 'e.g. BMW'
+    assign ff_certified_model_ph = 'e.g. M3'
     assign ff_product_title_up = product.title | upcase
     assign ff_product_handle = product.handle | downcase
     if ff_product_title_up contains '826M' and product.tags contains 'BEADLOCK'
-      assign ff_826m_beadlock = true
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '826M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET15'
+      assign ff_certified_offset = '+15'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. M3'
     elsif ff_product_title_up contains '826M' and product.tags contains 'beadlock'
-      assign ff_826m_beadlock = true
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '826M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET15'
+      assign ff_certified_offset = '+15'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. M3'
     elsif ff_product_handle == 'g80-g82-beadlock'
-      assign ff_826m_beadlock = true
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '826M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET15'
+      assign ff_certified_offset = '+15'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. M3'
+    elsif ff_product_handle == 'cadillac-ct5-v-blackwing-oem-beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'CT5-V Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. Cadillac'
+      assign ff_certified_model_ph = 'e.g. CT5-V Blackwing'
+    elsif ff_product_title_up contains 'CT5-V' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'CT5-V Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. Cadillac'
+      assign ff_certified_model_ph = 'e.g. CT5-V Blackwing'
+    elsif ff_product_title_up contains 'CT5V' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'CT5-V Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. Cadillac'
+      assign ff_certified_model_ph = 'e.g. CT5-V Blackwing'
     endif
     assign ff_826m_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
     assign colors_bg = section.settings.colors_bg
@@ -965,10 +1008,17 @@
                                             {%- endif -%}
                                         {%- endif -%}
                                     {%- when 'variant_picker' -%}
-                                        {%- if ff_826m_beadlock -%}
+                                        {%- if ff_certified_beadlock -%}
                                             {% render 'ff-826m-spec-path',
                                               product: product,
-                                              form_id: ff_826m_form_id
+                                              form_id: ff_826m_form_id,
+                                              path_label: ff_certified_path_label,
+                                              certified_fitment: ff_certified_fitment,
+                                              certified_size: ff_certified_size,
+                                              certified_width: ff_certified_width,
+                                              certified_offset: ff_certified_offset,
+                                              ymm_make_placeholder: ff_certified_make_ph,
+                                              ymm_model_placeholder: ff_certified_model_ph
                                             %}
                                         {%- endif -%}
                                         {%- if variantCount > 0 and product.has_only_default_variant != true -%}

@@ -1,10 +1,20 @@
 {{ 'ff-826m-certified.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
+  assign path_label = path_label | default: 'Beadlock checkout'
+  assign certified_fitment = certified_fitment | default: '18x11 ET15'
+  assign certified_size = certified_size | default: '18X11'
+  assign certified_width = certified_width | default: '11"'
+  assign certified_offset = certified_offset | default: '+15'
+  assign certified_lug = certified_lug | default: "PLUG N' PLAY || KEEP OEM SPECS"
+  assign ymm_make_placeholder = ymm_make_placeholder | default: 'e.g. BMW'
+  assign ymm_model_placeholder = ymm_model_placeholder | default: 'e.g. M3'
+
+  assign certified_size_key = certified_size | upcase | replace: ' ', ''
   assign certified_variant_id = blank
   for variant in product.variants
     assign size_key = variant.option1 | upcase | replace: ' ', ''
-    if size_key == '18X11'
+    if size_key == certified_size_key
       assign certified_variant_id = variant.id
     endif
   endfor
@@ -17,21 +27,21 @@
   data-product-id="{{ product.id }}"
   data-form-id="{{ form_id }}"
   data-certified-variant-id="{{ certified_variant_id }}"
-  data-certified-size="18X11"
-  data-certified-width='11"'
-  data-certified-offset="+15"
-  data-certified-lug="PLUG N' PLAY || KEEP OEM SPECS"
+  data-certified-size="{{ certified_size | escape }}"
+  data-certified-width="{{ certified_width | escape }}"
+  data-certified-offset="{{ certified_offset | escape }}"
+  data-certified-lug="{{ certified_lug | escape }}"
 >
-  <p class="ff-826m-path__eyebrow">826M Beadlock checkout</p>
+  <p class="ff-826m-path__eyebrow">{{ path_label | escape }}</p>
   <h2 class="ff-826m-path__heading">How do you want to spec this pair?</h2>
-  <p class="ff-826m-path__intro">Choose Fortune Certified Specs for a dialed-in 18x11 ET15 package, or select your own size, width, offset, and lug pattern.</p>
+  <p class="ff-826m-path__intro">Choose Fortune Certified Specs for a dialed-in {{ certified_fitment | escape }} package, or select your own size, width, offset, and lug pattern.</p>
 
   <div class="ff-826m-path__choices" role="radiogroup" aria-label="Spec path">
     <label class="ff-826m-path__choice">
       <input type="radio" name="ff_826m_path_{{ product.id }}" value="certified" checked>
       <span class="ff-826m-path__choice-card">
         <span class="ff-826m-path__choice-title">Fortune Certified Specs</span>
-        <span class="ff-826m-path__choice-meta">Fixed fitment: <strong>18x11 ET15</strong></span>
+        <span class="ff-826m-path__choice-meta">Fixed fitment: <strong>{{ certified_fitment | escape }}</strong></span>
         <span class="ff-826m-path__choice-meta">You only enter vehicle year / make / model and ring, face, and bolt colors.</span>
       </span>
     </label>
@@ -47,7 +57,7 @@
   <div class="ff-826m-path__certified" data-ff-826m-certified-panel>
     <div class="ff-826m-path__badge">
       <span>Certified fitment locked</span>
-      <strong>18x11 ET15</strong>
+      <strong>{{ certified_fitment | escape }}</strong>
     </div>
 
     <div class="ff-826m-path__ymm">
@@ -57,18 +67,18 @@
       </label>
       <label class="ff-826m-path__field">
         <span>Make</span>
-        <input type="text" name="properties[Make]" form="{{ form_id }}" autocomplete="off" placeholder="e.g. BMW" data-ff-826m-required-certified>
+        <input type="text" name="properties[Make]" form="{{ form_id }}" autocomplete="off" placeholder="{{ ymm_make_placeholder | escape }}" data-ff-826m-required-certified>
       </label>
       <label class="ff-826m-path__field">
         <span>Model</span>
-        <input type="text" name="properties[Model]" form="{{ form_id }}" autocomplete="off" placeholder="e.g. M3" data-ff-826m-required-certified>
+        <input type="text" name="properties[Model]" form="{{ form_id }}" autocomplete="off" placeholder="{{ ymm_model_placeholder | escape }}" data-ff-826m-required-certified>
       </label>
     </div>
 
     <p class="ff-826m-path__hint">Next, choose ring color, face color, and bolt color below. Size, width, offset, and lug pattern are set automatically.</p>
 
     <input type="hidden" name="properties[Spec Path]" value="Fortune Certified Specs" form="{{ form_id }}" data-ff-826m-certified-prop>
-    <input type="hidden" name="properties[Certified Fitment]" value="18x11 ET15" form="{{ form_id }}" data-ff-826m-certified-prop>
+    <input type="hidden" name="properties[Certified Fitment]" value="{{ certified_fitment | escape }}" form="{{ form_id }}" data-ff-826m-certified-prop>
   </div>
 
   <div class="ff-826m-path__custom" data-ff-826m-custom-panel hidden>
