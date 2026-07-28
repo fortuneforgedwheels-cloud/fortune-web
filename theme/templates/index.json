@@ -93,6 +93,69 @@
         "modal_thanks": "Perfect. When we follow up on your quote, we'll include media day details and help coordinate after installation."
       }
     },
+    "ff_fan_favorites_main": {
+      "type": "ff-fan-favorites",
+      "blocks": {
+        "setup_g8x": {
+          "type": "vehicle_setup",
+          "settings": {
+            "vehicle_label": "BMW G80 / G82 / G87",
+            "front_spec": "20x10 ET10",
+            "rear_spec": "20x11 ET10",
+            "full_set_note": "True flush fitment",
+            "beadlock_spec": "20x11 ET15",
+            "beadlock_note": "True flush fitment \u00b7 Clears steel & CCB brakes",
+            "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal"
+          }
+        },
+        "setup_f8x": {
+          "type": "vehicle_setup",
+          "settings": {
+            "vehicle_label": "BMW F80 / F82",
+            "front_spec": "20x9.5 ET15",
+            "rear_spec": "20x11 ET37",
+            "full_set_note": "True flush fitment",
+            "beadlock_spec": "18x11 ET40",
+            "beadlock_note": "True flush fitment",
+            "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal"
+          }
+        },
+        "setup_r8huracan": {
+          "type": "vehicle_setup",
+          "settings": {
+            "vehicle_label": "Audi R8 / Lamborghini Huracan",
+            "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal"
+          }
+        },
+        "setup_c7z06": {
+          "type": "vehicle_setup",
+          "settings": {
+            "vehicle_label": "Corvette C7 Z06",
+            "beadlock_spec": "18x12.5 ET55",
+            "beadlock_note": "Fits both OEM steel & carbon ceramic brakes",
+            "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal"
+          }
+        }
+      },
+      "block_order": [
+        "setup_g8x",
+        "setup_f8x",
+        "setup_r8huracan",
+        "setup_c7z06"
+      ],
+      "settings": {
+        "show_section": true,
+        "eyebrow": "Fortune Forged",
+        "heading": "Fan Favorite Setups",
+        "subheading": "Our most requested wheel and fitment combinations \u2014 sizing already dialed in for these platforms. Pick your finish and we'll build the rest.",
+        "card_cta": "Build this setup",
+        "quote_cta": "Get a custom quote",
+        "quote_link": "/#order",
+        "footnote": "Exact fitment, pricing, and any modifications are confirmed by our team before your order ships.",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
     "ff_value_props_main": {
       "type": "ff-value-props",
       "blocks": {
@@ -1573,6 +1636,7 @@
   "order": [
     "ff_hero_lifestyle_main",
     "ff_simple_build_main",
+    "ff_fan_favorites_main",
     "ff_value_props_main",
     "ff_project_gallery_main",
     "halo_slideshow_Kd9Mbj",
