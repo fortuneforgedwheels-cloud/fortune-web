@@ -13,77 +13,200 @@
       "type": "main-page",
       "disabled": true,
       "settings": {
-        "show_breadcrumb": true,
-        "breadcrumb_alignment": "left",
-        "show_page_title": true,
-        "page_title_alignment": "center",
+        "show_breadcrumb": false,
+        "show_page_title": false,
         "container": "1370",
         "padding_top": 0,
-        "padding_bottom": 70,
+        "padding_bottom": 0,
         "padding_top_tablet": 0,
-        "padding_bottom_tablet": 50,
+        "padding_bottom_tablet": 0,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 40
+        "padding_bottom_mobile": 0
       }
     },
-    "halo_custom_text_AYKbpy": {
-      "type": "halo-custom-text",
+    "ff_fitment_guide_e9x": {
+      "type": "ff-fitment-guide",
       "blocks": {
-        "button_link_9fgAF6": {
-          "type": "button-link",
+        "tier_agg_a": {
+          "type": "tier",
           "settings": {
-            "btn": "1",
-            "btn_text": "19\" specs",
-            "btn_icon": "",
-            "btn_link": "shopify://pages/e9x-19"
+            "tier_title": "Aggressive Street — Staggered A",
+            "tier_intro": "<p>Ideal for the driver who wants to fill out the wheel wells with the widest possible rubber and perfectly flush offsets. Sometimes these fitments are a direct bolt-on, but oftentimes require small spacers, negative camber, or rolled fenders for the sake of dialing in the perfect blend of function and form.</p><p>Staggered setups maintain stock-like handling characteristics; tires can only be rotated left to right. Maximizes both front and rear tire width.</p>",
+            "a_label": "Staggered · 18x9.5 / 18x10.5",
+            "a_front": "18x9.5 ET22",
+            "a_rear": "18x10.5 ET22",
+            "a_notes": "Popular fitment. Front 275/35-18 tires can also be used. Rear 295/35-18 tires can be used but may require rolled fenders to prevent rubbing.",
+            "a_tire_pick": "Front 265/35-18 // Rear 285/35-18",
+            "a_tire_flags": "Direct fit · Popular fitment",
+            "b_label": "Staggered · 18x10 / 18x11",
+            "b_front": "18x10 ET25",
+            "b_rear": "18x11 ET25",
+            "b_notes": "Another popular staggered fitment that is a touch more aggressive than the 9.5/10.5 setup. About as wide as the front and rear fenders will take without extensive modifications — typically bolt-on. We typically do not recommend exceeding a 295 rear tire unless the car has a substantial power bump (supercharged / stroker). 5mm front spacers may be required with certain aftermarket suspensions for inner clearance. Front tires may lightly scrub inner fender liners at full lock; this usually self-clears over time.",
+            "b_tire_pick": "Front 275/35-18 // Rear 295/35-18",
+            "b_tire_flags": "May require rolled rear fenders · Popular aggressive stagger"
           }
         },
-        "button_link_eEmiUW": {
-          "type": "button-link",
+        "tier_agg_b": {
+          "type": "tier",
           "settings": {
-            "btn": "1",
-            "btn_text": "18\" specs",
-            "btn_icon": "",
-            "btn_link": ""
+            "tier_title": "Aggressive Street — Staggered B",
+            "tier_intro": "<p>19\" aggressive staggered options for E90 / E92 / E93 M3 and non-M builds.</p>",
+            "a_label": "Staggered · 19x9.5 / 19x10.5",
+            "a_front": "19x9.5 ET22",
+            "a_rear": "19x10.5 ET22",
+            "a_notes": "Rear can also be run at ET25 depending on design. Rear 295/30-19 tires can be used but may require rolled fenders to prevent rubbing.",
+            "a_tire_pick": "Front 265/30-19 // Rear 285/30-19",
+            "a_tire_flags": "Direct fit",
+            "b_label": "Staggered · 19x10 / 19x10.5",
+            "b_front": "19x10 ET25",
+            "b_rear": "19x10.5 ET25",
+            "b_notes": "5mm or larger front spacers may be required with certain aftermarket suspensions for inner clearance. A 19x9.5 ET22 front can be used to avoid those spacers. Rear rolled fenders may be required to prevent rubbing.",
+            "b_tire_pick": "Front 275/30-19 // Rear 295/30-19",
+            "b_tire_flags": "May require rolled rear fenders"
+          }
+        },
+        "tier_agg_20": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Aggressive Street — 20\"",
+            "tier_intro": "<p>Flush 20\" staggered package. Specs below use a native rear offset so no rear spacers are required for flush fitment.</p>",
+            "a_label": "Staggered · 20\"",
+            "a_front": "20x9.5 ET22",
+            "a_rear": "20x11 ET28",
+            "a_notes": "Native ET28 rear replaces the common ET44 + 15–18mm rear spacer flush package (ET44 − 16mm ≈ ET28), so the wheel sits flush without spacers. 305/25-20 rear tires can also be used but rear fender rolling and/or additional negative camber may be required.",
+            "a_tire_pick": "Front 255/30-20 // Rear 295/25-20",
+            "a_tire_flags": "Flush without rear spacers · native ET28 rear"
+          }
+        },
+        "tier_perf_square": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Performance Street & Track — Square",
+            "tier_intro": "<p>These fitments are effective for performance-oriented street cars, weekend track warriors, or even a dedicated race car. Suspension type, alignment, and tire brand/size can be changed to work for nearly any scenario.</p><p>Square setups are recommended for most street and performance driving — they allow proper front-to-rear tire rotation to extend tire life and improve handling balance.</p>",
+            "a_label": "Square · 18x10\"",
+            "a_front": "18x10 ET25",
+            "a_rear": "18x10 ET25",
+            "a_notes": "Popular fitment. Direct fit, but a 5mm front spacer may be required with certain aftermarket suspensions for inner clearance.",
+            "a_tire_pick": "275/35-18 Front & Rear",
+            "a_tire_flags": "Direct fit · Popular fitment",
+            "b_label": "Square · 18x10.5\"",
+            "b_front": "18x10.5 ET22",
+            "b_rear": "18x10.5 ET22",
+            "b_notes": "Uses all available real estate under the fender arches — coilovers with linear race springs are a must for inner clearance (JRZ, MCS, Ground Control, AST, Moton, etc.). Also popular with 275/35-18 R-compounds or slicks for sidewall support.",
+            "b_tire_pick": "295/30-18 Front & Rear",
+            "b_tire_flags": "Requires −3° or more front camber · race-spring coilovers required"
+          }
+        },
+        "tier_perf_square_19": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Performance Street & Track — Square 19\"",
+            "tier_intro": "<p>19\" square dual-duty option for E9X.</p>",
+            "a_label": "Square · 19x10\"",
+            "a_front": "19x10 ET25",
+            "a_rear": "19x10 ET25",
+            "a_notes": "Direct fit, but a 5mm front spacer may be required with certain aftermarket suspensions for inner clearance.",
+            "a_tire_pick": "275/30-19 Front & Rear",
+            "a_tire_flags": "Direct fit"
+          }
+        },
+        "tier_perf_stagger_a": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Performance Street & Track — Staggered A",
+            "tier_intro": "<p>Staggered setups maintain stock-like handling characteristics; tires can only be rotated left to right. Maximizes both front and rear tire width.</p>",
+            "a_label": "Staggered · 18x9.5 / 18x10.5",
+            "a_front": "18x9.5 ET22",
+            "a_rear": "18x10.5 ET22",
+            "a_notes": "Popular fitment. Front 275/35-18 tires can also be used. Rear 295/35-18 tires can be used but may require rolled fenders to prevent rubbing.",
+            "a_tire_pick": "Front 265/35-18 // Rear 285/35-18",
+            "a_tire_flags": "Direct fit · Popular fitment",
+            "b_label": "Staggered · 18x10 / 18x11 ET25",
+            "b_front": "18x10 ET25",
+            "b_rear": "18x11 ET25",
+            "b_notes": "Popular aggressive stagger — typically bolt-on without extensive mods. Do not exceed a 295 rear unless the car has a substantial power bump. 5mm front spacers may be required with certain aftermarket suspensions. Front tires may lightly scrub inner liners at full lock (usually self-clears).",
+            "b_tire_pick": "Front 275/35-18 // Rear 295/35-18",
+            "b_tire_flags": "May require rolled rear fenders"
+          }
+        },
+        "tier_perf_stagger_b": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Performance Street & Track — Staggered B",
+            "tier_intro": "<p>Wider and 19\" staggered performance options. The 18x11 rear uses a native offset so no spacers are needed for subframe / flush positioning.</p>",
+            "a_label": "Staggered · 18x10 / 18x11 ET29",
+            "a_front": "18x10 ET25",
+            "a_rear": "18x11 ET29",
+            "a_notes": "Most aggressive staggered fitment in the lineup — reserved for serious track/race cars or high-power builds. Native ET29 rear replaces the common ET44 + 15mm spacer package (effective ET29) used to clear the subframe and improve fender clearance vs ET25. 295/35-18 rears may also be used. Many drivers remove rear fender liners to avoid contact. Even at this offset, rear tires may still contact the subframe under full droop (e.g. on a lift). 5mm front spacers may be required with certain aftermarket suspensions. Front tires may lightly scrub liners at full lock.",
+            "a_tire_pick": "Front 275/35-18 // Rear 305/35-18",
+            "a_tire_flags": "May require rolled rear fenders · native ET29 rear (no spacer)",
+            "b_label": "Staggered · 19x9.5 / 19x10.5",
+            "b_front": "19x9.5 ET22",
+            "b_rear": "19x10.5 ET25",
+            "b_notes": "Front 275/30-19 tires can also be used as a direct fit. Rear 295/30-19 tires can be used but may require a touch of negative camber or rolled fenders.",
+            "b_tire_pick": "Front 265/30-19 // Rear 285/30-19",
+            "b_tire_flags": "Direct fit"
+          }
+        },
+        "tier_hc_square": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Hardcore Track — Square",
+            "tier_intro": "<p>These no-compromise fitments are ideal for dedicated track / race cars. Square setups allow proper front-to-rear tire rotation to extend tire life and improve handling balance.</p>",
+            "a_label": "Square · 18x10\"",
+            "a_front": "18x10 ET25",
+            "a_rear": "18x10 ET25",
+            "a_notes": "Popular fitment. Direct fit, but a 5mm front spacer may be required with certain aftermarket suspensions for inner clearance.",
+            "a_tire_pick": "275/35-18 Front & Rear",
+            "a_tire_flags": "Direct fit · Popular fitment",
+            "b_label": "Square · 18x10.5\"",
+            "b_front": "18x10.5 ET22",
+            "b_rear": "18x10.5 ET22",
+            "b_notes": "Coilovers with linear race springs are a must for inner clearance. Also popular with 275/35-18 R-compounds or slicks for sidewall support.",
+            "b_tire_pick": "295/30-18 Front & Rear",
+            "b_tire_flags": "Requires −3° or more front camber · race-spring coilovers required"
+          }
+        },
+        "tier_hc_stagger": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Hardcore Track — Staggered",
+            "tier_intro": "<p>Most aggressive staggered hardcore package. Native rear offset eliminates the spacer stack typically used for subframe clearance.</p>",
+            "a_label": "Staggered · 18x10 / 18x11 ET29",
+            "a_front": "18x10 ET25",
+            "a_rear": "18x11 ET29",
+            "a_notes": "Native ET29 rear replaces ET44 + 15mm spacer (effective ET29) for subframe clearance and greater fender clearance vs ET25. May require rolled rear fenders; many drivers remove rear fender liners. 295/35-18 rears may also be used. Subframe contact under full droop is still possible. 5mm front spacers may be required with certain aftermarket suspensions. Slick runners may opt for a 10.5\" front for sidewall support.",
+            "a_tire_pick": "Front 275/35-18 // Rear 305/35-18",
+            "a_tire_flags": "May require rolled rear fenders · native ET29 rear (no spacer)"
           }
         }
       },
       "block_order": [
-        "button_link_9fgAF6",
-        "button_link_eEmiUW"
+        "tier_agg_a",
+        "tier_agg_b",
+        "tier_agg_20",
+        "tier_perf_square",
+        "tier_perf_square_19",
+        "tier_perf_stagger_a",
+        "tier_perf_stagger_b",
+        "tier_hc_square",
+        "tier_hc_stagger"
       ],
-      "name": "t:sections.custom-text.presets.name",
       "settings": {
-        "show_custom_text": true,
-        "container": "1770",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 40,
-        "padding_bottom_tablet": 40,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30,
-        "block_title": "THE E9X FITMENT GUIDE",
-        "block_text": "(E90 / E92 — M3 & Non-M) Dialing in proper fitment on the E9X chassis comes down to balancing aggressive stance with real drivability. Whether you’re building an M3 or a non-M 3 Series, here is how its done..",
-        "block_title_align": "center",
-        "layout_style": "1",
-        "show_customize_width": false,
-        "customize_width": 940,
-        "block_content": "",
-        "block_align": "center",
-        "show_custom_text_style": true,
-        "background_color": "",
-        "text_color": "#f9f9f9",
-        "title_color": "#f9f9f9",
-        "text_font": "font_1",
-        "text_font_size": 16,
-        "text_font_weight": "400",
-        "text_font_style": "normal",
-        "text_text_transform": "none"
+        "show_section": true,
+        "back_label": "All BMW chassis",
+        "back_link": "/pages/shop-by-vehicle-bmw",
+        "eyebrow": "Fortune Forged",
+        "heading": "BMW E9X (E90 / E92 / E93) Wheel & Tire Fitment Guide",
+        "intro": "<p>Forged-only wheel and tire configurations for BMW E90 / E92 / E93 — M3 and non-M. Where older guides called for spacers to sit flush or clear the subframe, this guide lists the native Fortune Forged offset that achieves the same position without spacers (e.g. ET44 + 15–18mm rear spacer → ET28; ET44 + 15mm → ET29). Optional photos can be added to each configuration in the theme editor.</p>",
+        "footnote": "Tire fitment notes are general guidance based on common setups. Final tire choice, spacers, and camber requirements are confirmed by our fitment specialists for your exact build. Conditional 5mm front spacers for certain aftermarket suspensions are still noted where inner clearance can vary. Fortune Forged produces forged wheels only.",
+        "quote_label": "Get a fitment-confirmed quote",
+        "quote_link": "/#order"
       }
     }
   },
   "order": [
     "main",
-    "halo_custom_text_AYKbpy"
+    "ff_fitment_guide_e9x"
   ]
 }
