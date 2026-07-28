@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "ff_hero_lifestyle_main": {
@@ -6,8 +15,8 @@
         "slide_mono": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/IMG_2108.jpg",
-            "mobile_image": "shopify://shop_images/IMG_2114.jpg",
+            "image": "shopify://shop_images/IMG_2176.jpg",
+            "mobile_image": "shopify://shop_images/BMW_F80_25MP_HighQuality.jpg",
             "title": "Monoblock Forged",
             "button_label": "Browse Selection",
             "button_link": "shopify://collections/monoblock-wheels"
@@ -59,27 +68,27 @@
         "vehicle_placeholder": "e.g. 2024 BMW G80 M3",
         "continue_label": "Continue",
         "step2_heading": "Choose your setup",
-        "step2_copy": "Browse the hottest designs, pick Monoblock, 2-Piece, or Beadlock \u2014 or skip straight to a custom quote.",
+        "step2_copy": "Browse the hottest designs, pick Monoblock, 2-Piece, or Beadlock — or skip straight to a custom quote.",
         "step2_hint": "Beadlock wheels are priced by the pair. Standard monoblock and two piece wheels are priced individually.",
         "hottest_label": "Browse the hottest designs",
         "hottest_desc": "See recent Fortune Forged builds and popular styles",
-        "hottest_link": "shopify://pages/project-gallery",
+        "hottest_link": "/#project-gallery",
         "quote_cta": "Skip to custom quote",
         "monoblock_link": "shopify://collections/monoblock-wheels",
-        "monoblock_desc": "One-piece forged strength \u00b7 priced individually",
+        "monoblock_desc": "One-piece forged strength · priced individually",
         "twopiece_link": "shopify://collections/two-piece-wheels",
-        "twopiece_desc": "Modular fitment & finish \u00b7 priced individually",
+        "twopiece_desc": "Modular fitment & finish · priced individually",
         "beadlock_link": "shopify://collections/beadlock-wheels",
-        "beadlock_desc": "Off-road lock-ring builds \u00b7 priced by the pair",
+        "beadlock_desc": "Off-road lock-ring builds · priced by the pair",
         "step3_heading": "Request your build",
-        "step3_copy": "Enter the custom details you already know \u2014 or leave fitment blank and a specialist will email or call you back to help.",
+        "step3_copy": "Enter the custom details you already know — or leave fitment blank and a specialist will email or call you back to help.",
         "modal_eyebrow": "Quote received",
-        "modal_title": "You're on the list \u2014 one more thing",
+        "modal_title": "You're on the list — one more thing",
         "modal_lead": "Thanks for requesting a quote. Our team will follow up shortly with pricing, fitment, and next steps.",
         "modal_offer_label": "Complimentary media day",
-        "modal_offer_copy": "When your new Fortune Forged wheels are installed, we'd love to host a complimentary media day for your build \u2014 fully covered by us. Professional content, your car, your new wheels.",
+        "modal_offer_copy": "When your new Fortune Forged wheels are installed, we'd love to host a complimentary media day for your build — fully covered by us. Professional content, your car, your new wheels.",
         "modal_social_copy": "We're proud of every set we ship and would love the chance to show off your finished build across Fortune Forged socials.",
-        "modal_cta": "Yes \u2014 I'm interested",
+        "modal_cta": "Yes — I'm interested",
         "modal_dismiss": "Maybe later",
         "modal_thanks": "Perfect. When we follow up on your quote, we'll include media day details and help coordinate after installation."
       }
@@ -92,7 +101,7 @@
           "settings": {
             "title": "FEA ANALYZED",
             "image": "shopify://shop_images/Screenshot_2026-07-27_at_11.35.47_PM.png",
-            "text": "Every Fortune Forged wheel is engineered from the ground up using advanced Finite Element Analysis (FEA) to optimize strength, rigidity, and weight before production ever begins. Each design is digitally tested to simulate real-world cornering, braking, impact, and load forces, allowing us to remove unnecessary material while reinforcing high-stress areas. The result is a forged wheel that delivers maximum performance, uncompromising safety, and exceptional durability\u2014custom-built for your vehicle rather than adapted from a generic off-the-shelf design.",
+            "text": "Every Fortune Forged wheel is engineered from the ground up using advanced Finite Element Analysis (FEA) to optimize strength, rigidity, and weight before production ever begins. Each design is digitally tested to simulate real-world cornering, braking, impact, and load forces, allowing us to remove unnecessary material while reinforcing high-stress areas. The result is a forged wheel that delivers maximum performance, uncompromising safety, and exceptional durability—custom-built for your vehicle rather than adapted from a generic off-the-shelf design.",
             "link_label": "VIRTUALLY TESTED. REAL-WORLD PROVEN.",
             "link": "shopify://collections/monoblock-wheels"
           }
@@ -102,7 +111,7 @@
           "settings": {
             "title": "LIGHTER",
             "image": "shopify://shop_images/IMG_2128.jpg",
-            "text": "Each wheel is machined from true aerospace grade 6061-T6 forged aluminum. Not cast or flow-formed construction. The forging process produces a denser, stronger grain structure, allowing our engineers to remove unnecessary material while maintaining exceptional structural integrity. The result is a wheel that is up to 25\u201330% lighter than a comparable cast wheel, reducing unsprung and rotational mass to improve acceleration, braking, steering response, and overall driving performance without compromising strength or durability.",
+            "text": "Each wheel is machined from true aerospace grade 6061-T6 forged aluminum. Not cast or flow-formed construction. The forging process produces a denser, stronger grain structure, allowing our engineers to remove unnecessary material while maintaining exceptional structural integrity. The result is a wheel that is up to 25–30% lighter than a comparable cast wheel, reducing unsprung and rotational mass to improve acceleration, braking, steering response, and overall driving performance without compromising strength or durability.",
             "link_label": "FORGED STRENGTH WITHOUT EXCESS WEIGHT",
             "link": "shopify://collections/two-piece-wheels"
           }
@@ -133,6 +142,249 @@
         "background_image": "shopify://shop_images/forza-manufacturing_7.webp",
         "padding_top": 64,
         "padding_bottom": 64
+      }
+    },
+    "ff_project_gallery_main": {
+      "type": "ff-project-gallery",
+      "blocks": {
+        "project_1": {
+          "type": "project",
+          "settings": {
+            "vehicle": "BMW G87 M2",
+            "subtitle": "Track-focused street build",
+            "cover_image": "shopify://shop_images/IMG_2133.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2133.jpg",
+            "gallery_1": "shopify://shop_images/IMG_0878.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2135.jpg",
+            "gallery_3": "shopify://shop_images/IMG_2134.jpg",
+            "wheel_style": "",
+            "construction": "Monoblock forged",
+            "sizes": "20x10 et12 / 20x11 et15",
+            "finish": "Polished clear",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>BMW G87 M2 running EMD lowering springs sitting on Fortune Forged the F-05SR. Fitment. </p><p>This set up sits very nicely, nearing the fender to the lip - rub free, direct bolt on.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": "shopify://products/f-05sr"
+          }
+        },
+        "project_2": {
+          "type": "project",
+          "settings": {
+            "vehicle": "Ferarri 488",
+            "subtitle": "Two-piece street setup",
+            "cover_image": "shopify://shop_images/IMG_0840.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_0840.jpg",
+            "gallery_1": "shopify://shop_images/IMG_0843.jpg",
+            "gallery_2": "shopify://shop_images/IMG_0841.jpg",
+            "gallery_3": "shopify://shop_images/IMG_0842.jpg",
+            "gallery_4": "shopify://shop_images/IMG_0844.jpg",
+            "wheel_style": "",
+            "construction": "Monoblock Forged",
+            "sizes": "20x9.5 et35 / 20x12 et48",
+            "finish": "Brushed gunmetal",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>The F-04S. Inspired by Ferrari's track-bred 488 Challenge race car, this directional monoblock design blends purposeful motorsport styling with modern forged engineering. Sculpted directional spokes optimize visual motion while delivering a lightweight, high-strength wheel built for both road and track.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": "shopify://products/f-04s"
+          }
+        },
+        "project_3": {
+          "type": "project",
+          "settings": {
+            "vehicle": "1200whp audi r8",
+            "subtitle": "",
+            "cover_image": "shopify://shop_images/HU9A6779.jpg",
+            "cover_image_mobile": "shopify://shop_images/HU9A6779.jpg",
+            "gallery_1": "shopify://shop_images/IMG_0859.jpg",
+            "gallery_2": "shopify://shop_images/IMG_0857.jpg",
+            "gallery_3": "shopify://shop_images/IMG_0858.jpg",
+            "wheel_style": "",
+            "construction": "Beadlock + Monoblock",
+            "sizes": "18x8.5 et30 / 18x12 et44",
+            "finish": "Satin black + Blue accent",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>This Audi R8 pairs our forged monoblock FF-06 front wheels with true matching rear beadlocks, creating a setup that's equally at home on the street and at the drag strip. Finished in a clean, motorsport-inspired spec, the combination delivers aggressive styling, uncompromising traction, and the confidence to put every bit of power to the pavement.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": "shopify://products/ff-06-beadlock-pair"
+          }
+        },
+        "project_QP6FfD": {
+          "type": "project",
+          "settings": {
+            "vehicle": "BMW G80 M3",
+            "subtitle": "Track-focused street build",
+            "cover_image": "shopify://shop_images/IMG_2149.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2149.jpg",
+            "gallery_1": "shopify://shop_images/IMG_2149.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2150.jpg",
+            "gallery_3": "shopify://shop_images/IMG_2151.jpg",
+            "gallery_4": "shopify://shop_images/IMG_2160.jpg",
+            "wheel_style": "",
+            "construction": "Monoblock forged",
+            "sizes": "20x10 et10 / 20x11 et10",
+            "finish": "Brushed clear",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>True flush fitment, this G80 M3 showcases our F-05X forged monoblock, our slot spoked design complements BMW's aggressive body lines while the bespoke offsets position each wheel perfectly within the fenders for an aggressive stance.</p><p>Requires fender liner mod to avoid rub at full lock, no other mods needed.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": ""
+          }
+        },
+        "project_jFgBcX": {
+          "type": "project",
+          "settings": {
+            "vehicle": "Ferarri SF90",
+            "subtitle": "Track-focused street build",
+            "cover_image": "shopify://shop_images/IMG_2143.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2143.jpg",
+            "gallery_1": "shopify://shop_images/IMG_2144.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2145.jpg",
+            "wheel_style": "",
+            "construction": "two-piece forged",
+            "sizes": "21x9.5 et31 / 21x12 et50",
+            "finish": "Triple chrome plated",
+            "hardware": "Gold titanium",
+            "location": "Built to order",
+            "writeup": "<p>This build showcases our F12 EVO two-piece forged wheels in a true flush fitment, enhancing the exotic proportions of the SF90 with a perfectly tailored stance. Finished to the owner's exact specifications.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": "shopify://products/f12-evo-r"
+          }
+        },
+        "project_wpGyHq": {
+          "type": "project",
+          "settings": {
+            "vehicle": "991.2 Porsche gt3rs",
+            "subtitle": "",
+            "cover_image": "shopify://shop_images/IMG_2138.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2138.jpg",
+            "gallery_1": "shopify://shop_images/IMG_2137.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2139.jpg",
+            "gallery_3": "shopify://shop_images/IMG_2161.jpg",
+            "gallery_4": "shopify://shop_images/IMG_2138.jpg",
+            "wheel_style": "",
+            "construction": "Monoblock forged",
+            "sizes": "20x9.5 et50 / 20x12.5 et48",
+            "finish": "Satin white",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>This 991.2 GT3 RS features our F-05SR forged monoblock in a perfectly dialed OEM+ flush fitment, engineered to complement Porsche's unmistakable motorsport silhouette. Finished with optional custom-machined relief holes specified by the owner, this bespoke configuration delivers a subtle, track-inspired detail that sets the build apart while preserving its refined factory character.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": ""
+          }
+        },
+        "project_4": {
+          "type": "project",
+          "settings": {
+            "vehicle": "Aston Martin Vantage (2025)",
+            "subtitle": "",
+            "cover_image": "shopify://shop_images/IMG_2162.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2162.jpg",
+            "gallery_1": "shopify://shop_images/IMG_2140.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2141.jpg",
+            "gallery_3": "shopify://shop_images/IMG_2142.jpg",
+            "gallery_4": "shopify://shop_images/IMG_2162.jpg",
+            "wheel_style": "",
+            "construction": "Forged monoblock",
+            "sizes": "21x9.5 et40 / 21x11.5 et33",
+            "finish": "Brushed clear",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>This 2025 Aston Martin Vantage features a fully custom designed forged monoblock design with custom floating centers engineered to conceal the lug hardware, creating the illusion of a seamless, zero-tolerance center section. Finished in a sophisticated Swiss-inspired specification with a true flush 21-inch fitment, the result is an understated expression of craftsmanship, precision, and timeless class.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": ""
+          }
+        },
+        "project_9EPqEJ": {
+          "type": "project",
+          "settings": {
+            "vehicle": "BMW F80 M3",
+            "subtitle": "",
+            "cover_image": "shopify://shop_images/IMG_2163.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2165.jpg",
+            "gallery_1": "shopify://shop_images/IMG_2164.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2165.jpg",
+            "gallery_3": "shopify://shop_images/IMG_2167.jpg",
+            "gallery_4": "shopify://shop_images/IMG_2166.jpg",
+            "wheel_style": "",
+            "construction": "Forged monoblock",
+            "sizes": "20x9.5 et15 / 20x11 et37",
+            "finish": "Polished clear",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>Finished in polished clear, this F8X build showcases our F-05SR forged monoblock with a true fender-to-lip, bolt-on flush fitment. This is as flush as the platform allows, delivering an aggressive stance with remarkable proportions and deep concave profile.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": "shopify://products/f-05sr"
+          }
+        },
+        "project_pTarbX": {
+          "type": "project",
+          "settings": {
+            "vehicle": "Mclaren 600LT",
+            "subtitle": "Custom 1 off designed",
+            "cover_image": "shopify://shop_images/IMG_2152.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2152.jpg",
+            "gallery_1": "shopify://shop_images/IMG_2125_2.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2153.jpg",
+            "gallery_3": "shopify://shop_images/IMG_2154.jpg",
+            "gallery_4": "shopify://shop_images/IMG_2152.jpg",
+            "wheel_style": "",
+            "construction": "Forged monoblock",
+            "sizes": "20x9 et33 / 21x12 et38",
+            "finish": "Brushed clear",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>Jake Schnatter's McLaren 600LT rides on our custom forged wheels in a true bolt-on flush fitment, perfectly complementing the car's lightweight, track-focused character. Built to the owner's exact specifications, this setup delivers an exotic aesthetic with the precision, performance, and craftsmanship expected from Fortune Forged.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": ""
+          }
+        },
+        "project_YazVee": {
+          "type": "project",
+          "disabled": true,
+          "settings": {
+            "vehicle": "Fortune Forged Feature",
+            "subtitle": "Custom finish showcase",
+            "cover_image": "shopify://shop_images/IMG_0786.jpg",
+            "gallery_1": "shopify://shop_images/IMG_0786.jpg",
+            "gallery_2": "shopify://shop_images/IMG_0878.jpg",
+            "gallery_3": "shopify://shop_images/IMG_0908.jpg",
+            "wheel_style": "FF Custom",
+            "construction": "Forged custom",
+            "sizes": "Custom sizing",
+            "finish": "Custom finish",
+            "hardware": "Gold titanium",
+            "location": "Built to order",
+            "writeup": "<p>Fortune Forged Feature built on Fortune Forged forged custom wheels. Fitment was measured around brake clearance, suspension setup, and target stance — then finished to match the car.</p><p>Swap this text in the theme editor with the real build story, owner details, and any supporting mods.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": "shopify://collections/monoblock-wheels"
+          }
+        }
+      },
+      "block_order": [
+        "project_1",
+        "project_2",
+        "project_3",
+        "project_QP6FfD",
+        "project_jFgBcX",
+        "project_wpGyHq",
+        "project_4",
+        "project_9EPqEJ",
+        "project_pTarbX",
+        "project_YazVee"
+      ],
+      "settings": {
+        "show_section": true,
+        "eyebrow": "Fortune Forged",
+        "heading": "PROJECT GALLERY",
+        "subheading": "Explore real world Fortune Forged builds. Browse complete vehicle specifications, custom fitment, premium finishes, and full photo galleries—engineered to inspire your next build.",
+        "card_cta": "View build",
+        "quote_label": "Request a similar build",
+        "quote_link": "/#order",
+        "padding_top": 72,
+        "padding_bottom": 72
       }
     },
     "halo_slideshow_Kd9Mbj": {
@@ -340,7 +592,7 @@
             "text": "",
             "btn": "1",
             "btn_text": "LATEST PROJECTS",
-            "link": "shopify://pages/project-gallery",
+            "link": "/#project-gallery",
             "container_content": "1570",
             "position": "center",
             "position_y": "bottom",
@@ -386,6 +638,7 @@
         "image_b7zCPM",
         "image_Rdx6Pk"
       ],
+      "disabled": true,
       "name": "t:sections.slideshow.presets.name",
       "settings": {
         "show_slideshow": true,
@@ -414,8 +667,7 @@
         "block_arrows_color": "",
         "block_arrows_border": "",
         "lookbook_style": "1"
-      },
-      "disabled": true
+      }
     },
     "halo_split_slideshow_gjcLKL": {
       "type": "halo-split-slideshow",
@@ -646,7 +898,7 @@
         "block_align": "center",
         "btn": "1",
         "btn_text": "THE FORTUNE FORGED GALLERY",
-        "btn_link": "shopify://pages/project-gallery",
+        "btn_link": "/#project-gallery",
         "background_color": "",
         "text_color": "#ffffff"
       }
@@ -1315,108 +1567,6 @@
         "block_title": "Request a quote",
         "block_text": "Please submit: year/make/model with your desired wheel design , the sizes Front/Rear (ie: 20x9.5F, 20x11R, etc) and the finish you need.  (brushed, polished, etc).",
         "block_title_align": "center"
-      }
-    },
-    "ff_project_gallery_main": {
-      "type": "ff-project-gallery",
-      "blocks": {
-        "project_1": {
-          "type": "project",
-          "settings": {
-            "vehicle": "BMW G80 M3",
-            "subtitle": "Track-focused street build",
-            "cover_image": "shopify://shop_images/IMG_0878.jpg",
-            "wheel_style": "FF Monoblock",
-            "construction": "Monoblock forged",
-            "sizes": "20x9.5F / 20x11R",
-            "finish": "Brushed clear",
-            "hardware": "Gold titanium",
-            "location": "Built to order",
-            "writeup": "<p>BMW G80 M3 built on Fortune Forged monoblock forged wheels. Fitment was measured around brake clearance, suspension setup, and target stance \u2014 then finished to match the car.</p><p>Swap this text in the theme editor with the real build story, owner details, and any supporting mods.</p>",
-            "shop_label": "Shop this style",
-            "shop_link": "shopify://collections/monoblock-wheels",
-            "gallery_1": "shopify://shop_images/IMG_0878.jpg",
-            "gallery_2": "shopify://shop_images/IMG_0908.jpg",
-            "gallery_3": "shopify://shop_images/IMG_0962.jpg"
-          }
-        },
-        "project_2": {
-          "type": "project",
-          "settings": {
-            "vehicle": "BMW M4 Competition",
-            "subtitle": "Two-piece street setup",
-            "cover_image": "shopify://shop_images/IMG_0908.jpg",
-            "wheel_style": "FF Two-Piece",
-            "construction": "Two-piece forged",
-            "sizes": "20x9.5F / 20x11R",
-            "finish": "Polished lip",
-            "hardware": "Gold titanium",
-            "location": "Built to order",
-            "writeup": "<p>BMW M4 Competition built on Fortune Forged two-piece forged wheels. Fitment was measured around brake clearance, suspension setup, and target stance \u2014 then finished to match the car.</p><p>Swap this text in the theme editor with the real build story, owner details, and any supporting mods.</p>",
-            "shop_label": "Shop this style",
-            "shop_link": "shopify://collections/two-piece-wheels",
-            "gallery_1": "shopify://shop_images/IMG_0908.jpg",
-            "gallery_2": "shopify://shop_images/IMG_0962.jpg",
-            "gallery_3": "shopify://shop_images/IMG_0786.jpg"
-          }
-        },
-        "project_3": {
-          "type": "project",
-          "settings": {
-            "vehicle": "Off-road Build",
-            "subtitle": "Beadlock trail setup",
-            "cover_image": "shopify://shop_images/IMG_0962.jpg",
-            "wheel_style": "FF Beadlock",
-            "construction": "Beadlock forged",
-            "sizes": "17x9 square",
-            "finish": "Satin black",
-            "hardware": "Gold titanium",
-            "location": "Built to order",
-            "writeup": "<p>Off-road Build built on Fortune Forged beadlock forged wheels. Fitment was measured around brake clearance, suspension setup, and target stance \u2014 then finished to match the car.</p><p>Swap this text in the theme editor with the real build story, owner details, and any supporting mods.</p>",
-            "shop_label": "Shop this style",
-            "shop_link": "shopify://collections/beadlock-wheels",
-            "gallery_1": "shopify://shop_images/IMG_0962.jpg",
-            "gallery_2": "shopify://shop_images/IMG_0786.jpg",
-            "gallery_3": "shopify://shop_images/IMG_0878.jpg"
-          }
-        },
-        "project_4": {
-          "type": "project",
-          "settings": {
-            "vehicle": "Fortune Forged Feature",
-            "subtitle": "Custom finish showcase",
-            "cover_image": "shopify://shop_images/IMG_0786.jpg",
-            "wheel_style": "FF Custom",
-            "construction": "Forged custom",
-            "sizes": "Custom sizing",
-            "finish": "Custom finish",
-            "hardware": "Gold titanium",
-            "location": "Built to order",
-            "writeup": "<p>Fortune Forged Feature built on Fortune Forged forged custom wheels. Fitment was measured around brake clearance, suspension setup, and target stance \u2014 then finished to match the car.</p><p>Swap this text in the theme editor with the real build story, owner details, and any supporting mods.</p>",
-            "shop_label": "Shop this style",
-            "shop_link": "shopify://collections/monoblock-wheels",
-            "gallery_1": "shopify://shop_images/IMG_0786.jpg",
-            "gallery_2": "shopify://shop_images/IMG_0878.jpg",
-            "gallery_3": "shopify://shop_images/IMG_0908.jpg"
-          }
-        }
-      },
-      "block_order": [
-        "project_1",
-        "project_2",
-        "project_3",
-        "project_4"
-      ],
-      "settings": {
-        "show_section": true,
-        "eyebrow": "Fortune Forged",
-        "heading": "PROJECT GALLERY",
-        "subheading": "Real builds running Fortune Forged wheels. Tap a build for full specs and photos.",
-        "card_cta": "View build",
-        "quote_label": "Request a similar build",
-        "quote_link": "/#order",
-        "padding_top": 72,
-        "padding_bottom": 72
       }
     }
   },
