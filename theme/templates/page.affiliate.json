@@ -93,11 +93,10 @@
         "show_section": true,
         "how_heading": "HOW IT WORKS",
         "intro": "The Fortune Forged Affiliate Program is a great way to earn additional money by monetizing your digital content. Sharing custom discount coupons allows you to receive a commission from the conversions made by visitors coming from your website, channel, social media, or any other communication channel. Join in and make sure your fellow drivers are standing out.",
-        "benefits_heading": "WHAT YOU'LL GET AS AN AFFILIATE",
-        "cta_label": "START EARNING NOW >",
+        "benefits_heading": "WHAT YOU RECEIVE AS AN AFFILIATE",
         "apply_heading": "Apply to become an affiliate",
-        "apply_intro": "Tell us about your channel and audience. Our team will review your application and follow up with next steps.",
-        "submit_label": "Submit application",
+        "apply_intro": "Fill out each field below. Use the placeholders as a guide — email in the email box, phone in the phone box, and so on.",
+        "submit_label": "START EARNING NOW",
         "success_message": "Thanks — we received your affiliate application and will follow up soon."
       }
     }

@@ -1,11 +1,24 @@
 {{ 'ff-affiliate-program.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign how_heading = section.settings.how_heading | default: 'HOW IT WORKS'
+  assign benefits_heading = section.settings.benefits_heading | default: 'WHAT YOU RECEIVE AS AN AFFILIATE'
+  assign submit_label = section.settings.submit_label | default: 'START EARNING NOW'
+  if how_heading == blank
+    assign how_heading = 'HOW IT WORKS'
+  endif
+  if benefits_heading == blank
+    assign benefits_heading = 'WHAT YOU RECEIVE AS AN AFFILIATE'
+  endif
+  if submit_label == blank
+    assign submit_label = 'START EARNING NOW'
+  endif
+-%}
+
 {%- if section.settings.show_section -%}
   <section class="ff-aff" id="ff-aff-{{ section.id }}">
     <div class="ff-aff__inner">
-      {%- if section.settings.how_heading != blank -%}
-        <h1 class="ff-aff__boxed-title">{{ section.settings.how_heading | escape }}</h1>
-      {%- endif -%}
+      <h1 class="ff-aff__boxed-title">{{ how_heading | escape }}</h1>
 
       {%- if section.settings.intro != blank -%}
         <p class="ff-aff__intro">{{ section.settings.intro | escape }}</p>
@@ -38,9 +51,7 @@
 
       <hr class="ff-aff__rule">
 
-      {%- if section.settings.benefits_heading != blank -%}
-        <h2 class="ff-aff__boxed-title">{{ section.settings.benefits_heading | escape }}</h2>
-      {%- endif -%}
+      <h2 class="ff-aff__boxed-title">{{ benefits_heading | escape }}</h2>
 
       <div class="ff-aff__benefits">
         {%- for block in section.blocks -%}
@@ -56,12 +67,6 @@
           {%- endif -%}
         {%- endfor -%}
       </div>
-
-      {%- if section.settings.cta_label != blank -%}
-        <div class="ff-aff__cta-wrap">
-          <a class="ff-aff__cta" href="#ff-aff-apply-{{ section.id }}">{{ section.settings.cta_label | escape }}</a>
-        </div>
-      {%- endif -%}
 
       <div class="ff-aff__apply" id="ff-aff-apply-{{ section.id }}">
         {%- if section.settings.apply_heading != blank -%}
@@ -85,46 +90,49 @@
 
           <div class="ff-aff__form-grid">
             <div class="ff-aff__field">
-              <label for="ff-aff-name">Name*</label>
+              <label for="ff-aff-name">Full name</label>
               <input id="ff-aff-name" type="text" name="contact[name]" required
+                placeholder="Enter your full name here"
                 value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
                 autocomplete="name">
             </div>
             <div class="ff-aff__field">
-              <label for="ff-aff-email">Email*</label>
+              <label for="ff-aff-email">Email address</label>
               <input id="ff-aff-email" type="email" name="contact[email]" required
+                placeholder="Enter your email here"
                 value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
                 autocomplete="email">
             </div>
             <div class="ff-aff__field">
-              <label for="ff-aff-phone">Phone</label>
-              <input id="ff-aff-phone" type="tel" name="contact[phone]"
+              <label for="ff-aff-phone">Phone number</label>
+              <input id="ff-aff-phone" type="tel" name="contact[phone]" required
+                placeholder="Enter your phone number here"
                 value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
                 autocomplete="tel">
             </div>
             <div class="ff-aff__field">
-              <label for="ff-aff-platform">Primary platform*</label>
+              <label for="ff-aff-platform">Primary platform</label>
               <input id="ff-aff-platform" type="text" name="contact[platform]" required
                 placeholder="Instagram, YouTube, TikTok, blog, etc.">
             </div>
             <div class="ff-aff__field ff-aff__field--full">
-              <label for="ff-aff-handle">Channel / handle / website*</label>
+              <label for="ff-aff-handle">Channel / handle / website</label>
               <input id="ff-aff-handle" type="text" name="contact[channel]" required
-                placeholder="@yourhandle or https://yoursite.com">
+                placeholder="Example: @yourhandle or https://yoursite.com">
             </div>
             <div class="ff-aff__field ff-aff__field--full">
               <label for="ff-aff-audience">Audience size</label>
               <input id="ff-aff-audience" type="text" name="contact[audience_size]"
-                placeholder="e.g. 25k Instagram followers">
+                placeholder="Example: 25,000 Instagram followers">
             </div>
             <div class="ff-aff__field ff-aff__field--full">
-              <label for="ff-aff-message">Tell us about your content*</label>
+              <label for="ff-aff-message">Tell us about your content</label>
               <textarea id="ff-aff-message" name="contact[body]" rows="5" required
                 placeholder="What you create, who your audience is, and why Fortune Forged is a fit."></textarea>
             </div>
           </div>
 
-          <button class="ff-aff__submit" type="submit">{{ section.settings.submit_label | default: 'Submit application' | escape }}</button>
+          <button class="ff-aff__submit" type="submit">{{ submit_label | escape }}</button>
         {%- endform -%}
       </div>
     </div>
@@ -159,13 +167,7 @@
       "type": "text",
       "id": "benefits_heading",
       "label": "Benefits heading",
-      "default": "WHAT YOU'LL GET AS AN AFFILIATE"
-    },
-    {
-      "type": "text",
-      "id": "cta_label",
-      "label": "CTA button label",
-      "default": "START EARNING NOW >"
+      "default": "WHAT YOU RECEIVE AS AN AFFILIATE"
     },
     {
       "type": "text",
@@ -177,13 +179,13 @@
       "type": "textarea",
       "id": "apply_intro",
       "label": "Application intro",
-      "default": "Tell us about your channel and audience. Our team will review your application and follow up with next steps."
+      "default": "Fill out each field below. Use the placeholders as a guide — email in the email box, phone in the phone box, and so on."
     },
     {
       "type": "text",
       "id": "submit_label",
       "label": "Submit button label",
-      "default": "Submit application"
+      "default": "START EARNING NOW"
     },
     {
       "type": "text",
