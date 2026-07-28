@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": false,
+        "show_page_title": false,
+        "container": "1770",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "ff_g80_proof": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<section style=\"min-height:70vh;display:grid;place-items:center;padding:48px 20px;background:linear-gradient(180deg,#0b0b0b,#151515);color:#f3f1ec;text-align:center;\"><div style=\"max-width:640px;\"><p style=\"letter-spacing:.18em;text-transform:uppercase;color:#c4a35a;font-weight:700;margin:0 0 12px;\">Draft proof page</p><h1 style=\"font-size:clamp(3rem,10vw,5.5rem);line-height:0.95;margin:0;letter-spacing:-0.03em;\">G80 M3</h1><p style=\"margin:18px 0 28px;color:#a8a59c;font-size:1.1rem;\">Create a Shopify page with handle <strong>g80-m3</strong> and assign template <strong>g80-m3</strong> to use /pages/g80-m3. Until then, open the alternate homepage view.</p><p><a href=\"/?view=g80-m3\" style=\"display:inline-block;background:#c4a35a;color:#111;text-decoration:none;font-weight:700;padding:14px 22px;\">Open G80 M3 proof view</a></p></div></section>"
+      }
+    }
+  },
+  "order": ["main", "ff_g80_proof"]
+}

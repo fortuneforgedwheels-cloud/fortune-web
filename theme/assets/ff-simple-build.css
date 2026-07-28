@@ -1,0 +1,242 @@
+.ff-build {
+  --ff-gold: #c4a35a;
+  --ff-ink: #f3f1ec;
+  --ff-muted: #a8a59c;
+  --ff-panel: #161616;
+  --ff-line: rgba(243, 241, 236, 0.14);
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(196, 163, 90, 0.18), transparent 55%),
+    linear-gradient(180deg, #0b0b0b 0%, #111 100%);
+  color: var(--ff-ink);
+  padding: 48px 20px 64px;
+}
+
+.ff-build__inner {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.ff-build__eyebrow {
+  margin: 0 0 8px;
+  color: var(--ff-gold);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ff-build__title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.ff-build__subtitle {
+  margin: 14px 0 0;
+  max-width: 38rem;
+  color: var(--ff-muted);
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.ff-build__steps {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 32px 0 28px;
+  padding: 0;
+}
+
+.ff-build__step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--ff-line);
+  background: rgba(255, 255, 255, 0.02);
+  opacity: 0.55;
+}
+
+.ff-build__step.is-active,
+.ff-build__step.is-done {
+  opacity: 1;
+  border-color: rgba(196, 163, 90, 0.55);
+}
+
+.ff-build__step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  background: var(--ff-gold);
+  color: #111;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ff-build__step-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ff-build__panel {
+  background: var(--ff-panel);
+  border: 1px solid var(--ff-line);
+  padding: 28px 24px;
+}
+
+.ff-build__panel-title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.ff-build__panel-copy,
+.ff-build__hint {
+  margin: 8px 0 0;
+  color: var(--ff-muted);
+  line-height: 1.5;
+}
+
+.ff-build__vehicles,
+.ff-build__styles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.ff-build__vehicle,
+.ff-build__style {
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+  background: #0f0f0f;
+  border: 1px solid var(--ff-line);
+  padding: 18px 16px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.ff-build__vehicle:hover,
+.ff-build__style:hover,
+.ff-build__vehicle.is-selected {
+  border-color: var(--ff-gold);
+  transform: translateY(-1px);
+}
+
+.ff-build__vehicle-label,
+.ff-build__style-name {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.ff-build__vehicle-hint,
+.ff-build__style-desc {
+  display: block;
+  margin-top: 4px;
+  color: var(--ff-muted);
+  font-size: 0.92rem;
+}
+
+.ff-build__manual {
+  margin-bottom: 18px;
+}
+
+.ff-build__label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ff-muted);
+}
+
+.ff-build__input,
+.ff-build__textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: #0a0a0a;
+  border: 1px solid var(--ff-line);
+  color: var(--ff-ink);
+  padding: 12px 14px;
+  font: inherit;
+}
+
+.ff-build__input:focus,
+.ff-build__textarea:focus {
+  outline: 1px solid var(--ff-gold);
+  border-color: var(--ff-gold);
+}
+
+.ff-build__next,
+.ff-build__submit {
+  min-width: 180px;
+}
+
+.ff-build__next:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ff-build__nav-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.ff-build__back {
+  background: transparent;
+  border: 0;
+  color: var(--ff-muted);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 8px 0;
+  font: inherit;
+}
+
+.ff-quote__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 18px 0 20px;
+}
+
+.ff-quote__field--full {
+  grid-column: 1 / -1;
+}
+
+.ff-quote__success {
+  background: rgba(196, 163, 90, 0.16);
+  border: 1px solid rgba(196, 163, 90, 0.5);
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+
+.ff-quote__error {
+  background: rgba(180, 40, 40, 0.18);
+  border: 1px solid rgba(220, 80, 80, 0.5);
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 749px) {
+  .ff-build__steps,
+  .ff-build__vehicles,
+  .ff-build__styles,
+  .ff-quote__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ff-build__step-label {
+    font-size: 12px;
+  }
+}

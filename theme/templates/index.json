@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "halo_slideshow_with_simple_effect_X4zHe3": {
@@ -31,7 +22,8 @@
         "block_arrows_bg": "",
         "block_arrows_color": "",
         "block_arrows_border": ""
-      }
+      },
+      "disabled": true
     },
     "halo_split_slideshow_gjcLKL": {
       "type": "halo-split-slideshow",
@@ -543,7 +535,8 @@
         "block_arrows_bg": "",
         "block_arrows_color": "",
         "block_arrows_border": ""
-      }
+      },
+      "disabled": true
     },
     "halo_banner_with_video_dtcbfK": {
       "type": "halo-banner-with-video",
@@ -577,11 +570,13 @@
         "text_text_transform": "uppercase",
         "text_color": "#ffffff",
         "title_color": "#f9f9f9"
-      }
+      },
+      "disabled": true
     },
     "17738955064a1e0a50": {
       "type": "apps",
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "1773890611372b8628": {
       "type": "apps",
@@ -608,7 +603,8 @@
       "block_order": [
         "instafeed_app_block_nyd7Ge"
       ],
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "custom_liquid_WpPQRK": {
       "type": "custom-liquid",
@@ -618,7 +614,8 @@
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "custom_liquid": ""
-      }
+      },
+      "disabled": true
     },
     "666a0ea5-3ed3-46bd-90cd-0fcfe3ff243c": {
       "type": "halo-slideshow",
@@ -946,7 +943,8 @@
       "block_order": [
         "instafeed_app_block_aYGkF3"
       ],
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "1627285730d8d5e449": {
       "type": "halo-product-block",
@@ -1161,7 +1159,8 @@
       "block_order": [
         "instafeed_app_block_zcNpbt"
       ],
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "contact_form_C7yhEx": {
       "type": "contact-form",
@@ -1178,14 +1177,78 @@
         "block_title": "Request a quote",
         "block_text": "Please submit: year/make/model with your desired wheel design , the sizes Front/Rear (ie: 20x9.5F, 20x11R, etc) and the finish you need.  (brushed, polished, etc).",
         "block_title_align": "center"
+      },
+      "disabled": true
+    },
+    "ff_simple_build_main": {
+      "type": "ff-simple-build",
+      "blocks": {
+        "vehicle_g80": {
+          "type": "vehicle",
+          "settings": {
+            "label": "G80 M3",
+            "hint": "BMW"
+          }
+        },
+        "vehicle_g82": {
+          "type": "vehicle",
+          "settings": {
+            "label": "G82 M4",
+            "hint": "BMW"
+          }
+        },
+        "vehicle_f80": {
+          "type": "vehicle",
+          "settings": {
+            "label": "F80 M3",
+            "hint": "BMW"
+          }
+        },
+        "vehicle_other": {
+          "type": "vehicle",
+          "settings": {
+            "label": "Other vehicle",
+            "hint": "Tell us below"
+          }
+        }
+      },
+      "block_order": [
+        "vehicle_g80",
+        "vehicle_g82",
+        "vehicle_f80",
+        "vehicle_other"
+      ],
+      "settings": {
+        "eyebrow": "Fortune Forged",
+        "title": "Order custom forged wheels",
+        "subtitle": "Skip the noise. Pick your vehicle, choose a construction, request a build.",
+        "step1_label": "Vehicle",
+        "step2_label": "Style",
+        "step3_label": "Quote",
+        "step1_heading": "What do you drive?",
+        "step1_copy": "Start with your chassis so we can size and fit the wheel correctly.",
+        "continue_label": "Continue",
+        "step2_heading": "Choose construction",
+        "step2_copy": "Browse designs now, or skip straight to a quote \u2014 we\u2019ll help you pick the right wheel.",
+        "step2_hint": "Beadlock wheels are priced by the pair. Standard wheels are priced individually.",
+        "quote_cta": "Request a quote",
+        "monoblock_link": "shopify://collections/monoblock-wheels",
+        "monoblock_desc": "One-piece forged strength",
+        "twopiece_link": "shopify://collections/two-piece-wheels",
+        "twopiece_desc": "Modular fitment & finish options",
+        "beadlock_link": "shopify://collections/beadlock-wheels",
+        "beadlock_desc": "Off-road lock-ring builds",
+        "step3_heading": "Request your build",
+        "step3_copy": "Send fitment details and we\u2019ll follow up with pricing and lead time."
       }
     }
   },
   "order": [
-    "halo_slideshow_with_simple_effect_X4zHe3",
+    "ff_simple_build_main",
     "halo_split_slideshow_gjcLKL",
     "halo_featured_collection_5_Cf6VNC",
     "halo_slideshow_Kd9Mbj",
+    "halo_slideshow_with_simple_effect_X4zHe3",
     "halo_custom_text_button_YwPLb3",
     "halo_slideshow_with_simple_effect_THU7G8",
     "halo_banner_with_video_dtcbfK",

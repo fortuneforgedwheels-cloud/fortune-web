@@ -1,0 +1,263 @@
+{{ 'ff-simple-build.css' | asset_url | stylesheet_tag }}
+
+<section class="ff-build" id="order" data-ff-build>
+  <div class="ff-build__inner">
+    <header class="ff-build__intro">
+      <p class="ff-build__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      <h1 class="ff-build__title">{{ section.settings.title | escape }}</h1>
+      {% if section.settings.subtitle != blank %}
+        <p class="ff-build__subtitle">{{ section.settings.subtitle | escape }}</p>
+      {% endif %}
+    </header>
+
+    <ol class="ff-build__steps" aria-label="Order steps">
+      <li class="ff-build__step is-active" data-step="1">
+        <span class="ff-build__step-num">1</span>
+        <span class="ff-build__step-label">{{ section.settings.step1_label | escape }}</span>
+      </li>
+      <li class="ff-build__step" data-step="2">
+        <span class="ff-build__step-num">2</span>
+        <span class="ff-build__step-label">{{ section.settings.step2_label | escape }}</span>
+      </li>
+      <li class="ff-build__step" data-step="3">
+        <span class="ff-build__step-num">3</span>
+        <span class="ff-build__step-label">{{ section.settings.step3_label | escape }}</span>
+      </li>
+    </ol>
+
+    <div class="ff-build__panel is-active" data-panel="1">
+      <h2 class="ff-build__panel-title">{{ section.settings.step1_heading | escape }}</h2>
+      <p class="ff-build__panel-copy">{{ section.settings.step1_copy | escape }}</p>
+      <div class="ff-build__vehicles">
+        {% for block in section.blocks %}
+          {% if block.type == 'vehicle' %}
+            <button
+              type="button"
+              class="ff-build__vehicle"
+              data-vehicle="{{ block.settings.label | escape }}"
+              {{ block.shopify_attributes }}
+            >
+              <span class="ff-build__vehicle-label">{{ block.settings.label | escape }}</span>
+              {% if block.settings.hint != blank %}
+                <span class="ff-build__vehicle-hint">{{ block.settings.hint | escape }}</span>
+              {% endif %}
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="ff-build__manual">
+        <label class="ff-build__label" for="ff-vehicle-manual-{{ section.id }}">Or type year / make / model</label>
+        <input
+          class="ff-build__input"
+          id="ff-vehicle-manual-{{ section.id }}"
+          type="text"
+          name="ff_vehicle_manual"
+          placeholder="e.g. 2024 BMW G80 M3"
+          autocomplete="off"
+        >
+      </div>
+      <button type="button" class="ff-build__next button button--primary" data-next="2" disabled>
+        {{ section.settings.continue_label | escape }}
+      </button>
+    </div>
+
+    <div class="ff-build__panel" data-panel="2" hidden>
+      <h2 class="ff-build__panel-title">{{ section.settings.step2_heading | escape }}</h2>
+      <p class="ff-build__panel-copy">{{ section.settings.step2_copy | escape }}</p>
+      <div class="ff-build__styles">
+        <a class="ff-build__style" href="{{ section.settings.monoblock_link }}" data-style="Monoblock">
+          <span class="ff-build__style-name">Monoblock</span>
+          <span class="ff-build__style-desc">{{ section.settings.monoblock_desc | escape }}</span>
+        </a>
+        <a class="ff-build__style" href="{{ section.settings.twopiece_link }}" data-style="2-Piece">
+          <span class="ff-build__style-name">2-Piece</span>
+          <span class="ff-build__style-desc">{{ section.settings.twopiece_desc | escape }}</span>
+        </a>
+        <a class="ff-build__style" href="{{ section.settings.beadlock_link }}" data-style="Beadlock">
+          <span class="ff-build__style-name">Beadlock</span>
+          <span class="ff-build__style-desc">{{ section.settings.beadlock_desc | escape }}</span>
+        </a>
+      </div>
+      <p class="ff-build__hint">{{ section.settings.step2_hint | escape }}</p>
+      <div class="ff-build__nav-row">
+        <button type="button" class="ff-build__back" data-back="1">Back</button>
+        <button type="button" class="ff-build__next button button--primary" data-next="3">
+          {{ section.settings.quote_cta | escape }}
+        </button>
+      </div>
+    </div>
+
+    <div class="ff-build__panel" data-panel="3" hidden>
+      <h2 class="ff-build__panel-title">{{ section.settings.step3_heading | escape }}</h2>
+      <p class="ff-build__panel-copy">{{ section.settings.step3_copy | escape }}</p>
+      {% render 'ff-quote-form', section: section %}
+      <button type="button" class="ff-build__back" data-back="2">Back</button>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'ff-simple-build.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "FF Simple Build",
+  "tag": "section",
+  "class": "section-ff-simple-build",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Fortune Forged"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Order custom forged wheels"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Three steps. Tell us your vehicle, pick a construction, request a build."
+    },
+    {
+      "type": "text",
+      "id": "step1_label",
+      "label": "Step 1 label",
+      "default": "Vehicle"
+    },
+    {
+      "type": "text",
+      "id": "step2_label",
+      "label": "Step 2 label",
+      "default": "Style"
+    },
+    {
+      "type": "text",
+      "id": "step3_label",
+      "label": "Step 3 label",
+      "default": "Quote"
+    },
+    {
+      "type": "text",
+      "id": "step1_heading",
+      "label": "Step 1 heading",
+      "default": "What do you drive?"
+    },
+    {
+      "type": "textarea",
+      "id": "step1_copy",
+      "label": "Step 1 copy",
+      "default": "Start with your chassis so we can size and fit the wheel correctly."
+    },
+    {
+      "type": "text",
+      "id": "continue_label",
+      "label": "Continue button",
+      "default": "Continue"
+    },
+    {
+      "type": "text",
+      "id": "step2_heading",
+      "label": "Step 2 heading",
+      "default": "Choose construction"
+    },
+    {
+      "type": "textarea",
+      "id": "step2_copy",
+      "label": "Step 2 copy",
+      "default": "Browse designs now, or skip straight to a quote — we’ll help you pick the right wheel."
+    },
+    {
+      "type": "text",
+      "id": "step2_hint",
+      "label": "Step 2 hint",
+      "default": "Beadlock wheels are priced by the pair. Standard wheels are priced individually."
+    },
+    {
+      "type": "text",
+      "id": "quote_cta",
+      "label": "Skip to quote button",
+      "default": "Request a quote"
+    },
+    {
+      "type": "url",
+      "id": "monoblock_link",
+      "label": "Monoblock collection"
+    },
+    {
+      "type": "text",
+      "id": "monoblock_desc",
+      "label": "Monoblock description",
+      "default": "One-piece forged strength"
+    },
+    {
+      "type": "url",
+      "id": "twopiece_link",
+      "label": "2-Piece collection"
+    },
+    {
+      "type": "text",
+      "id": "twopiece_desc",
+      "label": "2-Piece description",
+      "default": "Modular fitment & finish options"
+    },
+    {
+      "type": "url",
+      "id": "beadlock_link",
+      "label": "Beadlock collection"
+    },
+    {
+      "type": "text",
+      "id": "beadlock_desc",
+      "label": "Beadlock description",
+      "default": "Off-road lock-ring builds"
+    },
+    {
+      "type": "text",
+      "id": "step3_heading",
+      "label": "Step 3 heading",
+      "default": "Request your build"
+    },
+    {
+      "type": "textarea",
+      "id": "step3_copy",
+      "label": "Step 3 copy",
+      "default": "Send fitment details and we’ll follow up with pricing and lead time."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "vehicle",
+      "name": "Vehicle shortcut",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "G80 M3"
+        },
+        {
+          "type": "text",
+          "id": "hint",
+          "label": "Hint",
+          "default": "BMW"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FF Simple Build",
+      "blocks": [
+        { "type": "vehicle", "settings": { "label": "G80 M3", "hint": "BMW" } },
+        { "type": "vehicle", "settings": { "label": "G82 M4", "hint": "BMW" } },
+        { "type": "vehicle", "settings": { "label": "F80 M3", "hint": "BMW" } },
+        { "type": "vehicle", "settings": { "label": "Other vehicle", "hint": "Tell us below" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

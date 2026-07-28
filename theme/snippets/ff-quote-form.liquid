@@ -1,0 +1,74 @@
+{%- assign contact_form_id = 'FFQuoteForm-' | append: section.id -%}
+
+{%- form 'contact', id: contact_form_id, class: 'ff-quote' -%}
+  {%- if form.posted_successfully? -%}
+    <div class="ff-quote__success" role="status">
+      Thanks — we received your build request and will follow up shortly.
+    </div>
+  {%- elsif form.errors -%}
+    <div class="ff-quote__error" role="alert">
+      {{ form.errors | default_errors }}
+    </div>
+  {%- endif -%}
+
+  <input type="hidden" name="contact[form_name]" value="Fortune Forged Build Quote">
+  <input type="hidden" name="contact[selected_vehicle]" id="ff-selected-vehicle-{{ section.id }}" value="">
+  <input type="hidden" name="contact[selected_style]" id="ff-selected-style-{{ section.id }}" value="">
+
+  <div class="ff-quote__grid">
+    <div class="ff-quote__field">
+      <label class="ff-build__label" for="ff-name-{{ section.id }}">Name*</label>
+      <input class="ff-build__input" id="ff-name-{{ section.id }}" type="text" name="contact[name]" required
+        value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+        autocomplete="name">
+    </div>
+    <div class="ff-quote__field">
+      <label class="ff-build__label" for="ff-phone-{{ section.id }}">Phone*</label>
+      <input class="ff-build__input" id="ff-phone-{{ section.id }}" type="tel" name="contact[phone]" required
+        value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+        autocomplete="tel">
+    </div>
+    <div class="ff-quote__field">
+      <label class="ff-build__label" for="ff-email-{{ section.id }}">Email*</label>
+      <input class="ff-build__input" id="ff-email-{{ section.id }}" type="email" name="contact[email]" required
+        value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+        autocomplete="email">
+    </div>
+    <div class="ff-quote__field">
+      <label class="ff-build__label" for="ff-ymm-{{ section.id }}">Year / Make / Model*</label>
+      <input class="ff-build__input" id="ff-ymm-{{ section.id }}" type="text" name="contact[vehicle]" required
+        placeholder="2024 BMW G80 M3" value="">
+    </div>
+    <div class="ff-quote__field">
+      <label class="ff-build__label" for="ff-front-{{ section.id }}">Front size*</label>
+      <input class="ff-build__input" id="ff-front-{{ section.id }}" type="text" name="contact[front_size]" required
+        placeholder="20x9.5" value="">
+    </div>
+    <div class="ff-quote__field">
+      <label class="ff-build__label" for="ff-rear-{{ section.id }}">Rear size*</label>
+      <input class="ff-build__input" id="ff-rear-{{ section.id }}" type="text" name="contact[rear_size]" required
+        placeholder="20x11" value="">
+    </div>
+    <div class="ff-quote__field">
+      <label class="ff-build__label" for="ff-finish-{{ section.id }}">Finish*</label>
+      <input class="ff-build__input" id="ff-finish-{{ section.id }}" type="text" name="contact[finish]" required
+        placeholder="Brushed, polished, gloss black…" value="">
+    </div>
+    <div class="ff-quote__field">
+      <label class="ff-build__label" for="ff-design-{{ section.id }}">Desired design</label>
+      <input class="ff-build__input" id="ff-design-{{ section.id }}" type="text" name="contact[design]"
+        placeholder="Wheel model / design name" value="">
+    </div>
+    <div class="ff-quote__field ff-quote__field--full">
+      <label class="ff-build__label" for="ff-notes-{{ section.id }}">Notes</label>
+      <textarea class="ff-build__input ff-build__textarea" id="ff-notes-{{ section.id }}" name="contact[body]" rows="4"
+        placeholder="Offset preferences, tire size, deadline, questions…"></textarea>
+    </div>
+  </div>
+
+  <div class="ff-quote__actions">
+    <button type="submit" class="button button--primary ff-build__submit">
+      Submit build request
+    </button>
+  </div>
+{%- endform -%}
