@@ -1,0 +1,304 @@
+{{ 'ff-affiliate-program.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.show_section -%}
+  <section class="ff-aff" id="ff-aff-{{ section.id }}">
+    <div class="ff-aff__inner">
+      {%- if section.settings.how_heading != blank -%}
+        <h1 class="ff-aff__boxed-title">{{ section.settings.how_heading | escape }}</h1>
+      {%- endif -%}
+
+      {%- if section.settings.intro != blank -%}
+        <p class="ff-aff__intro">{{ section.settings.intro | escape }}</p>
+      {%- endif -%}
+
+      <div class="ff-aff__steps">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'step' -%}
+            <div class="ff-aff__step" {{ block.shopify_attributes }}>
+              <span class="ff-aff__step-icon" aria-hidden="true">
+                {%- case block.settings.icon -%}
+                  {%- when 'megaphone' -%}
+                    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 28v8l8 2v-12l-8 2Z"/><path d="M18 26v12l22 8V18L18 26Z"/><path d="M40 24v16c6 2 10 0 12-4V28c-2-4-6-6-12-4Z"/><path d="M18 38l-2 10h6l4-10"/></svg>
+                  {%- when 'cash' -%}
+                    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 40c0 4 8 8 14 8s14-4 14-8"/><ellipse cx="32" cy="40" rx="14" ry="8"/><path d="M18 34c0 4 8 8 14 8s14-4 14-8"/><ellipse cx="32" cy="34" rx="14" ry="8"/><path d="M18 28c0 4 8 8 14 8s14-4 14-8"/><ellipse cx="32" cy="28" rx="14" ry="8"/><path d="M44 24l6-4 4 3-4 4"/><path d="M50 20v6"/></svg>
+                  {%- else -%}
+                    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="18" r="6"/><circle cx="16" cy="42" r="6"/><circle cx="48" cy="42" r="6"/><path d="M26 20 20 36M38 20l6 16M22 42h20"/></svg>
+                {%- endcase -%}
+              </span>
+              {%- if block.settings.title != blank -%}
+                <h2 class="ff-aff__step-title">{{ block.settings.title | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="ff-aff__step-text">{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <hr class="ff-aff__rule">
+
+      {%- if section.settings.benefits_heading != blank -%}
+        <h2 class="ff-aff__boxed-title">{{ section.settings.benefits_heading | escape }}</h2>
+      {%- endif -%}
+
+      <div class="ff-aff__benefits">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'benefit' -%}
+            <div class="ff-aff__benefit" {{ block.shopify_attributes }}>
+              {%- if block.settings.value != blank -%}
+                <p class="ff-aff__benefit-value">{{ block.settings.value | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.label != blank -%}
+                <p class="ff-aff__benefit-label">{{ block.settings.label | escape }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.cta_label != blank -%}
+        <div class="ff-aff__cta-wrap">
+          <a class="ff-aff__cta" href="#ff-aff-apply-{{ section.id }}">{{ section.settings.cta_label | escape }}</a>
+        </div>
+      {%- endif -%}
+
+      <div class="ff-aff__apply" id="ff-aff-apply-{{ section.id }}">
+        {%- if section.settings.apply_heading != blank -%}
+          <h2 class="ff-aff__apply-heading">{{ section.settings.apply_heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.apply_intro != blank -%}
+          <p class="ff-aff__apply-intro">{{ section.settings.apply_intro | escape }}</p>
+        {%- endif -%}
+
+        {%- form 'contact', id: 'FFAffiliateApply', class: 'ff-aff__form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="ff-aff__success" role="status">
+              {{ section.settings.success_message | default: 'Thanks — we received your affiliate application and will follow up soon.' | escape }}
+            </div>
+          {%- elsif form.errors -%}
+            <div class="ff-aff__error" role="alert">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+
+          <input type="hidden" name="contact[form_name]" value="Fortune Forged Affiliate Application">
+          <input type="hidden" name="contact[subject]" value="Affiliate program application">
+
+          <div class="ff-aff__form-grid">
+            <div class="ff-aff__field">
+              <label for="ff-aff-name">Name*</label>
+              <input id="ff-aff-name" type="text" name="contact[name]" required
+                value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                autocomplete="name">
+            </div>
+            <div class="ff-aff__field">
+              <label for="ff-aff-email">Email*</label>
+              <input id="ff-aff-email" type="email" name="contact[email]" required
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                autocomplete="email">
+            </div>
+            <div class="ff-aff__field">
+              <label for="ff-aff-phone">Phone</label>
+              <input id="ff-aff-phone" type="tel" name="contact[phone]"
+                value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+                autocomplete="tel">
+            </div>
+            <div class="ff-aff__field">
+              <label for="ff-aff-platform">Primary platform*</label>
+              <input id="ff-aff-platform" type="text" name="contact[platform]" required
+                placeholder="Instagram, YouTube, TikTok, blog, etc.">
+            </div>
+            <div class="ff-aff__field ff-aff__field--full">
+              <label for="ff-aff-handle">Channel / handle / website*</label>
+              <input id="ff-aff-handle" type="text" name="contact[channel]" required
+                placeholder="@yourhandle or https://yoursite.com">
+            </div>
+            <div class="ff-aff__field ff-aff__field--full">
+              <label for="ff-aff-audience">Audience size</label>
+              <input id="ff-aff-audience" type="text" name="contact[audience_size]"
+                placeholder="e.g. 25k Instagram followers">
+            </div>
+            <div class="ff-aff__field ff-aff__field--full">
+              <label for="ff-aff-message">Tell us about your content*</label>
+              <textarea id="ff-aff-message" name="contact[body]" rows="5" required
+                placeholder="What you create, who your audience is, and why Fortune Forged is a fit."></textarea>
+            </div>
+          </div>
+
+          <button class="ff-aff__submit" type="submit">{{ section.settings.submit_label | default: 'Submit application' | escape }}</button>
+        {%- endform -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FF Affiliate Program",
+  "tag": "section",
+  "class": "section-ff-affiliate-program",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "how_heading",
+      "label": "How it works heading",
+      "default": "HOW IT WORKS"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro",
+      "default": "The Fortune Forged Affiliate Program is a great way to earn additional money by monetizing your digital content. Sharing custom discount coupons allows you to receive a commission from the conversions made by visitors coming from your website, channel, social media, or any other communication channel. Join in and make sure your fellow drivers are standing out."
+    },
+    {
+      "type": "text",
+      "id": "benefits_heading",
+      "label": "Benefits heading",
+      "default": "WHAT YOU'LL GET AS AN AFFILIATE"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA button label",
+      "default": "START EARNING NOW >"
+    },
+    {
+      "type": "text",
+      "id": "apply_heading",
+      "label": "Application heading",
+      "default": "Apply to become an affiliate"
+    },
+    {
+      "type": "textarea",
+      "id": "apply_intro",
+      "label": "Application intro",
+      "default": "Tell us about your channel and audience. Our team will review your application and follow up with next steps."
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit button label",
+      "default": "Submit application"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks — we received your affiliate application and will follow up soon."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "people", "label": "People / join" },
+            { "value": "megaphone", "label": "Megaphone" },
+            { "value": "cash", "label": "Cash / earn" }
+          ],
+          "default": "people"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Join as Affiliate"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Registering only takes a minute."
+        }
+      ]
+    },
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "10%"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "COMMISSION FROM EACH SALE"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FF Affiliate Program",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "icon": "people",
+            "title": "Join as Affiliate",
+            "text": "Registering only takes a minute."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "megaphone",
+            "title": "Promote Fortune Forged",
+            "text": "Recommend Fortune Forged by sharing your unique coupon code."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "cash",
+            "title": "Start Earning Commission",
+            "text": "You earn when your referrals come to our website and make a purchase using your coupon code."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "value": "10%",
+            "label": "COMMISSION FROM EACH SALE"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "value": "UNLIMITED",
+            "label": "ORDERS FROM REFERRALS"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "value": "30-DAY",
+            "label": "COOKIE WINDOW"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "value": "DASHBOARD",
+            "label": "TO TRACK PURCHASES"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

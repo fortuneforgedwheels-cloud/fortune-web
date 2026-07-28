@@ -278,28 +278,32 @@
         "badge_fitment": {
           "type": "badge",
           "settings": {
-            "icon": "check",
-            "heading": "Fitment Guaranteed",
-            "description": "Engineered for your chassis. Professional install required. If it doesn't fit, we make it right.",
-            "show_email": false
+            "icon": "lock",
+            "heading": "Fitment Guaranteed or money back",
+            "description": "Engineered specifically for your vehicle. Professional installation recommended. Perfect fitment, guaranteed.",
+            "show_email": false,
+            "contact_email": ""
           }
         },
         "badge_people": {
           "type": "badge",
           "settings": {
             "icon": "race_car",
-            "heading": "Real People, Same Day",
-            "description": "Questions? We answer same day. Real enthusiasts, not call centers. ",
-            "show_email": true
+            "heading": "Enthusiast owned & operated",
+            "description": "Questions? Speak directly with a Fortune Forged Fitment Specialist. Same-day responses, backed by real enthusiasts.",
+            "show_email": true,
+            "contact_email": ""
           }
         },
         "badge_secure": {
           "type": "badge",
           "settings": {
             "icon": "computer",
-            "heading": "Secure Checkout",
-            "description": "256-bit encryption. Affirm available. All major cards accepted.",
-            "show_email": false
+            "heading": "Become an affiliate",
+            "heading_link": "/pages/become-an-affiliate",
+            "description": "Apply to become a Fortune Forged brand ambassador, receive early access to new releases, special discounts and creator codes.",
+            "show_email": false,
+            "contact_email": ""
           }
         }
       },

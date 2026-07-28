@@ -1,0 +1,109 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": false,
+        "show_page_title": false,
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "ff_affiliate_program_main": {
+      "type": "ff-affiliate-program",
+      "blocks": {
+        "step_join": {
+          "type": "step",
+          "settings": {
+            "icon": "people",
+            "title": "Join as Affiliate",
+            "text": "Registering only takes a minute."
+          }
+        },
+        "step_promote": {
+          "type": "step",
+          "settings": {
+            "icon": "megaphone",
+            "title": "Promote Fortune Forged",
+            "text": "Recommend Fortune Forged by sharing your unique coupon code."
+          }
+        },
+        "step_earn": {
+          "type": "step",
+          "settings": {
+            "icon": "cash",
+            "title": "Start Earning Commission",
+            "text": "You earn when your referrals come to our website and make a purchase using your coupon code."
+          }
+        },
+        "benefit_commission": {
+          "type": "benefit",
+          "settings": {
+            "value": "10%",
+            "label": "COMMISSION FROM EACH SALE"
+          }
+        },
+        "benefit_unlimited": {
+          "type": "benefit",
+          "settings": {
+            "value": "UNLIMITED",
+            "label": "ORDERS FROM REFERRALS"
+          }
+        },
+        "benefit_cookie": {
+          "type": "benefit",
+          "settings": {
+            "value": "30-DAY",
+            "label": "COOKIE WINDOW"
+          }
+        },
+        "benefit_dashboard": {
+          "type": "benefit",
+          "settings": {
+            "value": "DASHBOARD",
+            "label": "TO TRACK PURCHASES"
+          }
+        }
+      },
+      "block_order": [
+        "step_join",
+        "step_promote",
+        "step_earn",
+        "benefit_commission",
+        "benefit_unlimited",
+        "benefit_cookie",
+        "benefit_dashboard"
+      ],
+      "settings": {
+        "show_section": true,
+        "how_heading": "HOW IT WORKS",
+        "intro": "The Fortune Forged Affiliate Program is a great way to earn additional money by monetizing your digital content. Sharing custom discount coupons allows you to receive a commission from the conversions made by visitors coming from your website, channel, social media, or any other communication channel. Join in and make sure your fellow drivers are standing out.",
+        "benefits_heading": "WHAT YOU'LL GET AS AN AFFILIATE",
+        "cta_label": "START EARNING NOW >",
+        "apply_heading": "Apply to become an affiliate",
+        "apply_intro": "Tell us about your channel and audience. Our team will review your application and follow up with next steps.",
+        "submit_label": "Submit application",
+        "success_message": "Thanks — we received your affiliate application and will follow up soon."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ff_affiliate_program_main"
+  ]
+}

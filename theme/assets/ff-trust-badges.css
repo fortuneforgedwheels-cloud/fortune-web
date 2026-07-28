@@ -46,6 +46,17 @@
   text-transform: uppercase;
 }
 
+.ff-trust__heading-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+.ff-trust__heading-link:hover {
+  color: var(--ff-gold);
+}
+
 .ff-trust__desc {
   margin: 0;
   color: #6b6862;

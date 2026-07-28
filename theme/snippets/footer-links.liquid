@@ -21,8 +21,20 @@
                         <div class="footer-block__list">
                             <ul class="list-unstyled">
                                 {%- for link in column.settings.menu.links -%}
+                                    {%- liquid
+                                      assign ff_footer_href = link.url
+                                      assign ff_footer_title = link.title | strip | downcase
+                                      if ff_footer_title == 'become an affiliate'
+                                        assign ff_aff_page = pages['become-an-affiliate']
+                                        if ff_aff_page != blank and ff_aff_page.url != blank
+                                          assign ff_footer_href = ff_aff_page.url
+                                        else
+                                          assign ff_footer_href = '/pages/become-an-affiliate'
+                                        endif
+                                      endif
+                                    -%}
                                     <li>
-                                        <a href="{{ link.url }}" class="link link-underline list-menu__item--link" role="button">
+                                        <a href="{{ ff_footer_href }}" class="link link-underline list-menu__item--link" role="button">
                                             <span class="text">{{ link.title }}</span>
                                         </a>
                                     </li>

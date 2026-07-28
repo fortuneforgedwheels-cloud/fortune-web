@@ -1,0 +1,254 @@
+.ff-aff {
+  --ff-aff-ink: #111111;
+  --ff-aff-muted: #444444;
+  --ff-aff-line: #111111;
+  background: #ffffff;
+  color: var(--ff-aff-ink);
+  padding: 64px 20px 88px;
+}
+
+.ff-aff__inner {
+  max-width: 980px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ff-aff__boxed-title {
+  display: inline-block;
+  margin: 0 0 28px;
+  padding: 14px 28px;
+  border: 1px solid var(--ff-aff-line);
+  background: #ffffff;
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.ff-aff__intro {
+  max-width: 52rem;
+  margin: 0 auto 48px;
+  color: var(--ff-aff-muted);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.ff-aff__steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px 28px;
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.ff-aff__step-icon {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 18px;
+  color: var(--ff-aff-ink);
+}
+
+.ff-aff__step-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ff-aff__step-title {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.ff-aff__step-text {
+  margin: 0;
+  color: var(--ff-aff-muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.ff-aff__rule {
+  width: 72px;
+  margin: 0 auto 48px;
+  border: 0;
+  border-top: 1px solid var(--ff-aff-line);
+}
+
+.ff-aff__benefits {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px 18px;
+  margin: 8px 0 40px;
+}
+
+.ff-aff__benefit-value {
+  margin: 0 0 8px;
+  font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.15;
+}
+
+.ff-aff__benefit-label {
+  margin: 0;
+  color: var(--ff-aff-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.ff-aff__cta-wrap {
+  margin: 8px 0 56px;
+}
+
+.ff-aff__cta {
+  display: inline-block;
+  padding: 16px 28px;
+  border: 1px solid var(--ff-aff-line);
+  background: #ffffff;
+  color: var(--ff-aff-ink);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.ff-aff__cta:hover {
+  background: var(--ff-aff-ink);
+  color: #ffffff;
+}
+
+.ff-aff__apply {
+  max-width: 720px;
+  margin: 0 auto;
+  padding-top: 8px;
+  text-align: left;
+  scroll-margin-top: 100px;
+}
+
+.ff-aff__apply-heading {
+  margin: 0 0 10px;
+  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ff-aff__apply-intro {
+  margin: 0 0 28px;
+  text-align: center;
+  color: var(--ff-aff-muted);
+  line-height: 1.55;
+}
+
+.ff-aff__form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.ff-aff__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ff-aff__field--full {
+  grid-column: 1 / -1;
+}
+
+.ff-aff__field label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ff-aff__field input,
+.ff-aff__field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cfcfcf;
+  border-radius: 0;
+  background: #ffffff;
+  color: var(--ff-aff-ink);
+  font: inherit;
+}
+
+.ff-aff__field input:focus,
+.ff-aff__field textarea:focus {
+  outline: 1px solid var(--ff-aff-ink);
+  border-color: var(--ff-aff-ink);
+}
+
+.ff-aff__submit {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 26px;
+  border: 1px solid var(--ff-aff-ink);
+  background: var(--ff-aff-ink);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.ff-aff__submit:hover {
+  background: #000000;
+}
+
+.ff-aff__success,
+.ff-aff__error {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--ff-aff-line);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.ff-aff__success {
+  background: #f4f4f4;
+}
+
+.ff-aff__error {
+  background: #fff5f5;
+  border-color: #cc0000;
+  color: #8a0000;
+}
+
+@media (max-width: 749.98px) {
+  .ff-aff {
+    padding: 48px 18px 72px;
+  }
+
+  .ff-aff__steps,
+  .ff-aff__benefits {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .ff-aff__form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ff-aff__boxed-title {
+    padding: 12px 18px;
+  }
+}
+
+@media (min-width: 750px) and (max-width: 989.98px) {
+  .ff-aff__benefits {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -43,7 +43,13 @@
                 {%- endcase -%}
               </span>
               {%- if block.settings.heading != blank -%}
-                <p class="ff-trust__heading">{{ block.settings.heading | escape }}</p>
+                {%- if block.settings.heading_link != blank -%}
+                  <p class="ff-trust__heading">
+                    <a class="ff-trust__heading-link" href="{{ block.settings.heading_link }}">{{ block.settings.heading | escape }}</a>
+                  </p>
+                {%- else -%}
+                  <p class="ff-trust__heading">{{ block.settings.heading | escape }}</p>
+                {%- endif -%}
               {%- endif -%}
               {%- if block.settings.description != blank -%}
                 <p class="ff-trust__desc">
@@ -122,6 +128,12 @@
           "id": "heading",
           "label": "Heading",
           "default": "Fitment Guaranteed"
+        },
+        {
+          "type": "url",
+          "id": "heading_link",
+          "label": "Heading link",
+          "info": "Optional. Makes the heading an underlined clickable link (e.g. Become an affiliate)."
         },
         {
           "type": "textarea",
