@@ -1,12 +1,11 @@
 {{ 'ff-826m-spec-path.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  assign certified_variant_id = nil
+  assign certified_variant_id = blank
   for variant in product.variants
     assign size_key = variant.option1 | upcase | replace: ' ', ''
     if size_key == '18X11'
       assign certified_variant_id = variant.id
-      break
     endif
   endfor
 -%}
