@@ -59,7 +59,7 @@
   position: absolute;
   z-index: 2;
   left: clamp(20px, 5vw, 72px);
-  bottom: clamp(28px, 8vh, 84px);
+  bottom: clamp(18px, 3.5vh, 36px);
   max-width: min(640px, calc(100% - 40px));
 }
 
@@ -126,9 +126,10 @@
 .ff-hero__dots {
   position: absolute;
   z-index: 3;
-  left: 50%;
+  right: 18px;
   bottom: 18px;
-  transform: translateX(-50%);
+  left: auto;
+  transform: none;
   display: flex;
   gap: 8px;
 }
