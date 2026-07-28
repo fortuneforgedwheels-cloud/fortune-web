@@ -1,0 +1,26 @@
+{%- comment -%}
+  Adds Finish Options to the main nav when the page exists but is not
+  already present in the assigned Shopify menu (main-menu).
+{%- endcomment -%}
+{%- assign ff_finish_page = pages['finish-options'] -%}
+{%- if ff_finish_page != blank -%}
+  {%- assign ff_finish_in_menu = false -%}
+  {%- for link in menu -%}
+    {%- if link.url == ff_finish_page.url or link.url contains 'finish-options' -%}
+      {%- assign ff_finish_in_menu = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- unless ff_finish_in_menu -%}
+    <li class="menu-lv-item menu-lv-1 text-left no-megamenu">
+      <a
+        href="{{ ff_finish_page.url }}"
+        class="menu-lv-1__action list-menu__item list-menu__item--end link focus-inset{% if request.path == ff_finish_page.url %} is-active{% endif %}"
+        role="button"
+        {% if request.path == ff_finish_page.url %}aria-current="page"{% endif %}
+      >
+        <span class="text">{{ ff_finish_page.title | escape }}</span>
+      </a>
+    </li>
+  {%- endunless -%}
+{%- endif -%}
