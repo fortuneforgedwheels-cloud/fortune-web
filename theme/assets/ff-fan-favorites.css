@@ -200,14 +200,73 @@
   position: relative;
   background: #000;
   min-height: 320px;
+  overflow: hidden;
 }
 
-.ff-fan__visual-img {
+.ff-fan__visual-group[hidden] {
+  display: none;
+}
+
+.ff-fan__visual-slide {
+  margin: 0;
+  height: 100%;
+}
+
+.ff-fan__visual-slide[hidden] {
+  display: none;
+}
+
+.ff-fan__visual-slide img {
   width: 100%;
   height: 100%;
   max-height: 80vh;
   object-fit: cover;
   display: block;
+}
+
+.ff-fan__visual-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+
+.ff-fan__visual-nav[hidden] {
+  display: none;
+}
+
+.ff-fan__visual-nav--prev {
+  left: 10px;
+}
+
+.ff-fan__visual-nav--next {
+  right: 10px;
+}
+
+.ff-fan__visual-counter {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--ff-gold);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  z-index: 2;
 }
 
 .ff-fan__config {

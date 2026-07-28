@@ -122,25 +122,98 @@
             </button>
 
             <div class="ff-fan__dialog-grid">
-              <div class="ff-fan__visual">
-                {%- if card_image != blank -%}
-                  {{
-                    card_image
-                    | image_url: width: 1200
-                    | image_tag: class: 'ff-fan__visual-img', loading: 'lazy', alt: b.vehicle_label
-                  }}
-                {%- endif -%}
+              <div class="ff-fan__visual" data-ff-fan-visual>
+                <div class="ff-fan__visual-group" data-ff-fan-visual-group="full">
+                  {%- liquid
+                    assign fslide_shown = false
+                  -%}
+                  {%- if b.full_image_1 != blank -%}
+                    <figure class="ff-fan__visual-slide{% unless fslide_shown %} is-active{% endunless %}" {% if fslide_shown %}hidden{% endif %} data-ff-fan-visual-slide>
+                      {{ b.full_image_1 | image_url: width: 1200 | image_tag: loading: 'lazy', alt: b.vehicle_label }}
+                    </figure>
+                    {%- assign fslide_shown = true -%}
+                  {%- endif -%}
+                  {%- if b.full_image_2 != blank -%}
+                    <figure class="ff-fan__visual-slide{% unless fslide_shown %} is-active{% endunless %}" {% if fslide_shown %}hidden{% endif %} data-ff-fan-visual-slide>
+                      {{ b.full_image_2 | image_url: width: 1200 | image_tag: loading: 'lazy', alt: b.vehicle_label }}
+                    </figure>
+                    {%- assign fslide_shown = true -%}
+                  {%- endif -%}
+                  {%- if b.full_image_3 != blank -%}
+                    <figure class="ff-fan__visual-slide{% unless fslide_shown %} is-active{% endunless %}" {% if fslide_shown %}hidden{% endif %} data-ff-fan-visual-slide>
+                      {{ b.full_image_3 | image_url: width: 1200 | image_tag: loading: 'lazy', alt: b.vehicle_label }}
+                    </figure>
+                    {%- assign fslide_shown = true -%}
+                  {%- endif -%}
+                  {%- if b.full_image_4 != blank -%}
+                    <figure class="ff-fan__visual-slide{% unless fslide_shown %} is-active{% endunless %}" {% if fslide_shown %}hidden{% endif %} data-ff-fan-visual-slide>
+                      {{ b.full_image_4 | image_url: width: 1200 | image_tag: loading: 'lazy', alt: b.vehicle_label }}
+                    </figure>
+                    {%- assign fslide_shown = true -%}
+                  {%- endif -%}
+                  {%- unless fslide_shown -%}
+                    {%- assign full_fallback_image = card_image | default: design_default_product.featured_image -%}
+                    {%- if full_fallback_image != blank -%}
+                      <figure class="ff-fan__visual-slide is-active" data-ff-fan-visual-slide>
+                        {{ full_fallback_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: b.vehicle_label }}
+                      </figure>
+                    {%- endif -%}
+                  {%- endunless -%}
+                </div>
+
+                <div class="ff-fan__visual-group" data-ff-fan-visual-group="bead" hidden>
+                  {%- liquid
+                    assign bslide_shown = false
+                  -%}
+                  {%- if b.bead_image_1 != blank -%}
+                    <figure class="ff-fan__visual-slide{% unless bslide_shown %} is-active{% endunless %}" {% if bslide_shown %}hidden{% endif %} data-ff-fan-visual-slide>
+                      {{ b.bead_image_1 | image_url: width: 1200 | image_tag: loading: 'lazy', alt: b.vehicle_label }}
+                    </figure>
+                    {%- assign bslide_shown = true -%}
+                  {%- endif -%}
+                  {%- if b.bead_image_2 != blank -%}
+                    <figure class="ff-fan__visual-slide{% unless bslide_shown %} is-active{% endunless %}" {% if bslide_shown %}hidden{% endif %} data-ff-fan-visual-slide>
+                      {{ b.bead_image_2 | image_url: width: 1200 | image_tag: loading: 'lazy', alt: b.vehicle_label }}
+                    </figure>
+                    {%- assign bslide_shown = true -%}
+                  {%- endif -%}
+                  {%- if b.bead_image_3 != blank -%}
+                    <figure class="ff-fan__visual-slide{% unless bslide_shown %} is-active{% endunless %}" {% if bslide_shown %}hidden{% endif %} data-ff-fan-visual-slide>
+                      {{ b.bead_image_3 | image_url: width: 1200 | image_tag: loading: 'lazy', alt: b.vehicle_label }}
+                    </figure>
+                    {%- assign bslide_shown = true -%}
+                  {%- endif -%}
+                  {%- if b.bead_image_4 != blank -%}
+                    <figure class="ff-fan__visual-slide{% unless bslide_shown %} is-active{% endunless %}" {% if bslide_shown %}hidden{% endif %} data-ff-fan-visual-slide>
+                      {{ b.bead_image_4 | image_url: width: 1200 | image_tag: loading: 'lazy', alt: b.vehicle_label }}
+                    </figure>
+                    {%- assign bslide_shown = true -%}
+                  {%- endif -%}
+                  {%- unless bslide_shown -%}
+                    {%- assign bead_fallback_image = beadlock_design_product.featured_image | default: design_default_product.featured_image -%}
+                    {%- if bead_fallback_image != blank -%}
+                      <figure class="ff-fan__visual-slide is-active" data-ff-fan-visual-slide>
+                        {{ bead_fallback_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: b.vehicle_label }}
+                      </figure>
+                    {%- endif -%}
+                  {%- endunless -%}
+                </div>
+
+                <button type="button" class="ff-fan__visual-nav ff-fan__visual-nav--prev" data-ff-fan-visual-prev hidden aria-label="Previous photo">
+                  <span aria-hidden="true">&lsaquo;</span>
+                </button>
+                <button type="button" class="ff-fan__visual-nav ff-fan__visual-nav--next" data-ff-fan-visual-next hidden aria-label="Next photo">
+                  <span aria-hidden="true">&rsaquo;</span>
+                </button>
+                <div class="ff-fan__visual-counter" data-ff-fan-visual-counter></div>
               </div>
 
               <div class="ff-fan__config" data-ff-fan-config>
-                <p class="ff-fan__config-badge">Fan Favorite Setup</p>
+                <p class="ff-fan__config-badge">{{ section.settings.badge_label | escape }}</p>
                 <h3 class="ff-fan__config-title">{{ b.vehicle_label | escape }}</h3>
 
                 {%- if has_full == false and has_bead == false -%}
-                  <p class="ff-fan__config-copy">
-                    We're dialing in the exact fitment for this platform. Get a custom quote and a
-                    fitment specialist will confirm your perfect spec.
-                  </p>
+                  <p class="ff-fan__config-copy">{{ section.settings.no_fitment_copy | escape }}</p>
                   <a class="button button--primary ff-fan__cta" href="{{ fallback_link }}">
                     {{ section.settings.quote_cta | escape }}
                   </a>
@@ -149,10 +222,10 @@
                   {%- if has_full and has_bead -%}
                     <div class="ff-fan__modes" data-ff-fan-modes>
                       <button type="button" class="ff-fan__mode is-selected" data-ff-fan-mode="full">
-                        Full Set <span>4 wheels</span>
+                        {{ section.settings.mode_full_label | escape }} <span>{{ section.settings.mode_full_sublabel | escape }}</span>
                       </button>
                       <button type="button" class="ff-fan__mode" data-ff-fan-mode="bead">
-                        Beadlock Rear Pair <span>2 wheels</span>
+                        {{ section.settings.mode_bead_label | escape }} <span>{{ section.settings.mode_bead_sublabel | escape }}</span>
                       </button>
                     </div>
                   {%- endif -%}
@@ -160,8 +233,8 @@
                   {%- if has_full -%}
                     <div class="ff-fan__setup" data-ff-fan-setup="full">
                       <dl class="ff-fan__specs">
-                        <div><dt>Front</dt><dd>{{ b.front_spec | escape }}</dd></div>
-                        <div><dt>Rear</dt><dd>{{ b.rear_spec | escape }}</dd></div>
+                        <div><dt>{{ section.settings.front_label | escape }}</dt><dd>{{ b.front_spec | escape }}</dd></div>
+                        <div><dt>{{ section.settings.rear_label | escape }}</dt><dd>{{ b.rear_spec | escape }}</dd></div>
                       </dl>
                       {%- if b.full_set_note != blank -%}
                         <p class="ff-fan__note">{{ b.full_set_note | escape }}</p>
@@ -231,8 +304,8 @@
                       </div>
                       {%- if design_default_product != blank -%}
                         <p class="ff-fan__price" data-ff-fan-price="full">
-                          {{ design_default_product.price | money }} each &middot; est.
-                          {{ design_default_product.price | times: 4 | money }} for a full set of 4
+                          {{ design_default_product.price | money }} {{ section.settings.price_each_label | escape }} &middot; est.
+                          {{ design_default_product.price | times: 4 | money }} {{ section.settings.price_full_set_label | escape }}
                         </p>
                       {%- endif -%}
                     </div>
@@ -241,7 +314,7 @@
                   {%- if has_bead -%}
                     <div class="ff-fan__setup" data-ff-fan-setup="bead" {% if has_full %}hidden{% endif %}>
                       <dl class="ff-fan__specs">
-                        <div><dt>Rear pair</dt><dd>{{ b.beadlock_spec | escape }}</dd></div>
+                        <div><dt>{{ section.settings.rear_pair_label | escape }}</dt><dd>{{ b.beadlock_spec | escape }}</dd></div>
                       </dl>
                       {%- if b.beadlock_note != blank -%}
                         <p class="ff-fan__note">{{ b.beadlock_note | escape }}</p>
@@ -264,15 +337,15 @@
                           </button>
                         </div>
                         <p class="ff-fan__price" data-ff-fan-price="bead">
-                          {{ bead_design.price | money }} each &middot; est.
-                          {{ bead_design.price | times: 2 | money }} for the pair
+                          {{ bead_design.price | money }} {{ section.settings.price_each_label | escape }} &middot; est.
+                          {{ bead_design.price | times: 2 | money }} {{ section.settings.price_pair_label | escape }}
                         </p>
                       {%- endif -%}
                     </div>
                   {%- endif -%}
 
                   <div class="ff-fan__field">
-                    <label class="ff-fan__label-sm">Finish</label>
+                    <label class="ff-fan__label-sm">{{ section.settings.finish_label | escape }}</label>
                     <div class="ff-fan__finishes" data-ff-fan-finishes>
                       {%- assign finishes = b.finish_options | split: ',' -%}
                       {%- for finish in finishes -%}
@@ -292,10 +365,18 @@
                     class="button button--primary ff-fan__cta"
                     data-ff-fan-add
                     data-vehicle="{{ b.vehicle_label | escape }}"
+                    data-label-default="{{ section.settings.add_to_cart_label | escape }}"
+                    data-label-loading="{{ section.settings.adding_label | escape }}"
                   >
-                    Add My Setup to Cart
+                    {{ section.settings.add_to_cart_label | escape }}
                   </button>
-                  <p class="ff-fan__error" data-ff-fan-error hidden></p>
+                  <p
+                    class="ff-fan__error"
+                    data-ff-fan-error
+                    data-error-missing-design="{{ section.settings.error_missing_design | escape }}"
+                    data-error-cart-failed="{{ section.settings.error_cart_failed | escape }}"
+                    hidden
+                  ></p>
                 {%- endif -%}
               </div>
             </div>
@@ -347,6 +428,122 @@
     },
     {
       "type": "text",
+      "id": "footnote",
+      "label": "Footnote",
+      "default": "Exact fitment, pricing, and any modifications are confirmed by our team before your order ships."
+    },
+    {
+      "type": "header",
+      "content": "Popup wording"
+    },
+    {
+      "type": "text",
+      "id": "badge_label",
+      "label": "Badge label",
+      "default": "Fan Favorite Setup"
+    },
+    {
+      "type": "text",
+      "id": "mode_full_label",
+      "label": "Full set mode label",
+      "default": "Full Set"
+    },
+    {
+      "type": "text",
+      "id": "mode_full_sublabel",
+      "label": "Full set mode sublabel",
+      "default": "4 wheels"
+    },
+    {
+      "type": "text",
+      "id": "mode_bead_label",
+      "label": "Beadlock mode label",
+      "default": "Beadlock Rear Pair"
+    },
+    {
+      "type": "text",
+      "id": "mode_bead_sublabel",
+      "label": "Beadlock mode sublabel",
+      "default": "2 wheels"
+    },
+    {
+      "type": "text",
+      "id": "front_label",
+      "label": "Front spec label",
+      "default": "Front"
+    },
+    {
+      "type": "text",
+      "id": "rear_label",
+      "label": "Rear spec label",
+      "default": "Rear"
+    },
+    {
+      "type": "text",
+      "id": "rear_pair_label",
+      "label": "Beadlock rear pair spec label",
+      "default": "Rear pair"
+    },
+    {
+      "type": "text",
+      "id": "finish_label",
+      "label": "Finish field label",
+      "default": "Finish"
+    },
+    {
+      "type": "text",
+      "id": "price_each_label",
+      "label": "Price 'each' label",
+      "default": "each"
+    },
+    {
+      "type": "text",
+      "id": "price_full_set_label",
+      "label": "Price full-set estimate label",
+      "default": "for a full set of 4"
+    },
+    {
+      "type": "text",
+      "id": "price_pair_label",
+      "label": "Price pair estimate label",
+      "default": "for the pair"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "Add to cart button label",
+      "default": "Add My Setup to Cart"
+    },
+    {
+      "type": "text",
+      "id": "adding_label",
+      "label": "Add to cart loading label",
+      "default": "Adding…"
+    },
+    {
+      "type": "text",
+      "id": "error_missing_design",
+      "label": "Error — no design selected",
+      "default": "Please choose a wheel design before adding to cart."
+    },
+    {
+      "type": "text",
+      "id": "error_cart_failed",
+      "label": "Error — cart add failed",
+      "default": "Something went wrong adding this to your cart. Please try again."
+    },
+    {
+      "type": "header",
+      "content": "No fitment configured yet"
+    },
+    {
+      "type": "textarea",
+      "id": "no_fitment_copy",
+      "label": "Fallback copy",
+      "default": "We're dialing in the exact fitment for this platform. Get a custom quote and a fitment specialist will confirm your perfect spec."
+    },
+    {
+      "type": "text",
       "id": "quote_cta",
       "label": "Fallback quote button label",
       "default": "Get a custom quote"
@@ -356,12 +553,6 @@
       "id": "quote_link",
       "label": "Fallback quote link",
       "info": "Used when a vehicle has no fitment configured yet. Defaults to the quote section."
-    },
-    {
-      "type": "text",
-      "id": "footnote",
-      "label": "Footnote",
-      "default": "Exact fitment, pricing, and any modifications are confirmed by our team before your order ships."
     },
     {
       "type": "range",
@@ -458,6 +649,31 @@
         },
         {
           "type": "header",
+          "content": "Full set photos"
+        },
+        {
+          "type": "image_picker",
+          "id": "full_image_1",
+          "label": "Photo 1",
+          "info": "Falls back to the card photo, then the design's product photo, if left blank."
+        },
+        {
+          "type": "image_picker",
+          "id": "full_image_2",
+          "label": "Photo 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "full_image_3",
+          "label": "Photo 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "full_image_4",
+          "label": "Photo 4"
+        },
+        {
+          "type": "header",
           "content": "Beadlock rear pair option (2 wheels)"
         },
         {
@@ -478,6 +694,31 @@
           "id": "beadlock_note",
           "label": "Beadlock fitment note",
           "default": "True flush fitment"
+        },
+        {
+          "type": "header",
+          "content": "Beadlock rear pair photos"
+        },
+        {
+          "type": "image_picker",
+          "id": "bead_image_1",
+          "label": "Photo 1",
+          "info": "Falls back to the beadlock design's product photo if left blank."
+        },
+        {
+          "type": "image_picker",
+          "id": "bead_image_2",
+          "label": "Photo 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "bead_image_3",
+          "label": "Photo 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "bead_image_4",
+          "label": "Photo 4"
         },
         {
           "type": "header",
@@ -513,9 +754,7 @@
             "vehicle_label": "BMW F80 / F82",
             "front_spec": "20x9.5 ET15",
             "rear_spec": "20x11 ET37",
-            "full_set_note": "True flush fitment",
-            "beadlock_spec": "18x11 ET40",
-            "beadlock_note": "True flush fitment"
+            "full_set_note": "True flush fitment"
           }
         },
         {

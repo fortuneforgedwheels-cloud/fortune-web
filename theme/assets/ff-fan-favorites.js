@@ -1,5 +1,77 @@
 (function () {
+  function initVisual(modal) {
+    var root = modal.querySelector('[data-ff-fan-visual]');
+    if (!root) return null;
+
+    var groups = {};
+    Array.prototype.slice.call(root.querySelectorAll('[data-ff-fan-visual-group]')).forEach(function (group) {
+      var key = group.getAttribute('data-ff-fan-visual-group');
+      groups[key] = {
+        el: group,
+        slides: Array.prototype.slice.call(group.querySelectorAll('[data-ff-fan-visual-slide]')),
+        index: 0
+      };
+    });
+
+    var prev = root.querySelector('[data-ff-fan-visual-prev]');
+    var next = root.querySelector('[data-ff-fan-visual-next]');
+    var counter = root.querySelector('[data-ff-fan-visual-counter]');
+    var groupKeys = Object.keys(groups);
+    var activeKey = groupKeys.length ? groupKeys[0] : null;
+
+    function render() {
+      groupKeys.forEach(function (key) {
+        var group = groups[key];
+        var active = key === activeKey;
+        group.el.hidden = !active;
+        if (!active) return;
+        group.slides.forEach(function (slide, i) {
+          var isActive = i === group.index;
+          slide.classList.toggle('is-active', isActive);
+          slide.hidden = !isActive;
+        });
+      });
+
+      var current = activeKey ? groups[activeKey] : null;
+      var multiple = !!(current && current.slides.length > 1);
+      if (prev) prev.hidden = !multiple;
+      if (next) next.hidden = !multiple;
+      if (counter) {
+        counter.textContent = current && current.slides.length
+          ? (current.index + 1) + ' / ' + current.slides.length
+          : '';
+      }
+    }
+
+    function go(step) {
+      var current = activeKey ? groups[activeKey] : null;
+      if (!current || !current.slides.length) return;
+      current.index = (current.index + step + current.slides.length) % current.slides.length;
+      render();
+    }
+
+    if (prev) prev.addEventListener('click', function () { go(-1); });
+    if (next) next.addEventListener('click', function () { go(1); });
+
+    render();
+
+    return {
+      setMode: function (key) {
+        if (!groups[key]) return;
+        activeKey = key;
+        groups[key].index = 0;
+        render();
+      },
+      reset: function () {
+        activeKey = groupKeys.length ? groupKeys[0] : null;
+        groupKeys.forEach(function (key) { groups[key].index = 0; });
+        render();
+      }
+    };
+  }
+
   function initModal(modal) {
+    var visual = initVisual(modal);
     var config = modal.querySelector('[data-ff-fan-config]');
     var modeButtons = Array.prototype.slice.call(modal.querySelectorAll('[data-ff-fan-mode]'));
     var setups = {
@@ -20,6 +92,7 @@
       Object.keys(setups).forEach(function (key) {
         if (setups[key]) setups[key].hidden = key !== mode;
       });
+      if (visual) visual.setMode(mode);
       if (errorEl) errorEl.hidden = true;
     }
 
@@ -89,16 +162,42 @@
       return note ? note.textContent.trim() : '';
     }
 
+    function frontLabel() {
+      var setup = setups.full;
+      if (!setup) return 'Front';
+      var dt = setup.querySelector('.ff-fan__specs dt');
+      return dt ? dt.textContent.trim() : 'Front';
+    }
+
+    function rearLabel() {
+      var setup = setups.full;
+      if (!setup) return 'Rear';
+      var rows = setup.querySelectorAll('.ff-fan__specs dt');
+      return rows.length > 1 ? rows[1].textContent.trim() : 'Rear';
+    }
+
+    function rearPairLabel() {
+      var setup = setups.bead;
+      if (!setup) return 'Rear pair';
+      var dt = setup.querySelector('.ff-fan__specs dt');
+      return dt ? dt.textContent.trim() : 'Rear pair';
+    }
+
     if (addBtn) {
+      var defaultLabel = addBtn.getAttribute('data-label-default') || addBtn.textContent.trim();
+      var loadingLabel = addBtn.getAttribute('data-label-loading') || 'Adding…';
+
       addBtn.addEventListener('click', function () {
         var finish = selectedFinish();
         var items = [];
+        var missingDesignMsg = errorEl ? errorEl.getAttribute('data-error-missing-design') : null;
+        var cartFailedMsg = errorEl ? errorEl.getAttribute('data-error-cart-failed') : null;
 
         if (mode === 'full') {
           var design = selectedDesign('full');
           if (!design || !design.variantId) {
             if (errorEl) {
-              errorEl.textContent = 'Please choose a wheel design before adding to cart.';
+              errorEl.textContent = missingDesignMsg || 'Please choose a wheel design before adding to cart.';
               errorEl.hidden = false;
             }
             return;
@@ -110,8 +209,8 @@
               'Vehicle': vehicle,
               'Wheel Design': design.title,
               'Finish': finish,
-              'Position': 'Front',
-              'Size': specText('Front', 'full'),
+              'Position': frontLabel(),
+              'Size': specText(frontLabel(), 'full'),
               'Fitment': noteText('full')
             }
           });
@@ -122,8 +221,8 @@
               'Vehicle': vehicle,
               'Wheel Design': design.title,
               'Finish': finish,
-              'Position': 'Rear',
-              'Size': specText('Rear', 'full'),
+              'Position': rearLabel(),
+              'Size': specText(rearLabel(), 'full'),
               'Fitment': noteText('full')
             }
           });
@@ -131,7 +230,7 @@
           var beadDesign = selectedDesign('bead');
           if (!beadDesign || !beadDesign.variantId) {
             if (errorEl) {
-              errorEl.textContent = 'Please choose a wheel design before adding to cart.';
+              errorEl.textContent = missingDesignMsg || 'Please choose a wheel design before adding to cart.';
               errorEl.hidden = false;
             }
             return;
@@ -143,15 +242,15 @@
               'Vehicle': vehicle,
               'Wheel Design': beadDesign.title,
               'Finish': finish,
-              'Position': 'Rear pair (beadlock)',
-              'Size': specText('Rear pair', 'bead'),
+              'Position': rearPairLabel() + ' (beadlock)',
+              'Size': specText(rearPairLabel(), 'bead'),
               'Fitment': noteText('bead')
             }
           });
         }
 
         addBtn.disabled = true;
-        addBtn.textContent = 'Adding…';
+        addBtn.textContent = loadingLabel;
         if (errorEl) errorEl.hidden = true;
 
         fetch('/cart/add.js', {
@@ -168,9 +267,9 @@
           })
           .catch(function () {
             addBtn.disabled = false;
-            addBtn.textContent = 'Add My Setup to Cart';
+            addBtn.textContent = defaultLabel;
             if (errorEl) {
-              errorEl.textContent = 'Something went wrong adding this to your cart. Please try again.';
+              errorEl.textContent = cartFailedMsg || 'Something went wrong adding this to your cart. Please try again.';
               errorEl.hidden = false;
             }
           });
