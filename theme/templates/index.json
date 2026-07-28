@@ -278,7 +278,7 @@
         "badge_fitment": {
           "type": "badge",
           "settings": {
-            "icon": "wheel",
+            "icon": "check",
             "heading": "Fitment Guaranteed",
             "description": "Engineered for your chassis. Professional install required. If it doesn't fit, we make it right.",
             "show_email": false
@@ -287,7 +287,7 @@
         "badge_people": {
           "type": "badge",
           "settings": {
-            "icon": "phone_person",
+            "icon": "race_car",
             "heading": "Real People, Same Day",
             "description": "Questions? We answer same day. Real enthusiasts, not call centers. ",
             "show_email": true
