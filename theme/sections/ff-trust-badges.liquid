@@ -42,23 +42,24 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.2 2.6 2.6L16.4 9"/></svg>
                 {%- endcase -%}
               </span>
-              {%- if block.settings.heading != blank -%}
+              {%- if block.settings.heading != blank or block.id == 'badge_secure' -%}
                 {%- liquid
+                  assign heading_text = block.settings.heading
                   assign heading_href = block.settings.heading_link
-                  assign heading_key = block.settings.heading | strip | downcase
-                  if heading_href == blank and heading_key contains 'affiliate'
-                    assign heading_href = '/pages/become-an-affiliate'
-                  endif
-                  if heading_href == blank and block.id == 'badge_secure'
-                    assign heading_href = '/pages/become-an-affiliate'
+                  assign heading_key = heading_text | strip | downcase
+                  if block.id == 'badge_secure' or heading_key == 'secure checkout' or heading_key contains 'affiliate'
+                    assign heading_text = 'Become an affiliate'
+                    if heading_href == blank
+                      assign heading_href = '/pages/become-an-affiliate'
+                    endif
                   endif
                 -%}
                 {%- if heading_href != blank -%}
                   <p class="ff-trust__heading">
-                    <a class="ff-trust__heading-link" href="{{ heading_href }}">{{ block.settings.heading | escape }}</a>
+                    <a class="ff-trust__heading-link" href="{{ heading_href }}">{{ heading_text | escape }}</a>
                   </p>
                 {%- else -%}
-                  <p class="ff-trust__heading">{{ block.settings.heading | escape }}</p>
+                  <p class="ff-trust__heading">{{ heading_text | escape }}</p>
                 {%- endif -%}
               {%- endif -%}
               {%- if block.settings.description != blank -%}
