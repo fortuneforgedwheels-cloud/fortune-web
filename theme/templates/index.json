@@ -272,7 +272,7 @@
         "padding_bottom": 64
       }
     },
-    "ff_trust_badges_main": {
+    "ff_trust_badges_home": {
       "type": "ff-trust-badges",
       "blocks": {
         "badge_fitment": {
@@ -1749,7 +1749,7 @@
     "ff_simple_build_main",
     "ff_fan_favorites_main",
     "ff_value_props_main",
-    "ff_trust_badges_main",
+    "ff_trust_badges_home",
     "ff_project_gallery_main",
     "halo_slideshow_Kd9Mbj",
     "halo_split_slideshow_gjcLKL",
