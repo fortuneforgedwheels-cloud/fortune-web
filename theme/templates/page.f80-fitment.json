@@ -13,251 +13,224 @@
       "type": "main-page",
       "disabled": true,
       "settings": {
-        "show_breadcrumb": true,
-        "breadcrumb_alignment": "left",
-        "show_page_title": true,
-        "page_title_alignment": "center",
+        "show_breadcrumb": false,
+        "show_page_title": false,
         "container": "1370",
         "padding_top": 0,
-        "padding_bottom": 70,
-        "padding_top_tablet": 0,
-        "padding_bottom_tablet": 50,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 40
-      }
-    },
-    "halo_custom_text_9PzE8m": {
-      "type": "halo-custom-text",
-      "blocks": {
-        "button_link_wNt6ED": {
-          "type": "button-link",
-          "settings": {
-            "btn": "1",
-            "btn_text": "20\" SPECS",
-            "btn_icon": "",
-            "btn_link": "shopify://pages/f80-20s"
-          }
-        },
-        "button_link_4hBdBn": {
-          "type": "button-link",
-          "settings": {
-            "btn": "1",
-            "btn_text": "19\" SPECS",
-            "btn_icon": "",
-            "btn_link": "shopify://pages/f80-19"
-          }
-        },
-        "button_link_WFwQiz": {
-          "type": "button-link",
-          "settings": {
-            "btn": "1",
-            "btn_text": "18\" SPECS",
-            "btn_icon": "",
-            "btn_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "button_link_wNt6ED",
-        "button_link_4hBdBn",
-        "button_link_WFwQiz"
-      ],
-      "name": "t:sections.custom-text.presets.name",
-      "settings": {
-        "show_custom_text": true,
-        "container": "1770",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 40,
-        "padding_bottom_tablet": 40,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30,
-        "block_title": "THE F8X FITMENT GUIDE",
-        "block_text": "Precision fitment for F80/F82 M3 & M4—dialed to sit flush, clear brakes, and perform without compromise. Choose your style, and we’ll spec it perfectly for a no-guesswork setup.",
-        "block_title_align": "center",
-        "layout_style": "1",
-        "show_customize_width": false,
-        "customize_width": 940,
-        "block_content": "",
-        "block_align": "center",
-        "show_custom_text_style": true,
-        "background_color": "",
-        "text_color": "#f9f9f9",
-        "title_color": "#f9f9f9",
-        "text_font": "font_1",
-        "text_font_size": 16,
-        "text_font_weight": "400",
-        "text_font_style": "normal",
-        "text_text_transform": "none"
-      }
-    },
-    "halo_product_block_2_Ft6CPt": {
-      "type": "halo-product-block-2",
-      "disabled": true,
-      "name": "t:sections.product-block.presets.name__2",
-      "settings": {
-        "display_product_block": true,
-        "container": "1770",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 40,
-        "padding_bottom_tablet": 40,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30,
-        "block_title": "SELECT YOUR CHASSIS",
-        "block_text": "",
-        "block_title_align": "center",
-        "block_layout": "grid",
-        "col": "narrow",
-        "block_collection": "wheeltire",
-        "block_limit": 3,
-        "block_image_ratio": "adapt",
-        "portrait_aspect_ratio": 133,
-        "show_add_to_cart": true,
-        "show_bottom_border": false,
-        "block_per_row": "6",
-        "block_infinite_scroll": true,
-        "block_show": "6",
-        "block_dots": false,
-        "block_arrows": true
-      }
-    },
-    "halo_collapsible_content_MPTTJJ": {
-      "type": "halo-collapsible-content",
-      "blocks": {
-        "content_EcrbFU": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "content_BqXXL4": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "content_gwDp4R": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "content_GFcXU8": {
-          "type": "content",
-          "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        }
-      },
-      "block_order": [
-        "content_EcrbFU",
-        "content_BqXXL4",
-        "content_gwDp4R",
-        "content_GFcXU8"
-      ],
-      "name": "t:sections.collapsible_content.presets.name",
-      "settings": {
-        "show_collapsible_content": true,
-        "container": "1770",
-        "padding_top": 0,
         "padding_bottom": 0,
         "padding_top_tablet": 0,
         "padding_bottom_tablet": 0,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
-        "block_title": "",
-        "block_text": "",
-        "block_title_align": "center",
-        "image": "shopify://shop_images/IMG_0904.jpg",
-        "desktop_layout": "image_second",
-        "open_first_collapsible_row": false,
-        "content_layout": "1"
+        "padding_bottom_mobile": 0
       }
     },
-    "halo_collapsible_content_QBWWN3": {
-      "type": "halo-collapsible-content",
+    "ff_fitment_guide_f8x": {
+      "type": "ff-fitment-guide",
       "blocks": {
-        "content_kVHEX6": {
-          "type": "content",
+        "tier_street": {
+          "type": "tier",
           "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
+            "tier_title": "Daily Street & OEM+ Bolt-On",
+            "tier_intro": "<p>These bolt-on forged wheel fitments are ideal for enthusiasts enjoying their car day-to-day on the street, and they are typically paired with all-season or performance-oriented summer tires. These wheel and tire configurations will improve the appearance and performance of the car without requiring modifications or adjustments to the factory alignment. Just bolt-on and enjoy!</p><p>While these wheel fitments can be used for track days and AutoX, performance will be left on the table. Drivers that prioritize performance should review our Performance Street &amp; Track and/or Hardcore Track &amp; Race sections below.</p>",
+            "a_label": "Staggered · 18\"",
+            "a_front": "18x9 ET30",
+            "a_rear": "18x10 ET25",
+            "a_notes": "Popular forged daily staggered fitment for F80/F82. 18x10 ET40 can also be used in the rear for an exact match of the factory offset.",
+            "a_tire_pick": "Front 255/40-18 // Rear 275/40-18",
+            "a_tire_flags": "Factory tire sizes · Direct fit",
+            "a_tire_allseason": "Michelin Pilot Sport AS4 (540TW)",
+            "a_tire_uhp": "Firestone Firehawk Indy 500 (340TW), Falken Azenis FK510 (300TW), BFGoodrich g-Force Sport Comp-2 (340TW), Sumitomo HTR Z5 (320TW)",
+            "a_tire_max": "Michelin Pilot Super Sport (300TW), Yokohama Advan Apex V601 (280TW), Continental ExtremeContact Sport (340TW), Hankook Ventus V12 Evo2 (320TW)",
+            "a_tire_extreme": "Goodyear Eagle F1 Supercar 3 (220TW), Yokohama Advan A052 (200TW)",
+            "b_label": "Staggered · 19\"",
+            "b_front": "19x9 ET30",
+            "b_rear": "19x10 ET25",
+            "b_notes": "Clears CCB. 19x10 ET40 can also be used in the rear for an exact match to the factory rear wheel width and offset.",
+            "b_tire_pick": "Front 255/35-19 // Rear 275/35-19",
+            "b_tire_flags": "Factory tire sizes · Direct fit · Clears CCB",
+            "b_tire_allseason": "Michelin Pilot Sport AS4 (540TW)",
+            "b_tire_uhp": "Firestone Firehawk Indy 500 (340TW), Falken Azenis FK510 (300TW), Sumitomo HTR Z5 (320TW)",
+            "b_tire_max": "Michelin Pilot Sport 4S (300TW), Yokohama Advan Apex V601 (280TW), Continental ExtremeContact Sport (340TW), Bridgestone Potenza S-04 Pole Position (280TW), Hankook Ventus V12 Evo2 (320TW)",
+            "b_tire_extreme": "Yokohama Advan A052 (200TW), Yokohama Advan Neova AD08R (200TW)"
           }
         },
-        "content_3FyEg3": {
-          "type": "content",
+        "tier_aggressive": {
+          "type": "tier",
           "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
+            "tier_title": "Aggressive Street",
+            "tier_intro": "<p>Ideal for the driver who wants to fill out the wheel wells with the widest possible rubber and/or perfectly flush offsets. These fitments are sometimes direct bolt-on, but oftentimes require small spacers, negative camber, or rolled fenders for the sake of dialing in the perfect blend of function and form.</p><p>Narrower tire sizes relative to wheel width are more common here to help move the tire sidewall away from the fenders with more aggressive offsets. Street-oriented all-season and summer tires are popular options.</p>",
+            "a_label": "Staggered · 20\"",
+            "a_front": "20x9.5 ET15",
+            "a_rear": "20x11 ET40",
+            "a_notes": "Clears CCB. Alternative tire setup: Front 255/30-20 // Rear 295/30-20 — tires will be slightly stretched. All-season options N/A on the alt; Max: Michelin Pilot Sport 4S (300TW), Falken Azenis FK510 (300TW); Extreme: Pirelli P Zero (220TW).",
+            "a_tire_pick": "Front 265/30-20 // Rear 295/30-20",
+            "a_tire_flags": "Direct fit · Clears CCB",
+            "a_tire_allseason": "Michelin Pilot Sport AS4 (540TW)",
+            "a_tire_max": "Michelin Pilot Sport 4S (300TW), Bridgestone Potenza Sport (300TW), Yokohama Advan Apex V601 (280TW)",
+            "a_tire_extreme": "Michelin Pilot Sport Cup 2 Connect (240TW), Pirelli P Zero (220TW)"
           }
         },
-        "content_jNAFdR": {
-          "type": "content",
+        "tier_perf_square": {
+          "type": "tier",
           "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
+            "tier_title": "Performance Street & Track — Square",
+            "tier_intro": "<p>Whether you enjoy spirited street driving or you are a weekend track warrior chasing lap times, these forged wheel and tire configurations are ideal for enthusiasts looking for a more dramatic improvement in performance and they are typically paired with performance-oriented summer tires or track-oriented R-compounds.</p><p>The suspension type, alignment settings, and tire brand/size can be changed accordingly to set the car up for either environment. While many of these wheel fitments can be run with the factory alignment, if you plan to track the car we highly recommend dialing in negative camber to improve handling and to extract the most performance and longevity out of your tires.</p><p>Square configurations help mitigate understeer and allow front/rear tire rotation. They may compromise rear-end grip versus staggered setups.</p>",
+            "a_label": "Square · 18\"",
+            "a_front": "18x10 ET25",
+            "a_rear": "18x10 ET25",
+            "a_notes": "Popular fitment. 5mm front spacers may be required with certain aftermarket suspensions that reduce inner clearance. An 18x9.5 ET15 front can be used to avoid running spacers due to its superior inner clearance. Wider alternative tires: 285/35-18 front & rear — typically direct fit; a small increase in negative camber may be required if lowered and/or the tire model runs wide.",
+            "a_tire_pick": "275/35-18 Front & Rear",
+            "a_tire_flags": "Direct fit · Popular fitment",
+            "a_tire_max": "Michelin Pilot Sport 4S (300TW)",
+            "a_tire_extreme": "Dunlop Direzza ZIII (200TW), Falken Azenis RT660 (200TW), Goodyear Eagle F1 Supercar 3 (220TW), BFGoodrich g-Force Rival S 1.5 (200TW), Continental ExtremeContact Force (200TW)",
+            "a_tire_rcompound": "Goodyear Eagle F1 Supercar 3R (100TW), Toyo Proxes R888R (100TW), Toyo Proxes RA1 (100TW), Nitto NT01 (100TW), Nankang AR-1 (100TW)",
+            "b_label": "Square · 19\"",
+            "b_front": "19x10 ET25",
+            "b_rear": "19x10 ET25",
+            "b_notes": "Clears CCB. 5mm front spacers may be required with certain aftermarket suspensions that reduce inner clearance. A 19x9.5 ET15 front can be used to avoid running spacers due to its superior inner clearance.",
+            "b_tire_pick": "275/30-19 Front & Rear",
+            "b_tire_flags": "Direct fit · Clears CCB",
+            "b_tire_max": "Michelin Pilot Sport 4S (300TW)",
+            "b_tire_extreme": "Yokohama Advan Neova AD08R (200TW), Falken Azenis RT660 (200TW)"
           }
         },
-        "content_YdeXBa": {
-          "type": "content",
+        "tier_perf_stagger": {
+          "type": "tier",
           "settings": {
-            "heading": "Collapsible Row",
-            "icon": "none",
-            "content": "",
-            "page": ""
+            "tier_title": "Performance Street & Track — Staggered",
+            "tier_intro": "<p>Recommended for enthusiasts that prioritize rear-end grip/traction. Wheels and tires cannot be rotated front to rear, and large staggers may induce understeer.</p>",
+            "a_label": "Staggered · 18\"",
+            "a_front": "18x10 ET25",
+            "a_rear": "18x11 ET40",
+            "a_notes": "Popular fitment. 5mm front spacers may be required with certain aftermarket suspensions that reduce inner clearance. An 18x9.5 ET15 front can be used to avoid running spacers due to its superior inner clearance. Wider alt: Front 275/35-18 // Rear 315/30-18 — may require rolled rear fenders and/or additional rear negative camber. Narrower alt: Front 265/35-18 // Rear 295/35-18 — direct fit (Max: Continental ExtremeContact Sport; Extreme: Yokohama Advan A052).",
+            "a_tire_pick": "Front 275/35-18 // Rear 305/35-18",
+            "a_tire_flags": "Direct fit · Popular fitment",
+            "a_tire_rcompound": "Toyo Proxes R888R (100TW), Nitto NT01 (100TW)",
+            "b_label": "Staggered · 19\"",
+            "b_front": "19x10 ET25",
+            "b_rear": "19x11 ET40",
+            "b_notes": "Popular fitment. Clears CCB. 5mm front spacers may be required with certain aftermarket suspensions. A 19x9.5 ET15 front can be used to avoid running spacers due to its superior inner clearance. Narrower alt: Front 265/35-19 // Rear 305/30-19 — taller fronts; rubbing may occur with wide-running compounds at full steering lock (opens more R-compound options including Michelin Pilot Sport Cup 2, Pirelli Trofeo R, Goodyear Supercar 3R, Toyo R888R, Nankang AR-1).",
+            "b_tire_pick": "Front 275/30-19 // Rear 305/30-19",
+            "b_tire_flags": "Direct fit · Clears CCB · Popular fitment",
+            "b_tire_max": "Michelin Pilot Sport 4S (300TW)",
+            "b_tire_extreme": "Yokohama Advan Neova AD08R (200TW), Falken Azenis RT660 (200TW)"
+          }
+        },
+        "tier_hc_square_a": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Hardcore Track — Square A",
+            "tier_intro": "<p>These forged wheel and tire configurations are best suited for hardcore track junkies and club racers competing for a spot on the podium. Extreme summer tires through full racing slicks are commonly used depending on experience and class rules. Additional negative camber is strongly encouraged to maximize performance and tire longevity.</p><p>Even with appropriate camber dialed in, some of the more extreme fitments can scrub the inner plastic fender liners under suspension compression and/or at full steering lock — that is expected when pushing fitment limits.</p><p>Square setups help mitigate understeer and allow front/rear tire rotation.</p>",
+            "a_label": "Square · 18x10\"",
+            "a_front": "18x10 ET25",
+            "a_rear": "18x10 ET25",
+            "a_notes": "Popular fitment. 5mm front spacers may be required with certain aftermarket suspensions that reduce inner clearance.",
+            "a_tire_pick": "275/35-18 Front & Rear",
+            "a_tire_flags": "Direct fit · Popular fitment",
+            "a_tire_extreme": "Dunlop Direzza ZIII (200TW), Falken Azenis RT660 (200TW), Goodyear Eagle F1 Supercar 3 (220TW), BFGoodrich g-Force Rival S 1.5 (200TW), Continental ExtremeContact Force (200TW)",
+            "a_tire_rcompound": "Goodyear Eagle F1 Supercar 3R (100TW), Toyo Proxes R888R (100TW), Toyo Proxes RA1 (100TW), Nitto NT01 (100TW), Nankang AR-1 (100TW), Maxxis RC-1 (100TW)",
+            "a_tire_drag": "Semi-slick: Hoosier A7 (40TW), Hoosier R7 (40TW), BFGoodrich R1S (40TW), Toyo Proxes RR (40TW)",
+            "b_label": "Square · 18x10.5\" ET40",
+            "b_front": "18x10.5 ET40",
+            "b_rear": "18x10.5 ET40",
+            "b_notes": "Adjustable camber plates required. 18–25mm front spacers required depending on tire size/model and suspension. Motorsport-oriented coilovers with a slim spring silhouette and favorable lower spring perch location required. Wider alt: 305/645-18 front & rear — min. −3° front camber, rear direct fit (Pirelli DH slick). Narrower alt: 275/35-18 front & rear — min. −2.5° front camber, rear direct fit.",
+            "b_tire_pick": "295/30-18 Front & Rear",
+            "b_tire_flags": "Min. −3° front camber · rear direct fit · camber plates + spacers required",
+            "b_tire_extreme": "Michelin Pilot Sport Cup 2 Connect (240TW), Yokohama Advan A052 (200TW), Continental ExtremeContact Force (200TW)",
+            "b_tire_rcompound": "Pirelli P Zero Trofeo R (60TW), Toyo Proxes R888R (100TW), Nankang AR-1 (100TW)",
+            "b_tire_drag": "Semi-slick: Hoosier A7 (40TW), Hoosier R7 (40TW), Toyo Proxes RR (40TW)"
+          }
+        },
+        "tier_hc_square_b": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Hardcore Track — Square B",
+            "tier_intro": "<p>More aggressive square hardcore options. Expect camber plates, motorsport coilovers, and fender work on the wider/lower-offset setups.</p>",
+            "a_label": "Square · 18x10.5\" ET22",
+            "a_front": "18x10.5 ET22",
+            "a_rear": "18x10.5 ET22",
+            "a_notes": "Adjustable camber plates required. Rear will require fender rolling/pulling. 3mm or 5mm front spacers may be required depending on tire size/model and suspension. Motorsport-oriented coilovers with a slim spring silhouette and favorable lower spring perch location required. Wider alt: 305/645-18 — min. −3° front / −2.5° rear (Pirelli DH). Narrower alt: 275/35-18 — same camber mins.",
+            "a_tire_pick": "295/30-18 Front & Rear",
+            "a_tire_flags": "Min. −3° front / −2.5° rear camber · fender roll/pull rear",
+            "a_tire_extreme": "Michelin Pilot Sport Cup 2 Connect (240TW), Yokohama Advan A052 (200TW), Continental ExtremeContact Force (200TW)",
+            "a_tire_rcompound": "Pirelli P Zero Trofeo R (60TW), Toyo Proxes R888R (100TW), Nankang AR-1 (100TW)",
+            "a_tire_drag": "Semi-slick: Hoosier A7 (40TW), Hoosier R7 (40TW), Toyo Proxes RR (40TW)",
+            "b_label": "Square · 18x11\"",
+            "b_front": "18x11 ET25",
+            "b_rear": "18x11 ET40",
+            "b_notes": "Adjustable camber plates required. 12mm front spacers are typically required depending on tire size/model and suspension. Motorsport-oriented coilovers with a slim spring silhouette and favorable lower spring perch location required. Staff pick uses 305/645-18 slick package. Wider alt: 315/30-18 front & rear. Narrower alt: 295/30-18 front & rear — same camber mins.",
+            "b_tire_pick": "305/645-18 Front & Rear",
+            "b_tire_flags": "Min. −3.6° front / −2° rear camber · camber plates + spacers required",
+            "b_tire_extreme": "Wider alt 315/30-18: Falken Azenis RT660 (200TW), BFGoodrich g-Force Rival S 1.5 (200TW), Yokohama Advan A052 (200TW), Continental ExtremeContact Force (200TW), Nankang CR-1 (200TW)",
+            "b_tire_rcompound": "Toyo Proxes R888R (100TW), Nitto NT01 (100TW), Nankang AR-1 (100TW) · narrower 295/30: Pirelli Trofeo R, Toyo R888R, Nankang AR-1",
+            "b_tire_drag": "Slicks: Pirelli DH · Semi-slick: Hoosier A7 / R7, BFGoodrich R1S, Toyo Proxes RR"
+          }
+        },
+        "tier_hc_stagger_a": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Hardcore Track — Staggered A",
+            "tier_intro": "<p>Staggered hardcore setups prioritize rear-end grip and traction. Wheels and tires cannot be rotated front to rear, and large staggers may induce understeer.</p>",
+            "a_label": "Staggered · 18x10 / 18x11",
+            "a_front": "18x10 ET25",
+            "a_rear": "18x11 ET40",
+            "a_notes": "Popular fitment. 5mm front spacers may be required with certain aftermarket suspensions. An 18x9.5 ET15 front can be used to avoid running spacers due to its superior inner clearance. Wider alt: Front 275/35-18 // Rear 315/30-18 — may require rolled rear fenders and/or additional rear negative camber. Narrower alt: Front 265/35-18 // Rear 295/35-18 — direct fit (Extreme: Yokohama Advan A052).",
+            "a_tire_pick": "Front 275/35-18 // Rear 305/35-18",
+            "a_tire_flags": "Direct fit · Popular fitment",
+            "a_tire_rcompound": "Toyo Proxes R888R (100TW), Nitto NT01 (100TW)",
+            "a_tire_drag": "Semi-slick: Toyo Proxes RR (40TW) · wider alt also: Hoosier A7 / R7, BFGoodrich R1S",
+            "b_label": "Staggered · 18x10.5 / 18x11",
+            "b_front": "18x10.5 ET22",
+            "b_rear": "18x11 ET40",
+            "b_notes": "Adjustable camber plates required. 3mm or 5mm front spacers are often required depending on tire size/model and suspension. Motorsport-oriented coilovers with a slim spring silhouette and favorable lower spring perch location required.",
+            "b_tire_pick": "Front 295/30-18 // Rear 315/30-18",
+            "b_tire_flags": "Min. −3° front / −2° rear camber · camber plates required",
+            "b_tire_extreme": "Yokohama Advan A052 (200TW), Continental ExtremeContact Force (200TW)",
+            "b_tire_rcompound": "Toyo Proxes R888R (100TW), Nankang AR-1 (100TW)",
+            "b_tire_drag": "Semi-slick: Hoosier A7 / R7 (40TW), Toyo Proxes RR (40TW)"
+          }
+        },
+        "tier_hc_stagger_b": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Hardcore Track — Staggered B",
+            "tier_intro": "<p>19\" staggered hardcore option with CCB clearance and alternate tire packages for more camber-hungry builds.</p>",
+            "a_label": "Staggered · 19\"",
+            "a_front": "19x10 ET25",
+            "a_rear": "19x11 ET40",
+            "a_notes": "Popular fitment. Clears CCB. 5mm front spacers may be required with certain aftermarket suspensions. A 19x9.5 ET15 front can be used to avoid running spacers due to its superior inner clearance. Wider alt: Front 295/30-19 // Rear 315/30-19 — min. −3° front / −2.5° rear camber (Extreme: Continental ExtremeContact Force; Semi-slick: Hoosier A7 / R7). Narrower alt: Front 265/35-19 // Rear 305/30-19 — direct fit with broader R-compound options.",
+            "a_tire_pick": "Front 275/30-19 // Rear 305/30-19",
+            "a_tire_flags": "Direct fit · Clears CCB · Popular fitment",
+            "a_tire_extreme": "Yokohama Advan Neova AD08R (200TW), Falken Azenis RT660 (200TW)",
+            "a_tire_rcompound": "Narrower alt: Michelin Pilot Sport Cup 2 (180TW), Pirelli P Zero Trofeo R (60TW), Goodyear Eagle F1 Supercar 3R (100TW), Toyo Proxes R888R (100TW), Nankang AR-1 (100TW)"
           }
         }
       },
       "block_order": [
-        "content_kVHEX6",
-        "content_3FyEg3",
-        "content_jNAFdR",
-        "content_YdeXBa"
+        "tier_street",
+        "tier_aggressive",
+        "tier_perf_square",
+        "tier_perf_stagger",
+        "tier_hc_square_a",
+        "tier_hc_square_b",
+        "tier_hc_stagger_a",
+        "tier_hc_stagger_b"
       ],
-      "name": "t:sections.collapsible_content.presets.name",
       "settings": {
-        "show_collapsible_content": true,
-        "container": "1770",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_tablet": 0,
-        "padding_bottom_tablet": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
-        "block_title": "",
-        "block_text": "",
-        "block_title_align": "center",
-        "image": "shopify://shop_images/IMG_0906.jpg",
-        "desktop_layout": "image_second",
-        "open_first_collapsible_row": false,
-        "content_layout": "1"
+        "show_section": true,
+        "back_label": "All BMW chassis",
+        "back_link": "/pages/shop-by-vehicle-bmw",
+        "eyebrow": "Fortune Forged",
+        "heading": "BMW F8X (F80 / F82) Wheel & Tire Fitment Guide",
+        "intro": "<p>Forged-only wheel and tire configurations for BMW F80 M3 and F82 M4. Square setups favor rotation and understeer control; staggered setups prioritize rear traction. Specs below use Fortune Forged offsets — 11\" rears at ET40 and 9.5\" fronts at ET15 where those widths apply. Optional photos can be added to each configuration in the theme editor.</p>",
+        "footnote": "Tire fitment notes are general guidance based on common setups. Final tire choice, spacers, and camber requirements are confirmed by our fitment specialists for your exact build. Suspension clearance can change with coilovers and ride height. Fortune Forged produces forged wheels only.",
+        "quote_label": "Get a fitment-confirmed quote",
+        "quote_link": "/#order"
       }
     }
   },
   "order": [
     "main",
-    "halo_custom_text_9PzE8m",
-    "halo_product_block_2_Ft6CPt",
-    "halo_collapsible_content_MPTTJJ",
-    "halo_collapsible_content_QBWWN3"
+    "ff_fitment_guide_f8x"
   ]
 }
