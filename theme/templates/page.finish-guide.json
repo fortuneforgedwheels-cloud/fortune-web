@@ -1,0 +1,72 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": false,
+        "show_page_title": false,
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "ff_finish_guide_main": {
+      "type": "ff-finish-guide",
+      "blocks": {
+        "category_standard": {
+          "type": "category",
+          "settings": {
+            "tab_label": "Standard Finishes",
+            "heading": "Standard Finishes",
+            "subheading": "Gloss & Satin",
+            "description": "Included as standard options with every Fortune Forged wheel set — a clean, durable finish for daily driving with no upcharge.",
+            "finish_1_name": "Gloss",
+            "finish_2_name": "Satin"
+          }
+        },
+        "category_premium": {
+          "type": "category",
+          "settings": {
+            "tab_label": "Premium Finishes",
+            "heading": "Premium Finishes",
+            "subheading": "Brushed, Polished & Chrome",
+            "description": "Elevated finishing options for a bespoke, show-ready look — hand-finished for a deeper, more dimensional appearance.",
+            "finish_1_name": "Brushed",
+            "finish_2_name": "Polished",
+            "finish_3_name": "Chrome"
+          }
+        }
+      },
+      "block_order": [
+        "category_standard",
+        "category_premium"
+      ],
+      "settings": {
+        "show_section": true,
+        "eyebrow": "Fortune Forged",
+        "heading": "Finish Options",
+        "intro": "Every Fortune Forged wheel is available in a range of finishes. Select a category below to explore your options.",
+        "quote_label": "Get a custom quote",
+        "quote_link": "/#order"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ff_finish_guide_main"
+  ]
+}
