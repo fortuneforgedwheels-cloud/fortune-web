@@ -42,16 +42,15 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.2 2.6 2.6L16.4 9"/></svg>
                 {%- endcase -%}
               </span>
-              {%- if block.settings.heading != blank or block.id == 'badge_secure' -%}
+              {%- comment -%} AFFILIATE_TRUST_LINK_V2 {%- endcomment -%}
+              {%- if block.settings.heading != blank or block.id == 'badge_secure' or forloop.index == 3 -%}
                 {%- liquid
                   assign heading_text = block.settings.heading
                   assign heading_href = block.settings.heading_link
                   assign heading_key = heading_text | strip | downcase
-                  if block.id == 'badge_secure' or heading_key == 'secure checkout' or heading_key contains 'affiliate'
+                  if forloop.index == 3 or block.id == 'badge_secure' or heading_key == 'secure checkout' or heading_key contains 'affiliate'
                     assign heading_text = 'Become an affiliate'
-                    if heading_href == blank
-                      assign heading_href = '/pages/become-an-affiliate'
-                    endif
+                    assign heading_href = '/pages/become-an-affiliate'
                   endif
                 -%}
                 {%- if heading_href != blank -%}
