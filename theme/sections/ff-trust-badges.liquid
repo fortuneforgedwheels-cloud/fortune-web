@@ -17,7 +17,7 @@
               assign icon = block.settings.icon
               assign contact_email = block.settings.contact_email | default: shop.email
             -%}
-            <div class="ff-trust__card" {{ block.shopify_attributes }}>
+              <div class="ff-trust__card" data-ff-trust-rev="aff-v3" {{ block.shopify_attributes }}>
               <span class="ff-trust__icon" aria-hidden="true">
                 {%- case icon -%}
                   {%- when 'check' -%}

@@ -1,0 +1,34 @@
+{%- comment -%}
+  Ensures the homepage trust badge "Become an affiliate" / Secure Checkout
+  heading is an underlined link to the affiliate application page.
+{%- endcomment -%}
+<script>
+  (function () {
+    var href = {{ pages['become-an-affiliate'].url | default: '/pages/become-an-affiliate' | json }};
+    function upgrade() {
+      var headings = document.querySelectorAll('.ff-trust__heading');
+      if (!headings.length) return;
+      headings.forEach(function (heading, index) {
+        if (heading.querySelector('a.ff-trust__heading-link')) return;
+        var text = (heading.textContent || '').replace(/\s+/g, ' ').trim();
+        var key = text.toLowerCase();
+        var shouldLink =
+          index === 2 ||
+          key.indexOf('affiliate') !== -1 ||
+          key === 'secure checkout';
+        if (!shouldLink) return;
+        var link = document.createElement('a');
+        link.className = 'ff-trust__heading-link';
+        link.href = href;
+        link.textContent = key.indexOf('affiliate') !== -1 ? text : 'Become an affiliate';
+        heading.textContent = '';
+        heading.appendChild(link);
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', upgrade);
+    } else {
+      upgrade();
+    }
+  })();
+</script>
