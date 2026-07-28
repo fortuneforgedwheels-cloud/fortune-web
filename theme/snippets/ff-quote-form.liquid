@@ -3,7 +3,7 @@
 {%- form 'contact', id: contact_form_id, class: 'ff-quote' -%}
   {%- if form.posted_successfully? -%}
     <div class="ff-quote__success" role="status">
-      Thanks — we received your build request and will follow up shortly.
+      Thanks — we received your request. If you left fitment blank, a specialist will email or call you back to help.
     </div>
   {%- elsif form.errors -%}
     <div class="ff-quote__error" role="alert">
@@ -14,6 +14,25 @@
   <input type="hidden" name="contact[form_name]" value="Fortune Forged Build Quote">
   <input type="hidden" name="contact[selected_vehicle]" id="ff-selected-vehicle-{{ section.id }}" value="">
   <input type="hidden" name="contact[selected_style]" id="ff-selected-style-{{ section.id }}" value="">
+  <input type="hidden" name="contact[help_preference]" id="ff-help-preference-{{ section.id }}" value="I know my specs">
+
+  <fieldset class="ff-quote__path">
+    <legend class="ff-build__label">How should we help?</legend>
+    <label class="ff-quote__choice">
+      <input type="radio" name="ff_help_mode" value="specs" checked data-help-mode>
+      <span>
+        <strong>I know my specs</strong>
+        <em>Enter sizes, finish, and design below</em>
+      </span>
+    </label>
+    <label class="ff-quote__choice">
+      <input type="radio" name="ff_help_mode" value="specialist" data-help-mode>
+      <span>
+        <strong>Leave it to a fitment specialist</strong>
+        <em>We’ll email or call you back to assist</em>
+      </span>
+    </label>
+  </fieldset>
 
   <div class="ff-quote__grid">
     <div class="ff-quote__field">
@@ -35,39 +54,51 @@
         autocomplete="email">
     </div>
     <div class="ff-quote__field">
+      <label class="ff-build__label" for="ff-contact-pref-{{ section.id }}">Preferred callback</label>
+      <select class="ff-build__input" id="ff-contact-pref-{{ section.id }}" name="contact[callback_preference]">
+        <option value="Email or phone — whichever is fastest">Email or phone — whichever is fastest</option>
+        <option value="Email me">Email me</option>
+        <option value="Call me back">Call me back</option>
+      </select>
+    </div>
+    <div class="ff-quote__field">
       <label class="ff-build__label" for="ff-ymm-{{ section.id }}">Year / Make / Model*</label>
       <input class="ff-build__input" id="ff-ymm-{{ section.id }}" type="text" name="contact[vehicle]" required
-        placeholder="2024 BMW G80 M3" value="">
+        placeholder="e.g. 2024 BMW G80 M3" value="">
     </div>
-    <div class="ff-quote__field">
-      <label class="ff-build__label" for="ff-front-{{ section.id }}">Front size*</label>
-      <input class="ff-build__input" id="ff-front-{{ section.id }}" type="text" name="contact[front_size]" required
-        placeholder="20x9.5" value="">
-    </div>
-    <div class="ff-quote__field">
-      <label class="ff-build__label" for="ff-rear-{{ section.id }}">Rear size*</label>
-      <input class="ff-build__input" id="ff-rear-{{ section.id }}" type="text" name="contact[rear_size]" required
-        placeholder="20x11" value="">
-    </div>
-    <div class="ff-quote__field">
-      <label class="ff-build__label" for="ff-finish-{{ section.id }}">Finish*</label>
-      <input class="ff-build__input" id="ff-finish-{{ section.id }}" type="text" name="contact[finish]" required
-        placeholder="Brushed, polished, gloss black…" value="">
-    </div>
-    <div class="ff-quote__field">
+    <div class="ff-quote__field ff-quote__specs">
       <label class="ff-build__label" for="ff-design-{{ section.id }}">Desired design</label>
       <input class="ff-build__input" id="ff-design-{{ section.id }}" type="text" name="contact[design]"
-        placeholder="Wheel model / design name" value="">
+        placeholder="Wheel model / design name (optional)" value="">
+    </div>
+    <div class="ff-quote__field ff-quote__specs">
+      <label class="ff-build__label" for="ff-front-{{ section.id }}">Front size</label>
+      <input class="ff-build__input" id="ff-front-{{ section.id }}" type="text" name="contact[front_size]"
+        placeholder="e.g. 20x9.5" value="" data-spec-field>
+    </div>
+    <div class="ff-quote__field ff-quote__specs">
+      <label class="ff-build__label" for="ff-rear-{{ section.id }}">Rear size</label>
+      <input class="ff-build__input" id="ff-rear-{{ section.id }}" type="text" name="contact[rear_size]"
+        placeholder="e.g. 20x11" value="" data-spec-field>
+    </div>
+    <div class="ff-quote__field ff-quote__specs">
+      <label class="ff-build__label" for="ff-finish-{{ section.id }}">Finish</label>
+      <input class="ff-build__input" id="ff-finish-{{ section.id }}" type="text" name="contact[finish]"
+        placeholder="Brushed, polished, gloss black…" value="" data-spec-field>
     </div>
     <div class="ff-quote__field ff-quote__field--full">
       <label class="ff-build__label" for="ff-notes-{{ section.id }}">Notes</label>
       <textarea class="ff-build__input ff-build__textarea" id="ff-notes-{{ section.id }}" name="contact[body]" rows="4"
-        placeholder="Offset preferences, tire size, deadline, questions…"></textarea>
+        placeholder="Anything else we should know — or leave blank and a fitment specialist will guide you."></textarea>
     </div>
   </div>
 
+  <p class="ff-quote__assist-note" data-assist-note hidden>
+    Leave sizes and finish blank if you’re unsure. A Fortune Forged fitment specialist will email or call you back to assist.
+  </p>
+
   <div class="ff-quote__actions">
-    <button type="submit" class="button button--primary ff-build__submit">
+    <button type="submit" class="button button--primary ff-build__submit" data-submit-label>
       Submit build request
     </button>
   </div>

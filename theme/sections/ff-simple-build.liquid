@@ -28,32 +28,16 @@
     <div class="ff-build__panel is-active" data-panel="1">
       <h2 class="ff-build__panel-title">{{ section.settings.step1_heading | escape }}</h2>
       <p class="ff-build__panel-copy">{{ section.settings.step1_copy | escape }}</p>
-      <div class="ff-build__vehicles">
-        {% for block in section.blocks %}
-          {% if block.type == 'vehicle' %}
-            <button
-              type="button"
-              class="ff-build__vehicle"
-              data-vehicle="{{ block.settings.label | escape }}"
-              {{ block.shopify_attributes }}
-            >
-              <span class="ff-build__vehicle-label">{{ block.settings.label | escape }}</span>
-              {% if block.settings.hint != blank %}
-                <span class="ff-build__vehicle-hint">{{ block.settings.hint | escape }}</span>
-              {% endif %}
-            </button>
-          {% endif %}
-        {% endfor %}
-      </div>
       <div class="ff-build__manual">
-        <label class="ff-build__label" for="ff-vehicle-manual-{{ section.id }}">Or type year / make / model</label>
+        <label class="ff-build__label" for="ff-vehicle-manual-{{ section.id }}">Year / make / model</label>
         <input
           class="ff-build__input"
           id="ff-vehicle-manual-{{ section.id }}"
           type="text"
           name="ff_vehicle_manual"
-          placeholder="e.g. 2024 BMW G80 M3"
+          placeholder="{{ section.settings.vehicle_placeholder | escape }}"
           autocomplete="off"
+          required
         >
       </div>
       <button type="button" class="ff-build__next button button--primary" data-next="2" disabled>
@@ -64,24 +48,43 @@
     <div class="ff-build__panel" data-panel="2" hidden>
       <h2 class="ff-build__panel-title">{{ section.settings.step2_heading | escape }}</h2>
       <p class="ff-build__panel-copy">{{ section.settings.step2_copy | escape }}</p>
+      <p class="ff-build__pricing-note">{{ section.settings.step2_hint | escape }}</p>
+
+      {% if section.settings.hottest_link != blank %}
+        <a class="ff-build__hottest" href="{{ section.settings.hottest_link }}" data-style="Hottest designs">
+          <span class="ff-build__style-name">{{ section.settings.hottest_label | escape }}</span>
+          <span class="ff-build__style-desc">{{ section.settings.hottest_desc | escape }}</span>
+        </a>
+      {% endif %}
+
       <div class="ff-build__styles">
-        <a class="ff-build__style" href="{{ section.settings.monoblock_link }}" data-style="Monoblock">
+        <button type="button" class="ff-build__style" data-style="Monoblock" data-style-select>
           <span class="ff-build__style-name">Monoblock</span>
           <span class="ff-build__style-desc">{{ section.settings.monoblock_desc | escape }}</span>
-        </a>
-        <a class="ff-build__style" href="{{ section.settings.twopiece_link }}" data-style="2-Piece">
+        </button>
+        <button type="button" class="ff-build__style" data-style="2-Piece" data-style-select>
           <span class="ff-build__style-name">2-Piece</span>
           <span class="ff-build__style-desc">{{ section.settings.twopiece_desc | escape }}</span>
-        </a>
-        <a class="ff-build__style" href="{{ section.settings.beadlock_link }}" data-style="Beadlock">
+        </button>
+        <button type="button" class="ff-build__style" data-style="Beadlock" data-style-select>
           <span class="ff-build__style-name">Beadlock</span>
           <span class="ff-build__style-desc">{{ section.settings.beadlock_desc | escape }}</span>
-        </a>
+        </button>
       </div>
-      <p class="ff-build__hint">{{ section.settings.step2_hint | escape }}</p>
-      <div class="ff-build__nav-row">
+
+      <div class="ff-build__browse-links" hidden data-browse-links>
+        <p class="ff-build__panel-copy">Browse that setup, or continue to quote with it selected.</p>
+        <div class="ff-build__nav-row">
+          <a class="ff-build__browse button button--primary" href="{{ section.settings.monoblock_link }}" data-browse-for="Monoblock">Browse Monoblock</a>
+          <a class="ff-build__browse button button--primary" href="{{ section.settings.twopiece_link }}" data-browse-for="2-Piece" hidden>Browse 2-Piece</a>
+          <a class="ff-build__browse button button--primary" href="{{ section.settings.beadlock_link }}" data-browse-for="Beadlock" hidden>Browse Beadlock</a>
+          <button type="button" class="ff-build__next button button--secondary" data-next="3">Continue to quote</button>
+        </div>
+      </div>
+
+      <div class="ff-build__nav-row ff-build__nav-row--split">
         <button type="button" class="ff-build__back" data-back="1">Back</button>
-        <button type="button" class="ff-build__next button button--primary" data-next="3">
+        <button type="button" class="ff-build__next button button--primary" data-next="3" data-skip-quote>
           {{ section.settings.quote_cta | escape }}
         </button>
       </div>
@@ -120,7 +123,7 @@
       "type": "textarea",
       "id": "subtitle",
       "label": "Subtitle",
-      "default": "Three steps. Tell us your vehicle, pick a construction, request a build."
+      "default": "Three steps. Tell us your vehicle, choose a setup, request a build."
     },
     {
       "type": "text",
@@ -150,7 +153,13 @@
       "type": "textarea",
       "id": "step1_copy",
       "label": "Step 1 copy",
-      "default": "Start with your chassis so we can size and fit the wheel correctly."
+      "default": "Enter your year, make, and model so we can size and fit the wheel correctly."
+    },
+    {
+      "type": "text",
+      "id": "vehicle_placeholder",
+      "label": "Vehicle input placeholder",
+      "default": "e.g. 2024 BMW G80 M3"
     },
     {
       "type": "text",
@@ -162,25 +171,42 @@
       "type": "text",
       "id": "step2_heading",
       "label": "Step 2 heading",
-      "default": "Choose construction"
+      "default": "Choose your setup"
     },
     {
       "type": "textarea",
       "id": "step2_copy",
       "label": "Step 2 copy",
-      "default": "Browse designs now, or skip straight to a quote — we’ll help you pick the right wheel."
+      "default": "Browse the hottest designs, pick Monoblock, 2-Piece, or Beadlock — or skip straight to a custom quote."
+    },
+    {
+      "type": "textarea",
+      "id": "step2_hint",
+      "label": "Pricing note",
+      "default": "Beadlock wheels are priced by the pair. Standard monoblock and two piece wheels are priced individually."
     },
     {
       "type": "text",
-      "id": "step2_hint",
-      "label": "Step 2 hint",
-      "default": "Beadlock wheels are priced by the pair. Standard wheels are priced individually."
+      "id": "hottest_label",
+      "label": "Hottest designs label",
+      "default": "Browse the hottest designs"
+    },
+    {
+      "type": "text",
+      "id": "hottest_desc",
+      "label": "Hottest designs description",
+      "default": "See recent Fortune Forged builds and popular styles"
+    },
+    {
+      "type": "url",
+      "id": "hottest_link",
+      "label": "Hottest designs link"
     },
     {
       "type": "text",
       "id": "quote_cta",
       "label": "Skip to quote button",
-      "default": "Request a quote"
+      "default": "Skip to custom quote"
     },
     {
       "type": "url",
@@ -191,7 +217,7 @@
       "type": "text",
       "id": "monoblock_desc",
       "label": "Monoblock description",
-      "default": "One-piece forged strength"
+      "default": "One-piece forged strength · priced individually"
     },
     {
       "type": "url",
@@ -202,7 +228,7 @@
       "type": "text",
       "id": "twopiece_desc",
       "label": "2-Piece description",
-      "default": "Modular fitment & finish options"
+      "default": "Modular fitment & finish · priced individually"
     },
     {
       "type": "url",
@@ -213,7 +239,7 @@
       "type": "text",
       "id": "beadlock_desc",
       "label": "Beadlock description",
-      "default": "Off-road lock-ring builds"
+      "default": "Off-road lock-ring builds · priced by the pair"
     },
     {
       "type": "text",
@@ -225,38 +251,12 @@
       "type": "textarea",
       "id": "step3_copy",
       "label": "Step 3 copy",
-      "default": "Send fitment details and we’ll follow up with pricing and lead time."
-    }
-  ],
-  "blocks": [
-    {
-      "type": "vehicle",
-      "name": "Vehicle shortcut",
-      "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "G80 M3"
-        },
-        {
-          "type": "text",
-          "id": "hint",
-          "label": "Hint",
-          "default": "BMW"
-        }
-      ]
+      "default": "Enter the custom details you already know — or leave fitment blank and a specialist will email or call you back to help."
     }
   ],
   "presets": [
     {
-      "name": "FF Simple Build",
-      "blocks": [
-        { "type": "vehicle", "settings": { "label": "G80 M3", "hint": "BMW" } },
-        { "type": "vehicle", "settings": { "label": "G82 M4", "hint": "BMW" } },
-        { "type": "vehicle", "settings": { "label": "F80 M3", "hint": "BMW" } },
-        { "type": "vehicle", "settings": { "label": "Other vehicle", "hint": "Tell us below" } }
-      ]
+      "name": "FF Simple Build"
     }
   ]
 }

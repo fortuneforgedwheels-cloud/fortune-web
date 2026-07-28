@@ -103,16 +103,17 @@
   line-height: 1.5;
 }
 
-.ff-build__vehicles,
 .ff-build__styles {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
-  margin: 22px 0;
+  margin: 18px 0;
 }
 
-.ff-build__vehicle,
+.ff-build__hottest,
 .ff-build__style {
+  display: block;
+  width: 100%;
   text-align: left;
   color: inherit;
   text-decoration: none;
@@ -121,23 +122,26 @@
   padding: 18px 16px;
   cursor: pointer;
   transition: border-color 0.2s ease, transform 0.2s ease;
+  font: inherit;
 }
 
-.ff-build__vehicle:hover,
+.ff-build__hottest {
+  margin-top: 18px;
+}
+
+.ff-build__hottest:hover,
 .ff-build__style:hover,
-.ff-build__vehicle.is-selected {
+.ff-build__style.is-selected {
   border-color: var(--ff-gold);
   transform: translateY(-1px);
 }
 
-.ff-build__vehicle-label,
 .ff-build__style-name {
   display: block;
   font-size: 1.1rem;
   font-weight: 700;
 }
 
-.ff-build__vehicle-hint,
 .ff-build__style-desc {
   display: block;
   margin-top: 4px;
@@ -145,8 +149,66 @@
   font-size: 0.92rem;
 }
 
+.ff-build__pricing-note {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(196, 163, 90, 0.45);
+  background: rgba(196, 163, 90, 0.1);
+  color: var(--ff-ink);
+  line-height: 1.45;
+  font-size: 0.95rem;
+}
+
+.ff-build__browse-links {
+  margin: 8px 0 18px;
+  padding-top: 4px;
+}
+
 .ff-build__manual {
-  margin-bottom: 18px;
+  margin: 22px 0 18px;
+}
+
+.ff-build__nav-row--split {
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.button--secondary {
+  background: transparent;
+  color: var(--ff-ink);
+  border: 1px solid var(--ff-line);
+}
+
+.ff-quote__path {
+  border: 1px solid var(--ff-line);
+  margin: 18px 0 8px;
+  padding: 14px;
+}
+
+.ff-quote__choice {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.ff-quote__choice strong {
+  display: block;
+}
+
+.ff-quote__choice em {
+  display: block;
+  margin-top: 2px;
+  color: var(--ff-muted);
+  font-style: normal;
+  font-size: 0.92rem;
+}
+
+.ff-quote__assist-note {
+  margin: 0 0 16px;
+  color: var(--ff-gold);
+  line-height: 1.45;
 }
 
 .ff-build__label {
@@ -230,7 +292,6 @@
 
 @media (max-width: 749px) {
   .ff-build__steps,
-  .ff-build__vehicles,
   .ff-build__styles,
   .ff-quote__grid {
     grid-template-columns: 1fr;

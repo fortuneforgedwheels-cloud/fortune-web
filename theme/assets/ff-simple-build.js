@@ -3,12 +3,16 @@
     if (!root || root.dataset.ffReady === '1') return;
     root.dataset.ffReady = '1';
 
-    var state = { vehicle: '', style: '' };
+    var state = { style: '' };
     var manual = root.querySelector('[name="ff_vehicle_manual"]');
     var ymm = root.querySelector('[name="contact[vehicle]"]');
     var hiddenVehicle = root.querySelector('[id^="ff-selected-vehicle-"]');
     var hiddenStyle = root.querySelector('[id^="ff-selected-style-"]');
-    var continueBtn = root.querySelector('[data-next="2"]');
+    var helpPreference = root.querySelector('[id^="ff-help-preference-"]');
+    var continueBtn = root.querySelector('[data-panel="1"] [data-next="2"]');
+    var browseWrap = root.querySelector('[data-browse-links]');
+    var assistNote = root.querySelector('[data-assist-note]');
+    var submitBtn = root.querySelector('[data-submit-label]');
 
     function setStep(n) {
       root.querySelectorAll('[data-step]').forEach(function (el) {
@@ -24,49 +28,65 @@
     }
 
     function syncVehicle() {
-      var value = state.vehicle || (manual && manual.value.trim()) || '';
+      var value = (manual && manual.value.trim()) || '';
       if (continueBtn) continueBtn.disabled = !value;
       if (hiddenVehicle) hiddenVehicle.value = value;
-      if (ymm && value && !ymm.value) ymm.value = value;
+      if (ymm && value) ymm.value = value;
     }
 
-    root.querySelectorAll('[data-vehicle]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        root.querySelectorAll('[data-vehicle]').forEach(function (b) {
-          b.classList.remove('is-selected');
+    function setStyle(style) {
+      state.style = style || '';
+      if (hiddenStyle) hiddenStyle.value = state.style;
+      root.querySelectorAll('[data-style-select]').forEach(function (btn) {
+        btn.classList.toggle('is-selected', btn.getAttribute('data-style') === state.style);
+      });
+      if (browseWrap) {
+        var show = !!state.style;
+        browseWrap.hidden = !show;
+        browseWrap.querySelectorAll('[data-browse-for]').forEach(function (link) {
+          link.hidden = link.getAttribute('data-browse-for') !== state.style;
         });
-        btn.classList.add('is-selected');
-        state.vehicle = btn.getAttribute('data-vehicle') || '';
-        if (manual && state.vehicle !== 'Other vehicle') {
-          manual.value = state.vehicle.indexOf('BMW') === -1 && state.vehicle.indexOf('G') === 0
-            ? 'BMW ' + state.vehicle
-            : state.vehicle;
-          if (state.vehicle === 'G80 M3') manual.value = 'BMW G80 M3';
-          if (state.vehicle === 'G82 M4') manual.value = 'BMW G82 M4';
-          if (state.vehicle === 'F80 M3') manual.value = 'BMW F80 M3';
-        }
-        syncVehicle();
+      }
+      try {
+        sessionStorage.setItem('ff_build_vehicle', hiddenVehicle ? hiddenVehicle.value : '');
+        sessionStorage.setItem('ff_build_style', state.style);
+      } catch (e) {}
+    }
+
+    function setHelpMode(mode) {
+      var specialist = mode === 'specialist';
+      root.querySelectorAll('.ff-quote__specs').forEach(function (field) {
+        field.hidden = specialist;
+      });
+      root.querySelectorAll('[data-spec-field]').forEach(function (input) {
+        if (specialist) input.value = '';
+      });
+      if (assistNote) assistNote.hidden = !specialist;
+      if (helpPreference) {
+        helpPreference.value = specialist
+          ? 'Leave it to a fitment specialist — email or call back'
+          : 'I know my specs';
+      }
+      if (submitBtn) {
+        submitBtn.textContent = specialist
+          ? 'Request specialist callback'
+          : 'Submit build request';
+      }
+    }
+
+    if (manual) {
+      manual.addEventListener('input', syncVehicle);
+    }
+
+    root.querySelectorAll('[data-style-select]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setStyle(btn.getAttribute('data-style') || '');
       });
     });
 
-    if (manual) {
-      manual.addEventListener('input', function () {
-        state.vehicle = '';
-        root.querySelectorAll('[data-vehicle]').forEach(function (b) {
-          b.classList.remove('is-selected');
-        });
-        syncVehicle();
-      });
-    }
-
-    root.querySelectorAll('[data-style]').forEach(function (link) {
-      link.addEventListener('click', function () {
-        state.style = link.getAttribute('data-style') || '';
-        if (hiddenStyle) hiddenStyle.value = state.style;
-        try {
-          sessionStorage.setItem('ff_build_vehicle', hiddenVehicle ? hiddenVehicle.value : '');
-          sessionStorage.setItem('ff_build_style', state.style);
-        } catch (e) {}
+    root.querySelectorAll('[data-help-mode]').forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        if (radio.checked) setHelpMode(radio.value);
       });
     });
 
@@ -76,6 +96,7 @@
         syncVehicle();
         if (next === 2 && continueBtn && continueBtn.disabled) return;
         if (ymm && hiddenVehicle && hiddenVehicle.value) ymm.value = hiddenVehicle.value;
+        if (btn.hasAttribute('data-skip-quote')) setStyle(state.style || 'Custom quote');
         setStep(next);
       });
     });
@@ -86,15 +107,7 @@
       });
     });
 
-    var params = new URLSearchParams(window.location.search);
-    var prefill = params.get('vehicle');
-    if (prefill && manual) {
-      manual.value = prefill;
-      syncVehicle();
-      if (params.get('step') === '3') setStep(3);
-      else if (params.get('step') === '2') setStep(2);
-    }
-
+    setHelpMode('specs');
     syncVehicle();
   }
 

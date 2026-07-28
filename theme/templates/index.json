@@ -1182,64 +1182,32 @@
     },
     "ff_simple_build_main": {
       "type": "ff-simple-build",
-      "blocks": {
-        "vehicle_g80": {
-          "type": "vehicle",
-          "settings": {
-            "label": "G80 M3",
-            "hint": "BMW"
-          }
-        },
-        "vehicle_g82": {
-          "type": "vehicle",
-          "settings": {
-            "label": "G82 M4",
-            "hint": "BMW"
-          }
-        },
-        "vehicle_f80": {
-          "type": "vehicle",
-          "settings": {
-            "label": "F80 M3",
-            "hint": "BMW"
-          }
-        },
-        "vehicle_other": {
-          "type": "vehicle",
-          "settings": {
-            "label": "Other vehicle",
-            "hint": "Tell us below"
-          }
-        }
-      },
-      "block_order": [
-        "vehicle_g80",
-        "vehicle_g82",
-        "vehicle_f80",
-        "vehicle_other"
-      ],
       "settings": {
         "eyebrow": "Fortune Forged",
         "title": "Order custom forged wheels",
-        "subtitle": "Skip the noise. Pick your vehicle, choose a construction, request a build.",
+        "subtitle": "Three steps. Tell us your vehicle, choose a setup, request a build.",
         "step1_label": "Vehicle",
         "step2_label": "Style",
         "step3_label": "Quote",
         "step1_heading": "What do you drive?",
-        "step1_copy": "Start with your chassis so we can size and fit the wheel correctly.",
+        "step1_copy": "Enter your year, make, and model so we can size and fit the wheel correctly.",
+        "vehicle_placeholder": "e.g. 2024 BMW G80 M3",
         "continue_label": "Continue",
-        "step2_heading": "Choose construction",
-        "step2_copy": "Browse designs now, or skip straight to a quote \u2014 we\u2019ll help you pick the right wheel.",
-        "step2_hint": "Beadlock wheels are priced by the pair. Standard wheels are priced individually.",
-        "quote_cta": "Request a quote",
+        "step2_heading": "Choose your setup",
+        "step2_copy": "Browse the hottest designs, pick Monoblock, 2-Piece, or Beadlock \u2014 or skip straight to a custom quote.",
+        "step2_hint": "Beadlock wheels are priced by the pair. Standard monoblock and two piece wheels are priced individually.",
+        "hottest_label": "Browse the hottest designs",
+        "hottest_desc": "See recent Fortune Forged builds and popular styles",
+        "hottest_link": "shopify://pages/project-gallery",
+        "quote_cta": "Skip to custom quote",
         "monoblock_link": "shopify://collections/monoblock-wheels",
-        "monoblock_desc": "One-piece forged strength",
+        "monoblock_desc": "One-piece forged strength \u00b7 priced individually",
         "twopiece_link": "shopify://collections/two-piece-wheels",
-        "twopiece_desc": "Modular fitment & finish options",
+        "twopiece_desc": "Modular fitment & finish \u00b7 priced individually",
         "beadlock_link": "shopify://collections/beadlock-wheels",
-        "beadlock_desc": "Off-road lock-ring builds",
+        "beadlock_desc": "Off-road lock-ring builds \u00b7 priced by the pair",
         "step3_heading": "Request your build",
-        "step3_copy": "Send fitment details and we\u2019ll follow up with pricing and lead time."
+        "step3_copy": "Enter the custom details you already know \u2014 or leave fitment blank and a specialist will email or call you back to help."
       }
     }
   },
