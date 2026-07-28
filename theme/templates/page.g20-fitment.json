@@ -129,13 +129,28 @@
             "b_tire_extreme": "Yokohama Advan Neova AD08R (200TW), Yokohama Advan A052 (200TW)",
             "b_tire_rcompound": "Michelin Pilot Sport Cup 2 (180TW)"
           }
+        },
+        "tier_drag": {
+          "type": "tier",
+          "settings": {
+            "tier_title": "Drag Race",
+            "tier_intro": "<p>Forged drag-focused fitment for maximum straight-line traction on G20 / G22 / G42. The smaller rear diameter adds sidewall for launch grip. Not recommended as a primary wet/cold street setup.</p>",
+            "a_label": "Drag · 17\" rear",
+            "a_front": "18x9 ET25",
+            "a_rear": "17x10 ET35",
+            "a_notes": "Purpose-built drag / traction rear. The 17x10 ET35 clears both M and non-M rear calipers as a direct bolt-on. Pair with an 18x9 ET25 (or other Fortune Forged street front) for a staggered strip setup. Optimized for wider, taller rear tire packages under hard acceleration.",
+            "a_tire_pick": "Front 255/40-18 // Rear 275/40-17",
+            "a_tire_flags": "Rear clears M & non-M calipers · direct bolt-on · drag / traction focused",
+            "a_tire_drag": "Mickey Thompson Street ET S/S, Nitto NT555R2 (100TW), Hoosier DR2 / slick alternatives"
+          }
         }
       },
       "block_order": [
         "tier_street",
         "tier_perf_square",
         "tier_perf_aggressive",
-        "tier_perf_stagger"
+        "tier_perf_stagger",
+        "tier_drag"
       ],
       "settings": {
         "show_section": true,
