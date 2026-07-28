@@ -214,6 +214,17 @@
   }
 
   .ff-hero__nav {
-    display: none;
+    display: grid;
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
+  }
+
+  .ff-hero__nav--prev {
+    left: 10px;
+  }
+
+  .ff-hero__nav--next {
+    right: 10px;
   }
 }
