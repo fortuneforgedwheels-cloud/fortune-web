@@ -43,9 +43,16 @@
                 {%- endcase -%}
               </span>
               {%- if block.settings.heading != blank -%}
-                {%- if block.settings.heading_link != blank -%}
+                {%- liquid
+                  assign heading_href = block.settings.heading_link
+                  assign heading_key = block.settings.heading | strip | downcase
+                  if heading_href == blank and heading_key contains 'affiliate'
+                    assign heading_href = '/pages/become-an-affiliate'
+                  endif
+                -%}
+                {%- if heading_href != blank -%}
                   <p class="ff-trust__heading">
-                    <a class="ff-trust__heading-link" href="{{ block.settings.heading_link }}">{{ block.settings.heading | escape }}</a>
+                    <a class="ff-trust__heading-link" href="{{ heading_href }}">{{ block.settings.heading | escape }}</a>
                   </p>
                 {%- else -%}
                   <p class="ff-trust__heading">{{ block.settings.heading | escape }}</p>
