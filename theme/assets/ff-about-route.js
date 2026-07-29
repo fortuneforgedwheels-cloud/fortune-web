@@ -1,7 +1,10 @@
-/* STOREFRONT_FIX_BUILD 2026-07-29e-preserve-copy */
+/* STOREFRONT_FIX_BUILD 2026-07-29f-no-editor-redirect */
 (function () {
   if (window.__ffStorefrontFix) return;
   window.__ffStorefrontFix = true;
+
+  // Never redirect inside the Shopify theme editor
+  if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
 
   var ABOUT_VIEW = 'ff-about-copy';
   var path = location.pathname || '';

@@ -93,16 +93,6 @@
         })();
       </script>
     {%- endif -%}
-    {%- if request.page_type == 'index' -%}
-      <script>
-        (function () {
-          if (window.Shopify && Shopify.designMode) return;
-          if (/[?&]view=vehicle(?:&|$)/.test(location.search || '')) return;
-          if (/[?&]preview_theme_id=/.test(location.search || '')) return;
-          location.replace('/?view=vehicle' + (location.hash || ''));
-        })();
-      </script>
-    {%- endif -%}
     </head>
     {%- liquid
         assign page_type = request.page_type | replace: 'customers/', ''
