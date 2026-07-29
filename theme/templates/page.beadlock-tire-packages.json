@@ -1,0 +1,83 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": false,
+        "show_page_title": false,
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "ff_beadlock_packages_main": {
+      "type": "ff-beadlock-packages",
+      "blocks": {
+        "pkg_g8x": {
+          "type": "package",
+          "settings": {
+            "product": "g8x-m2-m3-m4-traction-package",
+            "chassis": "G8X",
+            "title": "G8X M2 / M3 / M4",
+            "note": "18×11 ET18 forged beadlock + drag tire pack for G80 / G82 / G87."
+          }
+        },
+        "pkg_g20": {
+          "type": "package",
+          "settings": {
+            "product": "g20-g42-m240i-m340i-traction-package",
+            "chassis": "G20 / G42 / A90",
+            "title": "G20 / G42 / Supra",
+            "note": "17×10 ET35 B58 traction pack for M340i, M240i, and MK5 Supra."
+          }
+        },
+        "pkg_x3m": {
+          "type": "package",
+          "settings": {
+            "product": "x3m-x5m-traction-package",
+            "chassis": "X3M / X5M",
+            "title": "X3M / X5M",
+            "note": "Complete forged beadlock + drag tire turnkey pack for X3M and X5M."
+          }
+        }
+      },
+      "block_order": [
+        "pkg_g8x",
+        "pkg_g20",
+        "pkg_x3m"
+      ],
+      "settings": {
+        "show_section": true,
+        "hero_image": "shopify://shop_images/DSC08352.jpg",
+        "brand": "Fortune Forged",
+        "heading": "Beadlock + Tire Packages",
+        "lede": "Chassis-specific forged beadlock wheels and drag tires, built to order as a direct bolt-on pack.",
+        "cta_label": "Select your chassis",
+        "packages_eyebrow": "Built to order",
+        "packages_heading": "Select your chassis",
+        "packages_copy": "Each pack ships with the correct bolt pattern, lug seat, center bore, and offsets for that platform.",
+        "card_cta": "View package",
+        "includes_heading": "What's included",
+        "includes_copy": "Four forged beadlock wheels, four drag tires, OEM TPMS compatibility, and OEM-style center caps — engineered for clearance, load rating, and rear drag-pack performance."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ff_beadlock_packages_main"
+  ]
+}

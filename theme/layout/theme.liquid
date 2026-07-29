@@ -114,6 +114,7 @@
             {%- liquid
               assign ff_is_refund_policy = false
               assign ff_is_about_page = false
+              assign ff_is_beadlock_packages = false
               if request.page_type == 'policy'
                 if request.path contains 'refund-policy' or request.path contains 'refund_policy' or request.path contains 'return-policy'
                   assign ff_is_refund_policy = true
@@ -126,12 +127,17 @@
                 if page.handle == 'about' or page.handle == 'about-us' or request.path contains '/pages/about'
                   assign ff_is_about_page = true
                 endif
+                if page.handle == 'beadlock-tire-packages' or page.handle == 'beadlock-and-tire-package' or page.handle == 'beadlock-tire-package' or request.path contains '/pages/beadlock-tire-package'
+                  assign ff_is_beadlock_packages = true
+                endif
               endif
             -%}
             {%- if ff_is_refund_policy -%}
               {% render 'ff-warranty-returns' %}
             {%- elsif ff_is_about_page -%}
               {% section 'ff-about' %}
+            {%- elsif ff_is_beadlock_packages -%}
+              {% section 'ff-beadlock-packages' %}
             {%- else -%}
               {{ content_for_layout }}
             {%- endif -%}
