@@ -442,7 +442,7 @@
     root.style.setProperty('--ff-sbv-pad-y', '10px');
 
     var isCompact     = root.getAttribute('data-sbv-mode') === 'compact';
-    var buildUrl      = root.getAttribute('data-build-url') || '/pages/shop-by-vehicle-build';
+    var buildUrl      = root.getAttribute('data-build-url') || '/pages/shop-by-vehicle?view=shop-by-vehicle-build';
     var catalogUrl    = root.getAttribute('data-catalog-url');
     var fitmentUrl    = root.getAttribute('data-fitment-url');
     var ffFitmentsUrl = root.getAttribute('data-ff-fitments-url');
@@ -849,23 +849,27 @@
 
     function navigateToBuildPage() {
       var opt = selectedChassis() || {};
-      var params = new URLSearchParams({
-        year: yearEl.value,
-        make: makeEl.value,
-        model: modelEl.value,
-        chassis: chassisEl.value,
-        slug: opt.slug || '',
-        bolt: opt.boltPattern || '',
-        bore: opt.centerBore || '',
-      });
+      var dest;
+      try {
+        dest = new URL(buildUrl, window.location.origin);
+      } catch (e) {
+        dest = new URL('/pages/shop-by-vehicle', window.location.origin);
+        dest.searchParams.set('view', 'shop-by-vehicle-build');
+      }
+      dest.searchParams.set('year', yearEl.value);
+      dest.searchParams.set('make', makeEl.value);
+      dest.searchParams.set('model', modelEl.value);
+      dest.searchParams.set('chassis', chassisEl.value);
+      dest.searchParams.set('slug', opt.slug || '');
+      dest.searchParams.set('bolt', opt.boltPattern || '');
+      dest.searchParams.set('bore', opt.centerBore || '');
       try {
         sessionStorage.setItem('ffVehicleSelection', JSON.stringify({
           year: yearEl.value, make: makeEl.value, model: modelEl.value,
           chassis: chassisEl.value, slug: opt.slug || '', source: 'shop-by-vehicle',
         }));
       } catch (e) {}
-      var dest = buildUrl.replace(/\/$/, '') + '?' + params.toString();
-      window.location.assign(dest);
+      window.location.assign(dest.pathname + dest.search);
     }
 
     if (form && goBtn) {
