@@ -9,7 +9,8 @@
   assign offer_tags = 'newsletter, first-time-100-off'
   assign offer_disclaimer = 'By signing up, you agree to receive marketing emails. View our privacy policy and terms of service for more info.'
   assign offer_success = "You're in - check your email for your $100 off code."
-  if settings.newsletter_popup_image != blank
+  assign offer_image = images['BMW_F80_25MP_HighQuality.jpg']
+  if offer_image == blank and settings.newsletter_popup_image != blank
     assign offer_image = settings.newsletter_popup_image
   endif
 -%}
@@ -40,13 +41,20 @@
             alt: ''
         }}
       {%- else -%}
-        <div class="ff-offer__media-placeholder"></div>
+        <img
+          class="ff-offer__fallback-img"
+          src="{{ 'BMW_F80_25MP_HighQuality.jpg' | file_url }}"
+          alt=""
+          loading="lazy"
+          width="800"
+          height="1000"
+        >
       {%- endif -%}
     </div>
     <div class="ff-offer__panel">
       <h2 class="ff-offer__title" id="ff-offer-title">{{ offer_heading | escape }}</h2>
       <p class="ff-offer__sub">{{ offer_subheading | escape }}</p>
-      {%- form 'customer', class: 'ff-offer__form' -%}
+      {%- form 'customer', class: 'ff-offer__form', id: 'ff-offer-contact' -%}
         <input type="hidden" name="contact[tags]" value="{{ offer_tags | escape }}">
         <input class="ff-offer__input" type="text" name="contact[first_name]" placeholder="First name" autocomplete="given-name">
         <input class="ff-offer__input" type="email" name="contact[email]" placeholder="Email" autocomplete="email" required>

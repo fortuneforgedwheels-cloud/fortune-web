@@ -33,7 +33,8 @@
 
   ready(function () {
     var root = document.querySelector('[data-ff-offer]');
-    if (!root) return;
+    if (!root || root.getAttribute('data-ff-offer-ready') === '1') return;
+    root.setAttribute('data-ff-offer-ready', '1');
 
     var storageKey = 'ff-offer-popup-dismissed';
     var delay = parseInt(root.getAttribute('data-ff-offer-delay') || '5000', 10);
