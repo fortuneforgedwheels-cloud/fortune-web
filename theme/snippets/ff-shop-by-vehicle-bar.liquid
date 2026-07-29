@@ -7,8 +7,15 @@
     data-catalog-url="{{ 'ff-vehicle-catalog.json' | asset_url }}"
     data-fitment-url="{{ 'ff-vehicle-fitments.json' | asset_url }}"
     data-go-target="/#order"
-    style="--ff-sbv-bg: #0a0a0a; --ff-sbv-pad-y: 14px;"
 >
+<script>
+  (function () {
+    var el = document.getElementById('ff-sbv-home');
+    if (!el) return;
+    el.style.setProperty('--ff-sbv-bg', '#0a0a0a');
+    el.style.setProperty('--ff-sbv-pad-y', '10px');
+  })();
+</script>
   <div class="ff-sbv__inner">
     <h2 class="ff-sbv__heading">SHOP BY VEHICLE</h2>
 

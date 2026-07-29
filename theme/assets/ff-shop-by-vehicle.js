@@ -109,6 +109,10 @@
 
   /* ── main init ── */
   function init(root) {
+    /* Override stale cached inline orange styling from older theme deploys */
+    root.style.setProperty('--ff-sbv-bg', '#0a0a0a');
+    root.style.setProperty('--ff-sbv-pad-y', '10px');
+
     var catalogUrl   = root.getAttribute('data-catalog-url');
     var fitmentUrl   = root.getAttribute('data-fitment-url');
     var goTarget     = root.getAttribute('data-go-target') || '/#order';

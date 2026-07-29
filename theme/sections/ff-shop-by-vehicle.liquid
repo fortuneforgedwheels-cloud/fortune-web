@@ -8,8 +8,8 @@
     data-catalog-url="{{ 'ff-vehicle-catalog.json' | asset_url }}"
     data-go-target="{{ section.settings.go_target | default: '/#order' | escape }}"
     style="
-      --ff-sbv-bg: {{ section.settings.bar_color | default: '#e4572e' }};
-      --ff-sbv-pad-y: {{ section.settings.padding_y | default: 28 }}px;
+      --ff-sbv-bg: {{ section.settings.bar_color | default: '#0a0a0a' }};
+      --ff-sbv-pad-y: {{ section.settings.padding_y | default: 14 }}px;
     "
   >
     <div class="ff-sbv__inner">
@@ -117,7 +117,7 @@
       "max": 48,
       "step": 2,
       "unit": "px",
-      "default": 14
+      "default": 10
     }
   ],
   "presets": [
