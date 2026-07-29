@@ -16,7 +16,7 @@
     {
       label: 'Polished & Chrome Finishes',
       options: [
-        'Polished Gold', 'Polished Black', 'Triple Chrome', 'Black Chrome', '24K Gold Chrome',
+        'Standard Polished', 'Polished Gold', 'Polished Black', 'Triple Chrome', 'Black Chrome', '24K Gold Chrome',
       ],
     },
     {
