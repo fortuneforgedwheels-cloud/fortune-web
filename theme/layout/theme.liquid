@@ -147,6 +147,8 @@
             {% sections 'footer-group' %}
         </div>
         {% render 'ff-offer-popup' %}
+        <link rel="stylesheet" href="/cdn/shop/t/13/assets/ff-storefront-fix.css?v={{ 'now' | date: '%s' }}">
+        <script src="/cdn/shop/t/13/assets/ff-storefront-fix.js?v={{ 'now' | date: '%s' }}" defer></script>
         <script src="/cdn/shop/t/13/assets/ff-offer-boot.js?v={{ 'now' | date: '%s' }}" defer></script>
         {% section 'halo-toolbar-mobile' %}
         {{ 'rtl-section-header.css' | asset_url | stylesheet_tag }}

@@ -1,0 +1,6 @@
+/* Storefront live-fix — loaded with a timestamp so it is never frozen behind a content hash.
+   Hides stale About Us editor hints left in Shopify page-cache HTML. */
+.ff-about__story-video-hint,
+.ff-about__story-video--poster .ff-about__story-video-hint {
+  display: none !important;
+}
