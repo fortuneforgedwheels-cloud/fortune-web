@@ -1498,6 +1498,21 @@ body.dark-mode .image-effect-1:hover {
     transition: opacity 350ms ease, visibility 350ms ease;
 }
 
+/* Invisible page-load icon (no visible wheel/spinner) */
+.preload-screen--invisible,
+.preload-screen--invisible .loading-bar,
+.preload-screen--invisible .loading-logo,
+.loading-bar--invisible {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    background: transparent !important;
+}
+
+.preload-screen--invisible .loading-bar:after {
+    display: none !important;
+}
+
 .u-p-load.p-load .loading-bar {
     display: none;
 }
