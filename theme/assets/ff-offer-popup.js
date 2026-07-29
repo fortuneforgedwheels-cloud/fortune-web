@@ -1,3 +1,4 @@
+/* BOOT_BUILD 2026-07-29c */
 /**
  * Fortune Forged $100-off offer popup bootloader.
  * Injects markup if missing, then opens after delay.
