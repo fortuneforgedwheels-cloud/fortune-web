@@ -105,3 +105,33 @@
     }
   });
 })();
+
+
+/* FF_OFFER_EMBED_V2 */
+(function(){
+  if (window.__ffOfferEmbedLoaded) return;
+  window.__ffOfferEmbedLoaded = true;
+  function hideForms(){
+    ['#shopify-block-forms','[id*="shopify-forms"]','[id*="13768625480086291342"]','[class*="shopify-forms"]','iframe[src*="forms.shopify"]','iframe[src*="shopify-forms"]','div[data-forms-id]','shopify-forms'].forEach(function(sel){
+      document.querySelectorAll(sel).forEach(function(el){
+        el.style.setProperty('display','none','important');
+        el.style.setProperty('visibility','hidden','important');
+        el.style.setProperty('pointer-events','none','important');
+      });
+    });
+  }
+  hideForms();
+  setInterval(hideForms, 1000);
+  if (document.querySelector('[data-ff-offer]')) return;
+  var css = document.createElement('link');
+  css.rel = 'stylesheet';
+  css.href = "https://fortuneforgedwheels.com/cdn/shop/t/13/assets/ff-offer-popup.css";
+  document.head.appendChild(css);
+  var root = document.createElement('div');
+  root.innerHTML = '<div class="ff-offer" id="ff-offer-popup" data-ff-offer data-ff-offer-delay="5000" data-ff-offer-expire="14" hidden aria-hidden="true"><div class="ff-offer__backdrop" data-ff-offer-close tabindex="-1"></div><div class="ff-offer__dialog" role="dialog" aria-modal="true" aria-labelledby="ff-offer-title"><button type="button" class="ff-offer__close" data-ff-offer-close aria-label="Close offer"><span aria-hidden="true">&times;</span></button><div class="ff-offer__media" aria-hidden="true"><img class="ff-offer__fallback-img" src="https://fortuneforgedwheels.com/cdn/shop/files/BMW_F80_25MP_HighQuality.jpg?v=1785232100&width=1200" alt="" loading="lazy" width="800" height="1000"></div><div class="ff-offer__panel"><h2 class="ff-offer__title" id="ff-offer-title">Get $100 Off Your Entire Order</h2><p class="ff-offer__sub">Limited time offer for first-time customers. Premium mods, fast support and zero regrets. Built for real enthusiasts.</p><form method="post" action="/contact#contact_form" id="ff-offer-contact" accept-charset="UTF-8" class="ff-offer__form"><input type="hidden" name="form_type" value="customer" /><input type="hidden" name="utf8" value="✓" /><input type="hidden" name="contact[tags]" value="newsletter, first-time-100-off"><input class="ff-offer__input" type="text" name="contact[first_name]" placeholder="First name" autocomplete="given-name"><input class="ff-offer__input" type="email" name="contact[email]" placeholder="Email" autocomplete="email" required><button type="submit" class="ff-offer__submit">Claim Offer</button></form><p class="ff-offer__disclaimer">By signing up, you agree to receive marketing emails. View our privacy policy and terms of service for more info.</p><p class="ff-offer__success" data-ff-offer-success hidden>You\'re in - check your email for your $100 off code.</p></div></div></div>';
+  document.body.appendChild(root);
+  var s = document.createElement('script');
+  s.src = "https://fortuneforgedwheels.com/cdn/shop/t/13/assets/ff-offer-popup.js";
+  s.defer = true;
+  document.body.appendChild(s);
+})();

@@ -1175,13 +1175,12 @@
     },
     "custom_liquid_WpPQRK": {
       "type": "custom-liquid",
-      "disabled": true,
       "custom_css": [
         ".content-box--absolute {top: 95% !important;}"
       ],
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
-        "custom_liquid": ""
+        "custom_liquid": "{% render 'ff-offer-popup' %}"
       }
     },
     "666a0ea5-3ed3-46bd-90cd-0fcfe3ff243c": {
