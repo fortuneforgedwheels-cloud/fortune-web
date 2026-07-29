@@ -1,7 +1,4 @@
 {{ 'ff-about-page.css' | asset_url | stylesheet_tag }}
-<link rel="stylesheet" href="/cdn/shop/t/13/assets/ff-storefront-fix.css?v={{ 'now' | date: '%s' }}">
-<script src="/cdn/shop/t/13/assets/ff-storefront-fix.js?v={{ 'now' | date: '%s' }}" defer></script>
-<!-- ff-about-bust {{ 'now' | date: '%s' }} v2-no-video-hint -->
 
 {%- liquid
   assign hero_image = section.settings.hero_image
@@ -10,7 +7,7 @@
   assign story_video_url = section.settings.story_video_url
   assign story_poster = section.settings.story_poster
   if hero_image == blank
-    assign hero_image = images['IMG_2176.jpg']
+    assign hero_image = images['IMG_2142.jpg']
   endif
 
   assign hero_h = section.settings.hero_h_align | default: 'left'

@@ -58,7 +58,7 @@
     "customization_option_2": "",
     "after_add_to_cart": "quick_cart",
     "show_dynamic_browser_title": false,
-    "dynamic_browser_title_content": "Come back\u26a1",
+    "dynamic_browser_title_content": "Come back⚡",
     "image_loading_text": "FF",
     "show_badge": true,
     "show_badge_mobile": false,
@@ -261,7 +261,7 @@
     "global_checkbox_type": "link",
     "global_checkbox_link_text": "The Terms & Conditions",
     "global_checkbox_link": "shopify://pages/pages",
-    "global_checkbox_content": "<p><strong>What is Lorem Ipsum?</strong></p>\n<p><strong>Lorem Ipsum</strong>\u00c3\u201a is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><strong>Why do we use it?</strong><br>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>",
+    "global_checkbox_content": "<p><strong>What is Lorem Ipsum?</strong></p>\n<p><strong>Lorem Ipsum</strong>Ã‚ is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><strong>Why do we use it?</strong><br>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>",
     "select_icon_compare": "icon_1",
     "layout_direction": "ltr",
     "enable_shake_affect": false,
@@ -288,7 +288,7 @@
           "brand_text": "",
           "logo_color": "rgba(0,0,0,0)",
           "brand_logo": "shopify://shop_images/FF_Logo_-_Black_Stroke_copy.png",
-          "title": "\u26a0\ufe0f UNDER CONSTRUCTION \u26a0\ufe0f",
+          "title": "⚠️ UNDER CONSTRUCTION ⚠️",
           "subtitle": "WE'LL BE ONLINE JULY 12TH 2025 6PM PST",
           "subtitle_color": "#ffffff",
           "title_color": "#ffffff",
@@ -306,7 +306,7 @@
           "brand_text": "FORTUNE FORGED",
           "logo_color": "#FFFFFF",
           "brand_logo": "shopify://shop_images/FF_Logo_-_Black_Stroke_copy.png",
-          "title": "\u26a0\ufe0fUNDER CONSTRUCTION\u26a0\ufe0f",
+          "title": "⚠️UNDER CONSTRUCTION⚠️",
           "subtitle": "",
           "subtitle_color": "#ffffff",
           "title_color": "#ffffff",
@@ -730,21 +730,33 @@
             "type": "point",
             "settings": {
               "title": "Real fitment",
-              "text": "Specs dialed for your chassis\u2014offsets, brake clearance, and tire package\u2014not a generic one-size catalog guess."
+              "title_size": 22,
+              "title_align": "left",
+              "text": "Specs dialed for your chassis—offsets, brake clearance, and tire package—not a generic one-size catalog guess.",
+              "text_size": 18,
+              "text_align": "left"
             }
           },
           "point_finish": {
             "type": "point",
             "settings": {
               "title": "Custom finishes",
-              "text": "Brushed, polished, powder, one-offs. The face of the wheel gets the same attention as the face of the car."
+              "title_size": 22,
+              "title_align": "left",
+              "text": "Brushed, polished, powder, one-offs. The face of the wheel gets the same attention as the face of the car.",
+              "text_size": 18,
+              "text_align": "left"
             }
           },
           "point_support": {
             "type": "point",
             "settings": {
               "title": "Direct support",
-              "text": "Talk to people who build and drive this stuff. Same-day answers when you need a call on sizing, finish, or install."
+              "title_size": 22,
+              "title_align": "left",
+              "text": "Talk to people who build and drive this stuff. Same-day answers when you need a call on sizing, finish, or install.",
+              "text_size": 18,
+              "text_align": "left"
             }
           }
         },
@@ -754,29 +766,63 @@
           "point_support"
         ],
         "settings": {
-          "brand": "Fortune Forged",
-          "lede": "Custom forged wheels, factory-backed builds, and fitment that holds up on the street.",
-          "primary_label": "Request a quote",
-          "primary_link": "/",
-          "secondary_label": "Talk to us",
-          "secondary_link": "mailto:fortuneforgedwheels@gmail.com",
-          "story_eyebrow": "The shop",
-          "story_heading": "Built from the factory floor",
-          "story_body": "<p>We\u2019re not a badge slapped on someone else\u2019s wheels. Fortune Forged owns a stake in the factory that machines every set\u2014so design, materials, finishing, and QC stay under one roof.</p><p>That means tighter control, clearer answers, and wheels that match what you ordered. From first sketch to final torque spec, the same team is accountable for how it looks and how it sits.</p>",
-          "build_eyebrow": "How we work",
-          "build_heading": "What we actually sweat",
-          "build_intro": "Less catalog fluff. More clearances, finishes, and people who answer the phone.",
-          "mission": "Look right. Sit right. Last.",
-          "mission_note": "Forged strength, custom finishes, and fitment support from people who actually care how your car rolls out of the bay.",
-          "close_text": "Ready to spec a set? Tell us the car, the look, and how you drive\u2014we\u2019ll help lock the build.",
-          "close_label": "Get a quote",
-          "close_link": "mailto:fortuneforgedwheels@gmail.com",
-          "hero_image": "shopify://shop_images/IMG_2176.jpg",
+          "hero_image": "shopify://shop_images/IMG_2142.jpg",
+          "story_video": "shopify://files/videos/copy_7F042C72-F701-4563-B7AC-AC21A87AF875.mov",
+          "story_video_url": "",
+          "story_poster": "shopify://shop_images/IMG_2149_2.jpg",
           "story_video_autoplay": true,
           "story_video_loop": true,
           "story_video_muted": true,
           "story_video_controls": true,
-          "story_poster": "shopify://shop_images/IMG_2149_2.jpg"
+          "hero_h_align": "left",
+          "hero_v_align": "bottom",
+          "hero_offset_x": 0,
+          "hero_offset_y": 0,
+          "brand": "Fortune Forged",
+          "brand_size": 40,
+          "brand_align": "left",
+          "lede": "Custom forged wheels, factory-backed builds, and fitment that holds up on the street.",
+          "lede_size": 18,
+          "lede_align": "left",
+          "primary_label": "Request a quote",
+          "primary_size": 12,
+          "primary_link": "/",
+          "secondary_label": "Talk to us",
+          "secondary_size": 12,
+          "secondary_link": "mailto:fortuneforgedwheels@gmail.com",
+          "story_align": "left",
+          "story_eyebrow": "The shop",
+          "story_eyebrow_size": 12,
+          "story_eyebrow_align": "left",
+          "story_heading": "Built from the factory floor",
+          "story_heading_size": 40,
+          "story_heading_align": "left",
+          "story_body": "<p>We’re not a badge slapped on someone else’s wheels. Fortune Forged owns a stake in the factory that machines every set—so design, materials, finishing, and QC stay under one roof.</p><p>That means tighter control, clearer answers, and wheels that match what you ordered. From first sketch to final torque spec, the same team is accountable for how it looks and how it sits.</p>",
+          "story_body_size": 18,
+          "story_body_align": "left",
+          "build_align": "left",
+          "build_eyebrow": "How we work",
+          "build_eyebrow_size": 12,
+          "build_eyebrow_align": "left",
+          "build_heading": "What we actually sweat",
+          "build_heading_size": 40,
+          "build_heading_align": "left",
+          "build_intro": "Less catalog fluff. More clearances, finishes, and people who answer the phone.",
+          "build_intro_size": 18,
+          "build_intro_align": "left",
+          "mission_align": "center",
+          "mission": "Look right. Sit right. Last forever.",
+          "mission_size": 30,
+          "mission_line_align": "center",
+          "mission_note": "Forged strength, custom finishes, and fitment support from people who actually care how your car rolls out of the bay.",
+          "mission_note_size": 20,
+          "mission_note_align": "center",
+          "close_text": "",
+          "close_text_size": 20,
+          "close_text_align": "center",
+          "close_label": "Get a quote",
+          "close_label_size": 12,
+          "close_link": "mailto:fortuneforgedwheels@gmail.com"
         }
       },
       "ff-beadlock-packages": {
@@ -788,7 +834,7 @@
               "product": "g8x-m2-m3-m4-traction-package",
               "chassis": "G8X",
               "title": "G8X M2 / M3 / M4",
-              "note": "18\u00d711 ET18 forged beadlock + drag tire pack for G80 / G82 / G87."
+              "note": "18×11 ET18 forged beadlock + drag tire pack for G80 / G82 / G87."
             }
           },
           "pkg_g20": {
@@ -797,7 +843,7 @@
               "product": "g20-g42-m240i-m340i-traction-package",
               "chassis": "G20 / G42 / A90",
               "title": "G20 / G42 / Supra",
-              "note": "17\u00d710 ET35 B58 traction pack for M340i, M240i, and MK5 Supra."
+              "note": "17×10 ET35 B58 traction pack for M340i, M240i, and MK5 Supra."
             }
           },
           "pkg_x3m": {
@@ -827,7 +873,7 @@
           "packages_copy": "Each pack ships with the correct bolt pattern, lug seat, center bore, and offsets for that platform.",
           "card_cta": "View package",
           "includes_heading": "What's included",
-          "includes_copy": "Four forged beadlock wheels, four drag tires, OEM TPMS compatibility, and OEM-style center caps \u2014 engineered for clearance, load rating, and rear drag-pack performance."
+          "includes_copy": "Four forged beadlock wheels, four drag tires, OEM TPMS compatibility, and OEM-style center caps — engineered for clearance, load rating, and rear drag-pack performance."
         }
       }
     },
