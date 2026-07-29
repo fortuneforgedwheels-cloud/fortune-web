@@ -123,9 +123,9 @@
   background: rgba(0,0,0,0.28);
   border: 1px solid rgba(255,255,255,0.18);
   border-radius: 6px;
-  padding: 20px 24px 22px;
+  padding: 22px 26px 24px;
   display: grid;
-  gap: 16px;
+  gap: 18px;
 }
 
 .ff-sbv__fitment-header {
@@ -137,7 +137,7 @@
 
 .ff-sbv__fitment-chassis {
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.55rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -145,9 +145,9 @@
 
 .ff-sbv__fitment-label {
   font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 500;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255,255,255,0.78);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -228,9 +228,9 @@
 
 .ff-sbv__fitment-option {
   display: grid;
-  gap: 8px;
+  gap: 9px;
   width: 100%;
-  padding: 16px 18px;
+  padding: 18px 20px;
   border: 1.5px solid rgba(255,255,255,0.22);
   border-radius: 4px;
   background: rgba(255,255,255,0.06);
@@ -249,12 +249,12 @@
 .ff-sbv__fitment-option-badge {
   display: inline-block;
   width: fit-content;
-  padding: 4px 12px;
+  padding: 5px 14px;
   border-radius: 999px;
   background: #d4af37;
   color: #111;
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -273,7 +273,7 @@
 
 .ff-sbv__fitment-option-tier {
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -282,22 +282,22 @@
 
 .ff-sbv__fitment-option-label {
   font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   font-weight: 700;
 }
 
 .ff-sbv__fitment-option-specs {
   font-family: 'Source Sans 3', 'Segoe UI', monospace;
-  font-size: 1.1rem;
+  font-size: 1.22rem;
   color: rgba(255,255,255,0.95);
 }
 
 .ff-sbv__fitment-option-tires,
 .ff-sbv__fitment-option-notes {
   font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
-  font-size: 1rem;
-  color: rgba(255,255,255,0.78);
-  line-height: 1.45;
+  font-size: 1.12rem;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.5;
 }
 
 /* builder panel */
@@ -448,7 +448,12 @@
 @media (max-width: 900px) {
   .ff-sbv__form { grid-template-columns: 1fr 1fr; }
   .ff-sbv__go   { grid-column: 1 / -1; width: 100%; }
-  .ff-sbv__fitment-card { padding: 16px 16px 18px; }
+  .ff-sbv__fitment-card { padding: 18px 18px 20px; }
+  .ff-sbv__fitment-option-tier { font-size: 1.1rem; }
+  .ff-sbv__fitment-option-label { font-size: 1.22rem; }
+  .ff-sbv__fitment-option-specs { font-size: 1.12rem; }
+  .ff-sbv__fitment-option-tires,
+  .ff-sbv__fitment-option-notes { font-size: 1.05rem; }
 }
 
 @media (max-width: 560px) {
