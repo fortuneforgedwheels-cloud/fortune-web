@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+
+.ff-contact {
+  --ff-contact-gold: #e2d0a8;
+  --ff-contact-gold-rgb: 226, 208, 168;
+  --ff-contact-ink: #f5f5f5;
+  --ff-contact-muted: #b0aea8;
+  --ff-contact-line: #2e2e2e;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(1100px 480px at 0% -20%, rgba(var(--ff-contact-gold-rgb), 0.1), transparent 55%),
+    radial-gradient(900px 420px at 100% 0%, rgba(var(--ff-contact-gold-rgb), 0.06), transparent 50%),
+    linear-gradient(180deg, #0a0a0a 0%, #111111 45%, #0d0d0d 100%);
+  color: var(--ff-contact-ink);
+  padding: 56px 20px 88px;
+}
+
+.ff-contact__atmosphere {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 75%);
+  pointer-events: none;
+}
+
+.ff-contact__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.ff-contact__header {
+  max-width: 42rem;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.ff-contact__eyebrow {
+  margin: 0 0 10px;
+  color: var(--ff-contact-gold);
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.ff-contact__title {
+  margin: 0 0 14px;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: clamp(2rem, 4.5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ff-contact-gold);
+}
+
+.ff-contact__intro {
+  margin: 0;
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--ff-contact-muted);
+}
+
+.ff-contact__grid {
+  display: grid;
+  gap: 24px;
+}
+
+.ff-contact__panel {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 28px 28px 32px;
+}
+
+.ff-contact__panel-title {
+  margin: 0 0 8px;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ff-contact-gold);
+}
+
+.ff-contact__panel-text {
+  margin: 0 0 24px;
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ff-contact-muted);
+}
+
+.ff-contact__info {
+  display: grid;
+  gap: 16px;
+}
+
+.ff-contact__card {
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(var(--ff-contact-gold-rgb), 0.22);
+  border-radius: 8px;
+  padding: 20px 22px;
+}
+
+.ff-contact__card-label {
+  display: block;
+  margin: 0 0 8px;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ff-contact-gold);
+}
+
+.ff-contact__card-value,
+.ff-contact__card-text {
+  margin: 0;
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--ff-contact-ink);
+}
+
+.ff-contact__card-value {
+  color: #fff;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.ff-contact__card-value:hover {
+  color: var(--ff-contact-gold);
+}
+
+.ff-contact__card-note {
+  margin: 16px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ff-contact-muted);
+}
+
+/* Form overrides inside FF contact panel */
+.ff-contact .contact-form {
+  margin: 0;
+}
+
+.ff-contact .form-field + .form-field {
+  margin-top: 18px;
+}
+
+.ff-contact .form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.ff-contact .form-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.ff-contact .form-input::placeholder {
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.ff-contact .form-input:focus {
+  outline: none;
+  border-color: rgba(var(--ff-contact-gold-rgb), 0.65);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ff-contact textarea.form-input {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.ff-contact .form-actions {
+  margin-top: 24px;
+}
+
+.ff-contact .form-actions .button {
+  min-width: 180px;
+  min-height: 48px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ff-contact-gold);
+  color: #111;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+
+.ff-contact .form-actions .button:hover {
+  transform: translateY(-1px);
+}
+
+.ff-contact .alertBox {
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+}
+
+.ff-contact .alertBox--success {
+  background: rgba(72, 187, 120, 0.15);
+  border: 1px solid rgba(72, 187, 120, 0.35);
+  color: #b7f7d0;
+}
+
+.ff-contact .alertBox--error {
+  background: rgba(255, 100, 100, 0.12);
+  border: 1px solid rgba(255, 100, 100, 0.35);
+  color: #ffb4b4;
+}
+
+@media (min-width: 900px) {
+  .ff-contact__grid {
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: start;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 560px) {
+  .ff-contact {
+    padding-top: 40px;
+    padding-bottom: 64px;
+  }
+
+  .ff-contact__panel {
+    padding: 22px 18px 24px;
+  }
+}

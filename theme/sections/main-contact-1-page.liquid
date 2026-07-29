@@ -1,325 +1,147 @@
-{{ 'component-contact.css' | asset_url | stylesheet_tag }}
-{{ 'component-contact-form.css' | asset_url | stylesheet_tag }}
+{{ 'ff-contact-page.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-    assign padding_top = section.settings.padding_top | append: 'px'
-    assign padding_bottom = section.settings.padding_bottom | append: 'px'
-    assign padding_top_tablet = section.settings.padding_top_tablet | append: 'px'
-    assign padding_bottom_tablet = section.settings.padding_bottom_tablet | append: 'px'
-    assign padding_top_mobile = section.settings.padding_top_mobile | append: 'px'
-    assign padding_bottom_mobile = section.settings.padding_bottom_mobile | append: 'px'
-    assign show_breadcrumb = section.settings.show_breadcrumb
-    assign breadcrumb_alignment = section.settings.breadcrumb_alignment
-    assign show_page_title = section.settings.show_page_title
-    assign page_title_alignment = section.settings.page_title_alignment
-    assign container = section.settings.container
-    assign contact_form_title = section.settings.contact_form_title
-    assign contact_form_text = section.settings.contact_form_text
-    assign show_contact_info = section.settings.show_contact_info
-    if show_contact_info
-        assign has_contact_info = false
-        assign contact_info_title = section.settings.contact_info_title
-        assign contact_info_text = section.settings.contact_info_text
-        assign contact_info_address = section.settings.contact_info_address
-        assign contact_info_content_1 = section.settings.contact_info_content_1
-        assign contact_info_content_2 = section.settings.contact_info_content_2
-        if contact_info_title != blank or contact_info_text != blank or contact_info_address != blank or contact_info_content_1 != blank or contact_info_content_2 != blank
-            assign has_contact_info = true
-        endif
-    endif
+  assign contact_form_title = section.settings.contact_form_title | default: 'Send us a message'
+  assign contact_form_text = section.settings.contact_form_text | default: 'Questions about fitment, finishes, lead times, or an existing order? Fill out the form and our team will get back to you.'
+  assign contact_email = section.settings.contact_email | default: 'FortuneForgedWheels@gmail.com'
+  assign instagram_handle = section.settings.instagram_handle | default: '@fortuneforgedwheels'
+  assign instagram_url = section.settings.instagram_url | default: 'https://www.instagram.com/fortuneforgedwheels/'
+  assign business_hours = section.settings.business_hours | default: 'Monday – Friday: 9 AM – 5 PM\nSaturday – Sunday: Closed'
+  assign response_note = section.settings.response_note | default: 'We typically respond within one business day. For order updates, include your order number in the message.'
+  assign page_heading = section.settings.page_heading | default: page.title
 -%}
-<div data-section-id="{{ section.id }}" data-section-type="contact" id="ContactSection-{{ section.id }}" data-section="{{ section.id }}" class="halo-page-padding"
-    style="--padding-top: {{ padding_top }};
-        --padding-bottom: {{ padding_bottom }};
-        --padding-top-tablet: {{ padding_top_tablet }};
-        --padding-bottom-tablet: {{ padding_bottom_tablet }};
-        --padding-top-mobile: {{ padding_top_mobile }};
-        --padding-bottom-mobile: {{ padding_bottom_mobile }};"
+
+<section
+  class="ff-contact"
+  id="ContactSection-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="contact"
 >
-    <div class="container container-{{ container }}">
-        {%- if show_breadcrumb -%}
-            {% render 'breadcrumb', alignment: breadcrumb_alignment %}
+  <div class="ff-contact__atmosphere" aria-hidden="true"></div>
+  <div class="ff-contact__inner">
+    <header class="ff-contact__header">
+      <p class="ff-contact__eyebrow">{{ section.settings.eyebrow | default: 'Contact' | escape }}</p>
+      <h1 class="ff-contact__title">{{ page_heading | escape }}</h1>
+      {%- if section.settings.page_intro != blank -%}
+        <p class="ff-contact__intro">{{ section.settings.page_intro | escape }}</p>
+      {%- else -%}
+        <p class="ff-contact__intro">Premium forged wheels, built to order. Reach out for fitment help, custom quotes, or order support.</p>
+      {%- endif -%}
+    </header>
+
+    <div class="ff-contact__grid">
+      <div class="ff-contact__panel">
+        <h2 class="ff-contact__panel-title">{{ contact_form_title | escape }}</h2>
+        {%- if contact_form_text != blank -%}
+          <p class="ff-contact__panel-text">{{ contact_form_text | escape }}</p>
         {%- endif -%}
-        {%- if show_page_title -%}
-            <h1 class="page-header text-{{ page_title_alignment }}">
-                {{ page.title | escape }}
-            </h1>
-        {%- endif -%}
-        <div class="halo-page-content halo-contact-content">
-            <div class="contact contact-1">
-                <div class="contact-item{% if show_contact_info %}{% if has_contact_info %} contact-itemLeft{% endif %}{% endif %}">
-                    {%- if contact_form_title != blank -%}
-                        <h2 class="page-subheader contact-title">
-                            {{ contact_form_title | escape }}
-                        </h2>
-                    {%- endif %}
-                    {%- if contact_form_text != blank -%}
-                        <div class="contact-text">
-                            {{ contact_form_text | escape }}
-                        </div>
-                    {%- endif %}
-                    {% render 'halo-contact-form',
-                        section: section
-                    %}
-                </div>
-                {%- if show_contact_info -%}
-                    {%- if has_contact_info -%}
-                        <div class="contact-item contact-itemRight">
-                            {%- if contact_info_title != blank -%}
-                                <h2 class="page-subheader contact-title">
-                                    {{ contact_info_title | escape }}
-                                </h2>
-                            {%- endif %}
-                            {%- if contact_info_text != blank -%}
-                                <div class="contact-text">
-                                    {{ contact_info_text | escape }}
-                                </div>
-                            {%- endif %}
-                            {%- if contact_info_address != blank or contact_info_content_1 != blank or contact_info_content_2 != blank -%}
-                                <div class="contact-info">
-                                    {%- if contact_info_address != blank -%}
-                                        <div class="contact-address">
-                                            <address>
-                                                {{ contact_info_address }}
-                                            </address>
-                                        </div>
-                                    {%- endif -%}
-                                    {%- if contact_info_content_1 != blank -%}
-                                        <div class="contact-store">
-                                            {{ contact_info_content_1 }}
-                                        </div>
-                                    {%- endif -%}
-                                    {%- if contact_info_content_2 != blank -%}
-                                        <div class="contact-store">
-                                            {{ contact_info_content_2 }}
-                                        </div>
-                                    {%- endif -%}
-                                </div>
-                            {%- endif %}
-                        </div>
-                    {%- endif %}
-                {%- endif -%}
-            </div>
-        </div>
+        {% render 'halo-contact-form', section: section %}
+      </div>
+
+      {%- if section.settings.show_contact_info -%}
+        <aside class="ff-contact__info">
+          <div class="ff-contact__card">
+            <span class="ff-contact__card-label">Email</span>
+            <a class="ff-contact__card-value" href="mailto:{{ contact_email | escape }}">{{ contact_email | escape }}</a>
+          </div>
+
+          <div class="ff-contact__card">
+            <span class="ff-contact__card-label">Business hours</span>
+            <p class="ff-contact__card-text">{{ business_hours | newline_to_br }}</p>
+          </div>
+
+          <div class="ff-contact__card">
+            <span class="ff-contact__card-label">Instagram</span>
+            <a class="ff-contact__card-value" href="{{ instagram_url | escape }}" target="_blank" rel="noopener noreferrer">{{ instagram_handle | escape }}</a>
+          </div>
+
+          {%- if response_note != blank -%}
+            <p class="ff-contact__card-note">{{ response_note | escape }}</p>
+          {%- endif -%}
+        </aside>
+      {%- endif -%}
     </div>
-</div>
+  </div>
+</section>
 
 {% schema %}
-	{
-		"name": "t:sections.main-contact-page.name",
-        "settings":
-        [
-            {
-                "type": "header",
-                "content": "t:sections.main-contact-page.settings.header__1.content"
-            },
-            {
-                "type": "checkbox",
-                "id": "show_breadcrumb",
-                "label": "t:sections.general.settings.breadcrumb.label__1",
-                "default": true
-            },
-            {
-                "type": "select",
-                "id": "breadcrumb_alignment",
-                "label": "t:sections.general.settings.breadcrumb.label__2",
-                "options": [
-                {
-                    "value": "left",
-                    "label": "t:sections.general.settings.breadcrumb.options__1"
-                },
-                {
-                    "value": "center",
-                    "label": "t:sections.general.settings.breadcrumb.options__2"
-                },
-                {
-                    "value": "right",
-                    "label": "t:sections.general.settings.breadcrumb.options__3"
-                }],
-                "default": "left"
-            },
-            {
-                "type": "checkbox",
-                "id": "show_page_title",
-                "label": "t:sections.general.settings.page-title.label__1",
-                "default": true
-            },
-            {
-                "type": "select",
-                "id": "page_title_alignment",
-                "label": "t:sections.general.settings.page-title.label__2",
-                "options": [
-                {
-                    "value": "left",
-                    "label": "t:sections.general.settings.page-title.options__1"
-                },
-                {
-                    "value": "center",
-                    "label": "t:sections.general.settings.page-title.options__2"
-                },
-                {
-                    "value": "right",
-                    "label": "t:sections.general.settings.page-title.options__3"
-                }],
-                "default": "left"
-            },
-            {
-                "type": "select",
-                "id": "container",
-                "label": "t:sections.general.settings.container.label__1",
-                "default": "1370",
-                "options": [
-                {
-                    "value": "1170",
-                    "label": "t:sections.general.settings.container.options__1"
-                },
-                {
-                    "value": "1370",
-                    "label": "t:sections.general.settings.container.options__2"
-                },
-                {
-                    "value": "1570",
-                    "label": "t:sections.general.settings.container.options__3"
-                },
-                {
-                    "value": "1770",
-                    "label": "t:sections.general.settings.container.options__4"
-                },
-                {
-                    "value": "1860",
-                    "label": "t:sections.general.settings.container.options__5"
-                },
-                {
-                    "value": "full",
-                    "label": "t:sections.general.settings.container.options__6"
-                }],
-                "info": "t:sections.general.settings.container.info"
-            },
-            {
-                "type": "paragraph",
-                "content": "t:sections.general.settings.padding.paragraph__1.content"
-            },
-            {
-                "type": "range",
-                "id": "padding_top",
-                "label": "t:sections.general.settings.padding.label__1",
-                "min": 0,
-                "max": 100,
-                "step": 1,
-                "unit": "t:sections.general.settings.padding.unit",
-                "default": 0
-            },
-            {
-                "type": "range",
-                "id": "padding_bottom",
-                "label": "t:sections.general.settings.padding.label__2",
-                "min": 0,
-                "max": 100,
-                "step": 1,
-                "unit": "t:sections.general.settings.padding.unit",
-                "default": 0
-            },
-            {
-                "type": "paragraph",
-                "content": "t:sections.general.settings.padding.paragraph__2.content"
-            },
-            {
-                "type": "range",
-                "id": "padding_top_tablet",
-                "label": "t:sections.general.settings.padding.label__1",
-                "min": 0,
-                "max": 100,
-                "step": 1,
-                "unit": "t:sections.general.settings.padding.unit",
-                "default": 40
-            },
-            {
-                "type": "range",
-                "id": "padding_bottom_tablet",
-                "label": "t:sections.general.settings.padding.label__2",
-                "min": 0,
-                "max": 100,
-                "step": 1,
-                "unit": "t:sections.general.settings.padding.unit",
-                "default": 40
-            },
-            {
-                "type": "paragraph",
-                "content": "t:sections.general.settings.padding.paragraph__3.content"
-            },
-            {
-                "type": "range",
-                "id": "padding_top_mobile",
-                "label": "t:sections.general.settings.padding.label__1",
-                "min": 0,
-                "max": 100,
-                "step": 1,
-                "unit": "t:sections.general.settings.padding.unit",
-                "default": 30
-            },
-            {
-                "type": "range",
-                "id": "padding_bottom_mobile",
-                "label": "t:sections.general.settings.padding.label__2",
-                "min": 0,
-                "max": 100,
-                "step": 1,
-                "unit": "t:sections.general.settings.padding.unit",
-                "default": 30
-            },
-            {
-                "type": "header",
-                "content": "t:sections.main-contact-page.settings.header__2.content"
-            },
-            {
-                "type": "text",
-                "id": "contact_form_title",
-                "label": "t:sections.general.settings.content.label__1",
-                "default": "Drop Us A Line"
-            },
-            {
-                "type": "textarea",
-                "id": "contact_form_text",
-                "label": "t:sections.general.settings.content.label__2",
-                "default": "Have a question or comment? Use the form below to send us a message or contact us by mail at:"
-            },
-            {
-                "type": "header",
-                "content": "t:sections.main-contact-page.settings.header__3.content"
-            },
-            {
-                "type": "checkbox",
-                "id": "show_contact_info",
-                "label": "t:sections.main-contact-page.settings.contact_info.label__1",
-                "default": true 
-            },
-            {
-                "type": "text",
-                "id": "contact_info_title",
-                "label": "t:sections.general.settings.content.label__1",
-                "default": "Contact Information"
-            },
-            {
-                "type": "textarea",
-                "id": "contact_info_text",
-                "label": "t:sections.general.settings.content.label__2",
-                "default": "We'd love to hear from you - please use the form to send us your message or ideas. Or simply pop in for a cup of fresh tea and a cookie:"
-            },
-            {
-                "type": "textarea",
-                "id": "contact_info_address",
-                "label": "t:sections.general.settings.content.label__12"
-            },
-            {
-                "type": "textarea",
-                "id": "contact_info_content_1",
-                "label": "t:sections.main-contact-page.settings.contact_info.label__2"
-            },
-            {
-                "type": "textarea",
-                "id": "contact_info_content_2",
-                "label": "t:sections.main-contact-page.settings.contact_info.label__3"
-            }
-        ]
-	}
+{
+  "name": "t:sections.main-contact-page.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Contact"
+    },
+    {
+      "type": "text",
+      "id": "page_heading",
+      "label": "Page heading",
+      "info": "Leave blank to use the page title."
+    },
+    {
+      "type": "textarea",
+      "id": "page_intro",
+      "label": "Page intro",
+      "default": "Premium forged wheels, built to order. Reach out for fitment help, custom quotes, or order support."
+    },
+    {
+      "type": "header",
+      "content": "Contact form"
+    },
+    {
+      "type": "text",
+      "id": "contact_form_title",
+      "label": "Form title",
+      "default": "Send us a message"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_form_text",
+      "label": "Form description",
+      "default": "Questions about fitment, finishes, lead times, or an existing order? Fill out the form and our team will get back to you."
+    },
+    {
+      "type": "header",
+      "content": "Contact information"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact_info",
+      "label": "Show contact information",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Email address",
+      "default": "FortuneForgedWheels@gmail.com"
+    },
+    {
+      "type": "textarea",
+      "id": "business_hours",
+      "label": "Business hours",
+      "default": "Monday – Friday: 9 AM – 5 PM\nSaturday – Sunday: Closed"
+    },
+    {
+      "type": "text",
+      "id": "instagram_handle",
+      "label": "Instagram handle",
+      "default": "@fortuneforgedwheels"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL",
+      "default": "https://www.instagram.com/fortuneforgedwheels/"
+    },
+    {
+      "type": "textarea",
+      "id": "response_note",
+      "label": "Response note",
+      "default": "We typically respond within one business day. For order updates, include your order number in the message."
+    }
+  ]
+}
 {% endschema %}
