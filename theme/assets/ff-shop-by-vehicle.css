@@ -2,8 +2,8 @@
 
 /* ─── wrapper ─── */
 .ff-sbv {
-  --ff-sbv-bg: #e4572e;
-  --ff-sbv-pad-y: 28px;
+  --ff-sbv-bg: #0a0a0a;
+  --ff-sbv-pad-y: 14px;
   background: var(--ff-sbv-bg);
   color: #fff;
   padding: var(--ff-sbv-pad-y) 18px;
@@ -13,7 +13,7 @@
   max-width: 1180px;
   margin: 0 auto;
   display: grid;
-  gap: 14px;
+  gap: 10px;
   justify-items: center;
 }
 
@@ -21,7 +21,7 @@
   margin: 0;
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
   font-weight: 700;
-  font-size: clamp(1.55rem, 3.4vw, 2.35rem);
+  font-size: clamp(1.1rem, 2.2vw, 1.45rem);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-align: center;
@@ -33,7 +33,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
-  gap: 10px;
+  gap: 8px;
   align-items: stretch;
 }
 
@@ -43,8 +43,8 @@
   width: 100%;
   appearance: none;
   -webkit-appearance: none;
-  height: 48px;
-  padding: 0 38px 0 14px;
+  height: 40px;
+  padding: 0 34px 0 12px;
   border: 1.5px solid #111;
   border-radius: 2px;
   background-color: #fff;
@@ -58,7 +58,7 @@
   background-repeat: no-repeat;
   color: #111;
   font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1;
   cursor: pointer;
@@ -71,16 +71,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-width: 108px;
-  height: 48px;
-  padding: 0 22px;
+  gap: 6px;
+  min-width: 88px;
+  height: 40px;
+  padding: 0 18px;
   border: 0;
   border-radius: 999px;
   background: #fff;
   color: #111;
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -109,9 +109,10 @@
   max-width: 760px;
   text-align: center;
   font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
-  font-size: 0.86rem;
+  font-size: 0.78rem;
   font-weight: 500;
-  color: rgba(255,255,255,0.82);
+  color: rgba(255,255,255,0.65);
+  line-height: 1.3;
 }
 
 /* ─── fitment card ─── */
