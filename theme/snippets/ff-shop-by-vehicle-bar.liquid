@@ -1,12 +1,13 @@
 {{ 'ff-shop-by-vehicle.css' | asset_url | stylesheet_tag }}
 
-<section
-  class="ff-sbv"
-  id="ff-sbv-home"
-  data-ff-sbv
-  data-catalog-url="{{ 'ff-vehicle-catalog.json' | asset_url }}"
-  data-go-target="/#order"
-  style="--ff-sbv-bg: #e4572e; --ff-sbv-pad-y: 28px;"
+  <section
+    class="ff-sbv"
+    id="ff-sbv-home"
+    data-ff-sbv
+    data-catalog-url="{{ 'ff-vehicle-catalog.json' | asset_url }}"
+    data-fitment-url="{{ 'ff-vehicle-fitments.json' | asset_url }}"
+    data-go-target="/#order"
+    style="--ff-sbv-bg: #e4572e; --ff-sbv-pad-y: 28px;"
 >
   <div class="ff-sbv__inner">
     <h2 class="ff-sbv__heading">SHOP BY VEHICLE</h2>
@@ -51,6 +52,8 @@
     <div class="ff-sbv__specs" data-ff-sbv-specs hidden>
       <p class="ff-sbv__specs-line" data-ff-sbv-specs-line></p>
     </div>
+
+    <div class="ff-sbv__fitment-card" data-ff-sbv-fitment hidden></div>
 
     <p class="ff-sbv__helper">Select year, make, model, and chassis to match bolt pattern and center bore for your build.</p>
   </div>

@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
+/* ─── wrapper ─── */
 .ff-sbv {
   --ff-sbv-bg: #e4572e;
   --ff-sbv-pad-y: 28px;
@@ -12,7 +13,7 @@
   max-width: 1180px;
   margin: 0 auto;
   display: grid;
-  gap: 16px;
+  gap: 14px;
   justify-items: center;
 }
 
@@ -27,6 +28,7 @@
   line-height: 1;
 }
 
+/* ─── form row ─── */
 .ff-sbv__form {
   width: 100%;
   display: grid;
@@ -35,10 +37,7 @@
   align-items: stretch;
 }
 
-.ff-sbv__field {
-  display: block;
-  min-width: 0;
-}
+.ff-sbv__field { display: block; min-width: 0; }
 
 .ff-sbv__field select {
   width: 100%;
@@ -65,15 +64,8 @@
   cursor: pointer;
 }
 
-.ff-sbv__field select:disabled {
-  opacity: 0.72;
-  cursor: not-allowed;
-}
-
-.ff-sbv__field select:focus {
-  outline: 2px solid #111;
-  outline-offset: 1px;
-}
+.ff-sbv__field select:disabled { opacity: 0.72; cursor: not-allowed; }
+.ff-sbv__field select:focus    { outline: 2px solid #111; outline-offset: 1px; }
 
 .ff-sbv__go {
   display: inline-flex;
@@ -94,36 +86,22 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: transform 160ms ease, background-color 160ms ease;
+  white-space: nowrap;
 }
 
-.ff-sbv__go:hover:not(:disabled) {
-  transform: translateY(-1px);
-  background: #f7f7f7;
-}
+.ff-sbv__go:hover:not(:disabled) { transform: translateY(-1px); background: #f7f7f7; }
+.ff-sbv__go:disabled { opacity: 0.55; cursor: not-allowed; }
+.ff-sbv__go-icon { width: 14px; height: 14px; }
 
-.ff-sbv__go:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
-.ff-sbv__go-icon {
-  width: 14px;
-  height: 14px;
-}
-
-.ff-sbv__specs {
-  width: 100%;
-  max-width: 980px;
-  text-align: center;
-}
-
+/* ─── specs line ─── */
+.ff-sbv__specs { width: 100%; max-width: 980px; text-align: center; }
 .ff-sbv__specs-line {
   margin: 0;
   font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255,255,255,0.95);
 }
 
 .ff-sbv__helper {
@@ -133,22 +111,120 @@
   font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
   font-size: 0.86rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.86);
+  color: rgba(255,255,255,0.82);
 }
 
-@media (max-width: 900px) {
-  .ff-sbv__form {
-    grid-template-columns: 1fr 1fr;
-  }
+/* ─── fitment card ─── */
+.ff-sbv__fitment-card {
+  width: 100%;
+  max-width: 1100px;
+  background: rgba(0,0,0,0.28);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 6px;
+  padding: 18px 22px 20px;
+  display: grid;
+  gap: 14px;
+}
 
-  .ff-sbv__go {
-    grid-column: 1 / -1;
-    width: 100%;
-  }
+.ff-sbv__fitment-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ff-sbv__fitment-chassis {
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ff-sbv__fitment-label {
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.ff-sbv__fitment-cat {
+  display: grid;
+  gap: 8px;
+}
+
+.ff-sbv__fitment-cat-name {
+  margin: 0;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  padding-bottom: 4px;
+}
+
+/* wheel size pills */
+.ff-sbv__fitment-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.ff-sbv__fitment-pill {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.28);
+  font-family: 'Source Sans 3', 'Segoe UI', monospace;
+  font-size: 0.93rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* tire picks */
+.ff-sbv__fitment-tires {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.ff-sbv__fitment-tires-label {
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.ff-sbv__fitment-tire-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  font-family: 'Source Sans 3', 'Segoe UI', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  white-space: nowrap;
+}
+
+/* ─── responsive ─── */
+@media (max-width: 900px) {
+  .ff-sbv__form { grid-template-columns: 1fr 1fr; }
+  .ff-sbv__go   { grid-column: 1 / -1; width: 100%; }
+  .ff-sbv__fitment-card { padding: 14px 14px 16px; }
 }
 
 @media (max-width: 560px) {
-  .ff-sbv__form {
-    grid-template-columns: 1fr;
-  }
+  .ff-sbv__form { grid-template-columns: 1fr; }
 }
