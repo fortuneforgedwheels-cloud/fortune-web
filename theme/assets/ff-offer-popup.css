@@ -1,0 +1,223 @@
+.ff-offer {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.ff-offer[hidden] {
+  display: none !important;
+}
+
+.ff-offer__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 8, 8, 0.62);
+  backdrop-filter: blur(2px);
+}
+
+.ff-offer__dialog {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  width: min(860px, calc(100vw - 32px));
+  max-height: min(90vh, 620px);
+  overflow: hidden;
+  background: #ffffff;
+  color: #111111;
+  border-radius: 14px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+  animation: ff-offer-in 0.35s ease both;
+}
+
+.ff-offer__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #111;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ff-offer__close:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.ff-offer__media {
+  min-height: 100%;
+  background: #0f0f0f;
+}
+
+.ff-offer__media img,
+.ff-offer__media-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+.ff-offer__media-placeholder {
+  background:
+    linear-gradient(135deg, #1a1a1a, #2a2a2a 50%, #121212);
+}
+
+.ff-offer__panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 44px 40px 36px;
+  background: #ffffff;
+}
+
+.ff-offer__title {
+  margin: 0 0 12px;
+  max-width: 16ch;
+  color: #111111;
+  font-size: clamp(1.7rem, 2.8vw, 2.25rem);
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.ff-offer__sub {
+  margin: 0 0 22px;
+  max-width: 34ch;
+  color: #2a2a2a;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.ff-offer__form {
+  display: grid;
+  gap: 10px;
+}
+
+.ff-offer__input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid #d7d7d7;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+  font-size: 0.95rem;
+}
+
+.ff-offer__input:focus {
+  outline: 2px solid #111;
+  outline-offset: 1px;
+}
+
+.ff-offer__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 8px;
+  background: #0b1b3a;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.ff-offer__submit:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.ff-offer__disclaimer {
+  margin: 14px 0 0;
+  color: #777777;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.ff-offer__success {
+  margin: 16px 0 0;
+  color: #0b1b3a;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.ff-offer__form.is-hidden,
+.ff-offer__success[hidden] {
+  display: none !important;
+}
+
+html.ff-offer-open,
+html.ff-offer-open body {
+  overflow: hidden;
+}
+
+/* Hide Shopify Forms corner popup as a backup */
+#shopify-block-forms,
+[id*='shopify-forms'],
+[class*='shopify-forms'],
+iframe[src*='forms.shopify'],
+div[data-forms-id] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+@keyframes ff-offer-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 749.98px) {
+  .ff-offer {
+    padding: 12px;
+    align-items: end;
+  }
+
+  .ff-offer__dialog {
+    grid-template-columns: 1fr;
+    max-height: min(92vh, 760px);
+    width: min(480px, calc(100vw - 24px));
+  }
+
+  .ff-offer__media img,
+  .ff-offer__media-placeholder {
+    min-height: 180px;
+    max-height: 200px;
+  }
+
+  .ff-offer__panel {
+    padding: 28px 22px 24px;
+  }
+
+  .ff-offer__title {
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ff-offer__dialog {
+    animation: none;
+  }
+}

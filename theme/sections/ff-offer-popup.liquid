@@ -1,0 +1,191 @@
+{{ 'ff-offer-popup.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.show_popup -%}
+  {%- liquid
+    assign offer_image = section.settings.image
+    if offer_image == blank
+      assign offer_image = images['IMG_2176.jpg']
+    endif
+    assign delay_ms = section.settings.delay_seconds | default: 5 | times: 1000
+  -%}
+
+  <div
+    class="ff-offer"
+    id="ff-offer-{{ section.id }}"
+    data-ff-offer
+    data-ff-offer-delay="{{ delay_ms }}"
+    data-ff-offer-expire="{{ section.settings.expire_days | default: 14 }}"
+    hidden
+    aria-hidden="true"
+  >
+    <div class="ff-offer__backdrop" data-ff-offer-close tabindex="-1"></div>
+    <div
+      class="ff-offer__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ff-offer-title-{{ section.id }}"
+    >
+      <button type="button" class="ff-offer__close" data-ff-offer-close aria-label="Close offer">
+        <span aria-hidden="true">×</span>
+      </button>
+
+      <div class="ff-offer__media" aria-hidden="true">
+        {%- if offer_image != blank -%}
+          {{
+            offer_image
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'lazy',
+              widths: '480, 720, 960, 1200',
+              sizes: '(max-width: 749px) 100vw, 42vw',
+              alt: ''
+          }}
+        {%- else -%}
+          <div class="ff-offer__media-placeholder"></div>
+        {%- endif -%}
+      </div>
+
+      <div class="ff-offer__panel">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="ff-offer__title" id="ff-offer-title-{{ section.id }}">
+            {{ section.settings.heading | escape }}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="ff-offer__sub">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+
+        {%- form 'customer', class: 'ff-offer__form', id: 'ff-offer-form' -%}
+          <input type="hidden" name="contact[tags]" value="{{ section.settings.customer_tags | default: 'newsletter, first-time-100-off' | escape }}">
+          <label class="visually-hidden" for="ff-offer-first-{{ section.id }}">First name</label>
+          <input
+            id="ff-offer-first-{{ section.id }}"
+            class="ff-offer__input"
+            type="text"
+            name="contact[first_name]"
+            placeholder="{{ section.settings.first_name_placeholder | default: 'First name' | escape }}"
+            autocomplete="given-name"
+          >
+          <label class="visually-hidden" for="ff-offer-email-{{ section.id }}">Email</label>
+          <input
+            id="ff-offer-email-{{ section.id }}"
+            class="ff-offer__input"
+            type="email"
+            name="contact[email]"
+            placeholder="{{ section.settings.email_placeholder | default: 'Email' | escape }}"
+            autocomplete="email"
+            required
+          >
+          <button type="submit" class="ff-offer__submit">
+            {{ section.settings.button_label | default: 'Claim Offer' | escape }}
+          </button>
+        {%- endform -%}
+
+        {%- if section.settings.disclaimer != blank -%}
+          <p class="ff-offer__disclaimer">{{ section.settings.disclaimer }}</p>
+        {%- endif -%}
+
+        <p class="ff-offer__success" data-ff-offer-success hidden>
+          {{ section.settings.success_message | default: 'You’re in — check your email for your $100 off code.' | escape }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ 'ff-offer-popup.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FF Offer Popup",
+  "tag": "section",
+  "class": "section-ff-offer-popup",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_popup",
+      "label": "Show offer popup",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "delay_seconds",
+      "label": "Seconds before popup appears",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "expire_days",
+      "label": "Days to wait after close before showing again",
+      "min": 1,
+      "max": 60,
+      "step": 1,
+      "unit": "d",
+      "default": 14
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Left image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Limited time: $100 off your entire order"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "First-time customers only. Premium forged wheels, fast support, and zero regrets."
+    },
+    {
+      "type": "text",
+      "id": "first_name_placeholder",
+      "label": "First name placeholder",
+      "default": "First name"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "Email"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Claim Offer"
+    },
+    {
+      "type": "text",
+      "id": "customer_tags",
+      "label": "Customer tags",
+      "default": "newsletter, first-time-100-off",
+      "info": "Tags applied when someone submits the form."
+    },
+    {
+      "type": "textarea",
+      "id": "disclaimer",
+      "label": "Disclaimer",
+      "default": "By signing up, you agree to receive marketing emails. View our privacy policy and terms of service for more info."
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "You’re in — check your email for your $100 off code."
+    }
+  ],
+  "presets": [
+    {
+      "name": "FF Offer Popup"
+    }
+  ]
+}
+{% endschema %}
