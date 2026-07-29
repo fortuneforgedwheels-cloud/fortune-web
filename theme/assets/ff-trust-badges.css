@@ -46,14 +46,15 @@
 
 .ff-trust__heading {
   margin: 0 0 12px;
-  max-width: 18ch;
+  max-width: 100%;
   color: var(--ff-gold);
-  font-size: clamp(0.98rem, 1.35vw, 1.12rem);
+  font-size: clamp(0.78rem, 1.15vw, 0.95rem);
   font-weight: 800;
   font-style: normal;
-  letter-spacing: 0.1em;
-  line-height: 1.25;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .ff-trust__heading-link {
@@ -99,7 +100,8 @@
   }
 
   .ff-trust__heading {
-    max-width: 22ch;
+    white-space: normal;
+    font-size: clamp(0.9rem, 3.6vw, 1.05rem);
   }
 
   .ff-trust__desc {
