@@ -314,6 +314,10 @@
       ],
       "settings": {
         "show_section": true,
+        "heading_size": 17,
+        "heading_align": "center",
+        "description_size": 15,
+        "description_align": "center",
         "padding_top": 56,
         "padding_bottom": 56
       }
