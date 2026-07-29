@@ -54,15 +54,17 @@
                   endif
                 -%}
                 {%- if heading_href != blank -%}
-                  <p class="ff-trust__heading">
+                  <p class="ff-trust__heading" {% render 'ff-type-style', size: section.settings.heading_size, align: section.settings.heading_align, min_ratio: 85 %}>
                     <a class="ff-trust__heading-link" href="{{ heading_href }}">{{ heading_text | escape }}</a>
                   </p>
                 {%- else -%}
-                  <p class="ff-trust__heading">{{ heading_text | escape }}</p>
+                  <p class="ff-trust__heading" {% render 'ff-type-style', size: section.settings.heading_size, align: section.settings.heading_align, min_ratio: 85 %}>
+                    {{ heading_text | escape }}
+                  </p>
                 {%- endif -%}
               {%- endif -%}
               {%- if block.settings.description != blank -%}
-                <p class="ff-trust__desc" {% render 'ff-type-style', size: section.settings.description_size, align: section.settings.description_align, min_ratio: 75 %}>
+                <p class="ff-trust__desc" {% render 'ff-type-style', size: section.settings.description_size, align: section.settings.description_align, min_ratio: 80 %}>
                   {{ block.settings.description | escape }}
                   {%- if block.settings.show_email and contact_email != blank -%}
                     <a class="ff-trust__link" href="mailto:{{ contact_email }}">{{ contact_email }}</a>
@@ -92,18 +94,39 @@
     },
     {
       "type": "range",
-      "id": "description_size",
-      "label": "Supporting text size",
-      "min": 14,
-      "max": 36,
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 12,
+      "max": 28,
       "step": 1,
       "unit": "px",
-      "default": 18
+      "default": 17
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Body text size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 15
     },
     {
       "type": "select",
       "id": "description_align",
-      "label": "Supporting text align",
+      "label": "Body text align",
       "options": [
         { "value": "left", "label": "Left" },
         { "value": "center", "label": "Center" },

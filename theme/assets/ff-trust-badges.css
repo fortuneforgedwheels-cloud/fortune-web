@@ -1,5 +1,6 @@
 .ff-trust {
-  --ff-gold: #dce1e6;
+  --ff-gold: #c2a76b;
+  --ff-metal: #dce1e6;
   background: #0a0a0a;
   color: #f5f5f5;
   padding: var(--ff-trust-pad-top, 56px) 20px var(--ff-trust-pad-bottom, 56px);
@@ -13,11 +14,16 @@
 .ff-trust__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  gap: 18px;
+  align-items: stretch;
 }
 
 .ff-trust__card {
-  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 32px 26px 28px;
   border-radius: 14px;
   background: #161616;
   text-align: center;
@@ -26,10 +32,11 @@
 .ff-trust__icon {
   display: grid;
   place-items: center;
-  margin: 0 auto 18px;
-  width: 30px;
-  height: 30px;
-  color: #c2a76b;
+  flex: 0 0 auto;
+  margin: 0 auto 16px;
+  width: 28px;
+  height: 28px;
+  color: var(--ff-gold);
 }
 
 .ff-trust__icon svg {
@@ -38,12 +45,14 @@
 }
 
 .ff-trust__heading {
-  margin: 0 0 10px;
-  color: #ffffff;
-  font-size: 0.92rem;
+  margin: 0 0 12px;
+  max-width: 18ch;
+  color: var(--ff-gold);
+  font-size: clamp(0.98rem, 1.35vw, 1.12rem);
   font-weight: 800;
-  font-style: italic;
-  letter-spacing: 0.03em;
+  font-style: normal;
+  letter-spacing: 0.1em;
+  line-height: 1.25;
   text-transform: uppercase;
 }
 
@@ -55,20 +64,23 @@
 }
 
 .ff-trust__heading-link:hover {
-  color: var(--ff-gold);
+  color: #d4b87a;
 }
 
 .ff-trust__desc {
   margin: 0;
-  color: #b0aea8;
-  font-size: clamp(1.08rem, 1.6vw, 1.18rem);
-  line-height: 1.65;
+  max-width: 28ch;
+  color: #c4c2bc;
+  font-size: clamp(0.9rem, 1.15vw, 0.98rem);
+  line-height: 1.5;
+  flex: 1 1 auto;
 }
 
 .ff-trust__link {
   display: inline;
-  color: #b0aea8;
+  color: inherit;
   text-decoration: underline;
+  text-underline-offset: 2px;
   font-size: inherit;
 }
 
@@ -79,10 +91,18 @@
 @media (max-width: 749.98px) {
   .ff-trust__grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 12px;
   }
 
   .ff-trust__card {
-    padding: 28px 22px;
+    padding: 26px 22px 24px;
+  }
+
+  .ff-trust__heading {
+    max-width: 22ch;
+  }
+
+  .ff-trust__desc {
+    max-width: none;
   }
 }
