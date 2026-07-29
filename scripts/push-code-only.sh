@@ -5,7 +5,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-THEME_ID="${SHOPIFY_THEME_ID:-188539207955}"
+THEME_ID="${SHOPIFY_THEME_ID:-188578300179}"
 ALLOW_LIVE_FLAG=()
 if [[ "${1:-}" == "--allow-live" ]]; then
   ALLOW_LIVE_FLAG=(--allow-live)

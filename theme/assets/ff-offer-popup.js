@@ -11,7 +11,7 @@
   var STORAGE_KEY = 'ff-offer-dismissed-v3';
   var DELAY_MS = 5000;
   var EXPIRE_DAYS = 14;
-  var CSS_HREF = '/cdn/shop/t/13/assets/ff-offer-popup.css?v=offer3';
+  var CSS_HREF=(function(){var probe=document.querySelector("script[src*='/cdn/shop/t/'][src*='/assets/'],link[href*='/cdn/shop/t/'][href*='/assets/']");var base='/cdn/shop/t/13/assets/';if(probe){var raw=probe.getAttribute('src')||probe.getAttribute('href')||'';var m=raw.match(/(\/cdn\/shop\/t\/\d+\/assets\/)/);if(m)base=m[1];}return base+'ff-offer-popup.css?v=sbv1';})();
 
   function ready(fn) {
     if (document.readyState === 'loading') {

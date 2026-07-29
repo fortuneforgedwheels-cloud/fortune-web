@@ -92,6 +92,14 @@
         })();
       </script>
     {%- endif -%}
+    {%- if request.page_type == 'index' -%}
+      <script>
+        (function () {
+          if (/[?&]view=vehicle(?:&|$)/.test(location.search || '')) return;
+          location.replace('/?view=vehicle' + (location.hash || ''));
+        })();
+      </script>
+    {%- endif -%}
     </head>
     {%- liquid
         assign page_type = request.page_type | replace: 'customers/', ''
@@ -167,9 +175,9 @@
             {% sections 'footer-group' %}
         </div>
         {% render 'ff-offer-popup' %}
-        <link rel="stylesheet" href="/cdn/shop/t/13/assets/ff-storefront-fix.css?v={{ 'now' | date: '%s' }}">
-        <script src="/cdn/shop/t/13/assets/ff-about-route.js?v=preserve-copy3" defer></script>
-        <script src="/cdn/shop/t/13/assets/ff-offer-boot.js?v={{ 'now' | date: '%s' }}" defer></script>
+        {{ 'ff-storefront-fix.css' | asset_url | stylesheet_tag }}
+        <script src="{{ 'ff-about-route.js' | asset_url }}" defer></script>
+        <script src="{{ 'ff-offer-boot.js' | asset_url }}" defer></script>
         {% section 'halo-toolbar-mobile' %}
         {{ 'rtl-section-header.css' | asset_url | stylesheet_tag }}
         {{ 'rtl-section-footer.css' | asset_url | stylesheet_tag }}

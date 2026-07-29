@@ -10,14 +10,14 @@ Theme source lives in [`theme/`](./theme). Edits push to an **unpublished draft*
 
 | | |
 | --- | --- |
-| Draft theme | `Fortune-Cursor-Rebuild` |
-| Theme ID | `188539207955` |
-| Preview | https://bb6223-6f.myshopify.com?preview_theme_id=188539207955 |
-| Theme editor | https://bb6223-6f.myshopify.com/admin/themes/188539207955/editor |
+| Draft theme | `Fortune-SBV-202607290902` |
+| Theme ID | `188578300179` |
+| Preview | https://bb6223-6f.myshopify.com?preview_theme_id=188578300179 |
+| Theme editor | https://bb6223-6f.myshopify.com/admin/themes/188578300179/editor |
 
-Open that preview link (or Online Store → Themes → `Fortune-Cursor-Rebuild` → Preview). You should see a gold **DRAFT PREVIEW** bar at the top. The public live site is unchanged.
+Open that preview link (or Online Store → Themes → `Fortune-SBV-202607290902` → Preview). You should see a gold **DRAFT PREVIEW** bar at the top. The public live site is unchanged.
 
-> Note: `Halo-SetOnSocial-FinalVersion-Backup` is a different draft. Our Cursor work goes to **Fortune-Cursor-Rebuild** only.
+> Note: `Halo-SetOnSocial-FinalVersion-Backup` is a different draft. Our Cursor work goes to **Fortune-SBV-202607290902** only.
 
 ---
 
@@ -29,7 +29,7 @@ Open that preview link (or Online Store → Themes → `Fortune-Cursor-Rebuild` 
 | Store identity documented | Ready |
 | Theme Access password connected | Ready (local `.env`) |
 | Live Halo theme pulled into `theme/` | Ready (~716 files) |
-| Unpublished draft for private previews | Ready (`Fortune-Cursor-Rebuild`) |
+| Unpublished draft for private previews | Ready (`Fortune-SBV-202607290902`) |
 
 Give change requests in chat (homepage, collections, quote flow, branding, etc.). All pushes target the draft; nothing goes live unless you explicitly approve a publish.
 
@@ -53,7 +53,7 @@ Also store `SHOPIFY_CLI_THEME_TOKEN` as a Cursor secret for future cloud agent r
 | --- | --- |
 | `npm run setup:check` | Verify CLI + token + theme files |
 | `npm run theme:list` | List themes on the store |
-| `npm run theme:pull` | Download **draft** `Fortune-Cursor-Rebuild` |
+| `npm run theme:pull` | Download **draft** `Fortune-SBV-202607290902` |
 | `npm run theme:pull:live` | Download live theme (reference only) |
 | `npm run theme:push` | Upload local files to the **draft** theme |
 | `npm run theme:open` | Open the draft preview in a browser |

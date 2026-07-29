@@ -1,10 +1,10 @@
 # Owner next steps
 
-Private draft theme is ready: **Fortune-Cursor-Rebuild** (`188539207955`).
+Private draft theme is ready: **Fortune-Cursor-Rebuild** (`188578300179`).
 
 ## Preview only you can see
 
-1. Open: https://bb6223-6f.myshopify.com?preview_theme_id=188539207955  
+1. Open: https://bb6223-6f.myshopify.com?preview_theme_id=188578300179  
    Or: Shopify Admin → Online Store → Themes → **Fortune-Cursor-Rebuild** → Preview  
 2. Confirm the gold **DRAFT PREVIEW** bar at the top.  
 3. Live customers still see `halo-setonsocial` until you publish.

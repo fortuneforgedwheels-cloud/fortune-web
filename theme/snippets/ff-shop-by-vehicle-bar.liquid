@@ -1,0 +1,59 @@
+{{ 'ff-shop-by-vehicle.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="ff-sbv"
+  id="ff-sbv-home"
+  data-ff-sbv
+  data-catalog-url="{{ 'ff-vehicle-catalog.json' | asset_url }}"
+  data-go-target="/#order"
+  style="--ff-sbv-bg: #e4572e; --ff-sbv-pad-y: 28px;"
+>
+  <div class="ff-sbv__inner">
+    <h2 class="ff-sbv__heading">SHOP BY VEHICLE</h2>
+
+    <form class="ff-sbv__form" data-ff-sbv-form novalidate>
+      <label class="ff-sbv__field">
+        <span class="visually-hidden">Year</span>
+        <select name="year" data-ff-sbv-year required>
+          <option value="">Year</option>
+        </select>
+      </label>
+
+      <label class="ff-sbv__field">
+        <span class="visually-hidden">Make</span>
+        <select name="make" data-ff-sbv-make required disabled>
+          <option value="">Make</option>
+        </select>
+      </label>
+
+      <label class="ff-sbv__field">
+        <span class="visually-hidden">Model</span>
+        <select name="model" data-ff-sbv-model required disabled>
+          <option value="">Model</option>
+        </select>
+      </label>
+
+      <label class="ff-sbv__field">
+        <span class="visually-hidden">Chassis / trim</span>
+        <select name="chassis" data-ff-sbv-chassis required disabled>
+          <option value="">Chassis</option>
+        </select>
+      </label>
+
+      <button type="submit" class="ff-sbv__go" data-ff-sbv-go disabled>
+        <span>GO</span>
+        <svg class="ff-sbv__go-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M3 13 L13 3 M6 3 H13 V10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/>
+        </svg>
+      </button>
+    </form>
+
+    <div class="ff-sbv__specs" data-ff-sbv-specs hidden>
+      <p class="ff-sbv__specs-line" data-ff-sbv-specs-line></p>
+    </div>
+
+    <p class="ff-sbv__helper">Select year, make, model, and chassis to match bolt pattern and center bore for your build.</p>
+  </div>
+</section>
+
+<script src="{{ 'ff-shop-by-vehicle.js' | asset_url }}" defer></script>

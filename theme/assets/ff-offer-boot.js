@@ -1,4 +1,28 @@
-/* BOOT_BUILD 2026-07-29g */
+/* BOOT_BUILD 2026-07-29-sbv */
+/* FF_HOME_VEHICLE_REDIRECT */
+(function () {
+  try {
+    var path = location.pathname || '/';
+    if (path === '/' || path === '') {
+      if (!/[?&]view=vehicle(?:&|$)/.test(location.search || '')) {
+        location.replace('/?view=vehicle' + (location.hash || ''));
+        return;
+      }
+    }
+  } catch (e) {}
+})();
+
+function ffThemeAsset(name, bust) {
+  var probe = document.querySelector("script[src*='/cdn/shop/t/'][src*='/assets/'], link[href*='/cdn/shop/t/'][href*='/assets/']");
+  var base = "/cdn/shop/t/13/assets/";
+  if (probe) {
+    var raw = probe.getAttribute("src") || probe.getAttribute("href") || "";
+    var m = raw.match(/(\/cdn\/shop\/t\/\d+\/assets\/)/);
+    if (m) base = m[1];
+  }
+  return base + name + (bust ? ("?v=" + bust) : "");
+}
+
 /**
  * Fortune Forged page + offer bootloader.
  * - Upgrades sticky-cached About / Beadlock Packages pages to latest FF markup
@@ -88,7 +112,7 @@
             return !!(root.querySelector('.ff-about__hero, .ff-about') && !/Add a video in Theme settings/i.test(root.textContent || ''));
           },
           'ff-about-page',
-          '/cdn/shop/t/13/assets/ff-about-page.css?v=about2',
+          ffThemeAsset('ff-about-page.css','about2'),
           'ff-about',
           'ff-about-upgraded'
         );
@@ -103,7 +127,7 @@
             return !!root.querySelector('[data-ff-btp], .ff-btp');
           },
           'ff-beadlock-packages',
-          '/cdn/shop/t/13/assets/ff-beadlock-packages.css?v=btp1',
+          ffThemeAsset('ff-beadlock-packages.css','btp1'),
           'ff-beadlock-packages',
           'ff-btp-upgraded'
         );
@@ -124,7 +148,7 @@
   var STORAGE_KEY = 'ff-offer-dismissed-v3';
   var DELAY_MS = 5000;
   var EXPIRE_DAYS = 14;
-  var CSS_HREF = '/cdn/shop/t/13/assets/ff-offer-popup.css?v=offer3';
+  var CSS_HREF = ffThemeAsset('ff-offer-popup.css','sbv1');
 
   function ready(fn) {
     if (document.readyState === 'loading') {

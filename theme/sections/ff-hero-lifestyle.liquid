@@ -1,5 +1,5 @@
 {{ 'ff-hero-lifestyle.css' | asset_url | stylesheet_tag }}
-<script src="/cdn/shop/t/13/assets/ff-offer-boot.js?v={{ 'now' | date: '%s' }}" defer></script>
+<script src="{{ 'ff-offer-boot.js' | asset_url }}" defer></script>
 
 {%- if section.settings.show_hero -%}
   {%- liquid
@@ -183,6 +183,8 @@
   </section>
   <script src="{{ 'ff-hero-offer.js' | asset_url }}" defer></script>
 {%- endif -%}
+
+{% render 'ff-shop-by-vehicle-bar' %}
 
 {% schema %}
 {
