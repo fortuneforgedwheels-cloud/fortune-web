@@ -74,6 +74,24 @@
             }
         </script>
         <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+        {%- liquid
+      assign ff_about_redirect = false
+      if request.page_type == 'page'
+        if page.handle == 'about' or page.handle == 'about-us' or request.path contains '/pages/about'
+          unless template.suffix == 'ff-about'
+            assign ff_about_redirect = true
+          endunless
+        endif
+      endif
+    -%}
+    {%- if ff_about_redirect -%}
+      <script>
+        (function () {
+          if (/[?&]view=ff-about(?:&|$)/.test(location.search || '')) return;
+          location.replace(location.pathname + '?view=ff-about' + (location.hash || ''));
+        })();
+      </script>
+    {%- endif -%}
     </head>
     {%- liquid
         assign page_type = request.page_type | replace: 'customers/', ''

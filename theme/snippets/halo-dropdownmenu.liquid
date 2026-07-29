@@ -1,6 +1,6 @@
 <li class="menu-lv-item menu-lv-1 text-left no-megamenu{% if link.links != blank %} dropdown{% endif %}{% if sale_item_lv1 contains title %} menu-sale{% endif %}">
     {%- if link.links != blank -%}
-        <a class="menu-lv-1__action list-menu__item link focus-inset" href="{{ link.url }}" role="button">
+        <a class="menu-lv-1__action list-menu__item link focus-inset" href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about{% else %}{{ link.url }}{% endif %}" role="button">
             <span class="text">{{ link.title | escape }}</span>
             {%- if sale_item_lv1 contains title -%}
                 {% render 'icon-flashy' %}
@@ -44,7 +44,7 @@
             %}
         {%- endif -%}
     {%- else -%}
-        <a href="{{ link.url }}" class="menu-lv-1__action list-menu__item list-menu__item--end link focus-inset"{% if link.current %} aria-current="page"{% endif %} role="button">
+        <a href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about{% else %}{{ link.url }}{% endif %}" class="menu-lv-1__action list-menu__item list-menu__item--end link focus-inset"{% if link.current %} aria-current="page"{% endif %} role="button">
             <span class="text">{{ link.title | escape }}</span>
             {%- if sale_item_lv1 contains title -%}
                 {% render 'icon-flashy' %}
