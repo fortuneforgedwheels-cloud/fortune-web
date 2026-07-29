@@ -2,7 +2,65 @@
   if (window.__ffShopByVehicle) return;
   window.__ffShopByVehicle = true;
 
-  var FINISHES = ['Brushed Clear', 'Polished Clear', 'Gloss Black', 'Satin Black'];
+  var DEFAULT_FINISH = 'Brushed Silver';
+  var DEFAULT_HARDWARE = 'Silver';
+
+  var FINISH_GROUPS = [
+    {
+      label: 'Brushed Finishes',
+      options: [
+        'Brushed Silver', 'Brushed Bronze', 'Brushed Gold', 'Brushed Champagne',
+        'Brushed Copper', 'Brushed Black', 'Brushed Gunmetal',
+      ],
+    },
+    {
+      label: 'Polished & Chrome Finishes',
+      options: [
+        'Polished Gold', 'Polished Black', 'Triple Chrome', 'Black Chrome', '24K Gold Chrome',
+      ],
+    },
+    {
+      label: 'Gloss Powder Coat Finishes',
+      options: [
+        'Gloss Black', 'Gloss White', 'Gloss Silver', 'Gloss Gunmetal', 'Gloss Anthracite',
+        'Gloss Bronze', 'Gloss Gold', 'Gloss Champagne', 'Gloss Titanium', 'Gloss Graphite',
+        'Gloss Charcoal', 'Gloss Red', 'Gloss Blue', 'Gloss Green', 'Gloss Purple', 'Gloss Orange',
+      ],
+    },
+    {
+      label: 'Satin Powder Coat Finishes',
+      options: [
+        'Satin Black', 'Satin White', 'Satin Silver', 'Satin Gunmetal', 'Satin Titanium',
+        'Satin Graphite', 'Satin Bronze', 'Satin Gold', 'Satin Champagne', 'Satin Copper',
+        'Satin Olive', 'Satin Red', 'Satin Blue',
+      ],
+    },
+  ];
+
+  function populateFinishSelect(select, placeholder) {
+    if (!select) return;
+    select.innerHTML = '';
+    var ph = document.createElement('option');
+    ph.value = '';
+    ph.textContent = placeholder || 'Select finish…';
+    select.appendChild(ph);
+    FINISH_GROUPS.forEach(function (group) {
+      var og = document.createElement('optgroup');
+      og.label = group.label;
+      group.options.forEach(function (name) {
+        var opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        og.appendChild(opt);
+      });
+      select.appendChild(og);
+    });
+  }
+
+  function resetFinishSelect(select, placeholder) {
+    populateFinishSelect(select, placeholder);
+    select.value = '';
+  }
 
   /* ── helpers ── */
   function fillSelect(select, placeholder, values, enable) {
@@ -273,7 +331,7 @@
 
     var vehicle = state.vehicleLabel;
     var fit = state.selectedFitment;
-    var finish = state.selectedFinish || 'Brushed Clear';
+    var finish = state.selectedFinish || '';
     var note = sanitizeFitmentNotes(fit.notes, fit.source) || fit.tireFlags || '';
     var tireNote = fit.tirePick ? ('Tires: ' + fit.tirePick) : '';
     var fitmentNote = [note, tireNote].filter(Boolean).join(' · ');
@@ -287,11 +345,19 @@
       'Center Bore': state.centerBore || '',
       'Wheel Design': design.title,
       'Construction': construction,
-      'Finish': finish,
+      'Hardware': state.hardware || DEFAULT_HARDWARE,
       'Fitment Tier': fit.tier,
       'Fitment Config': fit.config,
       'Fitment Source': fit.source === 'fortune-forged' ? 'Fortune Forged Guide' : 'Apex Guide',
     };
+
+    if (state.wheelStyle === 'two') {
+      baseProps['Face Finish'] = state.faceFinish || '';
+      baseProps['Barrel Finish'] = state.barrelFinish || '';
+      baseProps['Finish'] = finish || ('Face: ' + state.faceFinish + ' / Barrel: ' + state.barrelFinish);
+    } else {
+      baseProps['Finish'] = finish;
+    }
 
     if (state.wheelStyle === 'bead') {
       items.push({
@@ -376,7 +442,12 @@
     var stepDesign   = root.querySelector('[data-ff-sbv-step="design"]');
     var stepFinish   = root.querySelector('[data-ff-sbv-step="finish"]');
     var designsEl    = root.querySelector('[data-ff-sbv-designs]');
-    var finishesEl   = root.querySelector('[data-ff-sbv-finishes]');
+    var finishSingle = root.querySelector('[data-ff-sbv-finish-single]');
+    var finishTwo    = root.querySelector('[data-ff-sbv-finish-twopiece]');
+    var finishSelect = root.querySelector('[data-ff-sbv-finish-select]');
+    var faceFinishSelect = root.querySelector('[data-ff-sbv-face-finish-select]');
+    var barrelFinishSelect = root.querySelector('[data-ff-sbv-barrel-finish-select]');
+    var hardwareSelect = root.querySelector('[data-ff-sbv-hardware-select]');
     var addCartBtn   = root.querySelector('[data-ff-sbv-add-cart]');
     var errorEl      = root.querySelector('[data-ff-sbv-error]');
 
@@ -393,12 +464,63 @@
       selectedFitment: null,
       wheelStyle: null,
       selectedDesign: null,
-      selectedFinish: FINISHES[0],
+      selectedFinish: '',
+      faceFinish: '',
+      barrelFinish: '',
+      hardware: DEFAULT_HARDWARE,
       vehicleLabel: '',
       chassis: '',
       boltPattern: '',
       centerBore: '',
     };
+
+    populateFinishSelect(finishSelect, 'Select finish…');
+    populateFinishSelect(faceFinishSelect, 'Select face finish…');
+    populateFinishSelect(barrelFinishSelect, 'Select barrel finish…');
+    if (hardwareSelect) hardwareSelect.value = DEFAULT_HARDWARE;
+
+    function readFinishState() {
+      if (state.wheelStyle === 'two') {
+        state.faceFinish = faceFinishSelect ? faceFinishSelect.value : '';
+        state.barrelFinish = barrelFinishSelect ? barrelFinishSelect.value : '';
+        state.selectedFinish = state.faceFinish && state.barrelFinish
+          ? ('Face: ' + state.faceFinish + ' / Barrel: ' + state.barrelFinish)
+          : '';
+      } else {
+        state.selectedFinish = finishSelect ? finishSelect.value : '';
+        state.faceFinish = '';
+        state.barrelFinish = '';
+      }
+      state.hardware = hardwareSelect ? hardwareSelect.value : DEFAULT_HARDWARE;
+    }
+
+    function finishesValid() {
+      readFinishState();
+      if (state.wheelStyle === 'two') {
+        return !!(state.faceFinish && state.barrelFinish && state.hardware);
+      }
+      return !!(state.selectedFinish && state.hardware);
+    }
+
+    function updateAddCartState() {
+      if (!addCartBtn) return;
+      addCartBtn.disabled = !(state.selectedDesign && state.selectedDesign.variantId && finishesValid());
+    }
+
+    function setFinishMode(style) {
+      var isTwo = style === 'two';
+      if (finishSingle) finishSingle.hidden = isTwo;
+      if (finishTwo) finishTwo.hidden = !isTwo;
+      resetFinishSelect(finishSelect, 'Select finish…');
+      resetFinishSelect(faceFinishSelect, 'Select face finish…');
+      resetFinishSelect(barrelFinishSelect, 'Select barrel finish…');
+      if (hardwareSelect) hardwareSelect.value = DEFAULT_HARDWARE;
+      state.selectedFinish = '';
+      state.faceFinish = '';
+      state.barrelFinish = '';
+      state.hardware = DEFAULT_HARDWARE;
+      updateAddCartState();
+    }
 
     function selectedChassis() { return chassisMap[chassisEl.value] || null; }
 
@@ -406,16 +528,17 @@
       state.selectedFitment = null;
       state.wheelStyle = null;
       state.selectedDesign = null;
-      state.selectedFinish = FINISHES[0];
+      state.selectedFinish = '';
+      state.faceFinish = '';
+      state.barrelFinish = '';
+      state.hardware = DEFAULT_HARDWARE;
       if (builder) builder.hidden = true;
       if (stepDesign) stepDesign.hidden = true;
       if (stepFinish) stepFinish.hidden = true;
       if (addCartBtn) { addCartBtn.disabled = true; addCartBtn.textContent = 'Add to cart'; }
       if (errorEl) errorEl.hidden = true;
       root.querySelectorAll('.ff-sbv__style').forEach(function (b) { b.classList.remove('is-selected'); });
-      root.querySelectorAll('.ff-sbv__finish').forEach(function (b) {
-        b.classList.toggle('is-selected', b.getAttribute('data-ff-sbv-finish') === FINISHES[0]);
-      });
+      setFinishMode('mono');
     }
 
     function showBuilder(fitment) {
@@ -448,11 +571,12 @@
         b.classList.toggle('is-selected', b.getAttribute('data-ff-sbv-style') === style);
       });
 
+      setFinishMode(style);
       var col = style === 'mono' ? colMono : (style === 'two' ? colTwo : colBead);
       stepDesign.hidden = false;
       stepFinish.hidden = false;
       designsEl.innerHTML = '<p class="ff-sbv__loading">Loading designs…</p>';
-      if (addCartBtn) addCartBtn.disabled = true;
+      updateAddCartState();
 
       loadDesigns(col).then(function (products) {
         renderDesigns(designsEl, products, function (btn) {
@@ -461,7 +585,7 @@
             variantId: btn.getAttribute('data-variant-id'),
             title: titleEl ? titleEl.textContent : '',
           };
-          if (addCartBtn) addCartBtn.disabled = false;
+          updateAddCartState();
         });
       });
     }
@@ -579,21 +703,25 @@
       });
     });
 
-    if (finishesEl) {
-      finishesEl.querySelectorAll('[data-ff-sbv-finish]').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          finishesEl.querySelectorAll('.ff-sbv__finish').forEach(function (b) { b.classList.remove('is-selected'); });
-          btn.classList.add('is-selected');
-          state.selectedFinish = btn.getAttribute('data-ff-sbv-finish');
-        });
-      });
-    }
+    [finishSelect, faceFinishSelect, barrelFinishSelect, hardwareSelect].forEach(function (el) {
+      if (!el) return;
+      el.addEventListener('change', updateAddCartState);
+    });
 
     if (addCartBtn) {
       addCartBtn.addEventListener('click', function () {
         if (!state.selectedFitment || !state.selectedDesign || !state.wheelStyle) {
           if (errorEl) {
             errorEl.textContent = 'Select a fitment, wheel style, and design first.';
+            errorEl.hidden = false;
+          }
+          return;
+        }
+        if (!finishesValid()) {
+          if (errorEl) {
+            errorEl.textContent = state.wheelStyle === 'two'
+              ? 'Select face finish, barrel finish, and hardware before adding to cart.'
+              : 'Select a finish and hardware before adding to cart.';
             errorEl.hidden = false;
           }
           return;

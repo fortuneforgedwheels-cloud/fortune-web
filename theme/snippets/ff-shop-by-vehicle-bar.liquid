@@ -89,13 +89,31 @@
       </div>
 
       <div class="ff-sbv__builder-step" data-ff-sbv-step="finish" hidden>
-        <p class="ff-sbv__builder-label">Finish</p>
-        <div class="ff-sbv__finishes" data-ff-sbv-finishes>
-          <button type="button" class="ff-sbv__finish is-selected" data-ff-sbv-finish="Brushed Clear">Brushed Clear</button>
-          <button type="button" class="ff-sbv__finish" data-ff-sbv-finish="Polished Clear">Polished Clear</button>
-          <button type="button" class="ff-sbv__finish" data-ff-sbv-finish="Gloss Black">Gloss Black</button>
-          <button type="button" class="ff-sbv__finish" data-ff-sbv-finish="Satin Black">Satin Black</button>
+        <div class="ff-sbv__finish-panel" data-ff-sbv-finish-single>
+          <label class="ff-sbv__builder-label" for="ff-sbv-finish-select">Finish</label>
+          <select id="ff-sbv-finish-select" class="ff-sbv__select" data-ff-sbv-finish-select>
+            <option value="">Select finish…</option>
+          </select>
         </div>
+
+        <div class="ff-sbv__finish-panel" data-ff-sbv-finish-twopiece hidden>
+          <label class="ff-sbv__builder-label" for="ff-sbv-face-finish-select">Face finish</label>
+          <select id="ff-sbv-face-finish-select" class="ff-sbv__select" data-ff-sbv-face-finish-select>
+            <option value="">Select face finish…</option>
+          </select>
+
+          <label class="ff-sbv__builder-label" for="ff-sbv-barrel-finish-select">Barrel finish</label>
+          <select id="ff-sbv-barrel-finish-select" class="ff-sbv__select" data-ff-sbv-barrel-finish-select>
+            <option value="">Select barrel finish…</option>
+          </select>
+        </div>
+
+        <label class="ff-sbv__builder-label" for="ff-sbv-hardware-select">Hardware</label>
+        <select id="ff-sbv-hardware-select" class="ff-sbv__select" data-ff-sbv-hardware-select>
+          <option value="Silver">Silver</option>
+          <option value="Black">Black</option>
+          <option value="Hidden">Hidden</option>
+        </select>
       </div>
 
       <div class="ff-sbv__builder-actions">
