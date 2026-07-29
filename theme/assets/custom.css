@@ -16,3 +16,18 @@
   height: 100px !important;
   border-radius: 30px;
 }
+/* Hide Shopify Forms corner popup — replaced by FF $100-off offer modal */
+#shopify-block-forms,
+[id*="shopify-forms"],
+[id*="13768625480086291342"],
+[class*="shopify-forms"],
+iframe[src*="forms.shopify"],
+iframe[src*="shopify-forms"],
+div[data-forms-id],
+shopify-forms,
+[data-shopify-forms] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}

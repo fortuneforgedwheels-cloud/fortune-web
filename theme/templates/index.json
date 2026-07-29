@@ -1180,7 +1180,7 @@
       ],
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
-        "custom_liquid": "{% render 'ff-offer-popup' %}"
+        "custom_liquid": ""
       }
     },
     "666a0ea5-3ed3-46bd-90cd-0fcfe3ff243c": {

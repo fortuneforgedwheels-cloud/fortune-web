@@ -32,8 +32,14 @@
   window.setInterval(hideShopifyFormsCorner, 1000);
 
   ready(function () {
-    var root = document.querySelector('[data-ff-offer]');
-    if (!root || root.getAttribute('data-ff-offer-ready') === '1') return;
+    var roots = document.querySelectorAll('[data-ff-offer]');
+    if (!roots.length) return;
+    // Keep the first popup instance; remove duplicates from multiple inject points.
+    for (var i = 1; i < roots.length; i++) {
+      roots[i].parentNode && roots[i].parentNode.removeChild(roots[i]);
+    }
+    var root = roots[0];
+    if (root.getAttribute('data-ff-offer-ready') === '1') return;
     root.setAttribute('data-ff-offer-ready', '1');
 
     var storageKey = 'ff-offer-popup-dismissed';
