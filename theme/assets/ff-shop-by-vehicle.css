@@ -502,27 +502,28 @@
 .ff-sbv--page {
   --ff-sbv-pad-y: 32px;
   padding-bottom: 48px !important;
+  font-size: 18px;
 }
 
 .ff-sbv__page-wrap {
-  max-width: 960px;
+  max-width: 1040px;
   margin: 0 auto;
   display: grid;
-  gap: 24px;
+  gap: 28px;
 }
 
 .ff-sbv__page-head {
   display: grid;
-  gap: 8px;
+  gap: 12px;
   text-align: center;
 }
 
 .ff-sbv__back {
   justify-self: start;
   font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
-  font-size: 0.82rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255,255,255,0.75);
   text-decoration: none;
   transition: color 160ms ease;
 }
@@ -533,7 +534,7 @@
   margin: 0;
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
   font-weight: 700;
-  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-size: clamp(2rem, 4.5vw, 2.85rem);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #d4af37;
@@ -542,24 +543,133 @@
 .ff-sbv__page-vehicle {
   margin: 0;
   font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-size: 1.35rem;
   font-weight: 600;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255,255,255,0.92);
 }
 
 .ff-sbv__page-vehicle a { color: #d4af37; }
 
 .ff-sbv__specs--page {
   max-width: none;
-  padding: 12px 16px;
+  padding: 16px 20px;
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 4px;
   background: rgba(255,255,255,0.04);
 }
 
+.ff-sbv--page .ff-sbv__specs-line {
+  font-size: 1.2rem;
+}
+
 .ff-sbv__helper--page {
-  font-size: 0.8rem;
+  font-size: 1.05rem;
   max-width: none;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.45;
+}
+
+/* Build page: larger fitment cards, builder, and controls */
+.ff-sbv--page .ff-sbv__fitment-card {
+  padding: 28px 30px 32px;
+  gap: 22px;
+}
+
+.ff-sbv--page .ff-sbv__fitment-chassis {
+  font-size: 1.85rem;
+}
+
+.ff-sbv--page .ff-sbv__fitment-label {
+  font-size: 1.25rem;
+}
+
+.ff-sbv--page .ff-sbv__fitment-option {
+  padding: 22px 24px;
+  gap: 11px;
+}
+
+.ff-sbv--page .ff-sbv__fitment-option-badge {
+  font-size: 1rem;
+  padding: 6px 16px;
+}
+
+.ff-sbv--page .ff-sbv__fitment-option-tier {
+  font-size: 1.35rem;
+}
+
+.ff-sbv--page .ff-sbv__fitment-option-label {
+  font-size: 1.5rem;
+}
+
+.ff-sbv--page .ff-sbv__fitment-option-specs {
+  font-size: 1.35rem;
+}
+
+.ff-sbv--page .ff-sbv__fitment-option-tires,
+.ff-sbv--page .ff-sbv__fitment-option-notes {
+  font-size: 1.2rem;
+}
+
+.ff-sbv--page .ff-sbv__empty,
+.ff-sbv--page .ff-sbv__loading {
+  font-size: 1.15rem;
+  line-height: 1.5;
+}
+
+.ff-sbv--page .ff-sbv__builder {
+  padding: 24px 26px 28px;
+  gap: 20px;
+}
+
+.ff-sbv--page .ff-sbv__builder-title {
+  font-size: 1.35rem;
+}
+
+.ff-sbv--page .ff-sbv__builder-sub {
+  font-size: 1.1rem;
+}
+
+.ff-sbv--page .ff-sbv__builder-label {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.ff-sbv--page .ff-sbv__style,
+.ff-sbv--page .ff-sbv__finish {
+  font-size: 1rem;
+  padding: 12px 20px;
+}
+
+.ff-sbv--page .ff-sbv__select {
+  height: 50px;
+  font-size: 1.1rem;
+  padding: 0 40px 0 14px;
+}
+
+.ff-sbv--page .ff-sbv__designs {
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 14px;
+}
+
+.ff-sbv--page .ff-sbv__design {
+  font-size: 0.95rem;
+  padding: 14px 10px;
+  gap: 8px;
+}
+
+.ff-sbv--page .ff-sbv__design img {
+  width: 88px;
+  height: 88px;
+}
+
+.ff-sbv--page .ff-sbv__add-cart {
+  min-width: 200px;
+  height: 50px;
+  font-size: 1rem;
+}
+
+.ff-sbv--page .ff-sbv__error {
+  font-size: 1rem;
 }
 
 /* ─── responsive ─── */
@@ -572,6 +682,12 @@
   .ff-sbv__fitment-option-specs { font-size: 1.12rem; }
   .ff-sbv__fitment-option-tires,
   .ff-sbv__fitment-option-notes { font-size: 1.05rem; }
+  .ff-sbv--page .ff-sbv__fitment-option-tier { font-size: 1.25rem; }
+  .ff-sbv--page .ff-sbv__fitment-option-label { font-size: 1.35rem; }
+  .ff-sbv--page .ff-sbv__fitment-option-specs { font-size: 1.22rem; }
+  .ff-sbv--page .ff-sbv__fitment-option-tires,
+  .ff-sbv--page .ff-sbv__fitment-option-notes { font-size: 1.12rem; }
+  .ff-sbv--page .ff-sbv__page-vehicle { font-size: 1.2rem; }
 }
 
 @media (max-width: 560px) {
