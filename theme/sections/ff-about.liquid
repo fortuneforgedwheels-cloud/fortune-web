@@ -52,18 +52,22 @@
     </div>
     <div class="ff-about__hero-shade" aria-hidden="true"></div>
     <div class="ff-about__hero-copy">
-      <p class="ff-about__brand">{{ section.settings.brand | default: 'Fortune Forged' | escape }}</p>
-      <span class="ff-about__brand-line" aria-hidden="true"></span>
       {%- if section.settings.lede != blank -%}
         <p class="ff-about__lede">{{ section.settings.lede | escape }}</p>
       {%- endif -%}
-      <div class="ff-about__cta-row">
-        {%- if section.settings.primary_label != blank and section.settings.primary_link != blank -%}
-          <a class="ff-about__btn ff-about__btn--solid" href="{{ section.settings.primary_link }}">{{ section.settings.primary_label | escape }}</a>
-        {%- endif -%}
-        {%- if section.settings.secondary_label != blank and section.settings.secondary_link != blank -%}
-          <a class="ff-about__btn ff-about__btn--ghost" href="{{ section.settings.secondary_link }}">{{ section.settings.secondary_label | escape }}</a>
-        {%- endif -%}
+      <div class="ff-about__hero-bar">
+        <div class="ff-about__brand-block">
+          <p class="ff-about__brand">{{ section.settings.brand | default: 'Fortune Forged' | escape }}</p>
+          <span class="ff-about__brand-line" aria-hidden="true"></span>
+        </div>
+        <div class="ff-about__cta-row">
+          {%- if section.settings.primary_label != blank and section.settings.primary_link != blank -%}
+            <a class="ff-about__btn ff-about__btn--solid" href="{{ section.settings.primary_link }}">{{ section.settings.primary_label | escape }}</a>
+          {%- endif -%}
+          {%- if section.settings.secondary_label != blank and section.settings.secondary_link != blank -%}
+            <a class="ff-about__btn ff-about__btn--ghost" href="{{ section.settings.secondary_link }}">{{ section.settings.secondary_label | escape }}</a>
+          {%- endif -%}
+        </div>
       </div>
     </div>
   </div>
@@ -293,7 +297,7 @@
       "type": "text",
       "id": "primary_label",
       "label": "Primary CTA label",
-      "default": "Start a build"
+      "default": "Request a quote"
     },
     {
       "type": "url",
