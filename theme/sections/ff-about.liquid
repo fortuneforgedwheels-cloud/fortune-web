@@ -180,21 +180,20 @@
   </div>
 
   <div class="ff-about__section ff-about__section--mission">
-    {%- if section.settings.mission != blank -%}
-      <p class="ff-about__mission">{{ section.settings.mission | escape }}</p>
-    {%- endif -%}
-    {%- if section.settings.mission_note != blank -%}
-      <p class="ff-about__mission-note">{{ section.settings.mission_note | escape }}</p>
-    {%- endif -%}
-  </div>
-
-  <div class="ff-about__section ff-about__section--close">
-    {%- if section.settings.close_text != blank -%}
-      <p class="ff-about__close-copy">{{ section.settings.close_text | escape }}</p>
-    {%- endif -%}
-    <div class="ff-about__cta-row ff-about__cta-row--center">
+    <div class="ff-about__mission-stack">
+      {%- if section.settings.mission != blank -%}
+        <p class="ff-about__mission">{{ section.settings.mission | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.mission_note != blank -%}
+        <p class="ff-about__mission-note">{{ section.settings.mission_note | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.close_text != blank -%}
+        <p class="ff-about__close-copy">{{ section.settings.close_text | escape }}</p>
+      {%- endif -%}
       {%- if section.settings.close_label != blank and section.settings.close_link != blank -%}
-        <a class="ff-about__btn ff-about__btn--solid" href="{{ section.settings.close_link }}">{{ section.settings.close_label | escape }}</a>
+        <div class="ff-about__cta-row ff-about__cta-row--center">
+          <a class="ff-about__btn ff-about__btn--solid" href="{{ section.settings.close_link }}">{{ section.settings.close_label | escape }}</a>
+        </div>
       {%- endif -%}
     </div>
   </div>
