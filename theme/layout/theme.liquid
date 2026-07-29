@@ -81,7 +81,8 @@
             assign default_dark_mode = settings.default_dark_mode
         endif
     -%}
-    <body class="body-full template-{{ page_type }} skin-{{ settings.layout }}{% if settings.select_layout and enable_iso_rtl %} rtl{% endif %}{% if default_dark_mode %} dark-mode{% endif %}">
+    {%- assign ff_page_cache_bust = "now" | date: "%s%N" -%}
+    <body data-ff-bust="{{ ff_page_cache_bust }}" class="body-full template-{{ page_type }} skin-{{ settings.layout }}{% if settings.select_layout and enable_iso_rtl %} rtl{% endif %}{% if default_dark_mode %} dark-mode{% endif %}">
         {%- if settings.show_dark_mode -%}
             <script>
                 {%- if default_dark_mode -%}
