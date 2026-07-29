@@ -10,7 +10,8 @@
   assign offer_button = 'Claim Offer'
   assign offer_tags = 'newsletter, first-time-100-off'
   assign offer_disclaimer = 'By signing up, you agree to receive marketing emails. View our privacy policy and terms of service for more info.'
-  assign offer_success = "You're in - check your email for your $100 off code."
+  assign offer_success_title = 'Thank you!'
+  assign offer_success = "You're in — check your email for your $100 off code."
   assign offer_image = images['BMW_F80_25MP_HighQuality.jpg']
   if offer_image == blank and settings.newsletter_popup_image != blank
     assign offer_image = settings.newsletter_popup_image
@@ -29,7 +30,7 @@
   <div class="ff-offer__backdrop" data-ff-offer-close tabindex="-1"></div>
   <div class="ff-offer__dialog" role="dialog" aria-modal="true" aria-labelledby="ff-offer-title">
     <button type="button" class="ff-offer__close" data-ff-offer-close aria-label="Close offer">
-      <span aria-hidden="true">&times;</span>
+      <span class="ff-offer__close-icon" aria-hidden="true">&times;</span>
     </button>
     <div class="ff-offer__media" aria-hidden="true">
       {%- if offer_image != blank -%}
@@ -54,16 +55,22 @@
       {%- endif -%}
     </div>
     <div class="ff-offer__panel">
-      <h2 class="ff-offer__title" id="ff-offer-title">{{ offer_heading | escape }}</h2>
-      <p class="ff-offer__sub">{{ offer_subheading | escape }}</p>
-      {%- form 'customer', class: 'ff-offer__form', id: 'ff-offer-contact' -%}
-        <input type="hidden" name="contact[tags]" value="{{ offer_tags | escape }}">
-        <input class="ff-offer__input" type="text" name="contact[first_name]" placeholder="First name" autocomplete="given-name">
-        <input class="ff-offer__input" type="email" name="contact[email]" placeholder="Email" autocomplete="email" required>
-        <button type="submit" class="ff-offer__submit">{{ offer_button | escape }}</button>
-      {%- endform -%}
-      <p class="ff-offer__disclaimer">{{ offer_disclaimer | escape }}</p>
-      <p class="ff-offer__success" data-ff-offer-success hidden>{{ offer_success | escape }}</p>
+      <div class="ff-offer__content" data-ff-offer-content>
+        <h2 class="ff-offer__title" id="ff-offer-title">{{ offer_heading | escape }}</h2>
+        <p class="ff-offer__sub">{{ offer_subheading | escape }}</p>
+        {%- form 'customer', class: 'ff-offer__form', id: 'ff-offer-contact' -%}
+          <input type="hidden" name="contact[tags]" value="{{ offer_tags | escape }}">
+          <input class="ff-offer__input" type="text" name="contact[first_name]" placeholder="First name" autocomplete="given-name">
+          <input class="ff-offer__input" type="email" name="contact[email]" placeholder="Email" autocomplete="email" required>
+          <button type="submit" class="ff-offer__submit">{{ offer_button | escape }}</button>
+        {%- endform -%}
+        <p class="ff-offer__disclaimer">{{ offer_disclaimer | escape }}</p>
+      </div>
+      <div class="ff-offer__thanks" data-ff-offer-success hidden>
+        <h2 class="ff-offer__title">{{ offer_success_title | escape }}</h2>
+        <p class="ff-offer__sub">{{ offer_success | escape }}</p>
+        <p class="ff-offer__thanks-hint">Tap the X or outside the box to close.</p>
+      </div>
     </div>
   </div>
 </div>
