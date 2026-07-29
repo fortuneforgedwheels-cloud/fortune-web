@@ -727,7 +727,7 @@
           "point_finish": {
             "type": "point",
             "settings": {
-              "title": "Custom finishes",
+              "title": "Custom Finishes...",
               "title_size": 22,
               "title_align": "left",
               "text": "Brushed, polished, powder, one-offs. The face of the wheel gets the same attention as the face of the car.",
