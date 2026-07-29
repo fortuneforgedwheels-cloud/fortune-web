@@ -24,8 +24,8 @@
   margin: 0 0 32px;
   max-width: 46rem;
   color: #b0aea8;
-  line-height: 1.5;
-  font-size: 1rem;
+  line-height: 1.65;
+  font-size: clamp(1.08rem, 1.6vw, 1.18rem);
 }
 
 .ff-chassis__grid {

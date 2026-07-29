@@ -45,7 +45,8 @@
   margin: 12px auto 0;
   max-width: 36rem;
   color: rgba(243, 241, 236, 0.72);
-  line-height: 1.5;
+  line-height: 1.65;
+  font-size: clamp(1.08rem, 1.6vw, 1.18rem);
 }
 
 .ff-values__feature {
