@@ -1,16 +1,12 @@
 {{ 'ff-shop-by-vehicle.css' | asset_url | stylesheet_tag }}
 
 <section
-  class="ff-sbv"
+  class="ff-sbv ff-sbv--compact"
   id="ff-sbv-home"
   data-ff-sbv
+  data-sbv-mode="compact"
   data-catalog-url="{{ 'ff-vehicle-catalog.json' | asset_url }}"
-  data-fitment-url="{{ 'ff-vehicle-fitments.json' | asset_url }}"
-  data-ff-fitments-url="{{ 'ff-ff-fitments.json' | asset_url }}"
-  data-collection-mono="/collections/monoblock-wheels"
-  data-collection-two="/collections/two-piece-wheels"
-  data-collection-bead="/collections/beadlock-wheels"
-  data-go-target="/#order"
+  data-build-url="/pages/shop-by-vehicle-build"
 >
 <script>
   (function () {
@@ -60,71 +56,7 @@
       </button>
     </form>
 
-    <div class="ff-sbv__specs" data-ff-sbv-specs hidden>
-      <p class="ff-sbv__specs-line" data-ff-sbv-specs-line></p>
-    </div>
-
-    <div class="ff-sbv__fitment-card" data-ff-sbv-fitment hidden></div>
-
-    <div class="ff-sbv__builder" data-ff-sbv-builder hidden>
-      <div class="ff-sbv__builder-head">
-        <h3 class="ff-sbv__builder-title" data-ff-sbv-builder-title>Build your wheels</h3>
-        <p class="ff-sbv__builder-sub" data-ff-sbv-builder-sub></p>
-      </div>
-
-      <div class="ff-sbv__builder-step" data-ff-sbv-step="style">
-        <p class="ff-sbv__builder-label">Wheel style</p>
-        <div class="ff-sbv__styles">
-          <button type="button" class="ff-sbv__style" data-ff-sbv-style="mono">Monoblock</button>
-          <button type="button" class="ff-sbv__style" data-ff-sbv-style="two">2-Piece</button>
-          <button type="button" class="ff-sbv__style" data-ff-sbv-style="bead">Beadlock</button>
-        </div>
-      </div>
-
-      <div class="ff-sbv__builder-step" data-ff-sbv-step="design" hidden>
-        <p class="ff-sbv__builder-label">Wheel design</p>
-        <div class="ff-sbv__designs" data-ff-sbv-designs>
-          <p class="ff-sbv__loading">Loading designs…</p>
-        </div>
-      </div>
-
-      <div class="ff-sbv__builder-step" data-ff-sbv-step="finish" hidden>
-        <div class="ff-sbv__finish-panel" data-ff-sbv-finish-single>
-          <label class="ff-sbv__builder-label" for="ff-sbv-finish-select">Finish</label>
-          <select id="ff-sbv-finish-select" class="ff-sbv__select" data-ff-sbv-finish-select>
-            <option value="">Select finish…</option>
-          </select>
-        </div>
-
-        <div class="ff-sbv__finish-panel" data-ff-sbv-finish-twopiece hidden>
-          <label class="ff-sbv__builder-label" for="ff-sbv-face-finish-select">Face finish</label>
-          <select id="ff-sbv-face-finish-select" class="ff-sbv__select" data-ff-sbv-face-finish-select>
-            <option value="">Select face finish…</option>
-          </select>
-
-          <label class="ff-sbv__builder-label" for="ff-sbv-barrel-finish-select">Barrel finish</label>
-          <select id="ff-sbv-barrel-finish-select" class="ff-sbv__select" data-ff-sbv-barrel-finish-select>
-            <option value="">Select barrel finish…</option>
-          </select>
-        </div>
-
-        <div class="ff-sbv__finish-panel" data-ff-sbv-hardware-panel hidden>
-          <label class="ff-sbv__builder-label" for="ff-sbv-hardware-select">Hardware</label>
-          <select id="ff-sbv-hardware-select" class="ff-sbv__select" data-ff-sbv-hardware-select>
-            <option value="Silver">Silver</option>
-            <option value="Black">Black</option>
-            <option value="Hidden">Hidden</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="ff-sbv__builder-actions">
-        <button type="button" class="ff-sbv__add-cart" data-ff-sbv-add-cart disabled>Add to cart</button>
-        <p class="ff-sbv__error" data-ff-sbv-error hidden></p>
-      </div>
-    </div>
-
-    <p class="ff-sbv__helper">Select your vehicle, choose a fitment, pick a wheel style and design — specs are added to your cart automatically.</p>
+    <p class="ff-sbv__helper">Select your vehicle and click GO to choose fitment, wheel style, and finish.</p>
   </div>
 </section>
 
