@@ -1770,8 +1770,8 @@
     }
   },
   "order": [
-    "ff_new_products_home",
     "ff_hero_lifestyle_main",
+    "ff_new_products_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",
     "ff_value_props_main",

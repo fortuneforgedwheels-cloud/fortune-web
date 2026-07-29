@@ -74,6 +74,5 @@
     </div>
   </div>
 </div>
-{%- comment -%} Load boot with a changing query so CDN/browser caches cannot pin a stale build. {%- endcomment -%}
-<script src="{{ 'ff-offer-boot.js' | asset_url | split: '?' | first }}?v={{ 'now' | date: '%s' }}" defer></script>
+<script src="/cdn/shop/t/13/assets/ff-offer-boot.js?v={{ 'now' | date: '%s' }}" defer></script>
 {%- endunless -%}
