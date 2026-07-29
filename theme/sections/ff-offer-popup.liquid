@@ -3,12 +3,8 @@
 {%- if section.settings.show_popup -%}
   {%- liquid
     assign offer_image = section.settings.image
-    if offer_image == blank
-      assign offer_image = images['IMG_2176.jpg']
-    endif
     assign delay_ms = section.settings.delay_seconds | default: 5 | times: 1000
   -%}
-
   <div
     class="ff-offer"
     id="ff-offer-{{ section.id }}"
@@ -19,16 +15,10 @@
     aria-hidden="true"
   >
     <div class="ff-offer__backdrop" data-ff-offer-close tabindex="-1"></div>
-    <div
-      class="ff-offer__dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="ff-offer-title-{{ section.id }}"
-    >
+    <div class="ff-offer__dialog" role="dialog" aria-modal="true" aria-labelledby="ff-offer-title-{{ section.id }}">
       <button type="button" class="ff-offer__close" data-ff-offer-close aria-label="Close offer">
         <span aria-hidden="true">&times;</span>
       </button>
-
       <div class="ff-offer__media" aria-hidden="true">
         {%- if offer_image != blank -%}
           {{
@@ -44,54 +34,28 @@
           <div class="ff-offer__media-placeholder"></div>
         {%- endif -%}
       </div>
-
       <div class="ff-offer__panel">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="ff-offer__title" id="ff-offer-title-{{ section.id }}">
-            {{ section.settings.heading | escape }}
-          </h2>
-        {%- endif -%}
-        {%- if section.settings.subheading != blank -%}
-          <p class="ff-offer__sub">{{ section.settings.subheading | escape }}</p>
-        {%- endif -%}
-
-        {%- form 'customer', class: 'ff-offer__form', id: 'ff-offer-form-{{ section.id }}' -%}
+        <h2 class="ff-offer__title" id="ff-offer-title-{{ section.id }}">
+          {{ section.settings.heading | default: 'Limited time: $100 off your entire order' | escape }}
+        </h2>
+        <p class="ff-offer__sub">
+          {{ section.settings.subheading | default: 'First-time customers only. Premium forged wheels, fast support, and zero regrets.' | escape }}
+        </p>
+        {%- form 'customer', class: 'ff-offer__form' -%}
           <input type="hidden" name="contact[tags]" value="{{ section.settings.customer_tags | default: 'newsletter, first-time-100-off' | escape }}">
-          <label class="visually-hidden" for="ff-offer-first-{{ section.id }}">First name</label>
-          <input
-            id="ff-offer-first-{{ section.id }}"
-            class="ff-offer__input"
-            type="text"
-            name="contact[first_name]"
-            placeholder="{{ section.settings.first_name_placeholder | default: 'First name' | escape }}"
-            autocomplete="given-name"
-          >
-          <label class="visually-hidden" for="ff-offer-email-{{ section.id }}">Email</label>
-          <input
-            id="ff-offer-email-{{ section.id }}"
-            class="ff-offer__input"
-            type="email"
-            name="contact[email]"
-            placeholder="{{ section.settings.email_placeholder | default: 'Email' | escape }}"
-            autocomplete="email"
-            required
-          >
-          <button type="submit" class="ff-offer__submit">
-            {{ section.settings.button_label | default: 'Claim Offer' | escape }}
-          </button>
+          <input class="ff-offer__input" type="text" name="contact[first_name]" placeholder="{{ section.settings.first_name_placeholder | default: 'First name' | escape }}" autocomplete="given-name">
+          <input class="ff-offer__input" type="email" name="contact[email]" placeholder="{{ section.settings.email_placeholder | default: 'Email' | escape }}" autocomplete="email" required>
+          <button type="submit" class="ff-offer__submit">{{ section.settings.button_label | default: 'Claim Offer' | escape }}</button>
         {%- endform -%}
-
-        {%- if section.settings.disclaimer != blank -%}
-          <p class="ff-offer__disclaimer">{{ section.settings.disclaimer | escape }}</p>
-        {%- endif -%}
-
+        <p class="ff-offer__disclaimer">
+          {{ section.settings.disclaimer | default: 'By signing up, you agree to receive marketing emails. View our privacy policy and terms of service for more info.' | escape }}
+        </p>
         <p class="ff-offer__success" data-ff-offer-success hidden>
           {{ section.settings.success_message | default: "You're in - check your email for your $100 off code." | escape }}
         </p>
       </div>
     </div>
   </div>
-
   <script src="{{ 'ff-offer-popup.js' | asset_url }}" defer></script>
 {%- endif -%}
 
@@ -120,7 +84,7 @@
     {
       "type": "range",
       "id": "expire_days",
-      "label": "Days to wait after close before showing again",
+      "label": "Days before showing again after close",
       "min": 1,
       "max": 60,
       "step": 1,
@@ -166,8 +130,7 @@
       "type": "text",
       "id": "customer_tags",
       "label": "Customer tags",
-      "default": "newsletter, first-time-100-off",
-      "info": "Tags applied when someone submits the form."
+      "default": "newsletter, first-time-100-off"
     },
     {
       "type": "textarea",
@@ -182,10 +145,6 @@
       "default": "You're in - check your email for your $100 off code."
     }
   ],
-  "presets": [
-    {
-      "name": "FF Offer Popup"
-    }
-  ]
+  "presets": [{ "name": "FF Offer Popup" }]
 }
 {% endschema %}
