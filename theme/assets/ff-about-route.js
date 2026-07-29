@@ -3,7 +3,7 @@
   if (window.__ffStorefrontFix) return;
   window.__ffStorefrontFix = true;
 
-  var ABOUT_VIEW = 'ff-about-now';
+  var ABOUT_VIEW = 'ff-about-keep';
   var path = location.pathname || '';
   var onAbout = /\/pages\/about(?:-us)?\/?$/.test(path);
   var hasFreshView = new RegExp('[?&]view=' + ABOUT_VIEW + '(?:&|$)').test(location.search || '');

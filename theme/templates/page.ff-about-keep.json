@@ -1,0 +1,118 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "ff_about_live": {
+      "type": "ff-about",
+      "blocks": {
+        "point_fitment": {
+          "type": "point",
+          "settings": {
+            "title": "Real fitment",
+            "title_size": 22,
+            "title_align": "left",
+            "text": "Specs dialed for your chassis—offsets, brake clearance, and tire package—not a generic one-size catalog guess.",
+            "text_size": 18,
+            "text_align": "left"
+          }
+        },
+        "point_finish": {
+          "type": "point",
+          "settings": {
+            "title": "Custom finishes",
+            "title_size": 22,
+            "title_align": "left",
+            "text": "Brushed, polished, powder, one-offs. The face of the wheel gets the same attention as the face of the car.",
+            "text_size": 18,
+            "text_align": "left"
+          }
+        },
+        "point_support": {
+          "type": "point",
+          "settings": {
+            "title": "Direct support",
+            "title_size": 22,
+            "title_align": "left",
+            "text": "Talk to people who build and drive this stuff. Same-day answers when you need a call on sizing, finish, or install. Tralalalalla.",
+            "text_size": 18,
+            "text_align": "left"
+          }
+        }
+      },
+      "block_order": [
+        "point_fitment",
+        "point_finish",
+        "point_support"
+      ],
+      "settings": {
+        "hero_image": "shopify://shop_images/IMG_2142.jpg",
+        "story_video": "shopify://files/videos/copy_7F042C72-F701-4563-B7AC-AC21A87AF875.mov",
+        "story_video_url": "",
+        "story_poster": "shopify://shop_images/IMG_2149_2.jpg",
+        "story_video_autoplay": true,
+        "story_video_loop": true,
+        "story_video_muted": true,
+        "story_video_controls": true,
+        "hero_h_align": "left",
+        "hero_v_align": "bottom",
+        "hero_offset_x": 0,
+        "hero_offset_y": 0,
+        "brand": "Fortune Forged",
+        "brand_size": 40,
+        "brand_align": "left",
+        "lede": "Custom forged wheels, factory-backed builds, and fitment that holds up on the street.",
+        "lede_size": 18,
+        "lede_align": "left",
+        "primary_label": "Request a quote",
+        "primary_size": 12,
+        "primary_link": "/",
+        "secondary_label": "Talk to us",
+        "secondary_size": 12,
+        "secondary_link": "mailto:fortuneforgedwheels@gmail.com",
+        "story_align": "left",
+        "story_eyebrow": "The shop",
+        "story_eyebrow_size": 12,
+        "story_eyebrow_align": "left",
+        "story_heading": "Built from the factory floor",
+        "story_heading_size": 40,
+        "story_heading_align": "left",
+        "story_body": "<p>We’re not a badge slapped on someone else’s wheels. Fortune Forged owns a stake in the factory that machines every set—so design, materials, finishing, and QC stay under one roof.</p><p>That means tighter control, clearer answers, and wheels that match what you ordered. From first sketch to final torque spec, the same team is accountable for how it looks and how it sits.</p>",
+        "story_body_size": 18,
+        "story_body_align": "left",
+        "build_align": "left",
+        "build_eyebrow": "How we work",
+        "build_eyebrow_size": 12,
+        "build_eyebrow_align": "left",
+        "build_heading": "What we actually sweat",
+        "build_heading_size": 40,
+        "build_heading_align": "left",
+        "build_intro": "Less catalog fluff. More clearances, finishes, and people who answer the phone.",
+        "build_intro_size": 18,
+        "build_intro_align": "left",
+        "mission_align": "center",
+        "mission": "Look right. Sit right. Last forever.",
+        "mission_size": 30,
+        "mission_line_align": "center",
+        "mission_note": "Forged strength, custom finishes, and fitment support from people who actually care how your car rolls out of the bay.",
+        "mission_note_size": 20,
+        "mission_note_align": "center",
+        "close_text": "",
+        "close_text_size": 20,
+        "close_text_align": "center",
+        "close_label": "Get a quote",
+        "close_label_size": 12,
+        "close_link": "mailto:fortuneforgedwheels@gmail.com"
+      }
+    }
+  },
+  "order": [
+    "ff_about_live"
+  ]
+}

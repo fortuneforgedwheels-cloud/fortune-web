@@ -1,6 +1,6 @@
 <li class="menu-lv-item menu-lv-1 text-left has-megamenu{% if link.links != blank %} dropdown{% endif %}{% if sale_item_lv1 contains title %} menu-sale{% endif %}" id="megamenu-{{ link.handle }}">
     {%- if link.links != blank -%}
-        <a class="menu-lv-1__action list-menu__item link focus-inset" href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-now{% else %}{{ link.url }}{% endif %}" role="button">
+        <a class="menu-lv-1__action list-menu__item link focus-inset" href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-keep{% else %}{{ link.url }}{% endif %}" role="button">
             <span class="text">{{ link.title | escape }}</span>
             {%- if sale_item_lv1 contains title -%}
                 {% render 'icon-flashy' %}
@@ -42,14 +42,14 @@
                                     <span class="icon-dropdown">
                                         {% render 'icon-long-arrow' %}
                                     </span>
-                                    <a class="menu-lv-2__action link focus-inset" href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-now{% else %}{{ link.url }}{% endif %}" role="button">
+                                    <a class="menu-lv-2__action link focus-inset" href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-keep{% else %}{{ link.url }}{% endif %}" role="button">
                                         <span class="text">
                                             {{ link.title | escape }}
                                         </span>
                                     </a>
                                 </div>
                                 <div class="menu-lv-item menu-lv-2 nav-all-mobile text-left">
-                                    <a href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-now{% else %}{{ link.url }}{% endif %}" class="menu-lv-2__action list-menu__item list-menu__item--end link focus-inset"{% if childlink.current %} aria-current="page"{% endif %} role="button">
+                                    <a href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-keep{% else %}{{ link.url }}{% endif %}" class="menu-lv-2__action list-menu__item list-menu__item--end link focus-inset"{% if childlink.current %} aria-current="page"{% endif %} role="button">
                                         <span class="text">
                                             {{ 'general.navigation.go_to' | t : name : link.title | escape }}
                                         </span>
@@ -57,7 +57,7 @@
                                 </div>
                                 {%- if show_custom_text -%}
                                     <div class="menu-lv-item menu-lv-2 dropdown menu-custom-text text-left">
-                                        <a class="menu-lv-2__action list-menu__item link site-nav-title" href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-now{% else %}{{ link.url }}{% endif %}" role="button">
+                                        <a class="menu-lv-2__action list-menu__item link site-nav-title" href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-keep{% else %}{{ link.url }}{% endif %}" role="button">
                                             <span class="text">
                                                 {{ custom_text_title | escape }}
                                             </span>
@@ -71,7 +71,7 @@
                                                     <span class="icon-dropdown">
                                                         {% render 'icon-long-arrow' %}
                                                     </span>
-                                                    <a class="menu-lv-3__action link focus-inset" href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-now{% else %}{{ link.url }}{% endif %}" role="button">
+                                                    <a class="menu-lv-3__action link focus-inset" href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-keep{% else %}{{ link.url }}{% endif %}" role="button">
                                                         <span class="text">
                                                             {{ custom_text_title | escape }}
                                                         </span>
@@ -458,7 +458,7 @@
             {%- endif -%}
         {%- endif -%}
     {%- else -%}
-        <a href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-now{% else %}{{ link.url }}{% endif %}" class="menu-lv-1__action list-menu__item list-menu__item--end link focus-inset"{% if link.current %} aria-current="page"{% endif %}>
+        <a href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-keep{% else %}{{ link.url }}{% endif %}" class="menu-lv-1__action list-menu__item list-menu__item--end link focus-inset"{% if link.current %} aria-current="page"{% endif %}>
             <span class="text">{{ link.title | escape }}</span>
             {%- if sale_item_lv1 contains title -%}
                 {% render 'icon-flashy' %}

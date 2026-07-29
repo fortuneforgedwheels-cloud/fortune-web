@@ -78,7 +78,7 @@
       assign ff_about_redirect = false
       if request.page_type == 'page'
         if page.handle == 'about' or page.handle == 'about-us' or request.path contains '/pages/about'
-          unless template.suffix == 'ff-about-now' or template.suffix == 'ff-about'
+          unless template.suffix == 'ff-about-keep' or template.suffix == 'ff-about'
             assign ff_about_redirect = true
           endunless
         endif
@@ -87,8 +87,8 @@
     {%- if ff_about_redirect -%}
       <script>
         (function () {
-          if (/[?&]view=ff-about-now(?:&|$)/.test(location.search || '')) return;
-          location.replace(location.pathname + '?view=ff-about-now' + (location.hash || ''));
+          if (/[?&]view=ff-about-keep(?:&|$)/.test(location.search || '')) return;
+          location.replace(location.pathname + '?view=ff-about-keep' + (location.hash || ''));
         })();
       </script>
     {%- endif -%}
@@ -143,7 +143,7 @@
               endif
               if request.page_type == 'page'
                 if page.handle == 'about' or page.handle == 'about-us' or request.path contains '/pages/about'
-                  unless template.suffix == 'ff-about-now' or template.suffix == 'ff-about' or template.suffix == 'about'
+                  unless template.suffix == 'ff-about-keep' or template.suffix == 'ff-about' or template.suffix == 'about'
                     assign ff_is_about_page = true
                   endunless
                 endif
@@ -168,7 +168,7 @@
         </div>
         {% render 'ff-offer-popup' %}
         <link rel="stylesheet" href="/cdn/shop/t/13/assets/ff-storefront-fix.css?v={{ 'now' | date: '%s' }}">
-        <script src="/cdn/shop/t/13/assets/ff-about-route.js?v=preserve-copy1" defer></script>
+        <script src="/cdn/shop/t/13/assets/ff-about-route.js?v=preserve-copy2" defer></script>
         <script src="/cdn/shop/t/13/assets/ff-offer-boot.js?v={{ 'now' | date: '%s' }}" defer></script>
         {% section 'halo-toolbar-mobile' %}
         {{ 'rtl-section-header.css' | asset_url | stylesheet_tag }}
