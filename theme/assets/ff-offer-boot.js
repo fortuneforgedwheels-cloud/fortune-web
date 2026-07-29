@@ -1,4 +1,4 @@
-/* BOOT_BUILD 2026-07-29f */
+/* BOOT_BUILD 2026-07-29g */
 /**
  * Fortune Forged page + offer bootloader.
  * - Upgrades sticky-cached About / Beadlock Packages pages to latest FF markup
