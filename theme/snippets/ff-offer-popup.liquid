@@ -1,22 +1,18 @@
 <!-- ff-offer-popup-marker -->
-{{ 'ff-offer-popup.css' | asset_url | stylesheet_tag }}
+<link href="{{ 'ff-offer-popup.css' | asset_url }}" rel="stylesheet" type="text/css" media="all">
 <div class="ff-offer" id="ff-offer-global" data-ff-offer data-ff-offer-delay="5000" data-ff-offer-expire="14" hidden aria-hidden="true">
   <div class="ff-offer__backdrop" data-ff-offer-close tabindex="-1"></div>
   <div class="ff-offer__dialog" role="dialog" aria-modal="true" aria-labelledby="ff-offer-title">
     <button type="button" class="ff-offer__close" data-ff-offer-close aria-label="Close offer"><span aria-hidden="true">&times;</span></button>
-    <div class="ff-offer__media" aria-hidden="true">
-      <div class="ff-offer__media-placeholder"></div>
-    </div>
+    <div class="ff-offer__media" aria-hidden="true"><div class="ff-offer__media-placeholder"></div></div>
     <div class="ff-offer__panel">
       <h2 class="ff-offer__title" id="ff-offer-title">Limited time: $100 off your entire order</h2>
       <p class="ff-offer__sub">First-time customers only. Premium forged wheels, fast support, and zero regrets.</p>
-      <form class="ff-offer__form" id="ff-offer-form" action="/contact#ff-offer-form" method="post" accept-charset="UTF-8">
+      <form class="ff-offer__form" id="ff-offer-form" action="{{ routes.root_url }}" method="post">
         <input type="hidden" name="form_type" value="customer">
         <input type="hidden" name="utf8" value="✓">
         <input type="hidden" name="contact[tags]" value="newsletter, first-time-100-off">
-        <label class="visually-hidden" for="ff-offer-first">First name</label>
         <input id="ff-offer-first" class="ff-offer__input" type="text" name="contact[first_name]" placeholder="First name" autocomplete="given-name">
-        <label class="visually-hidden" for="ff-offer-email">Email</label>
         <input id="ff-offer-email" class="ff-offer__input" type="email" name="contact[email]" placeholder="Email" autocomplete="email" required>
         <button type="submit" class="ff-offer__submit">Claim Offer</button>
       </form>

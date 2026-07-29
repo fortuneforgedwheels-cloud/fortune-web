@@ -144,7 +144,9 @@
         {{ 'rtl-section-header.css' | asset_url | stylesheet_tag }}
         {{ 'rtl-section-footer.css' | asset_url | stylesheet_tag }}
         {% render 'halo-popup' %}
+        <!-- ff-offer-before-render -->
         {% render 'ff-offer-popup' %}
+        <!-- ff-offer-after-render -->
         {% render 'halo-sidebar' %}
         {% render 'halo-gdpr-cookie-consent' %}
         <div class="background-overlay"></div>
