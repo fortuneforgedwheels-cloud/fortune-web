@@ -113,16 +113,17 @@
 .ff-hero__content {
   position: absolute;
   z-index: 3;
-  left: 50%;
+  left: clamp(20px, 5vw, 72px);
+  right: auto;
   bottom: clamp(10px, 1.6vh, 18px);
-  transform: translateX(-50%);
-  width: min(920px, calc(100% - 32px));
-  max-width: none;
+  transform: none;
+  width: auto;
+  max-width: min(640px, calc(100% - 40px));
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
-  text-align: center;
+  text-align: left;
 }
 
 .ff-hero__title {
@@ -217,9 +218,11 @@
   }
 
   .ff-hero__content {
+    left: 16px;
     bottom: clamp(10px, 2vh, 16px);
     gap: 6px;
-    width: calc(100% - 24px);
+    max-width: calc(100% - 32px);
+    width: auto;
   }
 
   .ff-hero__title {
