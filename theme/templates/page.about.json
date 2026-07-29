@@ -7,7 +7,7 @@
           "type": "point",
           "settings": {
             "title": "Real fitment",
-            "text": "Specs dialed for your chassis—offsets, brake clearance, and tire package—not a generic one-size catalog guess."
+            "text": "Specs dialed for your chassis\u2014offsets, brake clearance, and tire package\u2014not a generic one-size catalog guess."
           }
         },
         "point_finish": {
@@ -33,19 +33,19 @@
       "settings": {
         "brand": "Fortune Forged",
         "lede": "Custom forged wheels, factory-backed builds, and fitment that holds up on the street.",
-        "primary_label": "Start a build",
+        "primary_label": "Request a quote",
         "primary_link": "/",
         "secondary_label": "Talk to us",
         "secondary_link": "mailto:fortuneforgedwheels@gmail.com",
         "story_eyebrow": "The shop",
         "story_heading": "Built from the factory floor",
-        "story_body": "<p>We’re not a badge slapped on someone else’s wheels. Fortune Forged owns a stake in the factory that machines every set—so design, materials, finishing, and QC stay under one roof.</p><p>That means tighter control, clearer answers, and wheels that match what you ordered. From first sketch to final torque spec, the same team is accountable for how it looks and how it sits.</p>",
+        "story_body": "<p>We\u2019re not a badge slapped on someone else\u2019s wheels. Fortune Forged owns a stake in the factory that machines every set\u2014so design, materials, finishing, and QC stay under one roof.</p><p>That means tighter control, clearer answers, and wheels that match what you ordered. From first sketch to final torque spec, the same team is accountable for how it looks and how it sits.</p>",
         "build_eyebrow": "How we work",
         "build_heading": "What we actually sweat",
         "build_intro": "Less catalog fluff. More clearances, finishes, and people who answer the phone.",
         "mission": "Look right. Sit right. Last.",
         "mission_note": "Forged strength, custom finishes, and fitment support from people who actually care how your car rolls out of the bay.",
-        "close_text": "Ready to spec a set? Tell us the car, the look, and how you drive—we’ll help lock the build.",
+        "close_text": "Ready to spec a set? Tell us the car, the look, and how you drive\u2014we\u2019ll help lock the build.",
         "close_label": "Get a quote",
         "close_link": "mailto:fortuneforgedwheels@gmail.com",
         "hero_image": "shopify://shop_images/IMG_2176.jpg",

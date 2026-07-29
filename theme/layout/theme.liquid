@@ -123,8 +123,7 @@
                 endif
               endif
               if request.page_type == 'page'
-                assign ff_about_handle = request.path | split: '/' | last
-                if ff_about_handle == 'about'
+                if page.handle == 'about' or page.handle == 'about-us' or request.path contains '/pages/about'
                   assign ff_is_about_page = true
                 endif
               endif
