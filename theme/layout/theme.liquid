@@ -144,11 +144,11 @@
         {{ 'rtl-section-header.css' | asset_url | stylesheet_tag }}
         {{ 'rtl-section-footer.css' | asset_url | stylesheet_tag }}
         {% render 'halo-popup' %}
+        {% render 'halo-sidebar' %}
+        {% render 'halo-gdpr-cookie-consent' %}
         <div id="ff-offer-inline-test" class="ff-offer" data-ff-offer data-ff-offer-delay="5000" data-ff-offer-expire="14" hidden aria-hidden="true">FF_OFFER_MARKER</div>
         {{ 'ff-offer-popup.css' | asset_url | stylesheet_tag }}
         <script src="{{ 'ff-offer-popup.js' | asset_url }}" defer></script>
-        {% render 'halo-sidebar' %}
-        {% render 'halo-gdpr-cookie-consent' %}
         <div class="background-overlay"></div>
         {%- if settings.show_background_effect -%}
             <div class="background-effect {{ settings.background_effect }}" style="--duration-timing: {{ settings.background_effect_timing | append: 's' }};--opacity: {{ settings.background_effect_opacity | times: 0.01 }};"></div>
