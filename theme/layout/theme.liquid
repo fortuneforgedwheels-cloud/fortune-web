@@ -144,9 +144,27 @@
         {{ 'rtl-section-header.css' | asset_url | stylesheet_tag }}
         {{ 'rtl-section-footer.css' | asset_url | stylesheet_tag }}
         {% render 'halo-popup' %}
-        <!-- ff-offer-before-render -->
-        {% render 'ff-offer-modal' %}
-        <!-- ff-offer-after-render -->
+        <div id="ff-offer-inline-test" data-ff-offer data-ff-offer-delay="5000" data-ff-offer-expire="14" class="ff-offer" hidden aria-hidden="true">
+          <link href="{{ 'ff-offer-popup.css' | asset_url }}" rel="stylesheet" type="text/css" media="all">
+          <div class="ff-offer__backdrop" data-ff-offer-close tabindex="-1"></div>
+          <div class="ff-offer__dialog" role="dialog" aria-modal="true" aria-labelledby="ff-offer-title">
+            <button type="button" class="ff-offer__close" data-ff-offer-close aria-label="Close offer"><span aria-hidden="true">&times;</span></button>
+            <div class="ff-offer__media" aria-hidden="true"><div class="ff-offer__media-placeholder"></div></div>
+            <div class="ff-offer__panel">
+              <h2 class="ff-offer__title" id="ff-offer-title">Limited time: $100 off your entire order</h2>
+              <p class="ff-offer__sub">First-time customers only. Premium forged wheels, fast support, and zero regrets.</p>
+              {% form 'customer', class: 'ff-offer__form', id: 'ff-offer-form' %}
+                <input type="hidden" name="contact[tags]" value="newsletter, first-time-100-off">
+                <input class="ff-offer__input" type="text" name="contact[first_name]" placeholder="First name" autocomplete="given-name">
+                <input class="ff-offer__input" type="email" name="contact[email]" placeholder="Email" autocomplete="email" required>
+                <button type="submit" class="ff-offer__submit">Claim Offer</button>
+              {% endform %}
+              <p class="ff-offer__disclaimer">By signing up, you agree to receive marketing emails. View our privacy policy and terms of service for more info.</p>
+              <p class="ff-offer__success" data-ff-offer-success hidden>You're in - check your email for your $100 off code.</p>
+            </div>
+          </div>
+          <script src="{{ 'ff-offer-popup.js' | asset_url }}" defer></script>
+        </div>
         {% render 'halo-sidebar' %}
         {% render 'halo-gdpr-cookie-consent' %}
         <div class="background-overlay"></div>
