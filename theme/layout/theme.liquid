@@ -140,10 +140,14 @@
             {{ 'section-footer.css' | asset_url | stylesheet_tag }}
             {% sections 'footer-group' %}
         </div>
+        <!-- FF_OFFER_MARKER_A -->
+        {% render 'ff-offer-test' %}
         {% render 'ff-offer-popup' %}
         {% section 'halo-toolbar-mobile' %}
         {{ 'rtl-section-header.css' | asset_url | stylesheet_tag }}
         {{ 'rtl-section-footer.css' | asset_url | stylesheet_tag }}
+        <!-- FF_OFFER_MARKER_B -->
+        {% render 'ff-offer-popup' %}
         {% render 'halo-popup' %}
         {% render 'halo-sidebar' %}
         {% render 'halo-gdpr-cookie-consent' %}
