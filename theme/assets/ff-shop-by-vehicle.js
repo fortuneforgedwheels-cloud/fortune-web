@@ -129,11 +129,18 @@
     return { configs: [], source: null, guideSlug: null };
   }
 
-  function isF80TopSeller(cfg, guideSlug) {
-    return guideSlug === 'f80'
-      && cfg.tier === 'Aggressive Street'
-      && normalizeSpec(cfg.front) === '20x9.5 ET15'
-      && normalizeSpec(cfg.rear) === '20x11 ET40';
+  function isFortuneTopSeller(cfg, guideSlug) {
+    if (guideSlug === 'f80') {
+      return cfg.tier === 'Aggressive Street'
+        && normalizeSpec(cfg.front) === '20x9.5 ET15'
+        && normalizeSpec(cfg.rear) === '20x11 ET40';
+    }
+    if (guideSlug === 'g8x') {
+      return cfg.tier === 'Daily Street & OEM+ Bolt-On'
+        && normalizeSpec(cfg.front) === '20x10 ET10'
+        && normalizeSpec(cfg.rear) === '20x11 ET12';
+    }
+    return false;
   }
 
   /* ── fitment card with selectable options ── */
@@ -156,7 +163,7 @@
 
     configs.forEach(function (cfg, idx) {
       var specLine;
-      var isTopSeller = isF80TopSeller(cfg, guideSlug);
+      var isTopSeller = isFortuneTopSeller(cfg, guideSlug);
       if (isSquare(cfg.front, cfg.rear)) {
         specLine = 'Front &amp; Rear: <strong>' + escHtml(cfg.front) + '</strong>';
       } else {
