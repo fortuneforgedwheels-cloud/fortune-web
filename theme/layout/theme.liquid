@@ -125,7 +125,9 @@
               endif
               if request.page_type == 'page'
                 if page.handle == 'about' or page.handle == 'about-us' or request.path contains '/pages/about'
-                  assign ff_is_about_page = true
+                  unless template.suffix == 'ff-about' or template.suffix == 'about'
+                    assign ff_is_about_page = true
+                  endunless
                 endif
                 if page.handle == 'beadlock-tire-packages' or page.handle == 'beadlock-and-tire-package' or page.handle == 'beadlock-tire-package' or request.path contains '/pages/beadlock-tire-package'
                   assign ff_is_beadlock_packages = true
