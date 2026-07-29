@@ -43,6 +43,34 @@
     return [year, make, model, chassis].filter(Boolean).join(' ');
   }
 
+  /* Strip Apex wheel product references from fitment copy (keep sizes/offsets). */
+  function isApexAvailabilityNote(note) {
+    return /^\s*available in\b/i.test(String(note || ''));
+  }
+
+  function stripApexWheelRefs(text) {
+    return String(text || '')
+      .replace(/\s*\([^)]*(?:VS-5|EC-?7|ARC-8|SM-10|SM-8|ML-\d|FL-5|SL-\d|TC-10)[^)]*\)/gi, '')
+      .replace(/\bAvailable in:?\s*[^.]+(?:\.|$)/gi, '')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
+  }
+
+  function sanitizeApexNotes(notesArr) {
+    return (notesArr || [])
+      .filter(function (n) { return !isApexAvailabilityNote(n); })
+      .map(stripApexWheelRefs)
+      .filter(Boolean)
+      .join(' ')
+      .trim();
+  }
+
+  function sanitizeFitmentNotes(notes, source) {
+    var cleaned = source === 'apex' ? stripApexWheelRefs(notes) : String(notes || '').trim();
+    if (isApexAvailabilityNote(cleaned)) return '';
+    return cleaned;
+  }
+
   /* ── FF slug resolution ── */
   function resolveFfSlug(slug, ffData) {
     if (!ffData || !slug) return null;
@@ -77,10 +105,10 @@
         }
         configs.push({
           tier: cat.cat || '',
-          config: size.label ? size.label.split('\n')[0] : 'Wheel fitment',
+          config: stripApexWheelRefs(size.label ? size.label.split('\n')[0] : 'Wheel fitment'),
           front: front,
           rear: rear,
-          notes: (size.n || []).join(' '),
+          notes: sanitizeApexNotes(size.n),
           tirePick: tirePick,
           tireFlags: '',
           source: 'apex',
@@ -135,7 +163,10 @@
         html += '<span class="ff-sbv__fitment-option-tires">Tires: ' + escHtml(cfg.tirePick) + '</span>';
       }
       if (cfg.notes) {
-        html += '<span class="ff-sbv__fitment-option-notes">' + escHtml(cfg.notes.slice(0, 180)) + (cfg.notes.length > 180 ? '…' : '') + '</span>';
+        var noteText = sanitizeFitmentNotes(cfg.notes, source);
+        if (noteText) {
+          html += '<span class="ff-sbv__fitment-option-notes">' + escHtml(noteText.slice(0, 180)) + (noteText.length > 180 ? '…' : '') + '</span>';
+        }
       }
       html += '</button>';
     });
@@ -223,7 +254,7 @@
     var vehicle = state.vehicleLabel;
     var fit = state.selectedFitment;
     var finish = state.selectedFinish || 'Brushed Clear';
-    var note = fit.notes || fit.tireFlags || '';
+    var note = sanitizeFitmentNotes(fit.notes, fit.source) || fit.tireFlags || '';
     var tireNote = fit.tirePick ? ('Tires: ' + fit.tirePick) : '';
     var fitmentNote = [note, tireNote].filter(Boolean).join(' · ');
     var construction = state.wheelStyle === 'mono' ? 'Monoblock'
