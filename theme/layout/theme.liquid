@@ -87,6 +87,7 @@
     {%- if ff_about_redirect -%}
       <script>
         (function () {
+          if (window.Shopify && Shopify.designMode) return;
           if (/[?&]view=ff-about-copy(?:&|$)/.test(location.search || '')) return;
           location.replace(location.pathname + '?view=ff-about-copy' + (location.hash || ''));
         })();
@@ -95,7 +96,9 @@
     {%- if request.page_type == 'index' -%}
       <script>
         (function () {
+          if (window.Shopify && Shopify.designMode) return;
           if (/[?&]view=vehicle(?:&|$)/.test(location.search || '')) return;
+          if (/[?&]preview_theme_id=/.test(location.search || '')) return;
           location.replace('/?view=vehicle' + (location.hash || ''));
         })();
       </script>
