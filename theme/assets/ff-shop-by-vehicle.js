@@ -151,8 +151,8 @@
         var slug = opt.slug || '';
         if (fitmentData && fitmentData[slug]) {
           renderFitmentCard(fitmentCard, chassisEl.value + (opt.trim && opt.trim !== chassisEl.value ? ' – ' + opt.trim : ''), fitmentData[slug]);
-        } else if (opt.hasFitment && fitmentUrl && !fitmentData) {
-          // lazy-load fitment file on first chassis selection
+        } else if (fitmentUrl && !fitmentData) {
+          // lazy-load on first chassis selection (no hasFitment check needed — preload handles most cases)
           loadFitments(function () {
             if (fitmentData && fitmentData[slug]) {
               renderFitmentCard(fitmentCard, chassisEl.value, fitmentData[slug]);
