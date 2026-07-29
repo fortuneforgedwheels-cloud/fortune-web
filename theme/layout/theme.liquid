@@ -143,7 +143,7 @@
               endif
               if request.page_type == 'page'
                 if page.handle == 'about' or page.handle == 'about-us' or request.path contains '/pages/about'
-                  unless template.suffix == 'ff-about-keep' or template.suffix == 'ff-about' or template.suffix == 'about'
+                  unless template.suffix == 'ff-about-keep' or template.suffix == 'ff-about-now' or template.suffix == 'ff-about' or template.suffix == 'about'
                     assign ff_is_about_page = true
                   endunless
                 endif
