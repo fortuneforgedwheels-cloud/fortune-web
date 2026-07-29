@@ -252,17 +252,20 @@
   .ff-finishes__layout {
     grid-template-columns: 1fr;
     gap: 28px;
+    align-items: start;
   }
 
   .ff-finishes__side {
     position: static;
     order: -1;
+    height: auto;
+    min-height: 0;
   }
 
   .ff-finishes__side-frame {
-    aspect-ratio: 16 / 7;
+    height: auto;
     min-height: 180px;
-    max-height: none;
+    aspect-ratio: 16 / 7;
   }
 }
 
