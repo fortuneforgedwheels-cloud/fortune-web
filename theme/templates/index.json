@@ -1767,10 +1767,23 @@
         "padding_top": 28,
         "padding_bottom": 56
       }
+    },
+    "ff_shop_by_vehicle_home": {
+      "type": "ff-shop-by-vehicle",
+      "settings": {
+        "show_section": true,
+        "heading": "SHOP BY VEHICLE",
+        "go_label": "GO",
+        "go_target": "/#order",
+        "helper": "Select year, make, model, and chassis to match bolt pattern and center bore for your build.",
+        "bar_color": "#e4572e",
+        "padding_y": 28
+      }
     }
   },
   "order": [
     "ff_hero_lifestyle_main",
+    "ff_shop_by_vehicle_home",
     "ff_new_products_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",

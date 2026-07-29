@@ -2,7 +2,7 @@
   "name": "fortune-web",
   "version": "1.0.0",
   "private": true,
-  "description": "Fortune Forged Wheels — Shopify theme development repo for fortuneforgedwheels.com",
+  "description": "Fortune Forged Wheels \u2014 Shopify theme development repo for fortuneforgedwheels.com",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fortuneforgedwheels-cloud/fortune-web.git"
@@ -21,7 +21,8 @@
     "theme:open": "bash scripts/with-env.sh shopify theme open --theme 188539207955",
     "theme:check": "bash scripts/with-env.sh shopify theme check --path theme",
     "theme:info": "bash scripts/with-env.sh shopify theme info --path theme",
-    "setup:check": "node scripts/check-setup.mjs"
+    "setup:check": "node scripts/check-setup.mjs",
+    "theme:pull-vehicles": "node scripts/pull-apex-vehicles.mjs"
   },
   "engines": {
     "node": ">=20"

@@ -1,0 +1,129 @@
+{{ 'ff-shop-by-vehicle.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.show_section -%}
+  <section
+    class="ff-sbv"
+    id="ff-sbv-{{ section.id }}"
+    data-ff-sbv
+    data-catalog-url="{{ 'ff-vehicle-catalog.json' | asset_url }}"
+    data-go-target="{{ section.settings.go_target | default: '/#order' | escape }}"
+    style="
+      --ff-sbv-bg: {{ section.settings.bar_color | default: '#e4572e' }};
+      --ff-sbv-pad-y: {{ section.settings.padding_y | default: 28 }}px;
+    "
+  >
+    <div class="ff-sbv__inner">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ff-sbv__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+
+      <form class="ff-sbv__form" data-ff-sbv-form novalidate>
+        <label class="ff-sbv__field">
+          <span class="visually-hidden">Year</span>
+          <select name="year" data-ff-sbv-year required>
+            <option value="">Year</option>
+          </select>
+        </label>
+
+        <label class="ff-sbv__field">
+          <span class="visually-hidden">Make</span>
+          <select name="make" data-ff-sbv-make required disabled>
+            <option value="">Make</option>
+          </select>
+        </label>
+
+        <label class="ff-sbv__field">
+          <span class="visually-hidden">Model</span>
+          <select name="model" data-ff-sbv-model required disabled>
+            <option value="">Model</option>
+          </select>
+        </label>
+
+        <label class="ff-sbv__field">
+          <span class="visually-hidden">Chassis / trim</span>
+          <select name="chassis" data-ff-sbv-chassis required disabled>
+            <option value="">Chassis</option>
+          </select>
+        </label>
+
+        <button type="submit" class="ff-sbv__go" data-ff-sbv-go disabled>
+          <span>{{ section.settings.go_label | default: 'GO' | escape }}</span>
+          <svg class="ff-sbv__go-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path d="M3 13 L13 3 M6 3 H13 V10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/>
+          </svg>
+        </button>
+      </form>
+
+      <div class="ff-sbv__specs" data-ff-sbv-specs hidden>
+        <p class="ff-sbv__specs-line" data-ff-sbv-specs-line></p>
+      </div>
+
+      {%- if section.settings.helper != blank -%}
+        <p class="ff-sbv__helper">{{ section.settings.helper | escape }}</p>
+      {%- endif -%}
+    </div>
+  </section>
+
+  <script src="{{ 'ff-shop-by-vehicle.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FF Shop By Vehicle",
+  "tag": "section",
+  "class": "section-ff-shop-by-vehicle",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "SHOP BY VEHICLE"
+    },
+    {
+      "type": "text",
+      "id": "go_label",
+      "label": "GO button label",
+      "default": "GO"
+    },
+    {
+      "type": "url",
+      "id": "go_target",
+      "label": "GO destination",
+      "info": "Defaults to the homepage quote section (/#order) with the selected vehicle attached."
+    },
+    {
+      "type": "text",
+      "id": "helper",
+      "label": "Helper text",
+      "default": "Select year, make, model, and chassis to match bolt pattern and center bore for your build."
+    },
+    {
+      "type": "color",
+      "id": "bar_color",
+      "label": "Bar color",
+      "default": "#e4572e"
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "label": "Vertical padding",
+      "min": 12,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    }
+  ],
+  "presets": [
+    {
+      "name": "FF Shop By Vehicle"
+    }
+  ]
+}
+{% endschema %}

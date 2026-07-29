@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@500;600;700&display=swap');
+
+.ff-sbv {
+  --ff-sbv-bg: #e4572e;
+  --ff-sbv-pad-y: 28px;
+  background: var(--ff-sbv-bg);
+  color: #fff;
+  padding: var(--ff-sbv-pad-y) 18px;
+}
+
+.ff-sbv__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+}
+
+.ff-sbv__heading {
+  margin: 0;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.55rem, 3.4vw, 2.35rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+}
+
+.ff-sbv__form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.ff-sbv__field {
+  display: block;
+  min-width: 0;
+}
+
+.ff-sbv__field select {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 48px;
+  padding: 0 38px 0 14px;
+  border: 1.5px solid #111;
+  border-radius: 2px;
+  background-color: #fff;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #111 50%),
+    linear-gradient(135deg, #111 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 2px),
+    calc(100% - 12px) calc(50% - 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  color: #111;
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ff-sbv__field select:disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
+}
+
+.ff-sbv__field select:focus {
+  outline: 2px solid #111;
+  outline-offset: 1px;
+}
+
+.ff-sbv__go {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 108px;
+  height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.ff-sbv__go:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: #f7f7f7;
+}
+
+.ff-sbv__go:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.ff-sbv__go-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.ff-sbv__specs {
+  width: 100%;
+  max-width: 980px;
+  text-align: center;
+}
+
+.ff-sbv__specs-line {
+  margin: 0;
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.ff-sbv__helper {
+  margin: 0;
+  max-width: 760px;
+  text-align: center;
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+@media (max-width: 900px) {
+  .ff-sbv__form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ff-sbv__go {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .ff-sbv__form {
+    grid-template-columns: 1fr;
+  }
+}
