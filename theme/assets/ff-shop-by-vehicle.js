@@ -405,9 +405,10 @@
 
       loadDesigns(col).then(function (products) {
         renderDesigns(designsEl, products, function (btn) {
+          var titleEl = btn.querySelector('span');
           state.selectedDesign = {
             variantId: btn.getAttribute('data-variant-id'),
-            title: btn.getAttribute('data-title'),
+            title: titleEl ? titleEl.textContent : '',
           };
           if (addCartBtn) addCartBtn.disabled = false;
         });
