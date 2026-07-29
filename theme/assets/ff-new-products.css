@@ -179,14 +179,64 @@
 }
 
 @media (max-width: 749.98px) {
+  .ff-new {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
   .ff-new__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .ff-new__bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
+    min-height: 40px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    gap: 8px;
+  }
+
+  .ff-new__bar-left,
+  .ff-new__bar-right {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+
+  .ff-new__label {
+    min-height: 36px;
+    padding: 8px 6px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+
+  .ff-new__meta {
+    min-height: 44px;
+    padding: 10px 8px;
+  }
+
+  .ff-new__caption {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+  }
+
+  .ff-new__view {
+    margin-top: 8px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  .ff-new__dots {
+    bottom: 8px;
+    gap: 4px;
+  }
+
+  .ff-new__dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .ff-new__dot.is-active {
+    width: 12px;
   }
 }
 
