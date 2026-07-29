@@ -1,5 +1,5 @@
 .ff-values {
-  --ff-gold: #a8a8a8;
+  --ff-gold: #dce1e6;
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -17,7 +17,7 @@
   z-index: 0;
   background:
     linear-gradient(180deg, rgba(8, 8, 8, 0.9) 0%, rgba(8, 8, 8, 0.82) 100%),
-    radial-gradient(120% 80% at 50% 0%, rgba(168, 168, 168, 0.12), transparent 55%);
+    radial-gradient(120% 80% at 50% 0%, rgba(220, 225, 230, 0.12), transparent 55%);
 }
 
 .ff-values__inner {

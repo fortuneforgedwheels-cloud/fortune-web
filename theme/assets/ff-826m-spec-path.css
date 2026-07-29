@@ -3,8 +3,8 @@
   --ff-826m-muted: #b0aea8;
   --ff-826m-line: #2e2e2e;
   --ff-826m-soft: #161616;
-  --ff-826m-gold: #a8a8a8;
-  --ff-826m-gold-soft: rgba(168, 168, 168, 0.14);
+  --ff-826m-gold: #dce1e6;
+  --ff-826m-gold-soft: rgba(220, 225, 230, 0.14);
   --ff-826m-accent: #ffffff;
   margin: 0 0 22px;
   padding: 20px 0 8px;
@@ -77,7 +77,7 @@
 }
 
 .ff-826m-path__choice input:checked + .ff-826m-path__choice-card .ff-826m-path__choice-title {
-  color: #d0d0d0;
+  color: #f0f3f5;
 }
 
 .ff-826m-path__choice input:focus-visible + .ff-826m-path__choice-card {
@@ -98,7 +98,7 @@
 }
 
 .ff-826m-path__choice input:checked + .ff-826m-path__choice-card .ff-826m-path__choice-meta {
-  color: #b8b8b8;
+  color: #c9ced4;
 }
 
 .ff-826m-path__badge {

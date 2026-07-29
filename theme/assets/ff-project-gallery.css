@@ -1,6 +1,6 @@
 .ff-projects {
-  --ff-gold: #a8a8a8;
-  --ff-gold-soft: rgba(168, 168, 168, 0.16);
+  --ff-gold: #dce1e6;
+  --ff-gold-soft: rgba(220, 225, 230, 0.16);
   --ff-ink: #f3f1ec;
   --ff-muted: rgba(243, 241, 236, 0.7);
   --ff-line: rgba(243, 241, 236, 0.16);
@@ -8,7 +8,7 @@
   overflow: hidden;
   padding: var(--ff-projects-pad-top, 72px) 20px var(--ff-projects-pad-bottom, 72px);
   background:
-    radial-gradient(120% 70% at 50% -10%, rgba(168, 168, 168, 0.14), transparent 55%),
+    radial-gradient(120% 70% at 50% -10%, rgba(220, 225, 230, 0.14), transparent 55%),
     linear-gradient(180deg, #0a0a0a 0%, #101010 100%);
   color: var(--ff-ink);
 }
@@ -200,7 +200,7 @@
   max-height: calc(100vh - 40px);
   overflow: auto;
   background: #0c0c0c;
-  border: 1px solid rgba(168, 168, 168, 0.5);
+  border: 1px solid rgba(220, 225, 230, 0.5);
   border-radius: 14px;
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
 }
@@ -290,7 +290,7 @@
 
 .ff-projects__details {
   padding: 26px 24px 28px;
-  border-left: 1px solid rgba(168, 168, 168, 0.28);
+  border-left: 1px solid rgba(220, 225, 230, 0.28);
 }
 
 .ff-projects__detail-badge {
@@ -325,7 +325,7 @@
 .ff-projects__specs {
   margin: 20px 0 0;
   padding: 16px 0 4px;
-  border-top: 1px solid rgba(168, 168, 168, 0.35);
+  border-top: 1px solid rgba(220, 225, 230, 0.35);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px 18px;
@@ -418,7 +418,7 @@ html.ff-projects-open {
 
   .ff-projects__details {
     border-left: 0;
-    border-top: 1px solid rgba(168, 168, 168, 0.28);
+    border-top: 1px solid rgba(220, 225, 230, 0.28);
   }
 }
 
