@@ -708,20 +708,7 @@
       },
       "ff-offer-popup": {
         "type": "ff-offer-popup",
-        "settings": {
-          "show_popup": true,
-          "delay_seconds": 5,
-          "expire_days": 14,
-          "image": "shopify://shop_images/update-newsletter-banner-2.jpg",
-          "heading": "Get $100 Off Your Entire Order",
-          "subheading": "Limited time offer for first-time customers. Premium mods, fast support and zero regrets. Built for real enthusiasts.",
-          "first_name_placeholder": "First name",
-          "email_placeholder": "Email",
-          "button_label": "Claim Offer",
-          "customer_tags": "newsletter, first-time-100-off",
-          "disclaimer": "By signing up, you agree to receive marketing emails. View our privacy policy and terms of service for more info.",
-          "success_message": "You're in - check your email for your $100 off code."
-        }
+        "settings": {}
       },
       "ff-about": {
         "type": "ff-about",
@@ -751,7 +738,7 @@
           "point_support": {
             "type": "point",
             "settings": {
-              "title": "call torrin",
+              "title": "Direct support",
               "title_size": 22,
               "title_align": "left",
               "text": "Talk to people who build and drive this stuff. Same-day answers when you need a call on sizing, finish, or install.",

@@ -1,4 +1,4 @@
-/* STOREFRONT_FIX_BUILD 2026-07-29d-call-torrin */
+/* STOREFRONT_FIX_BUILD 2026-07-29e-preserve-copy */
 (function () {
   if (window.__ffStorefrontFix) return;
   window.__ffStorefrontFix = true;
@@ -22,18 +22,4 @@
       a.setAttribute('href', url.pathname + '?' + url.searchParams.toString() + url.hash);
     } catch (e) {}
   });
-
-  // Sticky HTML cache sometimes serves old About copy; force the smoke-test label.
-  function swapSupportLabel() {
-    document.querySelectorAll('.ff-about__point-title').forEach(function (el) {
-      if ((el.textContent || '').trim() === 'Direct support') {
-        el.textContent = 'call torrin';
-      }
-    });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', swapSupportLabel);
-  } else {
-    swapSupportLabel();
-  }
 })();

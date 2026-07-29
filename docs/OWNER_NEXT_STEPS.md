@@ -13,7 +13,9 @@ Do **not** use `Halo-SetOnSocial-FinalVersion-Backup` for Cursor work — that i
 
 ## Request changes
 
-Tell the agent what to rebuild (homepage, nav, collections, quote form, branding, etc.). Updates push to the draft only.
+Tell the agent what to rebuild (homepage, nav, collections, quote form, branding, etc.).
+
+**Text boxes you edit in the theme editor are kept.** Agents sync Shopify copy before settings/template work and push code without overwriting your text. See `docs/MERCHANT_COPY.md`.
 
 ## Safety
 

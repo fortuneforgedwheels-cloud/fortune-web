@@ -1,0 +1,40 @@
+---
+description: Never overwrite merchant Shopify theme-editor text; pull before editing settings
+alwaysApply: true
+---
+
+# Merchant copy is sacred
+
+Torrin edits text in the Shopify theme editor. Those values live in:
+
+- `theme/config/settings_data.json`
+- `theme/templates/**/*.json` section/block `settings`
+- Section schema `"default"` values (only matter for brand-new blocks)
+
+## Hard rules
+
+1. **Before any change** that touches templates, sections with settings, or `settings_data.json`, run:
+   ```bash
+   npm run theme:sync-copy
+   ```
+   That pulls the current Fortune-Cursor-Rebuild theme copy from Shopify into `theme/`.
+
+2. **Never invent or “improve” merchant text** (headlines, ledes, mission lines, point titles, CTAs, close text, etc.) unless Torrin explicitly asks to change that specific copy.
+
+3. **Never push stale local copy over Shopify.** After a sync, if you only changed Liquid/CSS/JS, deploy with:
+   ```bash
+   npm run theme:push:code
+   ```
+   Do **not** include `config/settings_data.json` or template JSON in a push unless you just synced from Shopify and are intentionally publishing structural template changes **while keeping pulled settings values**.
+
+4. **When you must edit a template JSON** (add a section, reorder, new block type):
+   - Sync first
+   - Change structure only (`type`, `block_order`, `order`, new empty blocks)
+   - Keep every existing `settings` string/image/video value from the synced file
+   - Use `node scripts/preserve-merchant-settings.mjs` if merging a structural patch onto synced copy
+
+5. **Do not hardcode storefront copy in JS** that rewrites theme-editor text (no “replace this label with …” bootloaders). Routing/cache fixes are fine; text overrides are not.
+
+6. **Snippet/section fallbacks** may include placeholder copy for empty settings, but live pages must render `section.settings` / `block.settings` from Shopify, not fixed marketing strings that fight the editor.
+
+If unsure whether a file contains merchant copy: treat it as merchant copy and sync first.
