@@ -1,0 +1,250 @@
+{{ 'ff-faq.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.show_section -%}
+  <section class="ff-faq" id="ff-faq-{{ section.id }}">
+    <div class="ff-faq__atmosphere" aria-hidden="true"></div>
+    <div class="ff-faq__inner">
+      <header class="ff-faq__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ff-faq__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h1 class="ff-faq__heading">{{ section.settings.heading | escape }}</h1>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <p class="ff-faq__intro">{{ section.settings.intro | escape }}</p>
+        {%- endif -%}
+      </header>
+
+      {%- assign categories = section.blocks | where: 'type', 'category' -%}
+      {%- if categories.size > 1 -%}
+        <nav class="ff-faq__topics" aria-label="FAQ topics">
+          <a class="ff-faq__topic is-active" href="#ff-faq-{{ section.id }}" data-ff-faq-topic="all">All</a>
+          {%- for block in categories -%}
+            {%- if block.settings.title != blank -%}
+              <a
+                class="ff-faq__topic"
+                href="#ff-faq-cat-{{ block.id }}"
+                data-ff-faq-topic="{{ block.id }}"
+              >{{ block.settings.title | escape }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+
+      <div class="ff-faq__groups">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'category' -%}
+            <div class="ff-faq__group" id="ff-faq-cat-{{ block.id }}" data-ff-faq-group="{{ block.id }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}
+                <h2 class="ff-faq__group-title">{{ block.settings.title | escape }}</h2>
+              {%- endif -%}
+              <div class="ff-faq__items">
+                {%- for i in (1..10) -%}
+                  {%- liquid
+                    assign q_key = 'question_' | append: i
+                    assign a_key = 'answer_' | append: i
+                    assign question = block.settings[q_key]
+                    assign answer = block.settings[a_key]
+                  -%}
+                  {%- if question != blank -%}
+                    <details class="ff-faq__item">
+                      <summary class="ff-faq__question">
+                        <span>{{ question | escape }}</span>
+                        <span class="ff-faq__icon" aria-hidden="true"></span>
+                      </summary>
+                      <div class="ff-faq__answer">
+                        {%- if answer != blank -%}
+                          {{ answer }}
+                        {%- endif -%}
+                      </div>
+                    </details>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+        <div class="ff-faq__cta">
+          <p class="ff-faq__cta-text">{{ section.settings.cta_text | escape }}</p>
+          <a class="ff-faq__cta-btn" href="{{ section.settings.cta_link }}">{{ section.settings.cta_label | escape }}</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+
+  <script src="{{ 'ff-faq.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FF FAQ",
+  "tag": "section",
+  "class": "section-ff-faq",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Fortune Forged"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "FAQ"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA supporting text",
+      "default": "Still have a question?"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Contact us"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category title",
+          "default": "Shipping"
+        },
+        {
+          "type": "text",
+          "id": "question_1",
+          "label": "Question 1"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_1",
+          "label": "Answer 1"
+        },
+        {
+          "type": "text",
+          "id": "question_2",
+          "label": "Question 2"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_2",
+          "label": "Answer 2"
+        },
+        {
+          "type": "text",
+          "id": "question_3",
+          "label": "Question 3"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_3",
+          "label": "Answer 3"
+        },
+        {
+          "type": "text",
+          "id": "question_4",
+          "label": "Question 4"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_4",
+          "label": "Answer 4"
+        },
+        {
+          "type": "text",
+          "id": "question_5",
+          "label": "Question 5"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_5",
+          "label": "Answer 5"
+        },
+        {
+          "type": "text",
+          "id": "question_6",
+          "label": "Question 6"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_6",
+          "label": "Answer 6"
+        },
+        {
+          "type": "text",
+          "id": "question_7",
+          "label": "Question 7"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_7",
+          "label": "Answer 7"
+        },
+        {
+          "type": "text",
+          "id": "question_8",
+          "label": "Question 8"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_8",
+          "label": "Answer 8"
+        },
+        {
+          "type": "text",
+          "id": "question_9",
+          "label": "Question 9"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_9",
+          "label": "Answer 9"
+        },
+        {
+          "type": "text",
+          "id": "question_10",
+          "label": "Question 10"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_10",
+          "label": "Answer 10"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FF FAQ"
+    }
+  ]
+}
+{% endschema %}
