@@ -391,6 +391,25 @@
     min-height: 78vh;
   }
 
+  .ff-about__hero-copy {
+    padding: 0 16px 14px;
+    gap: 8px;
+  }
+
+  .ff-about__hero-bar {
+    gap: 12px 14px;
+  }
+
+  .ff-about__brand {
+    font-size: clamp(1.7rem, 9vw, 2.4rem);
+  }
+
+  .ff-about__btn {
+    min-height: 42px;
+    padding: 0 16px;
+    font-size: 11px;
+  }
+
   .ff-about__hero-img--desktop {
     display: none;
   }
