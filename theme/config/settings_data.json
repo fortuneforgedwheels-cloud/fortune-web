@@ -755,7 +755,11 @@
           "close_label": "Get a quote",
           "close_link": "mailto:fortuneforgedwheels@gmail.com",
           "hero_image": "shopify://shop_images/IMG_2176.jpg",
-          "story_image": "shopify://shop_images/IMG_2149_2.jpg"
+          "story_video_autoplay": true,
+          "story_video_loop": true,
+          "story_video_muted": true,
+          "story_video_controls": true,
+          "story_poster": "shopify://shop_images/IMG_2149_2.jpg"
         }
       }
     },
