@@ -345,7 +345,6 @@
       'Center Bore': state.centerBore || '',
       'Wheel Design': design.title,
       'Construction': construction,
-      'Hardware': state.hardware || DEFAULT_HARDWARE,
       'Fitment Tier': fit.tier,
       'Fitment Config': fit.config,
       'Fitment Source': fit.source === 'fortune-forged' ? 'Fortune Forged Guide' : 'Apex Guide',
@@ -355,6 +354,7 @@
       baseProps['Face Finish'] = state.faceFinish || '';
       baseProps['Barrel Finish'] = state.barrelFinish || '';
       baseProps['Finish'] = finish || ('Face: ' + state.faceFinish + ' / Barrel: ' + state.barrelFinish);
+      baseProps['Hardware'] = state.hardware || DEFAULT_HARDWARE;
     } else {
       baseProps['Finish'] = finish;
     }
@@ -447,6 +447,7 @@
     var finishSelect = root.querySelector('[data-ff-sbv-finish-select]');
     var faceFinishSelect = root.querySelector('[data-ff-sbv-face-finish-select]');
     var barrelFinishSelect = root.querySelector('[data-ff-sbv-barrel-finish-select]');
+    var hardwarePanel = root.querySelector('[data-ff-sbv-hardware-panel]');
     var hardwareSelect = root.querySelector('[data-ff-sbv-hardware-select]');
     var addCartBtn   = root.querySelector('[data-ff-sbv-add-cart]');
     var errorEl      = root.querySelector('[data-ff-sbv-error]');
@@ -467,7 +468,7 @@
       selectedFinish: '',
       faceFinish: '',
       barrelFinish: '',
-      hardware: DEFAULT_HARDWARE,
+      hardware: '',
       vehicleLabel: '',
       chassis: '',
       boltPattern: '',
@@ -491,7 +492,9 @@
         state.faceFinish = '';
         state.barrelFinish = '';
       }
-      state.hardware = hardwareSelect ? hardwareSelect.value : DEFAULT_HARDWARE;
+      state.hardware = (state.wheelStyle === 'two' && hardwareSelect)
+        ? hardwareSelect.value
+        : '';
     }
 
     function finishesValid() {
@@ -499,7 +502,7 @@
       if (state.wheelStyle === 'two') {
         return !!(state.faceFinish && state.barrelFinish && state.hardware);
       }
-      return !!(state.selectedFinish && state.hardware);
+      return !!state.selectedFinish;
     }
 
     function updateAddCartState() {
@@ -511,6 +514,7 @@
       var isTwo = style === 'two';
       if (finishSingle) finishSingle.hidden = isTwo;
       if (finishTwo) finishTwo.hidden = !isTwo;
+      if (hardwarePanel) hardwarePanel.hidden = !isTwo;
       resetFinishSelect(finishSelect, 'Select finish…');
       resetFinishSelect(faceFinishSelect, 'Select face finish…');
       resetFinishSelect(barrelFinishSelect, 'Select barrel finish…');
@@ -518,7 +522,7 @@
       state.selectedFinish = '';
       state.faceFinish = '';
       state.barrelFinish = '';
-      state.hardware = DEFAULT_HARDWARE;
+      state.hardware = isTwo ? DEFAULT_HARDWARE : '';
       updateAddCartState();
     }
 
@@ -531,7 +535,7 @@
       state.selectedFinish = '';
       state.faceFinish = '';
       state.barrelFinish = '';
-      state.hardware = DEFAULT_HARDWARE;
+      state.hardware = '';
       if (builder) builder.hidden = true;
       if (stepDesign) stepDesign.hidden = true;
       if (stepFinish) stepFinish.hidden = true;
@@ -721,7 +725,7 @@
           if (errorEl) {
             errorEl.textContent = state.wheelStyle === 'two'
               ? 'Select face finish, barrel finish, and hardware before adding to cart.'
-              : 'Select a finish and hardware before adding to cart.';
+              : 'Select a finish before adding to cart.';
             errorEl.hidden = false;
           }
           return;
