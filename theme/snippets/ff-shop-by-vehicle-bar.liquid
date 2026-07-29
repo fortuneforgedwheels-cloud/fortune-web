@@ -1,12 +1,16 @@
 {{ 'ff-shop-by-vehicle.css' | asset_url | stylesheet_tag }}
 
-  <section
-    class="ff-sbv"
-    id="ff-sbv-home"
-    data-ff-sbv
-    data-catalog-url="{{ 'ff-vehicle-catalog.json' | asset_url }}"
-    data-fitment-url="{{ 'ff-vehicle-fitments.json' | asset_url }}"
-    data-go-target="/#order"
+<section
+  class="ff-sbv"
+  id="ff-sbv-home"
+  data-ff-sbv
+  data-catalog-url="{{ 'ff-vehicle-catalog.json' | asset_url }}"
+  data-fitment-url="{{ 'ff-vehicle-fitments.json' | asset_url }}"
+  data-ff-fitments-url="{{ 'ff-ff-fitments.json' | asset_url }}"
+  data-collection-mono="/collections/monoblock-wheels"
+  data-collection-two="/collections/two-piece-wheels"
+  data-collection-bead="/collections/beadlock-wheels"
+  data-go-target="/#order"
 >
 <script>
   (function () {
@@ -62,7 +66,45 @@
 
     <div class="ff-sbv__fitment-card" data-ff-sbv-fitment hidden></div>
 
-    <p class="ff-sbv__helper">Select year, make, model, and chassis to match bolt pattern and center bore for your build.</p>
+    <div class="ff-sbv__builder" data-ff-sbv-builder hidden>
+      <div class="ff-sbv__builder-head">
+        <h3 class="ff-sbv__builder-title" data-ff-sbv-builder-title>Build your wheels</h3>
+        <p class="ff-sbv__builder-sub" data-ff-sbv-builder-sub></p>
+      </div>
+
+      <div class="ff-sbv__builder-step" data-ff-sbv-step="style">
+        <p class="ff-sbv__builder-label">Wheel style</p>
+        <div class="ff-sbv__styles">
+          <button type="button" class="ff-sbv__style" data-ff-sbv-style="mono">Monoblock</button>
+          <button type="button" class="ff-sbv__style" data-ff-sbv-style="two">2-Piece</button>
+          <button type="button" class="ff-sbv__style" data-ff-sbv-style="bead">Beadlock</button>
+        </div>
+      </div>
+
+      <div class="ff-sbv__builder-step" data-ff-sbv-step="design" hidden>
+        <p class="ff-sbv__builder-label">Wheel design</p>
+        <div class="ff-sbv__designs" data-ff-sbv-designs>
+          <p class="ff-sbv__loading">Loading designs…</p>
+        </div>
+      </div>
+
+      <div class="ff-sbv__builder-step" data-ff-sbv-step="finish" hidden>
+        <p class="ff-sbv__builder-label">Finish</p>
+        <div class="ff-sbv__finishes" data-ff-sbv-finishes>
+          <button type="button" class="ff-sbv__finish is-selected" data-ff-sbv-finish="Brushed Clear">Brushed Clear</button>
+          <button type="button" class="ff-sbv__finish" data-ff-sbv-finish="Polished Clear">Polished Clear</button>
+          <button type="button" class="ff-sbv__finish" data-ff-sbv-finish="Gloss Black">Gloss Black</button>
+          <button type="button" class="ff-sbv__finish" data-ff-sbv-finish="Satin Black">Satin Black</button>
+        </div>
+      </div>
+
+      <div class="ff-sbv__builder-actions">
+        <button type="button" class="ff-sbv__add-cart" data-ff-sbv-add-cart disabled>Add to cart</button>
+        <p class="ff-sbv__error" data-ff-sbv-error hidden></p>
+      </div>
+    </div>
+
+    <p class="ff-sbv__helper">Select your vehicle, choose a fitment, pick a wheel style and design — specs are added to your cart automatically.</p>
   </div>
 </section>
 

@@ -22,7 +22,8 @@
     "theme:check": "bash scripts/with-env.sh shopify theme check --path theme",
     "theme:info": "bash scripts/with-env.sh shopify theme info --path theme",
     "setup:check": "node scripts/check-setup.mjs",
-    "theme:pull-vehicles": "node scripts/pull-apex-vehicles.mjs"
+    "theme:pull-vehicles": "node scripts/pull-apex-vehicles.mjs",
+    "theme:build-ff-fitments": "node scripts/build-ff-fitments.mjs"
   },
   "engines": {
     "node": ">=20"

@@ -2,6 +2,8 @@
   if (window.__ffShopByVehicle) return;
   window.__ffShopByVehicle = true;
 
+  var FINISHES = ['Brushed Clear', 'Polished Clear', 'Gloss Black', 'Satin Black'];
+
   /* ── helpers ── */
   function fillSelect(select, placeholder, values, enable) {
     select.innerHTML = '';
@@ -21,84 +23,6 @@
     selects.forEach(function (s, i) { fillSelect(s, placeholders[i], [], false); });
   }
 
-  /* ── fitment card renderer ── */
-  function renderFitmentCard(container, chassis, fitments) {
-    container.innerHTML = '';
-    if (!fitments || !fitments.length) {
-      container.hidden = true; return;
-    }
-
-    // Build unique wheel sizes grouped by category
-    var html = '<div class="ff-sbv__fitment-header">'
-      + '<span class="ff-sbv__fitment-chassis">' + escHtml(chassis) + '</span>'
-      + '<span class="ff-sbv__fitment-label">Compatible wheel sizes</span>'
-      + '</div>';
-
-    fitments.forEach(function (cat) {
-      if (!cat.sizes || !cat.sizes.length) return;
-
-      html += '<div class="ff-sbv__fitment-cat">';
-      html += '<h4 class="ff-sbv__fitment-cat-name">' + escHtml(cat.cat) + '</h4>';
-
-      // Group by diameter for compact display
-      var byDia = {};
-      cat.sizes.forEach(function (s) {
-        s.w.forEach(function (w) {
-          var key = w.diameter + '"';
-          (byDia[key] = byDia[key] || []).push(w);
-        });
-      });
-
-      // Build unique size pills
-      var pills = {};
-      cat.sizes.forEach(function (s) {
-        s.w.forEach(function (w) {
-          var k = w.diameter + 'x' + w.width;
-          if (pills[k]) return;
-          var axle = w.axle === 'both' ? '' : (w.axle === 'front' ? 'F ' : 'R ');
-          pills[k] = axle + w.diameter + '×' + w.width + '" ET' + w.offset;
-        });
-      });
-
-      if (Object.keys(pills).length) {
-        html += '<div class="ff-sbv__fitment-pills">';
-        Object.values(pills).forEach(function (pill) {
-          html += '<span class="ff-sbv__fitment-pill">' + escHtml(pill) + '</span>';
-        });
-        html += '</div>';
-      }
-
-      // Tire picks
-      var tireLines = [];
-      cat.sizes.forEach(function (s) {
-        if (s.t && s.t.length) {
-          var staffIdx = s.n ? s.n.findIndex(function (n) {
-            return n.toLowerCase().includes('staff pick');
-          }) : -1;
-          s.t.forEach(function (t) {
-            var prefix = s.label && s.label.toLowerCase().includes('staff pick') ? '★ ' : '';
-            var ax = t.axle === 'front' ? 'F ' : (t.axle === 'rear' ? 'R ' : '');
-            var line = prefix + ax + t.width + '/' + t.aspect + '-' + t.diameter;
-            if (!tireLines.includes(line)) tireLines.push(line);
-          });
-        }
-      });
-      if (tireLines.length) {
-        html += '<div class="ff-sbv__fitment-tires">';
-        html += '<span class="ff-sbv__fitment-tires-label">Tires: </span>';
-        tireLines.slice(0, 6).forEach(function (t) {
-          html += '<span class="ff-sbv__fitment-tire-pill">' + escHtml(t) + '</span>';
-        });
-        html += '</div>';
-      }
-
-      html += '</div>';
-    });
-
-    container.innerHTML = html;
-    container.hidden = false;
-  }
-
   function escHtml(str) {
     return String(str)
       .replace(/&/g, '&amp;')
@@ -107,15 +31,285 @@
       .replace(/"/g, '&quot;');
   }
 
+  function normalizeSpec(s) {
+    return String(s || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function isSquare(front, rear) {
+    return normalizeSpec(front).toLowerCase() === normalizeSpec(rear).toLowerCase();
+  }
+
+  function vehicleLabel(year, make, model, chassis) {
+    return [year, make, model, chassis].filter(Boolean).join(' ');
+  }
+
+  /* ── FF slug resolution ── */
+  function resolveFfSlug(slug, ffData) {
+    if (!ffData || !slug) return null;
+    if (ffData.fitments && ffData.fitments[slug]) return slug;
+    var alias = ffData.slugAliases && ffData.slugAliases[slug];
+    if (alias && ffData.fitments && ffData.fitments[alias]) return alias;
+    return null;
+  }
+
+  /* ── Apex → selectable configs ── */
+  function apexToConfigs(apexTiers) {
+    var configs = [];
+    (apexTiers || []).forEach(function (cat) {
+      (cat.sizes || []).forEach(function (size) {
+        if (!size.w || !size.w.length) return;
+        var front = '';
+        var rear = '';
+        size.w.forEach(function (w) {
+          var spec = w.diameter + 'x' + w.width + ' ET' + w.offset;
+          if (w.axle === 'front') front = spec;
+          else if (w.axle === 'rear') rear = spec;
+          else { front = spec; rear = spec; }
+        });
+        if (!front && rear) front = rear;
+        if (!rear && front) rear = front;
+        var tirePick = '';
+        if (size.t && size.t.length) {
+          tirePick = size.t.map(function (t) {
+            var ax = t.axle === 'front' ? 'F ' : (t.axle === 'rear' ? 'R ' : '');
+            return ax + (t.label || (t.width + '/' + t.aspect + '-' + t.diameter));
+          }).join(' // ');
+        }
+        configs.push({
+          tier: cat.cat || '',
+          config: size.label ? size.label.split('\n')[0] : 'Wheel fitment',
+          front: front,
+          rear: rear,
+          notes: (size.n || []).join(' '),
+          tirePick: tirePick,
+          tireFlags: '',
+          source: 'apex',
+        });
+      });
+    });
+    return configs;
+  }
+
+  function getFitmentConfigs(slug, ffData, apexData) {
+    var ffSlug = resolveFfSlug(slug, ffData);
+    if (ffSlug) {
+      return { configs: ffData.fitments[ffSlug], source: 'fortune-forged' };
+    }
+    if (apexData && apexData[slug]) {
+      return { configs: apexToConfigs(apexData[slug]), source: 'apex' };
+    }
+    return { configs: [], source: null };
+  }
+
+  /* ── fitment card with selectable options ── */
+  function renderFitmentCard(container, chassis, configs, source, onPick) {
+    container.innerHTML = '';
+    if (!configs || !configs.length) {
+      container.hidden = true;
+      return;
+    }
+
+    var sourceLabel = source === 'fortune-forged'
+      ? 'Fortune Forged fitment guide'
+      : 'Apex fitment guide';
+
+    var html = '<div class="ff-sbv__fitment-header">'
+      + '<span class="ff-sbv__fitment-chassis">' + escHtml(chassis) + '</span>'
+      + '<span class="ff-sbv__fitment-label">Select a fitment · ' + escHtml(sourceLabel) + '</span>'
+      + '</div>'
+      + '<div class="ff-sbv__fitment-options">';
+
+    configs.forEach(function (cfg, idx) {
+      var specLine;
+      if (isSquare(cfg.front, cfg.rear)) {
+        specLine = 'Front &amp; Rear: <strong>' + escHtml(cfg.front) + '</strong>';
+      } else {
+        specLine = 'Front: <strong>' + escHtml(cfg.front) + '</strong>'
+          + ' · Rear: <strong>' + escHtml(cfg.rear) + '</strong>';
+      }
+      html += '<button type="button" class="ff-sbv__fitment-option" data-ff-sbv-pick-fitment data-index="' + idx + '">'
+        + '<span class="ff-sbv__fitment-option-tier">' + escHtml(cfg.tier) + '</span>'
+        + '<span class="ff-sbv__fitment-option-label">' + escHtml(cfg.config) + '</span>'
+        + '<span class="ff-sbv__fitment-option-specs">' + specLine + '</span>';
+      if (cfg.tirePick) {
+        html += '<span class="ff-sbv__fitment-option-tires">Tires: ' + escHtml(cfg.tirePick) + '</span>';
+      }
+      if (cfg.notes) {
+        html += '<span class="ff-sbv__fitment-option-notes">' + escHtml(cfg.notes.slice(0, 180)) + (cfg.notes.length > 180 ? '…' : '') + '</span>';
+      }
+      html += '</button>';
+    });
+
+    html += '</div>';
+    container.innerHTML = html;
+    container.hidden = false;
+
+    container.querySelectorAll('[data-ff-sbv-pick-fitment]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        container.querySelectorAll('.ff-sbv__fitment-option').forEach(function (b) {
+          b.classList.remove('is-selected');
+        });
+        btn.classList.add('is-selected');
+        var idx = Number(btn.getAttribute('data-index'));
+        if (onPick && configs[idx]) onPick(configs[idx], idx);
+      });
+    });
+  }
+
+  /* ── design catalog cache ── */
+  var designCache = {};
+
+  function loadDesigns(collectionPath) {
+    if (designCache[collectionPath]) {
+      return Promise.resolve(designCache[collectionPath]);
+    }
+    var url = collectionPath.replace(/\/$/, '') + '/products.json?limit=50';
+    return fetch(url, { credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.json() : { products: [] }; })
+      .then(function (data) {
+        var products = (data.products || []).map(function (p) {
+          var v = p.variants && p.variants[0];
+          return {
+            id: p.id,
+            title: p.title,
+            handle: p.handle,
+            variantId: v ? v.id : null,
+            image: p.images && p.images[0] ? p.images[0].src : '',
+            price: v ? v.price : '',
+          };
+        }).filter(function (p) { return p.variantId; });
+        designCache[collectionPath] = products;
+        return products;
+      })
+      .catch(function () { return []; });
+  }
+
+  function renderDesigns(container, products, onSelect) {
+    if (!products.length) {
+      container.innerHTML = '<p class="ff-sbv__empty">No wheel designs found in this collection. <a href="/collections/all">Browse all wheels</a>.</p>';
+      return;
+    }
+    var html = '';
+    products.forEach(function (p, i) {
+      html += '<button type="button" class="ff-sbv__design' + (i === 0 ? ' is-selected' : '') + '"'
+        + ' data-variant-id="' + p.variantId + '">';
+      if (p.image) {
+        html += '<img src="' + escHtml(p.image) + '" alt="" loading="lazy" width="80" height="80">';
+      }
+      html += '<span>' + escHtml(p.title) + '</span></button>';
+    });
+    container.innerHTML = html;
+
+    container.querySelectorAll('.ff-sbv__design').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        container.querySelectorAll('.ff-sbv__design').forEach(function (b) { b.classList.remove('is-selected'); });
+        btn.classList.add('is-selected');
+        if (onSelect) onSelect(btn);
+      });
+    });
+
+    if (onSelect) {
+      var first = container.querySelector('.ff-sbv__design');
+      if (first) onSelect(first);
+    }
+  }
+
+  /* ── cart builder ── */
+  function buildCartItems(state) {
+    var items = [];
+    var design = state.selectedDesign;
+    if (!design || !design.variantId) return items;
+
+    var vehicle = state.vehicleLabel;
+    var fit = state.selectedFitment;
+    var finish = state.selectedFinish || 'Brushed Clear';
+    var note = fit.notes || fit.tireFlags || '';
+    var tireNote = fit.tirePick ? ('Tires: ' + fit.tirePick) : '';
+    var fitmentNote = [note, tireNote].filter(Boolean).join(' · ');
+    var construction = state.wheelStyle === 'mono' ? 'Monoblock'
+      : (state.wheelStyle === 'two' ? '2-Piece' : 'Beadlock');
+
+    var baseProps = {
+      'Vehicle': vehicle,
+      'Chassis': state.chassis,
+      'Bolt Pattern': state.boltPattern || '',
+      'Center Bore': state.centerBore || '',
+      'Wheel Design': design.title,
+      'Construction': construction,
+      'Finish': finish,
+      'Fitment Tier': fit.tier,
+      'Fitment Config': fit.config,
+      'Fitment Source': fit.source === 'fortune-forged' ? 'Fortune Forged Guide' : 'Apex Guide',
+    };
+
+    if (state.wheelStyle === 'bead') {
+      items.push({
+        id: Number(design.variantId),
+        quantity: 2,
+        properties: Object.assign({}, baseProps, {
+          'Position': 'Rear pair (beadlock)',
+          'Size': fit.rear,
+          'Front Size': fit.front,
+          'Rear Size': fit.rear,
+          'Fitment': fitmentNote,
+        }),
+      });
+      return items;
+    }
+
+    if (isSquare(fit.front, fit.rear)) {
+      items.push({
+        id: Number(design.variantId),
+        quantity: 4,
+        properties: Object.assign({}, baseProps, {
+          'Position': 'Front & Rear (square)',
+          'Size': fit.front,
+          'Front Size': fit.front,
+          'Rear Size': fit.rear,
+          'Fitment': fitmentNote,
+        }),
+      });
+      return items;
+    }
+
+    items.push({
+      id: Number(design.variantId),
+      quantity: 2,
+      properties: Object.assign({}, baseProps, {
+        'Position': 'Front',
+        'Size': fit.front,
+        'Front Size': fit.front,
+        'Rear Size': fit.rear,
+        'Fitment': fitmentNote,
+      }),
+    });
+    items.push({
+      id: Number(design.variantId),
+      quantity: 2,
+      properties: Object.assign({}, baseProps, {
+        'Position': 'Rear',
+        'Size': fit.rear,
+        'Front Size': fit.front,
+        'Rear Size': fit.rear,
+        'Fitment': fitmentNote,
+      }),
+    });
+    return items;
+  }
+
   /* ── main init ── */
   function init(root) {
-    /* Override stale cached inline orange styling from older theme deploys */
     root.style.setProperty('--ff-sbv-bg', '#0a0a0a');
     root.style.setProperty('--ff-sbv-pad-y', '10px');
 
-    var catalogUrl   = root.getAttribute('data-catalog-url');
-    var fitmentUrl   = root.getAttribute('data-fitment-url');
-    var goTarget     = root.getAttribute('data-go-target') || '/#order';
+    var catalogUrl    = root.getAttribute('data-catalog-url');
+    var fitmentUrl    = root.getAttribute('data-fitment-url');
+    var ffFitmentsUrl = root.getAttribute('data-ff-fitments-url');
+    var goTarget      = root.getAttribute('data-go-target') || '/#order';
+    var colMono       = root.getAttribute('data-collection-mono') || '/collections/monoblock-wheels';
+    var colTwo        = root.getAttribute('data-collection-two') || '/collections/two-piece-wheels';
+    var colBead       = root.getAttribute('data-collection-bead') || '/collections/beadlock-wheels';
+
     var form         = root.querySelector('[data-ff-sbv-form]');
     var yearEl       = root.querySelector('[data-ff-sbv-year]');
     var makeEl       = root.querySelector('[data-ff-sbv-make]');
@@ -125,13 +319,100 @@
     var specsEl      = root.querySelector('[data-ff-sbv-specs]');
     var specsLine    = root.querySelector('[data-ff-sbv-specs-line]');
     var fitmentCard  = root.querySelector('[data-ff-sbv-fitment]');
+    var builder      = root.querySelector('[data-ff-sbv-builder]');
+    var builderSub   = root.querySelector('[data-ff-sbv-builder-sub]');
+    var stepStyle    = root.querySelector('[data-ff-sbv-step="style"]');
+    var stepDesign   = root.querySelector('[data-ff-sbv-step="design"]');
+    var stepFinish   = root.querySelector('[data-ff-sbv-step="finish"]');
+    var designsEl    = root.querySelector('[data-ff-sbv-designs]');
+    var finishesEl   = root.querySelector('[data-ff-sbv-finishes]');
+    var addCartBtn   = root.querySelector('[data-ff-sbv-add-cart]');
+    var errorEl      = root.querySelector('[data-ff-sbv-error]');
+
     if (!catalogUrl || !form || !yearEl) return;
 
-    var catalog     = null;
-    var fitmentData = null;
-    var chassisMap  = {};
+    var catalog      = null;
+    var apexData     = null;
+    var ffData       = null;
+    var chassisMap   = {};
+    var currentConfigs = [];
+    var currentSource  = null;
+
+    var state = {
+      selectedFitment: null,
+      wheelStyle: null,
+      selectedDesign: null,
+      selectedFinish: FINISHES[0],
+      vehicleLabel: '',
+      chassis: '',
+      boltPattern: '',
+      centerBore: '',
+    };
 
     function selectedChassis() { return chassisMap[chassisEl.value] || null; }
+
+    function resetBuilder() {
+      state.selectedFitment = null;
+      state.wheelStyle = null;
+      state.selectedDesign = null;
+      state.selectedFinish = FINISHES[0];
+      if (builder) builder.hidden = true;
+      if (stepDesign) stepDesign.hidden = true;
+      if (stepFinish) stepFinish.hidden = true;
+      if (addCartBtn) { addCartBtn.disabled = true; addCartBtn.textContent = 'Add to cart'; }
+      if (errorEl) errorEl.hidden = true;
+      root.querySelectorAll('.ff-sbv__style').forEach(function (b) { b.classList.remove('is-selected'); });
+      root.querySelectorAll('.ff-sbv__finish').forEach(function (b) {
+        b.classList.toggle('is-selected', b.getAttribute('data-ff-sbv-finish') === FINISHES[0]);
+      });
+    }
+
+    function showBuilder(fitment) {
+      if (!builder) return;
+      var opt = selectedChassis() || {};
+      state.selectedFitment = fitment;
+      state.vehicleLabel = vehicleLabel(yearEl.value, makeEl.value, modelEl.value, chassisEl.value);
+      state.chassis = chassisEl.value;
+      state.boltPattern = opt.boltPattern || '';
+      state.centerBore = opt.centerBore || '';
+
+      builderSub.textContent = fitment.config + ' · ' + (isSquare(fitment.front, fitment.rear)
+        ? fitment.front
+        : ('F ' + fitment.front + ' / R ' + fitment.rear));
+      builder.hidden = false;
+      stepStyle.hidden = false;
+      stepDesign.hidden = true;
+      stepFinish.hidden = true;
+      state.wheelStyle = null;
+      state.selectedDesign = null;
+      if (addCartBtn) addCartBtn.disabled = true;
+      root.querySelectorAll('.ff-sbv__style').forEach(function (b) { b.classList.remove('is-selected'); });
+      builder.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function onStyleSelect(style) {
+      state.wheelStyle = style;
+      state.selectedDesign = null;
+      root.querySelectorAll('.ff-sbv__style').forEach(function (b) {
+        b.classList.toggle('is-selected', b.getAttribute('data-ff-sbv-style') === style);
+      });
+
+      var col = style === 'mono' ? colMono : (style === 'two' ? colTwo : colBead);
+      stepDesign.hidden = false;
+      stepFinish.hidden = false;
+      designsEl.innerHTML = '<p class="ff-sbv__loading">Loading designs…</p>';
+      if (addCartBtn) addCartBtn.disabled = true;
+
+      loadDesigns(col).then(function (products) {
+        renderDesigns(designsEl, products, function (btn) {
+          state.selectedDesign = {
+            variantId: btn.getAttribute('data-variant-id'),
+            title: btn.getAttribute('data-title'),
+          };
+          if (addCartBtn) addCartBtn.disabled = false;
+        });
+      });
+    }
 
     function updateGo() {
       var opt = selectedChassis();
@@ -141,6 +422,8 @@
       if (!opt) {
         specsEl.hidden = true; specsLine.textContent = '';
         if (fitmentCard) { fitmentCard.innerHTML = ''; fitmentCard.hidden = true; }
+        resetBuilder();
+        currentConfigs = [];
         return;
       }
 
@@ -151,47 +434,65 @@
       specsLine.innerHTML = bits.join(' &nbsp;·&nbsp; ');
       specsEl.hidden = bits.length === 0;
 
-      if (fitmentCard) {
-        var slug = opt.slug || '';
-        if (fitmentData && fitmentData[slug]) {
-          renderFitmentCard(fitmentCard, chassisEl.value + (opt.trim && opt.trim !== chassisEl.value ? ' – ' + opt.trim : ''), fitmentData[slug]);
-        } else if (fitmentUrl && !fitmentData) {
-          // lazy-load on first chassis selection (no hasFitment check needed — preload handles most cases)
-          loadFitments(function () {
-            if (fitmentData && fitmentData[slug]) {
-              renderFitmentCard(fitmentCard, chassisEl.value, fitmentData[slug]);
-            }
-          });
-        } else {
-          fitmentCard.innerHTML = '';
-          fitmentCard.hidden = true;
-        }
-      }
-    }
+      if (!fitmentCard) return;
+      var slug = opt.slug || '';
 
-    function loadFitments(cb) {
-      fetch(fitmentUrl, { credentials: 'same-origin' })
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (data) {
-          if (data) fitmentData = data;
-          if (cb) cb();
-        })
-        .catch(function () {});
+      function render(slugKey) {
+        var pack = getFitmentConfigs(slugKey, ffData, apexData);
+        currentConfigs = pack.configs;
+        currentSource = pack.source;
+        if (!pack.configs.length) {
+          fitmentCard.innerHTML = '<p class="ff-sbv__empty">No fitment data for this vehicle yet. <a href="/#order">Request a custom quote</a>.</p>';
+          fitmentCard.hidden = false;
+          resetBuilder();
+          return;
+        }
+        var label = chassisEl.value + (opt.trim && opt.trim !== chassisEl.value ? ' – ' + opt.trim : '');
+        renderFitmentCard(fitmentCard, label, pack.configs, pack.source, showBuilder);
+      }
+
+      if (ffData || apexData) {
+        render(slug);
+      } else {
+        var pending = 0;
+        function done() {
+          pending--;
+          if (pending <= 0) render(slug);
+        }
+        if (ffFitmentsUrl && !ffData) {
+          pending++;
+          fetch(ffFitmentsUrl, { credentials: 'same-origin' })
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (d) { ffData = d; })
+            .catch(function () {})
+            .finally(done);
+        }
+        if (fitmentUrl && !apexData) {
+          pending++;
+          fetch(fitmentUrl, { credentials: 'same-origin' })
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (d) { apexData = d; })
+            .catch(function () {})
+            .finally(done);
+        }
+        if (pending === 0) render(slug);
+      }
     }
 
     /* ── cascade ── */
     function onYear() {
       resetDownstream([makeEl, modelEl, chassisEl], ['Make', 'Model', 'Chassis']);
       chassisMap = {};
+      resetBuilder();
       if (!yearEl.value || !catalog) { updateGo(); return; }
-      var makes = Object.keys(catalog.years[yearEl.value] || {}).sort();
-      fillSelect(makeEl, 'Make', makes, true);
+      fillSelect(makeEl, 'Make', Object.keys(catalog.years[yearEl.value] || {}).sort(), true);
       updateGo();
     }
 
     function onMake() {
       resetDownstream([modelEl, chassisEl], ['Model', 'Chassis']);
       chassisMap = {};
+      resetBuilder();
       if (!makeEl.value) { updateGo(); return; }
       var models = Object.keys(((catalog.years[yearEl.value] || {})[makeEl.value] || {})).sort();
       fillSelect(modelEl, 'Model', models, true);
@@ -201,6 +502,7 @@
     function onModel() {
       resetDownstream([chassisEl], ['Chassis']);
       chassisMap = {};
+      resetBuilder();
       if (!modelEl.value) { updateGo(); return; }
       var opts = (((catalog.years[yearEl.value] || {})[makeEl.value] || {})[modelEl.value] || []);
       var labels = opts.map(function (opt) {
@@ -218,51 +520,119 @@
     modelEl.addEventListener('change', onModel);
     chassisEl.addEventListener('change', updateGo);
 
-    /* ── GO ── */
+    /* ── style / finish / cart ── */
+    root.querySelectorAll('[data-ff-sbv-style]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        onStyleSelect(btn.getAttribute('data-ff-sbv-style'));
+      });
+    });
+
+    if (finishesEl) {
+      finishesEl.querySelectorAll('[data-ff-sbv-finish]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          finishesEl.querySelectorAll('.ff-sbv__finish').forEach(function (b) { b.classList.remove('is-selected'); });
+          btn.classList.add('is-selected');
+          state.selectedFinish = btn.getAttribute('data-ff-sbv-finish');
+        });
+      });
+    }
+
+    if (addCartBtn) {
+      addCartBtn.addEventListener('click', function () {
+        if (!state.selectedFitment || !state.selectedDesign || !state.wheelStyle) {
+          if (errorEl) {
+            errorEl.textContent = 'Select a fitment, wheel style, and design first.';
+            errorEl.hidden = false;
+          }
+          return;
+        }
+        var items = buildCartItems(state);
+        if (!items.length) {
+          if (errorEl) {
+            errorEl.textContent = 'Could not build cart items. Please try another design.';
+            errorEl.hidden = false;
+          }
+          return;
+        }
+
+        addCartBtn.disabled = true;
+        addCartBtn.textContent = 'Adding…';
+        if (errorEl) errorEl.hidden = true;
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ items: items }),
+        })
+          .then(function (r) {
+            if (!r.ok) throw new Error('cart-add-failed');
+            return r.json();
+          })
+          .then(function () {
+            try {
+              sessionStorage.setItem('ffVehicleSelection', JSON.stringify({
+                year: yearEl.value, make: makeEl.value, model: modelEl.value,
+                chassis: chassisEl.value, slug: (selectedChassis() || {}).slug || '',
+                fitment: state.selectedFitment, source: 'shop-by-vehicle',
+              }));
+            } catch (e) {}
+            window.location.href = '/cart';
+          })
+          .catch(function () {
+            addCartBtn.disabled = false;
+            addCartBtn.textContent = 'Add to cart';
+            if (errorEl) {
+              errorEl.textContent = 'Something went wrong adding to cart. Please try again.';
+              errorEl.hidden = false;
+            }
+          });
+      });
+    }
+
+    /* ── GO scrolls to fitments ── */
     form.addEventListener('submit', function (ev) {
       ev.preventDefault();
       if (goBtn.disabled) return;
+      if (fitmentCard && !fitmentCard.hidden) {
+        fitmentCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return;
+      }
       var opt = selectedChassis() || {};
-      var payload = {
-        year: yearEl.value, make: makeEl.value,
-        model: modelEl.value, chassis: chassisEl.value,
-        trim: opt.trim || chassisEl.value,
-        boltPattern: opt.boltPattern || '',
-        centerBore: opt.centerBore || '',
-        yearsLabel: opt.yearsLabel || '',
-        submodels: opt.submodels || [],
-        slug: opt.slug || '',
-        source: 'shop-by-vehicle',
-      };
-      try { sessionStorage.setItem('ffVehicleSelection', JSON.stringify(payload)); } catch (e) {}
+      try {
+        sessionStorage.setItem('ffVehicleSelection', JSON.stringify({
+          year: yearEl.value, make: makeEl.value, model: modelEl.value,
+          chassis: chassisEl.value, slug: opt.slug || '', source: 'shop-by-vehicle',
+        }));
+      } catch (e) {}
       var url;
       try { url = new URL(goTarget, window.location.origin); }
       catch (e) { url = new URL('/#order', window.location.origin); }
-      url.searchParams.set('year', payload.year);
-      url.searchParams.set('make', payload.make);
-      url.searchParams.set('model', payload.model);
-      url.searchParams.set('chassis', payload.chassis);
-      if (payload.boltPattern) url.searchParams.set('bolt', payload.boltPattern);
-      if (payload.centerBore)  url.searchParams.set('bore', payload.centerBore);
       window.location.assign(url.pathname + url.search + (url.hash || '#order'));
     });
 
-    /* ── load catalog ── */
+    /* ── load catalog + preload fitment data ── */
     fetch(catalogUrl, { credentials: 'same-origin' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (data) {
         if (!data) return;
         catalog = data;
-        var years = (data.yearList || Object.keys(data.years || {})).map(String);
-        fillSelect(yearEl, 'Year', years, true);
+        fillSelect(yearEl, 'Year', (data.yearList || Object.keys(data.years || {})).map(String), true);
         updateGo();
 
-        // pre-load fitment data in background after catalog is ready
-        if (fitmentUrl) {
-          window.setTimeout(function () {
-            loadFitments(null);
-          }, 800);
-        }
+        window.setTimeout(function () {
+          if (ffFitmentsUrl) {
+            fetch(ffFitmentsUrl, { credentials: 'same-origin' })
+              .then(function (r) { return r.ok ? r.json() : null; })
+              .then(function (d) { ffData = d; })
+              .catch(function () {});
+          }
+          if (fitmentUrl) {
+            fetch(fitmentUrl, { credentials: 'same-origin' })
+              .then(function (r) { return r.ok ? r.json() : null; })
+              .then(function (d) { apexData = d; })
+              .catch(function () {});
+          }
+        }, 400);
       })
       .catch(function () { fillSelect(yearEl, 'Year unavailable', [], false); });
   }
