@@ -118,6 +118,7 @@
         <aside class="ff-finishes__side" aria-label="{{ section.settings.side_image_alt | default: 'Finish palette wall' | escape }}">
           <div class="ff-finishes__side-frame">
             {%- if section.settings.side_image != blank -%}
+              {%- assign side_alt = section.settings.side_image_alt | default: 'Finish palette wall' -%}
               {{
                 section.settings.side_image
                 | image_url: width: 1400
@@ -126,7 +127,7 @@
                   loading: 'lazy',
                   widths: '480, 720, 960, 1400',
                   sizes: '(max-width: 989px) 100vw, 28vw',
-                  alt: section.settings.side_image_alt | default: 'Finish palette wall'
+                  alt: side_alt
               }}
             {%- else -%}
               <div class="ff-finishes__side-placeholder">
