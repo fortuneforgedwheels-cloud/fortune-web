@@ -1742,10 +1742,33 @@
         "block_text": "Please submit: year/make/model with your desired wheel design , the sizes Front/Rear (ie: 20x9.5F, 20x11R, etc) and the finish you need.  (brushed, polished, etc).",
         "block_title_align": "center"
       }
+    },
+    "ff_new_products_home": {
+      "type": "ff-new-products",
+      "settings": {
+        "show_section": true,
+        "bar_left": "New products",
+        "bar_right": "New designs",
+        "left_label": "Monoblock",
+        "left_collection": "monoblock-wheels",
+        "left_empty": "Select a monoblock collection",
+        "left_view_label": "Shop monoblock",
+        "left_view_link": "shopify://collections/monoblock-wheels",
+        "right_label": "Two piece",
+        "right_collection": "two-piece-wheels",
+        "right_empty": "Select a two-piece collection",
+        "right_view_label": "Shop two piece",
+        "right_view_link": "shopify://collections/two-piece-wheels",
+        "product_limit": 8,
+        "cycle_ms": 5,
+        "padding_top": 28,
+        "padding_bottom": 56
+      }
     }
   },
   "order": [
     "ff_hero_lifestyle_main",
+    "ff_new_products_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",
     "ff_value_props_main",
