@@ -18,6 +18,12 @@
             </a>
         </li>
 		{%- for link in menu -%}
+			{%- liquid
+				assign ff_nav_title = link.title | escape | downcase | handle
+				if ff_nav_title == 'warranty' or link.url contains '/pages/warranty'
+					continue
+				endif
+			-%}
 			<li class="menu-lv-item menu-lv-2 text-left{% if link.links != blank %} dropdown{% endif %}">
 				{%- if link.links == blank -%}
 					<a href="{{ link.url }}" class="menu-lv-2__action list-menu__item list-menu__item--end link focus-inset{% if show_icon %} menu-lv__flex{% endif %}" role="button">
@@ -217,6 +223,5 @@
 				{%- endif -%}
 			</li>
 		{%- endfor -%}
-		{% render 'ff-nav-warranty', menu: menu, level: 2 %}
 	</ul>
 </div>
