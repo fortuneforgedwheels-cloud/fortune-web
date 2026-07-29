@@ -117,9 +117,7 @@
 }
 
 .ff-fan__thumb-shade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.75) 0%, transparent 60%);
+  display: none;
 }
 
 .ff-fan__thumb-cta {
