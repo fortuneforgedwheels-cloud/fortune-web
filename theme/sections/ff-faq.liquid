@@ -6,13 +6,13 @@
     <div class="ff-faq__inner">
       <header class="ff-faq__header">
         {%- if section.settings.eyebrow != blank -%}
-          <p class="ff-faq__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          <p class="ff-faq__eyebrow" {% render 'ff-type-style', size: section.settings.eyebrow_size, align: section.settings.eyebrow_align, min_ratio: 90 %}>{{ section.settings.eyebrow | escape }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
           <h1 class="ff-faq__heading">{{ section.settings.heading | escape }}</h1>
         {%- endif -%}
         {%- if section.settings.intro != blank -%}
-          <p class="ff-faq__intro">{{ section.settings.intro | escape }}</p>
+          <p class="ff-faq__intro" {% render 'ff-type-style', size: section.settings.intro_size, align: section.settings.intro_align, min_ratio: 75 %}>{{ section.settings.intro | escape }}</p>
         {%- endif -%}
       </header>
 
@@ -69,7 +69,7 @@
 
       {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
         <div class="ff-faq__cta">
-          <p class="ff-faq__cta-text">{{ section.settings.cta_text | escape }}</p>
+          <p class="ff-faq__cta-text" {% render 'ff-type-style', size: section.settings.cta_text_size, align: section.settings.cta_text_align, min_ratio: 75 %}>{{ section.settings.cta_text | escape }}</p>
           <a class="ff-faq__cta-btn" href="{{ section.settings.cta_link }}">{{ section.settings.cta_label | escape }}</a>
         </div>
       {%- endif -%}
@@ -99,6 +99,27 @@
       "default": "Fortune Forged"
     },
     {
+      "type": "range",
+      "id": "eyebrow_size",
+      "label": "Eyebrow size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_align",
+      "label": "Eyebrow align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "text",
       "id": "heading",
       "label": "Heading",
@@ -110,10 +131,52 @@
       "label": "Intro"
     },
     {
+      "type": "range",
+      "id": "intro_size",
+      "label": "Intro size",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "intro_align",
+      "label": "Intro align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "text",
       "id": "cta_text",
       "label": "CTA supporting text",
       "default": "Still have a question?"
+    },
+    {
+      "type": "range",
+      "id": "cta_text_size",
+      "label": "CTA supporting text size",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "cta_text_align",
+      "label": "CTA supporting text align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
     },
     {
       "type": "text",

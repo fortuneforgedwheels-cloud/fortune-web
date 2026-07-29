@@ -21,7 +21,7 @@
       <h1 class="ff-aff__boxed-title">{{ how_heading | escape }}</h1>
 
       {%- if section.settings.intro != blank -%}
-        <p class="ff-aff__intro">{{ section.settings.intro | escape }}</p>
+        <p class="ff-aff__intro" {% render 'ff-type-style', size: section.settings.intro_size, align: section.settings.intro_align, min_ratio: 75 %}>{{ section.settings.intro | escape }}</p>
       {%- endif -%}
 
       <div class="ff-aff__steps">
@@ -73,7 +73,7 @@
           <h2 class="ff-aff__apply-heading">{{ section.settings.apply_heading | escape }}</h2>
         {%- endif -%}
         {%- if section.settings.apply_intro != blank -%}
-          <p class="ff-aff__apply-intro">{{ section.settings.apply_intro | escape }}</p>
+          <p class="ff-aff__apply-intro" {% render 'ff-type-style', size: section.settings.apply_intro_size, align: section.settings.apply_intro_align, min_ratio: 75 %}>{{ section.settings.apply_intro | escape }}</p>
         {%- endif -%}
 
         {%- form 'contact', id: 'FFAffiliateApply', class: 'ff-aff__form' -%}
@@ -164,6 +164,27 @@
       "default": "The Fortune Forged Affiliate Program is a great way to earn additional money by monetizing your digital content. Sharing custom discount coupons allows you to receive a commission from the conversions made by visitors coming from your website, channel, social media, or any other communication channel. Join in and make sure your fellow drivers are standing out."
     },
     {
+      "type": "range",
+      "id": "intro_size",
+      "label": "Intro size",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "intro_align",
+      "label": "Intro align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
       "type": "text",
       "id": "benefits_heading",
       "label": "Benefits heading",
@@ -180,6 +201,27 @@
       "id": "apply_intro",
       "label": "Application intro",
       "default": "Fill out each field below. Use the placeholders as a guide — email in the email box, phone in the phone box, and so on."
+    },
+    {
+      "type": "range",
+      "id": "apply_intro_size",
+      "label": "Application intro size",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "apply_intro_align",
+      "label": "Application intro align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
     },
     {
       "type": "text",

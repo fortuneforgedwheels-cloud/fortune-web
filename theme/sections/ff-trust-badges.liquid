@@ -62,7 +62,7 @@
                 {%- endif -%}
               {%- endif -%}
               {%- if block.settings.description != blank -%}
-                <p class="ff-trust__desc">
+                <p class="ff-trust__desc" {% render 'ff-type-style', size: section.settings.description_size, align: section.settings.description_align, min_ratio: 75 %}>
                   {{ block.settings.description | escape }}
                   {%- if block.settings.show_email and contact_email != blank -%}
                     <a class="ff-trust__link" href="mailto:{{ contact_email }}">{{ contact_email }}</a>
@@ -89,6 +89,27 @@
       "id": "show_section",
       "label": "Show section",
       "default": true
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Supporting text size",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "description_align",
+      "label": "Supporting text align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
     },
     {
       "type": "range",

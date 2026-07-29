@@ -8,13 +8,13 @@
           <a class="ff-guide__back" href="{{ section.settings.back_link }}">{{ section.settings.back_label | escape }}</a>
         {%- endif -%}
         {%- if section.settings.eyebrow != blank -%}
-          <p class="ff-guide__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          <p class="ff-guide__eyebrow" {% render 'ff-type-style', size: section.settings.eyebrow_size, align: section.settings.eyebrow_align, min_ratio: 90 %}>{{ section.settings.eyebrow | escape }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
           <h1 class="ff-guide__heading">{{ section.settings.heading | escape }}</h1>
         {%- endif -%}
         {%- if section.settings.intro != blank -%}
-          <div class="ff-guide__intro">{{ section.settings.intro }}</div>
+          <div class="ff-guide__intro" {% render 'ff-type-style', size: section.settings.intro_size, align: section.settings.intro_align, min_ratio: 75 %}>{{ section.settings.intro }}</div>
         {%- endif -%}
       </header>
 
@@ -202,6 +202,27 @@
       "default": "Fortune Forged"
     },
     {
+      "type": "range",
+      "id": "eyebrow_size",
+      "label": "Eyebrow size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_align",
+      "label": "Eyebrow align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "text",
       "id": "heading",
       "label": "Heading",
@@ -211,6 +232,27 @@
       "type": "richtext",
       "id": "intro",
       "label": "Intro"
+    },
+    {
+      "type": "range",
+      "id": "intro_size",
+      "label": "Intro size",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "intro_align",
+      "label": "Intro align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
     },
     {
       "type": "text",

@@ -6,13 +6,13 @@
       <header class="ff-finishes__header">
         <div class="ff-finishes__header-copy">
           {%- if section.settings.eyebrow != blank -%}
-            <p class="ff-finishes__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+            <p class="ff-finishes__eyebrow" {% render 'ff-type-style', size: section.settings.eyebrow_size, align: section.settings.eyebrow_align, min_ratio: 90 %}>{{ section.settings.eyebrow | escape }}</p>
           {%- endif -%}
           {%- if section.settings.heading != blank -%}
             <h1 class="ff-finishes__page-heading">{{ section.settings.heading | escape }}</h1>
           {%- endif -%}
           {%- if section.settings.intro != blank -%}
-            <p class="ff-finishes__intro">{{ section.settings.intro | escape }}</p>
+            <p class="ff-finishes__intro" {% render 'ff-type-style', size: section.settings.intro_size, align: section.settings.intro_align, min_ratio: 75 %}>{{ section.settings.intro | escape }}</p>
           {%- endif -%}
         </div>
         {%- if section.settings.quote_label != blank -%}
@@ -62,7 +62,7 @@
               <h2 class="ff-finishes__heading">{{ b.heading | escape }}</h2>
             {%- endif -%}
             {%- if b.subheading != blank -%}
-              <p class="ff-finishes__subheading">{{ b.subheading | escape }}</p>
+              <p class="ff-finishes__subheading" {% render 'ff-type-style', size: section.settings.block_subheading_size, align: section.settings.block_subheading_align, min_ratio: 80 %}>{{ b.subheading | escape }}</p>
             {%- endif -%}
             {%- if b.description != blank -%}
               <p class="ff-finishes__description">{{ b.description | escape }}</p>
@@ -138,6 +138,27 @@
       "default": "Fortune Forged"
     },
     {
+      "type": "range",
+      "id": "eyebrow_size",
+      "label": "Eyebrow size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_align",
+      "label": "Eyebrow align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "text",
       "id": "heading",
       "label": "Page heading",
@@ -148,6 +169,48 @@
       "id": "intro",
       "label": "Intro",
       "default": "Every Fortune Forged wheel is available in a range of finishes. Select a category below to explore your options."
+    },
+    {
+      "type": "range",
+      "id": "intro_size",
+      "label": "Intro size",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "intro_align",
+      "label": "Intro align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "block_subheading_size",
+      "label": "Block subheading size",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 17
+    },
+    {
+      "type": "select",
+      "id": "block_subheading_align",
+      "label": "Block subheading align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
     },
     {
       "type": "text",

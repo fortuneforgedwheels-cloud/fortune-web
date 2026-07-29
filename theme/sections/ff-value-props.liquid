@@ -27,7 +27,7 @@
         <header class="ff-values__header">
           <h2 class="ff-values__heading">{{ section.settings.heading | escape }}</h2>
           {%- if section.settings.subheading != blank -%}
-            <p class="ff-values__subheading">{{ section.settings.subheading | escape }}</p>
+            <p class="ff-values__subheading" {% render 'ff-type-style', size: section.settings.subheading_size, align: section.settings.subheading_align, min_ratio: 75 %}>{{ section.settings.subheading | escape }}</p>
           {%- endif -%}
         </header>
       {%- endif -%}
@@ -144,6 +144,27 @@
       "id": "subheading",
       "label": "Subheading",
       "default": "Custom forged wheels engineered for your build."
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Subheading size",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "subheading_align",
+      "label": "Subheading align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
     },
     {
       "type": "header",

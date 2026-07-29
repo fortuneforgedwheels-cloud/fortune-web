@@ -3,10 +3,10 @@
 <section class="ff-build" id="order" data-ff-build>
   <div class="ff-build__inner">
     <header class="ff-build__intro">
-      <p class="ff-build__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      <p class="ff-build__eyebrow" {% render 'ff-type-style', size: section.settings.eyebrow_size, align: section.settings.eyebrow_align, min_ratio: 90 %}>{{ section.settings.eyebrow | escape }}</p>
       <h1 class="ff-build__title">{{ section.settings.title | escape }}</h1>
       {% if section.settings.subtitle != blank %}
-        <p class="ff-build__subtitle">{{ section.settings.subtitle | escape }}</p>
+        <p class="ff-build__subtitle" {% render 'ff-type-style', size: section.settings.subtitle_size, align: section.settings.subtitle_align, min_ratio: 75 %}>{{ section.settings.subtitle | escape }}</p>
       {% endif %}
     </header>
 
@@ -156,6 +156,27 @@
       "default": "Fortune Forged"
     },
     {
+      "type": "range",
+      "id": "eyebrow_size",
+      "label": "Eyebrow size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_align",
+      "label": "Eyebrow align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "text",
       "id": "title",
       "label": "Title",
@@ -166,6 +187,27 @@
       "id": "subtitle",
       "label": "Subtitle",
       "default": "Three steps. Tell us your vehicle, choose a setup, request a build."
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "subtitle_align",
+      "label": "Subtitle align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
     },
     {
       "type": "text",
