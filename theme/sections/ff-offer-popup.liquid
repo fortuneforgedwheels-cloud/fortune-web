@@ -36,10 +36,10 @@
       </div>
       <div class="ff-offer__panel">
         <h2 class="ff-offer__title" id="ff-offer-title-{{ section.id }}">
-          {{ section.settings.heading | default: 'Limited time: $100 off your entire order' | escape }}
+          {{ section.settings.heading | default: 'Get $100 Off Your Entire Order' | escape }}
         </h2>
         <p class="ff-offer__sub">
-          {{ section.settings.subheading | default: 'First-time customers only. Premium forged wheels, fast support, and zero regrets.' | escape }}
+          {{ section.settings.subheading | default: 'Limited time offer for first-time customers. Premium mods, fast support and zero regrets. Built for real enthusiasts.' | escape }}
         </p>
         {%- form 'customer', class: 'ff-offer__form' -%}
           <input type="hidden" name="contact[tags]" value="{{ section.settings.customer_tags | default: 'newsletter, first-time-100-off' | escape }}">
@@ -100,13 +100,13 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Limited time: $100 off your entire order"
+      "default": "Get $100 Off Your Entire Order"
     },
     {
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "First-time customers only. Premium forged wheels, fast support, and zero regrets."
+      "default": "Limited time offer for first-time customers. Premium mods, fast support and zero regrets. Built for real enthusiasts."
     },
     {
       "type": "text",

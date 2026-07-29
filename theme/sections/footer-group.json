@@ -221,10 +221,28 @@
         "footer_middle_bg_attachment": "fixed",
         "footer_middle_bg_size": "contain"
       }
+    },
+    "ff_offer_popup": {
+      "type": "ff-offer-popup",
+      "settings": {
+        "show_popup": true,
+        "delay_seconds": 5,
+        "expire_days": 14,
+        "heading": "Get $100 Off Your Entire Order",
+        "subheading": "Limited time offer for first-time customers. Premium mods, fast support and zero regrets. Built for real enthusiasts.",
+        "first_name_placeholder": "First name",
+        "email_placeholder": "Email",
+        "button_label": "Claim Offer",
+        "customer_tags": "newsletter, first-time-100-off",
+        "disclaimer": "By signing up, you agree to receive marketing emails. View our privacy policy and terms of service for more info.",
+        "success_message": "You're in - check your email for your $100 off code.",
+        "image": "shopify://shop_images/update-newsletter-banner-2.jpg"
+      }
     }
   },
   "order": [
     "footer",
-    "footer_8_WEr7dn"
+    "footer_8_WEr7dn",
+    "ff_offer_popup"
   ]
 }
