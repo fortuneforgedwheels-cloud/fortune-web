@@ -1,0 +1,87 @@
+{{ 'ff-about.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign hero_fallback = 'https://fortuneforgedwheels.com/cdn/shop/files/IMG_2176.jpg'
+  assign story_fallback = 'https://fortuneforgedwheels.com/cdn/shop/files/IMG_2149_2.jpg'
+-%}
+
+<section class="ff-about" id="ff-about-page">
+  <div class="ff-about__hero">
+    <div class="ff-about__hero-media" aria-hidden="true">
+      <img src="{{ hero_fallback }}" alt="" width="2400" height="1350" loading="eager">
+    </div>
+    <div class="ff-about__hero-shade" aria-hidden="true"></div>
+    <div class="ff-about__hero-copy">
+      <p class="ff-about__brand">Fortune Forged</p>
+      <span class="ff-about__brand-line" aria-hidden="true"></span>
+      <p class="ff-about__lede">Custom forged wheels, factory-backed builds, and fitment that holds up on the street.</p>
+      <div class="ff-about__cta-row">
+        <a class="ff-about__btn ff-about__btn--solid" href="/">Start a build</a>
+        <a class="ff-about__btn ff-about__btn--ghost" href="mailto:fortuneforgedwheels@gmail.com">Talk to us</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ff-about__section">
+    <div class="ff-about__section--story">
+      <div>
+        <p class="ff-about__eyebrow">The shop</p>
+        <h2 class="ff-about__heading">Built from the factory floor</h2>
+        <div class="ff-about__copy">
+          <p>We’re not a badge slapped on someone else’s wheels. Fortune Forged owns a stake in the factory that machines every set—so design, materials, finishing, and QC stay under one roof.</p>
+          <p>That means tighter control, clearer answers, and wheels that match what you ordered. From first sketch to final torque spec, the same team is accountable for how it looks and how it sits.</p>
+        </div>
+      </div>
+      <div class="ff-about__story-media">
+        <img src="{{ story_fallback }}" alt="Fortune Forged build" width="1600" height="1200" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <div class="ff-about__section ff-about__section--build">
+    <div class="ff-about__build-inner">
+      <header class="ff-about__build-header">
+        <p class="ff-about__eyebrow">How we work</p>
+        <h2 class="ff-about__heading">What we actually sweat</h2>
+        <p class="ff-about__copy" style="margin:0;">Less catalog fluff. More clearances, finishes, and people who answer the phone.</p>
+      </header>
+      <ol class="ff-about__points">
+        <li class="ff-about__point" data-ff-about-point>
+          <span class="ff-about__point-num">01</span>
+          <div>
+            <h3 class="ff-about__point-title">Real fitment</h3>
+            <p class="ff-about__point-text">Specs dialed for your chassis—offsets, brake clearance, and tire package—not a generic one-size catalog guess.</p>
+          </div>
+        </li>
+        <li class="ff-about__point" data-ff-about-point>
+          <span class="ff-about__point-num">02</span>
+          <div>
+            <h3 class="ff-about__point-title">Custom finishes</h3>
+            <p class="ff-about__point-text">Brushed, polished, powder, one-offs. The face of the wheel gets the same attention as the face of the car.</p>
+          </div>
+        </li>
+        <li class="ff-about__point" data-ff-about-point>
+          <span class="ff-about__point-num">03</span>
+          <div>
+            <h3 class="ff-about__point-title">Direct support</h3>
+            <p class="ff-about__point-text">Talk to people who build and drive this stuff. Same-day answers when you need a call on sizing, finish, or install.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="ff-about__section ff-about__section--mission">
+    <p class="ff-about__mission">Look right. Sit right. Last.</p>
+    <p class="ff-about__mission-note">Forged strength, custom finishes, and fitment support from people who actually care how your car rolls out of the bay.</p>
+  </div>
+
+  <div class="ff-about__section ff-about__section--close">
+    <p class="ff-about__close-copy">Ready to spec a set? Tell us the car, the look, and how you drive—we’ll help lock the build.</p>
+    <div class="ff-about__cta-row ff-about__cta-row--center">
+      <a class="ff-about__btn ff-about__btn--solid" href="mailto:fortuneforgedwheels@gmail.com">Get a quote</a>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'ff-about.js' | asset_url }}" defer></script>

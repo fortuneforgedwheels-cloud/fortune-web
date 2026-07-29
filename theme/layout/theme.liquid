@@ -112,6 +112,7 @@
         <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
             {%- liquid
               assign ff_is_refund_policy = false
+              assign ff_is_about_page = false
               if request.page_type == 'policy'
                 if request.path contains 'refund-policy' or request.path contains 'refund_policy' or request.path contains 'return-policy'
                   assign ff_is_refund_policy = true
@@ -120,9 +121,17 @@
                   assign ff_is_refund_policy = true
                 endif
               endif
+              if request.page_type == 'page'
+                assign ff_about_handle = request.path | split: '/' | last
+                if ff_about_handle == 'about'
+                  assign ff_is_about_page = true
+                endif
+              endif
             -%}
             {%- if ff_is_refund_policy -%}
               {% render 'ff-warranty-returns' %}
+            {%- elsif ff_is_about_page -%}
+              {% render 'ff-about' %}
             {%- else -%}
               {{ content_for_layout }}
             {%- endif -%}
