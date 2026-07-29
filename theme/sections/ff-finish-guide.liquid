@@ -3,115 +3,139 @@
 {%- if section.settings.show_section -%}
   <section class="ff-finishes" id="ff-finishes-{{ section.id }}" data-ff-finishes>
     <div class="ff-finishes__inner">
-      <header class="ff-finishes__header">
-        <div class="ff-finishes__header-copy">
-          {%- if section.settings.eyebrow != blank -%}
-            <p class="ff-finishes__eyebrow" {% render 'ff-type-style', size: section.settings.eyebrow_size, align: section.settings.eyebrow_align, min_ratio: 90 %}>{{ section.settings.eyebrow | escape }}</p>
-          {%- endif -%}
-          {%- if section.settings.heading != blank -%}
-            <h1 class="ff-finishes__page-heading">{{ section.settings.heading | escape }}</h1>
-          {%- endif -%}
-          {%- if section.settings.intro != blank -%}
-            <p class="ff-finishes__intro" {% render 'ff-type-style', size: section.settings.intro_size, align: section.settings.intro_align, min_ratio: 75 %}>{{ section.settings.intro | escape }}</p>
-          {%- endif -%}
-        </div>
-        {%- if section.settings.quote_label != blank -%}
-          {%- assign quote_href = section.settings.quote_link | default: '/#order' -%}
-          <div class="ff-finishes__header-cta">
-            <a class="ff-finishes__quote-btn" href="{{ quote_href }}">
-              <svg class="ff-finishes__quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                <circle cx="7" cy="7" r="1.25" fill="currentColor"/>
-              </svg>
-              <span>{{ section.settings.quote_label | escape }}</span>
-            </a>
-          </div>
-        {%- endif -%}
-      </header>
+      <div class="ff-finishes__layout{% if section.settings.side_image != blank %} ff-finishes__layout--has-side{% endif %}">
+        <div class="ff-finishes__main">
+          <header class="ff-finishes__header">
+            <div class="ff-finishes__header-copy">
+              {%- if section.settings.eyebrow != blank -%}
+                <p class="ff-finishes__eyebrow" {% render 'ff-type-style', size: section.settings.eyebrow_size, align: section.settings.eyebrow_align, min_ratio: 90 %}>{{ section.settings.eyebrow | escape }}</p>
+              {%- endif -%}
+              {%- if section.settings.heading != blank -%}
+                <h1 class="ff-finishes__page-heading">{{ section.settings.heading | escape }}</h1>
+              {%- endif -%}
+              {%- if section.settings.intro != blank -%}
+                <p class="ff-finishes__intro" {% render 'ff-type-style', size: section.settings.intro_size, align: section.settings.intro_align, min_ratio: 75 %}>{{ section.settings.intro | escape }}</p>
+              {%- endif -%}
+            </div>
+            {%- if section.settings.quote_label != blank -%}
+              {%- assign quote_href = section.settings.quote_link | default: '/#order' -%}
+              <div class="ff-finishes__header-cta">
+                <a class="ff-finishes__quote-btn" href="{{ quote_href }}">
+                  <svg class="ff-finishes__quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    <circle cx="7" cy="7" r="1.25" fill="currentColor"/>
+                  </svg>
+                  <span>{{ section.settings.quote_label | escape }}</span>
+                </a>
+              </div>
+            {%- endif -%}
+          </header>
 
-      {%- if section.blocks.size > 0 -%}
-        <nav class="ff-finishes__tabs" data-ff-finishes-tabs role="tablist">
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'category' -%}
-              <button
-                type="button"
-                class="ff-finishes__tab{% if forloop.first %} is-active{% endif %}"
-                data-ff-finishes-tab="{{ block.id }}"
-                role="tab"
-                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-              >
-                {{ block.settings.tab_label | escape }}
-              </button>
-            {%- endif -%}
-          {%- endfor -%}
-        </nav>
-      {%- endif -%}
-
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'category' -%}
-          {%- liquid
-            assign b = block.settings
-          -%}
-          <div
-            class="ff-finishes__panel{% if forloop.first %} is-active{% endif %}"
-            data-ff-finishes-panel="{{ block.id }}"
-            {% unless forloop.first %}hidden{% endunless %}
-            {{ block.shopify_attributes }}
-          >
-            {%- if b.heading != blank -%}
-              <h2 class="ff-finishes__heading">{{ b.heading | escape }}</h2>
-            {%- endif -%}
-            {%- if b.subheading != blank -%}
-              <p class="ff-finishes__subheading" {% render 'ff-type-style', size: section.settings.block_subheading_size, align: section.settings.block_subheading_align, min_ratio: 80 %}>{{ b.subheading | escape }}</p>
-            {%- endif -%}
-            {%- if b.description != blank -%}
-              <p class="ff-finishes__description">{{ b.description | escape }}</p>
-            {%- endif -%}
-
-            <div class="ff-finishes__swatches">
-              {%- for i in (1..4) -%}
-                {%- liquid
-                  case i
-                    when 1
-                      assign name = b.finish_1_name
-                      assign image = b.finish_1_image
-                    when 2
-                      assign name = b.finish_2_name
-                      assign image = b.finish_2_image
-                    when 3
-                      assign name = b.finish_3_name
-                      assign image = b.finish_3_image
-                    when 4
-                      assign name = b.finish_4_name
-                      assign image = b.finish_4_image
-                  endcase
-                -%}
-                {%- if name != blank -%}
-                  <div class="ff-finishes__swatch">
-                    <div class="ff-finishes__swatch-media">
-                      {%- if image != blank -%}
-                        {{
-                          image
-                          | image_url: width: 700
-                          | image_tag:
-                            loading: 'lazy',
-                            widths: '350, 500, 700',
-                            sizes: '(max-width: 749px) 45vw, 22vw',
-                            alt: name
-                        }}
-                      {%- else -%}
-                        <span class="ff-finishes__swatch-placeholder" aria-hidden="true"></span>
-                      {%- endif -%}
-                    </div>
-                    <p class="ff-finishes__swatch-name">{{ name | escape }}</p>
-                  </div>
+          {%- if section.blocks.size > 0 -%}
+            <nav class="ff-finishes__tabs" data-ff-finishes-tabs role="tablist">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'category' -%}
+                  <button
+                    type="button"
+                    class="ff-finishes__tab{% if forloop.first %} is-active{% endif %}"
+                    data-ff-finishes-tab="{{ block.id }}"
+                    role="tab"
+                    aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                  >
+                    {{ block.settings.tab_label | escape }}
+                  </button>
                 {%- endif -%}
               {%- endfor -%}
-            </div>
-          </div>
-        {%- endif -%}
-      {%- endfor -%}
+            </nav>
+          {%- endif -%}
 
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'category' -%}
+              {%- liquid
+                assign b = block.settings
+              -%}
+              <div
+                class="ff-finishes__panel{% if forloop.first %} is-active{% endif %}"
+                data-ff-finishes-panel="{{ block.id }}"
+                {% unless forloop.first %}hidden{% endunless %}
+                {{ block.shopify_attributes }}
+              >
+                {%- if b.heading != blank -%}
+                  <h2 class="ff-finishes__heading">{{ b.heading | escape }}</h2>
+                {%- endif -%}
+                {%- if b.subheading != blank -%}
+                  <p class="ff-finishes__subheading" {% render 'ff-type-style', size: section.settings.block_subheading_size, align: section.settings.block_subheading_align, min_ratio: 80 %}>{{ b.subheading | escape }}</p>
+                {%- endif -%}
+                {%- if b.description != blank -%}
+                  <p class="ff-finishes__description">{{ b.description | escape }}</p>
+                {%- endif -%}
+
+                <div class="ff-finishes__swatches">
+                  {%- for i in (1..4) -%}
+                    {%- liquid
+                      case i
+                        when 1
+                          assign name = b.finish_1_name
+                          assign image = b.finish_1_image
+                        when 2
+                          assign name = b.finish_2_name
+                          assign image = b.finish_2_image
+                        when 3
+                          assign name = b.finish_3_name
+                          assign image = b.finish_3_image
+                        when 4
+                          assign name = b.finish_4_name
+                          assign image = b.finish_4_image
+                      endcase
+                    -%}
+                    {%- if name != blank -%}
+                      <div class="ff-finishes__swatch">
+                        <div class="ff-finishes__swatch-media">
+                          {%- if image != blank -%}
+                            {{
+                              image
+                              | image_url: width: 700
+                              | image_tag:
+                                loading: 'lazy',
+                                widths: '350, 500, 700',
+                                sizes: '(max-width: 749px) 45vw, 22vw',
+                                alt: name
+                            }}
+                          {%- else -%}
+                            <span class="ff-finishes__swatch-placeholder" aria-hidden="true"></span>
+                          {%- endif -%}
+                        </div>
+                        <p class="ff-finishes__swatch-name">{{ name | escape }}</p>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <aside class="ff-finishes__side" aria-label="{{ section.settings.side_image_alt | default: 'Finish palette wall' | escape }}">
+          <div class="ff-finishes__side-frame">
+            {%- if section.settings.side_image != blank -%}
+              {{
+                section.settings.side_image
+                | image_url: width: 1400
+                | image_tag:
+                  class: 'ff-finishes__side-img',
+                  loading: 'lazy',
+                  widths: '480, 720, 960, 1400',
+                  sizes: '(max-width: 989px) 100vw, 28vw',
+                  alt: section.settings.side_image_alt | default: 'Finish palette wall'
+              }}
+            {%- else -%}
+              <div class="ff-finishes__side-placeholder">
+                <span class="ff-finishes__side-placeholder-label">Upload finish palette image</span>
+              </div>
+            {%- endif -%}
+          </div>
+        </aside>
+      </div>
     </div>
   </section>
 
@@ -222,6 +246,22 @@
       "type": "url",
       "id": "quote_link",
       "label": "Request quote button link"
+    },
+    {
+      "type": "header",
+      "content": "Right side image"
+    },
+    {
+      "type": "image_picker",
+      "id": "side_image",
+      "label": "Finish palette wall image",
+      "info": "Tall/portrait image works best. Shown as a long rectangle on the right of the page."
+    },
+    {
+      "type": "text",
+      "id": "side_image_alt",
+      "label": "Side image alt text",
+      "default": "Finish palette wall"
     }
   ],
   "blocks": [
