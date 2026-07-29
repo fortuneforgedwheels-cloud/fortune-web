@@ -110,8 +110,19 @@
         {%- endif -%}
         
         <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
-            {%- if request.path contains '/policies/refund-policy' -%}
-              {% section 'ff-warranty-returns' %}
+            {%- liquid
+              assign ff_is_refund_policy = false
+              if request.page_type == 'policy'
+                if request.path contains 'refund-policy' or request.path contains 'refund_policy' or request.path contains 'return-policy'
+                  assign ff_is_refund_policy = true
+                endif
+                if shop.refund_policy != blank and request.path == shop.refund_policy.url
+                  assign ff_is_refund_policy = true
+                endif
+              endif
+            -%}
+            {%- if ff_is_refund_policy -%}
+              {% render 'ff-warranty-returns' %}
             {%- else -%}
               {{ content_for_layout }}
             {%- endif -%}
