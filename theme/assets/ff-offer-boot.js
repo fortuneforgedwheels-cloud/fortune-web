@@ -69,6 +69,14 @@
     var path = location.pathname || '';
 
     if (/\/pages\/about(?:-us)?\/?$/.test(path) || /\/pages\/about\/?$/.test(path)) {
+      // Immediate visual fix for sticky-cached “Add a video” overlays
+      var style = document.createElement('style');
+      style.setAttribute('data-ff-about-hint-hide', '1');
+      style.textContent =
+        '.ff-about__story-video-hint{display:none!important}' +
+        '.ff-about__story-video--poster .ff-about__story-video-hint{display:none!important}';
+      document.head.appendChild(style);
+
       var aboutMain = document.getElementById('MainContent');
       var hasHero = !!(aboutMain && aboutMain.querySelector('.ff-about__hero, [data-ff-about], .ff-about'));
       var hasStaleHint = !!(aboutMain && aboutMain.querySelector('.ff-about__story-video-hint'));
