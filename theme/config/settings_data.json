@@ -753,7 +753,9 @@
           "mission_note": "Forged strength, custom finishes, and fitment support from people who actually care how your car rolls out of the bay.",
           "close_text": "Ready to spec a set? Tell us the car, the look, and how you drive—we’ll help lock the build.",
           "close_label": "Get a quote",
-          "close_link": "mailto:fortuneforgedwheels@gmail.com"
+          "close_link": "mailto:fortuneforgedwheels@gmail.com",
+          "hero_image": "shopify://shop_images/IMG_2176.jpg",
+          "story_image": "shopify://shop_images/IMG_2149_2.jpg"
         }
       }
     },

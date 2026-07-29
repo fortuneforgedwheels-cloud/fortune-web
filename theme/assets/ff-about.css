@@ -18,7 +18,8 @@
 }
 
 .ff-about__hero-media,
-.ff-about__hero-media img {
+.ff-about__hero-media img,
+.ff-about__hero-img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -27,9 +28,18 @@
   object-position: center;
 }
 
-.ff-about__hero-media img {
+.ff-about__hero-media img,
+.ff-about__hero-img {
   transform: scale(1.04);
   animation: ff-about-ken 18s ease-in-out infinite alternate;
+}
+
+.ff-about__hero-img--desktop {
+  display: block;
+}
+
+.ff-about__hero-img--mobile {
+  display: none;
 }
 
 .ff-about__hero-shade {
@@ -329,6 +339,14 @@
 
   .ff-about__hero {
     min-height: 78vh;
+  }
+
+  .ff-about__hero-img--desktop {
+    display: none;
+  }
+
+  .ff-about__hero-img--mobile {
+    display: block;
   }
 }
 

@@ -2,26 +2,53 @@
 
 {%- liquid
   assign hero_image = section.settings.hero_image
+  assign hero_image_mobile = section.settings.hero_image_mobile
   assign story_image = section.settings.story_image
-  assign hero_fallback = 'https://fortuneforgedwheels.com/cdn/shop/files/IMG_2176.jpg'
-  assign story_fallback = 'https://fortuneforgedwheels.com/cdn/shop/files/IMG_2149_2.jpg'
+  if hero_image == blank
+    assign hero_image = images['IMG_2176.jpg']
+  endif
+  if story_image == blank
+    assign story_image = images['IMG_2149_2.jpg']
+  endif
 -%}
 
 <section class="ff-about" id="ff-about-{{ section.id }}">
   <div class="ff-about__hero">
     <div class="ff-about__hero-media" aria-hidden="true">
       {%- if hero_image != blank -%}
-        {{
-          hero_image
-          | image_url: width: 2400
-          | image_tag:
-            loading: 'eager',
-            widths: '800, 1200, 1600, 2400',
-            sizes: '100vw',
-            alt: ''
-        }}
-      {%- else -%}
-        <img src="{{ hero_fallback }}" alt="" width="2400" height="1350" loading="eager">
+        {%- if hero_image_mobile != blank -%}
+          {{
+            hero_image
+            | image_url: width: 2400
+            | image_tag:
+              class: 'ff-about__hero-img ff-about__hero-img--desktop',
+              loading: 'eager',
+              widths: '800, 1200, 1600, 2400',
+              sizes: '100vw',
+              alt: ''
+          }}
+          {{
+            hero_image_mobile
+            | image_url: width: 1200
+            | image_tag:
+              class: 'ff-about__hero-img ff-about__hero-img--mobile',
+              loading: 'eager',
+              widths: '600, 900, 1200',
+              sizes: '100vw',
+              alt: ''
+          }}
+        {%- else -%}
+          {{
+            hero_image
+            | image_url: width: 2400
+            | image_tag:
+              class: 'ff-about__hero-img',
+              loading: 'eager',
+              widths: '800, 1200, 1600, 2400',
+              sizes: '100vw',
+              alt: ''
+          }}
+        {%- endif -%}
       {%- endif -%}
     </div>
     <div class="ff-about__hero-shade" aria-hidden="true"></div>
@@ -68,8 +95,6 @@
               sizes: '(max-width: 899px) 100vw, 46vw',
               alt: section.settings.story_heading | default: 'Fortune Forged build'
           }}
-        {%- else -%}
-          <img src="{{ story_fallback }}" alt="Fortune Forged build" width="1600" height="1200" loading="lazy">
         {%- endif -%}
       </div>
     </div>
@@ -140,9 +165,32 @@
   "max_blocks": 6,
   "settings": [
     {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "paragraph",
+      "content": "Replace these images anytime. Hero is the full-bleed top photo; Story is the photo beside the factory-floor copy."
+    },
+    {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Hero image"
+      "label": "Hero image (desktop + mobile)"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_mobile",
+      "label": "Hero image (mobile only, optional)",
+      "info": "Leave blank to reuse the main hero image on mobile."
+    },
+    {
+      "type": "image_picker",
+      "id": "story_image",
+      "label": "Story image"
+    },
+    {
+      "type": "header",
+      "content": "Hero text"
     },
     {
       "type": "text",
@@ -179,9 +227,8 @@
       "label": "Secondary CTA link"
     },
     {
-      "type": "image_picker",
-      "id": "story_image",
-      "label": "Story image"
+      "type": "header",
+      "content": "Story"
     },
     {
       "type": "text",
@@ -202,6 +249,10 @@
       "default": "<p>We’re not a badge slapped on someone else’s wheels. Fortune Forged owns a stake in the factory that machines every set—so design, materials, finishing, and QC stay under one roof.</p><p>That means tighter control, clearer answers, and wheels that match what you ordered. From first sketch to final torque spec, the same team is accountable for how it looks and how it sits.</p>"
     },
     {
+      "type": "header",
+      "content": "How we work"
+    },
+    {
       "type": "text",
       "id": "build_eyebrow",
       "label": "Build eyebrow",
@@ -218,6 +269,10 @@
       "id": "build_intro",
       "label": "Build intro",
       "default": "Less catalog fluff. More clearances, finishes, and people who answer the phone."
+    },
+    {
+      "type": "header",
+      "content": "Mission + closing"
     },
     {
       "type": "textarea",
