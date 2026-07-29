@@ -137,7 +137,7 @@
 
 .ff-sbv__fitment-chassis {
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -145,7 +145,7 @@
 
 .ff-sbv__fitment-label {
   font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   font-weight: 500;
   color: rgba(255,255,255,0.7);
   text-transform: uppercase;
@@ -228,9 +228,9 @@
 
 .ff-sbv__fitment-option {
   display: grid;
-  gap: 4px;
+  gap: 6px;
   width: 100%;
-  padding: 12px 14px;
+  padding: 14px 16px;
   border: 1.5px solid rgba(255,255,255,0.22);
   border-radius: 4px;
   background: rgba(255,255,255,0.06);
@@ -238,6 +238,26 @@
   text-align: left;
   cursor: pointer;
   transition: border-color 160ms ease, background 160ms ease;
+}
+
+.ff-sbv__fitment-option--top-seller {
+  border-color: rgba(212,175,55,0.65);
+  background: rgba(212,175,55,0.1);
+  box-shadow: 0 0 0 1px rgba(212,175,55,0.25);
+}
+
+.ff-sbv__fitment-option-badge {
+  display: inline-block;
+  width: fit-content;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #d4af37;
+  color: #111;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .ff-sbv__fitment-option:hover {
@@ -253,7 +273,7 @@
 
 .ff-sbv__fitment-option-tier {
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -262,22 +282,22 @@
 
 .ff-sbv__fitment-option-label {
   font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
-  font-size: 0.95rem;
+  font-size: 1.08rem;
   font-weight: 700;
 }
 
 .ff-sbv__fitment-option-specs {
   font-family: 'Source Sans 3', 'Segoe UI', monospace;
-  font-size: 0.88rem;
+  font-size: 0.98rem;
   color: rgba(255,255,255,0.92);
 }
 
 .ff-sbv__fitment-option-tires,
 .ff-sbv__fitment-option-notes {
   font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.62);
-  line-height: 1.35;
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.68);
+  line-height: 1.4;
 }
 
 /* builder panel */

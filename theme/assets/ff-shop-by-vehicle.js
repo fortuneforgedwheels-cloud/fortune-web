@@ -121,16 +121,23 @@
   function getFitmentConfigs(slug, ffData, apexData) {
     var ffSlug = resolveFfSlug(slug, ffData);
     if (ffSlug) {
-      return { configs: ffData.fitments[ffSlug], source: 'fortune-forged' };
+      return { configs: ffData.fitments[ffSlug], source: 'fortune-forged', guideSlug: ffSlug };
     }
     if (apexData && apexData[slug]) {
-      return { configs: apexToConfigs(apexData[slug]), source: 'apex' };
+      return { configs: apexToConfigs(apexData[slug]), source: 'apex', guideSlug: null };
     }
-    return { configs: [], source: null };
+    return { configs: [], source: null, guideSlug: null };
+  }
+
+  function isF80TopSeller(cfg, guideSlug) {
+    return guideSlug === 'f80'
+      && cfg.tier === 'Aggressive Street'
+      && normalizeSpec(cfg.front) === '20x9.5 ET15'
+      && normalizeSpec(cfg.rear) === '20x11 ET40';
   }
 
   /* ── fitment card with selectable options ── */
-  function renderFitmentCard(container, chassis, configs, source, onPick) {
+  function renderFitmentCard(container, chassis, configs, source, guideSlug, onPick) {
     container.innerHTML = '';
     if (!configs || !configs.length) {
       container.hidden = true;
@@ -149,14 +156,20 @@
 
     configs.forEach(function (cfg, idx) {
       var specLine;
+      var isTopSeller = isF80TopSeller(cfg, guideSlug);
       if (isSquare(cfg.front, cfg.rear)) {
         specLine = 'Front &amp; Rear: <strong>' + escHtml(cfg.front) + '</strong>';
       } else {
         specLine = 'Front: <strong>' + escHtml(cfg.front) + '</strong>'
           + ' · Rear: <strong>' + escHtml(cfg.rear) + '</strong>';
       }
-      html += '<button type="button" class="ff-sbv__fitment-option" data-ff-sbv-pick-fitment data-index="' + idx + '">'
-        + '<span class="ff-sbv__fitment-option-tier">' + escHtml(cfg.tier) + '</span>'
+      html += '<button type="button" class="ff-sbv__fitment-option'
+        + (isTopSeller ? ' ff-sbv__fitment-option--top-seller' : '')
+        + '" data-ff-sbv-pick-fitment data-index="' + idx + '">';
+      if (isTopSeller) {
+        html += '<span class="ff-sbv__fitment-option-badge">Fortune Top Seller</span>';
+      }
+      html += '<span class="ff-sbv__fitment-option-tier">' + escHtml(cfg.tier) + '</span>'
         + '<span class="ff-sbv__fitment-option-label">' + escHtml(cfg.config) + '</span>'
         + '<span class="ff-sbv__fitment-option-specs">' + specLine + '</span>';
       if (cfg.tirePick) {
@@ -480,7 +493,7 @@
           return;
         }
         var label = chassisEl.value + (opt.trim && opt.trim !== chassisEl.value ? ' – ' + opt.trim : '');
-        renderFitmentCard(fitmentCard, label, pack.configs, pack.source, showBuilder);
+        renderFitmentCard(fitmentCard, label, pack.configs, pack.source, pack.guideSlug, showBuilder);
       }
 
       if (ffData || apexData) {
