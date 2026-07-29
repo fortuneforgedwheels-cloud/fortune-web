@@ -1,5 +1,5 @@
 {{ 'ff-beadlock-packages.css' | asset_url | stylesheet_tag }}
-<!-- ff-btp-bust {{ 'now' | date: '%s' }} -->
+<!-- ff-btp-bust {{ 'now' | date: '%s' }} no-hero-cta -->
 
 {%- if section.settings.show_section -%}
   {%- liquid
@@ -188,7 +188,7 @@
       "type": "text",
       "id": "cta_label",
       "label": "Hero CTA label",
-      "default": "Select your chassis"
+      "default": ""
     },
     {
       "type": "url",
