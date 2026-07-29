@@ -706,6 +706,23 @@
           "lv_2_text_transform": "capitalize"
         }
       },
+      "ff-offer-popup": {
+        "type": "ff-offer-popup",
+        "settings": {
+          "show_popup": true,
+          "delay_seconds": 5,
+          "expire_days": 14,
+          "image": "shopify://shop_images/IMG_2176.jpg",
+          "heading": "Limited time: $100 off your entire order",
+          "subheading": "First-time customers only. Premium forged wheels, fast support, and zero regrets.",
+          "first_name_placeholder": "First name",
+          "email_placeholder": "Email",
+          "button_label": "Claim Offer",
+          "customer_tags": "newsletter, first-time-100-off",
+          "disclaimer": "By signing up, you agree to receive marketing emails. View our privacy policy and terms of service for more info.",
+          "success_message": "You're in - check your email for your $100 off code."
+        }
+      },
       "ff-about": {
         "type": "ff-about",
         "blocks": {

@@ -170,12 +170,18 @@ html.ff-offer-open body {
 /* Hide Shopify Forms corner popup as a backup */
 #shopify-block-forms,
 [id*='shopify-forms'],
+[id*='13768625480086291342'],
 [class*='shopify-forms'],
 iframe[src*='forms.shopify'],
-div[data-forms-id] {
+iframe[src*='shopify-forms'],
+div[data-forms-id],
+.shopify-app-block[id*='forms'] {
   display: none !important;
   visibility: hidden !important;
   pointer-events: none !important;
+  opacity: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
 }
 
 @keyframes ff-offer-in {

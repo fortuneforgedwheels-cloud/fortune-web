@@ -26,7 +26,7 @@
       aria-labelledby="ff-offer-title-{{ section.id }}"
     >
       <button type="button" class="ff-offer__close" data-ff-offer-close aria-label="Close offer">
-        <span aria-hidden="true">×</span>
+        <span aria-hidden="true">&times;</span>
       </button>
 
       <div class="ff-offer__media" aria-hidden="true">
@@ -55,7 +55,7 @@
           <p class="ff-offer__sub">{{ section.settings.subheading | escape }}</p>
         {%- endif -%}
 
-        {%- form 'customer', class: 'ff-offer__form', id: 'ff-offer-form' -%}
+        {%- form 'customer', class: 'ff-offer__form', id: 'ff-offer-form-{{ section.id }}' -%}
           <input type="hidden" name="contact[tags]" value="{{ section.settings.customer_tags | default: 'newsletter, first-time-100-off' | escape }}">
           <label class="visually-hidden" for="ff-offer-first-{{ section.id }}">First name</label>
           <input
@@ -82,11 +82,11 @@
         {%- endform -%}
 
         {%- if section.settings.disclaimer != blank -%}
-          <p class="ff-offer__disclaimer">{{ section.settings.disclaimer }}</p>
+          <p class="ff-offer__disclaimer">{{ section.settings.disclaimer | escape }}</p>
         {%- endif -%}
 
         <p class="ff-offer__success" data-ff-offer-success hidden>
-          {{ section.settings.success_message | default: 'You’re in — check your email for your $100 off code.' | escape }}
+          {{ section.settings.success_message | default: "You're in - check your email for your $100 off code." | escape }}
         </p>
       </div>
     </div>
@@ -179,7 +179,7 @@
       "type": "text",
       "id": "success_message",
       "label": "Success message",
-      "default": "You’re in — check your email for your $100 off code."
+      "default": "You're in - check your email for your $100 off code."
     }
   ],
   "presets": [
