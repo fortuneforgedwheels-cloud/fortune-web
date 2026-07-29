@@ -1,4 +1,66 @@
-/* BOOT_BUILD 2026-07-29c */
+/* BOOT_BUILD 2026-07-29d */
+/**
+ * Fortune Forged page + offer bootloader.
+ * - Upgrades sticky-cached Beadlock Packages page to the cleaned FF section
+ * - Injects $100-off offer markup if missing, then opens after delay
+ */
+(function () {
+  if (window.__ffBeadlockPackagesBoot) return;
+  window.__ffBeadlockPackagesBoot = true;
+
+  function isPackagesPath() {
+    return /\/pages\/beadlock-tire-package/.test(location.pathname || '');
+  }
+
+  function alreadyClean() {
+    return !!(document.querySelector('[data-ff-btp], .ff-btp, .section-ff-beadlock-packages'));
+  }
+
+  function ensurePackagesCss(doc) {
+    var href = null;
+    if (doc) {
+      var link = doc.querySelector('link[href*="ff-beadlock-packages"]');
+      if (link) href = link.getAttribute('href');
+    }
+    if (!href) href = '/cdn/shop/t/13/assets/ff-beadlock-packages.css?v=btp1';
+    if (document.querySelector('link[href*="ff-beadlock-packages"]')) return;
+    var el = document.createElement('link');
+    el.rel = 'stylesheet';
+    el.href = href;
+    document.head.appendChild(el);
+  }
+
+  function upgradePackagesPage() {
+    if (!isPackagesPath() || alreadyClean()) return;
+    var main = document.getElementById('MainContent');
+    if (!main) return;
+
+    fetch(location.pathname + '?view=beadlock-tire-packages', {
+      credentials: 'same-origin',
+      headers: { Accept: 'text/html' }
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('btp fetch failed');
+        return res.text();
+      })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        var next = doc.getElementById('MainContent');
+        if (!next || !next.querySelector('[data-ff-btp], .ff-btp')) return;
+        ensurePackagesCss(doc);
+        main.replaceWith(next);
+        document.documentElement.classList.add('ff-btp-upgraded');
+      })
+      .catch(function () {});
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', upgradePackagesPage);
+  } else {
+    upgradePackagesPage();
+  }
+})();
+
 /**
  * Fortune Forged $100-off offer popup bootloader.
  * Injects markup if missing, then opens after delay.
