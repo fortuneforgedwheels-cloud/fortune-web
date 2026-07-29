@@ -51,7 +51,6 @@
     var submitBtn = form ? form.querySelector('.ff-offer__submit') : null;
     var timer = null;
     var lastFocus = null;
-    var thanksMode = false;
 
     function wasDismissed() {
       try {
@@ -93,7 +92,6 @@
     }
 
     function showThanks() {
-      thanksMode = true;
       if (content) content.classList.add('is-hidden');
       if (success) success.hidden = false;
       markDismissed();
