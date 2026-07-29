@@ -131,7 +131,7 @@
             {%- if ff_is_refund_policy -%}
               {% render 'ff-warranty-returns' %}
             {%- elsif ff_is_about_page -%}
-              {% render 'ff-about' %}
+              {% section 'ff-about' %}
             {%- else -%}
               {{ content_for_layout }}
             {%- endif -%}

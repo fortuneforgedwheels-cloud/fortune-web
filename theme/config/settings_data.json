@@ -705,6 +705,56 @@
           "lv_2_font_weight": "400",
           "lv_2_text_transform": "capitalize"
         }
+      },
+      "ff-about": {
+        "type": "ff-about",
+        "blocks": {
+          "point_fitment": {
+            "type": "point",
+            "settings": {
+              "title": "Real fitment",
+              "text": "Specs dialed for your chassis—offsets, brake clearance, and tire package—not a generic one-size catalog guess."
+            }
+          },
+          "point_finish": {
+            "type": "point",
+            "settings": {
+              "title": "Custom finishes",
+              "text": "Brushed, polished, powder, one-offs. The face of the wheel gets the same attention as the face of the car."
+            }
+          },
+          "point_support": {
+            "type": "point",
+            "settings": {
+              "title": "Direct support",
+              "text": "Talk to people who build and drive this stuff. Same-day answers when you need a call on sizing, finish, or install."
+            }
+          }
+        },
+        "block_order": [
+          "point_fitment",
+          "point_finish",
+          "point_support"
+        ],
+        "settings": {
+          "brand": "Fortune Forged",
+          "lede": "Custom forged wheels, factory-backed builds, and fitment that holds up on the street.",
+          "primary_label": "Start a build",
+          "primary_link": "/",
+          "secondary_label": "Talk to us",
+          "secondary_link": "mailto:fortuneforgedwheels@gmail.com",
+          "story_eyebrow": "The shop",
+          "story_heading": "Built from the factory floor",
+          "story_body": "<p>We’re not a badge slapped on someone else’s wheels. Fortune Forged owns a stake in the factory that machines every set—so design, materials, finishing, and QC stay under one roof.</p><p>That means tighter control, clearer answers, and wheels that match what you ordered. From first sketch to final torque spec, the same team is accountable for how it looks and how it sits.</p>",
+          "build_eyebrow": "How we work",
+          "build_heading": "What we actually sweat",
+          "build_intro": "Less catalog fluff. More clearances, finishes, and people who answer the phone.",
+          "mission": "Look right. Sit right. Last.",
+          "mission_note": "Forged strength, custom finishes, and fitment support from people who actually care how your car rolls out of the bay.",
+          "close_text": "Ready to spec a set? Tell us the car, the look, and how you drive—we’ll help lock the build.",
+          "close_label": "Get a quote",
+          "close_link": "mailto:fortuneforgedwheels@gmail.com"
+        }
       }
     },
     "content_for_index": [],
