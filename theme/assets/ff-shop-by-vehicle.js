@@ -212,12 +212,23 @@
 
   function fitmentBadge(cfg, guideSlug) {
     if (isFortuneCertified(cfg, guideSlug)) {
-      return { label: 'Fortune Certified', className: 'ff-sbv__fitment-option--certified' };
+      return { label: 'Fortune Certified', className: 'ff-sbv__fitment-option--certified', priority: 2 };
     }
     if (isFortuneTopSeller(cfg, guideSlug)) {
-      return { label: 'Fortune Top Seller', className: 'ff-sbv__fitment-option--top-seller' };
+      return { label: 'Fortune Top Seller', className: 'ff-sbv__fitment-option--top-seller', priority: 1 };
     }
     return null;
+  }
+
+  function sortFitmentsWithBadgesFirst(configs, guideSlug) {
+    return (configs || []).map(function (cfg, idx) {
+      return { cfg: cfg, idx: idx, badge: fitmentBadge(cfg, guideSlug) };
+    }).sort(function (a, b) {
+      var pa = a.badge ? a.badge.priority : 0;
+      var pb = b.badge ? b.badge.priority : 0;
+      if (pb !== pa) return pb - pa;
+      return a.idx - b.idx;
+    }).map(function (row) { return row.cfg; });
   }
 
   /* ── fitment card with selectable options ── */
@@ -228,6 +239,7 @@
       return;
     }
 
+    var ordered = sortFitmentsWithBadgesFirst(configs, guideSlug);
     var sourceLabel = source === 'fortune-forged'
       ? 'Fortune Forged fitment guide'
       : 'Apex fitment guide';
@@ -238,7 +250,7 @@
       + '</div>'
       + '<div class="ff-sbv__fitment-options">';
 
-    configs.forEach(function (cfg, idx) {
+    ordered.forEach(function (cfg, idx) {
       var specLine;
       var badge = fitmentBadge(cfg, guideSlug);
       if (isSquare(cfg.front, cfg.rear)) {
@@ -279,7 +291,7 @@
         });
         btn.classList.add('is-selected');
         var idx = Number(btn.getAttribute('data-index'));
-        if (onPick && configs[idx]) onPick(configs[idx], idx);
+        if (onPick && ordered[idx]) onPick(ordered[idx], idx);
       });
     });
   }
