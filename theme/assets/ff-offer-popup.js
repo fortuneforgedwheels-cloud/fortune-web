@@ -7,6 +7,30 @@
     }
   }
 
+
+  function hideShopifyFormsCorner() {
+    var selectors = [
+      '#shopify-block-forms',
+      '[id*="shopify-forms"]',
+      '[id*="13768625480086291342"]',
+      '[class*="shopify-forms"]',
+      'iframe[src*="forms.shopify"]',
+      'iframe[src*="shopify-forms"]',
+      'div[data-forms-id]',
+      'shopify-forms'
+    ];
+    selectors.forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(function (el) {
+        el.style.setProperty('display', 'none', 'important');
+        el.style.setProperty('visibility', 'hidden', 'important');
+        el.style.setProperty('pointer-events', 'none', 'important');
+        el.setAttribute('aria-hidden', 'true');
+      });
+    });
+  }
+  hideShopifyFormsCorner();
+  window.setInterval(hideShopifyFormsCorner, 1000);
+
   ready(function () {
     var root = document.querySelector('[data-ff-offer]');
     if (!root) return;
@@ -83,6 +107,9 @@
         }, 400);
       });
     }
+
+    hideShopifyFormsCorner();
+    window.setInterval(hideShopifyFormsCorner, 1000);
 
     if (!wasDismissed()) {
       timer = window.setTimeout(openPopup, isNaN(delay) ? 5000 : delay);

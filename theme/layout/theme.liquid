@@ -139,8 +139,8 @@
         <div class="wrapper-footer">
             {{ 'section-footer.css' | asset_url | stylesheet_tag }}
             {% sections 'footer-group' %}
-            {% section 'ff-offer-popup' %}
         </div>
+        {% render 'ff-offer-popup' %}
         {% section 'halo-toolbar-mobile' %}
         {{ 'rtl-section-header.css' | asset_url | stylesheet_tag }}
         {{ 'rtl-section-footer.css' | asset_url | stylesheet_tag }}

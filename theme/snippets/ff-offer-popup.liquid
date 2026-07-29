@@ -1,0 +1,60 @@
+{{ 'ff-offer-popup.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign delay_ms = 5 | times: 1000
+  assign expire_days = 14
+  assign offer_heading = 'Get $100 Off Your Entire Order'
+  assign offer_subheading = 'Limited time offer for first-time customers. Premium mods, fast support and zero regrets. Built for real enthusiasts.'
+  assign offer_button = 'Claim Offer'
+  assign offer_tags = 'newsletter, first-time-100-off'
+  assign offer_disclaimer = 'By signing up, you agree to receive marketing emails. View our privacy policy and terms of service for more info.'
+  assign offer_success = "You're in - check your email for your $100 off code."
+  if settings.newsletter_popup_image != blank
+    assign offer_image = settings.newsletter_popup_image
+  endif
+-%}
+
+<div
+  class="ff-offer"
+  id="ff-offer-popup"
+  data-ff-offer
+  data-ff-offer-delay="{{ delay_ms }}"
+  data-ff-offer-expire="{{ expire_days }}"
+  hidden
+  aria-hidden="true"
+>
+  <div class="ff-offer__backdrop" data-ff-offer-close tabindex="-1"></div>
+  <div class="ff-offer__dialog" role="dialog" aria-modal="true" aria-labelledby="ff-offer-title">
+    <button type="button" class="ff-offer__close" data-ff-offer-close aria-label="Close offer">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="ff-offer__media" aria-hidden="true">
+      {%- if offer_image != blank -%}
+        {{
+          offer_image
+          | image_url: width: 1200
+          | image_tag:
+            loading: 'lazy',
+            widths: '480, 720, 960, 1200',
+            sizes: '(max-width: 749px) 100vw, 42vw',
+            alt: ''
+        }}
+      {%- else -%}
+        <div class="ff-offer__media-placeholder"></div>
+      {%- endif -%}
+    </div>
+    <div class="ff-offer__panel">
+      <h2 class="ff-offer__title" id="ff-offer-title">{{ offer_heading | escape }}</h2>
+      <p class="ff-offer__sub">{{ offer_subheading | escape }}</p>
+      {%- form 'customer', class: 'ff-offer__form' -%}
+        <input type="hidden" name="contact[tags]" value="{{ offer_tags | escape }}">
+        <input class="ff-offer__input" type="text" name="contact[first_name]" placeholder="First name" autocomplete="given-name">
+        <input class="ff-offer__input" type="email" name="contact[email]" placeholder="Email" autocomplete="email" required>
+        <button type="submit" class="ff-offer__submit">{{ offer_button | escape }}</button>
+      {%- endform -%}
+      <p class="ff-offer__disclaimer">{{ offer_disclaimer | escape }}</p>
+      <p class="ff-offer__success" data-ff-offer-success hidden>{{ offer_success | escape }}</p>
+    </div>
+  </div>
+</div>
+<script src="{{ 'ff-offer-popup.js' | asset_url }}" defer></script>
