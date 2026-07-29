@@ -272,3 +272,11 @@ div[data-forms-id],
     animation: none;
   }
 }
+
+/* Live-fix: hide sticky-cached About “Add a video” overlays sitewide.
+   Loaded by the offer popup boot via ?v=offer3 (not a frozen content hash). */
+.ff-about__story-video-hint,
+.ff-about__story-video--poster .ff-about__story-video-hint {
+  display: none !important;
+}
+
