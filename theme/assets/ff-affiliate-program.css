@@ -1,10 +1,10 @@
 .ff-aff {
-  --ff-aff-ink: #111111;
-  --ff-aff-muted: #3f3c37;
-  --ff-aff-gold: #c2a76b;
-  --ff-aff-cream: #f7f4ee;
-  --ff-aff-line: #111111;
-  background: #ffffff;
+  --ff-aff-ink: #f5f5f5;
+  --ff-aff-muted: #b0aea8;
+  --ff-aff-gold: #a8a8a8;
+  --ff-aff-cream: #161616;
+  --ff-aff-line: #2e2e2e;
+  background: #0a0a0a;
   color: var(--ff-aff-ink);
   padding: 72px 20px 96px;
 }
@@ -24,9 +24,9 @@ body.dark-mode .ff-aff * {
   display: inline-block;
   margin: 0 0 32px;
   padding: 18px 36px;
-  border: 2px solid var(--ff-aff-ink);
-  background: #ffffff;
-  color: #111111 !important;
+  border: 2px solid #ffffff;
+  background: #0a0a0a;
+  color: #ffffff !important;
   font-size: clamp(1.45rem, 3.2vw, 2rem);
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -66,7 +66,7 @@ body.dark-mode .ff-aff * {
 
 .ff-aff__step-title {
   margin: 0 0 12px;
-  color: #111111 !important;
+  color: #ffffff !important;
   font-size: clamp(1.2rem, 2.2vw, 1.45rem);
   font-weight: 800;
   line-height: 1.25;
@@ -95,7 +95,7 @@ body.dark-mode .ff-aff * {
 
 .ff-aff__benefit-value {
   margin: 0 0 10px;
-  color: #111111 !important;
+  color: #ffffff !important;
   font-size: clamp(1.45rem, 3vw, 1.9rem);
   font-weight: 800;
   letter-spacing: 0.02em;
@@ -117,7 +117,7 @@ body.dark-mode .ff-aff * {
   max-width: 760px;
   margin: 0 auto;
   padding: 36px 28px 32px;
-  border: 1px solid #e4dfd4;
+  border: 1px solid var(--ff-aff-line);
   background: var(--ff-aff-cream);
   text-align: left;
   scroll-margin-top: 100px;
@@ -126,7 +126,7 @@ body.dark-mode .ff-aff * {
 .ff-aff__apply-heading {
   margin: 0 0 12px;
   text-align: center;
-  color: #111111 !important;
+  color: #ffffff !important;
   font-size: clamp(1.35rem, 2.6vw, 1.7rem);
   font-weight: 800;
   letter-spacing: 0.06em;
@@ -169,10 +169,10 @@ body.dark-mode .ff-aff * {
 .ff-aff__field textarea {
   width: 100%;
   padding: 16px 18px;
-  border: 1px solid #d4cec1;
+  border: 1px solid #3a3a3a;
   border-radius: 0;
-  background: #ffffff;
-  color: #111111 !important;
+  background: #0f0f0f;
+  color: #ffffff !important;
   font-size: 1.05rem;
   line-height: 1.4;
   font-family: inherit;
@@ -180,7 +180,7 @@ body.dark-mode .ff-aff * {
 
 .ff-aff__field input::placeholder,
 .ff-aff__field textarea::placeholder {
-  color: #8a857a;
+  color: #8a8a8a;
   opacity: 1;
 }
 
@@ -197,9 +197,9 @@ body.dark-mode .ff-aff * {
   width: 100%;
   margin-top: 28px;
   padding: 18px 28px;
-  border: 2px solid #111111;
-  background: #111111;
-  color: #ffffff !important;
+  border: 2px solid #ffffff;
+  background: #ffffff;
+  color: #111111 !important;
   font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -221,18 +221,18 @@ body.dark-mode .ff-aff * {
   border: 1px solid var(--ff-aff-line);
   font-size: 1.02rem;
   line-height: 1.5;
-  color: #111111 !important;
+  color: #ffffff !important;
 }
 
 .ff-aff__success {
-  background: #ffffff;
+  background: #141414;
   border-color: var(--ff-aff-gold);
 }
 
 .ff-aff__error {
-  background: #fff5f5;
+  background: #2a1212;
   border-color: #cc0000;
-  color: #8a0000 !important;
+  color: #ffb3b3 !important;
 }
 
 @media (max-width: 749.98px) {

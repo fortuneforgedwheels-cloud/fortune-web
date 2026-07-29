@@ -1,9 +1,9 @@
 .ff-guide {
-  --ff-gold: #c2a76b;
-  --ff-ink: #111111;
-  --ff-muted: #55524a;
-  --ff-line: #e2ddd0;
-  background: #ffffff;
+  --ff-gold: #a8a8a8;
+  --ff-ink: #f5f5f5;
+  --ff-muted: #b0aea8;
+  --ff-line: #2e2e2e;
+  background: #0a0a0a;
   color: var(--ff-ink);
   padding: 40px 20px 80px;
 }
@@ -41,6 +41,7 @@
 
 .ff-guide__heading {
   margin: 0 0 14px;
+  color: #ffffff;
   font-size: clamp(1.9rem, 4vw, 2.6rem);
   line-height: 1.1;
   font-weight: 800;
@@ -117,6 +118,7 @@
 
 .ff-guide__tier-title {
   margin: 0 0 6px;
+  color: #ffffff;
   font-size: clamp(1.3rem, 2.4vw, 1.7rem);
   font-weight: 800;
   text-transform: uppercase;
@@ -149,7 +151,7 @@
   border: 1px solid var(--ff-line);
   border-radius: 8px;
   overflow: hidden;
-  background: #fdfcfa;
+  background: #141414;
 }
 
 .ff-guide__config-media img {
@@ -163,9 +165,9 @@
   display: grid;
   place-items: center;
   aspect-ratio: 16 / 10;
-  background: linear-gradient(135deg, #f0eee9, #e4e0d6 55%, #f0eee9);
+  background: linear-gradient(135deg, #1a1a1a, #222 55%, #1a1a1a);
   border-bottom: 1px solid var(--ff-line);
-  color: #8a857a;
+  color: #8a8a8a;
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -181,8 +183,8 @@
   margin-bottom: 12px;
   padding: 4px 12px;
   border-radius: 999px;
-  background: #111111;
-  color: #ffffff;
+  background: #ffffff;
+  color: #111111;
   font-size: 10.5px;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -204,11 +206,13 @@
 
 .ff-guide__spec-line {
   margin: 0 0 2px;
+  color: var(--ff-ink);
   font-size: 0.95rem;
 }
 
 .ff-guide__spec-line strong {
   font-weight: 800;
+  color: #ffffff;
 }
 
 .ff-guide__staff-pick span {
@@ -228,7 +232,7 @@
   margin: 0 0 14px;
   padding: 12px 14px;
   border-left: 2px solid var(--ff-gold);
-  background: #f7f4ec;
+  background: #1a1a1a;
   color: var(--ff-muted);
   font-size: 0.88rem;
   line-height: 1.55;
@@ -257,7 +261,7 @@
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #111;
+  color: #ffffff;
 }
 
 .ff-guide__tire-list dd {

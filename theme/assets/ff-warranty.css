@@ -1,16 +1,16 @@
 .ff-warranty {
-  --ff-gold: #c2a76b;
-  --ff-gold-soft: #f7f1e3;
-  --ff-ink: #111111;
-  --ff-muted: #5f5b54;
-  --ff-line: #e2ddd0;
-  --ff-cream: #f8f5ef;
+  --ff-gold: #a8a8a8;
+  --ff-gold-soft: rgba(168, 168, 168, 0.14);
+  --ff-ink: #f5f5f5;
+  --ff-muted: #b0aea8;
+  --ff-line: #2e2e2e;
+  --ff-cream: #161616;
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(1200px 500px at 10% -10%, rgba(194, 167, 107, 0.18), transparent 55%),
-    radial-gradient(900px 420px at 100% 0%, rgba(194, 167, 107, 0.12), transparent 50%),
-    linear-gradient(180deg, #fbfaf7 0%, #ffffff 42%, #f7f4ee 100%);
+    radial-gradient(1200px 500px at 10% -10%, rgba(168, 168, 168, 0.12), transparent 55%),
+    radial-gradient(900px 420px at 100% 0%, rgba(168, 168, 168, 0.08), transparent 50%),
+    linear-gradient(180deg, #0a0a0a 0%, #111111 42%, #0d0d0d 100%);
   color: var(--ff-ink);
   padding: 64px 20px 96px;
 }
@@ -19,8 +19,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(17, 17, 17, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(17, 17, 17, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 70%);
   pointer-events: none;
@@ -49,6 +49,7 @@
 
 .ff-warranty__heading {
   margin: 0 0 14px;
+  color: #ffffff;
   font-size: clamp(2.4rem, 6vw, 4rem);
   line-height: 0.95;
   font-weight: 800;
@@ -77,9 +78,9 @@
 
 .ff-warranty__highlight {
   padding: 22px 24px;
-  border: 1px solid rgba(194, 167, 107, 0.45);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), var(--ff-gold-soft));
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(168, 168, 168, 0.45);
+  background: linear-gradient(180deg, rgba(22, 22, 22, 0.95), #1a1a1a);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
 .ff-warranty__highlight-label {
@@ -93,6 +94,7 @@
 
 .ff-warranty__highlight-title {
   margin: 0 0 10px;
+  color: #ffffff;
   font-size: clamp(1.25rem, 2.4vw, 1.55rem);
   line-height: 1.2;
   font-weight: 800;
@@ -117,6 +119,7 @@
 
 .ff-warranty__section-title {
   margin: 0 0 10px;
+  color: #ffffff;
   font-size: clamp(1.15rem, 2vw, 1.35rem);
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -174,8 +177,8 @@
   min-height: 48px;
   padding: 14px 28px;
   border: 1px solid var(--ff-gold);
-  background: var(--ff-ink);
-  color: #ffffff;
+  background: #ffffff;
+  color: #111111;
   text-decoration: none;
   font-size: 12px;
   font-weight: 800;

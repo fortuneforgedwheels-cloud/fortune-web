@@ -1,11 +1,11 @@
 .ff-826m-path {
-  --ff-826m-ink: #111111;
-  --ff-826m-muted: #6b675f;
-  --ff-826m-line: #ddd8ce;
-  --ff-826m-soft: #f6f3ec;
-  --ff-826m-gold: #c2a76b;
-  --ff-826m-gold-soft: #f7f1e3;
-  --ff-826m-accent: #1a1a1a;
+  --ff-826m-ink: #f5f5f5;
+  --ff-826m-muted: #b0aea8;
+  --ff-826m-line: #2e2e2e;
+  --ff-826m-soft: #161616;
+  --ff-826m-gold: #a8a8a8;
+  --ff-826m-gold-soft: rgba(168, 168, 168, 0.14);
+  --ff-826m-accent: #ffffff;
   margin: 0 0 22px;
   padding: 20px 0 8px;
   border-top: 1px solid var(--ff-826m-line);
@@ -25,7 +25,7 @@
   margin: 0 0 8px;
   font-size: clamp(1.25rem, 2vw, 1.55rem);
   line-height: 1.2;
-  color: var(--ff-826m-ink);
+  color: #ffffff;
 }
 
 .ff-826m-path__intro {
@@ -66,7 +66,7 @@
   min-height: 100%;
   padding: 14px 16px;
   border: 1px solid var(--ff-826m-line);
-  background: #fff;
+  background: #141414;
   transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 }
 
@@ -77,7 +77,7 @@
 }
 
 .ff-826m-path__choice input:checked + .ff-826m-path__choice-card .ff-826m-path__choice-title {
-  color: #8a6f2f;
+  color: #d0d0d0;
 }
 
 .ff-826m-path__choice input:focus-visible + .ff-826m-path__choice-card {
@@ -98,7 +98,7 @@
 }
 
 .ff-826m-path__choice input:checked + .ff-826m-path__choice-card .ff-826m-path__choice-meta {
-  color: #6f5a2d;
+  color: #b8b8b8;
 }
 
 .ff-826m-path__badge {
@@ -108,7 +108,7 @@
   gap: 8px 14px;
   margin-bottom: 14px;
   padding: 12px 14px;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2a2418 55%, #3a311c 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #222 55%, #2a2a2a 100%);
   color: #fff;
   border: 1px solid var(--ff-826m-gold);
 }
@@ -155,7 +155,7 @@
   min-height: 44px;
   padding: 10px 12px;
   border: 1px solid var(--ff-826m-line);
-  background: #fff;
+  background: #0f0f0f;
   font-size: 15px;
   font-weight: 500;
   letter-spacing: 0;

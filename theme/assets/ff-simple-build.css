@@ -1,11 +1,11 @@
 .ff-build {
-  --ff-gold: #c4a35a;
+  --ff-gold: #a8a8a8;
   --ff-ink: #f3f1ec;
   --ff-muted: #a8a59c;
   --ff-panel: #161616;
   --ff-line: rgba(243, 241, 236, 0.14);
   background:
-    radial-gradient(120% 80% at 50% -10%, rgba(196, 163, 90, 0.18), transparent 55%),
+    radial-gradient(120% 80% at 50% -10%, rgba(168, 168, 168, 0.18), transparent 55%),
     linear-gradient(180deg, #0b0b0b 0%, #111 100%);
   color: var(--ff-ink);
   padding: 48px 20px 64px;
@@ -63,7 +63,7 @@
 .ff-build__step.is-active,
 .ff-build__step.is-done {
   opacity: 1;
-  border-color: rgba(196, 163, 90, 0.55);
+  border-color: rgba(168, 168, 168, 0.55);
 }
 
 .ff-build__step-num {
@@ -152,8 +152,8 @@
 .ff-build__pricing-note {
   margin: 14px 0 0;
   padding: 12px 14px;
-  border: 1px solid rgba(196, 163, 90, 0.45);
-  background: rgba(196, 163, 90, 0.1);
+  border: 1px solid rgba(168, 168, 168, 0.45);
+  background: rgba(168, 168, 168, 0.1);
   color: var(--ff-ink);
   line-height: 1.45;
   font-size: 0.95rem;
@@ -202,13 +202,13 @@
 }
 
 .ff-quote__choice:hover {
-  border-color: rgba(196, 163, 90, 0.55);
+  border-color: rgba(168, 168, 168, 0.55);
 }
 
 .ff-quote__choice.is-selected {
   border-color: var(--ff-gold);
-  background: rgba(196, 163, 90, 0.14);
-  box-shadow: inset 0 0 0 1px rgba(196, 163, 90, 0.45);
+  background: rgba(168, 168, 168, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(168, 168, 168, 0.45);
 }
 
 .ff-quote__choice input {
@@ -306,8 +306,8 @@
 }
 
 .ff-quote__success {
-  background: rgba(196, 163, 90, 0.16);
-  border: 1px solid rgba(196, 163, 90, 0.5);
+  background: rgba(168, 168, 168, 0.16);
+  border: 1px solid rgba(168, 168, 168, 0.5);
   padding: 12px 14px;
   margin-bottom: 16px;
 }
@@ -362,9 +362,9 @@ html.ff-modal-open {
   max-height: calc(100vh - 40px);
   overflow: auto;
   background:
-    radial-gradient(120% 90% at 50% -20%, rgba(196, 163, 90, 0.22), transparent 55%),
+    radial-gradient(120% 90% at 50% -20%, rgba(168, 168, 168, 0.22), transparent 55%),
     #141414;
-  border: 1px solid rgba(196, 163, 90, 0.55);
+  border: 1px solid rgba(168, 168, 168, 0.55);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
   color: var(--ff-ink);
   padding: 28px 24px 24px;
@@ -410,8 +410,8 @@ html.ff-modal-open {
 .ff-media-modal__offer {
   margin: 18px 0 0;
   padding: 16px 14px;
-  border: 1px solid rgba(196, 163, 90, 0.5);
-  background: rgba(196, 163, 90, 0.12);
+  border: 1px solid rgba(168, 168, 168, 0.5);
+  background: rgba(168, 168, 168, 0.12);
 }
 
 .ff-media-modal__offer-label {
@@ -449,8 +449,8 @@ html.ff-modal-open {
 .ff-media-modal__thanks {
   margin: 18px 0 0;
   padding: 14px;
-  border: 1px solid rgba(196, 163, 90, 0.5);
-  background: rgba(196, 163, 90, 0.16);
+  border: 1px solid rgba(168, 168, 168, 0.5);
+  background: rgba(168, 168, 168, 0.16);
   color: var(--ff-ink);
   line-height: 1.45;
 }

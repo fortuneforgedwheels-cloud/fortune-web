@@ -1,6 +1,6 @@
 .ff-fan {
-  --ff-gold: #c2a76b;
-  --ff-gold-soft: rgba(194, 167, 107, 0.16);
+  --ff-gold: #a8a8a8;
+  --ff-gold-soft: rgba(168, 168, 168, 0.16);
   --ff-ink: #f3f1ec;
   --ff-muted: rgba(243, 241, 236, 0.68);
   --ff-line: rgba(243, 241, 236, 0.14);
@@ -8,7 +8,7 @@
   overflow: hidden;
   padding: var(--ff-fan-pad-top, 64px) 20px var(--ff-fan-pad-bottom, 64px);
   background:
-    radial-gradient(120% 70% at 50% -10%, rgba(194, 167, 107, 0.12), transparent 55%),
+    radial-gradient(120% 70% at 50% -10%, rgba(168, 168, 168, 0.12), transparent 55%),
     linear-gradient(180deg, #0d0d0d 0%, #0a0a0a 100%);
   color: var(--ff-ink);
 }
@@ -170,7 +170,7 @@
   max-height: calc(100vh - 40px);
   overflow: auto;
   background: #0c0c0c;
-  border: 1px solid rgba(194, 167, 107, 0.5);
+  border: 1px solid rgba(168, 168, 168, 0.5);
   border-radius: 14px;
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
 }
@@ -271,7 +271,7 @@
 
 .ff-fan__config {
   padding: 28px 26px 30px;
-  border-left: 1px solid rgba(194, 167, 107, 0.28);
+  border-left: 1px solid rgba(168, 168, 168, 0.28);
 }
 
 .ff-fan__config-badge {
@@ -508,7 +508,7 @@ html.ff-fan-open {
 
   .ff-fan__config {
     border-left: 0;
-    border-top: 1px solid rgba(194, 167, 107, 0.28);
+    border-top: 1px solid rgba(168, 168, 168, 0.28);
   }
 }
 

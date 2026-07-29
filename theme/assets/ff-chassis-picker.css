@@ -1,7 +1,7 @@
 .ff-chassis {
-  --ff-gold: #c2a76b;
-  background: #ffffff;
-  color: #111111;
+  --ff-gold: #a8a8a8;
+  background: #0a0a0a;
+  color: #f5f5f5;
   padding: 48px 20px 64px;
 }
 
@@ -12,6 +12,7 @@
 
 .ff-chassis__heading {
   margin: 0 0 12px;
+  color: #ffffff;
   font-size: clamp(1.7rem, 3.6vw, 2.4rem);
   line-height: 1.15;
   font-weight: 800;
@@ -22,7 +23,7 @@
 .ff-chassis__subheading {
   margin: 0 0 32px;
   max-width: 46rem;
-  color: #55524a;
+  color: #b0aea8;
   line-height: 1.5;
   font-size: 1rem;
 }
@@ -40,10 +41,10 @@
   text-align: center;
   min-height: 96px;
   padding: 18px 22px;
-  border: 1px solid #d8d4c8;
+  border: 1px solid #2e2e2e;
   border-radius: 4px;
-  background: #ffffff;
-  color: #111111;
+  background: #141414;
+  color: #ffffff;
   text-decoration: none;
   font-size: 1.05rem;
   font-weight: 800;
@@ -55,7 +56,7 @@
 .ff-chassis__card:focus-visible {
   border-color: var(--ff-gold);
   color: var(--ff-gold);
-  background: #fbf8f1;
+  background: #1a1a1a;
 }
 
 @media (max-width: 749.98px) {

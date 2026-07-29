@@ -1,7 +1,7 @@
 .ff-trust {
-  --ff-gold: #c2a76b;
-  background: #ffffff;
-  color: #111111;
+  --ff-gold: #a8a8a8;
+  background: #0a0a0a;
+  color: #f5f5f5;
   padding: var(--ff-trust-pad-top, 56px) 20px var(--ff-trust-pad-bottom, 56px);
 }
 
@@ -19,7 +19,7 @@
 .ff-trust__card {
   padding: 36px 28px;
   border-radius: 14px;
-  background: #f5f3ef;
+  background: #161616;
   text-align: center;
 }
 
@@ -39,6 +39,7 @@
 
 .ff-trust__heading {
   margin: 0 0 10px;
+  color: #ffffff;
   font-size: 0.92rem;
   font-weight: 800;
   font-style: italic;
@@ -59,14 +60,14 @@
 
 .ff-trust__desc {
   margin: 0;
-  color: #6b6862;
+  color: #b0aea8;
   font-size: 0.88rem;
   line-height: 1.55;
 }
 
 .ff-trust__link {
   display: inline;
-  color: #6b6862;
+  color: #b0aea8;
   text-decoration: underline;
 }
 
