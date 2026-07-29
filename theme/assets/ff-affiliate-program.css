@@ -56,7 +56,7 @@ body.dark-mode .ff-aff * {
   width: 84px;
   height: 84px;
   margin: 0 auto 20px;
-  color: var(--ff-aff-gold) !important;
+  color: #c2a76b !important;
 }
 
 .ff-aff__step-icon svg {

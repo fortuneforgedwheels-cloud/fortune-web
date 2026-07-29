@@ -18,7 +18,7 @@
 
 .ff-build__eyebrow {
   margin: 0 0 8px;
-  color: var(--ff-gold);
+  color: #c2a76b;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-size: 12px;
@@ -386,7 +386,7 @@ html.ff-modal-open {
 
 .ff-media-modal__eyebrow {
   margin: 0 0 8px;
-  color: var(--ff-gold);
+  color: #c2a76b;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-size: 12px;

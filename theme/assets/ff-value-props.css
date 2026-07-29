@@ -147,8 +147,9 @@
 .ff-values__link {
   display: inline-block;
   margin-top: 18px;
-  color: #fff;
+  color: #c2a76b;
   text-decoration: underline;
+  text-decoration-color: #c2a76b;
   text-underline-offset: 4px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -158,7 +159,8 @@
 }
 
 .ff-values__link:hover {
-  color: var(--ff-gold);
+  color: #d4b87a;
+  text-decoration-color: #d4b87a;
 }
 
 .ff-values__link--static {

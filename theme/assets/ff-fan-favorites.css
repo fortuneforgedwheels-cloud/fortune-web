@@ -25,7 +25,7 @@
 
 .ff-fan__eyebrow {
   margin: 0 0 10px;
-  color: var(--ff-gold);
+  color: #c2a76b;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-size: 12px;
@@ -124,11 +124,19 @@
 
 .ff-fan__thumb-cta {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 10px;
+  right: 10px;
   bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: #000000;
   text-align: center;
-  color: var(--ff-gold);
+  color: #ffffff;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -469,6 +477,14 @@
   width: 100%;
   margin-top: 22px;
   min-height: 48px;
+  background: #000000 !important;
+  border: 1px solid #c2a76b !important;
+  color: #ffffff !important;
+}
+
+.ff-fan__cta:hover {
+  background: #111111 !important;
+  color: #ffffff !important;
 }
 
 .ff-fan__cta[disabled] {
