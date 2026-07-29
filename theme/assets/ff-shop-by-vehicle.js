@@ -201,6 +201,25 @@
     return false;
   }
 
+  function isFortuneCertified(cfg, guideSlug) {
+    if (guideSlug === 'g20-g21') {
+      return cfg.tier === 'Performance Street & Track — Square'
+        && normalizeSpec(cfg.front) === '19x9 ET25'
+        && normalizeSpec(cfg.rear) === '19x9 ET25';
+    }
+    return false;
+  }
+
+  function fitmentBadge(cfg, guideSlug) {
+    if (isFortuneCertified(cfg, guideSlug)) {
+      return { label: 'Fortune Certified', className: 'ff-sbv__fitment-option--certified' };
+    }
+    if (isFortuneTopSeller(cfg, guideSlug)) {
+      return { label: 'Fortune Top Seller', className: 'ff-sbv__fitment-option--top-seller' };
+    }
+    return null;
+  }
+
   /* ── fitment card with selectable options ── */
   function renderFitmentCard(container, chassis, configs, source, guideSlug, onPick) {
     container.innerHTML = '';
@@ -221,7 +240,7 @@
 
     configs.forEach(function (cfg, idx) {
       var specLine;
-      var isTopSeller = isFortuneTopSeller(cfg, guideSlug);
+      var badge = fitmentBadge(cfg, guideSlug);
       if (isSquare(cfg.front, cfg.rear)) {
         specLine = 'Front &amp; Rear: <strong>' + escHtml(cfg.front) + '</strong>';
       } else {
@@ -229,10 +248,10 @@
           + ' · Rear: <strong>' + escHtml(cfg.rear) + '</strong>';
       }
       html += '<button type="button" class="ff-sbv__fitment-option'
-        + (isTopSeller ? ' ff-sbv__fitment-option--top-seller' : '')
+        + (badge ? ' ' + badge.className : '')
         + '" data-ff-sbv-pick-fitment data-index="' + idx + '">';
-      if (isTopSeller) {
-        html += '<span class="ff-sbv__fitment-option-badge">Fortune Top Seller</span>';
+      if (badge) {
+        html += '<span class="ff-sbv__fitment-option-badge">' + escHtml(badge.label) + '</span>';
       }
       html += '<span class="ff-sbv__fitment-option-tier">' + escHtml(cfg.tier) + '</span>'
         + '<span class="ff-sbv__fitment-option-label">' + escHtml(cfg.config) + '</span>'

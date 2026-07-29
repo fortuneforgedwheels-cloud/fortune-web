@@ -242,7 +242,8 @@
   transition: border-color 160ms ease, background 160ms ease;
 }
 
-.ff-sbv__fitment-option--top-seller {
+.ff-sbv__fitment-option--top-seller,
+.ff-sbv__fitment-option--certified {
   border-color: rgba(var(--ff-sbv-gold-rgb),0.65);
   background: rgba(var(--ff-sbv-gold-rgb),0.1);
   box-shadow: 0 0 0 1px rgba(var(--ff-sbv-gold-rgb),0.25);
