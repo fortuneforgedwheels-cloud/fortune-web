@@ -1,0 +1,27 @@
+{%- comment -%}
+  Outputs an inline style for text size + alignment.
+  Params:
+  - size: max font size in px (optional — omit to keep CSS default)
+  - align: left | center | right (optional)
+  - min_ratio: percent of size used as clamp minimum (default 60)
+{%- endcomment -%}
+{%- liquid
+  assign ff_has_size = false
+  if size != blank and size != 0
+    assign ff_has_size = true
+    assign ff_size = size
+    assign ff_min_ratio = min_ratio | default: 60
+    assign ff_min = ff_size | times: ff_min_ratio | divided_by: 100
+    if ff_min < 10
+      assign ff_min = 10
+    endif
+    assign ff_vw = ff_size | times: 12 | divided_by: 100.0
+  endif
+  assign ff_has_align = false
+  if align == 'left' or align == 'center' or align == 'right'
+    assign ff_has_align = true
+  endif
+-%}
+{%- if ff_has_size or ff_has_align -%}
+style="{% if ff_has_size %}font-size: clamp({{ ff_min }}px, {{ ff_vw }}vw, {{ ff_size }}px);{% endif %}{% if ff_has_align %} text-align: {{ align }};{% endif %}"
+{%- endif -%}

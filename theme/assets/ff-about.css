@@ -12,8 +12,6 @@
 .ff-about__hero {
   position: relative;
   min-height: min(88vh, 820px);
-  display: grid;
-  align-items: end;
   isolation: isolate;
 }
 
@@ -52,23 +50,28 @@
 }
 
 .ff-about__hero-copy {
-  position: relative;
+  position: absolute;
   z-index: 2;
-  width: 100%;
+  left: var(--ff-hero-left, 0);
+  right: var(--ff-hero-right, auto);
+  top: var(--ff-hero-top, auto);
+  bottom: var(--ff-hero-bottom, 0);
+  width: min(920px, calc(100% - 40px));
   margin: 0;
-  padding: 0 clamp(20px, 5vw, 72px) clamp(14px, 2vh, 24px);
+  padding: clamp(16px, 3vh, 28px) clamp(20px, 5vw, 72px);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: var(--ff-hero-items, flex-start);
   gap: 10px;
-  text-align: left;
+  text-align: var(--ff-hero-text, left);
+  transform: translate(calc(var(--ff-hero-tx, 0%) + var(--ff-hero-ox, 0px)), calc(var(--ff-hero-ty, 0%) + var(--ff-hero-oy, 0px)));
 }
 
 .ff-about__hero-bar {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
-  justify-content: flex-start;
+  justify-content: var(--ff-hero-justify, flex-start);
   gap: 14px 22px;
   width: 100%;
 }
@@ -81,7 +84,6 @@
 .ff-about__brand {
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2rem, 5.5vw, 3.6rem);
   line-height: 0.92;
   font-weight: 800;
   letter-spacing: 0.02em;
@@ -94,6 +96,7 @@
   width: 72px;
   height: 2px;
   margin: 10px 0 0;
+  margin-inline: var(--ff-brand-line-inline, 0);
   background: linear-gradient(90deg, var(--ff-gold), rgba(194, 167, 107, 0.15));
   transform-origin: left center;
   animation: ff-about-draw 1s ease 0.2s both;
@@ -103,7 +106,6 @@
   margin: 0;
   max-width: 34rem;
   color: rgba(245, 245, 245, 0.88);
-  font-size: clamp(1rem, 1.8vw, 1.15rem);
   line-height: 1.45;
 }
 
@@ -179,11 +181,29 @@
 .ff-about__heading {
   margin: 0 0 18px;
   color: #ffffff;
-  font-size: clamp(1.9rem, 4vw, 3rem);
-  line-height: 1.05;
+  font-size: clamp(1.7rem, 3.8vw, 2.5rem);
+  line-height: 1.1;
   font-weight: 800;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
+}
+
+.ff-about__copy {
+  color: var(--ff-muted);
+  font-size: clamp(1.08rem, 1.6vw, 1.18rem);
+  line-height: 1.65;
+}
+
+.ff-about__copy--intro {
+  margin: 0;
+}
+
+.ff-about__story-copy {
+  text-align: var(--ff-story-align, left);
+}
+
+.ff-about__build-header {
+  text-align: var(--ff-build-align, left);
 }
 
 .ff-about__copy {
@@ -327,13 +347,13 @@
   position: relative;
   padding-top: clamp(72px, 10vw, 120px);
   padding-bottom: clamp(72px, 10vw, 120px);
-  text-align: center;
+  text-align: var(--ff-mission-align, center);
 }
 
 .ff-about__mission-stack {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: var(--ff-mission-items, center);
   gap: 22px;
   max-width: 48rem;
   margin: 0 auto;
@@ -376,8 +396,8 @@
   margin-top: 2px;
 }
 
-.ff-about__cta-row--center {
-  justify-content: center;
+.ff-about__cta-row--mission {
+  justify-content: var(--ff-mission-items, center);
 }
 
 @keyframes ff-about-ken {
@@ -405,22 +425,18 @@
   }
 
   .ff-about__hero-copy {
-    padding: 0 16px 14px;
+    padding: clamp(12px, 2vh, 20px) 16px;
     gap: 8px;
+    width: min(920px, calc(100% - 24px));
   }
 
   .ff-about__hero-bar {
     gap: 12px 14px;
   }
 
-  .ff-about__brand {
-    font-size: clamp(1.7rem, 9vw, 2.4rem);
-  }
-
   .ff-about__btn {
     min-height: 42px;
     padding: 0 16px;
-    font-size: 11px;
   }
 
   .ff-about__hero-img--desktop {

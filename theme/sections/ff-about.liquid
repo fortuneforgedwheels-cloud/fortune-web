@@ -9,9 +9,86 @@
   if hero_image == blank
     assign hero_image = images['IMG_2176.jpg']
   endif
+
+  assign hero_h = section.settings.hero_h_align | default: 'left'
+  assign hero_v = section.settings.hero_v_align | default: 'bottom'
+  assign hero_ox = section.settings.hero_offset_x | default: 0
+  assign hero_oy = section.settings.hero_offset_y | default: 0
+
+  case hero_h
+    when 'center'
+      assign hero_left = '50%'
+      assign hero_right = 'auto'
+      assign hero_tx = '-50%'
+      assign hero_justify = 'center'
+      assign hero_items = 'center'
+      assign hero_text = 'center'
+    when 'right'
+      assign hero_left = 'auto'
+      assign hero_right = '0'
+      assign hero_tx = '0'
+      assign hero_justify = 'flex-end'
+      assign hero_items = 'flex-end'
+      assign hero_text = 'right'
+    else
+      assign hero_left = '0'
+      assign hero_right = 'auto'
+      assign hero_tx = '0'
+      assign hero_justify = 'flex-start'
+      assign hero_items = 'flex-start'
+      assign hero_text = 'left'
+  endcase
+
+  case hero_v
+    when 'top'
+      assign hero_top = '0'
+      assign hero_bottom = 'auto'
+      assign hero_ty = '0'
+    when 'middle'
+      assign hero_top = '50%'
+      assign hero_bottom = 'auto'
+      assign hero_ty = '-50%'
+    else
+      assign hero_top = 'auto'
+      assign hero_bottom = '0'
+      assign hero_ty = '0'
+  endcase
+
+  assign mission_align = section.settings.mission_align | default: 'center'
+  assign story_align = section.settings.story_align | default: 'left'
+  assign build_align = section.settings.build_align | default: 'left'
+
+  case mission_align
+    when 'left'
+      assign mission_items = 'flex-start'
+    when 'right'
+      assign mission_items = 'flex-end'
+    else
+      assign mission_items = 'center'
+  endcase
 -%}
 
-<section class="ff-about" id="ff-about-{{ section.id }}">
+<section
+  class="ff-about"
+  id="ff-about-{{ section.id }}"
+  style="
+    --ff-hero-left: {{ hero_left }};
+    --ff-hero-right: {{ hero_right }};
+    --ff-hero-top: {{ hero_top }};
+    --ff-hero-bottom: {{ hero_bottom }};
+    --ff-hero-tx: {{ hero_tx }};
+    --ff-hero-ty: {{ hero_ty }};
+    --ff-hero-ox: {{ hero_ox }}px;
+    --ff-hero-oy: {{ hero_oy }}px;
+    --ff-hero-justify: {{ hero_justify }};
+    --ff-hero-items: {{ hero_items }};
+    --ff-hero-text: {{ hero_text }};
+    --ff-mission-align: {{ mission_align }};
+    --ff-mission-items: {{ mission_items }};
+    --ff-story-align: {{ story_align }};
+    --ff-build-align: {{ build_align }};
+  "
+>
   <div class="ff-about__hero">
     <div class="ff-about__hero-media" aria-hidden="true">
       {%- if hero_image != blank -%}
@@ -53,19 +130,31 @@
     <div class="ff-about__hero-shade" aria-hidden="true"></div>
     <div class="ff-about__hero-copy">
       {%- if section.settings.lede != blank -%}
-        <p class="ff-about__lede">{{ section.settings.lede | escape }}</p>
+        <p class="ff-about__lede" {% render 'ff-type-style', size: section.settings.lede_size, align: section.settings.lede_align, min_ratio: 75 %}>
+          {{ section.settings.lede | escape }}
+        </p>
       {%- endif -%}
       <div class="ff-about__hero-bar">
         <div class="ff-about__brand-block">
-          <p class="ff-about__brand">{{ section.settings.brand | default: 'Fortune Forged' | escape }}</p>
+          <p class="ff-about__brand" {% render 'ff-type-style', size: section.settings.brand_size, align: section.settings.brand_align, min_ratio: 55 %}>
+            {{ section.settings.brand | default: 'Fortune Forged' | escape }}
+          </p>
           <span class="ff-about__brand-line" aria-hidden="true"></span>
         </div>
         <div class="ff-about__cta-row">
           {%- if section.settings.primary_label != blank and section.settings.primary_link != blank -%}
-            <a class="ff-about__btn ff-about__btn--solid" href="{{ section.settings.primary_link }}">{{ section.settings.primary_label | escape }}</a>
+            <a
+              class="ff-about__btn ff-about__btn--solid"
+              href="{{ section.settings.primary_link }}"
+              {% render 'ff-type-style', size: section.settings.primary_size, min_ratio: 90 %}
+            >{{ section.settings.primary_label | escape }}</a>
           {%- endif -%}
           {%- if section.settings.secondary_label != blank and section.settings.secondary_link != blank -%}
-            <a class="ff-about__btn ff-about__btn--ghost" href="{{ section.settings.secondary_link }}">{{ section.settings.secondary_label | escape }}</a>
+            <a
+              class="ff-about__btn ff-about__btn--ghost"
+              href="{{ section.settings.secondary_link }}"
+              {% render 'ff-type-style', size: section.settings.secondary_size, min_ratio: 90 %}
+            >{{ section.settings.secondary_label | escape }}</a>
           {%- endif -%}
         </div>
       </div>
@@ -74,14 +163,18 @@
 
   <div class="ff-about__section">
     <div class="ff-about__section--story">
-      <div>
+      <div class="ff-about__story-copy">
         {%- if section.settings.story_eyebrow != blank -%}
-          <p class="ff-about__eyebrow">{{ section.settings.story_eyebrow | escape }}</p>
+          <p class="ff-about__eyebrow" {% render 'ff-type-style', size: section.settings.story_eyebrow_size, align: section.settings.story_eyebrow_align, min_ratio: 90 %}>
+            {{ section.settings.story_eyebrow | escape }}
+          </p>
         {%- endif -%}
         {%- if section.settings.story_heading != blank -%}
-          <h2 class="ff-about__heading">{{ section.settings.story_heading | escape }}</h2>
+          <h2 class="ff-about__heading" {% render 'ff-type-style', size: section.settings.story_heading_size, align: section.settings.story_heading_align, min_ratio: 70 %}>
+            {{ section.settings.story_heading | escape }}
+          </h2>
         {%- endif -%}
-        <div class="ff-about__copy">
+        <div class="ff-about__copy" {% render 'ff-type-style', size: section.settings.story_body_size, align: section.settings.story_body_align, min_ratio: 85 %}>
           {%- if section.settings.story_body != blank -%}
             {{ section.settings.story_body }}
           {%- endif -%}
@@ -149,13 +242,19 @@
     <div class="ff-about__build-inner">
       <header class="ff-about__build-header">
         {%- if section.settings.build_eyebrow != blank -%}
-          <p class="ff-about__eyebrow">{{ section.settings.build_eyebrow | escape }}</p>
+          <p class="ff-about__eyebrow" {% render 'ff-type-style', size: section.settings.build_eyebrow_size, align: section.settings.build_eyebrow_align, min_ratio: 90 %}>
+            {{ section.settings.build_eyebrow | escape }}
+          </p>
         {%- endif -%}
         {%- if section.settings.build_heading != blank -%}
-          <h2 class="ff-about__heading">{{ section.settings.build_heading | escape }}</h2>
+          <h2 class="ff-about__heading" {% render 'ff-type-style', size: section.settings.build_heading_size, align: section.settings.build_heading_align, min_ratio: 70 %}>
+            {{ section.settings.build_heading | escape }}
+          </h2>
         {%- endif -%}
         {%- if section.settings.build_intro != blank -%}
-          <p class="ff-about__copy" style="margin:0;">{{ section.settings.build_intro | escape }}</p>
+          <p class="ff-about__copy ff-about__copy--intro" {% render 'ff-type-style', size: section.settings.build_intro_size, align: section.settings.build_intro_align, min_ratio: 85 %}>
+            {{ section.settings.build_intro | escape }}
+          </p>
         {%- endif -%}
       </header>
 
@@ -166,10 +265,14 @@
               <span class="ff-about__point-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
               <div>
                 {%- if block.settings.title != blank -%}
-                  <h3 class="ff-about__point-title">{{ block.settings.title | escape }}</h3>
+                  <h3 class="ff-about__point-title" {% render 'ff-type-style', size: block.settings.title_size, align: block.settings.title_align, min_ratio: 80 %}>
+                    {{ block.settings.title | escape }}
+                  </h3>
                 {%- endif -%}
                 {%- if block.settings.text != blank -%}
-                  <p class="ff-about__point-text">{{ block.settings.text | escape }}</p>
+                  <p class="ff-about__point-text" {% render 'ff-type-style', size: block.settings.text_size, align: block.settings.text_align, min_ratio: 85 %}>
+                    {{ block.settings.text | escape }}
+                  </p>
                 {%- endif -%}
               </div>
             </li>
@@ -182,17 +285,27 @@
   <div class="ff-about__section ff-about__section--mission">
     <div class="ff-about__mission-stack">
       {%- if section.settings.mission != blank -%}
-        <p class="ff-about__mission">{{ section.settings.mission | escape }}</p>
+        <p class="ff-about__mission" {% render 'ff-type-style', size: section.settings.mission_size, align: section.settings.mission_line_align, min_ratio: 55 %}>
+          {{ section.settings.mission | escape }}
+        </p>
       {%- endif -%}
       {%- if section.settings.mission_note != blank -%}
-        <p class="ff-about__mission-note">{{ section.settings.mission_note | escape }}</p>
+        <p class="ff-about__mission-note" {% render 'ff-type-style', size: section.settings.mission_note_size, align: section.settings.mission_note_align, min_ratio: 70 %}>
+          {{ section.settings.mission_note | escape }}
+        </p>
       {%- endif -%}
       {%- if section.settings.close_text != blank -%}
-        <p class="ff-about__close-copy">{{ section.settings.close_text | escape }}</p>
+        <p class="ff-about__close-copy" {% render 'ff-type-style', size: section.settings.close_text_size, align: section.settings.close_text_align, min_ratio: 75 %}>
+          {{ section.settings.close_text | escape }}
+        </p>
       {%- endif -%}
       {%- if section.settings.close_label != blank and section.settings.close_link != blank -%}
-        <div class="ff-about__cta-row ff-about__cta-row--center">
-          <a class="ff-about__btn ff-about__btn--solid" href="{{ section.settings.close_link }}">{{ section.settings.close_label | escape }}</a>
+        <div class="ff-about__cta-row ff-about__cta-row--mission">
+          <a
+            class="ff-about__btn ff-about__btn--solid"
+            href="{{ section.settings.close_link }}"
+            {% render 'ff-type-style', size: section.settings.close_label_size, min_ratio: 90 %}
+          >{{ section.settings.close_label | escape }}</a>
         </div>
       {%- endif -%}
     </div>
@@ -278,6 +391,52 @@
     },
     {
       "type": "header",
+      "content": "Hero placement"
+    },
+    {
+      "type": "select",
+      "id": "hero_h_align",
+      "label": "Hero horizontal position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "hero_v_align",
+      "label": "Hero vertical position",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "middle", "label": "Middle" },
+        { "value": "bottom", "label": "Bottom" }
+      ],
+      "default": "bottom"
+    },
+    {
+      "type": "range",
+      "id": "hero_offset_x",
+      "label": "Hero nudge left/right",
+      "min": -80,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "hero_offset_y",
+      "label": "Hero nudge up/down",
+      "min": -80,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
       "content": "Hero text"
     },
     {
@@ -287,16 +446,68 @@
       "default": "Fortune Forged"
     },
     {
+      "type": "range",
+      "id": "brand_size",
+      "label": "Brand size",
+      "min": 24,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "default": 54
+    },
+    {
+      "type": "select",
+      "id": "brand_align",
+      "label": "Brand align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "textarea",
       "id": "lede",
       "label": "Hero supporting line",
       "default": "Custom forged wheels, factory-backed builds, and fitment that holds up on the street."
     },
     {
+      "type": "range",
+      "id": "lede_size",
+      "label": "Supporting line size",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "lede_align",
+      "label": "Supporting line align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "text",
       "id": "primary_label",
       "label": "Primary CTA label",
       "default": "Request a quote"
+    },
+    {
+      "type": "range",
+      "id": "primary_size",
+      "label": "Primary CTA text size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
     },
     {
       "type": "url",
@@ -310,6 +521,16 @@
       "default": "Talk to us"
     },
     {
+      "type": "range",
+      "id": "secondary_size",
+      "label": "Secondary CTA text size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
       "type": "url",
       "id": "secondary_link",
       "label": "Secondary CTA link"
@@ -319,10 +540,42 @@
       "content": "Story"
     },
     {
+      "type": "select",
+      "id": "story_align",
+      "label": "Story block align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "text",
       "id": "story_eyebrow",
       "label": "Story eyebrow",
       "default": "The shop"
+    },
+    {
+      "type": "range",
+      "id": "story_eyebrow_size",
+      "label": "Story eyebrow size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "story_eyebrow_align",
+      "label": "Story eyebrow align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
     },
     {
       "type": "text",
@@ -331,14 +584,67 @@
       "default": "Built from the factory floor"
     },
     {
+      "type": "range",
+      "id": "story_heading_size",
+      "label": "Story heading size",
+      "min": 20,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "story_heading_align",
+      "label": "Story heading align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "richtext",
       "id": "story_body",
       "label": "Story body",
       "default": "<p>We’re not a badge slapped on someone else’s wheels. Fortune Forged owns a stake in the factory that machines every set—so design, materials, finishing, and QC stay under one roof.</p><p>That means tighter control, clearer answers, and wheels that match what you ordered. From first sketch to final torque spec, the same team is accountable for how it looks and how it sits.</p>"
     },
     {
+      "type": "range",
+      "id": "story_body_size",
+      "label": "Story body size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "story_body_align",
+      "label": "Story body align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "header",
       "content": "How we work"
+    },
+    {
+      "type": "select",
+      "id": "build_align",
+      "label": "Build block align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
     },
     {
       "type": "text",
@@ -347,10 +653,52 @@
       "default": "How we work"
     },
     {
+      "type": "range",
+      "id": "build_eyebrow_size",
+      "label": "Build eyebrow size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "build_eyebrow_align",
+      "label": "Build eyebrow align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "text",
       "id": "build_heading",
       "label": "Build heading",
       "default": "What we actually sweat"
+    },
+    {
+      "type": "range",
+      "id": "build_heading_size",
+      "label": "Build heading size",
+      "min": 20,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "build_heading_align",
+      "label": "Build heading align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
     },
     {
       "type": "textarea",
@@ -359,8 +707,40 @@
       "default": "Less catalog fluff. More clearances, finishes, and people who answer the phone."
     },
     {
+      "type": "range",
+      "id": "build_intro_size",
+      "label": "Build intro size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "build_intro_align",
+      "label": "Build intro align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "header",
       "content": "Mission + closing"
+    },
+    {
+      "type": "select",
+      "id": "mission_align",
+      "label": "Mission block align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
     },
     {
       "type": "textarea",
@@ -369,10 +749,52 @@
       "default": "Look right. Sit right. Last."
     },
     {
+      "type": "range",
+      "id": "mission_size",
+      "label": "Mission line size",
+      "min": 24,
+      "max": 84,
+      "step": 2,
+      "unit": "px",
+      "default": 52
+    },
+    {
+      "type": "select",
+      "id": "mission_line_align",
+      "label": "Mission line align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
       "type": "textarea",
       "id": "mission_note",
       "label": "Mission note",
       "default": "Forged strength, custom finishes, and fitment support from people who actually care how your car rolls out of the bay."
+    },
+    {
+      "type": "range",
+      "id": "mission_note_size",
+      "label": "Mission note size",
+      "min": 14,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "mission_note_align",
+      "label": "Mission note align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
     },
     {
       "type": "textarea",
@@ -381,10 +803,41 @@
       "default": "Ready to spec a set? Tell us the car, the look, and how you drive—we’ll help lock the build."
     },
     {
+      "type": "range",
+      "id": "close_text_size",
+      "label": "Closing text size",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "close_text_align",
+      "label": "Closing text align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
       "type": "text",
       "id": "close_label",
       "label": "Closing CTA label",
       "default": "Get a quote"
+    },
+    {
+      "type": "range",
+      "id": "close_label_size",
+      "label": "Closing CTA text size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
     },
     {
       "type": "url",
@@ -403,9 +856,51 @@
           "label": "Title"
         },
         {
+          "type": "range",
+          "id": "title_size",
+          "label": "Title size",
+          "min": 14,
+          "max": 36,
+          "step": 1,
+          "unit": "px",
+          "default": 22
+        },
+        {
+          "type": "select",
+          "id": "title_align",
+          "label": "Title align",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
           "type": "textarea",
           "id": "text",
           "label": "Text"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "label": "Text size",
+          "min": 14,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text align",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
         }
       ]
     }

@@ -1,11 +1,66 @@
 {{ 'ff-hero-lifestyle.css' | asset_url | stylesheet_tag }}
 
 {%- if section.settings.show_hero -%}
+  {%- liquid
+    assign content_h = section.settings.content_h_align | default: 'left'
+    assign content_v = section.settings.content_v_align | default: 'bottom'
+    assign content_ox = section.settings.content_offset_x | default: 0
+    assign content_oy = section.settings.content_offset_y | default: 0
+
+    case content_h
+      when 'center'
+        assign c_left = '50%'
+        assign c_right = 'auto'
+        assign c_tx = '-50%'
+        assign c_items = 'center'
+        assign c_text = 'center'
+      when 'right'
+        assign c_left = 'auto'
+        assign c_right = '0'
+        assign c_tx = '0'
+        assign c_items = 'flex-end'
+        assign c_text = 'right'
+      else
+        assign c_left = '0'
+        assign c_right = 'auto'
+        assign c_tx = '0'
+        assign c_items = 'flex-start'
+        assign c_text = 'left'
+    endcase
+
+    case content_v
+      when 'top'
+        assign c_top = '0'
+        assign c_bottom = 'auto'
+        assign c_ty = '0'
+      when 'middle'
+        assign c_top = '50%'
+        assign c_bottom = 'auto'
+        assign c_ty = '-50%'
+      else
+        assign c_top = 'auto'
+        assign c_bottom = '0'
+        assign c_ty = '0'
+    endcase
+  -%}
   <section
     class="ff-hero"
     id="ff-hero-{{ section.id }}"
     data-ff-hero
-    style="--ff-hero-height: {{ section.settings.height }}vh; --ff-hero-height-mobile: {{ section.settings.height_mobile }}vh;"
+    style="
+      --ff-hero-height: {{ section.settings.height }}vh;
+      --ff-hero-height-mobile: {{ section.settings.height_mobile }}vh;
+      --ff-content-left: {{ c_left }};
+      --ff-content-right: {{ c_right }};
+      --ff-content-top: {{ c_top }};
+      --ff-content-bottom: {{ c_bottom }};
+      --ff-content-tx: {{ c_tx }};
+      --ff-content-ty: {{ c_ty }};
+      --ff-content-ox: {{ content_ox }}px;
+      --ff-content-oy: {{ content_oy }}px;
+      --ff-content-items: {{ c_items }};
+      --ff-content-text: {{ c_text }};
+    "
   >
     <div class="ff-hero__track" data-ff-hero-track>
       {%- for block in section.blocks -%}
@@ -87,12 +142,15 @@
 
             <div class="ff-hero__content">
               {%- if block.settings.title != blank -%}
-                <h2 class="ff-hero__title">{{ block.settings.title | escape }}</h2>
+                <h2 class="ff-hero__title" {% render 'ff-type-style', size: block.settings.title_size, align: block.settings.title_align, min_ratio: 55 %}>
+                  {{ block.settings.title | escape }}
+                </h2>
               {%- endif -%}
               {%- if block.settings.button_label != blank -%}
                 <a
                   class="ff-hero__cta"
                   href="{{ block.settings.button_link | default: '#' }}"
+                  {% render 'ff-type-style', size: block.settings.button_size, min_ratio: 90 %}
                 >
                   {{ block.settings.button_label | escape }}
                 </a>
@@ -156,6 +214,52 @@
       "unit": "vh",
       "label": "Mobile height",
       "default": 75
+    },
+    {
+      "type": "header",
+      "content": "Text placement (all slides)"
+    },
+    {
+      "type": "select",
+      "id": "content_h_align",
+      "label": "Horizontal position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "content_v_align",
+      "label": "Vertical position",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "middle", "label": "Middle" },
+        { "value": "bottom", "label": "Bottom" }
+      ],
+      "default": "bottom"
+    },
+    {
+      "type": "range",
+      "id": "content_offset_x",
+      "label": "Nudge left/right",
+      "min": -80,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_offset_y",
+      "label": "Nudge up/down",
+      "min": -80,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
     }
   ],
   "blocks": [
@@ -182,10 +286,41 @@
           "default": "Monoblock Forged"
         },
         {
+          "type": "range",
+          "id": "title_size",
+          "label": "Headline size",
+          "min": 18,
+          "max": 84,
+          "step": 2,
+          "unit": "px",
+          "default": 42
+        },
+        {
+          "type": "select",
+          "id": "title_align",
+          "label": "Headline align",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
           "type": "text",
           "id": "button_label",
           "label": "Button label",
           "default": "Browse Selection"
+        },
+        {
+          "type": "range",
+          "id": "button_size",
+          "label": "Button text size",
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "default": 12
         },
         {
           "type": "url",
