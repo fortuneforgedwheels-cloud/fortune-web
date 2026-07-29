@@ -1,0 +1,201 @@
+.ff-warranty {
+  --ff-gold: #c2a76b;
+  --ff-gold-soft: #f7f1e3;
+  --ff-ink: #111111;
+  --ff-muted: #5f5b54;
+  --ff-line: #e2ddd0;
+  --ff-cream: #f8f5ef;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(1200px 500px at 10% -10%, rgba(194, 167, 107, 0.18), transparent 55%),
+    radial-gradient(900px 420px at 100% 0%, rgba(194, 167, 107, 0.12), transparent 50%),
+    linear-gradient(180deg, #fbfaf7 0%, #ffffff 42%, #f7f4ee 100%);
+  color: var(--ff-ink);
+  padding: 64px 20px 96px;
+}
+
+.ff-warranty__atmosphere {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 70%);
+  pointer-events: none;
+}
+
+.ff-warranty__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.ff-warranty__header {
+  margin-bottom: 40px;
+  max-width: 42rem;
+}
+
+.ff-warranty__eyebrow {
+  margin: 0 0 10px;
+  color: var(--ff-gold);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.ff-warranty__heading {
+  margin: 0 0 14px;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 0.95;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.ff-warranty__intro {
+  margin: 0;
+  color: var(--ff-muted);
+  font-size: clamp(1.02rem, 2vw, 1.18rem);
+  line-height: 1.7;
+}
+
+.ff-warranty__highlights {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 48px;
+}
+
+@media (min-width: 800px) {
+  .ff-warranty__highlights {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.ff-warranty__highlight {
+  padding: 22px 24px;
+  border: 1px solid rgba(194, 167, 107, 0.45);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), var(--ff-gold-soft));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+
+.ff-warranty__highlight-label {
+  margin: 0 0 8px;
+  color: var(--ff-gold);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ff-warranty__highlight-title {
+  margin: 0 0 10px;
+  font-size: clamp(1.25rem, 2.4vw, 1.55rem);
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.ff-warranty__highlight-text {
+  margin: 0;
+  color: var(--ff-muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.ff-warranty__sections {
+  display: grid;
+  gap: 28px;
+}
+
+.ff-warranty__section {
+  padding: 0 0 0 18px;
+  border-left: 3px solid var(--ff-gold);
+}
+
+.ff-warranty__section-title {
+  margin: 0 0 10px;
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ff-warranty__section-body {
+  color: var(--ff-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.ff-warranty__section-body p {
+  margin: 0 0 12px;
+}
+
+.ff-warranty__section-body p:last-child {
+  margin-bottom: 0;
+}
+
+.ff-warranty__section-body ul {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.ff-warranty__section-body li {
+  margin-bottom: 8px;
+}
+
+.ff-warranty__section-body li:last-child {
+  margin-bottom: 0;
+}
+
+.ff-warranty__section-body strong {
+  color: var(--ff-ink);
+}
+
+.ff-warranty__footnote {
+  margin: 36px 0 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--ff-line);
+  color: var(--ff-muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.ff-warranty__cta {
+  margin-top: 28px;
+}
+
+.ff-warranty__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 14px 28px;
+  border: 1px solid var(--ff-gold);
+  background: var(--ff-ink);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.ff-warranty__cta-btn:hover {
+  background: var(--ff-gold);
+  border-color: var(--ff-gold);
+  color: #111111;
+}
+
+@media (max-width: 749px) {
+  .ff-warranty {
+    padding: 48px 16px 72px;
+  }
+
+  .ff-warranty__section {
+    padding-left: 14px;
+  }
+}
