@@ -1,4 +1,5 @@
-{%- unless ff_offer_popup_included -%}{%- assign ff_offer_popup_included = true -%}
+{%- unless ff_offer_popup_included -%}
+{%- assign ff_offer_popup_included = true -%}
 {{ 'ff-offer-popup.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
@@ -67,6 +68,4 @@
   </div>
 </div>
 <script src="{{ 'ff-offer-popup.js' | asset_url }}" defer></script>
-
-{%- endif -%}
 {%- endunless -%}

@@ -1768,10 +1768,6 @@
         "padding_top": 28,
         "padding_bottom": 56
       }
-    },
-    "ff_offer_popup_home": {
-      "type": "ff-offer-popup",
-      "settings": {}
     }
   },
   "order": [
@@ -1799,7 +1795,6 @@
     "1629468479dc8888b7",
     "1629469365b06e9677",
     "1773891512c6651249",
-    "contact_form_C7yhEx",
-    "ff_offer_popup_home"
+    "contact_form_C7yhEx"
   ]
 }
