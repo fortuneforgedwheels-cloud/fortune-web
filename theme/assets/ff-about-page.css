@@ -273,6 +273,16 @@
   line-height: 1.45;
 }
 
+/* Never show editor hints on the live storefront (including sticky cached HTML) */
+.ff-about__story-video--poster .ff-about__story-video-hint,
+.ff-about__story-video-hint {
+  display: none !important;
+}
+
+.shopify-design-mode .ff-about__story-video--empty .ff-about__story-video-hint {
+  display: block !important;
+}
+
 .ff-about__section--build {
   background:
     radial-gradient(900px 420px at 10% 0%, rgba(194, 167, 107, 0.1), transparent 55%),

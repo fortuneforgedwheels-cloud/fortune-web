@@ -1,64 +1,107 @@
-/* BOOT_BUILD 2026-07-29d */
+/* BOOT_BUILD 2026-07-29f */
 /**
  * Fortune Forged page + offer bootloader.
- * - Upgrades sticky-cached Beadlock Packages page to the cleaned FF section
+ * - Upgrades sticky-cached About / Beadlock Packages pages to latest FF markup
  * - Injects $100-off offer markup if missing, then opens after delay
  */
 (function () {
-  if (window.__ffBeadlockPackagesBoot) return;
-  window.__ffBeadlockPackagesBoot = true;
+  if (window.__ffStickyPageBoot) return;
+  window.__ffStickyPageBoot = true;
 
-  function isPackagesPath() {
-    return /\/pages\/beadlock-tire-package/.test(location.pathname || '');
-  }
-
-  function alreadyClean() {
-    return !!(document.querySelector('[data-ff-btp], .ff-btp, .section-ff-beadlock-packages'));
-  }
-
-  function ensurePackagesCss(doc) {
-    var href = null;
-    if (doc) {
-      var link = doc.querySelector('link[href*="ff-beadlock-packages"]');
-      if (link) href = link.getAttribute('href');
+  function ready(fn) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', fn);
+    } else {
+      fn();
     }
-    if (!href) href = '/cdn/shop/t/13/assets/ff-beadlock-packages.css?v=btp1';
-    if (document.querySelector('link[href*="ff-beadlock-packages"]')) return;
+  }
+
+  function ensureCss(doc, needle, fallback) {
+    if (document.querySelector('link[href*="' + needle + '"]')) return;
+    var href = fallback;
+    if (doc) {
+      var link = doc.querySelector('link[href*="' + needle + '"]');
+      if (link) href = link.getAttribute('href') || fallback;
+    }
     var el = document.createElement('link');
     el.rel = 'stylesheet';
     el.href = href;
     document.head.appendChild(el);
   }
 
-  function upgradePackagesPage() {
-    if (!isPackagesPath() || alreadyClean()) return;
+  function ensureScripts(doc, needle) {
+    if (!doc) return;
+    doc.querySelectorAll('script[src*="' + needle + '"]').forEach(function (srcEl) {
+      var src = srcEl.getAttribute('src');
+      if (!src || document.querySelector('script[src="' + src + '"]')) return;
+      var s = document.createElement('script');
+      s.src = src;
+      s.defer = true;
+      document.body.appendChild(s);
+    });
+  }
+
+  function swapMain(view, isFresh, cssNeedle, cssFallback, jsNeedle, flag) {
     var main = document.getElementById('MainContent');
     if (!main) return;
 
-    fetch(location.pathname + '?view=beadlock-tire-packages', {
+    fetch(location.pathname + '?view=' + encodeURIComponent(view), {
       credentials: 'same-origin',
       headers: { Accept: 'text/html' }
     })
       .then(function (res) {
-        if (!res.ok) throw new Error('btp fetch failed');
+        if (!res.ok) throw new Error(view + ' fetch failed');
         return res.text();
       })
       .then(function (html) {
         var doc = new DOMParser().parseFromString(html, 'text/html');
         var next = doc.getElementById('MainContent');
-        if (!next || !next.querySelector('[data-ff-btp], .ff-btp')) return;
-        ensurePackagesCss(doc);
+        if (!next || !isFresh(next)) return;
+        ensureCss(doc, cssNeedle, cssFallback);
+        if (jsNeedle) ensureScripts(doc, jsNeedle);
         main.replaceWith(next);
-        document.documentElement.classList.add('ff-btp-upgraded');
+        document.documentElement.classList.add(flag);
       })
       .catch(function () {});
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', upgradePackagesPage);
-  } else {
-    upgradePackagesPage();
-  }
+  ready(function () {
+    var path = location.pathname || '';
+
+    if (/\/pages\/about(?:-us)?\/?$/.test(path) || /\/pages\/about\/?$/.test(path)) {
+      var aboutMain = document.getElementById('MainContent');
+      var hasHero = !!(aboutMain && aboutMain.querySelector('.ff-about__hero, [data-ff-about], .ff-about'));
+      var hasStaleHint = !!(aboutMain && aboutMain.querySelector('.ff-about__story-video-hint'));
+      var hasStaleCopy = /Add a video in Theme settings/i.test(aboutMain ? aboutMain.textContent : '');
+      if (!hasHero || hasStaleHint || hasStaleCopy) {
+        swapMain(
+          'about',
+          function (root) {
+            return !!(root.querySelector('.ff-about__hero, .ff-about') && !/Add a video in Theme settings/i.test(root.textContent || ''));
+          },
+          'ff-about-page',
+          '/cdn/shop/t/13/assets/ff-about-page.css?v=about2',
+          'ff-about',
+          'ff-about-upgraded'
+        );
+      }
+    }
+
+    if (/\/pages\/beadlock-tire-package/.test(path)) {
+      if (!document.querySelector('[data-ff-btp], .ff-btp, .section-ff-beadlock-packages')) {
+        swapMain(
+          'beadlock-tire-packages',
+          function (root) {
+            return !!root.querySelector('[data-ff-btp], .ff-btp');
+          },
+          'ff-beadlock-packages',
+          '/cdn/shop/t/13/assets/ff-beadlock-packages.css?v=btp1',
+          'ff-beadlock-packages',
+          'ff-btp-upgraded'
+        );
+      }
+    }
+  });
 })();
 
 /**

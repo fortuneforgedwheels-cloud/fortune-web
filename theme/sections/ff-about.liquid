@@ -1,5 +1,5 @@
 {{ 'ff-about-page.css' | asset_url | stylesheet_tag }}
-<!-- ff-about-bust {{ 'now' | date: '%s' }} -->
+<!-- ff-about-bust {{ 'now' | date: '%s' }} v2-no-video-hint -->
 
 {%- liquid
   assign hero_image = section.settings.hero_image
@@ -229,7 +229,7 @@
                 alt: section.settings.story_heading | default: 'Fortune Forged'
             }}
           </div>
-        {%- else -%}
+        {%- elsif request.design_mode -%}
           <div class="ff-about__story-video ff-about__story-video--empty">
             <p class="ff-about__story-video-hint">Square video area — upload a Shopify video or paste a YouTube/Vimeo link in FF About settings.</p>
           </div>
