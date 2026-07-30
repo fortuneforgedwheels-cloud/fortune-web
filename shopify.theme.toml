@@ -4,15 +4,15 @@
 
 [environments.development]
 store = "bb6223-6f.myshopify.com"
-theme = "188578300179"
+theme = "188605104403"
 path = "theme"
 
 [environments.draft]
 store = "bb6223-6f.myshopify.com"
-theme = "188578300179"
+theme = "188605104403"
 path = "theme"
 
 [environments.live]
 store = "bb6223-6f.myshopify.com"
-theme = "178099421459"
+theme = "188604973331"
 path = "theme"

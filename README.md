@@ -2,7 +2,7 @@
 
 Development repo for **[fortuneforgedwheels.com](https://www.fortuneforgedwheels.com)** (`bb6223-6f.myshopify.com`).
 
-Live theme today: **Halo 3.0.0** (`halo-setonsocial`, theme ID `178099421459`).
+Live theme today: **Halo 3.0.0** (`halo-setonsocial`, theme ID `188604973331`).
 
 Theme source lives in [`theme/`](./theme). Edits push to an **unpublished draft** only.
 
@@ -11,9 +11,9 @@ Theme source lives in [`theme/`](./theme). Edits push to an **unpublished draft*
 | | |
 | --- | --- |
 | Draft theme | `Fortune-SBV-202607290902` |
-| Theme ID | `188578300179` |
-| Preview | https://bb6223-6f.myshopify.com?preview_theme_id=188578300179 |
-| Theme editor | https://bb6223-6f.myshopify.com/admin/themes/188578300179/editor |
+| Theme ID | `188604973331` |
+| Preview | https://bb6223-6f.myshopify.com?preview_theme_id=188604973331 |
+| Theme editor | https://bb6223-6f.myshopify.com/admin/themes/188604973331/editor |
 
 Open that preview link (or Online Store → Themes → `Fortune-SBV-202607290902` → Preview). You should see a gold **DRAFT PREVIEW** bar at the top. The public live site is unchanged.
 

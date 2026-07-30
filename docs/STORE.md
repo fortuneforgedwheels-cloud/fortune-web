@@ -11,12 +11,12 @@ Captured from the live storefront for development context.
 | Currency / market | USD / US |
 | Live theme name | `Fortune-Cursor-Rebuild` |
 | Theme family | Halo `3.0.0` (Halothemes) |
-| Live theme ID | `188578300179` |
-| Previous live (now unpublished) | `halo-setonsocial` (`178099421459`) |
+| Live theme ID | `188604973331` |
+| Previous live (now unpublished) | `halo-setonsocial` (`188604973331`) |
 | Draft rebuild theme | _(published — now live)_ |
-| Draft theme ID | `188578300179` (live) |
-| Draft preview | https://bb6223-6f.myshopify.com?preview_theme_id=188578300179 |
-| Draft editor | https://bb6223-6f.myshopify.com/admin/themes/188578300179/editor |
+| Draft theme ID | `188604973331` (live) |
+| Draft preview | https://bb6223-6f.myshopify.com?preview_theme_id=188604973331 |
+| Draft editor | https://bb6223-6f.myshopify.com/admin/themes/188604973331/editor |
 | Appearance notes | Dark-mode-first Halo skin; product lines: Monoblock, 2-Piece, Beadlock |
 
 ## Known routes
@@ -34,8 +34,8 @@ Premium aftermarket forged beadlock, monoblock, and custom 2-piece wheels. Built
 
 ## Important safety rules for agents
 
-1. Never push directly to the live/main theme (`178099421459`) unless the owner explicitly requests a production deploy.
-2. All agent pushes go to draft `Fortune-Cursor-Rebuild` (`188578300179`) via `npm run theme:push`.
+1. Never push directly to the live/main theme (`188604973331`) unless the owner explicitly requests a production deploy.
+2. All agent pushes go to draft `Fortune-Cursor-Rebuild` (`188604973331`) via `npm run theme:push`.
 3. Never commit `.env` or Theme Access passwords.
 4. Preserve existing Shopify apps/embeds (product options, pixels, etc.) unless asked to change them.
 5. Do not overwrite unrelated drafts (e.g. `Halo-SetOnSocial-FinalVersion-Backup`) unless the owner asks.
