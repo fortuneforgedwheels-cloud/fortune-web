@@ -1,4 +1,5 @@
 {{ 'ff-hero-lifestyle.css' | asset_url | stylesheet_tag }}
+<!-- ff-hero-cache-bust: homepage-v3 -->
 <script src="{{ 'ff-offer-boot.js' | asset_url }}" defer></script>
 
 {%- if section.settings.show_hero -%}
@@ -324,7 +325,7 @@
           "type": "video",
           "id": "video",
           "label": "Desktop video",
-          "info": "Shown on large screens only. Muted, looping. Upload a separate Mobile video below for phones."
+          "info": "Large screens only. Saves to the homepage — click Save at the top after uploading."
         },
         {
           "type": "image_picker",

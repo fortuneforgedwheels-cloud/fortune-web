@@ -1,19 +1,4 @@
-/* BOOT_BUILD 2026-07-29-sbv-fix-editor */
-/* FF_HOME_VEHICLE_REDIRECT */
-(function () {
-  try {
-    // Never redirect inside the Shopify theme editor
-    if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
-    var path = location.pathname || '/';
-    if (path === '/' || path === '') {
-      if (!/[?&]view=vehicle(?:&|$)/.test(location.search || '')) {
-        location.replace('/?view=vehicle' + (location.hash || ''));
-        return;
-      }
-    }
-  } catch (e) {}
-})();
-
+/* BOOT_BUILD 2026-07-30-theme-fonts */
 function ffThemeAsset(name, bust) {
   var probe = document.querySelector("script[src*='/cdn/shop/t/'][src*='/assets/'], link[href*='/cdn/shop/t/'][href*='/assets/']");
   var base = "/cdn/shop/t/13/assets/";
@@ -133,6 +118,106 @@ function ffThemeAsset(name, bust) {
           'ff-beadlock-packages',
           'ff-btp-upgraded'
         );
+      }
+    }
+
+    if (path === '/' || path === '') {
+      if (window.Shopify && Shopify.designMode) return;
+
+      if (!/[?&]view=/.test(location.search || '')) {
+        var homeMain = document.getElementById('MainContent');
+        var hasTopSelling = !!(homeMain && homeMain.querySelector(
+          '.section-ff-top-selling-monoblocks, [id*="ff_top_selling_monoblocks"]'
+        ));
+        var hasLegacyHome = !!(homeMain && homeMain.querySelector(
+          '[id*="ff_new_products_home"], [id*="ff_hero_lifestyle_main"]'
+        ));
+        if (!hasTopSelling || hasLegacyHome) {
+          swapMain(
+            'live',
+            function (root) {
+              return !!root.querySelector('.section-ff-top-selling-monoblocks');
+            },
+            'ff-top-selling-monoblocks',
+            ffThemeAsset('ff-top-selling-monoblocks.css', 'tsm1'),
+            'ff-top-selling-monoblocks',
+            'ff-home-upgraded'
+          );
+          return;
+        }
+      }
+
+      var heroSection = document.querySelector('.section-ff-hero-lifestyle');
+      if (heroSection && !document.documentElement.classList.contains('ff-hero-upgraded')) {
+        function slideVideoCounts(section) {
+          return Array.prototype.slice
+            .call(section.querySelectorAll('[data-ff-hero-slide]'))
+            .map(function (slide) {
+              return slide.querySelectorAll('video').length;
+            });
+        }
+
+        function needsHeroUpgrade(current, fresh) {
+          var cur = slideVideoCounts(current);
+          var next = slideVideoCounts(fresh);
+          if (next.length !== cur.length) return true;
+          for (var i = 0; i < next.length; i++) {
+            if (next[i] > cur[i]) return true;
+          }
+          return false;
+        }
+
+        function fetchHeroSection(url) {
+          return fetch(url, {
+            credentials: 'same-origin',
+            headers: { Accept: 'application/json' }
+          })
+            .then(function (res) {
+              if (!res.ok) throw new Error('hero section fetch failed');
+              return res.json();
+            })
+            .then(function (data) {
+              var html = data && data['ff-hero-lifestyle'];
+              if (!html) return null;
+              var doc = new DOMParser().parseFromString(html, 'text/html');
+              return doc.querySelector('.section-ff-hero-lifestyle');
+            })
+            .catch(function () {
+              return null;
+            });
+        }
+
+        var bust = '_ff=' + Date.now();
+        var urls = [
+          location.pathname + '?sections=ff-hero-lifestyle&' + bust
+        ];
+
+        Promise.all(urls.map(fetchHeroSection)).then(function (sections) {
+          var freshSection = null;
+          var bestVideos = slideVideoCounts(heroSection).reduce(function (a, b) {
+            return a + b;
+          }, 0);
+
+          sections.forEach(function (candidate) {
+            if (!candidate) return;
+            var count = slideVideoCounts(candidate).reduce(function (a, b) {
+              return a + b;
+            }, 0);
+            if (count > bestVideos) {
+              bestVideos = count;
+              freshSection = candidate;
+            }
+          });
+
+          if (!freshSection || !needsHeroUpgrade(heroSection, freshSection)) return;
+
+          heroSection.replaceWith(freshSection);
+          document.documentElement.classList.add('ff-hero-upgraded');
+          var root = document.querySelector('[data-ff-hero]');
+          if (root && typeof window.__ffHeroInit === 'function') {
+            window.__ffHeroInit(root);
+          }
+        });
       }
     }
   });
