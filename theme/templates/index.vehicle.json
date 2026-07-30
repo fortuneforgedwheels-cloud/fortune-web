@@ -9,52 +9,6 @@
  */
 {
   "sections": {
-    "ff_hero_lifestyle_main": {
-      "type": "ff-hero-lifestyle",
-      "blocks": {
-        "slide_mono": {
-          "type": "slide",
-          "settings": {
-            "video": "shopify://files/videos/414fa15f69387a7d69ecb48a51a58017_raw.MP4",
-            "image": "shopify://shop_images/IMG_2176.jpg",
-            "mobile_image": "shopify://shop_images/BMW_F80_25MP_HighQuality.jpg",
-            "title": "Monoblock Forged",
-            "button_label": "Browse Selection",
-            "button_link": "shopify://collections/monoblock-wheels"
-          }
-        },
-        "slide_two": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_6.58.56_PM.png",
-            "mobile_image": "shopify://shop_images/IMG_0287_2.jpg",
-            "title": "Two-Piece Forged",
-            "button_label": "Browse Selection",
-            "button_link": "shopify://collections/two-piece-wheels"
-          }
-        },
-        "slide_bead": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM_c0f745e4-4f88-4373-8d62-148cfcbbe059.png",
-            "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
-            "title": "Beadlock Forged",
-            "button_label": "Browse Selection",
-            "button_link": "shopify://collections/beadlock-wheels"
-          }
-        }
-      },
-      "block_order": [
-        "slide_mono",
-        "slide_two",
-        "slide_bead"
-      ],
-      "settings": {
-        "show_hero": true,
-        "height": 90,
-        "height_mobile": 75
-      }
-    },
     "ff_simple_build_main": {
       "type": "ff-simple-build",
       "settings": {
@@ -591,10 +545,56 @@
         "padding_top": 40,
         "padding_bottom": 64
       }
+    },
+    "ff_hero_lifestyle_video": {
+      "type": "ff-hero-lifestyle",
+      "blocks": {
+        "slide_mono": {
+          "type": "slide",
+          "settings": {
+            "video": "shopify://files/videos/414fa15f69387a7d69ecb48a51a58017_raw.MP4",
+            "image": "shopify://shop_images/IMG_2176.jpg",
+            "mobile_image": "shopify://shop_images/BMW_F80_25MP_HighQuality.jpg",
+            "title": "Monoblock Forged",
+            "button_label": "Browse Selection",
+            "button_link": "shopify://collections/monoblock-wheels"
+          }
+        },
+        "slide_two": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-07-27_at_6.58.56_PM.png",
+            "mobile_image": "shopify://shop_images/IMG_0287_2.jpg",
+            "title": "Two-Piece Forged",
+            "button_label": "Browse Selection",
+            "button_link": "shopify://collections/two-piece-wheels"
+          }
+        },
+        "slide_bead": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM_c0f745e4-4f88-4373-8d62-148cfcbbe059.png",
+            "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
+            "title": "Beadlock Forged",
+            "button_label": "Browse Selection",
+            "button_link": "shopify://collections/beadlock-wheels"
+          }
+        }
+      },
+      "block_order": [
+        "slide_mono",
+        "slide_two",
+        "slide_bead"
+      ],
+      "settings": {
+        "show_hero": true,
+        "height": 90,
+        "height_mobile": 75
+      }
     }
   },
   "order": [
-    "ff_hero_lifestyle_main",
+    "ff_hero_lifestyle_video",
     "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",

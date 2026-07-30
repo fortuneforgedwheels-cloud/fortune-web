@@ -52,42 +52,27 @@
   inset: 0;
 }
 
-/* Default = desktop. JS also sets data-ff-viewport for theme editor reliability. */
-.ff-hero__media-desktop {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  z-index: 1;
-}
+/* Viewport split is CSS-only so the correct video shows even if JS is late. */
+@media (min-width: 750px) {
+  .ff-hero__media-desktop {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 1;
+    pointer-events: auto !important;
+  }
 
-.ff-hero__media-mobile {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  z-index: 0;
-  pointer-events: none !important;
-}
-
-.ff-hero[data-ff-viewport="mobile"] .ff-hero__media-desktop,
-.ff-hero.is-mobile-viewport .ff-hero__media-desktop {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  z-index: 0;
-  pointer-events: none !important;
-}
-
-.ff-hero[data-ff-viewport="mobile"] .ff-hero__media-mobile,
-.ff-hero.is-mobile-viewport .ff-hero__media-mobile {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  z-index: 1;
-  pointer-events: auto !important;
+  .ff-hero__media-mobile {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    z-index: 0;
+    pointer-events: none !important;
+  }
 }
 
 @media (max-width: 749.98px) {
-  .ff-hero:not([data-ff-viewport="desktop"]) .ff-hero__media-desktop {
+  .ff-hero__media-desktop {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
@@ -95,7 +80,7 @@
     pointer-events: none !important;
   }
 
-  .ff-hero:not([data-ff-viewport="desktop"]) .ff-hero__media-mobile {
+  .ff-hero__media-mobile {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
