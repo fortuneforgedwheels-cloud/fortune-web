@@ -190,5 +190,18 @@
         {% render 'theme-demo-notification' %}
         <script src="{{ 'halo-quick-search.js' | asset_url }}" defer="defer"></script>
         {% render 'ff-affiliate-trust-link' %}
+        <script>
+          (function () {
+            function renameShopByStyle() {
+              document.querySelectorAll('.menu-lv-1 .text, .menu-lv-2.nav-title-mobile .text, .menu-lv-2.nav-all-mobile .text').forEach(function (el) {
+                var t = (el.textContent || '').replace(/\s+/g, ' ').trim();
+                if (/^shop by style$/i.test(t)) el.textContent = 'WHEELS';
+                else if (/^go to shop by style$/i.test(t)) el.textContent = 'Go to WHEELS';
+              });
+            }
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renameShopByStyle);
+            else renameShopByStyle();
+          })();
+        </script>
     </body>
 </html>
