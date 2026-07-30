@@ -98,8 +98,8 @@
                     {{
                       slide_video
                       | video_tag:
-                        class: 'ff-hero__video',
-                        autoplay: true,
+                        class: 'ff-hero__video ff-hero__video--desktop',
+                        autoplay: false,
                         loop: true,
                         muted: true,
                         controls: false,
@@ -132,19 +132,8 @@
                     {{
                       slide_mobile_video
                       | video_tag:
-                        class: 'ff-hero__video',
-                        autoplay: true,
-                        loop: true,
-                        muted: true,
-                        controls: false,
-                        image_size: '1200x'
-                    }}
-                  {%- elsif slide_video != blank -%}
-                    {{
-                      slide_video
-                      | video_tag:
-                        class: 'ff-hero__video',
-                        autoplay: true,
+                        class: 'ff-hero__video ff-hero__video--mobile',
+                        autoplay: false,
                         loop: true,
                         muted: true,
                         controls: false,
@@ -166,6 +155,17 @@
                       height="1600"
                       data-ff-mobile-image
                     >
+                  {%- elsif slide_video != blank -%}
+                    {{
+                      slide_video
+                      | video_tag:
+                        class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback',
+                        autoplay: false,
+                        loop: true,
+                        muted: true,
+                        controls: false,
+                        image_size: '1200x'
+                    }}
                   {%- elsif block.settings.image != blank -%}
                     <img
                       class="ff-hero__image"
@@ -317,28 +317,36 @@
       "name": "Slide",
       "settings": [
         {
+          "type": "header",
+          "content": "Desktop media"
+        },
+        {
           "type": "video",
           "id": "video",
           "label": "Desktop video",
-          "info": "Fills the hero like the image. Muted, looping, autoplay. Image is used as fallback/poster if video is empty."
+          "info": "Shown on large screens only. Muted, looping. Upload a separate Mobile video below for phones."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop image fallback",
+          "info": "Used on desktop when no desktop video is set (and as the video poster)."
+        },
+        {
+          "type": "header",
+          "content": "Mobile media"
         },
         {
           "type": "video",
           "id": "mobile_video",
           "label": "Mobile video",
-          "info": "Optional. Falls back to desktop video, then mobile image."
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Desktop image only",
-          "info": "Large screens only. Used when no desktop video is set, and as the video poster."
+          "info": "Shown on phones only. Upload a different clip here — it will not replace the desktop video."
         },
         {
           "type": "image_picker",
           "id": "mobile_image",
-          "label": "Mobile image only",
-          "info": "Phones only. Upload here to change mobile without affecting desktop. Use the phone preview icon to verify."
+          "label": "Mobile image fallback",
+          "info": "Used on phones when no mobile video is set. If both mobile video and image are empty, desktop media is used."
         },
         {
           "type": "text",

@@ -13,14 +13,19 @@
     });
   }
 
-  function syncVideos(slides, activeIndex) {
+  function syncVideos(root, slides, activeIndex) {
+    var mobile = root.getAttribute('data-ff-viewport') === 'mobile' || root.classList.contains('is-mobile-viewport');
     slides.forEach(function (slide, i) {
       var videos = slide.querySelectorAll('video');
       videos.forEach(function (video) {
         video.muted = true;
         video.setAttribute('playsinline', '');
         video.setAttribute('webkit-playsinline', '');
-        if (i === activeIndex) {
+        var inMobileLayer = !!(video.closest('[data-ff-mobile-layer]'));
+        var inDesktopLayer = !!(video.closest('[data-ff-desktop-layer]'));
+        var layerVisible = mobile ? inMobileLayer : inDesktopLayer;
+        var shouldPlay = i === activeIndex && layerVisible;
+        if (shouldPlay) {
           var playPromise = video.play();
           if (playPromise && typeof playPromise.catch === 'function') {
             playPromise.catch(function () {});
@@ -39,18 +44,6 @@
     if (!root || root.dataset.ffReady === '1') return;
     root.dataset.ffReady = '1';
 
-    setViewport(root);
-    if (window.ResizeObserver) {
-      var ro = new ResizeObserver(function () {
-        setViewport(root);
-      });
-      ro.observe(root);
-    } else {
-      window.addEventListener('resize', function () {
-        setViewport(root);
-      });
-    }
-
     var slides = Array.prototype.slice.call(root.querySelectorAll('[data-ff-hero-slide]'));
     var dots = Array.prototype.slice.call(root.querySelectorAll('[data-ff-hero-dot]'));
     var index = Math.max(
@@ -61,14 +54,31 @@
     );
     if (index < 0) index = 0;
 
-    syncVideos(slides, index);
+    function refreshViewport() {
+      setViewport(root);
+      syncVideos(root, slides, index);
+    }
+
+    refreshViewport();
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(function () {
+        refreshViewport();
+      });
+      ro.observe(root);
+    } else {
+      window.addEventListener('resize', refreshViewport);
+    }
+
     if (slides.length < 2) return;
 
     var timer = null;
     var delay = 6000;
 
     function activeHasVideo() {
-      return !!(slides[index] && slides[index].querySelector('video'));
+      if (!slides[index]) return false;
+      var mobile = root.getAttribute('data-ff-viewport') === 'mobile';
+      var layer = slides[index].querySelector(mobile ? '[data-ff-mobile-layer]' : '[data-ff-desktop-layer]');
+      return !!(layer && layer.querySelector('video'));
     }
 
     function show(next) {
@@ -81,14 +91,12 @@
       dots.forEach(function (dot, i) {
         dot.classList.toggle('is-active', i === index);
       });
-      setViewport(root);
-      syncVideos(slides, index);
+      refreshViewport();
       start();
     }
 
     function start() {
       stop();
-      // Keep video slides on screen longer so the clip can play.
       var ms = activeHasVideo() ? 14000 : delay;
       timer = window.setInterval(function () {
         show(index + 1);
@@ -120,9 +128,7 @@
 
     root.addEventListener('mouseenter', stop);
     root.addEventListener('mouseleave', start);
-    document.addEventListener('shopify:section:reorder', function () {
-      setViewport(root);
-    });
+    document.addEventListener('shopify:section:reorder', refreshViewport);
     start();
   }
 
