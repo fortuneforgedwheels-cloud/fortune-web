@@ -1,0 +1,9 @@
+{%- liquid
+  render 'ff-wheel-pricing-type', product: product
+  assign ff_wheel_pricing_note = ''
+  if ff_wheel_pricing_type == 'beadlock'
+    assign ff_wheel_pricing_note = '(priced by the pair)'
+  elsif ff_wheel_pricing_type == 'monoblock' or ff_wheel_pricing_type == 'two-piece'
+    assign ff_wheel_pricing_note = '(priced per wheel)'
+  endif
+-%}{{- ff_wheel_pricing_note -}}
