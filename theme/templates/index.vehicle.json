@@ -546,7 +546,7 @@
         "padding_bottom": 64
       }
     },
-    "ff_hero_lifestyle_video": {
+    "ff_hero_lifestyle_type": {
       "type": "ff-hero-lifestyle",
       "blocks": {
         "slide_mono": {
@@ -558,7 +558,9 @@
             "title": "Monoblock Forged",
             "button_label": "Browse Selection",
             "button_link": "shopify://collections/monoblock-wheels",
-            "mobile_video": "shopify://files/videos/Video Oct 07 2025, 6 39 14 PM.MP4"
+            "mobile_video": "shopify://files/videos/Video Oct 07 2025, 6 39 14 PM.MP4",
+            "title_size": 58,
+            "button_size": 16
           }
         },
         "slide_two": {
@@ -568,7 +570,9 @@
             "mobile_image": "shopify://shop_images/IMG_0287_2.jpg",
             "title": "Two-Piece Forged",
             "button_label": "Browse Selection",
-            "button_link": "shopify://collections/two-piece-wheels"
+            "button_link": "shopify://collections/two-piece-wheels",
+            "title_size": 58,
+            "button_size": 16
           }
         },
         "slide_bead": {
@@ -578,7 +582,9 @@
             "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
             "title": "Beadlock Forged",
             "button_label": "Browse Selection",
-            "button_link": "shopify://collections/beadlock-wheels"
+            "button_link": "shopify://collections/beadlock-wheels",
+            "title_size": 58,
+            "button_size": 16
           }
         }
       },
@@ -595,7 +601,7 @@
     }
   },
   "order": [
-    "ff_hero_lifestyle_video",
+    "ff_hero_lifestyle_type",
     "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",
