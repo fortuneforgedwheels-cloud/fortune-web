@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "ff_vehicle_redirect": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<script>location.replace('/index'+(location.hash||''));</script><meta http-equiv=\"refresh\" content=\"0;url=/index\"><p style=\"font-family:sans-serif;padding:2rem;text-align:center\"><a href=\"/index\">Continue to Fortune Forged Wheels</a></p>"
+      }
+    }
+  },
+  "order": [
+    "ff_vehicle_redirect"
+  ]
+}
