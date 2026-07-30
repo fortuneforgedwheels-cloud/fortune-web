@@ -562,7 +562,7 @@
         "custom_liquid": ""
       }
     },
-    "ff_hero_lifestyle_slides": {
+    "ff_hero_lifestyle_media": {
       "type": "ff-hero-lifestyle",
       "blocks": {
         "slide_mono": {
@@ -595,8 +595,8 @@
         "slide_bead": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM_c0f745e4-4f88-4373-8d62-148cfcbbe059.png",
-            "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
+            "video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E.mov",
+            "mobile_video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E.mov",
             "title": "Beadlock Forged",
             "title_size": 42,
             "title_align": "left",
@@ -623,7 +623,7 @@
     }
   },
   "order": [
-    "ff_hero_lifestyle_slides",
+    "ff_hero_lifestyle_media",
     "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",

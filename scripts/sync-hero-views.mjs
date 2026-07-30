@@ -47,6 +47,12 @@ function syncHeroBlocks(targetSection, sourceSection) {
   for (const [blockId, sourceBlock] of Object.entries(sourceBlocks)) {
     if (!targetBlocks[blockId]) continue;
     const nextSettings = { ...sourceBlock.settings };
+    if (nextSettings.video) {
+      nextSettings.image = nextSettings.image || '';
+      if (nextSettings.mobile_video) {
+        nextSettings.mobile_image = '';
+      }
+    }
     const prev = JSON.stringify(targetBlocks[blockId].settings || {});
     targetBlocks[blockId] = {
       ...targetBlocks[blockId],

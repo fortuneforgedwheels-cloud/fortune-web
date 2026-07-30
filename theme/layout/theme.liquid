@@ -16,6 +16,22 @@
 -%}
 <html class="no-js" lang="{{ request.locale.iso_code }}" {% if settings.select_layout and enable_iso_rtl %} dir="rtl" {% endif %}>
     <head>
+  <script>
+    /* FF_HOME_LIVE_VIEW */
+    (function () {
+      try {
+        if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
+        var path = location.pathname || '/';
+        if (path === '/' || path === '') {
+          var params = location.search || '';
+          if (!/[?&]view=live(?:&|$)/.test(params)) {
+            location.replace('/?view=live' + (location.hash || ''));
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
+
 <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">

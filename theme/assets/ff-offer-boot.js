@@ -1,4 +1,19 @@
-/* BOOT_BUILD 2026-07-30-hero-sync */
+/* FF_HOME_LIVE_VIEW */
+(function () {
+  try {
+    if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
+    var path = location.pathname || '/';
+    if (path === '/' || path === '') {
+      var params = location.search || '';
+      if (!/[?&]view=live(?:&|$)/.test(params)) {
+        location.replace('/?view=live' + (location.hash || ''));
+        return;
+      }
+    }
+  } catch (e) {}
+})();
+
+/* BOOT_BUILD 2026-07-30-beadlock-hero-sync */
 function ffThemeAsset(name, bust) {
   var probe = document.querySelector("script[src*='/cdn/shop/t/'][src*='/assets/'], link[href*='/cdn/shop/t/'][href*='/assets/']");
   var base = "/cdn/shop/t/13/assets/";
@@ -124,32 +139,77 @@ function ffThemeAsset(name, bust) {
     if (path === '/' || path === '') {
       var heroSection = document.querySelector('.section-ff-hero-lifestyle');
       if (heroSection && !document.documentElement.classList.contains('ff-hero-upgraded')) {
-        var currentVideos = heroSection.querySelectorAll('video').length;
-        fetch(location.pathname + '?sections=ff-hero-lifestyle&view=wheels', {
-          credentials: 'same-origin',
-          headers: { Accept: 'application/json' }
-        })
-          .then(function (res) {
-            if (!res.ok) throw new Error('hero section fetch failed');
-            return res.json();
+        function slideVideoCounts(section) {
+          return Array.prototype.slice
+            .call(section.querySelectorAll('[data-ff-hero-slide]'))
+            .map(function (slide) {
+              return slide.querySelectorAll('video').length;
+            });
+        }
+
+        function needsHeroUpgrade(current, fresh) {
+          var cur = slideVideoCounts(current);
+          var next = slideVideoCounts(fresh);
+          if (next.length !== cur.length) return true;
+          for (var i = 0; i < next.length; i++) {
+            if (next[i] > cur[i]) return true;
+          }
+          return false;
+        }
+
+        function fetchHeroSection(url) {
+          return fetch(url, {
+            credentials: 'same-origin',
+            headers: { Accept: 'application/json' }
           })
-          .then(function (data) {
-            var html = data && data['ff-hero-lifestyle'];
-            if (!html) return;
-            var doc = new DOMParser().parseFromString(html, 'text/html');
-            var freshSection = doc.querySelector('.section-ff-hero-lifestyle');
-            if (!freshSection) return;
-            var freshVideos = freshSection.querySelectorAll('video').length;
-            if (freshVideos <= currentVideos) return;
-            heroSection.replaceWith(freshSection);
-            document.documentElement.classList.add('ff-hero-upgraded');
-            ensureScripts(doc, 'ff-hero-lifestyle.js');
-            var root = document.querySelector('[data-ff-hero]');
-            if (root && typeof window.__ffHeroInit === 'function') {
-              window.__ffHeroInit(root);
+            .then(function (res) {
+              if (!res.ok) throw new Error('hero section fetch failed');
+              return res.json();
+            })
+            .then(function (data) {
+              var html = data && data['ff-hero-lifestyle'];
+              if (!html) return null;
+              var doc = new DOMParser().parseFromString(html, 'text/html');
+              return doc.querySelector('.section-ff-hero-lifestyle');
+            })
+            .catch(function () {
+              return null;
+            });
+        }
+
+        var bust = '_ff=' + Date.now();
+        var urls = [
+          location.pathname + '?sections=ff-hero-lifestyle&view=live&' + bust,
+          location.pathname + '?sections=ff-hero-lifestyle&' + bust,
+          location.pathname + '?sections=ff-hero-lifestyle&view=wheels&' + bust
+        ];
+
+        Promise.all(urls.map(fetchHeroSection)).then(function (sections) {
+          var freshSection = null;
+          var bestVideos = slideVideoCounts(heroSection).reduce(function (a, b) {
+            return a + b;
+          }, 0);
+
+          sections.forEach(function (candidate) {
+            if (!candidate) return;
+            var count = slideVideoCounts(candidate).reduce(function (a, b) {
+              return a + b;
+            }, 0);
+            if (count > bestVideos) {
+              bestVideos = count;
+              freshSection = candidate;
             }
-          })
-          .catch(function () {});
+          });
+
+          if (!freshSection || !needsHeroUpgrade(heroSection, freshSection)) return;
+
+          heroSection.replaceWith(freshSection);
+          document.documentElement.classList.add('ff-hero-upgraded');
+          var root = document.querySelector('[data-ff-hero]');
+          if (root && typeof window.__ffHeroInit === 'function') {
+            window.__ffHeroInit(root);
+          }
+        });
       }
     }
   });
