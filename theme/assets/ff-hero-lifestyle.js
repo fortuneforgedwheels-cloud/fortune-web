@@ -133,6 +133,11 @@
   }
 
   document.querySelectorAll('[data-ff-hero]').forEach(init);
+  window.__ffHeroInit = function (root) {
+    if (!root) return;
+    delete root.dataset.ffReady;
+    init(root);
+  };
   document.addEventListener('shopify:section:load', function (event) {
     var root = event.target.querySelector('[data-ff-hero]');
     if (root) {

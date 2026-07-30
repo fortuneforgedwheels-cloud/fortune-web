@@ -7,5 +7,7 @@
       }
     }
   },
-  "order": ["ff_g80_proof"]
+  "order": [
+    "ff_g80_proof"
+  ]
 }
