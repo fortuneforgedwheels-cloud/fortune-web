@@ -1,7 +1,14 @@
 {%- for link in menu -%}
+	{%- liquid
+		assign ff_link_label = link.title
+		assign ff_link_handle = link.title | downcase | handle
+		if ff_link_handle == 'shop-by-style'
+			assign ff_link_label = 'WHEELS'
+		endif
+	-%}
 	<li class="menu-lv-item menu-lv-1 text-left no-megamenu{% if link != blank %} dropdown{% endif %}">
 		{%- if link.links != blank -%}
-			<a class="menu-lv-1__action list-menu__item link focus-inset{% if show_icon %} menu-lv__flex{% endif %}" role="button">
+			<a class="menu-lv-1__action list-menu__item link focus-inset{% if show_icon %} menu-lv__flex{% endif %}" role="button" aria-haspopup="true">
 				{%- if show_icon -%}
 					{%- liquid
 						if image_type == 'jpg'
@@ -17,7 +24,7 @@
 						</span>
 					{%- endif -%}
 				{%- endif -%}
-				<span class="text {{ item_image }}">{{ link.title | escape }}</span>
+				<span class="text {{ item_image }}">{{ ff_link_label | escape }}</span>
 				<span class="icon-dropdown" data-toggle-menu-mb>
 					{% render 'icon-caret-right' %}
 				</span>
@@ -30,14 +37,14 @@
 			            </span>
 			            <a class="menu-lv-2__action link focus-inset" href="{{ link.url }}" role="button">
 			                <span class="text">
-			                    {{ link.title | escape }}
+			                    {{ ff_link_label | escape }}
 			                </span>
 			            </a>
 			        </li>
 			        <li class="menu-lv-item menu-lv-2 text-left nav-all-mobile">
 			            <a href="{{ link.url }}" class="menu-lv-2__action list-menu__item list-menu__item--end link focus-inset" role="button">
 			                <span class="text">
-			                    {{ 'general.navigation.go_to' | t : name : link.title | escape }}
+			                    {{ 'general.navigation.go_to' | t : name : ff_link_label | escape }}
 			                </span>
 			            </a>
 			        </li>
@@ -155,7 +162,7 @@
 						</span>
 					{%- endif -%}
 				{%- endif -%}
-				<span class="text">{{ link.title | escape }}</span>
+				<span class="text">{{ ff_link_label | escape }}</span>
 			</a>
 		{%- endif -%}
 	</li>

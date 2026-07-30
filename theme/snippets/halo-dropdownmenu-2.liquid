@@ -1,3 +1,10 @@
+{%- liquid
+  assign ff_parent_label = link.title
+  assign ff_parent_handle = link.title | downcase | handle
+  if ff_parent_handle == 'shop-by-style'
+    assign ff_parent_label = 'WHEELS'
+  endif
+-%}
 <div class="menu-lv__dropdownmenu{% if resize_menu %} hide{% else %}{% if settings.layout == '2' %} menu-lv__dropdownmenu--border{% endif %}{% endif %}">
     <ul class="menu-lv__list list-menu list-unstyled motion-reduce" role="list">
         <li class="menu-lv-item menu-lv-2 nav-title-mobile text-center">
@@ -6,14 +13,14 @@
             </span>
             <a class="menu-lv-2__action link focus-inset" href="{{ link.url }}" role="button">
                 <span class="text">
-                    {{ link.title | escape }}
+                    {{ ff_parent_label | escape }}
                 </span>
             </a>
         </li>
         <li class="menu-lv-item menu-lv-2 text-left nav-all-mobile">
             <a href="{{ link.url }}" class="menu-lv-2__action list-menu__item list-menu__item--end link focus-inset"{% if childlink.current %} aria-current="page"{% endif %} role="button">
                 <span class="text">
-                    {{ 'general.navigation.go_to' | t : name : link.title | escape }}
+                    {{ 'general.navigation.go_to' | t : name : ff_parent_label | escape }}
                 </span>
             </a>
         </li>
