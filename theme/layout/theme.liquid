@@ -26,7 +26,6 @@
             <link rel="icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">
         {%- endif -%}
         <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-        {% render 'ff-fonts' %}
 
         {%- unless settings.type_font_1_shopify_name.system? and settings.type_font_2_shopify_name.system? and settings.type_font_3_shopify_name.system? -%}
             <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>

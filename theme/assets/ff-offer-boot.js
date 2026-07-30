@@ -1,4 +1,4 @@
-/* BOOT_BUILD 2026-07-30-homepage-cache-upgrade */
+/* BOOT_BUILD 2026-07-30-theme-fonts */
 function ffThemeAsset(name, bust) {
   var probe = document.querySelector("script[src*='/cdn/shop/t/'][src*='/assets/'], link[href*='/cdn/shop/t/'][href*='/assets/']");
   var base = "/cdn/shop/t/13/assets/";
@@ -18,25 +18,6 @@ function ffThemeAsset(name, bust) {
 (function () {
   if (window.__ffStickyPageBoot) return;
   window.__ffStickyPageBoot = true;
-
-  function ensureBrandFonts() {
-    if (document.querySelector('link[href*="family=Oswald"]')) return;
-    var preG = document.createElement('link');
-    preG.rel = 'preconnect';
-    preG.href = 'https://fonts.googleapis.com';
-    document.head.appendChild(preG);
-    var preS = document.createElement('link');
-    preS.rel = 'preconnect';
-    preS.href = 'https://fonts.gstatic.com';
-    preS.crossOrigin = 'anonymous';
-    document.head.appendChild(preS);
-    var sheet = document.createElement('link');
-    sheet.rel = 'stylesheet';
-    sheet.href =
-      'https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap';
-    document.head.appendChild(sheet);
-  }
-  ensureBrandFonts();
 
   function ready(fn) {
     if (document.readyState === 'loading') {

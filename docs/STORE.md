@@ -29,8 +29,7 @@ Captured from the live storefront for development context.
 
 ## Fonts
 
-- **Theme-wide (Halo):** Jost + Barlow Semi Condensed via Theme settings → Typography.
-- **FF sections (headings):** Oswald + Source Sans 3 loaded globally in `snippets/ff-fonts.liquid`.
+All FF sections use the Halo theme typography from **Theme settings → Typography** (Jost for body/headings, Barlow Semi Condensed for accent). Do not hardcode separate webfonts in FF CSS — use `var(--font-heading-family)`, `var(--font-body-family)`, or `var(--font-3-family)`.
 
 ## Known routes
 
