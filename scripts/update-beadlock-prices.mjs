@@ -2,11 +2,12 @@
 /**
  * Set all beadlock variant prices to $1,999 except 15-inch diameter options.
  *
- * Requires Admin API access:
- *   SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_... npm run shop:update-beadlock-prices -- --apply
+ * Auth (pick one):
+ *   SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_...
+ *   SHOPIFY_CLIENT_ID + SHOPIFY_CLIENT_SECRET  (Dev Dashboard apps, 2026+)
  *
- * Dry run (default):
- *   npm run shop:update-beadlock-prices
+ * Apply:
+ *   npm run shop:update-beadlock-prices -- --apply
  */
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -47,13 +48,43 @@ function loadDotEnv() {
 
 loadDotEnv();
 
-const token =
-  process.env.SHOPIFY_ADMIN_ACCESS_TOKEN ||
-  process.env.SHOPIFY_ACCESS_TOKEN ||
-  "";
-
 const apply = process.argv.includes("--apply");
 const writeCsv = process.argv.includes("--csv");
+
+async function resolveAdminToken() {
+  const direct =
+    process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || process.env.SHOPIFY_ACCESS_TOKEN || "";
+  if (direct.startsWith("shpat_")) return direct;
+
+  const clientId = process.env.SHOPIFY_CLIENT_ID || "";
+  const clientSecret = process.env.SHOPIFY_CLIENT_SECRET || "";
+  if (!clientId || !clientSecret) return "";
+
+  const res = await fetch(`https://${STORE}/admin/oauth/access_token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+    body: new URLSearchParams({
+      grant_type: "client_credentials",
+      client_id: clientId,
+      client_secret: clientSecret,
+    }),
+  });
+
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const detail = body.error_description || body.error || res.statusText;
+    throw new Error(`Could not fetch Admin API token: ${detail}`);
+  }
+
+  if (!body.access_token) {
+    throw new Error("OAuth response did not include an access_token.");
+  }
+
+  return body.access_token;
+}
 
 /** True when the variant's wheel diameter (first number before "x") is 15 inches. */
 export function is15InchVariant(variant) {
@@ -165,7 +196,7 @@ async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function updateVariantPrice(variantId, price) {
+async function updateVariantPrice(variantId, price, token) {
   const url = `https://${STORE}/admin/api/${API_VERSION}/variants/${variantId}.json`;
   const res = await fetch(url, {
     method: "PUT",
@@ -218,7 +249,15 @@ async function main() {
     return;
   }
 
-  if (!token.startsWith("shpat_")) {
+  let token = "";
+  try {
+    token = await resolveAdminToken();
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
+  }
+
+  if (!token) {
     if (!apply) {
       console.log("\nSample updates:");
       for (const row of plan.updates.slice(0, 10)) {
@@ -230,7 +269,7 @@ async function main() {
         console.log(`  ... and ${plan.updates.length - 10} more`);
       }
       console.log(
-        "\nAdd SHOPIFY_ADMIN_ACCESS_TOKEN and rerun with --apply to push via Admin API."
+        "\nAdd SHOPIFY_ADMIN_ACCESS_TOKEN or SHOPIFY_CLIENT_ID + SHOPIFY_CLIENT_SECRET, then rerun with --apply."
       );
       console.log(
         `Or import ${csvPath} in Shopify Admin → Products → Import.`
@@ -238,12 +277,10 @@ async function main() {
       return;
     }
 
-    console.error(
-      "\nMissing SHOPIFY_ADMIN_ACCESS_TOKEN (Admin API token starting with shpat_)."
-    );
-    console.error(
-      "Add it to .env or Cursor secrets, then rerun with --apply."
-    );
+    console.error("\nMissing Admin API credentials.");
+    console.error("Add one of these to Cursor secrets or .env:");
+    console.error("  SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_...");
+    console.error("  SHOPIFY_CLIENT_ID + SHOPIFY_CLIENT_SECRET (Dev Dashboard app)");
     console.error(
       `Or import ${csvPath} in Shopify Admin → Products → Import.`
     );
@@ -269,7 +306,7 @@ async function main() {
 
   for (const row of plan.updates) {
     try {
-      await updateVariantPrice(row.variantId, row.toPrice);
+      await updateVariantPrice(row.variantId, row.toPrice, token);
       ok += 1;
       process.stdout.write(".");
       await sleep(550);
