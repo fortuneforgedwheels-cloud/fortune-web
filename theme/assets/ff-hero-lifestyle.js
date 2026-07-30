@@ -71,7 +71,11 @@
     if (!layer || !src) return;
     var existing = layer.querySelector('video');
     if (videoLooksClean(existing, src)) {
-      prepare(existing);
+      // Do not re-prepare a clean video that is already autoplaying — prepare/play
+      // storms were freezing the first frame for 1–3s then restarting late.
+      if (!(existing && !existing.paused && existing.readyState > 2)) {
+        prepare(existing);
+      }
       return existing;
     }
     layer.querySelectorAll('img, .ff-hero__placeholder, video').forEach(function (el) {
@@ -164,7 +168,12 @@
     }
   }
 
+  function isPlaying(video) {
+    return !!(video && !video.paused && !video.ended && video.readyState > 2);
+  }
+
   function tryPlay(video) {
+    if (isPlaying(video)) return;
     prepare(video);
     video.autoplay = true;
     video.setAttribute('autoplay', '');
@@ -172,15 +181,15 @@
     if (p && typeof p.catch === 'function') {
       p.catch(function () {
         var retry = function () {
+          if (isPlaying(video)) return;
           prepare(video);
           var p2 = video.play();
           if (p2 && typeof p2.catch === 'function') p2.catch(function () {});
         };
         video.addEventListener('canplay', retry, { once: true });
         video.addEventListener('loadeddata', retry, { once: true });
-        window.setTimeout(retry, 200);
-        window.setTimeout(retry, 600);
-        window.setTimeout(retry, 1500);
+        window.setTimeout(retry, 80);
+        window.setTimeout(retry, 250);
       });
     }
   }
@@ -200,18 +209,16 @@
     slides.forEach(function (slide, i) {
       var active = i === activeIndex;
       slide.querySelectorAll('video').forEach(function (video) {
-        prepare(video);
         if (videoShouldPlay(slide, video, active)) {
-          tryPlay(video);
+          // Leave a healthy native-autoplay video alone — re-calling play/prepare
+          // after src thrash is what made playback start late.
+          if (!isPlaying(video)) tryPlay(video);
         } else {
           try {
             video.pause();
           } catch (e) {}
           video.removeAttribute('autoplay');
           video.autoplay = false;
-          try {
-            if (video.currentTime > 0.1) video.currentTime = 0;
-          } catch (e2) {}
         }
       });
     });
@@ -236,14 +243,11 @@
       sync(slides, index);
     }
 
+    // One immediate nudge only if the visible video is still paused.
     refresh();
     window.requestAnimationFrame(refresh);
-    [50, 150, 400, 900, 1800, 3500].forEach(function (ms) {
-      window.setTimeout(refresh, ms);
-    });
 
     var onViewport = function () {
-      // Rebuild autoplay flags for the new viewport, then play the one visible video.
       delete root.dataset.ffReady;
       ensureHardcodedVideos(root);
       root.dataset.ffReady = '1';
@@ -257,7 +261,6 @@
     };
     document.addEventListener('pointerdown', unlock, { passive: true });
     document.addEventListener('touchstart', unlock, { passive: true });
-    document.addEventListener('touchend', unlock, { passive: true });
     document.addEventListener('visibilitychange', function () {
       if (!document.hidden) refresh();
     });

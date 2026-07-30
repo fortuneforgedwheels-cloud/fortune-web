@@ -47,7 +47,7 @@
   <section
     class="ff-hero"
     id="ff-hero-{{ section.id }}"
-    data-ff-hero data-ff-fingerprint="HERO-MOBILE-AUTOPLAY-20260730F" data-ff-hero-fix="arrows-v1"
+    data-ff-hero data-ff-fingerprint="HERO-INSTANT-20260730G" data-ff-hero-fix="arrows-v1"
     style="
       --ff-hero-height: {{ section.settings.height }}vh;
       --ff-hero-height-mobile: {{ section.settings.height_mobile }}vh;
@@ -196,6 +196,22 @@
                   {%- else -%}
                     <div class="ff-hero__placeholder" aria-hidden="true"></div>
                   {%- endif -%}
+                  {%- if forloop.first -%}
+                    <script>
+                      (function () {
+                        var layer = document.currentScript && document.currentScript.parentElement;
+                        var v = layer && layer.querySelector('video.ff-hero__video--mobile');
+                        if (!v) return;
+                        v.muted = true;
+                        v.defaultMuted = true;
+                        v.playsInline = true;
+                        v.autoplay = true;
+                        try { v.volume = 0; } catch (e) {}
+                        var p = v.play();
+                        if (p && typeof p.catch === 'function') p.catch(function () {});
+                      })();
+                    </script>
+                  {%- endif -%}
                 </div>
               {%- else -%}
                 <div class="ff-hero__placeholder" aria-hidden="true"></div>
@@ -244,102 +260,34 @@
     {%- endif -%}
   </section>
   <script src="{{ 'ff-hero-lifestyle.js' | asset_url }}" defer></script>
-  <script src="{{ 'ff-hero-offer.js' | asset_url }}" defer></script>
   <script>
-    /* Play ONLY the visible active-slide video. iOS blocks multi-video autoplay. */
+    /* Immediate nudge only — do not storm play()/pause() (that froze the first frame). */
     (function () {
       var mq = window.matchMedia('(max-width: 749.98px)');
-
-      function prep(v) {
-        if (!v) return;
-        v.controls = false;
-        v.removeAttribute('controls');
+      function playing(v) {
+        return v && !v.paused && !v.ended && v.readyState > 2;
+      }
+      function kick() {
+        var isMobile = mq.matches;
+        var hero = document.querySelector('[data-ff-hero]');
+        if (!hero) return;
+        var active = hero.querySelector('[data-ff-hero-slide].is-active') || hero.querySelector('[data-ff-hero-slide]');
+        if (!active) return;
+        var sel = isMobile ? '.ff-hero__video--mobile' : '.ff-hero__video--desktop';
+        var v = active.querySelector(sel);
+        if (!v || playing(v)) return;
         v.muted = true;
         v.defaultMuted = true;
         v.playsInline = true;
-        v.loop = true;
+        v.autoplay = true;
         try { v.volume = 0; } catch (e) {}
-        v.setAttribute('muted', '');
-        v.setAttribute('playsinline', 'true');
-        v.setAttribute('webkit-playsinline', 'true');
-        v.setAttribute('preload', 'auto');
-        v.querySelectorAll('img').forEach(function (img) { img.remove(); });
+        var p = v.play();
+        if (p && typeof p.catch === 'function') p.catch(function () {});
       }
-
-      function layerVisible(layer) {
-        if (!layer) return false;
-        try {
-          var s = window.getComputedStyle(layer);
-          return s.display !== 'none' && s.visibility !== 'hidden' && Number(s.opacity) > 0;
-        } catch (e) {
-          return true;
-        }
-      }
-
-      function kick() {
-        var isMobile = mq.matches;
-        document.querySelectorAll('[data-ff-hero]').forEach(function (hero) {
-          var slides = hero.querySelectorAll('[data-ff-hero-slide]');
-          var active = null;
-          slides.forEach(function (slide) {
-            if (slide.classList.contains('is-active') && !slide.hidden) active = slide;
-          });
-          if (!active && slides[0]) active = slides[0];
-
-          slides.forEach(function (slide) {
-            slide.querySelectorAll('video').forEach(function (v) {
-              prep(v);
-              var layer = v.closest('[data-ff-desktop-layer]') || v.closest('[data-ff-mobile-layer]');
-              var want =
-                slide === active &&
-                layerVisible(layer) &&
-                ((isMobile && v.classList.contains('ff-hero__video--mobile')) ||
-                  (!isMobile && v.classList.contains('ff-hero__video--desktop')));
-              if (!want) {
-                try { v.pause(); } catch (e1) {}
-                v.removeAttribute('autoplay');
-                return;
-              }
-              v.setAttribute('autoplay', '');
-              v.autoplay = true;
-              var p = v.play();
-              if (p && typeof p.catch === 'function') {
-                p.catch(function () {
-                  window.setTimeout(function () {
-                    prep(v);
-                    var p2 = v.play();
-                    if (p2 && typeof p2.catch === 'function') p2.catch(function () {});
-                  }, 200);
-                });
-              }
-            });
-          });
-        });
-
-        /* Values feature video — single muted autoplay, no controls */
-        document.querySelectorAll('.ff-values__feature-video').forEach(function (v) {
-          prep(v);
-          v.setAttribute('autoplay', '');
-          v.autoplay = true;
-          var p = v.play();
-          if (p && typeof p.catch === 'function') p.catch(function () {});
-        });
-      }
-
       kick();
-      [50, 200, 500, 1200, 2500].forEach(function (ms) {
-        window.setTimeout(kick, ms);
-      });
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', kick, { once: true });
       }
-      if (mq.addEventListener) mq.addEventListener('change', kick);
-      else if (mq.addListener) mq.addListener(kick);
-      document.addEventListener('touchstart', kick, { passive: true });
-      document.addEventListener('pointerdown', kick, { passive: true });
-      document.addEventListener('visibilitychange', function () {
-        if (!document.hidden) kick();
-      });
     })();
   </script>
 {%- endif -%}

@@ -83,11 +83,11 @@
               var qs = location.search || '';
               var onHome = path === '/' || path === '/index';
               if (!onHome) return;
-              if (/[?&]view=ffnow(?:&|$)/.test(qs)) return;
-              if (document.documentElement && document.documentElement.querySelector('[data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"]')) return;
-              /* Bare / and legacy ?view=vehicle are both sticky-cached with broken multi-video heroes. */
-              if (!/[?&]view=/.test(qs) || /[?&]view=vehicle(?:&|$)/.test(qs) || /[?&]view=ffautoplay(?:&|$)/.test(qs)) {
-                location.replace('/?view=ffnow' + (location.hash || ''));
+              if (/[?&]view=ffgo(?:&|$)/.test(qs)) return;
+              if (document.documentElement && document.documentElement.querySelector('[data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]')) return;
+              /* Bare / and legacy sticky views — jump straight to fresh markup (no late swap). */
+              if (!/[?&]view=/.test(qs) || /[?&]view=vehicle(?:&|$)/.test(qs) || /[?&]view=ffautoplay(?:&|$)/.test(qs) || /[?&]view=ffnow(?:&|$)/.test(qs) || /[?&]view=ffmplay(?:&|$)/.test(qs)) {
+                location.replace('/?view=ffgo' + (location.hash || ''));
               }
             } catch (e) {}
           })();
