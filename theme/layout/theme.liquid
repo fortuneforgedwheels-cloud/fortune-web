@@ -20,6 +20,28 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta name="theme-color" content="">
+        {%- comment -%}
+          Escape sticky IndexController caches that still ship the old
+          /?view=vehicle redirect + HLS hero markup. Must stay synchronous
+          and must NEVER send the homepage to ?view=vehicle.
+        {%- endcomment -%}
+        <script>
+          (function () {
+            try {
+              if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
+              var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
+              var qs = location.search || '';
+              var isHome = path === '/' || path === '/index' || path === '/index.html';
+              if ((path === '/' || path === '') && /[?&]view=vehicle(?:&|$)/.test(qs)) {
+                location.replace('/index' + (location.hash || ''));
+                return;
+              }
+              if (isHome && /[?&]view=vehicle(?:&|$)/.test(qs)) {
+                location.replace('/index' + (location.hash || ''));
+              }
+            } catch (e) {}
+          })();
+        </script>
         <link rel="canonical" href="{{ canonical_url }}">
         <link canonical-shop-url="{{ shop.url }}/">
         {%- if settings.favicon != blank -%}

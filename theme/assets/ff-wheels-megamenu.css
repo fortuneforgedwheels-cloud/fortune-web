@@ -1,4 +1,4 @@
-/* Fortune Forged — Apex-style WHEELS mega menu */
+/* Fortune Forged — WHEELS mega menu (stable hover + white type, no orange) */
 
 .header-nav,
 .header-nav-full-elements .header-nav__menu,
@@ -7,81 +7,84 @@
 }
 
 [data-navigation] .ff-wheels-mega {
-  position: static;
+  position: static !important;
 }
 
 [data-navigation] .ff-wheels-mega > .menu-lv-1__action .text {
-  /* Active/hover accent handled below */
+  color: inherit;
 }
 
 [data-navigation] .ff-wheels-mega:hover > .menu-lv-1__action .text,
-[data-navigation] .ff-wheels-mega:focus-within > .menu-lv-1__action .text {
-  color: #e85d04;
+[data-navigation] .ff-wheels-mega:focus-within > .menu-lv-1__action .text,
+[data-navigation] .ff-wheels-mega.is-open > .menu-lv-1__action .text {
+  color: #ffffff !important;
 }
 
-[data-navigation] .ff-wheels-mega .ff-wheels-mega__panel,
-[data-navigation] .ff-wheels-mega .menu-lv__megamenu {
-  display: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 100%;
-  width: 100%;
-  z-index: 40;
-  background: #0a0a0a;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+/*
+  Keep the panel in the layout (display:block) and toggle with opacity/visibility.
+  display:none creates a hover gap so the panel closes before you can click links.
+  padding-top + ::before form an invisible bridge under the WHEELS label.
+*/
+[data-navigation] .ff-wheels-mega > .ff-wheels-mega__panel,
+[data-navigation] .ff-wheels-mega > .menu-lv__megamenu.ff-wheels-mega__panel {
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 100% !important;
+  width: 100% !important;
+  z-index: 120 !important;
+  background: #0a0a0a !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45) !important;
+  max-height: none !important;
+  overflow: visible !important;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(6px);
-  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+  transform: none !important;
+  transition: opacity 0.1s ease, visibility 0.1s ease;
+  padding-top: 18px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+[data-navigation] .ff-wheels-mega > .ff-wheels-mega__panel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -22px;
+  height: 22px;
+  background: transparent;
 }
 
 [data-navigation] .ff-wheels-mega:hover > .ff-wheels-mega__panel,
-[data-navigation] .ff-wheels-mega:focus-within > .ff-wheels-mega__panel {
-  display: block;
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-/* Caret under WHEELS like Apex */
-[data-navigation] .ff-wheels-mega:hover > .menu-lv-1__action,
-[data-navigation] .ff-wheels-mega:focus-within > .menu-lv-1__action {
-  position: relative;
-}
-
-[data-navigation] .ff-wheels-mega:hover > .menu-lv-1__action::after,
-[data-navigation] .ff-wheels-mega:focus-within > .menu-lv-1__action::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: -1px;
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 8px solid #0a0a0a;
-  transform: translateX(-50%);
-  z-index: 41;
+[data-navigation] .ff-wheels-mega:focus-within > .ff-wheels-mega__panel,
+[data-navigation] .ff-wheels-mega.is-open > .ff-wheels-mega__panel {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
 }
 
 .ff-wheels-mega__inner {
   display: grid;
-  grid-template-columns: minmax(160px, 0.9fr) repeat(4, minmax(140px, 1fr));
+  grid-template-columns: minmax(170px, 0.9fr) repeat(4, minmax(150px, 1fr));
   gap: 0;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 28px 40px 34px;
+  padding: 8px 40px 36px;
   align-items: start;
+  background: #0a0a0a;
 }
 
 .ff-wheels-mega__col {
   padding: 8px 28px;
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
-  min-height: 140px;
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  min-height: 150px;
 }
 
 .ff-wheels-mega__col--cta {
@@ -95,43 +98,42 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 14px 22px;
+  padding: 15px 24px;
   border-radius: 999px;
-  background: #e85d04;
-  color: #fff !important;
+  border: 1px solid #ffffff;
+  background: transparent;
+  color: #ffffff !important;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   letter-spacing: 0.02em;
   text-decoration: none !important;
   white-space: nowrap;
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .ff-wheels-mega__cta:hover {
-  background: #ff6a0f;
-  transform: translateY(-1px);
+  background: #ffffff;
+  color: #0a0a0a !important;
 }
 
-.ff-wheels-mega__heading {
+.ff-wheels-mega__heading,
+.ff-wheels-mega__heading--static {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin: 0 0 16px;
-  color: #e85d04 !important;
-  font-size: 1rem;
+  margin: 0 0 18px;
+  color: #ffffff !important;
+  font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 0.01em;
   text-decoration: none !important;
   line-height: 1.3;
 }
 
-.ff-wheels-mega__heading--static {
-  margin: 0 0 16px;
-}
-
 .ff-wheels-mega__arrow {
-  font-size: 0.85em;
+  font-size: 0.9em;
   line-height: 1;
+  color: #ffffff !important;
 }
 
 .ff-wheels-mega__list {
@@ -141,23 +143,23 @@
 }
 
 .ff-wheels-mega__list li + li {
-  margin-top: 12px;
+  margin-top: 14px;
 }
 
 .ff-wheels-mega__list a {
-  color: #f3f1ec !important;
+  color: #ffffff !important;
   text-decoration: none !important;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: 500;
-  line-height: 1.35;
-  transition: color 0.15s ease;
+  line-height: 1.4;
+  transition: opacity 0.15s ease;
 }
 
 .ff-wheels-mega__list a:hover {
-  color: #e85d04 !important;
+  opacity: 0.72;
+  color: #ffffff !important;
 }
 
-/* Hide default caret icon on desktop for this item; keep for mobile drawer */
 @media (min-width: 1025px) {
   [data-navigation] .ff-wheels-mega > .menu-lv-1__action > .icon-dropdown {
     display: none;
@@ -167,7 +169,7 @@
 @media (max-width: 1199px) {
   .ff-wheels-mega__inner {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    padding: 24px 24px 28px;
+    padding: 16px 24px 28px;
   }
 
   .ff-wheels-mega__col--cta {
@@ -181,24 +183,24 @@
   }
 }
 
-/* Mobile drawer: stack as a normal open panel */
 @media (max-width: 1024px) {
   .ff-wheels-mega {
-    position: relative;
+    position: relative !important;
   }
 
-  .ff-wheels-mega .ff-wheels-mega__panel,
-  .ff-wheels-mega .menu-lv__megamenu {
+  .ff-wheels-mega > .ff-wheels-mega__panel,
+  .ff-wheels-mega > .menu-lv__megamenu.ff-wheels-mega__panel {
     position: static !important;
-    display: none;
+    display: none !important;
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
     transform: none !important;
     box-shadow: none !important;
-    border-top: 0;
-    background: transparent;
-    max-height: none;
+    border-top: 0 !important;
+    background: transparent !important;
+    max-height: none !important;
+    padding-top: 0 !important;
   }
 
   .ff-wheels-mega.is-open > .ff-wheels-mega__panel {

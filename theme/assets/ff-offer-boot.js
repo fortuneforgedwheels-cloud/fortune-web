@@ -1,15 +1,14 @@
-/* BOOT_BUILD 2026-07-29-sbv-fix-editor */
-/* FF_HOME_VEHICLE_REDIRECT */
+/* BOOT_BUILD 2026-07-30-video-final-2 */
+/* NEVER redirect homepage to ?view=vehicle — that URL was sticky-cached with broken HLS hero markup. */
 (function () {
   try {
-    // Never redirect inside the Shopify theme editor
     if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
-    var path = location.pathname || '/';
-    if (path === '/' || path === '') {
-      if (!/[?&]view=vehicle(?:&|$)/.test(location.search || '')) {
-        location.replace('/?view=vehicle' + (location.hash || ''));
-        return;
-      }
+    var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
+    var qs = location.search || '';
+    // Escape sticky broken vehicle homepage cache immediately.
+    if ((path === '/' || path === '') && /[?&]view=vehicle(?:&|$)/.test(qs)) {
+      location.replace('/index' + (location.hash || ''));
+      return;
     }
   } catch (e) {}
 })();
@@ -67,16 +66,16 @@ function ffThemeAsset(name, bust) {
     });
   }
 
-  function swapMain(view, isFresh, cssNeedle, cssFallback, jsNeedle, flag) {
+  function swapMainUrl(url, isFresh, cssNeedle, cssFallback, jsNeedle, flag) {
     var main = document.getElementById('MainContent');
     if (!main) return;
 
-    fetch(location.pathname + '?view=' + encodeURIComponent(view), {
+    fetch(url, {
       credentials: 'same-origin',
       headers: { Accept: 'text/html' }
     })
       .then(function (res) {
-        if (!res.ok) throw new Error(view + ' fetch failed');
+        if (!res.ok) throw new Error(url + ' fetch failed');
         return res.text();
       })
       .then(function (html) {
@@ -87,12 +86,94 @@ function ffThemeAsset(name, bust) {
         if (jsNeedle) ensureScripts(doc, jsNeedle);
         main.replaceWith(next);
         document.documentElement.classList.add(flag);
+        try {
+          healHeroVideos();
+        } catch (e0) {}
+        try {
+          document.querySelectorAll('[data-ff-hero]').forEach(function (root) {
+            try { delete root.dataset.ffReady; } catch (e1) {}
+          });
+          document.dispatchEvent(new CustomEvent('shopify:section:load', { bubbles: true }));
+          document.dispatchEvent(new CustomEvent('ff:main-swapped', { bubbles: true }));
+        } catch (e) {}
+        [100, 400, 1000].forEach(function (ms) {
+          window.setTimeout(healHeroVideos, ms);
+        });
       })
       .catch(function () {});
   }
 
+  function swapMain(view, isFresh, cssNeedle, cssFallback, jsNeedle, flag) {
+    swapMainUrl(
+      location.pathname + '?view=' + encodeURIComponent(view),
+      isFresh,
+      cssNeedle,
+      cssFallback,
+      jsNeedle,
+      flag
+    );
+  }
+
+  function healHeroVideos() {
+    document.querySelectorAll('video').forEach(function (video) {
+      var sources = video.querySelectorAll('source');
+      var mp4 = null;
+      Array.prototype.forEach.call(sources, function (source) {
+        var src = source.getAttribute('src') || '';
+        if (src.indexOf('.mp4') !== -1) mp4 = src;
+        if (src.indexOf('.m3u8') !== -1) source.remove();
+      });
+      if (!mp4 && (video.getAttribute('src') || '').indexOf('.mp4') !== -1) {
+        mp4 = video.getAttribute('src');
+      }
+      if (mp4) {
+        if (!(video.getAttribute('src') || '').length || (video.getAttribute('src') || '').indexOf('.m3u8') !== -1) {
+          video.setAttribute('src', mp4);
+        }
+      }
+      video.muted = true;
+      video.defaultMuted = true;
+      video.autoplay = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('autoplay', '');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      video.setAttribute('preload', 'auto');
+      video.querySelectorAll('img').forEach(function (img) {
+        img.style.display = 'none';
+      });
+      var p = video.play();
+      if (p && typeof p.catch === 'function') p.catch(function () {});
+    });
+  }
+
   ready(function () {
     var path = location.pathname || '';
+
+    // Homepage: if sticky cache served non-MP4 hero markup, pull /index MainContent.
+    if (path === '/' || path === '' || path === '/index') {
+      var homeMain = document.getElementById('MainContent');
+      var hasMp4Hero = !!(homeMain && homeMain.querySelector('[data-ff-autoplay-v="mp4-only-1"]'));
+      if (!hasMp4Hero) {
+        swapMainUrl(
+          '/index?ffhome=1',
+          function (root) {
+            return !!root.querySelector('[data-ff-autoplay-v="mp4-only-1"]');
+          },
+          'ff-hero-lifestyle',
+          ffThemeAsset('ff-hero-lifestyle.css', 'herofinal'),
+          'ff-hero-lifestyle',
+          'ff-home-video-upgraded'
+        );
+      } else {
+        healHeroVideos();
+        [200, 600, 1500].forEach(function (ms) {
+          window.setTimeout(healHeroVideos, ms);
+        });
+      }
+    }
 
     if (/\/pages\/about(?:-us)?\/?$/.test(path) || /\/pages\/about\/?$/.test(path)) {
       // Immediate visual fix for sticky-cached “Add a video” overlays

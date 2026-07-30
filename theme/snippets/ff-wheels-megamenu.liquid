@@ -18,7 +18,7 @@
     </span>
   </a>
 
-  <div class="menu-lv__megamenu ff-wheels-mega__panel">
+  <div class="menu-lv__megamenu ff-wheels-mega__panel" data-ff-wheels-panel>
     <div class="ff-wheels-mega__inner">
       <div class="ff-wheels-mega__col ff-wheels-mega__col--cta">
         <a class="ff-wheels-mega__cta" href="/collections/all">View all Wheels</a>
@@ -80,3 +80,45 @@
     </div>
   </div>
 </li>
+<script>
+  (function () {
+    if (window.__ffWheelsMegaBound) return;
+    window.__ffWheelsMegaBound = true;
+    function bind(root) {
+      if (!root || root.dataset.ffMegaBound === '1') return;
+      root.dataset.ffMegaBound = '1';
+      var timer = null;
+      function open() {
+        if (timer) { clearTimeout(timer); timer = null; }
+        root.classList.add('is-open');
+        var a = root.querySelector('.menu-lv-1__action');
+        if (a) a.setAttribute('aria-expanded', 'true');
+      }
+      function closeSoon() {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(function () {
+          root.classList.remove('is-open');
+          var a = root.querySelector('.menu-lv-1__action');
+          if (a) a.setAttribute('aria-expanded', 'false');
+        }, 280);
+      }
+      root.addEventListener('mouseenter', open);
+      root.addEventListener('mouseleave', closeSoon);
+      var panel = root.querySelector('[data-ff-wheels-panel]');
+      if (panel) {
+        panel.addEventListener('mouseenter', open);
+        panel.addEventListener('mouseleave', closeSoon);
+      }
+      root.addEventListener('focusin', open);
+      root.addEventListener('focusout', function (e) {
+        if (!root.contains(e.relatedTarget)) closeSoon();
+      });
+    }
+    function boot() {
+      document.querySelectorAll('[data-ff-wheels-mega]').forEach(bind);
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+    else boot();
+    document.addEventListener('shopify:section:load', boot);
+  })();
+</script>

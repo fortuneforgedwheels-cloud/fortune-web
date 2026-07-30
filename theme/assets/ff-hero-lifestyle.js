@@ -1,40 +1,105 @@
 (function () {
-  function setViewport(root) {
-    var width = root.getBoundingClientRect().width || window.innerWidth || 1200;
-    var mobile = width <= 749.98;
-    root.setAttribute('data-ff-viewport', mobile ? 'mobile' : 'desktop');
-    root.classList.toggle('is-mobile-viewport', mobile);
+  function isCssVisible(el) {
+    if (!el) return false;
+    try {
+      var style = window.getComputedStyle(el);
+      if (style.display === 'none' || style.visibility === 'hidden') return false;
+      // Opacity on this node only — ancestors are handled via slide.hidden / is-active.
+      return Number(style.opacity) > 0;
+    } catch (e) {
+      return true;
+    }
+  }
 
-    root.querySelectorAll('[data-ff-desktop-layer]').forEach(function (el) {
-      el.setAttribute('aria-hidden', mobile ? 'true' : 'false');
+  function preferMp4(video) {
+    // Chrome desktop won't play HLS in a plain <video>; swap .m3u8 to .mp4 when needed.
+    var current = video.currentSrc || video.src || '';
+    if (current && current.indexOf('.m3u8') === -1) return;
+    var sources = video.querySelectorAll('source');
+    var mp4 = null;
+    Array.prototype.forEach.call(sources, function (source) {
+      var src = source.getAttribute('src') || '';
+      var type = (source.getAttribute('type') || '').toLowerCase();
+      if (src.indexOf('.mp4') !== -1 || type.indexOf('mp4') !== -1) mp4 = src;
     });
-    root.querySelectorAll('[data-ff-mobile-layer]').forEach(function (el) {
-      el.setAttribute('aria-hidden', mobile ? 'false' : 'true');
+    if (!mp4 && video.getAttribute('src') && video.getAttribute('src').indexOf('.mp4') !== -1) {
+      mp4 = video.getAttribute('src');
+    }
+    if (!mp4) return;
+    Array.prototype.forEach.call(sources, function (source) {
+      var src = source.getAttribute('src') || '';
+      if (src.indexOf('.m3u8') !== -1) source.remove();
+    });
+    if (!video.getAttribute('src')) video.setAttribute('src', mp4);
+    else if ((video.getAttribute('src') || '').indexOf('.m3u8') !== -1) video.setAttribute('src', mp4);
+  }
+
+  function prepare(video) {
+    preferMp4(video);
+    video.muted = true;
+    video.defaultMuted = true;
+    video.autoplay = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('autoplay', '');
+    video.setAttribute('loop', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    if (video.getAttribute('preload') !== 'auto') video.setAttribute('preload', 'auto');
+    video.querySelectorAll('img').forEach(function (img) {
+      img.style.display = 'none';
+      img.setAttribute('hidden', '');
     });
   }
 
-  function syncVideos(root, slides, activeIndex) {
-    var mobile = root.getAttribute('data-ff-viewport') === 'mobile' || root.classList.contains('is-mobile-viewport');
+  function tryPlay(video) {
+    prepare(video);
+    // Never call video.load() — it aborts buffering and freezes on the poster.
+    var p = video.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(function () {
+        // Autoplay can fail before enough data; retry when ready.
+        var retry = function () {
+          prepare(video);
+          var p2 = video.play();
+          if (p2 && typeof p2.catch === 'function') p2.catch(function () {});
+        };
+        video.addEventListener('canplay', retry, { once: true });
+        video.addEventListener('loadeddata', retry, { once: true });
+        window.setTimeout(retry, 400);
+      });
+    }
+  }
+
+  function videoShouldPlay(slide, video, isActiveSlide) {
+    if (!isActiveSlide || slide.hidden) return false;
+    var layer =
+      video.closest('[data-ff-desktop-layer]') ||
+      video.closest('[data-ff-mobile-layer]');
+    // If no layer wrapper, treat as playable.
+    if (!layer) return true;
+    return isCssVisible(layer);
+  }
+
+  function sync(slides, activeIndex, resetInactive) {
     slides.forEach(function (slide, i) {
-      var videos = slide.querySelectorAll('video');
-      videos.forEach(function (video) {
-        video.muted = true;
-        video.setAttribute('playsinline', '');
-        video.setAttribute('webkit-playsinline', '');
-        var inMobileLayer = !!(video.closest('[data-ff-mobile-layer]'));
-        var inDesktopLayer = !!(video.closest('[data-ff-desktop-layer]'));
-        var layerVisible = mobile ? inMobileLayer : inDesktopLayer;
-        var shouldPlay = i === activeIndex && layerVisible;
-        if (shouldPlay) {
-          var playPromise = video.play();
-          if (playPromise && typeof playPromise.catch === 'function') {
-            playPromise.catch(function () {});
-          }
-        } else {
-          video.pause();
+      var active = i === activeIndex;
+      slide.querySelectorAll('video').forEach(function (video) {
+        prepare(video);
+        if (videoShouldPlay(slide, video, active)) {
+          if (video.paused || video.ended) tryPlay(video);
+        } else if (resetInactive) {
           try {
-            video.currentTime = 0;
+            video.pause();
           } catch (e) {}
+          try {
+            if (video.currentTime > 0.1) video.currentTime = 0;
+          } catch (e2) {}
+        } else {
+          try {
+            video.pause();
+          } catch (e3) {}
         }
       });
     });
@@ -48,37 +113,55 @@
     var dots = Array.prototype.slice.call(root.querySelectorAll('[data-ff-hero-dot]'));
     var index = Math.max(
       0,
-      slides.findIndex(function (slide) {
-        return slide.classList.contains('is-active');
+      slides.findIndex(function (s) {
+        return s.classList.contains('is-active');
       })
     );
     if (index < 0) index = 0;
 
-    function refreshViewport() {
-      setViewport(root);
-      syncVideos(root, slides, index);
+    function refresh(resetInactive) {
+      sync(slides, index, !!resetInactive);
     }
 
-    refreshViewport();
-    if (window.ResizeObserver) {
-      var ro = new ResizeObserver(function () {
-        refreshViewport();
-      });
-      ro.observe(root);
-    } else {
-      window.addEventListener('resize', refreshViewport);
-    }
+    // Immediate + delayed kicks (fonts / layout / Shopify apps settle late).
+    refresh(true);
+    window.requestAnimationFrame(function () {
+      refresh(false);
+    });
+    [100, 300, 800, 1600, 3000].forEach(function (ms) {
+      window.setTimeout(function () {
+        refresh(false);
+      }, ms);
+    });
+
+    // MatchMedia is more reliable than measuring the hero box.
+    var mq = window.matchMedia('(max-width: 749.98px)');
+    var onViewport = function () {
+      refresh(true);
+    };
+    if (mq.addEventListener) mq.addEventListener('change', onViewport);
+    else if (mq.addListener) mq.addListener(onViewport);
+
+    var unlock = function () {
+      refresh(false);
+    };
+    document.addEventListener('pointerdown', unlock, { passive: true });
+    document.addEventListener('touchstart', unlock, { passive: true });
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) refresh(false);
+    });
 
     if (slides.length < 2) return;
 
     var timer = null;
-    var delay = 6000;
 
     function activeHasVideo() {
       if (!slides[index]) return false;
-      var mobile = root.getAttribute('data-ff-viewport') === 'mobile';
-      var layer = slides[index].querySelector(mobile ? '[data-ff-mobile-layer]' : '[data-ff-desktop-layer]');
-      return !!(layer && layer.querySelector('video'));
+      var found = false;
+      slides[index].querySelectorAll('video').forEach(function (video) {
+        if (videoShouldPlay(slides[index], video, true)) found = true;
+      });
+      return found;
     }
 
     function show(next) {
@@ -91,16 +174,15 @@
       dots.forEach(function (dot, i) {
         dot.classList.toggle('is-active', i === index);
       });
-      refreshViewport();
+      refresh(true);
       start();
     }
 
     function start() {
       stop();
-      var ms = activeHasVideo() ? 14000 : delay;
       timer = window.setInterval(function () {
         show(index + 1);
-      }, ms);
+      }, activeHasVideo() ? 14000 : 6000);
     }
 
     function stop() {
@@ -110,16 +192,8 @@
 
     var prev = root.querySelector('[data-ff-hero-prev]');
     var next = root.querySelector('[data-ff-hero-next]');
-    if (prev) {
-      prev.addEventListener('click', function () {
-        show(index - 1);
-      });
-    }
-    if (next) {
-      next.addEventListener('click', function () {
-        show(index + 1);
-      });
-    }
+    if (prev) prev.addEventListener('click', function () { show(index - 1); });
+    if (next) next.addEventListener('click', function () { show(index + 1); });
     dots.forEach(function (dot) {
       dot.addEventListener('click', function () {
         show(Number(dot.getAttribute('data-ff-hero-dot')) || 0);
@@ -128,11 +202,19 @@
 
     root.addEventListener('mouseenter', stop);
     root.addEventListener('mouseleave', start);
-    document.addEventListener('shopify:section:reorder', refreshViewport);
     start();
   }
 
-  document.querySelectorAll('[data-ff-hero]').forEach(init);
+  function boot() {
+    document.querySelectorAll('[data-ff-hero]').forEach(init);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
   document.addEventListener('shopify:section:load', function (event) {
     var root = event.target.querySelector('[data-ff-hero]');
     if (root) {

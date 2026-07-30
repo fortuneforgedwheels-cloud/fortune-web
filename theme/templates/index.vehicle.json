@@ -552,11 +552,15 @@
         "slide_mono": {
           "type": "slide",
           "settings": {
-            "video": "shopify://files/videos/414fa15f69387a7d69ecb48a51a58017_raw.MP4",
+            "video": "shopify://files/videos/Video Apr 27 2026, 9 57 19 PM.mov",
             "image": "shopify://shop_images/IMG_2176.jpg",
+            "mobile_video": "shopify://files/videos/Video Oct 07 2025, 6 39 14 PM.MP4",
             "mobile_image": "shopify://shop_images/BMW_F80_25MP_HighQuality.jpg",
             "title": "Monoblock Forged",
+            "title_size": 42,
+            "title_align": "left",
             "button_label": "Browse Selection",
+            "button_size": 12,
             "button_link": "shopify://collections/monoblock-wheels"
           }
         },
@@ -566,7 +570,10 @@
             "image": "shopify://shop_images/Screenshot_2026-07-27_at_6.58.56_PM.png",
             "mobile_image": "shopify://shop_images/IMG_0287_2.jpg",
             "title": "Two-Piece Forged",
+            "title_size": 42,
+            "title_align": "left",
             "button_label": "Browse Selection",
+            "button_size": 12,
             "button_link": "shopify://collections/two-piece-wheels"
           }
         },
@@ -576,7 +583,10 @@
             "image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM_c0f745e4-4f88-4373-8d62-148cfcbbe059.png",
             "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
             "title": "Beadlock Forged",
+            "title_size": 42,
+            "title_align": "left",
             "button_label": "Browse Selection",
+            "button_size": 12,
             "button_link": "shopify://collections/beadlock-wheels"
           }
         }
@@ -589,7 +599,11 @@
       "settings": {
         "show_hero": true,
         "height": 90,
-        "height_mobile": 75
+        "height_mobile": 75,
+        "content_h_align": "left",
+        "content_v_align": "bottom",
+        "content_offset_x": 0,
+        "content_offset_y": 0
       }
     }
   },
