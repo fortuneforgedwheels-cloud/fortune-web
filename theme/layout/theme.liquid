@@ -70,8 +70,8 @@
 
         {% render 'meta-tags' %}
         {%- if request.page_type == '404' and request.path contains 'the-forging-process' -%}
-          <meta http-equiv="refresh" content="0;url=/pages/faq?view=forging">
-          <script>location.replace('/pages/faq?view=forging');</script>
+          <meta http-equiv="refresh" content="0;url=/pages/faq?view=forgeflow">
+          <script>location.replace('/pages/faq?view=forgeflow');</script>
         {%- endif -%}
         {{ content_for_header }}
         <script>
@@ -81,9 +81,12 @@
               if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
               var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
               var qs = location.search || '';
-              /* Sticky orange forging page → fresh gold view */
-              if (/\/pages\/faq\/?$/.test(path) && /[?&]view=the-forging-process(?:&|$)/.test(qs)) {
-                location.replace('/pages/faq?view=forging' + (location.hash || ''));
+              /* Sticky forging pages → fresh step-layout view */
+              if (
+                /\/pages\/faq\/?$/.test(path) &&
+                /[?&]view=(?:the-forging-process|forging)(?:&|$)/.test(qs)
+              ) {
+                location.replace('/pages/faq?view=forgeflow' + (location.hash || ''));
                 return;
               }
               var onHome = path === '/' || path === '/index';

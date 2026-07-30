@@ -20,7 +20,7 @@
         "padding_bottom_mobile": 0
       }
     },
-    "ff_forging_steps_20260730h": {
+    "ff_forging_flow_20260730i": {
       "type": "ff-forging-process",
       "blocks": {
         "step_1": {
@@ -29,7 +29,7 @@
             "kicker": "FROM BILLET TO BLANK",
             "heading": "BILLET.",
             "number": "1",
-            "text": "<p>Every Fortune Forged wheel starts as certified aerospace-grade 6061-T6 aluminum billet — chosen for strength-to-weight performance and the finish quality our builds are known for.</p><p>Material selection is the foundation. Get this wrong and nothing downstream can fix it.</p>",
+            "text": "<p>Every Fortune Forged wheel starts as certified aerospace-grade 6061-T6 aluminum billet \u2014 chosen for strength-to-weight performance and the finish quality our builds are known for.</p><p>Material selection is the foundation. Get this wrong and nothing downstream can fix it.</p>",
             "media_style": "grid",
             "flip": false,
             "image_1": "shopify://shop_images/forza-manufacturing_7.webp",
@@ -59,7 +59,7 @@
             "kicker": "WHERE DESIGN COMES TO LIFE",
             "heading": "MILLING.",
             "number": "3",
-            "text": "<p>Multi-axis CNC work sculpts the final design, spoke profile, and mounting geometry to exacting tolerances for fitment, balance, and brake clearance.</p><p>After machining, hand finishing stages — filing, deburring, and surface prep — bring every edge and face to a clean, consistent standard before coating.</p>",
+            "text": "<p>Multi-axis CNC work sculpts the final design, spoke profile, and mounting geometry to exacting tolerances for fitment, balance, and brake clearance.</p><p>After machining, hand finishing stages \u2014 filing, deburring, and surface prep \u2014 bring every edge and face to a clean, consistent standard before coating.</p>",
             "media_style": "grid",
             "flip": false,
             "image_1": "shopify://shop_images/IMG_2142.jpg",
@@ -74,7 +74,7 @@
             "kicker": "AMERICAN-MADE PRECISION",
             "heading": "HIGH SPEED MACHINING.",
             "number": "4",
-            "text": "<p>We rely on modern CNC capacity to hold tight tolerances across complex spoke packages and deep concave profiles — the kind of geometry that only works when the machine work is exact.</p>",
+            "text": "<p>We rely on modern CNC capacity to hold tight tolerances across complex spoke packages and deep concave profiles \u2014 the kind of geometry that only works when the machine work is exact.</p>",
             "media_style": "solo",
             "flip": false,
             "image_1": "shopify://shop_images/IMG_2128.jpg",
@@ -89,7 +89,7 @@
             "kicker": "BUILT TO SHIP",
             "heading": "FINISH.",
             "number": "5",
-            "text": "<p>From brushed and polished to custom powder coats, each set is finished to spec, then inspected before it ships — ready for the street, strip, or circuit.</p><p>Every wheel leaves as a precision instrument, not a generic catalog part.</p>",
+            "text": "<p>From brushed and polished to custom powder coats, each set is finished to spec, then inspected before it ships \u2014 ready for the street, strip, or circuit.</p><p>Every wheel leaves as a precision instrument, not a generic catalog part.</p>",
             "media_style": "grid",
             "flip": true,
             "image_1": "shopify://shop_images/IMG_0840.jpg",
@@ -117,13 +117,13 @@
       ],
       "settings": {
         "eyebrow": "Manufacturing",
-        "heading": "THE FORGING PROCESS",
-        "intro": "Every Fortune Forged wheel starts as aerospace-grade billet and leaves as a precision instrument for the street and track. Here’s how we get there."
+        "heading": "The Forging Process",
+        "intro": "Every Fortune Forged wheel starts as aerospace-grade billet and leaves as a precision instrument for the street and track. Here\u2019s how we get there."
       }
     }
   },
   "order": [
     "main",
-    "ff_forging_steps_20260730h"
+    "ff_forging_flow_20260730i"
   ]
 }
