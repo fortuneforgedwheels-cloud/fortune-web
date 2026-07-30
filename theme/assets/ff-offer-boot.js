@@ -19,6 +19,25 @@ function ffThemeAsset(name, bust) {
   if (window.__ffStickyPageBoot) return;
   window.__ffStickyPageBoot = true;
 
+  function ensureBrandFonts() {
+    if (document.querySelector('link[href*="family=Oswald"]')) return;
+    var preG = document.createElement('link');
+    preG.rel = 'preconnect';
+    preG.href = 'https://fonts.googleapis.com';
+    document.head.appendChild(preG);
+    var preS = document.createElement('link');
+    preS.rel = 'preconnect';
+    preS.href = 'https://fonts.gstatic.com';
+    preS.crossOrigin = 'anonymous';
+    document.head.appendChild(preS);
+    var sheet = document.createElement('link');
+    sheet.rel = 'stylesheet';
+    sheet.href =
+      'https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap';
+    document.head.appendChild(sheet);
+  }
+  ensureBrandFonts();
+
   function ready(fn) {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', fn);
@@ -122,6 +141,8 @@ function ffThemeAsset(name, bust) {
     }
 
     if (path === '/' || path === '') {
+      if (window.Shopify && Shopify.designMode) return;
+
       if (!/[?&]view=/.test(location.search || '')) {
         var homeMain = document.getElementById('MainContent');
         var hasTopSelling = !!(homeMain && homeMain.querySelector(

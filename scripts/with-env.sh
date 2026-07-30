@@ -12,6 +12,6 @@ if [[ -f "${ENV_FILE}" ]]; then
 fi
 
 export SHOPIFY_FLAG_STORE="${SHOPIFY_FLAG_STORE:-bb6223-6f.myshopify.com}"
-export SHOPIFY_FLAG_THEME="${SHOPIFY_FLAG_THEME:-178099421459}"
+# Do not default SHOPIFY_FLAG_THEME to an old theme — scripts set this explicitly.
 
 exec "$@"

@@ -19,11 +19,18 @@ Captured from the live storefront for development context.
 
 ## Homepage template rules (important)
 
-1. **Single source of truth:** `theme/templates/index.json` — all homepage text and section settings edited in the theme editor save here.
-2. **No duplicate homepage views:** Do not recreate `index.homepage.json`, `index.vehicle.json`, `index.wheels.json`, etc. Those caused editor changes to not match the live site.
-3. **No `?view=` redirects** in `ff-offer-boot.js` or `theme.liquid` for the homepage.
-4. **Shopify full-page cache:** The default `/` URL can lag behind `index.json` for hours. `templates/index.live.json` is auto-synced from `index.json` on every `npm run theme:push`. `ff-offer-boot.js` upgrades stale homepages from `?view=live` when needed.
-5. After editing homepage copy in the theme editor, run `npm run theme:push` so `index.live.json` stays in sync.
+1. **Single source of truth:** `theme/templates/index.json` — homepage text and section settings from the theme editor (Default template).
+2. **Live storefront mirror:** `theme/templates/index.live.json` — uncached copy visitors see when Shopify’s default `/` cache is stale. Auto-synced from `index.json` on pull/push.
+3. **After editing homepage copy:** Either:
+   - Select the **“live”** homepage template in the theme editor (top bar) and click **Save** — updates go live immediately, or
+   - Edit the **Default** template, click **Save**, then run `npm run theme:mirror-homepage` to copy your changes to the live mirror.
+4. **No duplicate homepage views** (`index.vehicle.json`, `index.homepage.json`, etc.) and no `?view=` redirects.
+5. **Safe code deploys:** `npm run theme:push` pulls your latest editor changes first, then pushes code only — it never overwrites `settings_data.json` or template JSON.
+
+## Fonts
+
+- **Theme-wide (Halo):** Jost + Barlow Semi Condensed via Theme settings → Typography.
+- **FF sections (headings):** Oswald + Source Sans 3 loaded globally in `snippets/ff-fonts.liquid`.
 
 ## Known routes
 
