@@ -821,20 +821,54 @@ class GlobalCheckbox extends HTMLElement {
 
         if(this.input) {
             this.input.addEventListener('change', this.toggleEvent.bind(this));
+            this.toggleEvent({ target: this.input });
+
+            const form = this.closest('form');
+            if (form && this.hasAttribute('data-require-atc')) {
+                form.addEventListener('submit', (event) => {
+                    if (!this.input.checked) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        this.input.focus();
+                    }
+                }, true);
+            }
+        }
+    }
+
+    setTargetState(targetEl, enabled) {
+        if (!targetEl) return;
+
+        if (targetEl.tagName === 'BUTTON') {
+            if (enabled) {
+                if (targetEl.dataset.ffTermsLocked === '1') {
+                    targetEl.disabled = false;
+                    targetEl.removeAttribute('data-ff-terms-locked');
+                }
+            } else if (!targetEl.disabled || targetEl.dataset.ffTermsLocked === '1') {
+                targetEl.dataset.ffTermsLocked = '1';
+                targetEl.disabled = true;
+            }
+            return;
+        }
+
+        if (enabled) {
+            targetEl.removeAttribute('disabled');
+        } else {
+            targetEl.setAttribute('disabled', true);
         }
     }
 
     toggleEvent(event) {
-        let targetId = event.target.getAttribute('data-target');
-        const targetDiv = document.querySelector(targetId);
+        const checked = Boolean(event.target.checked);
+        const targets = String(event.target.getAttribute('data-target') || '')
+            .split(',')
+            .map((selector) => selector.trim())
+            .filter(Boolean);
 
-        if(targetDiv) {
-            if(event.target.checked){
-                targetDiv.removeAttribute('disabled');
-            } else{
-                targetDiv.setAttribute('disabled', true);
-            }
-        }
+        targets.forEach((targetId) => {
+            this.setTargetState(document.querySelector(targetId), checked);
+        });
     }
 }
 

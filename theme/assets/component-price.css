@@ -150,12 +150,12 @@ body.dark-mode .product-edit-item .price.price--on-sale .price-item--sale .money
 
 .price__wheel-inline {
     display: inline;
-    margin-left: 0.35em;
-    font-size: 0.62em;
+    margin-left: 0.4em;
+    font-size: 0.72em;
     font-weight: 500;
     letter-spacing: 0.01em;
     line-height: 1.2;
-    color: var(--color-text2, #9a9890);
+    color: rgba(255, 255, 255, 0.55);
     vertical-align: baseline;
     white-space: nowrap;
 }
