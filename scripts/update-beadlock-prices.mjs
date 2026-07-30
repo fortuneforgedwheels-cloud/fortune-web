@@ -170,13 +170,14 @@ function escapeCsv(value) {
 
 function writeImportCsv(products, updates, outPath) {
   const byHandle = Object.fromEntries(products.map((p) => [p.handle, p]));
-  const lines = ["Handle,Option1 Value,Option2 Value,Option3 Value,Variant Price"];
+  const lines = ["Handle,Title,Option1 Value,Option2 Value,Option3 Value,Variant Price"];
 
   for (const row of updates) {
     const product = byHandle[row.handle];
     lines.push(
       [
         row.handle,
+        product?.title ?? row.title ?? "",
         row.option1 ?? "",
         row.option2 ?? "",
         row.option3 ?? "",
