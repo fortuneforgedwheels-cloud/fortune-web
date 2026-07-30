@@ -35,6 +35,17 @@
   display: block;
 }
 
+.ff-hero__video,
+.ff-hero__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border: 0;
+  background: #0b0b0b;
+}
+
 .ff-hero__media-desktop,
 .ff-hero__media-mobile {
   position: absolute;

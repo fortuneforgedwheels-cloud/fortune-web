@@ -80,9 +80,32 @@
             {% unless forloop.first %}hidden{% endunless %}
           >
             <div class="ff-hero__media">
-              {%- if block.settings.image != blank or block.settings.mobile_image != blank -%}
+              {%- liquid
+                assign slide_video = block.settings.video
+                assign slide_mobile_video = block.settings.mobile_video
+                assign has_desktop_media = false
+                if slide_video != blank or block.settings.image != blank
+                  assign has_desktop_media = true
+                endif
+                assign has_mobile_media = false
+                if slide_mobile_video != blank or block.settings.mobile_image != blank or slide_video != blank or block.settings.image != blank
+                  assign has_mobile_media = true
+                endif
+              -%}
+              {%- if has_desktop_media or has_mobile_media -%}
                 <div class="ff-hero__media-desktop" data-ff-desktop-layer>
-                  {%- if block.settings.image != blank -%}
+                  {%- if slide_video != blank -%}
+                    {{
+                      slide_video
+                      | video_tag:
+                        class: 'ff-hero__video',
+                        autoplay: true,
+                        loop: true,
+                        muted: true,
+                        controls: false,
+                        image_size: '2400x'
+                    }}
+                  {%- elsif block.settings.image != blank -%}
                     <img
                       class="ff-hero__image"
                       src="{{ block.settings.image | image_url: width: 2400 }}"
@@ -105,7 +128,29 @@
                   {%- endif -%}
                 </div>
                 <div class="ff-hero__media-mobile" data-ff-mobile-layer>
-                  {%- if block.settings.mobile_image != blank -%}
+                  {%- if slide_mobile_video != blank -%}
+                    {{
+                      slide_mobile_video
+                      | video_tag:
+                        class: 'ff-hero__video',
+                        autoplay: true,
+                        loop: true,
+                        muted: true,
+                        controls: false,
+                        image_size: '1200x'
+                    }}
+                  {%- elsif slide_video != blank -%}
+                    {{
+                      slide_video
+                      | video_tag:
+                        class: 'ff-hero__video',
+                        autoplay: true,
+                        loop: true,
+                        muted: true,
+                        controls: false,
+                        image_size: '1200x'
+                    }}
+                  {%- elsif block.settings.mobile_image != blank -%}
                     <img
                       class="ff-hero__image"
                       src="{{ block.settings.mobile_image | image_url: width: 1200 }}"
@@ -272,10 +317,22 @@
       "name": "Slide",
       "settings": [
         {
+          "type": "video",
+          "id": "video",
+          "label": "Desktop video",
+          "info": "Fills the hero like the image. Muted, looping, autoplay. Image is used as fallback/poster if video is empty."
+        },
+        {
+          "type": "video",
+          "id": "mobile_video",
+          "label": "Mobile video",
+          "info": "Optional. Falls back to desktop video, then mobile image."
+        },
+        {
           "type": "image_picker",
           "id": "image",
           "label": "Desktop image only",
-          "info": "Large screens only. Never overwritten by the mobile upload."
+          "info": "Large screens only. Used when no desktop video is set, and as the video poster."
         },
         {
           "type": "image_picker",

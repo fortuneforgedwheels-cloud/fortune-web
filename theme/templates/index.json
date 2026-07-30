@@ -15,6 +15,7 @@
         "slide_mono": {
           "type": "slide",
           "settings": {
+            "video": "shopify://files/videos/414fa15f69387a7d69ecb48a51a58017_raw.MP4",
             "image": "shopify://shop_images/IMG_2176.jpg",
             "mobile_image": "shopify://shop_images/BMW_F80_25MP_HighQuality.jpg",
             "title": "Monoblock Forged",
