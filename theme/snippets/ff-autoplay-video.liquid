@@ -3,13 +3,20 @@
   Prefer MP4 over HLS (.m3u8). Chrome desktop does not play HLS in a
   plain <video> tag without hls.js, which made the hero look frozen.
   No nested poster <img>, preload=auto, muted + playsinline for mobile.
+
+  Params:
+    - video: Shopify video object (optional if src is set)
+    - src: direct MP4 URL (hardcoded fallback — preferred when set)
+    - poster: poster image URL (optional)
+    - class: CSS class string
 {%- endcomment -%}
 {%- liquid
   assign video = video | default: blank
   assign class_name = class | default: ''
   assign poster_url = poster | default: blank
-  assign mp4_url = blank
-  if video != blank
+  assign mp4_url = src | default: blank
+
+  if mp4_url == blank and video != blank
     if poster_url == blank and video.preview_image != blank
       assign poster_url = video.preview_image | image_url: width: 2400
     endif
@@ -19,7 +26,7 @@
     endif
   endif
 -%}
-{%- if video != blank and mp4_url != blank -%}
+{%- if mp4_url != blank -%}
 <video
   class="{{ class_name }}"
   data-ff-autoplay-v="mp4-only-1"
@@ -34,7 +41,6 @@
   disablepictureinpicture
 ></video>
 {%- elsif video != blank -%}
-{%- comment -%} Fallback: first non-HLS source if format filter returns nothing {%- endcomment -%}
 <video
   class="{{ class_name }}"
   data-ff-autoplay-v="mp4-fallback-1"

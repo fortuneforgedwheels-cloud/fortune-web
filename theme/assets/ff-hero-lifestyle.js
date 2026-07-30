@@ -1,4 +1,92 @@
 (function () {
+  /* Hardcoded homepage hero MP4s — survives theme-editor wipes / sticky image fallbacks. */
+  var HARD_SLIDES = [
+    {
+      desktop:
+        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/92e8d7c7b0174fcdbeec08d65d2fd2cf/92e8d7c7b0174fcdbeec08d65d2fd2cf.HD-1080p-7.2Mbps-90297590.mp4?v=0',
+      mobile:
+        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/63c8141975ae4110a8861547f20aca76/63c8141975ae4110a8861547f20aca76.HD-1080p-7.2Mbps-90297806.mp4?v=0',
+      posterDesktop:
+        'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/92e8d7c7b0174fcdbeec08d65d2fd2cf.thumbnail.0000000000.jpg?v=1785391047',
+      posterMobile:
+        'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/63c8141975ae4110a8861547f20aca76.thumbnail.0000000000.jpg?v=1785391278',
+    },
+    {
+      desktop:
+        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/261a3f7c0dd64b71b8f5c3ef6641250a/261a3f7c0dd64b71b8f5c3ef6641250a.HD-1080p-7.2Mbps-90301640.mp4?v=0',
+      mobile:
+        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/261a3f7c0dd64b71b8f5c3ef6641250a/261a3f7c0dd64b71b8f5c3ef6641250a.HD-1080p-7.2Mbps-90301640.mp4?v=0',
+      posterDesktop:
+        'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/261a3f7c0dd64b71b8f5c3ef6641250a.thumbnail.0000000000.jpg?v=1785394349',
+      posterMobile:
+        'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/261a3f7c0dd64b71b8f5c3ef6641250a.thumbnail.0000000000.jpg?v=1785394349',
+    },
+    {
+      desktop:
+        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/e7fd235dfab64f38bcef7199a5c592e8/e7fd235dfab64f38bcef7199a5c592e8.HD-1080p-7.2Mbps-90304907.mp4?v=0',
+      mobile:
+        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/f3da456d74c54424be0bb9591ac2ed16/f3da456d74c54424be0bb9591ac2ed16.HD-1080p-4.8Mbps-90303270.mp4?v=0',
+      posterDesktop:
+        'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/e7fd235dfab64f38bcef7199a5c592e8.thumbnail.0000000000.jpg?v=1785396035',
+      posterMobile:
+        'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/f3da456d74c54424be0bb9591ac2ed16.thumbnail.0000000000.jpg?v=1785395101',
+    },
+  ];
+
+  function makeVideo(src, poster, className) {
+    var video = document.createElement('video');
+    video.className = className;
+    video.setAttribute('data-ff-autoplay-v', 'mp4-hardcoded-1');
+    if (poster) video.setAttribute('poster', poster);
+    video.setAttribute('src', src);
+    video.setAttribute('autoplay', '');
+    video.setAttribute('muted', '');
+    video.setAttribute('loop', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    video.setAttribute('preload', 'auto');
+    video.setAttribute('disablepictureinpicture', '');
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.autoplay = true;
+    video.loop = true;
+    return video;
+  }
+
+  function ensureLayerVideo(layer, src, poster, className) {
+    if (!layer || !src) return;
+    var existing = layer.querySelector('video');
+    if (existing) {
+      var cur = existing.currentSrc || existing.getAttribute('src') || '';
+      if (cur.indexOf('.mp4') !== -1 && existing.querySelector('source[type="application/x-mpegURL"]') === null) {
+        // Already a usable MP4 video tag.
+        preferMp4(existing);
+        return;
+      }
+      // Replace HLS-first / broken video markup.
+      existing.replaceWith(makeVideo(src, poster, className));
+      return;
+    }
+    // Slide fell back to a still image — swap in the hardcoded MP4.
+    layer.querySelectorAll('img.ff-hero__image, .ff-hero__placeholder').forEach(function (el) {
+      el.remove();
+    });
+    layer.appendChild(makeVideo(src, poster, className));
+  }
+
+  function ensureHardcodedVideos(root) {
+    var slides = root.querySelectorAll('[data-ff-hero-slide]');
+    slides.forEach(function (slide, i) {
+      var hard = HARD_SLIDES[i];
+      if (!hard) return;
+      var desktop = slide.querySelector('[data-ff-desktop-layer]');
+      var mobile = slide.querySelector('[data-ff-mobile-layer]');
+      ensureLayerVideo(desktop, hard.desktop, hard.posterDesktop, 'ff-hero__video ff-hero__video--desktop');
+      ensureLayerVideo(mobile, hard.mobile, hard.posterMobile, 'ff-hero__video ff-hero__video--mobile');
+    });
+  }
+
   function isCssVisible(el) {
     if (!el) return false;
     try {
@@ -107,6 +195,7 @@
 
   function init(root) {
     if (!root || root.dataset.ffReady === '1') return;
+    ensureHardcodedVideos(root);
     root.dataset.ffReady = '1';
 
     var slides = Array.prototype.slice.call(root.querySelectorAll('[data-ff-hero-slide]'));

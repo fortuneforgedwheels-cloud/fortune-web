@@ -574,7 +574,9 @@
             "title_align": "left",
             "button_label": "Browse Selection",
             "button_size": 12,
-            "button_link": "shopify://collections/two-piece-wheels"
+            "button_link": "shopify://collections/two-piece-wheels",
+            "video": "shopify://files/videos/G80 done 2.MP4",
+            "mobile_video": "shopify://files/videos/G80 done 2.MP4"
           }
         },
         "slide_bead": {
@@ -587,7 +589,9 @@
             "title_align": "left",
             "button_label": "Browse Selection",
             "button_size": 12,
-            "button_link": "shopify://collections/beadlock-wheels"
+            "button_link": "shopify://collections/beadlock-wheels",
+            "video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E 2.mov",
+            "mobile_video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E.mov"
           }
         }
       },

@@ -28,6 +28,7 @@ for item in "${EXTRA[@]}"; do
     config/settings_data.json|templates/*|templates|config/settings_data.json)
       echo "Refusing to push merchant copy via theme:push:code: $item" >&2
       echo "Run npm run theme:sync-copy first, then use theme:push:templates intentionally." >&2
+      echo "WARNING: Never push a stale templates/index.json — it can wipe homepage hero videos." >&2
       exit 1
       ;;
   esac

@@ -114,7 +114,71 @@ function ffThemeAsset(name, bust) {
     );
   }
 
+  var HARD_SLIDES = [
+    {
+      desktop:
+        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/92e8d7c7b0174fcdbeec08d65d2fd2cf/92e8d7c7b0174fcdbeec08d65d2fd2cf.HD-1080p-7.2Mbps-90297590.mp4?v=0',
+      mobile:
+        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/63c8141975ae4110a8861547f20aca76/63c8141975ae4110a8861547f20aca76.HD-1080p-7.2Mbps-90297806.mp4?v=0',
+    },
+    {
+      desktop:
+        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/261a3f7c0dd64b71b8f5c3ef6641250a/261a3f7c0dd64b71b8f5c3ef6641250a.HD-1080p-7.2Mbps-90301640.mp4?v=0',
+      mobile:
+        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/261a3f7c0dd64b71b8f5c3ef6641250a/261a3f7c0dd64b71b8f5c3ef6641250a.HD-1080p-7.2Mbps-90301640.mp4?v=0',
+    },
+    {
+      desktop:
+        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/e7fd235dfab64f38bcef7199a5c592e8/e7fd235dfab64f38bcef7199a5c592e8.HD-1080p-7.2Mbps-90304907.mp4?v=0',
+      mobile:
+        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/f3da456d74c54424be0bb9591ac2ed16/f3da456d74c54424be0bb9591ac2ed16.HD-1080p-4.8Mbps-90303270.mp4?v=0',
+    },
+  ];
+
+  function injectHardcodedHeroVideos() {
+    var slides = document.querySelectorAll('[data-ff-hero-slide]');
+    if (!slides.length) return;
+    slides.forEach(function (slide, i) {
+      var hard = HARD_SLIDES[i];
+      if (!hard) return;
+      [
+        { layer: slide.querySelector('[data-ff-desktop-layer]'), src: hard.desktop, cls: 'ff-hero__video ff-hero__video--desktop' },
+        { layer: slide.querySelector('[data-ff-mobile-layer]'), src: hard.mobile, cls: 'ff-hero__video ff-hero__video--mobile' },
+      ].forEach(function (item) {
+        if (!item.layer || !item.src) return;
+        var video = item.layer.querySelector('video');
+        if (!video) {
+          item.layer.querySelectorAll('img.ff-hero__image, .ff-hero__placeholder').forEach(function (el) {
+            el.remove();
+          });
+          video = document.createElement('video');
+          video.className = item.cls;
+          video.setAttribute('data-ff-autoplay-v', 'mp4-hardcoded-1');
+          item.layer.appendChild(video);
+        }
+        video.setAttribute('src', item.src);
+        video.querySelectorAll('source').forEach(function (s) {
+          s.remove();
+        });
+        video.muted = true;
+        video.defaultMuted = true;
+        video.autoplay = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.setAttribute('muted', '');
+        video.setAttribute('autoplay', '');
+        video.setAttribute('loop', '');
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+        video.setAttribute('preload', 'auto');
+        var p = video.play();
+        if (p && typeof p.catch === 'function') p.catch(function () {});
+      });
+    });
+  }
+
   function healHeroVideos() {
+    injectHardcodedHeroVideos();
     document.querySelectorAll('video').forEach(function (video) {
       var sources = video.querySelectorAll('source');
       var mp4 = null;
