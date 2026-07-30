@@ -264,13 +264,26 @@
 }
 
 .ff-sbv__fitment-option:hover {
-  border-color: rgba(var(--ff-sbv-gold-rgb),0.55);
-  background: rgba(var(--ff-sbv-gold-rgb),0.08);
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.09);
 }
 
 .ff-sbv__fitment-option.is-selected {
-  border-color: var(--ff-sbv-gold);
+  border-color: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.1);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
+}
+
+.ff-sbv__fitment-option--top-seller:hover,
+.ff-sbv__fitment-option--certified:hover {
+  border-color: rgba(var(--ff-sbv-gold-rgb),0.8);
   background: rgba(var(--ff-sbv-gold-rgb),0.14);
+}
+
+.ff-sbv__fitment-option--top-seller.is-selected,
+.ff-sbv__fitment-option--certified.is-selected {
+  border-color: var(--ff-sbv-gold);
+  background: rgba(var(--ff-sbv-gold-rgb),0.16);
   box-shadow: inset 0 0 0 1px rgba(var(--ff-sbv-gold-rgb),0.35);
 }
 
@@ -280,6 +293,11 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  color: rgba(255,255,255,0.78);
+}
+
+.ff-sbv__fitment-option--top-seller .ff-sbv__fitment-option-tier,
+.ff-sbv__fitment-option--certified .ff-sbv__fitment-option-tier {
   color: var(--ff-sbv-gold);
 }
 
