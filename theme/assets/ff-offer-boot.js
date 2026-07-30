@@ -1,5 +1,5 @@
 /* BOOT_BUILD 2026-07-29-sbv-fix-editor */
-/* FF_HOME_VIEW_REDIRECT */
+/* FF_HOME_WHEELS_REDIRECT */
 (function () {
   try {
     // Never redirect inside the Shopify theme editor
@@ -7,8 +7,8 @@
     var path = location.pathname || '/';
     if (path === '/' || path === '') {
       var params = location.search || '';
-      if (/[?&]view=vehicle(?:&|$)/.test(params) || !/[?&]view=home(?:&|$)/.test(params)) {
-        location.replace('/?view=home' + (location.hash || ''));
+      if (/[?&]view=vehicle(?:&|$)/.test(params) || !/[?&]view=wheels(?:&|$)/.test(params)) {
+        location.replace('/?view=wheels' + (location.hash || ''));
         return;
       }
     }
