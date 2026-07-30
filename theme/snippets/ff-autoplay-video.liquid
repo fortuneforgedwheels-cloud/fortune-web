@@ -1,0 +1,23 @@
+{%- comment -%}
+  Renders a Shopify video host object as a plain HTML5 video that autoplays.
+  Avoids video_tag's nested poster <img> and metadata-only preload, which
+  left homepage heroes stuck on a still frame.
+  Accepts: video, class, preload (optional)
+{%- endcomment -%}
+{%- if video != blank -%}
+  <video
+    class="{{ class | default: 'ff-hero__video' }}"
+    autoplay
+    muted
+    loop
+    playsinline
+    webkit-playsinline
+    preload="{{ preload | default: 'auto' }}"
+    disablepictureinpicture
+    disableremoteplayback
+  >
+    {%- for source in video.sources -%}
+      <source src="{{ source.url }}" type="{{ source.mime_type }}">
+    {%- endfor -%}
+  </video>
+{%- endif -%}

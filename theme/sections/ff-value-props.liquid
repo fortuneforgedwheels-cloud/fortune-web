@@ -36,17 +36,7 @@
         <div class="ff-values__feature">
           {%- if section.settings.video != blank -%}
             <div class="ff-values__feature-frame" data-ff-autoplay-video>
-              {{
-                section.settings.video
-                | video_tag:
-                  class: 'ff-values__feature-video',
-                  autoplay: true,
-                  loop: true,
-                  muted: true,
-                  controls: false,
-                  preload: 'auto',
-                  image_size: '2000x'
-              }}
+              {% render 'ff-autoplay-video', video: section.settings.video, class: 'ff-values__feature-video' %}
             </div>
             <script>
               (function () {
@@ -57,13 +47,13 @@
                 video.muted = true;
                 video.playsInline = true;
                 video.setAttribute('playsinline', '');
-                video.querySelectorAll('img').forEach(function (img) { img.style.display = 'none'; });
                 var play = function () {
                   var p = video.play();
                   if (p && p.catch) p.catch(function () {});
                 };
                 play();
                 video.addEventListener('canplay', play, { once: true });
+                setTimeout(play, 500);
               })();
             </script>
           {%- elsif video_id != blank -%}
