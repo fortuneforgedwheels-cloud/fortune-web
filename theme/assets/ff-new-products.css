@@ -7,11 +7,11 @@
   --ff-panel: #161616;
   background: #0a0a0a;
   color: var(--ff-ink);
-  padding: var(--ff-new-pad-top, 40px) clamp(16px, 4vw, 48px) var(--ff-new-pad-bottom, 64px);
+  padding: var(--ff-new-pad-top, 40px) clamp(12px, 2.5vw, 28px) var(--ff-new-pad-bottom, 64px);
 }
 
 .ff-new__inner {
-  max-width: 1280px;
+  max-width: 1480px;
   margin: 0 auto;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .ff-new__card {
-  flex: 0 0 min(240px, 78vw);
+  flex: 0 0 min(320px, 82vw);
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
@@ -217,7 +217,7 @@
   }
 
   .ff-new__card {
-    flex-basis: min(220px, 72vw);
+    flex-basis: min(280px, 78vw);
   }
 
   .ff-new__heading {
