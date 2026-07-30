@@ -11,7 +11,31 @@
     }
   }
 
+  function preferMp4(video) {
+    // Chrome desktop won't play HLS in a plain <video>; swap .m3u8 to .mp4 when needed.
+    var current = video.currentSrc || video.src || '';
+    if (current && current.indexOf('.m3u8') === -1) return;
+    var sources = video.querySelectorAll('source');
+    var mp4 = null;
+    Array.prototype.forEach.call(sources, function (source) {
+      var src = source.getAttribute('src') || '';
+      var type = (source.getAttribute('type') || '').toLowerCase();
+      if (src.indexOf('.mp4') !== -1 || type.indexOf('mp4') !== -1) mp4 = src;
+    });
+    if (!mp4 && video.getAttribute('src') && video.getAttribute('src').indexOf('.mp4') !== -1) {
+      mp4 = video.getAttribute('src');
+    }
+    if (!mp4) return;
+    Array.prototype.forEach.call(sources, function (source) {
+      var src = source.getAttribute('src') || '';
+      if (src.indexOf('.m3u8') !== -1) source.remove();
+    });
+    if (!video.getAttribute('src')) video.setAttribute('src', mp4);
+    else if ((video.getAttribute('src') || '').indexOf('.m3u8') !== -1) video.setAttribute('src', mp4);
+  }
+
   function prepare(video) {
+    preferMp4(video);
     video.muted = true;
     video.defaultMuted = true;
     video.autoplay = true;
