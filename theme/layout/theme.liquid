@@ -84,7 +84,7 @@
               /* Sticky forging pages → fresh step-layout view */
               if (
                 /\/pages\/faq\/?$/.test(path) &&
-                /[?&]view=(?:the-forging-process|forging)(?:&|$)/.test(qs)
+                /[?&]view=(?:the-forging-process|forging|forgesteps)(?:&|$)/.test(qs)
               ) {
                 location.replace('/pages/faq?view=forgeflow' + (location.hash || ''));
                 return;
