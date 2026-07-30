@@ -1,4 +1,4 @@
-/* BOOT_BUILD 2026-07-30-video-final-2 */
+/* BOOT_BUILD 2026-07-30-mobile-autoplay-1 */
 /* NEVER redirect homepage to ?view=vehicle — that URL was sticky-cached with broken HLS hero markup. */
 (function () {
   try {
@@ -6,8 +6,17 @@
     var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
     var qs = location.search || '';
     // Escape sticky broken vehicle homepage cache immediately.
+    // Escape sticky broken caches onto the fresh mobile-autoplay homepage view.
     if ((path === '/' || path === '') && /[?&]view=vehicle(?:&|$)/.test(qs)) {
-      location.replace('/index' + (location.hash || ''));
+      location.replace('/?view=ffnow' + (location.hash || ''));
+      return;
+    }
+    if (
+      (path === '/' || path === '' || path === '/index') &&
+      !/[?&]view=ffnow(?:&|$)/.test(qs) &&
+      !document.querySelector('[data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"]')
+    ) {
+      location.replace('/?view=ffnow' + (location.hash || ''));
       return;
     }
   } catch (e) {}
@@ -135,15 +144,78 @@ function ffThemeAsset(name, bust) {
     },
   ];
 
+  var mqHeroMobile = window.matchMedia('(max-width: 749.98px)');
+
+  function prepHeroVideo(video) {
+    if (!video) return;
+    var sources = video.querySelectorAll('source');
+    var mp4 = null;
+    Array.prototype.forEach.call(sources, function (source) {
+      var src = source.getAttribute('src') || '';
+      if (src.indexOf('.mp4') !== -1) mp4 = src;
+      if (src.indexOf('.m3u8') !== -1) source.remove();
+    });
+    if (!mp4 && (video.getAttribute('src') || '').indexOf('.mp4') !== -1) {
+      mp4 = video.getAttribute('src');
+    }
+    if (mp4) {
+      if (!(video.getAttribute('src') || '').length || (video.getAttribute('src') || '').indexOf('.m3u8') !== -1) {
+        video.setAttribute('src', mp4);
+      }
+    }
+    video.controls = false;
+    video.removeAttribute('controls');
+    video.muted = true;
+    video.defaultMuted = true;
+    video.loop = true;
+    video.playsInline = true;
+    try {
+      video.volume = 0;
+    } catch (eVol) {}
+    video.setAttribute('muted', '');
+    video.setAttribute('loop', '');
+    video.setAttribute('playsinline', 'true');
+    video.setAttribute('webkit-playsinline', 'true');
+    video.querySelectorAll('img').forEach(function (img) {
+      img.remove();
+    });
+    // iOS shows a static poster + Play chrome when many videos compete.
+    if (video.classList.contains('ff-hero__video--mobile')) {
+      video.removeAttribute('poster');
+    }
+  }
+
+  function layerIsVisible(layer) {
+    if (!layer) return false;
+    try {
+      var style = window.getComputedStyle(layer);
+      return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) > 0;
+    } catch (e) {
+      return true;
+    }
+  }
+
   function injectHardcodedHeroVideos() {
     var slides = document.querySelectorAll('[data-ff-hero-slide]');
     if (!slides.length) return;
+    var isMobile = mqHeroMobile.matches;
     slides.forEach(function (slide, i) {
       var hard = HARD_SLIDES[i];
       if (!hard) return;
+      var isActive = slide.classList.contains('is-active') && !slide.hidden;
       [
-        { layer: slide.querySelector('[data-ff-desktop-layer]'), src: hard.desktop, cls: 'ff-hero__video ff-hero__video--desktop' },
-        { layer: slide.querySelector('[data-ff-mobile-layer]'), src: hard.mobile, cls: 'ff-hero__video ff-hero__video--mobile' },
+        {
+          layer: slide.querySelector('[data-ff-desktop-layer]'),
+          src: hard.desktop,
+          cls: 'ff-hero__video ff-hero__video--desktop',
+          wantPlay: isActive && !isMobile,
+        },
+        {
+          layer: slide.querySelector('[data-ff-mobile-layer]'),
+          src: hard.mobile,
+          cls: 'ff-hero__video ff-hero__video--mobile',
+          wantPlay: isActive && isMobile,
+        },
       ].forEach(function (item) {
         if (!item.layer || !item.src) return;
         var video = item.layer.querySelector('video');
@@ -160,60 +232,83 @@ function ffThemeAsset(name, bust) {
         video.querySelectorAll('source, img').forEach(function (s) {
           s.remove();
         });
-        video.controls = false;
-        video.removeAttribute('controls');
-        video.muted = true;
-        video.defaultMuted = true;
-        video.autoplay = true;
-        video.loop = true;
-        video.playsInline = true;
-        try { video.volume = 0; } catch (eVol) {}
-        video.setAttribute('muted', '');
-        video.setAttribute('autoplay', '');
-        video.setAttribute('loop', '');
-        video.setAttribute('playsinline', '');
-        video.setAttribute('webkit-playsinline', '');
-        video.setAttribute('preload', 'auto');
-        var p = video.play();
-        if (p && typeof p.catch === 'function') p.catch(function () {});
+        prepHeroVideo(video);
+        if (item.wantPlay) {
+          video.autoplay = true;
+          video.setAttribute('autoplay', '');
+          video.setAttribute('preload', 'auto');
+        } else {
+          video.autoplay = false;
+          video.removeAttribute('autoplay');
+          video.setAttribute('preload', 'none');
+          try {
+            video.pause();
+          } catch (ePause) {}
+        }
       });
     });
   }
 
+  /* iOS blocks autoplay when several muted videos call play() — only one may play. */
   function healHeroVideos() {
     injectHardcodedHeroVideos();
-    document.querySelectorAll('video').forEach(function (video) {
-      var sources = video.querySelectorAll('source');
-      var mp4 = null;
-      Array.prototype.forEach.call(sources, function (source) {
-        var src = source.getAttribute('src') || '';
-        if (src.indexOf('.mp4') !== -1) mp4 = src;
-        if (src.indexOf('.m3u8') !== -1) source.remove();
+    var isMobile = mqHeroMobile.matches;
+    var heroes = document.querySelectorAll('[data-ff-hero], [data-ff-hero-track]');
+    if (!heroes.length) {
+      // Still sanitize any stray hero videos; never mass-play.
+      document.querySelectorAll('.ff-hero__video, .ff-values__feature-video').forEach(function (video) {
+        prepHeroVideo(video);
       });
-      if (!mp4 && (video.getAttribute('src') || '').indexOf('.mp4') !== -1) {
-        mp4 = video.getAttribute('src');
-      }
-      if (mp4) {
-        if (!(video.getAttribute('src') || '').length || (video.getAttribute('src') || '').indexOf('.m3u8') !== -1) {
-          video.setAttribute('src', mp4);
-        }
-      }
-      video.controls = false;
-      video.removeAttribute('controls');
-      video.muted = true;
-      video.defaultMuted = true;
+      return;
+    }
+    heroes.forEach(function (hero) {
+      var slides = hero.querySelectorAll('[data-ff-hero-slide]');
+      var active = null;
+      slides.forEach(function (slide) {
+        if (slide.classList.contains('is-active') && !slide.hidden) active = slide;
+      });
+      if (!active && slides[0]) active = slides[0];
+
+      slides.forEach(function (slide) {
+        slide.querySelectorAll('video').forEach(function (video) {
+          prepHeroVideo(video);
+          var layer =
+            video.closest('[data-ff-desktop-layer]') || video.closest('[data-ff-mobile-layer]');
+          var want =
+            slide === active &&
+            layerIsVisible(layer) &&
+            ((isMobile && video.classList.contains('ff-hero__video--mobile')) ||
+              (!isMobile && video.classList.contains('ff-hero__video--desktop')));
+          if (!want) {
+            try {
+              video.pause();
+            } catch (e1) {}
+            video.autoplay = false;
+            video.removeAttribute('autoplay');
+            video.setAttribute('preload', 'none');
+            return;
+          }
+          video.autoplay = true;
+          video.setAttribute('autoplay', '');
+          video.setAttribute('preload', 'auto');
+          var p = video.play();
+          if (p && typeof p.catch === 'function') {
+            p.catch(function () {
+              window.setTimeout(function () {
+                prepHeroVideo(video);
+                var p2 = video.play();
+                if (p2 && typeof p2.catch === 'function') p2.catch(function () {});
+              }, 250);
+            });
+          }
+        });
+      });
+    });
+
+    document.querySelectorAll('.ff-values__feature-video').forEach(function (video) {
+      prepHeroVideo(video);
       video.autoplay = true;
-      video.loop = true;
-      video.playsInline = true;
-      try { video.volume = 0; } catch (eVol2) {}
-      video.setAttribute('muted', '');
       video.setAttribute('autoplay', '');
-      video.setAttribute('playsinline', '');
-      video.setAttribute('webkit-playsinline', '');
-      video.setAttribute('preload', 'auto');
-      video.querySelectorAll('img').forEach(function (img) {
-        img.remove();
-      });
       var p = video.play();
       if (p && typeof p.catch === 'function') p.catch(function () {});
     });
@@ -222,24 +317,28 @@ function ffThemeAsset(name, bust) {
   ready(function () {
     var path = location.pathname || '';
 
-    // Homepage: if sticky cache served non-MP4 hero markup, pull /index MainContent.
-    if (path === '/' || path === '' || path === '/index') {
+    // Homepage: sticky IndexController cache often pins old hero markup.
+    // Pull a never-cached alternate view so mobile can autoplay without tap.
+    if (path === '/' || path === '' || path === '/index' || path === '/index.html') {
       var homeMain = document.getElementById('MainContent');
-      var hasMp4Hero = !!(homeMain && homeMain.querySelector('[data-ff-autoplay-v="mp4-only-1"]'));
-      if (!hasMp4Hero) {
+      var hasFreshHero = !!(
+        homeMain &&
+        homeMain.querySelector('[data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY-20260730F"]')
+      );
+      if (!hasFreshHero) {
         swapMainUrl(
-          '/index?ffhome=1',
+          '/?view=ffnow&ffhome=1',
           function (root) {
-            return !!root.querySelector('[data-ff-autoplay-v="mp4-only-1"]');
+            return !!root.querySelector('[data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"]');
           },
           'ff-hero-lifestyle',
-          ffThemeAsset('ff-hero-lifestyle.css', 'herofinal'),
+          ffThemeAsset('ff-hero-lifestyle.css', 'mplay1'),
           'ff-hero-lifestyle',
-          'ff-home-video-upgraded'
+          'ff-home-mobile-autoplay'
         );
       } else {
         healHeroVideos();
-        [200, 600, 1500].forEach(function (ms) {
+        [100, 400, 1200].forEach(function (ms) {
           window.setTimeout(healHeroVideos, ms);
         });
       }

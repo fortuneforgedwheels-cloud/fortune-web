@@ -1,15 +1,16 @@
 {%- comment -%}
   Autoplay-friendly MP4 video. No controls, no nested poster <img>.
-  Params: video, src, poster, class, autoplay (default true)
+  Params: video, src, poster, class, autoplay_mode ('on' default, 'off' to disable).
+  NOTE: Shopify drops boolean `false` on render — never pass autoplay: false.
 {%- endcomment -%}
 {%- liquid
   assign video = video | default: blank
   assign class_name = class | default: ''
   assign poster_url = poster | default: blank
   assign mp4_url = src | default: blank
-  # Liquid `default` treats false as empty — never use default for booleans.
+  assign mode = autoplay_mode | default: 'on'
   assign do_autoplay = true
-  if autoplay == false
+  if mode == 'off' or mode == 'false' or mode == '0'
     assign do_autoplay = false
   endif
 
@@ -35,7 +36,7 @@
   loop
   playsinline
   webkit-playsinline
-  preload="auto"
+  preload="{% if do_autoplay %}auto{% else %}none{% endif %}"
   disablepictureinpicture
   disableRemotePlayback
   x-webkit-airplay="deny"
@@ -51,7 +52,7 @@
   loop
   playsinline
   webkit-playsinline
-  preload="auto"
+  preload="{% if do_autoplay %}auto{% else %}none{% endif %}"
   disablepictureinpicture
   disableRemotePlayback
   x-webkit-airplay="deny"

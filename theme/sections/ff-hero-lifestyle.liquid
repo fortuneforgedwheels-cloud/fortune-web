@@ -47,7 +47,7 @@
   <section
     class="ff-hero"
     id="ff-hero-{{ section.id }}"
-    data-ff-hero data-ff-fingerprint="HERO-MOBILE-AUTOPLAY-20260730E" data-ff-hero-fix="arrows-v1"
+    data-ff-hero data-ff-fingerprint="HERO-MOBILE-AUTOPLAY-20260730F" data-ff-hero-fix="arrows-v1"
     style="
       --ff-hero-height: {{ section.settings.height }}vh;
       --ff-hero-height-mobile: {{ section.settings.height_mobile }}vh;
@@ -123,9 +123,9 @@
               {%- if has_desktop_media or has_mobile_media -%}
                 <div class="ff-hero__media-desktop" data-ff-desktop-layer>
                   {%- if hard_desktop != blank -%}
-                    {% render 'ff-autoplay-video', src: hard_desktop, poster: hard_poster_d, class: 'ff-hero__video ff-hero__video--desktop', autoplay: false %}
+                    {% render 'ff-autoplay-video', src: hard_desktop, poster: hard_poster_d, class: 'ff-hero__video ff-hero__video--desktop', autoplay_mode: 'off' %}
                   {%- elsif slide_video != blank -%}
-                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--desktop', autoplay: false %}
+                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--desktop', autoplay_mode: 'off' %}
                   {%- elsif block.settings.image != blank -%}
                     <img
                       class="ff-hero__image"
@@ -154,19 +154,19 @@
                     iOS blocks autoplay when many videos compete; JS plays the rest.
                   {%- endcomment -%}
                   {%- liquid
-                    assign mobile_autoplay = false
+                    assign mobile_autoplay_mode = 'off'
                     if forloop.first
-                      assign mobile_autoplay = true
+                      assign mobile_autoplay_mode = 'on'
                     endif
                   -%}
                   {%- if hard_mobile != blank -%}
-                    {% render 'ff-autoplay-video', src: hard_mobile, poster: blank, class: 'ff-hero__video ff-hero__video--mobile', autoplay: mobile_autoplay %}
+                    {% render 'ff-autoplay-video', src: hard_mobile, poster: blank, class: 'ff-hero__video ff-hero__video--mobile', autoplay_mode: mobile_autoplay_mode %}
                   {%- elsif slide_mobile_video != blank -%}
-                    {% render 'ff-autoplay-video', video: slide_mobile_video, class: 'ff-hero__video ff-hero__video--mobile', autoplay: mobile_autoplay %}
+                    {% render 'ff-autoplay-video', video: slide_mobile_video, class: 'ff-hero__video ff-hero__video--mobile', autoplay_mode: mobile_autoplay_mode %}
                   {%- elsif hard_desktop != blank -%}
-                    {% render 'ff-autoplay-video', src: hard_desktop, poster: blank, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback', autoplay: mobile_autoplay %}
+                    {% render 'ff-autoplay-video', src: hard_desktop, poster: blank, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback', autoplay_mode: mobile_autoplay_mode %}
                   {%- elsif slide_video != blank -%}
-                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback', autoplay: mobile_autoplay %}
+                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback', autoplay_mode: mobile_autoplay_mode %}
                   {%- elsif block.settings.mobile_image != blank -%}
                     <img
                       class="ff-hero__image"

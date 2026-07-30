@@ -74,6 +74,24 @@
           <script>location.replace('/pages/faq?view=the-forging-process');</script>
         {%- endif -%}
         {{ content_for_header }}
+        <script>
+          /* Immediate escape from sticky IndexController caches onto fresh autoplay homepage. */
+          (function () {
+            try {
+              if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
+              var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
+              var qs = location.search || '';
+              var onHome = path === '/' || path === '/index';
+              if (!onHome) return;
+              if (/[?&]view=ffnow(?:&|$)/.test(qs)) return;
+              if (document.documentElement && document.documentElement.querySelector('[data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"]')) return;
+              /* Bare / and legacy ?view=vehicle are both sticky-cached with broken multi-video heroes. */
+              if (!/[?&]view=/.test(qs) || /[?&]view=vehicle(?:&|$)/.test(qs) || /[?&]view=ffautoplay(?:&|$)/.test(qs)) {
+                location.replace('/?view=ffnow' + (location.hash || ''));
+              }
+            } catch (e) {}
+          })();
+        </script>
 
         <style type="text/css" media="screen">
             {% render 'variable' %}

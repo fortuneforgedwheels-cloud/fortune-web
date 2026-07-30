@@ -155,11 +155,13 @@
     video.setAttribute('loop', '');
     video.setAttribute('playsinline', 'true');
     video.setAttribute('webkit-playsinline', 'true');
-    video.setAttribute('preload', 'auto');
     video.setAttribute('disablepictureinpicture', '');
     video.querySelectorAll('img').forEach(function (img) {
       img.remove();
     });
+    if (video.classList.contains('ff-hero__video--mobile')) {
+      video.removeAttribute('poster');
+    }
   }
 
   function tryPlay(video) {
