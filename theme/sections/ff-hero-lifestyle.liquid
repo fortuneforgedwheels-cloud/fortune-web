@@ -235,6 +235,38 @@
   </section>
   <script src="{{ 'ff-hero-lifestyle.js' | asset_url }}" defer></script>
   <script src="{{ 'ff-hero-offer.js' | asset_url }}" defer></script>
+  <script>
+    /* Immediate muted autoplay kick — runs before deferred hero JS. No controls. */
+    (function () {
+      function kick(root) {
+        var scope = root || document;
+        scope.querySelectorAll('[data-ff-hero] video, .ff-values__feature-video, video[data-ff-autoplay-v]').forEach(function (v) {
+          v.controls = false;
+          v.removeAttribute('controls');
+          v.muted = true;
+          v.defaultMuted = true;
+          v.playsInline = true;
+          v.autoplay = true;
+          v.loop = true;
+          try { v.volume = 0; } catch (e) {}
+          v.setAttribute('muted', '');
+          v.setAttribute('autoplay', '');
+          v.setAttribute('playsinline', '');
+          v.setAttribute('webkit-playsinline', '');
+          v.setAttribute('preload', 'auto');
+          v.querySelectorAll('img').forEach(function (img) { img.remove(); });
+          var p = v.play();
+          if (p && typeof p.catch === 'function') p.catch(function () {});
+        });
+      }
+      kick();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () { kick(); }, { once: true });
+      }
+      document.addEventListener('touchstart', function () { kick(); }, { passive: true });
+      document.addEventListener('pointerdown', function () { kick(); }, { passive: true });
+    })();
+  </script>
 {%- endif -%}
 
 {% render 'ff-shop-by-vehicle-bar' %}
