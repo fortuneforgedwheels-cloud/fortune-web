@@ -220,6 +220,19 @@
     return null;
   }
 
+  function getFitmentLayout(cfg) {
+    var hay = [cfg.tier, cfg.config, cfg.notes, cfg.tireFlags].filter(Boolean).join(' ');
+    if (/\bbead\s*lock|\bbeadlock\b/i.test(hay)) return 'beadlock';
+    if (isSquare(cfg.front, cfg.rear)) return 'square';
+    return 'staggered';
+  }
+
+  function filterFitmentsByLayout(configs, layout) {
+    return (configs || []).filter(function (cfg) {
+      return getFitmentLayout(cfg) === layout;
+    });
+  }
+
   function sortFitmentsWithBadgesFirst(configs, guideSlug) {
     return (configs || []).map(function (cfg, idx) {
       return { cfg: cfg, idx: idx, badge: fitmentBadge(cfg, guideSlug) };
@@ -490,6 +503,7 @@
     var goBtn        = root.querySelector('[data-ff-sbv-go]');
     var specsEl      = root.querySelector('[data-ff-sbv-specs]');
     var specsLine    = root.querySelector('[data-ff-sbv-specs-line]');
+    var layoutChooser = root.querySelector('[data-ff-sbv-layout-chooser]');
     var fitmentCard  = root.querySelector('[data-ff-sbv-fitment]');
     var builder      = root.querySelector('[data-ff-sbv-builder]');
     var builderSub   = root.querySelector('[data-ff-sbv-builder-sub]');
@@ -519,6 +533,9 @@
     var vehicleOpt   = null;
     var currentConfigs = [];
     var currentSource  = null;
+    var currentGuideSlug = null;
+    var currentChassisLabel = '';
+    var selectedLayout = '';
 
     var state = {
       selectedFitment: null,
@@ -560,32 +577,76 @@
       specsEl.hidden = bits.length === 0;
     }
 
+    function showLayoutChooser() {
+      selectedLayout = '';
+      if (layoutChooser) {
+        layoutChooser.hidden = false;
+        layoutChooser.querySelectorAll('.ff-sbv__layout-option').forEach(function (btn) {
+          btn.classList.remove('is-selected');
+        });
+      }
+      if (fitmentCard) {
+        fitmentCard.innerHTML = '';
+        fitmentCard.hidden = true;
+      }
+      resetBuilder();
+    }
+
+    function renderFilteredFitments(layout) {
+      selectedLayout = layout;
+      if (!fitmentCard) return;
+
+      if (layoutChooser) {
+        layoutChooser.querySelectorAll('.ff-sbv__layout-option').forEach(function (btn) {
+          btn.classList.toggle('is-selected', btn.getAttribute('data-ff-sbv-layout') === layout);
+        });
+      }
+
+      var filtered = filterFitmentsByLayout(currentConfigs, layout);
+      resetBuilder();
+
+      if (!filtered.length) {
+        var layoutLabel = layout === 'square' ? 'square' : layout;
+        fitmentCard.innerHTML = '<p class="ff-sbv__empty">No '
+          + escHtml(layoutLabel)
+          + ' fitments for this vehicle yet. Pick another layout or <a href="/#order">request a custom quote</a>.</p>';
+        fitmentCard.hidden = false;
+        return;
+      }
+
+      var label = currentChassisLabel;
+      renderFitmentCard(fitmentCard, label, filtered, currentSource, currentGuideSlug, showBuilder);
+      fitmentCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     function renderFitmentsForVehicle(opt, chassisLabel) {
       if (!fitmentCard || !opt) return;
       var slug = opt.slug || '';
+      currentChassisLabel = chassisLabel + (opt.trim && opt.trim !== chassisLabel ? ' – ' + opt.trim : '');
 
-      function render(slugKey) {
+      function prepare(slugKey) {
         var pack = getFitmentConfigs(slugKey, ffData, apexData);
         currentConfigs = pack.configs;
         currentSource = pack.source;
+        currentGuideSlug = pack.guideSlug;
         if (!pack.configs.length) {
+          if (layoutChooser) layoutChooser.hidden = true;
           fitmentCard.innerHTML = '<p class="ff-sbv__empty">No fitment data for this vehicle yet. <a href="/#order">Request a custom quote</a>.</p>';
           fitmentCard.hidden = false;
           resetBuilder();
           return;
         }
-        var label = chassisLabel + (opt.trim && opt.trim !== chassisLabel ? ' – ' + opt.trim : '');
-        renderFitmentCard(fitmentCard, label, pack.configs, pack.source, pack.guideSlug, showBuilder);
+        showLayoutChooser();
       }
 
       if (ffData || apexData) {
-        render(slug);
+        prepare(slug);
         return;
       }
       var pending = 0;
       function done() {
         pending--;
-        if (pending <= 0) render(slug);
+        if (pending <= 0) prepare(slug);
       }
       if (ffFitmentsUrl && !ffData) {
         pending++;
@@ -603,7 +664,7 @@
           .catch(function () {})
           .finally(done);
       }
-      if (pending === 0) render(slug);
+      if (pending === 0) prepare(slug);
     }
 
     function initBuildFromQuery() {
@@ -801,7 +862,13 @@
       chassisEl.addEventListener('change', updateGo);
     }
 
-    /* ── style / finish / cart ── */
+    /* ── layout chooser / style / finish / cart ── */
+    root.querySelectorAll('[data-ff-sbv-layout]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        renderFilteredFitments(btn.getAttribute('data-ff-sbv-layout'));
+      });
+    });
+
     root.querySelectorAll('[data-ff-sbv-style]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         onStyleSelect(btn.getAttribute('data-ff-sbv-style'));
