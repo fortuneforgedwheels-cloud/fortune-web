@@ -2,10 +2,19 @@
 
 {%- if section.settings.show_section -%}
   {%- liquid
-    assign left_collection = collections[section.settings.left_collection]
-    assign right_collection = collections[section.settings.right_collection]
+    assign mono_collection = collections[section.settings.collection]
+    if mono_collection == blank
+      assign mono_collection = collections[section.settings.left_collection]
+    endif
     assign product_limit = section.settings.product_limit | default: 8
-    assign interval_ms = section.settings.cycle_ms | default: 5 | times: 1000
+    assign heading = section.settings.heading | default: 'Top selling monoblocks'
+    assign buy_label = section.settings.buy_label | default: 'Buy Now'
+    assign empty_text = section.settings.empty_text | default: 'Add monoblock products to this collection'
+    assign view_label = section.settings.view_label | default: 'Shop all monoblocks'
+    assign view_link = section.settings.view_link
+    if view_link == blank and mono_collection != blank
+      assign view_link = mono_collection.url
+    endif
   -%}
 
   <section
@@ -15,137 +24,74 @@
     style="
       --ff-new-pad-top: {{ section.settings.padding_top }}px;
       --ff-new-pad-bottom: {{ section.settings.padding_bottom }}px;
-      --ff-new-bar-align: {{ section.settings.bar_align | default: 'space-between' }};
-      --ff-new-label-align: {{ section.settings.label_align | default: 'center' }};
-      --ff-new-caption-align: {{ section.settings.caption_align | default: 'center' }};
     "
   >
     <div class="ff-new__inner">
-      {%- if section.settings.bar_left != blank or section.settings.bar_right != blank -%}
-        <div class="ff-new__bar">
-          {%- if section.settings.bar_left != blank -%}
-            <p class="ff-new__bar-left" {% render 'ff-type-style', size: section.settings.bar_size, align: section.settings.bar_text_align, min_ratio: 85 %}>
-              {{ section.settings.bar_left | escape }}
-            </p>
-          {%- else -%}
-            <span></span>
-          {%- endif -%}
-          {%- if section.settings.bar_right != blank -%}
-            <p class="ff-new__bar-right" {% render 'ff-type-style', size: section.settings.bar_size, align: section.settings.bar_text_align, min_ratio: 85 %}>
-              {{ section.settings.bar_right | escape }}
-            </p>
-          {%- endif -%}
-        </div>
+      {%- if heading != blank -%}
+        <header class="ff-new__header">
+          <h2 class="ff-new__heading">{{ heading | escape }}</h2>
+        </header>
       {%- endif -%}
 
-      <div class="ff-new__grid">
-        {%- for side in (1..2) -%}
-          {%- liquid
-            if side == 1
-              assign col_collection = left_collection
-              assign col_label = section.settings.left_label
-              assign col_empty = section.settings.left_empty
-              assign col_view_label = section.settings.left_view_label
-              assign col_view_link = section.settings.left_view_link
-              if col_view_link == blank and col_collection != blank
-                assign col_view_link = col_collection.url
-              endif
-            else
-              assign col_collection = right_collection
-              assign col_label = section.settings.right_label
-              assign col_empty = section.settings.right_empty
-              assign col_view_label = section.settings.right_view_label
-              assign col_view_link = section.settings.right_view_link
-              if col_view_link == blank and col_collection != blank
-                assign col_view_link = col_collection.url
-              endif
-            endif
-          -%}
+      <div class="ff-new__rail-wrap">
+        <button type="button" class="ff-new__nav ff-new__nav--prev" data-ff-new-prev aria-label="Previous products">
+          <span aria-hidden="true">&#8249;</span>
+        </button>
 
-          <article class="ff-new__col" data-ff-new-col data-ff-new-interval="{{ interval_ms }}">
-            {%- if col_label != blank -%}
-              <h3 class="ff-new__label" {% render 'ff-type-style', size: section.settings.label_size, align: section.settings.label_align, min_ratio: 80 %}>
-                {{ col_label | escape }}
-              </h3>
-            {%- endif -%}
-
-            <div class="ff-new__stage">
-              {%- if col_collection != blank and col_collection.products_count > 0 -%}
-                {%- for product in col_collection.products limit: product_limit -%}
-                  {%- liquid
-                    assign slide_image = product.featured_media
-                    if slide_image == blank
-                      assign slide_image = product.featured_image
-                    endif
-                  -%}
-                  <a
-                    class="ff-new__slide{% if forloop.first %} is-active{% endif %}"
-                    href="{{ product.url }}"
-                    data-ff-new-slide
-                    data-ff-new-title="{{ product.title | escape }}"
-                    {% unless forloop.first %}tabindex="-1" aria-hidden="true"{% endunless %}
-                  >
-                    {%- if slide_image != blank -%}
-                      {{
-                        slide_image
-                        | image_url: width: 1200
-                        | image_tag:
-                          loading: 'lazy',
-                          widths: '500, 700, 900, 1200',
-                          sizes: '(max-width: 749px) 100vw, 50vw',
-                          alt: product.title
-                      }}
-                    {%- else -%}
-                      <span class="ff-new__slide-placeholder">{{ product.title | escape }}</span>
-                    {%- endif -%}
-                  </a>
-                {%- endfor -%}
-
-                {%- if col_collection.products.size > 1 or product_limit > 1 -%}
-                  {%- assign slide_count = col_collection.products.size -%}
-                  {%- if slide_count > product_limit -%}
-                    {%- assign slide_count = product_limit -%}
+        <div class="ff-new__rail" data-ff-new-rail>
+          {%- if mono_collection != blank and mono_collection.products_count > 0 -%}
+            {%- for product in mono_collection.products limit: product_limit -%}
+              {%- liquid
+                assign card_image = product.featured_media
+                if card_image == blank
+                  assign card_image = product.featured_image
+                endif
+                assign card_blurb = product.description | strip_html | strip | truncate: 140
+              -%}
+              <article class="ff-new__card">
+                <a class="ff-new__card-media" href="{{ product.url }}">
+                  {%- if card_image != blank -%}
+                    {{
+                      card_image
+                      | image_url: width: 900
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '320, 480, 640, 900',
+                        sizes: '(max-width: 749px) 70vw, 240px',
+                        alt: product.title
+                    }}
+                  {%- else -%}
+                    <span class="ff-new__card-placeholder" aria-hidden="true"></span>
                   {%- endif -%}
-                  {%- if slide_count > 1 -%}
-                    <div class="ff-new__dots" aria-hidden="true">
-                      {%- for product in col_collection.products limit: product_limit -%}
-                        <button
-                          type="button"
-                          class="ff-new__dot{% if forloop.first %} is-active{% endif %}"
-                          data-ff-new-dot
-                          aria-label="Show product {{ forloop.index }}"
-                        ></button>
-                      {%- endfor -%}
-                    </div>
+                </a>
+                <div class="ff-new__card-body">
+                  <h3 class="ff-new__card-title">
+                    <a href="{{ product.url }}">{{ product.title | escape }}</a>
+                  </h3>
+                  {%- if card_blurb != blank -%}
+                    <p class="ff-new__card-text">{{ card_blurb | escape }}</p>
                   {%- endif -%}
-                {%- endif -%}
-              {%- else -%}
-                <div class="ff-new__slide is-active">
-                  <span class="ff-new__slide-placeholder">{{ col_empty | default: 'Add a collection' | escape }}</span>
+                  <a class="ff-new__buy" href="{{ product.url }}">{{ buy_label | escape }}</a>
                 </div>
-              {%- endif -%}
+              </article>
+            {%- endfor -%}
+          {%- else -%}
+            <div class="ff-new__empty">
+              <p>{{ empty_text | escape }}</p>
             </div>
+          {%- endif -%}
+        </div>
 
-            <div class="ff-new__meta">
-              {%- if col_collection != blank and col_collection.products_count > 0 -%}
-                <p class="ff-new__caption" data-ff-new-caption {% render 'ff-type-style', size: section.settings.caption_size, align: section.settings.caption_align, min_ratio: 70 %}>
-                  {{ col_collection.products.first.title | escape }}
-                </p>
-              {%- elsif col_empty != blank -%}
-                <p class="ff-new__caption" {% render 'ff-type-style', size: section.settings.caption_size, align: section.settings.caption_align, min_ratio: 70 %}>
-                  {{ col_empty | escape }}
-                </p>
-              {%- endif -%}
-            </div>
-
-            {%- if col_view_label != blank and col_view_link != blank -%}
-              <a class="ff-new__view" href="{{ col_view_link }}" {% render 'ff-type-style', size: section.settings.view_size, min_ratio: 85 %}>
-                {{ col_view_label | escape }}
-              </a>
-            {%- endif -%}
-          </article>
-        {%- endfor -%}
+        <button type="button" class="ff-new__nav ff-new__nav--next" data-ff-new-next aria-label="Next products">
+          <span aria-hidden="true">&#8250;</span>
+        </button>
       </div>
+
+      {%- if view_label != blank and view_link != blank -%}
+        <div class="ff-new__footer">
+          <a class="ff-new__view-all" href="{{ view_link }}">{{ view_label | escape }}</a>
+        </div>
+      {%- endif -%}
     </div>
   </section>
 
@@ -155,7 +101,7 @@
 
 {% schema %}
 {
-  "name": "FF New Products",
+  "name": "FF Top Selling Monoblocks",
   "tag": "section",
   "class": "section-ff-new-products",
   "settings": [
@@ -166,186 +112,53 @@
       "default": true
     },
     {
-      "type": "header",
-      "content": "Top bar"
-    },
-    {
       "type": "text",
-      "id": "bar_left",
-      "label": "Left bar text",
-      "default": "New products"
+      "id": "heading",
+      "label": "Heading",
+      "default": "Top selling monoblocks"
     },
     {
-      "type": "text",
-      "id": "bar_right",
-      "label": "Right bar text",
-      "default": "New designs"
-    },
-    {
-      "type": "range",
-      "id": "bar_size",
-      "label": "Bar text size",
-      "min": 10,
-      "max": 22,
-      "step": 1,
-      "unit": "px",
-      "default": 13
-    },
-    {
-      "type": "select",
-      "id": "bar_text_align",
-      "label": "Bar text align",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
-      ],
-      "default": "left"
-    },
-    {
-      "type": "header",
-      "content": "Left column — Monoblock"
-    },
-    {
-      "type": "text",
-      "id": "left_label",
-      "label": "Column label",
-      "default": "Monoblock"
+      "type": "collection",
+      "id": "collection",
+      "label": "Monoblock collection"
     },
     {
       "type": "collection",
       "id": "left_collection",
-      "label": "Collection"
-    },
-    {
-      "type": "text",
-      "id": "left_empty",
-      "label": "Empty state text",
-      "default": "Select a monoblock collection"
-    },
-    {
-      "type": "text",
-      "id": "left_view_label",
-      "label": "View-all label",
-      "default": "Shop monoblock"
-    },
-    {
-      "type": "url",
-      "id": "left_view_link",
-      "label": "View-all link",
-      "info": "Defaults to the selected collection if blank."
-    },
-    {
-      "type": "header",
-      "content": "Right column — Two piece"
-    },
-    {
-      "type": "text",
-      "id": "right_label",
-      "label": "Column label",
-      "default": "Two piece"
-    },
-    {
-      "type": "collection",
-      "id": "right_collection",
-      "label": "Collection"
-    },
-    {
-      "type": "text",
-      "id": "right_empty",
-      "label": "Empty state text",
-      "default": "Select a two-piece collection"
-    },
-    {
-      "type": "text",
-      "id": "right_view_label",
-      "label": "View-all label",
-      "default": "Shop two piece"
-    },
-    {
-      "type": "url",
-      "id": "right_view_link",
-      "label": "View-all link",
-      "info": "Defaults to the selected collection if blank."
-    },
-    {
-      "type": "header",
-      "content": "Column text size & align"
-    },
-    {
-      "type": "range",
-      "id": "label_size",
-      "label": "Column label size",
-      "min": 10,
-      "max": 22,
-      "step": 1,
-      "unit": "px",
-      "default": 13
-    },
-    {
-      "type": "select",
-      "id": "label_align",
-      "label": "Column label align",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
-      ],
-      "default": "center"
-    },
-    {
-      "type": "range",
-      "id": "caption_size",
-      "label": "Product caption size",
-      "min": 10,
-      "max": 28,
-      "step": 1,
-      "unit": "px",
-      "default": 16
-    },
-    {
-      "type": "select",
-      "id": "caption_align",
-      "label": "Product caption align",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
-      ],
-      "default": "center"
-    },
-    {
-      "type": "range",
-      "id": "view_size",
-      "label": "Shop link size",
-      "min": 9,
-      "max": 18,
-      "step": 1,
-      "unit": "px",
-      "default": 11
-    },
-    {
-      "type": "header",
-      "content": "Cycling"
+      "label": "Fallback collection (legacy)",
+      "info": "Used if Monoblock collection is empty. Kept for existing homepage settings."
     },
     {
       "type": "range",
       "id": "product_limit",
-      "label": "Products to cycle per column",
-      "min": 2,
-      "max": 12,
+      "label": "Products to show",
+      "min": 3,
+      "max": 16,
       "step": 1,
       "default": 8
     },
     {
-      "type": "range",
-      "id": "cycle_ms",
-      "label": "Seconds between slides",
-      "min": 3,
-      "max": 10,
-      "step": 1,
-      "default": 5,
-      "unit": "s"
+      "type": "text",
+      "id": "buy_label",
+      "label": "Buy button label",
+      "default": "Buy Now"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty state text",
+      "default": "Add monoblock products to this collection"
+    },
+    {
+      "type": "text",
+      "id": "view_label",
+      "label": "Shop all label",
+      "default": "Shop all monoblocks"
+    },
+    {
+      "type": "url",
+      "id": "view_link",
+      "label": "Shop all link"
     },
     {
       "type": "header",
@@ -358,7 +171,7 @@
       "min": 0,
       "max": 100,
       "step": 4,
-      "default": 28,
+      "default": 40,
       "unit": "px"
     },
     {
@@ -368,13 +181,13 @@
       "min": 0,
       "max": 120,
       "step": 4,
-      "default": 56,
+      "default": 64,
       "unit": "px"
     }
   ],
   "presets": [
     {
-      "name": "FF New Products"
+      "name": "FF Top Selling Monoblocks"
     }
   ]
 }
