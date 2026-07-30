@@ -575,32 +575,26 @@
         "custom_liquid": ""
       }
     },
-    "ff_new_products_home": {
-      "type": "ff-new-products",
+    "ff_top_selling_monoblocks_home": {
+      "type": "ff-top-selling-monoblocks",
       "settings": {
         "show_section": true,
-        "bar_left": "New products",
-        "bar_right": "New designs",
-        "left_label": "Monoblock",
+        "heading": "Top selling monoblocks",
+        "collection": "monoblock-wheels",
         "left_collection": "monoblock-wheels",
-        "left_empty": "Select a monoblock collection",
-        "left_view_label": "Shop monoblock",
-        "left_view_link": "shopify://collections/monoblock-wheels",
-        "right_label": "Two piece",
-        "right_collection": "two-piece-wheels",
-        "right_empty": "Select a two-piece collection",
-        "right_view_label": "Shop two piece",
-        "right_view_link": "shopify://collections/two-piece-wheels",
         "product_limit": 8,
-        "cycle_ms": 5,
-        "padding_top": 28,
-        "padding_bottom": 56
+        "buy_label": "Buy Now",
+        "empty_text": "Add monoblock products to this collection",
+        "view_label": "Shop all monoblocks",
+        "view_link": "shopify://collections/monoblock-wheels",
+        "padding_top": 40,
+        "padding_bottom": 64
       }
     }
   },
   "order": [
     "ff_hero_lifestyle_main",
-    "ff_new_products_home",
+    "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",
     "ff_value_props_main",

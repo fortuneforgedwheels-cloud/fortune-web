@@ -136,8 +136,8 @@
   min-height: 36px;
   padding: 0 16px;
   border-radius: 999px;
-  background: #fff;
-  color: #111;
+  background: #e4572e;
+  color: #fff;
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
   font-size: 0.78rem;
   font-weight: 700;
@@ -148,8 +148,8 @@
 }
 
 .ff-new__buy:hover {
-  background: var(--ff-gold);
-  color: #111;
+  background: #f06a42;
+  color: #fff;
 }
 
 .ff-new__nav {
