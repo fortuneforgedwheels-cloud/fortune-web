@@ -1,4 +1,4 @@
-/* Fortune Forged — WHEELS mega menu (stable hover + white type, no orange) */
+/* Fortune Forged — WHEELS mega menu (hover bridge under label + white type) */
 
 .header-nav,
 .header-nav-full-elements .header-nav__menu,
@@ -8,6 +8,11 @@
 
 [data-navigation] .ff-wheels-mega {
   position: static !important;
+}
+
+[data-navigation] .ff-wheels-mega > .menu-lv-1__action {
+  position: relative;
+  z-index: 121;
 }
 
 [data-navigation] .ff-wheels-mega > .menu-lv-1__action .text {
@@ -21,9 +26,8 @@
 }
 
 /*
-  Keep the panel in the layout (display:block) and toggle with opacity/visibility.
-  display:none creates a hover gap so the panel closes before you can click links.
-  padding-top + ::before form an invisible bridge under the WHEELS label.
+  Full-width panel under the nav. A tall invisible bridge sits above the panel
+  so the cursor can travel from “WHEELS” straight down without the menu closing.
 */
 [data-navigation] .ff-wheels-mega > .ff-wheels-mega__panel,
 [data-navigation] .ff-wheels-mega > .menu-lv__megamenu.ff-wheels-mega__panel {
@@ -44,12 +48,33 @@
   visibility: hidden;
   pointer-events: none;
   transform: none !important;
-  transition: opacity 0.1s ease, visibility 0.1s ease;
-  padding-top: 18px !important;
+  transition: opacity 0.08s ease, visibility 0.08s ease;
+  /* Overlap the nav bottom so there is no dead gap under WHEELS */
+  margin-top: -8px !important;
+  padding-top: 8px !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
   padding-bottom: 0 !important;
-  margin-top: 0 !important;
+}
+
+/* Tall hit-area above the panel — covers the path under the WHEELS label */
+[data-navigation] .ff-wheels-mega > .ff-wheels-mega__panel > .ff-wheels-mega__bridge {
+  content: none;
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -96px;
+  height: 96px;
+  background: transparent;
+  pointer-events: none;
+  z-index: 0;
+}
+
+[data-navigation] .ff-wheels-mega:hover > .ff-wheels-mega__panel > .ff-wheels-mega__bridge,
+[data-navigation] .ff-wheels-mega:focus-within > .ff-wheels-mega__panel > .ff-wheels-mega__bridge,
+[data-navigation] .ff-wheels-mega.is-open > .ff-wheels-mega__panel > .ff-wheels-mega__bridge {
+  pointer-events: auto;
 }
 
 [data-navigation] .ff-wheels-mega > .ff-wheels-mega__panel::before {
@@ -57,9 +82,17 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: -22px;
-  height: 22px;
+  top: -96px;
+  height: 96px;
   background: transparent;
+  pointer-events: none;
+  z-index: 0;
+}
+
+[data-navigation] .ff-wheels-mega:hover > .ff-wheels-mega__panel::before,
+[data-navigation] .ff-wheels-mega:focus-within > .ff-wheels-mega__panel::before,
+[data-navigation] .ff-wheels-mega.is-open > .ff-wheels-mega__panel::before {
+  pointer-events: auto;
 }
 
 [data-navigation] .ff-wheels-mega:hover > .ff-wheels-mega__panel,
@@ -71,12 +104,14 @@
 }
 
 .ff-wheels-mega__inner {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(170px, 0.9fr) repeat(4, minmax(150px, 1fr));
   gap: 0;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 8px 40px 36px;
+  padding: 16px 40px 36px;
   align-items: start;
   background: #0a0a0a;
 }
@@ -201,6 +236,12 @@
     background: transparent !important;
     max-height: none !important;
     padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  .ff-wheels-mega > .ff-wheels-mega__panel > .ff-wheels-mega__bridge,
+  .ff-wheels-mega > .ff-wheels-mega__panel::before {
+    display: none !important;
   }
 
   .ff-wheels-mega.is-open > .ff-wheels-mega__panel {

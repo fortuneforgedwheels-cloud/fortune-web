@@ -4,7 +4,7 @@
 {%- endcomment -%}
 {{ 'ff-wheels-megamenu.css' | asset_url | stylesheet_tag }}
 <style id="ff-wheels-mega-critical">
-  /* Inline critical rules so hover stays clickable even if an old CSS asset is sticky-cached */
+  /* Inline critical rules — keep popup open when cursor is under WHEELS */
   @media (min-width: 1025px) {
     [data-navigation] .ff-wheels-mega > .ff-wheels-mega__panel,
     [data-navigation] .ff-wheels-mega > .menu-lv__megamenu.ff-wheels-mega__panel {
@@ -12,15 +12,44 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      padding-top: 18px !important;
+      margin-top: -8px !important;
+      padding-top: 8px !important;
       transform: none !important;
       z-index: 120 !important;
+    }
+    [data-navigation] .ff-wheels-mega > .ff-wheels-mega__panel::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -96px;
+      height: 96px;
+      background: transparent;
+      pointer-events: none;
+    }
+    [data-navigation] .ff-wheels-mega > .ff-wheels-mega__panel > .ff-wheels-mega__bridge {
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -96px;
+      height: 96px;
+      background: transparent;
+      pointer-events: none;
     }
     [data-navigation] .ff-wheels-mega:hover > .ff-wheels-mega__panel,
     [data-navigation] .ff-wheels-mega:focus-within > .ff-wheels-mega__panel,
     [data-navigation] .ff-wheels-mega.is-open > .ff-wheels-mega__panel {
       opacity: 1 !important;
       visibility: visible !important;
+      pointer-events: auto !important;
+    }
+    [data-navigation] .ff-wheels-mega:hover > .ff-wheels-mega__panel::before,
+    [data-navigation] .ff-wheels-mega:focus-within > .ff-wheels-mega__panel::before,
+    [data-navigation] .ff-wheels-mega.is-open > .ff-wheels-mega__panel::before,
+    [data-navigation] .ff-wheels-mega:hover > .ff-wheels-mega__panel > .ff-wheels-mega__bridge,
+    [data-navigation] .ff-wheels-mega:focus-within > .ff-wheels-mega__panel > .ff-wheels-mega__bridge,
+    [data-navigation] .ff-wheels-mega.is-open > .ff-wheels-mega__panel > .ff-wheels-mega__bridge {
       pointer-events: auto !important;
     }
     .ff-wheels-mega__heading,
@@ -48,6 +77,7 @@
     role="button"
     aria-haspopup="true"
     aria-expanded="false"
+    data-ff-wheels-trigger
   >
     <span class="text">WHEELS</span>
     <span class="icon-dropdown" data-toggle-menu-mb>
@@ -56,6 +86,7 @@
   </a>
 
   <div class="menu-lv__megamenu ff-wheels-mega__panel" data-ff-wheels-panel>
+    <div class="ff-wheels-mega__bridge" data-ff-wheels-bridge aria-hidden="true"></div>
     <div class="ff-wheels-mega__inner">
       <div class="ff-wheels-mega__col ff-wheels-mega__col--cta">
         <a class="ff-wheels-mega__cta" href="/collections/all">View all Wheels</a>
@@ -121,39 +152,73 @@
   (function () {
     if (window.__ffWheelsMegaBound) return;
     window.__ffWheelsMegaBound = true;
+
     function bind(root) {
       if (!root || root.dataset.ffMegaBound === '1') return;
       root.dataset.ffMegaBound = '1';
+
+      var panel = root.querySelector('[data-ff-wheels-panel]');
+      var trigger = root.querySelector('[data-ff-wheels-trigger]');
+      var bridge = root.querySelector('[data-ff-wheels-bridge]');
       var timer = null;
+      var CLOSE_MS = 450;
+
       function open() {
-        if (timer) { clearTimeout(timer); timer = null; }
+        if (timer) {
+          clearTimeout(timer);
+          timer = null;
+        }
         root.classList.add('is-open');
-        var a = root.querySelector('.menu-lv-1__action');
-        if (a) a.setAttribute('aria-expanded', 'true');
+        if (trigger) trigger.setAttribute('aria-expanded', 'true');
       }
+
       function closeSoon() {
         if (timer) clearTimeout(timer);
         timer = setTimeout(function () {
+          // Stay open if the cursor is still over the trigger, bridge, or panel.
+          if (root.matches(':hover') || (panel && panel.matches(':hover'))) {
+            timer = null;
+            return;
+          }
           root.classList.remove('is-open');
-          var a = root.querySelector('.menu-lv-1__action');
-          if (a) a.setAttribute('aria-expanded', 'false');
-        }, 280);
+          if (trigger) trigger.setAttribute('aria-expanded', 'false');
+          timer = null;
+        }, CLOSE_MS);
       }
+
+      function onLeave(e) {
+        var next = e.relatedTarget;
+        if (next && root.contains(next)) {
+          open();
+          return;
+        }
+        closeSoon();
+      }
+
       root.addEventListener('mouseenter', open);
-      root.addEventListener('mouseleave', closeSoon);
-      var panel = root.querySelector('[data-ff-wheels-panel]');
+      root.addEventListener('mouseleave', onLeave);
       if (panel) {
         panel.addEventListener('mouseenter', open);
-        panel.addEventListener('mouseleave', closeSoon);
+        panel.addEventListener('mouseleave', onLeave);
       }
+      if (bridge) {
+        bridge.addEventListener('mouseenter', open);
+        bridge.addEventListener('mouseleave', onLeave);
+      }
+      if (trigger) {
+        trigger.addEventListener('mouseenter', open);
+      }
+
       root.addEventListener('focusin', open);
       root.addEventListener('focusout', function (e) {
         if (!root.contains(e.relatedTarget)) closeSoon();
       });
     }
+
     function boot() {
       document.querySelectorAll('[data-ff-wheels-mega]').forEach(bind);
     }
+
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
     else boot();
     document.addEventListener('shopify:section:load', boot);
