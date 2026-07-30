@@ -85,6 +85,10 @@
   display: block;
 }
 
+.ff-values__feature-frame video > img {
+  display: none !important;
+}
+
 .ff-values__feature-frame > * {
   max-width: 100%;
 }

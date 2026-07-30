@@ -35,7 +35,7 @@
       {%- if show_feature -%}
         <div class="ff-values__feature">
           {%- if section.settings.video != blank -%}
-            <div class="ff-values__feature-frame">
+            <div class="ff-values__feature-frame" data-ff-autoplay-video>
               {{
                 section.settings.video
                 | video_tag:
@@ -43,10 +43,29 @@
                   autoplay: true,
                   loop: true,
                   muted: true,
-                  controls: true,
+                  controls: false,
+                  preload: 'auto',
                   image_size: '2000x'
               }}
             </div>
+            <script>
+              (function () {
+                var root = document.currentScript && document.currentScript.previousElementSibling;
+                if (!root) return;
+                var video = root.querySelector('video');
+                if (!video) return;
+                video.muted = true;
+                video.playsInline = true;
+                video.setAttribute('playsinline', '');
+                video.querySelectorAll('img').forEach(function (img) { img.style.display = 'none'; });
+                var play = function () {
+                  var p = video.play();
+                  if (p && p.catch) p.catch(function () {});
+                };
+                play();
+                video.addEventListener('canplay', play, { once: true });
+              })();
+            </script>
           {%- elsif video_id != blank -%}
             <div class="ff-values__feature-frame ff-values__feature-frame--embed">
               <iframe

@@ -46,6 +46,12 @@
   background: #0b0b0b;
 }
 
+/* Shopify video_tag nests a poster <img> fallback; hide it so the page
+   never looks like a still photo when the video is present. */
+.ff-hero__media video > img {
+  display: none !important;
+}
+
 .ff-hero__media-desktop,
 .ff-hero__media-mobile {
   position: absolute;

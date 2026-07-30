@@ -1,40 +1,84 @@
 (function () {
-  function setViewport(root) {
-    var width = root.getBoundingClientRect().width || window.innerWidth || 1200;
-    var mobile = width <= 749.98;
-    root.setAttribute('data-ff-viewport', mobile ? 'mobile' : 'desktop');
-    root.classList.toggle('is-mobile-viewport', mobile);
+  function layerIsVisible(el) {
+    if (!el) return false;
+    try {
+      var style = window.getComputedStyle(el);
+      return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) > 0;
+    } catch (e) {
+      return true;
+    }
+  }
 
-    root.querySelectorAll('[data-ff-desktop-layer]').forEach(function (el) {
-      el.setAttribute('aria-hidden', mobile ? 'true' : 'false');
-    });
-    root.querySelectorAll('[data-ff-mobile-layer]').forEach(function (el) {
-      el.setAttribute('aria-hidden', mobile ? 'false' : 'true');
+  function prepareVideo(video) {
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    video.setAttribute('autoplay', '');
+    video.preload = 'auto';
+    // Shopify video_tag nests a poster <img> fallback that can look like a still.
+    video.querySelectorAll('img').forEach(function (img) {
+      img.setAttribute('aria-hidden', 'true');
+      img.style.display = 'none';
     });
   }
 
-  function syncVideos(root, slides, activeIndex) {
-    var mobile = root.getAttribute('data-ff-viewport') === 'mobile' || root.classList.contains('is-mobile-viewport');
+  function playVideo(video) {
+    prepareVideo(video);
+    if (video.readyState < 2) {
+      try {
+        video.load();
+      } catch (e) {}
+    }
+    var attempt = function () {
+      var playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(function () {
+          // Retry once media can play — common after first paint / low-power mode.
+          var onReady = function () {
+            video.removeEventListener('canplay', onReady);
+            video.removeEventListener('loadeddata', onReady);
+            prepareVideo(video);
+            var retry = video.play();
+            if (retry && typeof retry.catch === 'function') retry.catch(function () {});
+          };
+          video.addEventListener('canplay', onReady, { once: true });
+          video.addEventListener('loadeddata', onReady, { once: true });
+        });
+      }
+    };
+    attempt();
+  }
+
+  function pauseVideo(video, reset) {
+    if (!video) return;
+    try {
+      video.pause();
+    } catch (e) {}
+    if (reset) {
+      try {
+        video.currentTime = 0;
+      } catch (e2) {}
+    }
+  }
+
+  function syncVideos(slides, activeIndex) {
     slides.forEach(function (slide, i) {
       var videos = slide.querySelectorAll('video');
       videos.forEach(function (video) {
-        video.muted = true;
-        video.setAttribute('playsinline', '');
-        video.setAttribute('webkit-playsinline', '');
-        var inMobileLayer = !!(video.closest('[data-ff-mobile-layer]'));
-        var inDesktopLayer = !!(video.closest('[data-ff-desktop-layer]'));
-        var layerVisible = mobile ? inMobileLayer : inDesktopLayer;
-        var shouldPlay = i === activeIndex && layerVisible;
+        prepareVideo(video);
+        var layer =
+          video.closest('[data-ff-desktop-layer]') ||
+          video.closest('[data-ff-mobile-layer]');
+        var layerVisible = layerIsVisible(layer);
+        var shouldPlay = i === activeIndex && layerVisible && !slide.hidden;
         if (shouldPlay) {
-          var playPromise = video.play();
-          if (playPromise && typeof playPromise.catch === 'function') {
-            playPromise.catch(function () {});
-          }
+          if (video.paused || video.ended) playVideo(video);
         } else {
-          video.pause();
-          try {
-            video.currentTime = 0;
-          } catch (e) {}
+          pauseVideo(video, true);
         }
       });
     });
@@ -54,20 +98,38 @@
     );
     if (index < 0) index = 0;
 
-    function refreshViewport() {
-      setViewport(root);
-      syncVideos(root, slides, index);
+    function refresh() {
+      syncVideos(slides, index);
     }
 
-    refreshViewport();
+    // Kick playback as soon as possible, then again after layout settles.
+    refresh();
+    window.requestAnimationFrame(refresh);
+    window.setTimeout(refresh, 250);
+    window.setTimeout(refresh, 1000);
+
+    var resizeTimer = null;
+    function onResize() {
+      if (resizeTimer) window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(refresh, 120);
+    }
     if (window.ResizeObserver) {
-      var ro = new ResizeObserver(function () {
-        refreshViewport();
-      });
+      var ro = new ResizeObserver(onResize);
       ro.observe(root);
     } else {
-      window.addEventListener('resize', refreshViewport);
+      window.addEventListener('resize', onResize);
     }
+
+    // First user gesture unlocks autoplay on strict browsers.
+    var unlock = function () {
+      refresh();
+      document.removeEventListener('pointerdown', unlock);
+      document.removeEventListener('touchstart', unlock);
+      document.removeEventListener('keydown', unlock);
+    };
+    document.addEventListener('pointerdown', unlock, { once: true, passive: true });
+    document.addEventListener('touchstart', unlock, { once: true, passive: true });
+    document.addEventListener('keydown', unlock, { once: true });
 
     if (slides.length < 2) return;
 
@@ -76,9 +138,14 @@
 
     function activeHasVideo() {
       if (!slides[index]) return false;
-      var mobile = root.getAttribute('data-ff-viewport') === 'mobile';
-      var layer = slides[index].querySelector(mobile ? '[data-ff-mobile-layer]' : '[data-ff-desktop-layer]');
-      return !!(layer && layer.querySelector('video'));
+      var videos = slides[index].querySelectorAll('video');
+      for (var i = 0; i < videos.length; i++) {
+        var layer =
+          videos[i].closest('[data-ff-desktop-layer]') ||
+          videos[i].closest('[data-ff-mobile-layer]');
+        if (layerIsVisible(layer)) return true;
+      }
+      return false;
     }
 
     function show(next) {
@@ -91,7 +158,7 @@
       dots.forEach(function (dot, i) {
         dot.classList.toggle('is-active', i === index);
       });
-      refreshViewport();
+      refresh();
       start();
     }
 
@@ -128,11 +195,23 @@
 
     root.addEventListener('mouseenter', stop);
     root.addEventListener('mouseleave', start);
-    document.addEventListener('shopify:section:reorder', refreshViewport);
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) refresh();
+    });
+    document.addEventListener('shopify:section:reorder', refresh);
     start();
   }
 
-  document.querySelectorAll('[data-ff-hero]').forEach(init);
+  function boot() {
+    document.querySelectorAll('[data-ff-hero]').forEach(init);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
   document.addEventListener('shopify:section:load', function (event) {
     var root = event.target.querySelector('[data-ff-hero]');
     if (root) {
