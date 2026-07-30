@@ -147,7 +147,38 @@
       });
     }
 
+    function getSelectedCertChoice(root) {
+      return root.querySelector('[data-ff-826m-cert-choice]:checked');
+    }
+
+    function applyCertifiedChoice(root) {
+      if (root.getAttribute('data-certified-multi') !== '1') return;
+
+      const choice = getSelectedCertChoice(root);
+      if (!choice) return;
+
+      const fitment = choice.getAttribute('data-fitment') || '';
+      const offset = choice.getAttribute('data-offset') || root.getAttribute('data-certified-offset');
+      const modelPlaceholder = choice.getAttribute('data-model-placeholder') || '';
+
+      if (offset) root.setAttribute('data-certified-offset', offset);
+
+      const fitmentDisplay = root.querySelector('[data-ff-826m-fitment-display]');
+      if (fitmentDisplay && fitment) fitmentDisplay.textContent = fitment;
+
+      root.querySelectorAll('[data-ff-826m-fitment-input]').forEach((input) => {
+        input.value = fitment;
+      });
+
+      const modelInput = root.querySelector('[data-ff-826m-model-input]');
+      if (modelInput && modelPlaceholder) {
+        modelInput.placeholder = modelPlaceholder;
+      }
+    }
+
     function applyCertifiedOptions(root) {
+      applyCertifiedChoice(root);
+
       const map = {
         WIDTH: root.getAttribute('data-certified-width'),
         OFFSET: root.getAttribute('data-certified-offset'),
@@ -220,6 +251,14 @@
       root.querySelectorAll('input[type="radio"][name^="ff_826m_path_"]').forEach((radio) => {
         radio.addEventListener('change', function () {
           setMode(root, radio.value);
+        });
+      });
+
+      root.querySelectorAll('[data-ff-826m-cert-choice]').forEach((radio) => {
+        radio.addEventListener('change', function () {
+          if (currentMode(root) !== 'certified') return;
+          applyCertifiedChoice(root);
+          applyCertifiedOptions(root);
         });
       });
 

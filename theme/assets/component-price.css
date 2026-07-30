@@ -147,3 +147,19 @@ body.dark-mode .halo-recently-viewed-popup .price.price--on-sale .price-item--sa
 body.dark-mode .product-edit-item .price.price--on-sale .price-item--sale .money{
     filter: invert(0);
 }
+
+.price__wheel-note,
+.ff-pricing-note {
+    display: block;
+    margin: 6px 0 0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.3;
+    color: var(--color-text2, #9a9890);
+}
+
+.productView .price__wheel-note {
+    margin-top: 8px;
+}

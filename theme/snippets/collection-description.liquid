@@ -3,6 +3,7 @@
         <h1 class="collection-title page-header text-{{ page_title_alignment }}">
             {{ collection.title | escape }}
         </h1>
+        {% render 'ff-collection-pricing-note', collection: collection %}
     {%- endif -%}
     {%- if collection.description != blank -%}
 		<div class="collection-info-item">
