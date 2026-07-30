@@ -3,6 +3,43 @@
   Columns: View all | Beadlock | Monoblock | Two Piece | Manufacturing
 {%- endcomment -%}
 {{ 'ff-wheels-megamenu.css' | asset_url | stylesheet_tag }}
+<style id="ff-wheels-mega-critical">
+  /* Inline critical rules so hover stays clickable even if an old CSS asset is sticky-cached */
+  @media (min-width: 1025px) {
+    [data-navigation] .ff-wheels-mega > .ff-wheels-mega__panel,
+    [data-navigation] .ff-wheels-mega > .menu-lv__megamenu.ff-wheels-mega__panel {
+      display: block !important;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      padding-top: 18px !important;
+      transform: none !important;
+      z-index: 120 !important;
+    }
+    [data-navigation] .ff-wheels-mega:hover > .ff-wheels-mega__panel,
+    [data-navigation] .ff-wheels-mega:focus-within > .ff-wheels-mega__panel,
+    [data-navigation] .ff-wheels-mega.is-open > .ff-wheels-mega__panel {
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+    .ff-wheels-mega__heading,
+    .ff-wheels-mega__heading--static,
+    .ff-wheels-mega__list a,
+    .ff-wheels-mega__cta,
+    .ff-wheels-mega__arrow {
+      color: #ffffff !important;
+    }
+    .ff-wheels-mega__cta {
+      background: transparent !important;
+      border: 1px solid #ffffff !important;
+      font-size: 1.1rem !important;
+    }
+    .ff-wheels-mega__heading,
+    .ff-wheels-mega__heading--static { font-size: 1.2rem !important; }
+    .ff-wheels-mega__list a { font-size: 1.1rem !important; }
+  }
+</style>
 
 <li class="menu-lv-item menu-lv-1 text-left has-megamenu ff-wheels-mega dropdown" data-ff-wheels-mega>
   <a
