@@ -1,0 +1,13 @@
+{%- liquid
+  assign ff_collection_pricing_note = ''
+  assign col_handle = collection.handle | downcase
+
+  if col_handle contains 'beadlock'
+    assign ff_collection_pricing_note = 'Priced by the pair'
+  elsif col_handle contains 'monoblock' or col_handle == 'two-piece-wheels'
+    assign ff_collection_pricing_note = 'Priced per wheel'
+  endif
+-%}
+{%- if ff_collection_pricing_note != blank -%}
+  <p class="ff-pricing-note">{{ ff_collection_pricing_note | escape }}</p>
+{%- endif -%}

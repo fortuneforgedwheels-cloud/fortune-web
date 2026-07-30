@@ -350,6 +350,15 @@
   }
 }
 
+.ff-btp__packages-header .ff-pricing-note {
+  margin: 10px 0 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ff-btp__hero-img,
   .ff-btp__hero-copy,

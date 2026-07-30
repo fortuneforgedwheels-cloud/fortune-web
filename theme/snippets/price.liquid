@@ -82,4 +82,8 @@
             </dd>
         </small>
     </dl>
+    {%- capture ff_wheel_pricing_note -%}{% render 'ff-wheel-pricing-note', product: product %}{%- endcapture -%}
+    {%- if ff_wheel_pricing_note != blank -%}
+        <p class="price__wheel-note">{{ ff_wheel_pricing_note | strip }}</p>
+    {%- endif -%}
 </div>
