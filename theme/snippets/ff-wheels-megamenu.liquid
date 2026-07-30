@@ -1,0 +1,82 @@
+{%- comment -%}
+  Apex-style side-by-side mega menu for the WHEELS (Shop by Style) nav item.
+  Columns: View all | Beadlock | Monoblock | Two Piece | Manufacturing
+{%- endcomment -%}
+{{ 'ff-wheels-megamenu.css' | asset_url | stylesheet_tag }}
+
+<li class="menu-lv-item menu-lv-1 text-left has-megamenu ff-wheels-mega dropdown" data-ff-wheels-mega>
+  <a
+    class="menu-lv-1__action list-menu__item link focus-inset"
+    href="/collections/all"
+    role="button"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    <span class="text">WHEELS</span>
+    <span class="icon-dropdown" data-toggle-menu-mb>
+      {% render 'icon-caret-right' %}
+    </span>
+  </a>
+
+  <div class="menu-lv__megamenu ff-wheels-mega__panel">
+    <div class="ff-wheels-mega__inner">
+      <div class="ff-wheels-mega__col ff-wheels-mega__col--cta">
+        <a class="ff-wheels-mega__cta" href="/collections/all">View all Wheels</a>
+      </div>
+
+      <div class="ff-wheels-mega__col">
+        <a class="ff-wheels-mega__heading" href="/collections/beadlock-wheels">
+          <span>All Beadlock Wheels</span>
+          <span class="ff-wheels-mega__arrow" aria-hidden="true">↗</span>
+        </a>
+        <ul class="ff-wheels-mega__list">
+          <li>
+            <a href="/collections/oem-beadlock-wheels">OEM Beadlock Wheels</a>
+          </li>
+          <li>
+            <a href="/collections/ff-beadlock-wheels">FF Beadlock Wheels</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="ff-wheels-mega__col">
+        <a class="ff-wheels-mega__heading" href="/collections/monoblock-wheels">
+          <span>All Monoblock Wheels</span>
+          <span class="ff-wheels-mega__arrow" aria-hidden="true">↗</span>
+        </a>
+        <ul class="ff-wheels-mega__list">
+          <li>
+            <a href="/collections/oem-monoblock-wheels">OEM Monoblock Wheels</a>
+          </li>
+          <li>
+            <a href="/collections/ff-monoblock-wheels">FF Monoblock Wheels</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="ff-wheels-mega__col">
+        <a class="ff-wheels-mega__heading" href="/collections/two-piece-wheels">
+          <span>All Two Piece Wheels</span>
+          <span class="ff-wheels-mega__arrow" aria-hidden="true">↗</span>
+        </a>
+        <ul class="ff-wheels-mega__list">
+          <li>
+            <a href="/collections/oem-two-piece-wheels">OEM Two Piece Wheels</a>
+          </li>
+          <li>
+            <a href="/collections/ff-two-piece-wheels">FF Two Piece Wheels</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="ff-wheels-mega__col">
+        <p class="ff-wheels-mega__heading ff-wheels-mega__heading--static">Manufacturing</p>
+        <ul class="ff-wheels-mega__list">
+          <li>
+            <a href="/pages/the-forging-process" data-ff-forging-link>The Forging Process</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</li>

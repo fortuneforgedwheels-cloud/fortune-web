@@ -1,0 +1,85 @@
+/*
+ * ------------------------------------------------------------
+ * The Forging Process — Fortune Forged manufacturing page
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": false,
+        "show_page_title": false,
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "ff_forging_process": {
+      "type": "ff-forging-process",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "number": "01",
+            "heading": "Billet selection",
+            "text": "<p>Every wheel starts as certified aerospace-grade aluminum billet — chosen for strength-to-weight performance and the finish quality Fortune Forged is known for.</p>"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "number": "02",
+            "heading": "Precision forging",
+            "text": "<p>Under extreme heat and pressure, the billet is forged into a dense, directional grain structure. That process is what separates forged performance from cast alternatives.</p>"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "number": "03",
+            "heading": "CNC machining",
+            "text": "<p>Multi-axis CNC work sculpts the final design, spoke profile, and mounting geometry to exacting tolerances for fitment, balance, and brake clearance.</p>"
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "number": "04",
+            "heading": "Finish & inspection",
+            "text": "<p>From brushed and polished to custom powder coats, each set is finished to spec, then inspected before it ships — ready for the street, strip, or circuit.</p>"
+          }
+        },
+        "cta_1": {
+          "type": "cta",
+          "settings": {
+            "text": "Ready to build your set?",
+            "button_label": "Shop wheels",
+            "button_link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4",
+        "cta_1"
+      ],
+      "settings": {
+        "eyebrow": "Manufacturing",
+        "heading": "The Forging Process",
+        "intro": "Every Fortune Forged wheel starts as aerospace-grade billet and leaves as a precision instrument for the street and track. Here’s how we get there."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ff_forging_process"
+  ]
+}

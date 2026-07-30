@@ -1,0 +1,127 @@
+.ff-forge {
+  --ff-forge-bg: #0a0a0a;
+  --ff-forge-text: #f3f1ec;
+  --ff-forge-muted: #a8a59c;
+  --ff-forge-accent: #e85d04;
+  background: var(--ff-forge-bg);
+  color: var(--ff-forge-text);
+}
+
+.ff-forge__hero {
+  padding: clamp(48px, 8vw, 96px) 20px 40px;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(232, 93, 4, 0.22), transparent 55%),
+    linear-gradient(180deg, #121212 0%, #0a0a0a 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ff-forge__hero-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ff-forge__eyebrow {
+  margin: 0 0 12px;
+  color: var(--ff-forge-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ff-forge__title {
+  margin: 0;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+.ff-forge__intro {
+  margin: 20px auto 0;
+  max-width: 560px;
+  color: var(--ff-forge-muted);
+  font-size: 1.1rem;
+  line-height: 1.55;
+}
+
+.ff-forge__body {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 72px) 20px 80px;
+}
+
+.ff-forge__step {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 20px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ff-forge__step-num {
+  color: var(--ff-forge-accent);
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+
+.ff-forge__step-title {
+  margin: 0 0 10px;
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.ff-forge__step-text {
+  color: var(--ff-forge-muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.ff-forge__step-text p {
+  margin: 0 0 0.75em;
+}
+
+.ff-forge__step-text p:last-child {
+  margin-bottom: 0;
+}
+
+.ff-forge__cta {
+  margin-top: 48px;
+  padding: 32px;
+  text-align: center;
+  background: linear-gradient(180deg, #151515, #101010);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ff-forge__cta-text {
+  margin: 0 0 18px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.ff-forge__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 26px;
+  border-radius: 999px;
+  background: var(--ff-forge-accent);
+  color: #fff !important;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+
+.ff-forge__cta-btn:hover {
+  background: #ff6a0f;
+}
+
+@media (max-width: 649px) {
+  .ff-forge__step {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
