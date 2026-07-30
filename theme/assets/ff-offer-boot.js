@@ -1,19 +1,4 @@
-/* FF_HOME_HOMEPAGE_VIEW */
-(function () {
-  try {
-    if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
-    var path = location.pathname || '/';
-    if (path === '/' || path === '') {
-      var params = location.search || '';
-      if (!/[?&]view=homepage(?:&|$)/.test(params)) {
-        location.replace('/?view=homepage' + (location.hash || ''));
-        return;
-      }
-    }
-  } catch (e) {}
-})();
-
-/* BOOT_BUILD 2026-07-30-homepage-desktop-video */
+/* BOOT_BUILD 2026-07-30-homepage-cache-upgrade */
 function ffThemeAsset(name, bust) {
   var probe = document.querySelector("script[src*='/cdn/shop/t/'][src*='/assets/'], link[href*='/cdn/shop/t/'][href*='/assets/']");
   var base = "/cdn/shop/t/13/assets/";
@@ -137,6 +122,29 @@ function ffThemeAsset(name, bust) {
     }
 
     if (path === '/' || path === '') {
+      if (!/[?&]view=/.test(location.search || '')) {
+        var homeMain = document.getElementById('MainContent');
+        var hasTopSelling = !!(homeMain && homeMain.querySelector(
+          '.section-ff-top-selling-monoblocks, [id*="ff_top_selling_monoblocks"]'
+        ));
+        var hasLegacyHome = !!(homeMain && homeMain.querySelector(
+          '[id*="ff_new_products_home"], [id*="ff_hero_lifestyle_main"]'
+        ));
+        if (!hasTopSelling || hasLegacyHome) {
+          swapMain(
+            'live',
+            function (root) {
+              return !!root.querySelector('.section-ff-top-selling-monoblocks');
+            },
+            'ff-top-selling-monoblocks',
+            ffThemeAsset('ff-top-selling-monoblocks.css', 'tsm1'),
+            'ff-top-selling-monoblocks',
+            'ff-home-upgraded'
+          );
+          return;
+        }
+      }
+
       var heroSection = document.querySelector('.section-ff-hero-lifestyle');
       if (heroSection && !document.documentElement.classList.contains('ff-hero-upgraded')) {
         function slideVideoCounts(section) {
@@ -179,9 +187,7 @@ function ffThemeAsset(name, bust) {
 
         var bust = '_ff=' + Date.now();
         var urls = [
-          location.pathname + '?sections=ff-hero-lifestyle&view=homepage&' + bust,
-          location.pathname + '?sections=ff-hero-lifestyle&' + bust,
-          location.pathname + '?sections=ff-hero-lifestyle&view=wheels&' + bust
+          location.pathname + '?sections=ff-hero-lifestyle&' + bust
         ];
 
         Promise.all(urls.map(fetchHeroSection)).then(function (sections) {
