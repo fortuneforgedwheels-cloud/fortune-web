@@ -1,6 +1,27 @@
-{{ 'ff-forging-process.css' | asset_url | stylesheet_tag }}
+{{ 'ff-forging-gold.css' | asset_url | stylesheet_tag }}
+<style>
+  /* Inline fallback so sticky CDN hashes cannot keep orange accents */
+  .ff-forge {
+    --ff-forge-accent: #dce1e6 !important;
+    --ff-forge-accent-soft: rgba(220, 225, 230, 0.16) !important;
+  }
+  .ff-forge__eyebrow,
+  .ff-forge__step-num {
+    color: #dce1e6 !important;
+  }
+  .ff-forge__cta-btn {
+    background: #dce1e6 !important;
+    border-color: #dce1e6 !important;
+    color: #0a0a0a !important;
+  }
+  .ff-forge__cta-btn:hover {
+    background: #f0f3f5 !important;
+    border-color: #f0f3f5 !important;
+    color: #0a0a0a !important;
+  }
+</style>
 
-<section class="ff-forge" id="ff-forge-{{ section.id }}">
+<section class="ff-forge" id="ff-forge-{{ section.id }}" data-ff-forge-gold="1">
   <div class="ff-forge__hero">
     <div class="ff-forge__hero-inner">
       {%- if section.settings.eyebrow != blank -%}
