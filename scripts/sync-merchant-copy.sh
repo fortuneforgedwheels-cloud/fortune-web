@@ -24,4 +24,7 @@ bash scripts/with-env.sh shopify theme pull \
   --only 'sections/*.json' \
   --force
 
+echo "==> Syncing hero videos from index.json to alternate homepage views"
+node scripts/sync-hero-views.mjs
+
 echo "==> Merchant copy synced. Keep settings values when you edit structure."

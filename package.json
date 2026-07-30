@@ -17,6 +17,7 @@
     "theme:push:draft": "bash scripts/with-env.sh shopify theme push --path theme --theme 188578300179",
     "theme:push:code": "bash scripts/push-code-only.sh --allow-live",
     "theme:sync-copy": "bash scripts/sync-merchant-copy.sh",
+    "theme:sync-hero": "node scripts/sync-hero-views.mjs",
     "theme:preserve-settings": "node scripts/preserve-merchant-settings.mjs",
     "theme:open": "bash scripts/with-env.sh shopify theme open --theme 188578300179",
     "theme:check": "bash scripts/with-env.sh shopify theme check --path theme",

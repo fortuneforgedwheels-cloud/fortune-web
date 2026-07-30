@@ -9,12 +9,32 @@
  */
 {
   "sections": {
+    "ff_top_selling_monoblocks_home": {
+      "type": "ff-top-selling-monoblocks",
+      "settings": {
+        "show_section": true,
+        "heading": "TRACK PROVEN FAVORITES",
+        "collection": "monoblock-wheels",
+        "left_collection": "monoblock-wheels",
+        "product_limit": 8,
+        "buy_label": "Buy Now",
+        "empty_text": "Add monoblock products to this collection",
+        "view_label": "SHOP ALL MONOBLOCKS",
+        "view_link": "shopify://collections/monoblock-wheels",
+        "padding_top": 40,
+        "padding_bottom": 64
+      }
+    },
     "ff_simple_build_main": {
       "type": "ff-simple-build",
       "settings": {
         "eyebrow": "Fortune Forged",
+        "eyebrow_size": 12,
+        "eyebrow_align": "left",
         "title": "Request a quote for your next forged wheels",
         "subtitle": "Three steps. Tell us your vehicle, choose a setup, request a build.",
+        "subtitle_size": 18,
+        "subtitle_align": "left",
         "step1_label": "Vehicle",
         "step2_label": "Style",
         "step3_label": "Quote",
@@ -149,8 +169,12 @@
       "settings": {
         "show_section": true,
         "eyebrow": "Fortune Forged",
+        "eyebrow_size": 12,
+        "eyebrow_align": "center",
         "heading": "Track tested favorites",
         "subheading": "Our most requested wheel and fitment combinations \u2014 sizing already dialed in for these platforms. Pick your finish and we'll build the rest.",
+        "subheading_size": 18,
+        "subheading_align": "center",
         "card_cta": "Build this setup",
         "footnote": "Exact fitment, pricing, and any modifications are confirmed by our team before your order ships.",
         "badge_label": "Track Tested Favorite",
@@ -219,6 +243,8 @@
         "show_section": true,
         "heading": "THE FORTUNE FORGED EXPERIENCE",
         "subheading": "",
+        "subheading_size": 18,
+        "subheading_align": "center",
         "show_feature_media": true,
         "video": "shopify://files/videos/414fa15f69387a7d69ecb48a51a58017_raw.MP4",
         "youtube_id": "",
@@ -235,6 +261,7 @@
           "settings": {
             "icon": "lock",
             "heading": "Fitment Guaranteed or money back",
+            "heading_link": "",
             "description": "Engineered specifically for your vehicle. Professional installation recommended. Perfect fitment, guaranteed.",
             "show_email": false,
             "contact_email": ""
@@ -245,6 +272,7 @@
           "settings": {
             "icon": "race_car",
             "heading": "Enthusiast owned & operated",
+            "heading_link": "",
             "description": "Questions? Speak directly with a Fortune Forged Fitment Specialist. Same-day responses, backed by real enthusiasts.",
             "show_email": true,
             "contact_email": ""
@@ -511,8 +539,12 @@
       "settings": {
         "show_section": true,
         "eyebrow": "Fortune Forged",
+        "eyebrow_size": 12,
+        "eyebrow_align": "center",
         "heading": "PROJECT GALLERY",
         "subheading": "Explore real world Fortune Forged builds. Browse complete vehicle specifications, custom fitment, premium finishes, and full photo galleries\u2014engineered to inspire your next build.",
+        "subheading_size": 18,
+        "subheading_align": "left",
         "card_cta": "View build",
         "quote_label": "Request a similar build",
         "quote_link": "/#order",
@@ -530,23 +562,7 @@
         "custom_liquid": ""
       }
     },
-    "ff_top_selling_monoblocks_home": {
-      "type": "ff-top-selling-monoblocks",
-      "settings": {
-        "show_section": true,
-        "heading": "Top selling monoblocks",
-        "collection": "monoblock-wheels",
-        "left_collection": "monoblock-wheels",
-        "product_limit": 8,
-        "buy_label": "Buy Now",
-        "empty_text": "Add monoblock products to this collection",
-        "view_label": "Shop all monoblocks",
-        "view_link": "shopify://collections/monoblock-wheels",
-        "padding_top": 40,
-        "padding_bottom": 64
-      }
-    },
-    "ff_hero_lifestyle_video": {
+    "ff_hero_lifestyle_slides": {
       "type": "ff-hero-lifestyle",
       "blocks": {
         "slide_mono": {
@@ -555,7 +571,6 @@
             "video": "shopify://files/videos/Video Apr 27 2026, 9 57 19 PM.mov",
             "image": "shopify://shop_images/IMG_2176.jpg",
             "mobile_video": "shopify://files/videos/Video Oct 07 2025, 6 39 14 PM.MP4",
-            "mobile_image": "shopify://shop_images/BMW_F80_25MP_HighQuality.jpg",
             "title": "Monoblock Forged",
             "title_size": 42,
             "title_align": "left",
@@ -567,8 +582,8 @@
         "slide_two": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_6.58.56_PM.png",
-            "mobile_image": "shopify://shop_images/IMG_0287_2.jpg",
+            "video": "shopify://files/videos/G80 done 2.MP4",
+            "mobile_video": "shopify://files/videos/G80 done 2.MP4",
             "title": "Two-Piece Forged",
             "title_size": 42,
             "title_align": "left",
@@ -608,7 +623,7 @@
     }
   },
   "order": [
-    "ff_hero_lifestyle_video",
+    "ff_hero_lifestyle_slides",
     "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",

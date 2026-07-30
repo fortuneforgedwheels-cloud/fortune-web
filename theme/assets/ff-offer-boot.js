@@ -1,19 +1,4 @@
-/* BOOT_BUILD 2026-07-29-sbv-fix-editor */
-/* FF_HOME_VEHICLE_REDIRECT */
-(function () {
-  try {
-    // Never redirect inside the Shopify theme editor
-    if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
-    var path = location.pathname || '/';
-    if (path === '/' || path === '') {
-      if (!/[?&]view=vehicle(?:&|$)/.test(location.search || '')) {
-        location.replace('/?view=vehicle' + (location.hash || ''));
-        return;
-      }
-    }
-  } catch (e) {}
-})();
-
+/* BOOT_BUILD 2026-07-30-hero-sync */
 function ffThemeAsset(name, bust) {
   var probe = document.querySelector("script[src*='/cdn/shop/t/'][src*='/assets/'], link[href*='/cdn/shop/t/'][href*='/assets/']");
   var base = "/cdn/shop/t/13/assets/";
@@ -133,6 +118,38 @@ function ffThemeAsset(name, bust) {
           'ff-beadlock-packages',
           'ff-btp-upgraded'
         );
+      }
+    }
+
+    if (path === '/' || path === '') {
+      var heroSection = document.querySelector('.section-ff-hero-lifestyle');
+      if (heroSection && !document.documentElement.classList.contains('ff-hero-upgraded')) {
+        var currentVideos = heroSection.querySelectorAll('video').length;
+        fetch(location.pathname + '?sections=ff-hero-lifestyle&view=wheels', {
+          credentials: 'same-origin',
+          headers: { Accept: 'application/json' }
+        })
+          .then(function (res) {
+            if (!res.ok) throw new Error('hero section fetch failed');
+            return res.json();
+          })
+          .then(function (data) {
+            var html = data && data['ff-hero-lifestyle'];
+            if (!html) return;
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var freshSection = doc.querySelector('.section-ff-hero-lifestyle');
+            if (!freshSection) return;
+            var freshVideos = freshSection.querySelectorAll('video').length;
+            if (freshVideos <= currentVideos) return;
+            heroSection.replaceWith(freshSection);
+            document.documentElement.classList.add('ff-hero-upgraded');
+            ensureScripts(doc, 'ff-hero-lifestyle.js');
+            var root = document.querySelector('[data-ff-hero]');
+            if (root && typeof window.__ffHeroInit === 'function') {
+              window.__ffHeroInit(root);
+            }
+          })
+          .catch(function () {});
       }
     }
   });
