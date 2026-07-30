@@ -1,6 +1,6 @@
 (function () {
   try {
-    const HIDE_TITLES = ['WIDTH', 'OFFSET', 'LUG PATTERN'];
+    const HIDE_TITLES = ['SIZE', 'WIDTH', 'OFFSET', 'LUG PATTERN'];
 
     function normalizeTitle(text) {
       return String(text || '')
@@ -100,19 +100,43 @@
       return false;
     }
 
+    function normalizeSizeKey(value) {
+      return String(value || '').replace(/\s+/g, '').toUpperCase();
+    }
+
+    function sizeMatches(candidate, targetKey) {
+      const key = normalizeSizeKey(candidate);
+      if (!key || !targetKey) return false;
+      if (key === targetKey) return true;
+      return key.replace(/X/g, 'x') === targetKey.replace(/X/g, 'x');
+    }
+
     function selectCertifiedSize(root) {
       const size = root.getAttribute('data-certified-size') || '18X11';
       const variantId = root.getAttribute('data-certified-variant-id');
       const productView = getProductView(root);
-      const sizeKey = String(size).replace(/\s+/g, '').toUpperCase();
+      const sizeKey = normalizeSizeKey(size);
+
+      propertyFields('SIZE').forEach((field) => setFieldValue(field, size));
 
       const radios = productView.querySelectorAll(
         '.productView-variants input.product-form__radio, variant-radios input.product-form__radio'
       );
       radios.forEach((radio) => {
-        const value = String(radio.value || '').replace(/\s+/g, '').toUpperCase();
-        if (value !== sizeKey) return;
+        if (!sizeMatches(radio.value, sizeKey)) return;
         if (!radio.checked) radio.click();
+      });
+
+      const selects = productView.querySelectorAll(
+        '.productView-variants select.select__select, variant-selects select.select__select'
+      );
+      selects.forEach((select) => {
+        const match = Array.from(select.options).find((opt) => sizeMatches(opt.value, sizeKey));
+        if (!match) return;
+        if (select.value !== match.value) {
+          select.value = match.value;
+          select.dispatchEvent(new Event('change', { bubbles: true }));
+        }
       });
 
       if (variantId) {
@@ -122,6 +146,36 @@
           idInput.dispatchEvent(new Event('change', { bubbles: true }));
         }
       }
+    }
+
+    function toggleVariantPicker(root, certified) {
+      const productView = getProductView(root);
+      productView.querySelectorAll('[data-ff-826m-hide-certified]').forEach((picker) => {
+        if (certified) {
+          picker.setAttribute('data-ff-826m-variant-hidden', '1');
+          picker.style.setProperty('display', 'none', 'important');
+          picker.setAttribute('aria-hidden', 'true');
+        } else {
+          picker.removeAttribute('data-ff-826m-variant-hidden');
+          picker.style.removeProperty('display');
+          picker.setAttribute('aria-hidden', 'false');
+        }
+
+        picker.querySelectorAll('select, input.product-form__radio').forEach((field) => {
+          if (certified) {
+            if (!field.hasAttribute('data-ff-826m-was-required')) {
+              field.setAttribute('data-ff-826m-was-required', field.required ? '1' : '0');
+            }
+            field.required = false;
+            if (field.tagName === 'SELECT') field.disabled = true;
+          } else {
+            if (field.getAttribute('data-ff-826m-was-required') === '1') {
+              field.required = true;
+            }
+            if (field.tagName === 'SELECT') field.disabled = false;
+          }
+        });
+      });
     }
 
     function hideSpecFields(certified) {
@@ -149,6 +203,7 @@
 
     function applyCertifiedOptions(root) {
       const map = {
+        SIZE: root.getAttribute('data-certified-size'),
         WIDTH: root.getAttribute('data-certified-width'),
         OFFSET: root.getAttribute('data-certified-offset'),
         'LUG PATTERN': root.getAttribute('data-certified-lug'),
@@ -193,6 +248,7 @@
 
       if (certified) applyCertifiedOptions(root);
       hideSpecFields(certified);
+      toggleVariantPicker(root, certified);
     }
 
     function currentMode(root) {
@@ -237,6 +293,7 @@
             if (currentMode(root) !== 'certified') return;
             applyCertifiedOptions(root);
             hideSpecFields(true);
+            toggleVariantPicker(root, true);
             validateCertified(root, event);
           },
           true
@@ -251,10 +308,12 @@
           if (currentMode(root) === 'certified') {
             applyCertifiedOptions(root);
             hideSpecFields(true);
+            toggleVariantPicker(root, true);
           }
         } catch (e) {}
 
-        const found = propertyFields('WIDTH').length + propertyFields('OFFSET').length;
+        const found =
+          propertyFields('SIZE').length + propertyFields('WIDTH').length + propertyFields('OFFSET').length;
         if (found > 0 || tries >= 20) {
           window.clearInterval(timer);
           try {
