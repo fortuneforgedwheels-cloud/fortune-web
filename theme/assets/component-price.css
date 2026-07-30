@@ -155,7 +155,33 @@ body.dark-mode .product-edit-item .price.price--on-sale .price-item--sale .money
     font-weight: 500;
     letter-spacing: 0.01em;
     line-height: 1.2;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-text2, #9a9890);
     vertical-align: baseline;
     white-space: nowrap;
+}
+
+/* Survives JS variant price swaps (theme.js replaces .price-item innerHTML) */
+.price[data-ff-pricing="per-wheel"] .price-item--regular::after,
+.price[data-ff-pricing="per-wheel"] .price-item--sale::after {
+    content: " (priced per wheel)";
+    font-size: 0.72em;
+    font-weight: 500;
+    color: var(--color-text2, #9a9890);
+    white-space: nowrap;
+}
+
+.price[data-ff-pricing="per-pair"] .price-item--regular::after,
+.price[data-ff-pricing="per-pair"] .price-item--sale::after {
+    content: " (priced by the pair)";
+    font-size: 0.72em;
+    font-weight: 500;
+    color: var(--color-text2, #9a9890);
+    white-space: nowrap;
+}
+
+.price[data-ff-pricing="per-wheel"] .price-item--regular:has(.price__wheel-inline)::after,
+.price[data-ff-pricing="per-wheel"] .price-item--sale:has(.price__wheel-inline)::after,
+.price[data-ff-pricing="per-pair"] .price-item--regular:has(.price__wheel-inline)::after,
+.price[data-ff-pricing="per-pair"] .price-item--sale:has(.price__wheel-inline)::after {
+    content: none;
 }
