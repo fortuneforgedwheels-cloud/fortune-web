@@ -1,4 +1,5 @@
 {{ 'ff-hero-lifestyle.css' | asset_url | stylesheet_tag }}
+<!-- ff-hero-cache-bust: home-videos-v1 -->
 <script src="{{ 'ff-offer-boot.js' | asset_url }}" defer></script>
 
 {%- if section.settings.show_hero -%}
@@ -359,10 +360,10 @@
           "id": "title_size",
           "label": "Headline size",
           "min": 18,
-          "max": 84,
+          "max": 96,
           "step": 2,
           "unit": "px",
-          "default": 42
+          "default": 58
         },
         {
           "type": "select",
@@ -386,10 +387,10 @@
           "id": "button_size",
           "label": "Button text size",
           "min": 10,
-          "max": 20,
+          "max": 24,
           "step": 1,
           "unit": "px",
-          "default": 12
+          "default": 16
         },
         {
           "type": "url",

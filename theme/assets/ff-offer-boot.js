@@ -1,13 +1,14 @@
 /* BOOT_BUILD 2026-07-29-sbv-fix-editor */
-/* FF_HOME_VEHICLE_REDIRECT */
+/* FF_HOME_WHEELS_REDIRECT */
 (function () {
   try {
     // Never redirect inside the Shopify theme editor
     if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
     var path = location.pathname || '/';
     if (path === '/' || path === '') {
-      if (!/[?&]view=vehicle(?:&|$)/.test(location.search || '')) {
-        location.replace('/?view=vehicle' + (location.hash || ''));
+      var params = location.search || '';
+      if (/[?&]view=vehicle(?:&|$)/.test(params) || !/[?&]view=wheels(?:&|$)/.test(params)) {
+        location.replace('/?view=wheels' + (location.hash || ''));
         return;
       }
     }
