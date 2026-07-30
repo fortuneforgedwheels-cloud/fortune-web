@@ -48,8 +48,8 @@
 
         {% render 'meta-tags' %}
         {%- if request.page_type == '404' and request.path contains 'the-forging-process' -%}
-          <meta http-equiv="refresh" content="0;url=/pages/about?view=the-forging-process">
-          <script>location.replace('/pages/about?view=the-forging-process');</script>
+          <meta http-equiv="refresh" content="0;url=/pages/faq?view=the-forging-process">
+          <script>location.replace('/pages/faq?view=the-forging-process');</script>
         {%- endif -%}
         {{ content_for_header }}
 
