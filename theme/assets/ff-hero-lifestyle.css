@@ -44,6 +44,22 @@
   display: block;
   border: 0;
   background: #0b0b0b;
+  /* Never show native play UI / controls (esp. iOS when autoplay is delayed). */
+  pointer-events: none;
+}
+
+.ff-hero__video::-webkit-media-controls,
+.ff-hero__media video::-webkit-media-controls,
+.ff-hero__video::-webkit-media-controls-enclosure,
+.ff-hero__media video::-webkit-media-controls-enclosure,
+.ff-hero__video::-webkit-media-controls-start-playback-button,
+.ff-hero__media video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .ff-hero__media-desktop,

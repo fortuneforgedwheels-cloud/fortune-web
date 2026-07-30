@@ -34,11 +34,14 @@
   src="{{ mp4_url }}"
   autoplay
   muted
+  defaultmuted
   loop
   playsinline
   webkit-playsinline
   preload="auto"
   disablepictureinpicture
+  disableRemotePlayback
+  x-webkit-airplay="deny"
 ></video>
 {%- elsif video != blank -%}
 <video
@@ -47,11 +50,14 @@
   {% if poster_url != blank %}poster="{{ poster_url | escape }}"{% endif %}
   autoplay
   muted
+  defaultmuted
   loop
   playsinline
   webkit-playsinline
   preload="auto"
   disablepictureinpicture
+  disableRemotePlayback
+  x-webkit-airplay="deny"
 >
   {%- for source in video.sources -%}
     {%- if source.format == 'mp4' -%}

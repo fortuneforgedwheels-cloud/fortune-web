@@ -157,14 +157,17 @@ function ffThemeAsset(name, bust) {
           item.layer.appendChild(video);
         }
         video.setAttribute('src', item.src);
-        video.querySelectorAll('source').forEach(function (s) {
+        video.querySelectorAll('source, img').forEach(function (s) {
           s.remove();
         });
+        video.controls = false;
+        video.removeAttribute('controls');
         video.muted = true;
         video.defaultMuted = true;
         video.autoplay = true;
         video.loop = true;
         video.playsInline = true;
+        try { video.volume = 0; } catch (eVol) {}
         video.setAttribute('muted', '');
         video.setAttribute('autoplay', '');
         video.setAttribute('loop', '');
@@ -195,18 +198,21 @@ function ffThemeAsset(name, bust) {
           video.setAttribute('src', mp4);
         }
       }
+      video.controls = false;
+      video.removeAttribute('controls');
       video.muted = true;
       video.defaultMuted = true;
       video.autoplay = true;
       video.loop = true;
       video.playsInline = true;
+      try { video.volume = 0; } catch (eVol2) {}
       video.setAttribute('muted', '');
       video.setAttribute('autoplay', '');
       video.setAttribute('playsinline', '');
       video.setAttribute('webkit-playsinline', '');
       video.setAttribute('preload', 'auto');
       video.querySelectorAll('img').forEach(function (img) {
-        img.style.display = 'none';
+        img.remove();
       });
       var p = video.play();
       if (p && typeof p.catch === 'function') p.catch(function () {});

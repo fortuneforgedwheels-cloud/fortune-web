@@ -35,17 +35,8 @@
       {%- if show_feature -%}
         <div class="ff-values__feature">
           {%- if section.settings.video != blank -%}
-            <div class="ff-values__feature-frame">
-              {{
-                section.settings.video
-                | video_tag:
-                  class: 'ff-values__feature-video',
-                  autoplay: true,
-                  loop: true,
-                  muted: true,
-                  controls: true,
-                  image_size: '2000x'
-              }}
+            <div class="ff-values__feature-frame" data-ff-autoplay-video>
+              {% render 'ff-autoplay-video', video: section.settings.video, class: 'ff-values__feature-video' %}
             </div>
           {%- elsif video_id != blank -%}
             <div class="ff-values__feature-frame ff-values__feature-frame--embed">

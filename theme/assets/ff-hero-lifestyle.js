@@ -1,5 +1,5 @@
 (function () {
-  /* Hardcoded homepage hero MP4s — survives theme-editor wipes / sticky image fallbacks. */
+  /* Hardcoded homepage hero MP4s — clean muted autoplay, no controls, no nested poster img. */
   var HARD_SLIDES = [
     {
       desktop:
@@ -46,30 +46,24 @@
     video.setAttribute('webkit-playsinline', '');
     video.setAttribute('preload', 'auto');
     video.setAttribute('disablepictureinpicture', '');
+    video.removeAttribute('controls');
+    video.controls = false;
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
     video.autoplay = true;
     video.loop = true;
+    try {
+      video.volume = 0;
+    } catch (e) {}
     return video;
   }
 
   function ensureLayerVideo(layer, src, poster, className) {
     if (!layer || !src) return;
-    var existing = layer.querySelector('video');
-    if (existing) {
-      var cur = existing.currentSrc || existing.getAttribute('src') || '';
-      if (cur.indexOf('.mp4') !== -1 && existing.querySelector('source[type="application/x-mpegURL"]') === null) {
-        // Already a usable MP4 video tag.
-        preferMp4(existing);
-        return;
-      }
-      // Replace HLS-first / broken video markup.
-      existing.replaceWith(makeVideo(src, poster, className));
-      return;
-    }
-    // Slide fell back to a still image — swap in the hardcoded MP4.
-    layer.querySelectorAll('img.ff-hero__image, .ff-hero__placeholder').forEach(function (el) {
+    // Always install a clean autoplay tag — sticky HTML often has nested <img>,
+    // controls, or source-only markup that blocks iOS autoplay.
+    layer.querySelectorAll('img, .ff-hero__placeholder, video').forEach(function (el) {
       el.remove();
     });
     layer.appendChild(makeVideo(src, poster, className));
@@ -92,7 +86,6 @@
     try {
       var style = window.getComputedStyle(el);
       if (style.display === 'none' || style.visibility === 'hidden') return false;
-      // Opacity on this node only — ancestors are handled via slide.hidden / is-active.
       return Number(style.opacity) > 0;
     } catch (e) {
       return true;
@@ -100,9 +93,8 @@
   }
 
   function preferMp4(video) {
-    // Chrome desktop won't play HLS in a plain <video>; swap .m3u8 to .mp4 when needed.
     var current = video.currentSrc || video.src || '';
-    if (current && current.indexOf('.m3u8') === -1) return;
+    if (current && current.indexOf('.m3u8') === -1 && current.indexOf('.mp4') !== -1) return;
     var sources = video.querySelectorAll('source');
     var mp4 = null;
     Array.prototype.forEach.call(sources, function (source) {
@@ -115,29 +107,32 @@
     }
     if (!mp4) return;
     Array.prototype.forEach.call(sources, function (source) {
-      var src = source.getAttribute('src') || '';
-      if (src.indexOf('.m3u8') !== -1) source.remove();
+      source.remove();
     });
-    if (!video.getAttribute('src')) video.setAttribute('src', mp4);
-    else if ((video.getAttribute('src') || '').indexOf('.m3u8') !== -1) video.setAttribute('src', mp4);
+    video.setAttribute('src', mp4);
   }
 
   function prepare(video) {
     preferMp4(video);
+    video.controls = false;
+    video.removeAttribute('controls');
     video.muted = true;
     video.defaultMuted = true;
     video.autoplay = true;
     video.loop = true;
     video.playsInline = true;
+    try {
+      video.volume = 0;
+    } catch (e) {}
     video.setAttribute('muted', '');
     video.setAttribute('autoplay', '');
     video.setAttribute('loop', '');
     video.setAttribute('playsinline', '');
     video.setAttribute('webkit-playsinline', '');
-    if (video.getAttribute('preload') !== 'auto') video.setAttribute('preload', 'auto');
+    video.setAttribute('preload', 'auto');
+    video.setAttribute('disablepictureinpicture', '');
     video.querySelectorAll('img').forEach(function (img) {
-      img.style.display = 'none';
-      img.setAttribute('hidden', '');
+      img.remove();
     });
   }
 
@@ -147,7 +142,6 @@
     var p = video.play();
     if (p && typeof p.catch === 'function') {
       p.catch(function () {
-        // Autoplay can fail before enough data; retry when ready.
         var retry = function () {
           prepare(video);
           var p2 = video.play();
@@ -155,7 +149,9 @@
         };
         video.addEventListener('canplay', retry, { once: true });
         video.addEventListener('loadeddata', retry, { once: true });
-        window.setTimeout(retry, 400);
+        window.setTimeout(retry, 250);
+        window.setTimeout(retry, 800);
+        window.setTimeout(retry, 1600);
       });
     }
   }
@@ -165,7 +161,6 @@
     var layer =
       video.closest('[data-ff-desktop-layer]') ||
       video.closest('[data-ff-mobile-layer]');
-    // If no layer wrapper, treat as playable.
     if (!layer) return true;
     return isCssVisible(layer);
   }
@@ -176,7 +171,7 @@
       slide.querySelectorAll('video').forEach(function (video) {
         prepare(video);
         if (videoShouldPlay(slide, video, active)) {
-          if (video.paused || video.ended) tryPlay(video);
+          tryPlay(video);
         } else if (resetInactive) {
           try {
             video.pause();
@@ -212,18 +207,16 @@
       sync(slides, index, !!resetInactive);
     }
 
-    // Immediate + delayed kicks (fonts / layout / Shopify apps settle late).
     refresh(true);
     window.requestAnimationFrame(function () {
       refresh(false);
     });
-    [100, 300, 800, 1600, 3000].forEach(function (ms) {
+    [50, 150, 400, 900, 1800, 3500].forEach(function (ms) {
       window.setTimeout(function () {
         refresh(false);
       }, ms);
     });
 
-    // MatchMedia is more reliable than measuring the hero box.
     var mq = window.matchMedia('(max-width: 749.98px)');
     var onViewport = function () {
       refresh(true);
@@ -231,13 +224,18 @@
     if (mq.addEventListener) mq.addEventListener('change', onViewport);
     else if (mq.addListener) mq.addListener(onViewport);
 
+    // Any user gesture unlocks autoplay on locked mobile browsers.
     var unlock = function () {
       refresh(false);
     };
     document.addEventListener('pointerdown', unlock, { passive: true });
     document.addEventListener('touchstart', unlock, { passive: true });
+    document.addEventListener('touchend', unlock, { passive: true });
     document.addEventListener('visibilitychange', function () {
       if (!document.hidden) refresh(false);
+    });
+    window.addEventListener('pageshow', function () {
+      refresh(false);
     });
 
     if (slides.length < 2) return;
@@ -296,6 +294,11 @@
 
   function boot() {
     document.querySelectorAll('[data-ff-hero]').forEach(init);
+    // Also strip controls / force play on any other FF autoplay videos on the page.
+    document.querySelectorAll('.ff-values__feature-video, video[data-ff-autoplay], video[data-ff-autoplay-v]').forEach(function (video) {
+      prepare(video);
+      tryPlay(video);
+    });
   }
 
   if (document.readyState === 'loading') {
