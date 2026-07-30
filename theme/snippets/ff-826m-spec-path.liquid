@@ -7,6 +7,7 @@
   assign certified_width = certified_width | default: '11"'
   assign certified_offset = certified_offset | default: '+15'
   assign certified_lug = certified_lug | default: "PLUG N' PLAY || KEEP OEM SPECS"
+  assign certified_multi = certified_multi | default: false
   assign ymm_make_placeholder = ymm_make_placeholder | default: 'e.g. BMW'
   assign ymm_model_placeholder = ymm_model_placeholder | default: 'e.g. M3'
 
@@ -21,7 +22,7 @@
 -%}
 
 <div
-  class="ff-826m-path"
+  class="ff-826m-path{% if certified_multi %} ff-826m-path--multi{% endif %}"
   id="ff-826m-path-{{ product.id }}"
   data-ff-826m-path
   data-product-id="{{ product.id }}"
@@ -31,17 +32,26 @@
   data-certified-width="{{ certified_width | escape }}"
   data-certified-offset="{{ certified_offset | escape }}"
   data-certified-lug="{{ certified_lug | escape }}"
+  data-certified-multi="{% if certified_multi %}1{% else %}0{% endif %}"
 >
   <p class="ff-826m-path__eyebrow">{{ path_label | escape }}</p>
   <h2 class="ff-826m-path__heading">How do you want to spec this pair?</h2>
-  <p class="ff-826m-path__intro">Choose Fortune Certified Specs for a dialed-in {{ certified_fitment | escape }} package, or select your own size, width, offset, and lug pattern.</p>
+  {%- if certified_multi -%}
+    <p class="ff-826m-path__intro">Choose Fortune Certified Specs for a dialed-in C6 or C7 Z06/ZR1 rear pair, or select your own size, width, offset, and lug pattern.</p>
+  {%- else -%}
+    <p class="ff-826m-path__intro">Choose Fortune Certified Specs for a dialed-in {{ certified_fitment | escape }} package, or select your own size, width, offset, and lug pattern.</p>
+  {%- endif -%}
 
   <div class="ff-826m-path__choices" role="radiogroup" aria-label="Spec path">
     <label class="ff-826m-path__choice">
       <input type="radio" name="ff_826m_path_{{ product.id }}" value="certified" checked>
       <span class="ff-826m-path__choice-card">
         <span class="ff-826m-path__choice-title">Fortune Certified Specs</span>
-        <span class="ff-826m-path__choice-meta">Fixed fitment: <strong>{{ certified_fitment | escape }}</strong></span>
+        {%- if certified_multi -%}
+          <span class="ff-826m-path__choice-meta">Pick your C6 or C7 Z06/ZR1 rear certified fitment below.</span>
+        {%- else -%}
+          <span class="ff-826m-path__choice-meta">Fixed fitment: <strong>{{ certified_fitment | escape }}</strong></span>
+        {%- endif -%}
         <span class="ff-826m-path__choice-meta">You only enter vehicle year / make / model and ring, face, and bolt colors.</span>
       </span>
     </label>
@@ -55,15 +65,54 @@
   </div>
 
   <div class="ff-826m-path__certified" data-ff-826m-certified-panel>
+    {%- if certified_multi -%}
+      <p class="ff-826m-path__cert-heading">Select your Fortune Certified rear pair</p>
+      <div class="ff-826m-path__cert-choices" role="radiogroup" aria-label="Certified fitment">
+        <label class="ff-826m-path__cert-choice">
+          <input
+            type="radio"
+            name="ff_826m_cert_{{ product.id }}"
+            value="c6"
+            checked
+            data-ff-826m-cert-choice
+            data-fitment="Fortune Certified C6 Z06/ZR1 — 18x12.5 ET45 rear"
+            data-offset="+45"
+            data-model-placeholder="e.g. Corvette C6 Z06"
+          >
+          <span class="ff-826m-path__cert-choice-card">
+            <span class="ff-826m-path__cert-choice-title">C6 Z06 / ZR1</span>
+            <span class="ff-826m-path__cert-choice-meta"><strong>18x12.5 ET45</strong> rear</span>
+            <span class="ff-826m-path__cert-choice-meta">Clears CCB rear brakes and steel</span>
+          </span>
+        </label>
+        <label class="ff-826m-path__cert-choice">
+          <input
+            type="radio"
+            name="ff_826m_cert_{{ product.id }}"
+            value="c7"
+            data-ff-826m-cert-choice
+            data-fitment="Fortune Certified C7 Z06/ZR1 — 18x12.5 ET52 rear"
+            data-offset="+52"
+            data-model-placeholder="e.g. Corvette C7 Z06"
+          >
+          <span class="ff-826m-path__cert-choice-card">
+            <span class="ff-826m-path__cert-choice-title">C7 Z06 / ZR1</span>
+            <span class="ff-826m-path__cert-choice-meta"><strong>18x12.5 ET52</strong> rear</span>
+            <span class="ff-826m-path__cert-choice-meta">Clears CCB rear brakes and steel</span>
+          </span>
+        </label>
+      </div>
+    {%- endif -%}
+
     <div class="ff-826m-path__badge">
       <span>Certified fitment locked</span>
-      <strong>{{ certified_fitment | escape }}</strong>
+      <strong data-ff-826m-fitment-display>{{ certified_fitment | escape }}</strong>
     </div>
 
     <div class="ff-826m-path__ymm">
       <label class="ff-826m-path__field">
         <span>Year</span>
-        <input type="text" name="properties[Year]" form="{{ form_id }}" autocomplete="off" placeholder="e.g. 2023" data-ff-826m-required-certified>
+        <input type="text" name="properties[Year]" form="{{ form_id }}" autocomplete="off" placeholder="e.g. 2015" data-ff-826m-required-certified>
       </label>
       <label class="ff-826m-path__field">
         <span>Make</span>
@@ -71,14 +120,22 @@
       </label>
       <label class="ff-826m-path__field">
         <span>Model</span>
-        <input type="text" name="properties[Model]" form="{{ form_id }}" autocomplete="off" placeholder="{{ ymm_model_placeholder | escape }}" data-ff-826m-required-certified>
+        <input
+          type="text"
+          name="properties[Model]"
+          form="{{ form_id }}"
+          autocomplete="off"
+          placeholder="{{ ymm_model_placeholder | escape }}"
+          data-ff-826m-required-certified
+          data-ff-826m-model-input
+        >
       </label>
     </div>
 
     <p class="ff-826m-path__hint">Next, choose ring color, face color, and bolt color below. Size, width, offset, and lug pattern are set automatically.</p>
 
     <input type="hidden" name="properties[Spec Path]" value="Fortune Certified Specs" form="{{ form_id }}" data-ff-826m-certified-prop>
-    <input type="hidden" name="properties[Certified Fitment]" value="{{ certified_fitment | escape }}" form="{{ form_id }}" data-ff-826m-certified-prop>
+    <input type="hidden" name="properties[Certified Fitment]" value="{{ certified_fitment | escape }}" form="{{ form_id }}" data-ff-826m-certified-prop data-ff-826m-fitment-input>
   </div>
 
   <div class="ff-826m-path__custom" data-ff-826m-custom-panel hidden>

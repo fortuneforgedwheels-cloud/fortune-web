@@ -9,11 +9,13 @@
     assign current_variant = product.selected_or_first_available_variant
     assign variantCount = product.variants | size
     assign ff_certified_beadlock = false
+    assign ff_certified_multi = false
     assign ff_certified_path_label = 'Beadlock checkout'
     assign ff_certified_fitment = '18x11 ET15'
     assign ff_certified_size = '18X11'
     assign ff_certified_width = '11"'
     assign ff_certified_offset = '+15'
+    assign ff_certified_lug = "PLUG N' PLAY || KEEP OEM SPECS"
     assign ff_certified_make_ph = 'e.g. BMW'
     assign ff_certified_model_ph = 'e.g. M3'
     assign ff_product_title_up = product.title | upcase
@@ -60,6 +62,28 @@
       assign ff_certified_offset = '+40'
       assign ff_certified_make_ph = 'e.g. Cadillac'
       assign ff_certified_model_ph = 'e.g. CT5-V Blackwing'
+    elsif ff_product_handle == 'c7-z06-beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_multi = true
+      assign ff_certified_path_label = 'C6/C7 Z06 Beadlock checkout'
+      assign ff_certified_fitment = 'Fortune Certified C6 Z06/ZR1 — 18x12.5 ET45 rear'
+      assign ff_certified_size = '18X12.5'
+      assign ff_certified_width = '12.5"'
+      assign ff_certified_offset = '+45'
+      assign ff_certified_lug = '5x120.65'
+      assign ff_certified_make_ph = 'e.g. Chevrolet'
+      assign ff_certified_model_ph = 'e.g. Corvette C6 Z06'
+    elsif ff_product_title_up contains 'C6 / C7 Z06' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_multi = true
+      assign ff_certified_path_label = 'C6/C7 Z06 Beadlock checkout'
+      assign ff_certified_fitment = 'Fortune Certified C6 Z06/ZR1 — 18x12.5 ET45 rear'
+      assign ff_certified_size = '18X12.5'
+      assign ff_certified_width = '12.5"'
+      assign ff_certified_offset = '+45'
+      assign ff_certified_lug = '5x120.65'
+      assign ff_certified_make_ph = 'e.g. Chevrolet'
+      assign ff_certified_model_ph = 'e.g. Corvette C6 Z06'
     endif
     assign ff_826m_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
     assign colors_bg = section.settings.colors_bg
@@ -1017,6 +1041,8 @@
                                               certified_size: ff_certified_size,
                                               certified_width: ff_certified_width,
                                               certified_offset: ff_certified_offset,
+                                              certified_lug: ff_certified_lug,
+                                              certified_multi: ff_certified_multi,
                                               ymm_make_placeholder: ff_certified_make_ph,
                                               ymm_model_placeholder: ff_certified_model_ph
                                             %}
