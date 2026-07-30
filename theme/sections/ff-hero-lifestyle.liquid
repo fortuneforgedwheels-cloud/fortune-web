@@ -47,7 +47,7 @@
   <section
     class="ff-hero"
     id="ff-hero-{{ section.id }}"
-    data-ff-hero data-ff-fingerprint="HERO-AUTOPLAY-20260730D" data-ff-hero-fix="arrows-v1"
+    data-ff-hero data-ff-fingerprint="HERO-MOBILE-AUTOPLAY-20260730E" data-ff-hero-fix="arrows-v1"
     style="
       --ff-hero-height: {{ section.settings.height }}vh;
       --ff-hero-height-mobile: {{ section.settings.height_mobile }}vh;
@@ -123,9 +123,9 @@
               {%- if has_desktop_media or has_mobile_media -%}
                 <div class="ff-hero__media-desktop" data-ff-desktop-layer>
                   {%- if hard_desktop != blank -%}
-                    {% render 'ff-autoplay-video', src: hard_desktop, poster: hard_poster_d, class: 'ff-hero__video ff-hero__video--desktop' %}
+                    {% render 'ff-autoplay-video', src: hard_desktop, poster: hard_poster_d, class: 'ff-hero__video ff-hero__video--desktop', autoplay: false %}
                   {%- elsif slide_video != blank -%}
-                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--desktop' %}
+                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--desktop', autoplay: false %}
                   {%- elsif block.settings.image != blank -%}
                     <img
                       class="ff-hero__image"
@@ -149,14 +149,24 @@
                   {%- endif -%}
                 </div>
                 <div class="ff-hero__media-mobile" data-ff-mobile-layer>
+                  {%- comment -%}
+                    Only the first slide's mobile video gets HTML autoplay.
+                    iOS blocks autoplay when many videos compete; JS plays the rest.
+                  {%- endcomment -%}
+                  {%- liquid
+                    assign mobile_autoplay = false
+                    if forloop.first
+                      assign mobile_autoplay = true
+                    endif
+                  -%}
                   {%- if hard_mobile != blank -%}
-                    {% render 'ff-autoplay-video', src: hard_mobile, poster: hard_poster_m, class: 'ff-hero__video ff-hero__video--mobile' %}
+                    {% render 'ff-autoplay-video', src: hard_mobile, poster: blank, class: 'ff-hero__video ff-hero__video--mobile', autoplay: mobile_autoplay %}
                   {%- elsif slide_mobile_video != blank -%}
-                    {% render 'ff-autoplay-video', video: slide_mobile_video, class: 'ff-hero__video ff-hero__video--mobile' %}
+                    {% render 'ff-autoplay-video', video: slide_mobile_video, class: 'ff-hero__video ff-hero__video--mobile', autoplay: mobile_autoplay %}
                   {%- elsif hard_desktop != blank -%}
-                    {% render 'ff-autoplay-video', src: hard_desktop, poster: hard_poster_d, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback' %}
+                    {% render 'ff-autoplay-video', src: hard_desktop, poster: blank, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback', autoplay: mobile_autoplay %}
                   {%- elsif slide_video != blank -%}
-                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback' %}
+                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback', autoplay: mobile_autoplay %}
                   {%- elsif block.settings.mobile_image != blank -%}
                     <img
                       class="ff-hero__image"
@@ -236,35 +246,100 @@
   <script src="{{ 'ff-hero-lifestyle.js' | asset_url }}" defer></script>
   <script src="{{ 'ff-hero-offer.js' | asset_url }}" defer></script>
   <script>
-    /* Immediate muted autoplay kick — runs before deferred hero JS. No controls. */
+    /* Play ONLY the visible active-slide video. iOS blocks multi-video autoplay. */
     (function () {
-      function kick(root) {
-        var scope = root || document;
-        scope.querySelectorAll('[data-ff-hero] video, .ff-values__feature-video, video[data-ff-autoplay-v]').forEach(function (v) {
-          v.controls = false;
-          v.removeAttribute('controls');
-          v.muted = true;
-          v.defaultMuted = true;
-          v.playsInline = true;
-          v.autoplay = true;
-          v.loop = true;
-          try { v.volume = 0; } catch (e) {}
-          v.setAttribute('muted', '');
+      var mq = window.matchMedia('(max-width: 749.98px)');
+
+      function prep(v) {
+        if (!v) return;
+        v.controls = false;
+        v.removeAttribute('controls');
+        v.muted = true;
+        v.defaultMuted = true;
+        v.playsInline = true;
+        v.loop = true;
+        try { v.volume = 0; } catch (e) {}
+        v.setAttribute('muted', '');
+        v.setAttribute('playsinline', 'true');
+        v.setAttribute('webkit-playsinline', 'true');
+        v.setAttribute('preload', 'auto');
+        v.querySelectorAll('img').forEach(function (img) { img.remove(); });
+      }
+
+      function layerVisible(layer) {
+        if (!layer) return false;
+        try {
+          var s = window.getComputedStyle(layer);
+          return s.display !== 'none' && s.visibility !== 'hidden' && Number(s.opacity) > 0;
+        } catch (e) {
+          return true;
+        }
+      }
+
+      function kick() {
+        var isMobile = mq.matches;
+        document.querySelectorAll('[data-ff-hero]').forEach(function (hero) {
+          var slides = hero.querySelectorAll('[data-ff-hero-slide]');
+          var active = null;
+          slides.forEach(function (slide) {
+            if (slide.classList.contains('is-active') && !slide.hidden) active = slide;
+          });
+          if (!active && slides[0]) active = slides[0];
+
+          slides.forEach(function (slide) {
+            slide.querySelectorAll('video').forEach(function (v) {
+              prep(v);
+              var layer = v.closest('[data-ff-desktop-layer]') || v.closest('[data-ff-mobile-layer]');
+              var want =
+                slide === active &&
+                layerVisible(layer) &&
+                ((isMobile && v.classList.contains('ff-hero__video--mobile')) ||
+                  (!isMobile && v.classList.contains('ff-hero__video--desktop')));
+              if (!want) {
+                try { v.pause(); } catch (e1) {}
+                v.removeAttribute('autoplay');
+                return;
+              }
+              v.setAttribute('autoplay', '');
+              v.autoplay = true;
+              var p = v.play();
+              if (p && typeof p.catch === 'function') {
+                p.catch(function () {
+                  window.setTimeout(function () {
+                    prep(v);
+                    var p2 = v.play();
+                    if (p2 && typeof p2.catch === 'function') p2.catch(function () {});
+                  }, 200);
+                });
+              }
+            });
+          });
+        });
+
+        /* Values feature video — single muted autoplay, no controls */
+        document.querySelectorAll('.ff-values__feature-video').forEach(function (v) {
+          prep(v);
           v.setAttribute('autoplay', '');
-          v.setAttribute('playsinline', '');
-          v.setAttribute('webkit-playsinline', '');
-          v.setAttribute('preload', 'auto');
-          v.querySelectorAll('img').forEach(function (img) { img.remove(); });
+          v.autoplay = true;
           var p = v.play();
           if (p && typeof p.catch === 'function') p.catch(function () {});
         });
       }
+
       kick();
+      [50, 200, 500, 1200, 2500].forEach(function (ms) {
+        window.setTimeout(kick, ms);
+      });
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () { kick(); }, { once: true });
+        document.addEventListener('DOMContentLoaded', kick, { once: true });
       }
-      document.addEventListener('touchstart', function () { kick(); }, { passive: true });
-      document.addEventListener('pointerdown', function () { kick(); }, { passive: true });
+      if (mq.addEventListener) mq.addEventListener('change', kick);
+      else if (mq.addListener) mq.addListener(kick);
+      document.addEventListener('touchstart', kick, { passive: true });
+      document.addEventListener('pointerdown', kick, { passive: true });
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) kick();
+      });
     })();
   </script>
 {%- endif -%}

@@ -1,20 +1,17 @@
 {%- comment -%}
-  Autoplay-friendly video markup for hero / lifestyle sections.
-  Prefer MP4 over HLS (.m3u8). Chrome desktop does not play HLS in a
-  plain <video> tag without hls.js, which made the hero look frozen.
-  No nested poster <img>, preload=auto, muted + playsinline for mobile.
-
-  Params:
-    - video: Shopify video object (optional if src is set)
-    - src: direct MP4 URL (hardcoded fallback — preferred when set)
-    - poster: poster image URL (optional)
-    - class: CSS class string
+  Autoplay-friendly MP4 video. No controls, no nested poster <img>.
+  Params: video, src, poster, class, autoplay (default true)
 {%- endcomment -%}
 {%- liquid
   assign video = video | default: blank
   assign class_name = class | default: ''
   assign poster_url = poster | default: blank
   assign mp4_url = src | default: blank
+  # Liquid `default` treats false as empty — never use default for booleans.
+  assign do_autoplay = true
+  if autoplay == false
+    assign do_autoplay = false
+  endif
 
   if mp4_url == blank and video != blank
     if poster_url == blank and video.preview_image != blank
@@ -32,7 +29,7 @@
   data-ff-autoplay-v="mp4-only-1"
   {% if poster_url != blank %}poster="{{ poster_url | escape }}"{% endif %}
   src="{{ mp4_url }}"
-  autoplay
+  {% if do_autoplay %}autoplay{% endif %}
   muted
   defaultmuted
   loop
@@ -48,7 +45,7 @@
   class="{{ class_name }}"
   data-ff-autoplay-v="mp4-fallback-1"
   {% if poster_url != blank %}poster="{{ poster_url | escape }}"{% endif %}
-  autoplay
+  {% if do_autoplay %}autoplay{% endif %}
   muted
   defaultmuted
   loop
