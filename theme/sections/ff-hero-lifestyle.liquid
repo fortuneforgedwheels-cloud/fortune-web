@@ -47,7 +47,7 @@
   <section
     class="ff-hero"
     id="ff-hero-{{ section.id }}"
-    data-ff-hero data-ff-hero-fix="arrows-v1"
+    data-ff-hero data-ff-fingerprint="HERO-MP4-20260730A" data-ff-hero-fix="arrows-v1"
     style="
       --ff-hero-height: {{ section.settings.height }}vh;
       --ff-hero-height-mobile: {{ section.settings.height_mobile }}vh;
@@ -95,16 +95,7 @@
               {%- if has_desktop_media or has_mobile_media -%}
                 <div class="ff-hero__media-desktop" data-ff-desktop-layer>
                   {%- if slide_video != blank -%}
-                    {{
-                      slide_video
-                      | video_tag:
-                        class: 'ff-hero__video ff-hero__video--desktop',
-                        autoplay: true,
-                        loop: true,
-                        muted: true,
-                        controls: false,
-                        image_size: '2400x'
-                    }}
+                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--desktop' %}
                   {%- elsif block.settings.image != blank -%}
                     <img
                       class="ff-hero__image"
@@ -129,16 +120,7 @@
                 </div>
                 <div class="ff-hero__media-mobile" data-ff-mobile-layer>
                   {%- if slide_mobile_video != blank -%}
-                    {{
-                      slide_mobile_video
-                      | video_tag:
-                        class: 'ff-hero__video ff-hero__video--mobile',
-                        autoplay: true,
-                        loop: true,
-                        muted: true,
-                        controls: false,
-                        image_size: '1200x'
-                    }}
+                    {% render 'ff-autoplay-video', video: slide_mobile_video, class: 'ff-hero__video ff-hero__video--mobile' %}
                   {%- elsif block.settings.mobile_image != blank -%}
                     <img
                       class="ff-hero__image"
@@ -156,16 +138,7 @@
                       data-ff-mobile-image
                     >
                   {%- elsif slide_video != blank -%}
-                    {{
-                      slide_video
-                      | video_tag:
-                        class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback',
-                        autoplay: true,
-                        loop: true,
-                        muted: true,
-                        controls: false,
-                        image_size: '1200x'
-                    }}
+                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback' %}
                   {%- elsif block.settings.image != blank -%}
                     <img
                       class="ff-hero__image"

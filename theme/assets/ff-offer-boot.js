@@ -1,15 +1,19 @@
-/* BOOT_BUILD 2026-07-29-sbv-fix-editor */
-/* FF_HOME_VEHICLE_REDIRECT */
+/* BOOT_BUILD 2026-07-30-hero-mp4-homeheal */
+/* Homepage video heal: Shopify IndexController page_cache can pin stale hero markup.
+   Prefer /index (known-good MP4 markup) when the root document still lacks mp4-only videos. */
 (function () {
   try {
-    // Never redirect inside the Shopify theme editor
     if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
     var path = location.pathname || '/';
-    if (path === '/' || path === '') {
-      if (!/[?&]view=vehicle(?:&|$)/.test(location.search || '')) {
-        location.replace('/?view=vehicle' + (location.hash || ''));
-        return;
-      }
+    if (path !== '/' && path !== '') return;
+    if (document.querySelector('[data-ff-autoplay-v="mp4-only-1"]')) return;
+    // Exact / and /?view=vehicle were both sticky-cached; /index serves fresh MP4 heroes.
+    if (/[?&]view=vehicle(?:&|$)/.test(location.search || '')) {
+      location.replace('/index' + (location.hash || ''));
+      return;
+    }
+    if (!(location.search || '')) {
+      location.replace('/index' + (location.hash || ''));
     }
   } catch (e) {}
 })();
@@ -67,16 +71,16 @@ function ffThemeAsset(name, bust) {
     });
   }
 
-  function swapMain(view, isFresh, cssNeedle, cssFallback, jsNeedle, flag) {
+  function swapMainUrl(url, isFresh, cssNeedle, cssFallback, jsNeedle, flag) {
     var main = document.getElementById('MainContent');
     if (!main) return;
 
-    fetch(location.pathname + '?view=' + encodeURIComponent(view), {
+    fetch(url, {
       credentials: 'same-origin',
       headers: { Accept: 'text/html' }
     })
       .then(function (res) {
-        if (!res.ok) throw new Error(view + ' fetch failed');
+        if (!res.ok) throw new Error(url + ' fetch failed');
         return res.text();
       })
       .then(function (html) {
@@ -87,12 +91,41 @@ function ffThemeAsset(name, bust) {
         if (jsNeedle) ensureScripts(doc, jsNeedle);
         main.replaceWith(next);
         document.documentElement.classList.add(flag);
+        document.dispatchEvent(new CustomEvent('shopify:section:load', { detail: {}, bubbles: true }));
       })
       .catch(function () {});
   }
 
+  function swapMain(view, isFresh, cssNeedle, cssFallback, jsNeedle, flag) {
+    swapMainUrl(
+      location.pathname + '?view=' + encodeURIComponent(view),
+      isFresh,
+      cssNeedle,
+      cssFallback,
+      jsNeedle,
+      flag
+    );
+  }
+
   ready(function () {
     var path = location.pathname || '';
+
+    // Heal sticky-cached homepage heroes that still look like still frames.
+    if (path === '/' || path === '' || path === '/index') {
+      var homeMain = document.getElementById('MainContent');
+      if (homeMain && !homeMain.querySelector('[data-ff-autoplay-v="mp4-only-1"]')) {
+        swapMainUrl(
+          '/index?ffhome=1',
+          function (root) {
+            return !!root.querySelector('[data-ff-autoplay-v="mp4-only-1"]');
+          },
+          'ff-hero-lifestyle',
+          ffThemeAsset('ff-hero-lifestyle.css', 'heromp4'),
+          'ff-hero-lifestyle',
+          'ff-home-video-upgraded'
+        );
+      }
+    }
 
     if (/\/pages\/about(?:-us)?\/?$/.test(path) || /\/pages\/about\/?$/.test(path)) {
       // Immediate visual fix for sticky-cached “Add a video” overlays
