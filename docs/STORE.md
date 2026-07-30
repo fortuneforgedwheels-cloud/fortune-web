@@ -39,3 +39,13 @@ Premium aftermarket forged beadlock, monoblock, and custom 2-piece wheels. Built
 3. Never commit `.env` or Theme Access passwords.
 4. Preserve existing Shopify apps/embeds (product options, pixels, etc.) unless asked to change them.
 5. Do not overwrite unrelated drafts (e.g. `Halo-SetOnSocial-FinalVersion-Backup`) unless the owner asks.
+
+## Beadlock pricing bulk update
+
+Non–15-inch beadlock variants should be **$1,999** (15-inch sizes keep their current prices).
+
+- Dry run: `npm run shop:update-beadlock-prices`
+- Apply via Admin API: set `SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_...` in `.env`, then `npm run shop:update-beadlock-prices -- --apply`
+- CSV import fallback: `data/beadlock-price-update.csv` → Shopify Admin → Products → Import
+
+Theme Access (`shptka_`) cannot change product prices — Admin API or CSV import is required.
