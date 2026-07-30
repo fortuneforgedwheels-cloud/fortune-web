@@ -1,23 +1,42 @@
 {%- comment -%}
-  Renders a Shopify video host object as a plain HTML5 video that autoplays.
-  Avoids video_tag's nested poster <img> and metadata-only preload, which
-  left homepage heroes stuck on a still frame.
-  Accepts: video, class, preload (optional)
+  Autoplay-friendly video markup for hero / lifestyle sections.
+  Prefer MP4 over HLS (.m3u8). Chrome desktop does not play HLS in a
+  plain <video> tag without hls.js, which made the hero look frozen.
+  No nested poster <img>, preload=auto, muted + playsinline for mobile.
 {%- endcomment -%}
-{%- if video != blank -%}
-  <video
-    class="{{ class | default: 'ff-hero__video' }}"
-    autoplay
-    muted
-    loop
-    playsinline
-    webkit-playsinline
-    preload="{{ preload | default: 'auto' }}"
-    disablepictureinpicture
-    disableremoteplayback
-  >
+{%- liquid
+  assign video = video | default: blank
+  assign class_name = class | default: ''
+  assign poster_url = poster | default: blank
+  if video != blank
+    if poster_url == blank and video.preview_image != blank
+      assign poster_url = video.preview_image | image_url: width: 2400
+    endif
+-%}
+<video
+  class="{{ class_name }}"
+  {% if poster_url != blank %}poster="{{ poster_url | escape }}"{% endif %}
+  autoplay
+  muted
+  loop
+  playsinline
+  webkit-playsinline
+  preload="auto"
+  disablepictureinpicture
+>
+  {%- assign mp4_count = 0 -%}
+  {%- for source in video.sources -%}
+    {%- if source.format == 'mp4' or source.mime_type == 'video/mp4' or source.url contains '.mp4' -%}
+      <source src="{{ source.url }}" type="video/mp4">
+      {%- assign mp4_count = mp4_count | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if mp4_count == 0 -%}
     {%- for source in video.sources -%}
-      <source src="{{ source.url }}" type="{{ source.mime_type }}">
+      {%- unless source.format == 'm3u8' or source.mime_type == 'application/x-mpegURL' or source.url contains '.m3u8' -%}
+        <source src="{{ source.url }}"{% if source.mime_type != blank %} type="{{ source.mime_type }}"{% endif %}>
+      {%- endunless -%}
     {%- endfor -%}
-  </video>
+  {%- endif -%}
+</video>
 {%- endif -%}
