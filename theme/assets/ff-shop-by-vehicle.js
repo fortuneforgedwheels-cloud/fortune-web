@@ -247,6 +247,7 @@
   /* ── fitment card with selectable options ── */
   function renderFitmentCard(container, chassis, configs, source, guideSlug, onPick) {
     container.innerHTML = '';
+    container.classList.remove('is-collapsed');
     if (!configs || !configs.length) {
       container.hidden = true;
       return;
@@ -258,8 +259,11 @@
       : 'Apex fitment guide';
 
     var html = '<div class="ff-sbv__fitment-header">'
+      + '<div class="ff-sbv__fitment-header-text">'
       + '<span class="ff-sbv__fitment-chassis">' + escHtml(chassis) + '</span>'
-      + '<span class="ff-sbv__fitment-label">Select a fitment · ' + escHtml(sourceLabel) + '</span>'
+      + '<span class="ff-sbv__fitment-label" data-ff-sbv-fitment-label>Select a fitment · ' + escHtml(sourceLabel) + '</span>'
+      + '</div>'
+      + '<button type="button" class="ff-sbv__fitment-toggle" data-ff-sbv-fitment-toggle hidden>Change fitment</button>'
       + '</div>'
       + '<div class="ff-sbv__fitment-options">';
 
@@ -297,12 +301,54 @@
     container.innerHTML = html;
     container.hidden = false;
 
+    var labelEl = container.querySelector('[data-ff-sbv-fitment-label]');
+    var toggleBtn = container.querySelector('[data-ff-sbv-fitment-toggle]');
+
+    function collapseToSelected(btn) {
+      container.classList.add('is-collapsed');
+      container.querySelectorAll('.ff-sbv__fitment-option').forEach(function (b) {
+        b.hidden = !b.classList.contains('is-selected');
+      });
+      if (labelEl) labelEl.textContent = 'Selected fitment';
+      if (toggleBtn) {
+        toggleBtn.hidden = false;
+        toggleBtn.textContent = 'Change fitment';
+      }
+    }
+
+    function expandAll() {
+      container.classList.remove('is-collapsed');
+      container.querySelectorAll('.ff-sbv__fitment-option').forEach(function (b) {
+        b.hidden = false;
+      });
+      if (labelEl) labelEl.textContent = 'Select a fitment · ' + sourceLabel;
+      if (toggleBtn) {
+        toggleBtn.hidden = true;
+        toggleBtn.textContent = 'Change fitment';
+      }
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function () {
+        if (container.classList.contains('is-collapsed')) expandAll();
+        else {
+          var selected = container.querySelector('.ff-sbv__fitment-option.is-selected');
+          if (selected) collapseToSelected(selected);
+        }
+      });
+    }
+
     container.querySelectorAll('[data-ff-sbv-pick-fitment]').forEach(function (btn) {
       btn.addEventListener('click', function () {
+        if (container.classList.contains('is-collapsed') && btn.classList.contains('is-selected')) {
+          expandAll();
+          return;
+        }
         container.querySelectorAll('.ff-sbv__fitment-option').forEach(function (b) {
           b.classList.remove('is-selected');
         });
         btn.classList.add('is-selected');
+        collapseToSelected(btn);
         var idx = Number(btn.getAttribute('data-index'));
         if (onPick && ordered[idx]) onPick(ordered[idx], idx);
       });

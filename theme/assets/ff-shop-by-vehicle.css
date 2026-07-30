@@ -132,9 +132,56 @@
 
 .ff-sbv__fitment-header {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ff-sbv__fitment-header-text {
+  display: flex;
   align-items: baseline;
   gap: 12px;
   flex-wrap: wrap;
+  min-width: 0;
+}
+
+.ff-sbv__fitment-toggle {
+  margin-left: auto;
+  padding: 8px 14px;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+
+.ff-sbv__fitment-toggle:hover {
+  border-color: var(--ff-sbv-gold);
+  color: var(--ff-sbv-gold);
+  background: rgba(var(--ff-sbv-gold-rgb), 0.08);
+}
+
+.ff-sbv__fitment-toggle[hidden] {
+  display: none !important;
+}
+
+.ff-sbv__fitment-card.is-collapsed .ff-sbv__fitment-option:not(.is-selected) {
+  display: none;
+}
+
+.ff-sbv__fitment-card.is-collapsed .ff-sbv__fitment-option.is-selected {
+  cursor: pointer;
+}
+
+.ff-sbv__fitment-card.is-collapsed .ff-sbv__fitment-option-notes {
+  display: none;
 }
 
 .ff-sbv__fitment-chassis {
