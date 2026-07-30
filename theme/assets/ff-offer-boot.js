@@ -1,19 +1,19 @@
-/* FF_HOME_LIVE_VIEW */
+/* FF_HOME_HOMEPAGE_VIEW */
 (function () {
   try {
     if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
     var path = location.pathname || '/';
     if (path === '/' || path === '') {
       var params = location.search || '';
-      if (!/[?&]view=live(?:&|$)/.test(params)) {
-        location.replace('/?view=live' + (location.hash || ''));
+      if (!/[?&]view=homepage(?:&|$)/.test(params)) {
+        location.replace('/?view=homepage' + (location.hash || ''));
         return;
       }
     }
   } catch (e) {}
 })();
 
-/* BOOT_BUILD 2026-07-30-beadlock-hero-sync */
+/* BOOT_BUILD 2026-07-30-homepage-desktop-video */
 function ffThemeAsset(name, bust) {
   var probe = document.querySelector("script[src*='/cdn/shop/t/'][src*='/assets/'], link[href*='/cdn/shop/t/'][href*='/assets/']");
   var base = "/cdn/shop/t/13/assets/";
@@ -179,7 +179,7 @@ function ffThemeAsset(name, bust) {
 
         var bust = '_ff=' + Date.now();
         var urls = [
-          location.pathname + '?sections=ff-hero-lifestyle&view=live&' + bust,
+          location.pathname + '?sections=ff-hero-lifestyle&view=homepage&' + bust,
           location.pathname + '?sections=ff-hero-lifestyle&' + bust,
           location.pathname + '?sections=ff-hero-lifestyle&view=wheels&' + bust
         ];
