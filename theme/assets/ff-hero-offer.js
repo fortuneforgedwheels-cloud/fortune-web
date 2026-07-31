@@ -86,7 +86,23 @@
     return video;
   }
 
+  function layerHasUsableMp4(layer) {
+    if (!layer) return false;
+    var video = layer.querySelector('video');
+    if (!video) return false;
+    var src = video.getAttribute('src') || video.currentSrc || '';
+    if (src.indexOf('.mp4') !== -1 && src.indexOf('.m3u8') === -1) return true;
+    var sources = video.querySelectorAll('source');
+    for (var i = 0; i < sources.length; i++) {
+      var s = sources[i].getAttribute('src') || '';
+      var t = (sources[i].getAttribute('type') || '').toLowerCase();
+      if (s.indexOf('.mp4') !== -1 || t.indexOf('mp4') !== -1) return true;
+    }
+    return false;
+  }
+
   function ensureHardcodedVideos(root) {
+    /* Hardcoded URLs are FALLBACKS only — never overwrite Theme Editor videos. */
     var slides = root.querySelectorAll('[data-ff-hero-slide]');
     var isMobile = mqMobile.matches;
     slides.forEach(function (slide, i) {
@@ -95,21 +111,24 @@
       var desktop = slide.querySelector('[data-ff-desktop-layer]');
       var mobile = slide.querySelector('[data-ff-mobile-layer]');
       var isActive = slide.classList.contains('is-active') && !slide.hidden;
-      // Only the active + visible layer gets HTML autoplay flag.
-      ensureLayerVideo(
-        desktop,
-        hard.desktop,
-        hard.posterDesktop,
-        'ff-hero__video ff-hero__video--desktop',
-        isActive && !isMobile
-      );
-      ensureLayerVideo(
-        mobile,
-        hard.mobile,
-        hard.posterMobile,
-        'ff-hero__video ff-hero__video--mobile',
-        isActive && isMobile
-      );
+      if (!layerHasUsableMp4(desktop)) {
+        ensureLayerVideo(
+          desktop,
+          hard.desktop,
+          hard.posterDesktop,
+          'ff-hero__video ff-hero__video--desktop',
+          isActive && !isMobile
+        );
+      }
+      if (!layerHasUsableMp4(mobile)) {
+        ensureLayerVideo(
+          mobile,
+          hard.mobile,
+          hard.posterMobile,
+          'ff-hero__video ff-hero__video--mobile',
+          isActive && isMobile
+        );
+      }
     });
   }
 

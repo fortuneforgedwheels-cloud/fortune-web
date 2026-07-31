@@ -1,22 +1,26 @@
-/* BOOT_BUILD 2026-07-30-instant-play-1 */
+/* BOOT_BUILD 2026-07-31-editor-first-1 */
 /* NEVER redirect homepage to ?view=vehicle — that URL was sticky-cached with broken HLS hero markup. */
 (function () {
   try {
     if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
     var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
     var qs = location.search || '';
+    var hasFreshHero = !!document.querySelector(
+      '[data-ff-fingerprint^="HERO-EDITOR-FIRST"], [data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]'
+    );
     // Escape sticky broken vehicle homepage cache immediately.
-    // Escape sticky broken caches onto the fresh mobile-autoplay homepage view.
     if ((path === '/' || path === '') && /[?&]view=vehicle(?:&|$)/.test(qs)) {
-      location.replace('/?view=ffgo' + (location.hash || ''));
+      location.replace('/?view=fflive' + (location.hash || ''));
       return;
     }
+    // Only leave bare / when sticky cache served pre-editor-first markup.
+    // fflive mirrors templates/index.json (Theme Editor homepage).
     if (
       (path === '/' || path === '' || path === '/index') &&
-      !/[?&]view=ffgo(?:&|$)/.test(qs) &&
-      !document.querySelector('[data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]')
+      !/[?&]view=fflive(?:&|$)/.test(qs) &&
+      !hasFreshHero
     ) {
-      location.replace('/?view=ffgo' + (location.hash || ''));
+      location.replace('/?view=fflive' + (location.hash || ''));
       return;
     }
   } catch (e) {}
@@ -206,7 +210,22 @@ function ffThemeAsset(name, bust) {
     return !!(video && !video.paused && !video.ended && video.readyState > 2);
   }
 
+  function layerHasUsableMp4(layer) {
+    if (!layer) return false;
+    var video = layer.querySelector('video');
+    if (!video) return false;
+    var src = video.getAttribute('src') || video.currentSrc || '';
+    if (src.indexOf('.mp4') !== -1 && src.indexOf('.m3u8') === -1) return true;
+    var sources = video.querySelectorAll('source');
+    for (var i = 0; i < sources.length; i++) {
+      var s = sources[i].getAttribute('src') || '';
+      if (s.indexOf('.mp4') !== -1) return true;
+    }
+    return false;
+  }
+
   function injectHardcodedHeroVideos() {
+    /* FALLBACK only — never overwrite Theme Editor / Liquid MP4s. */
     var slides = document.querySelectorAll('[data-ff-hero-slide]');
     if (!slides.length) return;
     var isMobile = mqHeroMobile.matches;
@@ -229,6 +248,8 @@ function ffThemeAsset(name, bust) {
         },
       ].forEach(function (item) {
         if (!item.layer || !item.src) return;
+        // Keep whatever the theme editor / Liquid already rendered.
+        if (layerHasUsableMp4(item.layer)) return;
         var video = item.layer.querySelector('video');
         if (!video) {
           item.layer.querySelectorAll('img.ff-hero__image, .ff-hero__placeholder').forEach(function (el) {
@@ -239,7 +260,6 @@ function ffThemeAsset(name, bust) {
           video.setAttribute('data-ff-autoplay-v', 'mp4-hardcoded-1');
           item.layer.appendChild(video);
         }
-        // Re-setting src aborts native autoplay and causes the "frozen then starts late" feel.
         if (!srcMatches(video, item.src)) {
           video.setAttribute('src', item.src);
         }
@@ -329,26 +349,25 @@ function ffThemeAsset(name, bust) {
       var hasFreshHero = !!(
         homeMain &&
         homeMain.querySelector(
-          '[data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]'
+          '[data-ff-fingerprint^="HERO-EDITOR-FIRST"], [data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]'
         )
       );
       if (!hasFreshHero) {
-        // Hard navigation is faster/cleaner than swap+heal (no static-then-start gap).
-        if (!/[?&]view=ffgo(?:&|$)/.test(location.search || '')) {
-          location.replace('/?view=ffgo' + (location.hash || ''));
+        if (!/[?&]view=fflive(?:&|$)/.test(location.search || '')) {
+          location.replace('/?view=fflive' + (location.hash || ''));
           return;
         }
         swapMainUrl(
-          '/?view=ffgo&ffhome=1',
+          '/?view=fflive&ffhome=1',
           function (root) {
             return !!root.querySelector(
-              '[data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]'
+              '[data-ff-fingerprint^="HERO-EDITOR-FIRST"], [data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]'
             );
           },
           'ff-hero-lifestyle',
-          ffThemeAsset('ff-hero-lifestyle.css', 'instant1'),
+          ffThemeAsset('ff-hero-lifestyle.css', 'editor1'),
           'ff-hero-lifestyle',
-          'ff-home-mobile-autoplay'
+          'ff-home-editor-first'
         );
       }
       // Fresh markup: leave native HTML autoplay alone. Deferred heal was

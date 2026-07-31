@@ -47,7 +47,7 @@
   <section
     class="ff-hero"
     id="ff-hero-{{ section.id }}"
-    data-ff-hero data-ff-fingerprint="HERO-INSTANT-20260730G" data-ff-hero-fix="arrows-v1"
+    data-ff-hero data-ff-fingerprint="HERO-EDITOR-FIRST-20260731A" data-ff-hero-fix="arrows-v1"
     style="
       --ff-hero-height: {{ section.settings.height }}vh;
       --ff-hero-height-mobile: {{ section.settings.height_mobile }}vh;
@@ -81,9 +81,8 @@
           >
             <div class="ff-hero__media">
               {%- comment -%}
-                HARDCODED homepage hero MP4s. Theme-editor / template JSON wipes
-                must not turn these slides back into still images. Direct CDN
-                MP4 URLs always win for the first three slides.
+                Theme editor videos win. Hardcoded CDN MP4s are FALLBACKS only
+                when a slide video setting is blank.
               {%- endcomment -%}
               {%- liquid
                 assign slide_video = block.settings.video
@@ -112,20 +111,20 @@
                 endcase
 
                 assign has_desktop_media = false
-                if hard_desktop != blank or slide_video != blank or block.settings.image != blank
+                if slide_video != blank or hard_desktop != blank or block.settings.image != blank
                   assign has_desktop_media = true
                 endif
                 assign has_mobile_media = false
-                if hard_mobile != blank or slide_mobile_video != blank or block.settings.mobile_image != blank or slide_video != blank or block.settings.image != blank
+                if slide_mobile_video != blank or hard_mobile != blank or block.settings.mobile_image != blank or slide_video != blank or block.settings.image != blank
                   assign has_mobile_media = true
                 endif
               -%}
               {%- if has_desktop_media or has_mobile_media -%}
                 <div class="ff-hero__media-desktop" data-ff-desktop-layer>
-                  {%- if hard_desktop != blank -%}
-                    {% render 'ff-autoplay-video', src: hard_desktop, poster: hard_poster_d, class: 'ff-hero__video ff-hero__video--desktop', autoplay_mode: 'off' %}
-                  {%- elsif slide_video != blank -%}
+                  {%- if slide_video != blank -%}
                     {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--desktop', autoplay_mode: 'off' %}
+                  {%- elsif hard_desktop != blank -%}
+                    {% render 'ff-autoplay-video', src: hard_desktop, poster: hard_poster_d, class: 'ff-hero__video ff-hero__video--desktop', autoplay_mode: 'off' %}
                   {%- elsif block.settings.image != blank -%}
                     <img
                       class="ff-hero__image"
@@ -159,14 +158,14 @@
                       assign mobile_autoplay_mode = 'on'
                     endif
                   -%}
-                  {%- if hard_mobile != blank -%}
-                    {% render 'ff-autoplay-video', src: hard_mobile, poster: blank, class: 'ff-hero__video ff-hero__video--mobile', autoplay_mode: mobile_autoplay_mode %}
-                  {%- elsif slide_mobile_video != blank -%}
+                  {%- if slide_mobile_video != blank -%}
                     {% render 'ff-autoplay-video', video: slide_mobile_video, class: 'ff-hero__video ff-hero__video--mobile', autoplay_mode: mobile_autoplay_mode %}
-                  {%- elsif hard_desktop != blank -%}
-                    {% render 'ff-autoplay-video', src: hard_desktop, poster: blank, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback', autoplay_mode: mobile_autoplay_mode %}
+                  {%- elsif hard_mobile != blank -%}
+                    {% render 'ff-autoplay-video', src: hard_mobile, poster: blank, class: 'ff-hero__video ff-hero__video--mobile', autoplay_mode: mobile_autoplay_mode %}
                   {%- elsif slide_video != blank -%}
                     {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback', autoplay_mode: mobile_autoplay_mode %}
+                  {%- elsif hard_desktop != blank -%}
+                    {% render 'ff-autoplay-video', src: hard_desktop, poster: blank, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback', autoplay_mode: mobile_autoplay_mode %}
                   {%- elsif block.settings.mobile_image != blank -%}
                     <img
                       class="ff-hero__image"

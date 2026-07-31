@@ -92,10 +92,10 @@
               var onHome = path === '/' || path === '/index';
               if (!onHome) return;
               if (/[?&]view=ffgo(?:&|$)/.test(qs)) return;
-              if (document.documentElement && document.documentElement.querySelector('[data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]')) return;
-              /* Bare / and legacy sticky views — jump straight to fresh markup (no late swap). */
-              if (!/[?&]view=/.test(qs) || /[?&]view=vehicle(?:&|$)/.test(qs) || /[?&]view=ffautoplay(?:&|$)/.test(qs) || /[?&]view=ffnow(?:&|$)/.test(qs) || /[?&]view=ffmplay(?:&|$)/.test(qs)) {
-                location.replace('/?view=ffgo' + (location.hash || ''));
+              if (document.documentElement && document.documentElement.querySelector('[data-ff-fingerprint^="HERO-EDITOR-FIRST"], [data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]')) return;
+              /* Bare / and legacy sticky views — jump to fflive (mirrors Theme Editor homepage). */
+              if (!/[?&]view=/.test(qs) || /[?&]view=vehicle(?:&|$)/.test(qs) || /[?&]view=ffautoplay(?:&|$)/.test(qs) || /[?&]view=ffnow(?:&|$)/.test(qs) || /[?&]view=ffmplay(?:&|$)/.test(qs) || /[?&]view=ffgo(?:&|$)/.test(qs)) {
+                location.replace('/?view=fflive' + (location.hash || ''));
               }
             } catch (e) {}
           })();

@@ -546,7 +546,7 @@
         "padding_bottom": 64
       }
     },
-    "ff_hero_instant_20260730g": {
+    "ff_hero_editor_20260731a": {
       "type": "ff-hero-lifestyle",
       "blocks": {
         "slide_mono": {
@@ -554,7 +554,7 @@
           "settings": {
             "video": "shopify://files/videos/Video Apr 27 2026, 9 57 19 PM.mov",
             "image": "shopify://shop_images/IMG_2176.jpg",
-            "mobile_video": "shopify://files/videos/Video Oct 07 2025, 6 39 14 PM.MP4",
+            "mobile_video": "shopify://files/videos/medeeee3_1_prob4.MP4",
             "mobile_image": "shopify://shop_images/BMW_F80_25MP_HighQuality.jpg",
             "title": "Monoblock Forged",
             "title_size": 42,
@@ -612,7 +612,7 @@
     }
   },
   "order": [
-    "ff_hero_instant_20260730g",
+    "ff_hero_editor_20260731a",
     "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",
