@@ -90,6 +90,8 @@
     if (!layer) return false;
     var video = layer.querySelector('video');
     if (!video) return false;
+    // Never overwrite Theme Editor uploads.
+    if (video.getAttribute('data-ff-from-editor') === '1') return true;
     var src = video.getAttribute('src') || video.currentSrc || '';
     if (src.indexOf('.mp4') !== -1 && src.indexOf('.m3u8') === -1) return true;
     var sources = video.querySelectorAll('source');

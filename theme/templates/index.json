@@ -562,7 +562,7 @@
         "custom_liquid": ""
       }
     },
-    "ff_hero_editor_20260731a": {
+    "ff_hero_live_editor_20260731b": {
       "type": "ff-hero-lifestyle",
       "blocks": {
         "slide_mono": {
@@ -598,7 +598,7 @@
         "slide_bead": {
           "type": "slide",
           "settings": {
-            "video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E 2.mov",
+            "video": "shopify://files/videos/fortune 1080 rev 1.MP4",
             "image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM_c0f745e4-4f88-4373-8d62-148cfcbbe059.png",
             "mobile_video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E.mov",
             "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
@@ -628,7 +628,7 @@
     }
   },
   "order": [
-    "ff_hero_editor_20260731a",
+    "ff_hero_live_editor_20260731b",
     "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",

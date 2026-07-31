@@ -8,6 +8,10 @@
   assign class_name = class | default: ''
   assign poster_url = poster | default: blank
   assign mp4_url = src | default: blank
+  assign from_editor = false
+  if video != blank
+    assign from_editor = true
+  endif
   assign mode = autoplay_mode | default: 'on'
   assign do_autoplay = true
   if mode == 'off' or mode == 'false' or mode == '0'
@@ -21,6 +25,12 @@
     assign mp4_sources = video.sources | where: 'format', 'mp4'
     if mp4_sources.size > 0
       assign mp4_url = mp4_sources.last.url
+    else
+      for source in video.sources
+        if source.url contains '.mp4'
+          assign mp4_url = source.url
+        endif
+      endfor
     endif
   endif
 -%}
@@ -28,6 +38,7 @@
 <video
   class="{{ class_name }}"
   data-ff-autoplay-v="mp4-only-1"
+  {% if from_editor %}data-ff-from-editor="1"{% endif %}
   {% if poster_url != blank %}poster="{{ poster_url | escape }}"{% endif %}
   src="{{ mp4_url }}"
   {% if do_autoplay %}autoplay{% endif %}
@@ -45,6 +56,7 @@
 <video
   class="{{ class_name }}"
   data-ff-autoplay-v="mp4-fallback-1"
+  data-ff-from-editor="1"
   {% if poster_url != blank %}poster="{{ poster_url | escape }}"{% endif %}
   {% if do_autoplay %}autoplay{% endif %}
   muted
@@ -58,7 +70,7 @@
   x-webkit-airplay="deny"
 >
   {%- for source in video.sources -%}
-    {%- if source.format == 'mp4' -%}
+    {%- if source.format == 'mp4' or source.url contains '.mp4' -%}
       <source src="{{ source.url }}" type="video/mp4">
     {%- endif -%}
   {%- endfor -%}

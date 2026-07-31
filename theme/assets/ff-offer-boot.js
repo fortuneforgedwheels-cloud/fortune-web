@@ -1,26 +1,17 @@
-/* BOOT_BUILD 2026-07-31-editor-first-1 */
-/* NEVER redirect homepage to ?view=vehicle — that URL was sticky-cached with broken HLS hero markup. */
+/* BOOT_BUILD 2026-07-31-live-editor-2 */
+/* Theme Editor edits templates/index.json — that MUST be what / serves. */
+/* NEVER redirect homepage to ?view=vehicle. */
 (function () {
   try {
     if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
     var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
     var qs = location.search || '';
-    var hasFreshHero = !!document.querySelector(
-      '[data-ff-fingerprint^="HERO-EDITOR-FIRST"], [data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]'
-    );
-    // Escape sticky broken vehicle homepage cache immediately.
-    if ((path === '/' || path === '') && /[?&]view=vehicle(?:&|$)/.test(qs)) {
-      location.replace('/?view=fflive' + (location.hash || ''));
-      return;
-    }
-    // Only leave bare / when sticky cache served pre-editor-first markup.
-    // fflive mirrors templates/index.json (Theme Editor homepage).
+    // Legacy sticky alternate homepage views → real Theme Editor homepage (/).
     if (
-      (path === '/' || path === '' || path === '/index') &&
-      !/[?&]view=fflive(?:&|$)/.test(qs) &&
-      !hasFreshHero
+      (path === '/' || path === '') &&
+      /[?&]view=(?:vehicle|fflive|ffgo|ffnow|ffmplay|ffautoplay)(?:&|$)/.test(qs)
     ) {
-      location.replace('/?view=fflive' + (location.hash || ''));
+      location.replace('/' + (location.hash || ''));
       return;
     }
   } catch (e) {}
@@ -214,6 +205,7 @@ function ffThemeAsset(name, bust) {
     if (!layer) return false;
     var video = layer.querySelector('video');
     if (!video) return false;
+    if (video.getAttribute('data-ff-from-editor') === '1') return true;
     var src = video.getAttribute('src') || video.currentSrc || '';
     if (src.indexOf('.mp4') !== -1 && src.indexOf('.m3u8') === -1) return true;
     var sources = video.querySelectorAll('source');
@@ -349,25 +341,23 @@ function ffThemeAsset(name, bust) {
       var hasFreshHero = !!(
         homeMain &&
         homeMain.querySelector(
-          '[data-ff-fingerprint^="HERO-EDITOR-FIRST"], [data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]'
+          '[data-ff-fingerprint^="HERO-LIVE-EDITOR"], [data-ff-fingerprint^="HERO-EDITOR-FIRST"], [data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]'
         )
       );
       if (!hasFreshHero) {
-        if (!/[?&]view=fflive(?:&|$)/.test(location.search || '')) {
-          location.replace('/?view=fflive' + (location.hash || ''));
-          return;
-        }
+        // Soft-upgrade sticky HTML from a mirror of index.json — do not hard-redirect
+        // away from /, or Theme Editor saves on the default homepage never appear.
         swapMainUrl(
-          '/?view=fflive&ffhome=1',
+          '/index?ffhome=1',
           function (root) {
             return !!root.querySelector(
-              '[data-ff-fingerprint^="HERO-EDITOR-FIRST"], [data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]'
+              '[data-ff-fingerprint^="HERO-LIVE-EDITOR"], [data-ff-fingerprint^="HERO-EDITOR-FIRST"], [data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]'
             );
           },
           'ff-hero-lifestyle',
-          ffThemeAsset('ff-hero-lifestyle.css', 'editor1'),
+          ffThemeAsset('ff-hero-lifestyle.css', 'liveed2'),
           'ff-hero-lifestyle',
-          'ff-home-editor-first'
+          'ff-home-live-editor'
         );
       }
       // Fresh markup: leave native HTML autoplay alone. Deferred heal was

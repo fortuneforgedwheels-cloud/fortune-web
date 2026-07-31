@@ -546,7 +546,7 @@
         "padding_bottom": 64
       }
     },
-    "ff_hero_editor_20260731a": {
+    "ff_hero_live_editor_20260731b": {
       "type": "ff-hero-lifestyle",
       "blocks": {
         "slide_mono": {
@@ -567,31 +567,31 @@
         "slide_two": {
           "type": "slide",
           "settings": {
+            "video": "shopify://files/videos/G80 done 2.MP4",
             "image": "shopify://shop_images/Screenshot_2026-07-27_at_6.58.56_PM.png",
+            "mobile_video": "shopify://files/videos/G80 done 2.MP4",
             "mobile_image": "shopify://shop_images/IMG_0287_2.jpg",
             "title": "Two-Piece Forged",
             "title_size": 42,
             "title_align": "left",
             "button_label": "Browse Selection",
             "button_size": 12,
-            "button_link": "shopify://collections/two-piece-wheels",
-            "video": "shopify://files/videos/G80 done 2.MP4",
-            "mobile_video": "shopify://files/videos/G80 done 2.MP4"
+            "button_link": "shopify://collections/two-piece-wheels"
           }
         },
         "slide_bead": {
           "type": "slide",
           "settings": {
+            "video": "shopify://files/videos/fortune 1080 rev 1.MP4",
             "image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM_c0f745e4-4f88-4373-8d62-148cfcbbe059.png",
+            "mobile_video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E.mov",
             "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
             "title": "Beadlock Forged",
             "title_size": 42,
             "title_align": "left",
             "button_label": "Browse Selection",
             "button_size": 12,
-            "button_link": "shopify://collections/beadlock-wheels",
-            "video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E 2.mov",
-            "mobile_video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E.mov"
+            "button_link": "shopify://collections/beadlock-wheels"
           }
         }
       },
@@ -612,7 +612,7 @@
     }
   },
   "order": [
-    "ff_hero_editor_20260731a",
+    "ff_hero_live_editor_20260731b",
     "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",
