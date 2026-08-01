@@ -1,0 +1,444 @@
+{{ 'ff-e36-giveaway.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ff-e36-giveaway.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign is_live = section.settings.is_live
+  assign show_page = false
+  if is_live or request.design_mode
+    assign show_page = true
+  endif
+
+  assign giveaway = section.settings.product
+  assign variant = blank
+  if giveaway != blank
+    assign variant = giveaway.selected_or_first_available_variant
+  endif
+
+  assign brand_title = section.settings.brand_title | default: 'WIN OUR E36 M3'
+  if brand_title == blank
+    assign brand_title = 'WIN OUR E36 M3'
+  endif
+  assign cta_label = section.settings.cta_label | default: 'GET MY ENTRY'
+  if cta_label == blank
+    assign cta_label = 'GET MY ENTRY'
+  endif
+  assign checkout_label = section.settings.checkout_label | default: 'ENTER NOW — CHECKOUT'
+  if checkout_label == blank
+    assign checkout_label = 'ENTER NOW — CHECKOUT'
+  endif
+  assign terms_version = section.settings.terms_version | default: '1'
+  if terms_version == blank
+    assign terms_version = '1'
+  endif
+  assign terms_label = section.settings.terms_checkbox_label | default: 'I have read and agree to the Official Rules and Privacy Policy.'
+  if terms_label == blank
+    assign terms_label = 'I have read and agree to the Official Rules and Privacy Policy.'
+  endif
+-%}
+
+{%- unless show_page -%}
+  <section class="ff-e36" id="ff-e36-{{ section.id }}" data-ff-e36-giveaway data-ff-e36-gated="1" {{ section.shopify_attributes }}>
+    <div class="ff-e36__gate">
+      <h1>{{ brand_title | escape }}</h1>
+      <p>{{ section.settings.gated_message | default: 'This giveaway is not live yet. Check back soon.' | escape }}</p>
+    </div>
+  </section>
+{%- else -%}
+  <section
+    class="ff-e36"
+    id="ff-e36-{{ section.id }}"
+    data-ff-e36-giveaway
+    data-ff-e36-live="{% if is_live %}1{% else %}0{% endif %}"
+    {{ section.shopify_attributes }}
+  >
+    {%- comment -%} 1) Full-bleed video + brand + GET MY ENTRY {%- endcomment -%}
+    <div class="ff-e36__hero">
+      <div class="ff-e36__video-wrap" data-ff-autoplay-video>
+        {%- if section.settings.hero_video != blank -%}
+          {% render 'ff-autoplay-video', video: section.settings.hero_video, class: 'ff-e36__video' %}
+        {%- elsif section.settings.hero_poster != blank -%}
+          {{
+            section.settings.hero_poster
+            | image_url: width: 2000
+            | image_tag:
+              class: 'ff-e36__poster',
+              widths: '600, 900, 1200, 1600, 2000',
+              sizes: '100vw',
+              loading: 'eager',
+              alt: brand_title
+          }}
+        {%- else -%}
+          <div class="ff-e36__poster" style="background: linear-gradient(160deg, #1a1c22, #070708); min-height: 100%;" aria-hidden="true"></div>
+        {%- endif -%}
+        <div class="ff-e36__hero-shade" aria-hidden="true"></div>
+        <div class="ff-e36__hero-copy">
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="ff-e36__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {%- endif -%}
+          <h1 class="ff-e36__title">{{ brand_title | escape }}</h1>
+          {%- if section.settings.subtitle != blank -%}
+            <p class="ff-e36__subtitle">{{ section.settings.subtitle | escape }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="ff-e36__cta-bar" data-ff-e36-hero-cta>
+        <button type="button" class="ff-e36__cta" data-ff-e36-scroll-entry>
+          {{ cta_label | escape }}
+        </button>
+        {%- if section.settings.cta_note != blank -%}
+          <p class="ff-e36__cta-note">{{ section.settings.cta_note | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} 2) Car write-up {%- endcomment -%}
+    <div class="ff-e36__section ff-e36__section--story">
+      <div class="ff-e36__section-inner">
+        {%- if section.settings.story_kicker != blank -%}
+          <p class="ff-e36__story-kicker">{{ section.settings.story_kicker | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.story_title != blank -%}
+          <h2 class="ff-e36__story-title">{{ section.settings.story_title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.story_body != blank -%}
+          <div class="ff-e36__story-body">{{ section.settings.story_body }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} 3) Product entry + required terms {%- endcomment -%}
+    <div class="ff-e36__entry" id="ff-e36-entry" data-ff-e36-entry>
+      {%- if giveaway != blank and variant != blank -%}
+        <div class="ff-e36__entry-top">
+          <div class="ff-e36__entry-media">
+            {%- if giveaway.featured_media != blank -%}
+              {%- liquid
+                assign entry_alt = giveaway.featured_media.alt | default: giveaway.title
+              -%}
+              {{
+                giveaway.featured_media
+                | image_url: width: 600
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '200, 300, 400, 600',
+                  sizes: '(min-width: 750px) 140px, 40vw',
+                  alt: entry_alt
+              }}
+            {%- elsif section.settings.hero_poster != blank -%}
+              {{
+                section.settings.hero_poster
+                | image_url: width: 600
+                | image_tag:
+                  loading: 'lazy',
+                  alt: brand_title
+              }}
+            {%- endif -%}
+          </div>
+          <div>
+            <h2 class="ff-e36__entry-heading">{{ section.settings.entry_heading | default: giveaway.title | escape }}</h2>
+            <p class="ff-e36__entry-price">
+              {%- if variant.price == 0 -%}
+                {{ section.settings.free_price_label | default: 'FREE ENTRY' | escape }}
+              {%- else -%}
+                {{ variant.price | money }}
+                {%- if variant.compare_at_price > variant.price -%}
+                  <span style="opacity:0.55;text-decoration:line-through;margin-left:0.4em;font-size:0.85em;">{{ variant.compare_at_price | money }}</span>
+                {%- endif -%}
+              {%- endif -%}
+            </p>
+            {%- if section.settings.entry_blurb != blank -%}
+              <p class="ff-e36__entry-desc">{{ section.settings.entry_blurb | escape }}</p>
+            {%- elsif giveaway.description != blank -%}
+              <div class="ff-e36__entry-desc">{{ giveaway.description | strip_html | truncate: 180 }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- if variant.available -%}
+          {% form 'product', giveaway, data-ff-e36-form: '', id: 'ff-e36-form' %}
+            <input type="hidden" name="id" value="{{ variant.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <input type="hidden" name="return_to" value="/checkout">
+
+            <input type="hidden" name="properties[Sweepstakes Terms Accepted]" value="" data-ff-e36-accepted-flag>
+            <input type="hidden" name="properties[Sweepstakes Terms Accepted At]" value="" data-ff-e36-accepted-at>
+            <input type="hidden" name="properties[Sweepstakes Terms Version]" value="{{ terms_version | escape }}" data-ff-e36-terms-version>
+            <input type="hidden" name="properties[Sweepstakes Entry Page]" value="{{ request.path | escape }}">
+            <input type="hidden" name="properties[Sweepstakes Giveaway]" value="{{ brand_title | escape }}">
+
+            <div class="ff-e36__terms">
+              <div class="ff-e36__terms-row">
+                <input
+                  type="checkbox"
+                  id="ff-e36-terms-{{ section.id }}"
+                  name="properties[Official Rules Accepted]"
+                  value="Yes"
+                  data-ff-e36-terms
+                  required
+                  aria-required="true"
+                  aria-invalid="true"
+                  aria-describedby="ff-e36-terms-error-{{ section.id }}"
+                >
+                <label for="ff-e36-terms-{{ section.id }}">
+                  {{ terms_label }}
+                  {%- if section.settings.terms_link_label != blank and section.settings.terms_link_url != blank -%}
+                    <a href="{{ section.settings.terms_link_url }}" target="_blank" rel="noopener">{{ section.settings.terms_link_label | escape }}</a>
+                  {%- endif -%}
+                </label>
+              </div>
+              <p
+                class="ff-e36__terms-error"
+                id="ff-e36-terms-error-{{ section.id }}"
+                data-ff-e36-terms-error
+                data-message="{{ section.settings.terms_error | default: 'Please accept the Official Rules to continue.' | escape }}"
+                hidden
+                role="alert"
+              ></p>
+            </div>
+
+            <button type="submit" class="ff-e36__cta" data-ff-e36-cta disabled aria-disabled="true">
+              {{ checkout_label | escape }}
+            </button>
+            {%- if section.settings.checkout_note != blank -%}
+              <p class="ff-e36__cta-note">{{ section.settings.checkout_note | escape }}</p>
+            {%- endif -%}
+          {% endform %}
+        {%- else -%}
+          <p class="ff-e36__soldout">{{ section.settings.soldout_message | default: 'Entries are closed for now.' | escape }}</p>
+        {%- endif -%}
+      {%- else -%}
+        <p class="ff-e36__soldout">
+          {%- if request.design_mode -%}
+            Select the Giveaway product in this section’s settings to enable checkout.
+          {%- else -%}
+            {{ section.settings.missing_product_message | default: 'Entry product unavailable. Please check back soon.' | escape }}
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.fine_print != blank -%}
+      <details class="ff-e36__fineprint" {% if section.settings.fine_print_open %}open{% endif %}>
+        <summary>{{ section.settings.fine_print_heading | default: 'Official Rules & Fine Print' | escape }}</summary>
+        <div class="ff-e36__fineprint-body">{{ section.settings.fine_print }}</div>
+      </details>
+    {%- elsif request.design_mode -%}
+      <details class="ff-e36__fineprint">
+        <summary>Official Rules & Fine Print</summary>
+        <div class="ff-e36__fineprint-body"><p>Paste your California sweepstakes / Official Rules text in the section setting “Fine print”.</p></div>
+      </details>
+    {%- endif -%}
+
+    <div class="ff-e36__sticky" data-ff-e36-sticky>
+      <button type="button" class="ff-e36__cta" data-ff-e36-scroll-entry>
+        {{ cta_label | escape }}
+      </button>
+    </div>
+  </section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "E36 M3 Giveaway",
+  "tag": "div",
+  "class": "ff-e36-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Go live control"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_live",
+      "label": "Enable page on storefront",
+      "default": false,
+      "info": "Keep OFF while building. Turn ON when you publish the page. Theme Editor always previews the full page."
+    },
+    {
+      "type": "text",
+      "id": "gated_message",
+      "label": "Message when not live",
+      "default": "This giveaway is not live yet. Check back soon."
+    },
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "video",
+      "id": "hero_video",
+      "label": "Hero video (MP4)"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_poster",
+      "label": "Hero image fallback / poster"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "FORTUNE FORGED GIVEAWAY"
+    },
+    {
+      "type": "text",
+      "id": "brand_title",
+      "label": "Page title",
+      "default": "WIN OUR E36 M3"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Supporting line",
+      "default": "One entry. One legendary E36 M3. Enter in under a minute."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Primary CTA label",
+      "default": "GET MY ENTRY"
+    },
+    {
+      "type": "text",
+      "id": "cta_note",
+      "label": "Note under GET MY ENTRY",
+      "default": "Takes less than 60 seconds · Limited-time giveaway"
+    },
+    {
+      "type": "header",
+      "content": "Car story"
+    },
+    {
+      "type": "text",
+      "id": "story_kicker",
+      "label": "Story kicker",
+      "default": "THE PRIZE"
+    },
+    {
+      "type": "text",
+      "id": "story_title",
+      "label": "Story headline",
+      "default": "A real E36 M3 — built to be driven"
+    },
+    {
+      "type": "richtext",
+      "id": "story_body",
+      "label": "Story write-up",
+      "default": "<p>This is your shot at owning a classic BMW E36 M3 from Fortune Forged. Enter now, accept the Official Rules, and complete checkout to lock in your entry.</p><p>No complicated forms on this page — just watch the film, claim your entry, and check out.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Entry product"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Giveaway product",
+      "info": "Select your existing Giveaway product."
+    },
+    {
+      "type": "text",
+      "id": "entry_heading",
+      "label": "Entry heading override",
+      "info": "Leave blank to use the product title."
+    },
+    {
+      "type": "textarea",
+      "id": "entry_blurb",
+      "label": "Entry blurb",
+      "default": "Official giveaway entry. Accept the rules below, then checkout to secure your spot."
+    },
+    {
+      "type": "text",
+      "id": "free_price_label",
+      "label": "Label when price is $0",
+      "default": "FREE ENTRY"
+    },
+    {
+      "type": "text",
+      "id": "checkout_label",
+      "label": "Checkout button label",
+      "default": "ENTER NOW — CHECKOUT"
+    },
+    {
+      "type": "text",
+      "id": "checkout_note",
+      "label": "Note under checkout button",
+      "default": "You will complete checkout to confirm your entry."
+    },
+    {
+      "type": "text",
+      "id": "soldout_message",
+      "label": "Sold out / closed message",
+      "default": "Entries are closed for now."
+    },
+    {
+      "type": "text",
+      "id": "missing_product_message",
+      "label": "Missing product message",
+      "default": "Entry product unavailable. Please check back soon."
+    },
+    {
+      "type": "header",
+      "content": "Terms acceptance (required)"
+    },
+    {
+      "type": "richtext",
+      "id": "terms_checkbox_label",
+      "label": "Checkbox label",
+      "default": "<p>I have read and agree to the Official Rules and understand this is a sweepstakes skill/chance promotion as described in the fine print.</p>"
+    },
+    {
+      "type": "text",
+      "id": "terms_link_label",
+      "label": "Optional rules link label"
+    },
+    {
+      "type": "url",
+      "id": "terms_link_url",
+      "label": "Optional rules link URL"
+    },
+    {
+      "type": "text",
+      "id": "terms_version",
+      "label": "Terms version (logged on order)",
+      "default": "1",
+      "info": "Bump this when you change Official Rules so orders show which version was accepted."
+    },
+    {
+      "type": "text",
+      "id": "terms_error",
+      "label": "Error if unchecked",
+      "default": "Please accept the Official Rules to continue."
+    },
+    {
+      "type": "header",
+      "content": "Fine print / CA sweepstakes"
+    },
+    {
+      "type": "text",
+      "id": "fine_print_heading",
+      "label": "Fine print heading",
+      "default": "Official Rules & Fine Print"
+    },
+    {
+      "type": "richtext",
+      "id": "fine_print",
+      "label": "Fine print",
+      "info": "Paste your full California sweepstakes / Official Rules text here."
+    },
+    {
+      "type": "checkbox",
+      "id": "fine_print_open",
+      "label": "Start with fine print expanded",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "E36 M3 Giveaway"
+    }
+  ]
+}
+{% endschema %}

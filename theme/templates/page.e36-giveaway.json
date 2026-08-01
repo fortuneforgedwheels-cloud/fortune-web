@@ -1,0 +1,47 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": false,
+        "show_page_title": false,
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "ff_e36_giveaway": {
+      "type": "ff-e36-giveaway",
+      "settings": {
+        "is_live": false,
+        "gated_message": "This giveaway is not live yet. Check back soon.",
+        "eyebrow": "FORTUNE FORGED GIVEAWAY",
+        "brand_title": "WIN OUR E36 M3",
+        "subtitle": "One entry. One legendary E36 M3. Enter in under a minute.",
+        "cta_label": "GET MY ENTRY",
+        "cta_note": "Takes less than 60 seconds · Limited-time giveaway",
+        "story_kicker": "THE PRIZE",
+        "story_title": "A real E36 M3 — built to be driven",
+        "story_body": "<p>This is your shot at owning a classic BMW E36 M3 from Fortune Forged. Enter now, accept the Official Rules, and complete checkout to lock in your entry.</p><p>No complicated forms on this page — just watch the film, claim your entry, and check out.</p>",
+        "entry_blurb": "Official giveaway entry. Accept the rules below, then checkout to secure your spot.",
+        "free_price_label": "FREE ENTRY",
+        "checkout_label": "ENTER NOW — CHECKOUT",
+        "checkout_note": "You will complete checkout to confirm your entry.",
+        "terms_checkbox_label": "<p>I have read and agree to the Official Rules and understand this is a sweepstakes promotion as described in the fine print.</p>",
+        "terms_version": "1",
+        "terms_error": "Please accept the Official Rules to continue.",
+        "fine_print_heading": "Official Rules & Fine Print",
+        "fine_print_open": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ff_e36_giveaway"
+  ]
+}
