@@ -198,12 +198,20 @@
     prepare(video);
     video.autoplay = true;
     video.setAttribute('autoplay', '');
+    video.setAttribute('preload', 'auto');
+    try {
+      video.preload = 'auto';
+    } catch (ePre) {}
     var p = video.play();
     if (p && typeof p.catch === 'function') {
       p.catch(function () {
         var retry = function () {
           if (isPlaying(video)) return;
           prepare(video);
+          video.setAttribute('preload', 'auto');
+          try {
+            video.preload = 'auto';
+          } catch (ePre2) {}
           var p2 = video.play();
           if (p2 && typeof p2.catch === 'function') p2.catch(function () {});
         };

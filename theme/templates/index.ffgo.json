@@ -546,7 +546,7 @@
         "padding_bottom": 64
       }
     },
-    "ff_hero_live_editor_20260731b": {
+    "ff_hero_desktop_play_20260801a": {
       "type": "ff-hero-lifestyle",
       "blocks": {
         "slide_mono": {
@@ -612,7 +612,7 @@
     }
   },
   "order": [
-    "ff_hero_live_editor_20260731b",
+    "ff_hero_desktop_play_20260801a",
     "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",

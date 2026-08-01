@@ -1,4 +1,4 @@
-/* BOOT_BUILD 2026-07-31-live-editor-2 */
+/* BOOT_BUILD 2026-08-01-desktop-play-1 */
 /* Theme Editor edits templates/index.json — that MUST be what / serves. */
 /* NEVER redirect homepage to ?view=vehicle. */
 (function () {
@@ -7,6 +7,7 @@
     var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
     var qs = location.search || '';
     // Legacy sticky alternate homepage views → real Theme Editor homepage (/).
+    // Keep ?view=ffdesk available as an uncached mirror used to heal sticky /.
     if (
       (path === '/' || path === '') &&
       /[?&]view=(?:vehicle|fflive|ffgo|ffnow|ffmplay|ffautoplay)(?:&|$)/.test(qs)
@@ -338,30 +339,64 @@ function ffThemeAsset(name, bust) {
     // Pull a never-cached alternate view so mobile can autoplay without tap.
     if (path === '/' || path === '' || path === '/index' || path === '/index.html') {
       var homeMain = document.getElementById('MainContent');
-      var hasFreshHero = !!(
-        homeMain &&
-        homeMain.querySelector(
-          '[data-ff-fingerprint^="HERO-LIVE-EDITOR"], [data-ff-fingerprint^="HERO-EDITOR-FIRST"], [data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]'
-        )
-      );
-      if (!hasFreshHero) {
-        // Soft-upgrade sticky HTML from a mirror of index.json — do not hard-redirect
-        // away from /, or Theme Editor saves on the default homepage never appear.
+      // Only DESKTOP-PLAY markup has first-slide desktop HTML autoplay.
+      // Older fingerprints (LIVE-EDITOR etc.) often ship desktop preload=none with
+      // autoplay off, so sticky / looks like a static poster after Theme Editor saves.
+      var desktopPlaySel = '[data-ff-fingerprint^="HERO-DESKTOP-PLAY"]';
+      var anyHeroSel =
+        desktopPlaySel +
+        ', [data-ff-fingerprint^="HERO-LIVE-EDITOR"], [data-ff-fingerprint^="HERO-EDITOR-FIRST"], [data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]';
+      var hasDesktopPlay = !!(homeMain && homeMain.querySelector(desktopPlaySel));
+      if (!hasDesktopPlay) {
+        // Bare / is sticky-cached; any ?view= bypasses IndexController page cache.
+        // Hard-redirect so Theme Editor homepage markup (and desktop autoplay) appears.
+        if (!/[?&]view=/.test(location.search || '')) {
+          var params = new URLSearchParams(location.search || '');
+          params.set('view', '');
+          location.replace('/?' + params.toString() + (location.hash || ''));
+          return;
+        }
         swapMainUrl(
-          '/index?ffhome=1',
+          '/?view=',
           function (root) {
-            return !!root.querySelector(
-              '[data-ff-fingerprint^="HERO-LIVE-EDITOR"], [data-ff-fingerprint^="HERO-EDITOR-FIRST"], [data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]'
-            );
+            return !!root.querySelector(desktopPlaySel);
           },
           'ff-hero-lifestyle',
-          ffThemeAsset('ff-hero-lifestyle.css', 'liveed2'),
+          ffThemeAsset('ff-hero-lifestyle.css', 'deskplay1'),
           'ff-hero-lifestyle',
-          'ff-home-live-editor'
+          'ff-home-desktop-play'
         );
+      } else {
+        // Play-only nudge — never rewrite src (that froze the first frame).
+        function nudgeVisibleHero() {
+          try {
+            var isMobile = mqHeroMobile.matches;
+            var hero = document.querySelector('[data-ff-hero]');
+            if (!hero) return;
+            var active =
+              hero.querySelector('[data-ff-hero-slide].is-active') ||
+              hero.querySelector('[data-ff-hero-slide]');
+            if (!active) return;
+            var video = active.querySelector(
+              isMobile ? '.ff-hero__video--mobile' : '.ff-hero__video--desktop'
+            );
+            if (!video || isPlaying(video)) return;
+            prepHeroVideo(video);
+            video.autoplay = true;
+            video.setAttribute('autoplay', '');
+            video.setAttribute('preload', 'auto');
+            try {
+              video.preload = 'auto';
+            } catch (ePre) {}
+            var p = video.play();
+            if (p && typeof p.catch === 'function') p.catch(function () {});
+          } catch (eNudge) {}
+        }
+        nudgeVisibleHero();
+        [120, 400].forEach(function (ms) {
+          window.setTimeout(nudgeVisibleHero, ms);
+        });
       }
-      // Fresh markup: leave native HTML autoplay alone. Deferred heal was
-      // re-setting src and freezing the first frame until a late retry.
     }
 
     if (/\/pages\/about(?:-us)?\/?$/.test(path) || /\/pages\/about\/?$/.test(path)) {

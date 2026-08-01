@@ -47,7 +47,7 @@
   <section
     class="ff-hero"
     id="ff-hero-{{ section.id }}"
-    data-ff-hero data-ff-fingerprint="HERO-LIVE-EDITOR-20260731B" data-ff-hero-fix="arrows-v1"
+    data-ff-hero data-ff-fingerprint="HERO-DESKTOP-PLAY-20260801A" data-ff-hero-fix="arrows-v1"
     style="
       --ff-hero-height: {{ section.settings.height }}vh;
       --ff-hero-height-mobile: {{ section.settings.height_mobile }}vh;
@@ -121,10 +121,21 @@
               -%}
               {%- if has_desktop_media or has_mobile_media -%}
                 <div class="ff-hero__media-desktop" data-ff-desktop-layer>
+                  {%- comment -%}
+                    First slide desktop must HTML-autoplay like mobile. Desktop used to ship
+                    autoplay off + preload=none, so live often showed only the poster until
+                    (or unless) deferred JS called play() — looking like "video missing".
+                  {%- endcomment -%}
+                  {%- liquid
+                    assign desktop_autoplay_mode = 'off'
+                    if forloop.first
+                      assign desktop_autoplay_mode = 'on'
+                    endif
+                  -%}
                   {%- if slide_video != blank -%}
-                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--desktop', autoplay_mode: 'off' %}
+                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--desktop', autoplay_mode: desktop_autoplay_mode %}
                   {%- elsif hard_desktop != blank -%}
-                    {% render 'ff-autoplay-video', src: hard_desktop, poster: hard_poster_d, class: 'ff-hero__video ff-hero__video--desktop', autoplay_mode: 'off' %}
+                    {% render 'ff-autoplay-video', src: hard_desktop, poster: hard_poster_d, class: 'ff-hero__video ff-hero__video--desktop', autoplay_mode: desktop_autoplay_mode %}
                   {%- elsif block.settings.image != blank -%}
                     <img
                       class="ff-hero__image"
@@ -279,6 +290,9 @@
         v.defaultMuted = true;
         v.playsInline = true;
         v.autoplay = true;
+        v.setAttribute('autoplay', '');
+        v.setAttribute('preload', 'auto');
+        try { v.preload = 'auto'; } catch (e0) {}
         try { v.volume = 0; } catch (e) {}
         var p = v.play();
         if (p && typeof p.catch === 'function') p.catch(function () {});

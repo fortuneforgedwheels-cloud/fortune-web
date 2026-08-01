@@ -31,13 +31,19 @@
               if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
               var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
               var qs = location.search || '';
-              var isHome = path === '/' || path === '/index' || path === '/index.html';
-              if ((path === '/' || path === '') && /[?&]view=vehicle(?:&|$)/.test(qs)) {
-                location.replace('/index' + (location.hash || ''));
+              var isHome = path === '/' || path === '/index' || path === '/index.html' || path === '';
+              // Legacy vehicle view → clean home (with cache-bypass view=).
+              if (isHome && /[?&]view=vehicle(?:&|$)/.test(qs)) {
+                location.replace('/?view=' + (location.hash || ''));
                 return;
               }
-              if (isHome && /[?&]view=vehicle(?:&|$)/.test(qs)) {
-                location.replace('/index' + (location.hash || ''));
+              // Bare / is pinned by Shopify IndexController page cache. Any ?view=
+              // (including empty) bypasses it so Theme Editor hero videos appear.
+              if (isHome && path === '/' && !/[?&]view=/.test(qs)) {
+                var params = new URLSearchParams(qs);
+                params.set('view', '');
+                var q = params.toString(); // includes view=
+                location.replace('/?' + q + (location.hash || ''));
               }
             } catch (e) {}
           })();
@@ -211,6 +217,25 @@
               {% section 'ff-beadlock-packages' %}
             {%- else -%}
               {{ content_for_layout }}
+
+        <script data-ff-home-heal="1">
+        (function () {
+          try {
+            if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
+            var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
+            if (path !== '/') return;
+            // Bare / is sticky-cached by Shopify IndexController. Any ?view= bypasses it.
+            if (/[?&]view=/.test(location.search || '')) return;
+            var hero = document.querySelector('[data-ff-hero]');
+            var fp = (hero && hero.getAttribute('data-ff-fingerprint')) || '';
+            if (fp.indexOf('HERO-DESKTOP-PLAY') === 0) return;
+            var params = new URLSearchParams(location.search || '');
+            params.set('view', '');
+            location.replace('/?' + params.toString() + (location.hash || ''));
+          } catch (e) {}
+        })();
+        </script>
+
             {%- endif -%}
         </main>
         <div class="wrapper-footer">
