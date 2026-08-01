@@ -2,12 +2,6 @@
 <script src="{{ 'ff-e36-giveaway.js' | asset_url }}" defer></script>
 
 {%- liquid
-  assign is_live = section.settings.is_live
-  assign show_page = false
-  if is_live or request.design_mode
-    assign show_page = true
-  endif
-
   assign giveaway = section.settings.product
   assign variant = blank
   if giveaway != blank
@@ -36,19 +30,10 @@
   endif
 -%}
 
-{%- unless show_page -%}
-  <section class="ff-e36" id="ff-e36-{{ section.id }}" data-ff-e36-giveaway data-ff-e36-gated="1" {{ section.shopify_attributes }}>
-    <div class="ff-e36__gate">
-      <h1>{{ brand_title | escape }}</h1>
-      <p>{{ section.settings.gated_message | default: 'This giveaway is not live yet. Check back soon.' | escape }}</p>
-    </div>
-  </section>
-{%- else -%}
   <section
     class="ff-e36"
     id="ff-e36-{{ section.id }}"
     data-ff-e36-giveaway
-    data-ff-e36-live="{% if is_live %}1{% else %}0{% endif %}"
     {{ section.shopify_attributes }}
   >
     {%- comment -%} 1) Full-bleed video + brand + GET MY ENTRY {%- endcomment -%}
@@ -274,7 +259,6 @@
       </button>
     </div>
   </section>
-{%- endunless -%}
 
 {% schema %}
 {
@@ -282,23 +266,6 @@
   "tag": "div",
   "class": "ff-e36-section",
   "settings": [
-    {
-      "type": "header",
-      "content": "Go live control"
-    },
-    {
-      "type": "checkbox",
-      "id": "is_live",
-      "label": "Enable page on storefront",
-      "default": false,
-      "info": "Keep OFF while building. Turn ON when you publish the page. Theme Editor always previews the full page."
-    },
-    {
-      "type": "text",
-      "id": "gated_message",
-      "label": "Message when not live",
-      "default": "This giveaway is not live yet. Check back soon."
-    },
     {
       "type": "header",
       "content": "Hero"

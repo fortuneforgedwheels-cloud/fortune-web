@@ -18,8 +18,6 @@
     "ff_e36_giveaway": {
       "type": "ff-e36-giveaway",
       "settings": {
-        "is_live": false,
-        "gated_message": "This giveaway is not live yet. Check back soon.",
         "eyebrow": "FORTUNE FORGED GIVEAWAY",
         "brand_title": "WIN OUR E36 M3",
         "subtitle": "One entry. One legendary E36 M3. Enter in under a minute.",
