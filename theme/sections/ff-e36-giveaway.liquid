@@ -247,6 +247,13 @@
             </div>
           </div>
 
+          <button type="submit" class="ff-e36__cta ff-e36__cta--checkout" data-ff-e36-cta disabled aria-disabled="true">
+            {{ checkout_label | escape }}
+          </button>
+          {%- if section.settings.checkout_note != blank -%}
+            <p class="ff-e36__cta-note">{{ section.settings.checkout_note | escape }}</p>
+          {%- endif -%}
+
           <div class="ff-e36__terms">
             <div class="ff-e36__terms-head">
               <div class="ff-e36__terms-row">
@@ -304,13 +311,6 @@
               </div>
             </div>
           </div>
-
-          <button type="submit" class="ff-e36__cta" data-ff-e36-cta disabled aria-disabled="true">
-            {{ checkout_label | escape }}
-          </button>
-          {%- if section.settings.checkout_note != blank -%}
-            <p class="ff-e36__cta-note">{{ section.settings.checkout_note | escape }}</p>
-          {%- endif -%}
         {% endform %}
       {%- else -%}
         {%- if giveaway != blank and variant != blank and variant.available == false -%}
