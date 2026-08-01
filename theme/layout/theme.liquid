@@ -21,35 +21,59 @@
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta name="theme-color" content="">
         {%- comment -%}
-          Escape sticky IndexController caches that still ship the old
-          /?view=vehicle redirect + HLS hero markup. Must stay synchronous
-          and must NEVER send the homepage to ?view=vehicle.
+          CRITICAL: Shopify IndexController caches bare / as a frozen HTML snapshot
+          (even after theme publish/delete). Using `now` opts homepage Liquid out of
+          that cache. The working storefront path is /index (same Theme Editor
+          index.json) — never trust bare / alone.
         {%- endcomment -%}
+        {%- if request.page_type == 'index' -%}
+          <meta name="ff-home-rendered-at" content="{{ 'now' | date: '%s%N' }}">
+        {%- endif -%}
         <script>
           (function () {
             try {
               if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
               var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
               var qs = location.search || '';
-              var isHome = path === '/' || path === '/index' || path === '/index.html' || path === '';
-              // Legacy vehicle view → clean home (with cache-bypass view=).
-              if (isHome && /[?&]view=vehicle(?:&|$)/.test(qs)) {
-                location.replace('/?view=' + (location.hash || ''));
+              var hash = location.hash || '';
+              // Legacy vehicle view → live homepage.
+              if ((path === '/' || path === '/index') && /[?&]view=vehicle(?:&|$)/.test(qs)) {
+                location.replace('/index' + hash);
                 return;
               }
-              // Bare / is pinned by Shopify IndexController page cache. Any ?view=
-              // (including empty) bypasses it so Theme Editor hero videos appear.
-              if (isHome && path === '/' && !/[?&]view=/.test(qs)) {
-                var params = new URLSearchParams(qs);
-                params.set('view', '');
-                var q = params.toString(); // includes view=
-                location.replace('/?' + q + (location.hash || ''));
+              // Bare / is permanently untrustworthy on this shop — always use /index.
+              if (path === '/') {
+                location.replace('/index' + qs + hash);
+                return;
               }
+              // Any in-site link to bare / → /index (covers menus, logo, buttons).
+              document.addEventListener(
+                'click',
+                function (e) {
+                  var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+                  if (!a) return;
+                  var href = a.getAttribute('href');
+                  if (!href || href.charAt(0) === '#') return;
+                  try {
+                    var u = new URL(href, location.origin);
+                    if (u.origin !== location.origin) return;
+                    var p = (u.pathname || '/').replace(/\/+$/, '') || '/';
+                    if (p !== '/') return;
+                    e.preventDefault();
+                    location.assign('/index' + (u.search || '') + (u.hash || ''));
+                  } catch (err) {}
+                },
+                true
+              );
             } catch (e) {}
           })();
         </script>
-        <link rel="canonical" href="{{ canonical_url }}">
-        <link canonical-shop-url="{{ shop.url }}/">
+        {%- if request.page_type == 'index' -%}
+          <link rel="canonical" href="{{ shop.url }}/index">
+        {%- else -%}
+          <link rel="canonical" href="{{ canonical_url }}">
+        {%- endif -%}
+        <link canonical-shop-url="{{ shop.url }}/index">
         {%- if settings.favicon != blank -%}
             <link rel="icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">
         {%- endif -%}
@@ -223,15 +247,9 @@
           try {
             if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
             var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
-            if (path !== '/') return;
-            // Bare / is sticky-cached by Shopify IndexController. Any ?view= bypasses it.
-            if (/[?&]view=/.test(location.search || '')) return;
-            var hero = document.querySelector('[data-ff-hero]');
-            var fp = (hero && hero.getAttribute('data-ff-fingerprint')) || '';
-            if (fp.indexOf('HERO-DESKTOP-PLAY') === 0) return;
-            var params = new URLSearchParams(location.search || '');
-            params.set('view', '');
-            location.replace('/?' + params.toString() + (location.hash || ''));
+            if (path === '/') {
+              location.replace('/index' + (location.search || '') + (location.hash || ''));
+            }
           } catch (e) {}
         })();
         </script>

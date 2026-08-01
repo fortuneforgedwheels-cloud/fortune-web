@@ -47,7 +47,7 @@
   <section
     class="ff-hero"
     id="ff-hero-{{ section.id }}"
-    data-ff-hero data-ff-fingerprint="HERO-DESKTOP-PLAY-20260801A" data-ff-hero-fix="arrows-v1"
+    data-ff-hero data-ff-fingerprint="HERO-EDITOR-ALWAYS-20260801C" data-ff-hero-fix="arrows-v1" data-ff-rendered-at="{{ 'now' | date: '%s%N' }}"
     style="
       --ff-hero-height: {{ section.settings.height }}vh;
       --ff-hero-height-mobile: {{ section.settings.height_mobile }}vh;
@@ -81,51 +81,25 @@
           >
             <div class="ff-hero__media">
               {%- comment -%}
-                Theme editor videos win. Hardcoded CDN MP4s are FALLBACKS only
-                when a slide video setting is blank.
+                Theme Editor media ONLY. No hardcoded CDN fallbacks — those made
+                uploads look like they "never saved" on the live site.
+                Priority: editor video → editor image → placeholder.
               {%- endcomment -%}
               {%- liquid
                 assign slide_video = block.settings.video
                 assign slide_mobile_video = block.settings.mobile_video
-                assign hard_desktop = blank
-                assign hard_mobile = blank
-                assign hard_poster_d = blank
-                assign hard_poster_m = blank
-
-                case forloop.index0
-                  when 0
-                    assign hard_desktop = 'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/92e8d7c7b0174fcdbeec08d65d2fd2cf/92e8d7c7b0174fcdbeec08d65d2fd2cf.HD-1080p-7.2Mbps-90297590.mp4?v=0'
-                    assign hard_mobile = 'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/63c8141975ae4110a8861547f20aca76/63c8141975ae4110a8861547f20aca76.HD-1080p-7.2Mbps-90297806.mp4?v=0'
-                    assign hard_poster_d = 'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/92e8d7c7b0174fcdbeec08d65d2fd2cf.thumbnail.0000000000.jpg?v=1785391047'
-                    assign hard_poster_m = 'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/63c8141975ae4110a8861547f20aca76.thumbnail.0000000000.jpg?v=1785391278'
-                  when 1
-                    assign hard_desktop = 'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/261a3f7c0dd64b71b8f5c3ef6641250a/261a3f7c0dd64b71b8f5c3ef6641250a.HD-1080p-7.2Mbps-90301640.mp4?v=0'
-                    assign hard_mobile = 'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/261a3f7c0dd64b71b8f5c3ef6641250a/261a3f7c0dd64b71b8f5c3ef6641250a.HD-1080p-7.2Mbps-90301640.mp4?v=0'
-                    assign hard_poster_d = 'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/261a3f7c0dd64b71b8f5c3ef6641250a.thumbnail.0000000000.jpg?v=1785394349'
-                    assign hard_poster_m = hard_poster_d
-                  when 2
-                    assign hard_desktop = 'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/e7fd235dfab64f38bcef7199a5c592e8/e7fd235dfab64f38bcef7199a5c592e8.HD-1080p-7.2Mbps-90304907.mp4?v=0'
-                    assign hard_mobile = 'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/f3da456d74c54424be0bb9591ac2ed16/f3da456d74c54424be0bb9591ac2ed16.HD-1080p-4.8Mbps-90303270.mp4?v=0'
-                    assign hard_poster_d = 'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/e7fd235dfab64f38bcef7199a5c592e8.thumbnail.0000000000.jpg?v=1785396035'
-                    assign hard_poster_m = 'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/f3da456d74c54424be0bb9591ac2ed16.thumbnail.0000000000.jpg?v=1785395101'
-                endcase
 
                 assign has_desktop_media = false
-                if slide_video != blank or hard_desktop != blank or block.settings.image != blank
+                if slide_video != blank or block.settings.image != blank
                   assign has_desktop_media = true
                 endif
                 assign has_mobile_media = false
-                if slide_mobile_video != blank or hard_mobile != blank or block.settings.mobile_image != blank or slide_video != blank or block.settings.image != blank
+                if slide_mobile_video != blank or block.settings.mobile_image != blank or slide_video != blank or block.settings.image != blank
                   assign has_mobile_media = true
                 endif
               -%}
               {%- if has_desktop_media or has_mobile_media -%}
                 <div class="ff-hero__media-desktop" data-ff-desktop-layer>
-                  {%- comment -%}
-                    First slide desktop must HTML-autoplay like mobile. Desktop used to ship
-                    autoplay off + preload=none, so live often showed only the poster until
-                    (or unless) deferred JS called play() — looking like "video missing".
-                  {%- endcomment -%}
                   {%- liquid
                     assign desktop_autoplay_mode = 'off'
                     if forloop.first
@@ -134,8 +108,6 @@
                   -%}
                   {%- if slide_video != blank -%}
                     {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--desktop', autoplay_mode: desktop_autoplay_mode %}
-                  {%- elsif hard_desktop != blank -%}
-                    {% render 'ff-autoplay-video', src: hard_desktop, poster: hard_poster_d, class: 'ff-hero__video ff-hero__video--desktop', autoplay_mode: desktop_autoplay_mode %}
                   {%- elsif block.settings.image != blank -%}
                     <img
                       class="ff-hero__image"
@@ -171,12 +143,8 @@
                   -%}
                   {%- if slide_mobile_video != blank -%}
                     {% render 'ff-autoplay-video', video: slide_mobile_video, class: 'ff-hero__video ff-hero__video--mobile', autoplay_mode: mobile_autoplay_mode %}
-                  {%- elsif hard_mobile != blank -%}
-                    {% render 'ff-autoplay-video', src: hard_mobile, poster: blank, class: 'ff-hero__video ff-hero__video--mobile', autoplay_mode: mobile_autoplay_mode %}
                   {%- elsif slide_video != blank -%}
                     {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback', autoplay_mode: mobile_autoplay_mode %}
-                  {%- elsif hard_desktop != blank -%}
-                    {% render 'ff-autoplay-video', src: hard_desktop, poster: blank, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback', autoplay_mode: mobile_autoplay_mode %}
                   {%- elsif block.settings.mobile_image != blank -%}
                     <img
                       class="ff-hero__image"

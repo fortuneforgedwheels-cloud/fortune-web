@@ -193,7 +193,7 @@
                                 {%- when 'logo' -%}
                                     <div class="header-nav__logo header-top-center text-center" style="--logo-color: {{ block.settings.logo_color }};--logo-font-size: {{ block.settings.logo_font_size | append: 'px' }};--logo-font-weight: {{ block.settings.logo_font_weight }};{% if logo_type == 'icon' %}--logo-icon-width: {{ block.settings.logo_icon_width | append: 'px' }};--logo-icon-height: {{ block.settings.logo_icon_height | append: 'px' }};{% endif %}">
                                         <{% if request.page_type == 'index' %}h1{% else %}div{% endif %} class="header__heading">
-                                            <a href="{{ routes.root_url }}" class="header__heading-link focus-inset">
+                                            <a href="/index" class="header__heading-link focus-inset">
                                                 {%- if logo_type == 'image' -%}
                                                     {%- if image != blank -%}
                                                         <img

@@ -1,138 +1,6 @@
 (function () {
-  /* Hardcoded MP4s. Only ONE visible active-slide video plays (iOS multi-play block). */
-  var HARD_SLIDES = [
-    {
-      desktop:
-        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/92e8d7c7b0174fcdbeec08d65d2fd2cf/92e8d7c7b0174fcdbeec08d65d2fd2cf.HD-1080p-7.2Mbps-90297590.mp4?v=0',
-      mobile:
-        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/63c8141975ae4110a8861547f20aca76/63c8141975ae4110a8861547f20aca76.HD-1080p-7.2Mbps-90297806.mp4?v=0',
-      posterDesktop:
-        'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/92e8d7c7b0174fcdbeec08d65d2fd2cf.thumbnail.0000000000.jpg?v=1785391047',
-      posterMobile: '',
-    },
-    {
-      desktop:
-        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/261a3f7c0dd64b71b8f5c3ef6641250a/261a3f7c0dd64b71b8f5c3ef6641250a.HD-1080p-7.2Mbps-90301640.mp4?v=0',
-      mobile:
-        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/261a3f7c0dd64b71b8f5c3ef6641250a/261a3f7c0dd64b71b8f5c3ef6641250a.HD-1080p-7.2Mbps-90301640.mp4?v=0',
-      posterDesktop:
-        'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/261a3f7c0dd64b71b8f5c3ef6641250a.thumbnail.0000000000.jpg?v=1785394349',
-      posterMobile: '',
-    },
-    {
-      desktop:
-        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/e7fd235dfab64f38bcef7199a5c592e8/e7fd235dfab64f38bcef7199a5c592e8.HD-1080p-7.2Mbps-90304907.mp4?v=0',
-      mobile:
-        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/f3da456d74c54424be0bb9591ac2ed16/f3da456d74c54424be0bb9591ac2ed16.HD-1080p-4.8Mbps-90303270.mp4?v=0',
-      posterDesktop:
-        'https://fortuneforgedwheels.com/cdn/shop/files/preview_images/e7fd235dfab64f38bcef7199a5c592e8.thumbnail.0000000000.jpg?v=1785396035',
-      posterMobile: '',
-    },
-  ];
-
+  /* Theme Editor media only — never inject hardcoded CDN MP4s over uploads. */
   var mqMobile = window.matchMedia('(max-width: 749.98px)');
-
-  function makeVideo(src, poster, className, withAutoplay) {
-    var video = document.createElement('video');
-    video.className = className;
-    video.setAttribute('data-ff-autoplay-v', 'mp4-hardcoded-1');
-    if (poster) video.setAttribute('poster', poster);
-    video.setAttribute('src', src);
-    if (withAutoplay) video.setAttribute('autoplay', '');
-    video.setAttribute('muted', '');
-    video.setAttribute('loop', '');
-    video.setAttribute('playsinline', 'true');
-    video.setAttribute('webkit-playsinline', 'true');
-    video.setAttribute('preload', 'auto');
-    video.setAttribute('disablepictureinpicture', '');
-    video.removeAttribute('controls');
-    video.controls = false;
-    video.muted = true;
-    video.defaultMuted = true;
-    video.playsInline = true;
-    video.autoplay = !!withAutoplay;
-    video.loop = true;
-    try {
-      video.volume = 0;
-    } catch (e) {}
-    return video;
-  }
-
-  function videoLooksClean(video, src) {
-    if (!video) return false;
-    var cur = video.getAttribute('src') || '';
-    if (cur.indexOf(src.split('?')[0]) === -1) return false;
-    if (video.querySelector('img, source')) return false;
-    if (video.hasAttribute('controls')) return false;
-    return true;
-  }
-
-  function ensureLayerVideo(layer, src, poster, className, withAutoplay) {
-    if (!layer || !src) return;
-    var existing = layer.querySelector('video');
-    if (videoLooksClean(existing, src)) {
-      // Do not re-prepare a clean video that is already autoplaying — prepare/play
-      // storms were freezing the first frame for 1–3s then restarting late.
-      if (!(existing && !existing.paused && existing.readyState > 2)) {
-        prepare(existing);
-      }
-      return existing;
-    }
-    layer.querySelectorAll('img, .ff-hero__placeholder, video').forEach(function (el) {
-      el.remove();
-    });
-    var video = makeVideo(src, poster, className, withAutoplay);
-    layer.appendChild(video);
-    return video;
-  }
-
-  function layerHasUsableMp4(layer) {
-    if (!layer) return false;
-    var video = layer.querySelector('video');
-    if (!video) return false;
-    // Never overwrite Theme Editor uploads.
-    if (video.getAttribute('data-ff-from-editor') === '1') return true;
-    var src = video.getAttribute('src') || video.currentSrc || '';
-    if (src.indexOf('.mp4') !== -1 && src.indexOf('.m3u8') === -1) return true;
-    var sources = video.querySelectorAll('source');
-    for (var i = 0; i < sources.length; i++) {
-      var s = sources[i].getAttribute('src') || '';
-      var t = (sources[i].getAttribute('type') || '').toLowerCase();
-      if (s.indexOf('.mp4') !== -1 || t.indexOf('mp4') !== -1) return true;
-    }
-    return false;
-  }
-
-  function ensureHardcodedVideos(root) {
-    /* Hardcoded URLs are FALLBACKS only — never overwrite Theme Editor videos. */
-    var slides = root.querySelectorAll('[data-ff-hero-slide]');
-    var isMobile = mqMobile.matches;
-    slides.forEach(function (slide, i) {
-      var hard = HARD_SLIDES[i];
-      if (!hard) return;
-      var desktop = slide.querySelector('[data-ff-desktop-layer]');
-      var mobile = slide.querySelector('[data-ff-mobile-layer]');
-      var isActive = slide.classList.contains('is-active') && !slide.hidden;
-      if (!layerHasUsableMp4(desktop)) {
-        ensureLayerVideo(
-          desktop,
-          hard.desktop,
-          hard.posterDesktop,
-          'ff-hero__video ff-hero__video--desktop',
-          isActive && !isMobile
-        );
-      }
-      if (!layerHasUsableMp4(mobile)) {
-        ensureLayerVideo(
-          mobile,
-          hard.mobile,
-          hard.posterMobile,
-          'ff-hero__video ff-hero__video--mobile',
-          isActive && isMobile
-        );
-      }
-    });
-  }
 
   function isCssVisible(el) {
     if (!el) return false;
@@ -255,7 +123,6 @@
 
   function init(root) {
     if (!root || root.dataset.ffReady === '1') return;
-    ensureHardcodedVideos(root);
     root.dataset.ffReady = '1';
 
     var slides = Array.prototype.slice.call(root.querySelectorAll('[data-ff-hero-slide]'));
@@ -277,9 +144,6 @@
     window.requestAnimationFrame(refresh);
 
     var onViewport = function () {
-      delete root.dataset.ffReady;
-      ensureHardcodedVideos(root);
-      root.dataset.ffReady = '1';
       refresh();
     };
     if (mqMobile.addEventListener) mqMobile.addEventListener('change', onViewport);

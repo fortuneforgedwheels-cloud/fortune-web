@@ -1,18 +1,22 @@
-/* BOOT_BUILD 2026-08-01-desktop-play-1 */
-/* Theme Editor edits templates/index.json — that MUST be what / serves. */
+/* BOOT_BUILD 2026-08-01-editor-always-2 */
+/* Theme Editor edits templates/index.json — served live at /index (NOT bare /). */
+/* Bare / is poisoned by Shopify IndexController page cache on this shop. */
 /* NEVER redirect homepage to ?view=vehicle. */
 (function () {
   try {
     if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
     var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
     var qs = location.search || '';
-    // Legacy sticky alternate homepage views → real Theme Editor homepage (/).
-    // Keep ?view=ffdesk available as an uncached mirror used to heal sticky /.
+    var hash = location.hash || '';
+    if (path === '/') {
+      location.replace('/index' + qs + hash);
+      return;
+    }
     if (
-      (path === '/' || path === '') &&
+      path === '/index' &&
       /[?&]view=(?:vehicle|fflive|ffgo|ffnow|ffmplay|ffautoplay)(?:&|$)/.test(qs)
     ) {
-      location.replace('/' + (location.hash || ''));
+      location.replace('/index' + hash);
       return;
     }
   } catch (e) {}
@@ -119,26 +123,7 @@ function ffThemeAsset(name, bust) {
     );
   }
 
-  var HARD_SLIDES = [
-    {
-      desktop:
-        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/92e8d7c7b0174fcdbeec08d65d2fd2cf/92e8d7c7b0174fcdbeec08d65d2fd2cf.HD-1080p-7.2Mbps-90297590.mp4?v=0',
-      mobile:
-        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/63c8141975ae4110a8861547f20aca76/63c8141975ae4110a8861547f20aca76.HD-1080p-7.2Mbps-90297806.mp4?v=0',
-    },
-    {
-      desktop:
-        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/261a3f7c0dd64b71b8f5c3ef6641250a/261a3f7c0dd64b71b8f5c3ef6641250a.HD-1080p-7.2Mbps-90301640.mp4?v=0',
-      mobile:
-        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/261a3f7c0dd64b71b8f5c3ef6641250a/261a3f7c0dd64b71b8f5c3ef6641250a.HD-1080p-7.2Mbps-90301640.mp4?v=0',
-    },
-    {
-      desktop:
-        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/e7fd235dfab64f38bcef7199a5c592e8/e7fd235dfab64f38bcef7199a5c592e8.HD-1080p-7.2Mbps-90304907.mp4?v=0',
-      mobile:
-        'https://fortuneforgedwheels.com/cdn/shop/videos/c/vp/f3da456d74c54424be0bb9591ac2ed16/f3da456d74c54424be0bb9591ac2ed16.HD-1080p-4.8Mbps-90303270.mp4?v=0',
-    },
-  ];
+  var HARD_SLIDES = [];
 
   var mqHeroMobile = window.matchMedia('(max-width: 749.98px)');
 
@@ -218,62 +203,7 @@ function ffThemeAsset(name, bust) {
   }
 
   function injectHardcodedHeroVideos() {
-    /* FALLBACK only — never overwrite Theme Editor / Liquid MP4s. */
-    var slides = document.querySelectorAll('[data-ff-hero-slide]');
-    if (!slides.length) return;
-    var isMobile = mqHeroMobile.matches;
-    slides.forEach(function (slide, i) {
-      var hard = HARD_SLIDES[i];
-      if (!hard) return;
-      var isActive = slide.classList.contains('is-active') && !slide.hidden;
-      [
-        {
-          layer: slide.querySelector('[data-ff-desktop-layer]'),
-          src: hard.desktop,
-          cls: 'ff-hero__video ff-hero__video--desktop',
-          wantPlay: isActive && !isMobile,
-        },
-        {
-          layer: slide.querySelector('[data-ff-mobile-layer]'),
-          src: hard.mobile,
-          cls: 'ff-hero__video ff-hero__video--mobile',
-          wantPlay: isActive && isMobile,
-        },
-      ].forEach(function (item) {
-        if (!item.layer || !item.src) return;
-        // Keep whatever the theme editor / Liquid already rendered.
-        if (layerHasUsableMp4(item.layer)) return;
-        var video = item.layer.querySelector('video');
-        if (!video) {
-          item.layer.querySelectorAll('img.ff-hero__image, .ff-hero__placeholder').forEach(function (el) {
-            el.remove();
-          });
-          video = document.createElement('video');
-          video.className = item.cls;
-          video.setAttribute('data-ff-autoplay-v', 'mp4-hardcoded-1');
-          item.layer.appendChild(video);
-        }
-        if (!srcMatches(video, item.src)) {
-          video.setAttribute('src', item.src);
-        }
-        video.querySelectorAll('source, img').forEach(function (s) {
-          s.remove();
-        });
-        prepHeroVideo(video);
-        if (item.wantPlay) {
-          video.autoplay = true;
-          video.setAttribute('autoplay', '');
-          video.setAttribute('preload', 'auto');
-        } else if (!isPlaying(video)) {
-          video.autoplay = false;
-          video.removeAttribute('autoplay');
-          video.setAttribute('preload', 'none');
-          try {
-            video.pause();
-          } catch (ePause) {}
-        }
-      });
-    });
+    /* Disabled — Theme Editor media only. */
   }
 
   /* iOS blocks autoplay when several muted videos call play() — only one may play. */
@@ -335,39 +265,33 @@ function ffThemeAsset(name, bust) {
   ready(function () {
     var path = location.pathname || '';
 
-    // Homepage: sticky IndexController cache often pins old hero markup.
-    // Pull a never-cached alternate view so mobile can autoplay without tap.
-    if (path === '/' || path === '' || path === '/index' || path === '/index.html') {
+    // Homepage at /index (bare / is IndexController-poisoned on this shop).
+    if (path === '/index' || path === '/index.html' || path === '/' || path === '') {
+      if ((location.pathname || '/') === '/' || (location.pathname || '') === '') {
+        location.replace('/index' + (location.search || '') + (location.hash || ''));
+        return;
+      }
       var homeMain = document.getElementById('MainContent');
-      // Only DESKTOP-PLAY markup has first-slide desktop HTML autoplay.
-      // Older fingerprints (LIVE-EDITOR etc.) often ship desktop preload=none with
-      // autoplay off, so sticky / looks like a static poster after Theme Editor saves.
-      var desktopPlaySel = '[data-ff-fingerprint^="HERO-DESKTOP-PLAY"]';
-      var anyHeroSel =
-        desktopPlaySel +
-        ', [data-ff-fingerprint^="HERO-LIVE-EDITOR"], [data-ff-fingerprint^="HERO-EDITOR-FIRST"], [data-ff-fingerprint^="HERO-MOBILE-AUTOPLAY"], [data-ff-fingerprint^="HERO-INSTANT"]';
-      var hasDesktopPlay = !!(homeMain && homeMain.querySelector(desktopPlaySel));
-      if (!hasDesktopPlay) {
-        // Bare / is sticky-cached; any ?view= bypasses IndexController page cache.
-        // Hard-redirect so Theme Editor homepage markup (and desktop autoplay) appears.
-        if (!/[?&]view=/.test(location.search || '')) {
-          var params = new URLSearchParams(location.search || '');
-          params.set('view', '');
-          location.replace('/?' + params.toString() + (location.hash || ''));
-          return;
-        }
+      var freshHeroSel =
+        '[data-ff-fingerprint^="HERO-EDITOR-ALWAYS"], [data-ff-fingerprint^="HERO-DESKTOP-PLAY"]';
+      var hasFreshHero = !!(
+        document.querySelector('meta[name="ff-home-rendered-at"]') &&
+        homeMain &&
+        homeMain.querySelector(freshHeroSel)
+      );
+      if (!hasFreshHero) {
+        // Soft-upgrade from a known-fresh URL that renders live index.json.
         swapMainUrl(
-          '/?view=',
+          '/index?ffhome=1',
           function (root) {
-            return !!root.querySelector(desktopPlaySel);
+            return !!root.querySelector(freshHeroSel);
           },
           'ff-hero-lifestyle',
-          ffThemeAsset('ff-hero-lifestyle.css', 'deskplay1'),
+          ffThemeAsset('ff-hero-lifestyle.css', 'editor2'),
           'ff-hero-lifestyle',
-          'ff-home-desktop-play'
+          'ff-home-editor-always'
         );
       } else {
-        // Play-only nudge — never rewrite src (that froze the first frame).
         function nudgeVisibleHero() {
           try {
             var isMobile = mqHeroMobile.matches;

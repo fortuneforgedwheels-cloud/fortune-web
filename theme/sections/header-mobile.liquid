@@ -111,7 +111,7 @@
                                                     if multi_page_url != blank
                                                         assign url = multi_page_url
                                                     else
-                                                        assign url = routes.root_url
+                                                        assign url = '/index'
                                                     endif
                                                 -%}
                                                 <a href="{{ url }}" class="{{ class }}{% if forloop.first %} first{% endif %}" data-load-logo-page="{{ multi_page_handle }}">
@@ -147,7 +147,7 @@
                                         </{% if request.page_type == 'index' %}h1{% else %}div{% endif %}>
                                     {%- else -%}
                                         <div class="header__heading" style="--logo-color: {{ block.settings.logo_color }};--logo-font-size: {{ block.settings.logo_font_size | append: 'px' }};--logo-font-weight: {{ block.settings.logo_font_weight }};{% if block.settings.logo_type == 'icon' %}--logo-icon-width-mobile: {{ block.settings.logo_icon_width_mobile | append: 'px' }};--logo-icon-height-mobile: {{ block.settings.logo_icon_height_mobile | append: 'px' }};{% endif %}">
-                                            <a href="{{ routes.root_url }}" class="header__heading-link focus-inset">
+                                            <a href="/index" class="header__heading-link focus-inset">
                                                 {%- if block.settings.logo_type == 'image' -%}
                                                     {%- if block.settings.logo_mobile != blank -%}
                                                         {%- liquid

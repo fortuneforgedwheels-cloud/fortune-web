@@ -562,7 +562,7 @@
         "custom_liquid": ""
       }
     },
-    "ff_hero_desktop_play_20260801a": {
+    "ff_hero_editor_always_20260801c": {
       "type": "ff-hero-lifestyle",
       "blocks": {
         "slide_mono": {
@@ -628,7 +628,7 @@
     }
   },
   "order": [
-    "ff_hero_desktop_play_20260801a",
+    "ff_hero_editor_always_20260801c",
     "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",
