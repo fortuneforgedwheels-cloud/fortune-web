@@ -198,7 +198,7 @@
                                 </div>
                             {%- when 'cart' -%}
                                 <div class="header-mobile--icon" style="--icon-color: {{ block.settings.icon_color }};--cart-count-background: {{ block.settings.cart_count_background }};--cart-count-color: {{ block.settings.cart_count_color }};">
-                                    <a {% if settings.show_quick_cart %}{% if routes.account_login_url == '/account/login' %}{% if settings.quick_cart_type=='popup' %} data-open-cart-popup href="javascript:void(0)" {% else %}data-cart-sidebar href="javascript:void(0)" {% endif %}{% endif %}{% else %}href="{{ routes.cart_url }}" {% endif %} class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble mobile" role="button">
+                                    <a {% if settings.show_quick_cart %}{% if settings.quick_cart_type == 'popup' %} data-open-cart-popup href="javascript:void(0)"{% else %}data-cart-sidebar href="javascript:void(0)"{% endif %}{% else %}href="{{ routes.cart_url }}"{% endif %} class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble mobile" role="button">
                                         {%- if style_function_group == '2' -%}
                                             {% render 'icon-cart-special' %}
                                         {%- else -%}
