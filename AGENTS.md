@@ -28,9 +28,9 @@ Torrin edits copy in the Shopify theme editor. Agents must **not** overwrite tho
 ### Homepage / Theme Editor media (permanent)
 
 - Shopify IndexController can pin **frozen HTML for bare `/`** even after theme publish/delete.
-- **Live homepage URL is `/index`** — it renders Theme Editor `templates/index.json` (images + videos) with Liquid `now` cache opt-out.
+- **Live homepage URL is `/?page=1`** — it renders Theme Editor `templates/index.json` (images + videos) with Liquid `now` cache opt-out.
 - Keep `meta name="ff-home-rendered-at"` + hero `now` fingerprint. Never remove them.
-- Logo/home links use `{% render 'ff-home-url' %}` → `/index`.
+- Logo/home links use `{% render 'ff-home-url' %}` → `/?page=1`.
 - Before any `templates/index*.json` push: `shopify theme pull` live `templates/index.json` first so editor uploads are not wiped.
 
 ### Target theme

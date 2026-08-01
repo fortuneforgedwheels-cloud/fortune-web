@@ -1,5 +1,5 @@
-/* BOOT_BUILD 2026-08-01-editor-always-2 */
-/* Theme Editor edits templates/index.json — served live at /index (NOT bare /). */
+/* BOOT_BUILD 2026-08-01-editor-always-3 */
+/* Theme Editor edits templates/index.json — live URL is /?page=1 (NOT bare /). */
 /* Bare / is poisoned by Shopify IndexController page cache on this shop. */
 /* NEVER redirect homepage to ?view=vehicle. */
 (function () {
@@ -8,15 +8,18 @@
     var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
     var qs = location.search || '';
     var hash = location.hash || '';
-    if (path === '/') {
-      location.replace('/index' + qs + hash);
+    function toLiveHome(search, hashPart) {
+      var params = new URLSearchParams(search || '');
+      params.delete('view');
+      params.set('page', '1');
+      return '/?' + params.toString() + (hashPart || '');
+    }
+    if (path === '/' && !/[?&]page=1(?:&|$)/.test(qs)) {
+      location.replace(toLiveHome(qs, hash));
       return;
     }
-    if (
-      path === '/index' &&
-      /[?&]view=(?:vehicle|fflive|ffgo|ffnow|ffmplay|ffautoplay)(?:&|$)/.test(qs)
-    ) {
-      location.replace('/index' + hash);
+    if (path === '/' && /[?&]view=(?:vehicle|fflive|ffgo|ffnow|ffmplay|ffautoplay)(?:&|$)/.test(qs)) {
+      location.replace(toLiveHome('', hash));
       return;
     }
   } catch (e) {}
@@ -265,10 +268,14 @@ function ffThemeAsset(name, bust) {
   ready(function () {
     var path = location.pathname || '';
 
-    // Homepage at /index (bare / is IndexController-poisoned on this shop).
-    if (path === '/index' || path === '/index.html' || path === '/' || path === '') {
-      if ((location.pathname || '/') === '/' || (location.pathname || '') === '') {
-        location.replace('/index' + (location.search || '') + (location.hash || ''));
+    // Homepage: bare / is IndexController-poisoned; live editor media is at /?page=1.
+    if (path === '/' || path === '' || path === '/index' || path === '/index.html') {
+      var qsNow = location.search || '';
+      if ((path === '/' || path === '') && !/[?&]page=1(?:&|$)/.test(qsNow)) {
+        var params = new URLSearchParams(qsNow);
+        params.delete('view');
+        params.set('page', '1');
+        location.replace('/?' + params.toString() + (location.hash || ''));
         return;
       }
       var homeMain = document.getElementById('MainContent');
@@ -280,9 +287,8 @@ function ffThemeAsset(name, bust) {
         homeMain.querySelector(freshHeroSel)
       );
       if (!hasFreshHero) {
-        // Soft-upgrade from a known-fresh URL that renders live index.json.
         swapMainUrl(
-          '/index?ffhome=1',
+          '/?page=1&ffhome=1',
           function (root) {
             return !!root.querySelector(freshHeroSel);
           },

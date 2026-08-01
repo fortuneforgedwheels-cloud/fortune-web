@@ -61,7 +61,7 @@
                                         if multi_page_url != blank
                                             assign url = multi_page_url
                                         else
-                                            assign url = '/index'
+                                            assign url = '/?page=1'
                                         endif
                                     -%}
                                     <a href="{{ url }}" class="{{ class }}{% if forloop.first %} first{% endif %}" data-load-logo-page="{{ multi_page_handle }}">
@@ -109,7 +109,7 @@
                             {%- else -%}
                                 <div class="header__heading">
                             {%- endif -%}
-                                <a href="/index" class="header__heading-link focus-inset">
+                                <a href="/?page=1" class="header__heading-link focus-inset">
                                     {%- if section.settings.logo_type == 'image' -%}
                                         {%- if section.settings.logo != blank -%}
                                             {%- liquid

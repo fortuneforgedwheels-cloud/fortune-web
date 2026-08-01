@@ -23,7 +23,7 @@
         {%- comment -%}
           CRITICAL: Shopify IndexController caches bare / as a frozen HTML snapshot
           (even after theme publish/delete). Using `now` opts homepage Liquid out of
-          that cache. The working storefront path is /index (same Theme Editor
+          that cache. The working storefront path is /?page=1 (same Theme Editor
           index.json) — never trust bare / alone.
         {%- endcomment -%}
         {%- if request.page_type == 'index' -%}
@@ -36,17 +36,24 @@
               var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
               var qs = location.search || '';
               var hash = location.hash || '';
+              function toLiveHome(search, hashPart) {
+                var params = new URLSearchParams(search || '');
+                params.delete('view');
+                params.set('page', '1');
+                var q = params.toString();
+                return '/?' + q + (hashPart || '');
+              }
               // Legacy vehicle view → live homepage.
-              if ((path === '/' || path === '/index') && /[?&]view=vehicle(?:&|$)/.test(qs)) {
-                location.replace('/index' + hash);
+              if (path === '/' && /[?&]view=vehicle(?:&|$)/.test(qs)) {
+                location.replace(toLiveHome('', hash));
                 return;
               }
-              // Bare / is permanently untrustworthy on this shop — always use /index.
-              if (path === '/') {
-                location.replace('/index' + qs + hash);
+              // Bare / without page=1 is IndexController-poisoned — force live home.
+              if (path === '/' && !/[?&]page=1(?:&|$)/.test(qs)) {
+                location.replace(toLiveHome(qs, hash));
                 return;
               }
-              // Any in-site link to bare / → /index (covers menus, logo, buttons).
+              // Menus/logo still point at / — send them to the live homepage.
               document.addEventListener(
                 'click',
                 function (e) {
@@ -59,8 +66,9 @@
                     if (u.origin !== location.origin) return;
                     var p = (u.pathname || '/').replace(/\/+$/, '') || '/';
                     if (p !== '/') return;
+                    if (/[?&]page=1(?:&|$)/.test(u.search || '')) return;
                     e.preventDefault();
-                    location.assign('/index' + (u.search || '') + (u.hash || ''));
+                    location.assign(toLiveHome(u.search, u.hash));
                   } catch (err) {}
                 },
                 true
@@ -69,11 +77,11 @@
           })();
         </script>
         {%- if request.page_type == 'index' -%}
-          <link rel="canonical" href="{{ shop.url }}/index">
+          <link rel="canonical" href="{{ shop.url }}/?page=1">
         {%- else -%}
           <link rel="canonical" href="{{ canonical_url }}">
         {%- endif -%}
-        <link canonical-shop-url="{{ shop.url }}/index">
+        <link canonical-shop-url="{{ shop.url }}/?page=1">
         {%- if settings.favicon != blank -%}
             <link rel="icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">
         {%- endif -%}
@@ -119,7 +127,7 @@
                 location.replace('/pages/faq?view=forgeflow' + (location.hash || ''));
                 return;
               }
-              var onHome = path === '/' || path === '/index';
+              var onHome = path === '/' || path === '/?page=1';
               if (!onHome) return;
               /* Legacy sticky alternate views → real Theme Editor homepage (/). */
               if (/[?&]view=(?:vehicle|fflive|ffgo|ffnow|ffmplay|ffautoplay)(?:&|$)/.test(qs)) {
@@ -247,8 +255,12 @@
           try {
             if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
             var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
-            if (path === '/') {
-              location.replace('/index' + (location.search || '') + (location.hash || ''));
+            var qs = location.search || '';
+            if (path === '/' && !/[?&]page=1(?:&|$)/.test(qs)) {
+              var params = new URLSearchParams(qs);
+              params.delete('view');
+              params.set('page', '1');
+              location.replace('/?' + params.toString() + (location.hash || ''));
             }
           } catch (e) {}
         })();
