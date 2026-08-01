@@ -43,9 +43,9 @@
   if terms_version == blank
     assign terms_version = '1'
   endif
-  assign terms_label = section.settings.terms_checkbox_label | default: 'I have read and agree to the Official Rules and Privacy Policy.'
+  assign terms_label = section.settings.terms_checkbox_label | default: 'I have read and agree to the terms and conditions'
   if terms_label == blank
-    assign terms_label = 'I have read and agree to the Official Rules and Privacy Policy.'
+    assign terms_label = 'I have read and agree to the terms and conditions'
   endif
 -%}
 

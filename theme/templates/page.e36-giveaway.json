@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -5,7 +14,9 @@
       "disabled": true,
       "settings": {
         "show_breadcrumb": false,
+        "breadcrumb_alignment": "left",
         "show_page_title": false,
+        "page_title_alignment": "center",
         "container": "1370",
         "padding_top": 0,
         "padding_bottom": 0,
@@ -18,6 +29,7 @@
     "ff_e36_giveaway": {
       "type": "ff-e36-giveaway",
       "settings": {
+        "hero_video": "shopify://files/videos/v12044gd0000d50ud3fog65mubln8d1g.MP4",
         "eyebrow": "FORTUNE FORGED GIVEAWAY",
         "brand_title": "WIN OUR E36 M3",
         "subtitle": "One entry. One legendary E36 M3. Enter in under a minute.",
@@ -25,15 +37,23 @@
         "cta_note": "Takes less than 60 seconds · Limited-time giveaway",
         "story_kicker": "THE PRIZE",
         "story_title": "A real E36 M3 — built to be driven",
-        "story_body": "<p>This is your shot at owning a classic BMW E36 M3 from Fortune Forged. Enter now, accept the Official Rules, and complete checkout to lock in your entry.</p><p>No complicated forms on this page — just watch the film, claim your entry, and check out.</p>",
+        "story_body": "<p>This is your shot at owning a classic BMW E36 M3 from Fortune Forged. Enter now, accept the Official Rules, and complete checkout to lock in your entry.</p><p>No complicated forms on this page — just claim your entry, and check out.</p>",
+        "product": "1998-bmw-m3",
+        "entry_heading": "",
         "entry_blurb": "Official giveaway entry. Accept the rules below, then checkout to secure your spot.",
         "free_price_label": "FREE ENTRY",
         "checkout_label": "ENTER NOW — CHECKOUT",
         "checkout_note": "You will complete checkout to confirm your entry.",
-        "terms_checkbox_label": "<p>I have read and agree to the Official Rules and understand this is a sweepstakes promotion as described in the fine print.</p>",
+        "soldout_message": "Entries are closed for now.",
+        "missing_product_message": "Entry product unavailable. Please check back soon.",
+        "terms_checkbox_label": "<p>I have read and agree to the terms and conditions</p>",
+        "terms_link_label": "",
+        "terms_link_url": "",
         "terms_version": "1",
         "terms_error": "Please accept the Official Rules to continue.",
-        "fine_print_heading": "Official Rules & Fine Print",
+        "fine_print_heading": "OFFICIAL TERMS",
+        "load_more_label": "Load more",
+        "fine_print": "",
         "fine_print_open": false
       }
     }
