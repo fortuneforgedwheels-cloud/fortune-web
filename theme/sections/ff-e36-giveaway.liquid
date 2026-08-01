@@ -3,9 +3,22 @@
 
 {%- liquid
   assign giveaway = section.settings.product
+  if giveaway == blank
+    assign giveaway = all_products['giveaway']
+  endif
+  if giveaway == blank
+    assign giveaway = all_products['win-our-e36-m3']
+  endif
+
   assign variant = blank
   if giveaway != blank
     assign variant = giveaway.selected_or_first_available_variant
+  endif
+
+  # Prefer section Fine print; fall back to Shopify page body content.
+  assign rules_html = section.settings.fine_print
+  if rules_html == blank and page.content != blank
+    assign rules_html = page.content
   endif
 
   assign brand_title = section.settings.brand_title | default: 'WIN OUR E36 M3'
@@ -99,7 +112,7 @@
       </div>
     </div>
 
-    {%- comment -%} 3) Product entry + required terms {%- endcomment -%}
+    {%- comment -%} 3) Product entry + required terms (terms always show when rules exist) {%- endcomment -%}
     <div class="ff-e36__entry" id="ff-e36-entry" data-ff-e36-entry>
       {%- if giveaway != blank and variant != blank -%}
         <div class="ff-e36__entry-top">
@@ -146,120 +159,59 @@
             {%- endif -%}
           </div>
         </div>
-
-        {%- if variant.available -%}
-          {% form 'product', giveaway, data-ff-e36-form: '', id: 'ff-e36-form' %}
-            <input type="hidden" name="id" value="{{ variant.id }}">
-            <input type="hidden" name="quantity" value="1">
-            <input type="hidden" name="return_to" value="/checkout">
-
-            <input type="hidden" name="properties[Sweepstakes Terms Accepted]" value="" data-ff-e36-accepted-flag>
-            <input type="hidden" name="properties[Sweepstakes Terms Accepted At]" value="" data-ff-e36-accepted-at>
-            <input type="hidden" name="properties[Sweepstakes Terms Version]" value="{{ terms_version | escape }}" data-ff-e36-terms-version>
-            <input type="hidden" name="properties[Sweepstakes Entry Page]" value="{{ request.path | escape }}">
-            <input type="hidden" name="properties[Sweepstakes Giveaway]" value="{{ brand_title | escape }}">
-
-            <div class="ff-e36__terms">
-              <div class="ff-e36__terms-head">
-                <div class="ff-e36__terms-row">
-                  <input
-                    type="checkbox"
-                    id="ff-e36-terms-{{ section.id }}"
-                    class="ff-e36__terms-input"
-                    name="properties[Official Rules Accepted]"
-                    value="Yes"
-                    data-ff-e36-terms
-                    required
-                    aria-required="true"
-                    aria-invalid="true"
-                    aria-describedby="ff-e36-terms-error-{{ section.id }} ff-e36-terms-scroll-{{ section.id }}"
-                  >
-                  <label class="form-label--checkbox ff-e36__terms-label" for="ff-e36-terms-{{ section.id }}">
-                    <span class="ff-e36__terms-label-text">
-                      {{ terms_label }}
-                      {%- if section.settings.terms_link_label != blank and section.settings.terms_link_url != blank -%}
-                        <a href="{{ section.settings.terms_link_url }}" target="_blank" rel="noopener">{{ section.settings.terms_link_label | escape }}</a>
-                      {%- endif -%}
-                    </span>
-                  </label>
-                </div>
-                <p
-                  class="ff-e36__terms-error"
-                  id="ff-e36-terms-error-{{ section.id }}"
-                  data-ff-e36-terms-error
-                  data-message="{{ section.settings.terms_error | default: 'Please accept the Official Rules to continue.' | escape }}"
-                  hidden
-                  role="alert"
-                ></p>
-              </div>
-
-              <div class="ff-e36__terms-panel" data-ff-e36-terms-panel>
-                <div
-                  class="ff-e36__terms-scroll"
-                  id="ff-e36-terms-scroll-{{ section.id }}"
-                  tabindex="0"
-                  role="region"
-                  aria-label="{{ section.settings.fine_print_heading | default: 'Official Rules & Fine Print' | escape }}"
-                  data-ff-e36-terms-scroll
-                >
-                  {%- if section.settings.fine_print != blank -%}
-                    <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>{{ section.settings.fine_print }}</div>
-                  {%- elsif request.design_mode -%}
-                    <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>
-                      <p>Paste your California sweepstakes / Official Rules text in the section setting “Fine print”.</p>
-                      <p>A preview of the rules shows here first. Shoppers tap Load more at the bottom to reveal the rest before accepting.</p>
-                      <p>Add your full Official Rules so this Load more control appears when the text is longer than the preview.</p>
-                    </div>
-                  {%- else -%}
-                    <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>
-                      <p>Review the Official Rules below, then check the box above to continue.</p>
-                    </div>
-                  {%- endif -%}
-                </div>
-                <div class="ff-e36__terms-more" data-ff-e36-terms-more>
-                  <button
-                    type="button"
-                    class="ff-e36__terms-more-btn"
-                    data-ff-e36-load-more
-                    aria-expanded="false"
-                    aria-controls="ff-e36-terms-scroll-{{ section.id }}"
-                  >
-                    {{ section.settings.load_more_label | default: 'Load more' | escape }}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <button type="submit" class="ff-e36__cta" data-ff-e36-cta disabled aria-disabled="true">
-              {{ checkout_label | escape }}
-            </button>
-            {%- if section.settings.checkout_note != blank -%}
-              <p class="ff-e36__cta-note">{{ section.settings.checkout_note | escape }}</p>
-            {%- endif -%}
-          {% endform %}
-        {%- else -%}
-          <p class="ff-e36__soldout">{{ section.settings.soldout_message | default: 'Entries are closed for now.' | escape }}</p>
-        {%- endif -%}
       {%- else -%}
         <p class="ff-e36__soldout">
           {%- if request.design_mode -%}
-            Select the Giveaway product in this section’s settings to enable checkout.
+            Left sidebar → <strong>Giveaway product</strong> → pick your Giveaway product, then Save.
           {%- else -%}
             {{ section.settings.missing_product_message | default: 'Entry product unavailable. Please check back soon.' | escape }}
           {%- endif -%}
         </p>
       {%- endif -%}
-    </div>
 
-    {%- comment -%} Fine print scrolls inside the terms box above when the entry form is shown. {%- endcomment -%}
-    {%- if giveaway == blank or variant == blank or variant.available == false -%}
-      {%- if section.settings.fine_print != blank -%}
-        <details class="ff-e36__fineprint" {% if section.settings.fine_print_open %}open{% endif %}>
-          <summary>{{ section.settings.fine_print_heading | default: 'Official Rules & Fine Print' | escape }}</summary>
-          <div class="ff-e36__fineprint-body">{{ section.settings.fine_print }}</div>
-        </details>
+      {%- if giveaway != blank and variant != blank and variant.available -%}
+        {% form 'product', giveaway, data-ff-e36-form: '', id: 'ff-e36-form' %}
+          <input type="hidden" name="id" value="{{ variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <input type="hidden" name="return_to" value="/checkout">
+
+          <input type="hidden" name="properties[Sweepstakes Terms Accepted]" value="" data-ff-e36-accepted-flag>
+          <input type="hidden" name="properties[Sweepstakes Terms Accepted At]" value="" data-ff-e36-accepted-at>
+          <input type="hidden" name="properties[Sweepstakes Terms Version]" value="{{ terms_version | escape }}" data-ff-e36-terms-version>
+          <input type="hidden" name="properties[Sweepstakes Entry Page]" value="{{ request.path | escape }}">
+          <input type="hidden" name="properties[Sweepstakes Giveaway]" value="{{ brand_title | escape }}">
+
+          {% render 'ff-e36-terms-box',
+            section: section,
+            terms_label: terms_label,
+            rules_html: rules_html
+          %}
+
+          <button type="submit" class="ff-e36__cta" data-ff-e36-cta disabled aria-disabled="true">
+            {{ checkout_label | escape }}
+          </button>
+          {%- if section.settings.checkout_note != blank -%}
+            <p class="ff-e36__cta-note">{{ section.settings.checkout_note | escape }}</p>
+          {%- endif -%}
+        {% endform %}
+      {%- elsif giveaway != blank and variant != blank and variant.available == false -%}
+        <p class="ff-e36__soldout">{{ section.settings.soldout_message | default: 'Entries are closed for now.' | escape }}</p>
+        {% render 'ff-e36-terms-box',
+          section: section,
+          terms_label: terms_label,
+          rules_html: rules_html,
+          checkbox_disabled: '1'
+        %}
+      {%- else -%}
+        {%- comment -%} No product yet — still show Official Rules so pasted terms are visible. {%- endcomment -%}
+        {% render 'ff-e36-terms-box',
+          section: section,
+          terms_label: terms_label,
+          rules_html: rules_html,
+          checkbox_disabled: '1'
+        %}
       {%- endif -%}
-    {%- endif -%}
+    </div>
 
     <div class="ff-e36__sticky" data-ff-e36-sticky>
       <button type="button" class="ff-e36__cta" data-ff-e36-scroll-entry>
@@ -350,7 +302,7 @@
       "type": "product",
       "id": "product",
       "label": "Giveaway product",
-      "info": "Select your existing Giveaway product."
+      "info": "Required. Pick your Giveaway product here (even if it is draft/unpublished)."
     },
     {
       "type": "text",
