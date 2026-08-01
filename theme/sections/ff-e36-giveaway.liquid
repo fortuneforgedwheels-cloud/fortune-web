@@ -38,9 +38,13 @@
   >
     {%- comment -%} 1) Full-bleed video + brand + GET MY ENTRY {%- endcomment -%}
     <div class="ff-e36__hero">
-      <div class="ff-e36__video-wrap" data-ff-autoplay-video>
+      <div class="ff-e36__video-wrap" data-ff-autoplay-video data-ff-e36-video-wrap>
         {%- if section.settings.hero_video != blank -%}
-          {% render 'ff-autoplay-video', video: section.settings.hero_video, class: 'ff-e36__video' %}
+          {% render 'ff-autoplay-video',
+            video: section.settings.hero_video,
+            poster: section.settings.hero_poster,
+            class: 'ff-e36__video'
+          %}
         {%- elsif section.settings.hero_poster != blank -%}
           {{
             section.settings.hero_poster
@@ -52,6 +56,10 @@
               loading: 'eager',
               alt: brand_title
           }}
+        {%- elsif request.design_mode -%}
+          <div class="ff-e36__poster ff-e36__poster--empty">
+            <p>Select <strong>Hero video (MP4)</strong> in this section’s settings (left sidebar).</p>
+          </div>
         {%- else -%}
           <div class="ff-e36__poster" style="background: linear-gradient(160deg, #1a1c22, #070708); min-height: 100%;" aria-hidden="true"></div>
         {%- endif -%}
@@ -273,12 +281,14 @@
     {
       "type": "video",
       "id": "hero_video",
-      "label": "Hero video (MP4)"
+      "label": "Hero video (MP4)",
+      "info": "Required for the top video. Re-select after theme updates if it goes blank."
     },
     {
       "type": "image_picker",
       "id": "hero_poster",
-      "label": "Hero image fallback / poster"
+      "label": "Hero image fallback / poster",
+      "info": "Optional. Shows if video is missing or while it loads."
     },
     {
       "type": "text",

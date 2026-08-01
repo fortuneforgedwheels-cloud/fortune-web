@@ -89,9 +89,34 @@
     }
   }
 
+  function nudgeHeroVideo(root) {
+    var video = qs(root, '.ff-e36__video-wrap video, video.ff-e36__video');
+    if (!video) return;
+    try {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('playsinline', 'true');
+      video.autoplay = true;
+      video.setAttribute('autoplay', '');
+      if (video.paused) {
+        var p = video.play();
+        if (p && typeof p.catch === 'function') p.catch(function () {});
+      }
+    } catch (e) {}
+  }
+
   function initRoot(root) {
     if (!root || root.getAttribute('data-ff-e36-ready') === '1') return;
     root.setAttribute('data-ff-e36-ready', '1');
+
+    nudgeHeroVideo(root);
+    [120, 400, 1000].forEach(function (ms) {
+      window.setTimeout(function () {
+        nudgeHeroVideo(root);
+      }, ms);
+    });
 
     var checkbox = qs(root, '[data-ff-e36-terms]');
     var form = qs(root, '[data-ff-e36-form]');
