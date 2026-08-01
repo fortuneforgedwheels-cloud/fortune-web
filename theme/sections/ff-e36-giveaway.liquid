@@ -174,18 +174,69 @@
           <input type="hidden" name="id" value="{{ variant.id }}">
           <input type="hidden" name="quantity" value="1">
           <input type="hidden" name="return_to" value="/checkout">
-
           <input type="hidden" name="properties[Sweepstakes Terms Accepted]" value="" data-ff-e36-accepted-flag>
           <input type="hidden" name="properties[Sweepstakes Terms Accepted At]" value="" data-ff-e36-accepted-at>
           <input type="hidden" name="properties[Sweepstakes Terms Version]" value="{{ terms_version | escape }}" data-ff-e36-terms-version>
           <input type="hidden" name="properties[Sweepstakes Entry Page]" value="{{ request.path | escape }}">
           <input type="hidden" name="properties[Sweepstakes Giveaway]" value="{{ brand_title | escape }}">
 
-          {% render 'ff-e36-terms-box',
-            section: section,
-            terms_label: terms_label,
-            rules_html: rules_html
-          %}
+          <div class="ff-e36__terms">
+            <div class="ff-e36__terms-head">
+              <div class="ff-e36__terms-row">
+                <input
+                  type="checkbox"
+                  id="ff-e36-terms-{{ section.id }}"
+                  class="ff-e36__terms-input"
+                  name="properties[Official Rules Accepted]"
+                  value="Yes"
+                  data-ff-e36-terms
+                  required
+                  aria-required="true"
+                  aria-invalid="true"
+                  aria-describedby="ff-e36-terms-error-{{ section.id }} ff-e36-terms-scroll-{{ section.id }}"
+                >
+                <label class="form-label--checkbox ff-e36__terms-label" for="ff-e36-terms-{{ section.id }}">
+                  <span class="ff-e36__terms-label-text">
+                    {{ terms_label }}
+                    {%- if section.settings.terms_link_label != blank and section.settings.terms_link_url != blank -%}
+                      <a href="{{ section.settings.terms_link_url }}" target="_blank" rel="noopener">{{ section.settings.terms_link_label | escape }}</a>
+                    {%- endif -%}
+                  </span>
+                </label>
+              </div>
+              <p
+                class="ff-e36__terms-error"
+                id="ff-e36-terms-error-{{ section.id }}"
+                data-ff-e36-terms-error
+                data-message="{{ section.settings.terms_error | default: 'Please accept the Official Rules to continue.' | escape }}"
+                hidden
+                role="alert"
+              ></p>
+            </div>
+            <div class="ff-e36__terms-panel" data-ff-e36-terms-panel>
+              <div
+                class="ff-e36__terms-scroll"
+                id="ff-e36-terms-scroll-{{ section.id }}"
+                tabindex="0"
+                role="region"
+                aria-label="{{ section.settings.fine_print_heading | default: 'Official Rules & Fine Print' | escape }}"
+                data-ff-e36-terms-scroll
+              >
+                {%- if rules_html != blank -%}
+                  <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>{{ rules_html }}</div>
+                {%- else -%}
+                  <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>
+                    <p>Official Rules will appear here once they are added in the Theme Editor Fine print setting.</p>
+                  </div>
+                {%- endif -%}
+              </div>
+              <div class="ff-e36__terms-more" data-ff-e36-terms-more>
+                <button type="button" class="ff-e36__terms-more-btn" data-ff-e36-load-more aria-expanded="false" aria-controls="ff-e36-terms-scroll-{{ section.id }}">
+                  {{ section.settings.load_more_label | default: 'Load more' | escape }}
+                </button>
+              </div>
+            </div>
+          </div>
 
           <button type="submit" class="ff-e36__cta" data-ff-e36-cta disabled aria-disabled="true">
             {{ checkout_label | escape }}
@@ -194,22 +245,55 @@
             <p class="ff-e36__cta-note">{{ section.settings.checkout_note | escape }}</p>
           {%- endif -%}
         {% endform %}
-      {%- elsif giveaway != blank and variant != blank and variant.available == false -%}
-        <p class="ff-e36__soldout">{{ section.settings.soldout_message | default: 'Entries are closed for now.' | escape }}</p>
-        {% render 'ff-e36-terms-box',
-          section: section,
-          terms_label: terms_label,
-          rules_html: rules_html,
-          checkbox_disabled: '1'
-        %}
       {%- else -%}
-        {%- comment -%} No product yet — still show Official Rules so pasted terms are visible. {%- endcomment -%}
-        {% render 'ff-e36-terms-box',
-          section: section,
-          terms_label: terms_label,
-          rules_html: rules_html,
-          checkbox_disabled: '1'
-        %}
+        {%- if giveaway != blank and variant != blank and variant.available == false -%}
+          <p class="ff-e36__soldout">{{ section.settings.soldout_message | default: 'Entries are closed for now.' | escape }}</p>
+        {%- endif -%}
+
+        <div class="ff-e36__terms">
+          <div class="ff-e36__terms-head">
+            <div class="ff-e36__terms-row">
+              <input
+                type="checkbox"
+                id="ff-e36-terms-{{ section.id }}"
+                class="ff-e36__terms-input"
+                disabled
+                aria-invalid="true"
+                aria-describedby="ff-e36-terms-scroll-{{ section.id }}"
+              >
+              <label class="form-label--checkbox ff-e36__terms-label" for="ff-e36-terms-{{ section.id }}">
+                <span class="ff-e36__terms-label-text">{{ terms_label }}</span>
+              </label>
+            </div>
+          </div>
+          <div class="ff-e36__terms-panel" data-ff-e36-terms-panel>
+            <div
+              class="ff-e36__terms-scroll"
+              id="ff-e36-terms-scroll-{{ section.id }}"
+              tabindex="0"
+              role="region"
+              aria-label="{{ section.settings.fine_print_heading | default: 'Official Rules & Fine Print' | escape }}"
+              data-ff-e36-terms-scroll
+            >
+              {%- if rules_html != blank -%}
+                <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>{{ rules_html }}</div>
+              {%- elsif request.design_mode -%}
+                <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>
+                  <p>Paste Official Rules in this section’s <strong>Fine print</strong> setting (left sidebar), or in the page content under Online Store → Pages.</p>
+                </div>
+              {%- else -%}
+                <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>
+                  <p>Official Rules will appear here once they are added in the Theme Editor Fine print setting.</p>
+                </div>
+              {%- endif -%}
+            </div>
+            <div class="ff-e36__terms-more" data-ff-e36-terms-more>
+              <button type="button" class="ff-e36__terms-more-btn" data-ff-e36-load-more aria-expanded="false" aria-controls="ff-e36-terms-scroll-{{ section.id }}">
+                {{ section.settings.load_more_label | default: 'Load more' | escape }}
+              </button>
+            </div>
+          </div>
+        </div>
       {%- endif -%}
     </div>
 
