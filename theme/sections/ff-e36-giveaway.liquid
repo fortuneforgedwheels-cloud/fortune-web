@@ -200,24 +200,40 @@
                 ></p>
               </div>
 
-              <div
-                class="ff-e36__terms-scroll"
-                id="ff-e36-terms-scroll-{{ section.id }}"
-                tabindex="0"
-                role="region"
-                aria-label="{{ section.settings.fine_print_heading | default: 'Official Rules & Fine Print' | escape }}"
-              >
-                {%- if section.settings.fine_print != blank -%}
-                  <div class="ff-e36__terms-scroll-body">{{ section.settings.fine_print }}</div>
-                {%- elsif request.design_mode -%}
-                  <div class="ff-e36__terms-scroll-body">
-                    <p>Paste your California sweepstakes / Official Rules text in the section setting “Fine print”. Shoppers will scroll this box while the agree checkbox stays clickable above.</p>
-                  </div>
-                {%- else -%}
-                  <div class="ff-e36__terms-scroll-body">
-                    <p>Scroll to review the Official Rules, then check the box above to continue.</p>
-                  </div>
-                {%- endif -%}
+              <div class="ff-e36__terms-panel" data-ff-e36-terms-panel>
+                <div
+                  class="ff-e36__terms-scroll"
+                  id="ff-e36-terms-scroll-{{ section.id }}"
+                  tabindex="0"
+                  role="region"
+                  aria-label="{{ section.settings.fine_print_heading | default: 'Official Rules & Fine Print' | escape }}"
+                  data-ff-e36-terms-scroll
+                >
+                  {%- if section.settings.fine_print != blank -%}
+                    <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>{{ section.settings.fine_print }}</div>
+                  {%- elsif request.design_mode -%}
+                    <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>
+                      <p>Paste your California sweepstakes / Official Rules text in the section setting “Fine print”.</p>
+                      <p>A preview of the rules shows here first. Shoppers tap Load more at the bottom to reveal the rest before accepting.</p>
+                      <p>Add your full Official Rules so this Load more control appears when the text is longer than the preview.</p>
+                    </div>
+                  {%- else -%}
+                    <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>
+                      <p>Review the Official Rules below, then check the box above to continue.</p>
+                    </div>
+                  {%- endif -%}
+                </div>
+                <div class="ff-e36__terms-more" data-ff-e36-terms-more>
+                  <button
+                    type="button"
+                    class="ff-e36__terms-more-btn"
+                    data-ff-e36-load-more
+                    aria-expanded="false"
+                    aria-controls="ff-e36-terms-scroll-{{ section.id }}"
+                  >
+                    {{ section.settings.load_more_label | default: 'Load more' | escape }}
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -443,6 +459,13 @@
       "id": "fine_print_heading",
       "label": "Fine print heading",
       "default": "Official Rules & Fine Print"
+    },
+    {
+      "type": "text",
+      "id": "load_more_label",
+      "label": "Load more label",
+      "default": "Load more",
+      "info": "Shown at the bottom of the Official Rules preview. Reveals the full terms when tapped."
     },
     {
       "type": "richtext",

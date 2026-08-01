@@ -127,6 +127,46 @@
       });
     });
 
+    var termsPanel = qs(root, '[data-ff-e36-terms-panel]');
+    var termsScroll = qs(root, '[data-ff-e36-terms-scroll]');
+    var termsBody = qs(root, '[data-ff-e36-terms-body]');
+    var loadMoreBtn = qs(root, '[data-ff-e36-load-more]');
+
+    function syncTermsOverflow() {
+      if (!termsPanel || !termsScroll || !termsBody) return;
+      if (termsPanel.classList.contains('is-expanded')) return;
+      /* If rules fit in the preview, hide Load more */
+      var needsMore = termsBody.scrollHeight > termsScroll.clientHeight + 8;
+      termsPanel.classList.toggle('is-short', !needsMore);
+      if (loadMoreBtn) {
+        loadMoreBtn.hidden = !needsMore;
+      }
+    }
+
+    if (loadMoreBtn && termsPanel) {
+      loadMoreBtn.addEventListener('click', function () {
+        termsPanel.classList.add('is-expanded');
+        termsPanel.classList.remove('is-short');
+        loadMoreBtn.setAttribute('aria-expanded', 'true');
+        loadMoreBtn.hidden = true;
+        if (termsScroll) {
+          try {
+            termsScroll.focus({ preventScroll: true });
+          } catch (errFocus) {
+            termsScroll.focus();
+          }
+        }
+      });
+    }
+
+    syncTermsOverflow();
+    window.setTimeout(syncTermsOverflow, 120);
+    if (typeof ResizeObserver !== 'undefined' && termsBody) {
+      try {
+        new ResizeObserver(syncTermsOverflow).observe(termsBody);
+      } catch (errRo) {}
+    }
+
     if (form) {
       form.addEventListener('submit', function (e) {
         if (checkbox && !checkbox.checked) {
