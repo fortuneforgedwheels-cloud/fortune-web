@@ -2,3 +2,17 @@
 .ff-about__story-video-hint {
   display: none !important;
 }
+
+/* Mobile drawer: ensure nav labels are readable on dark sidebar */
+.halo-sidebar-menu [data-navigation-mobile] .menu-lv-1__action,
+.halo-sidebar-menu [data-navigation-mobile] .menu-lv-2__action,
+.halo-sidebar-menu [data-navigation-mobile] .menu-lv-3__action,
+.halo-sidebar-menu [data-navigation-mobile] .menu-lv-1__action .text,
+.halo-sidebar-menu [data-navigation-mobile] .menu-lv-2__action .text,
+.halo-sidebar-menu [data-navigation-mobile] .menu-lv-3__action .text {
+  color: #ffffff !important;
+}
+
+.halo-sidebar-menu [data-navigation-mobile] .menu-lv-item {
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}

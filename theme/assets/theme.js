@@ -1049,6 +1049,7 @@
                 if (navigation && navigation.innerHTML.trim().length) {
                     var menuMobile = $('[data-navigation-mobile]');
 
+                    $('.list-menu-loading').remove();
                     menuMobile.html($(navigation).find('[data-navigation]').children());
 
                     halo.sliderProductMegaMenu();

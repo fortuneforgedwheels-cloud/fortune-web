@@ -670,7 +670,15 @@
                                             assign padding_bottom = block.settings.padding_bottom
                                             assign enable_shake_affect = block.settings.enable_shake_affect
                                             assign show_dynamic_checkout = block.settings.show_dynamic_checkout
-                                            assign show_customization_option = settings.show_customization_option
+                                            assign show_customization_option = false
+                                            assign has_global_checkbox = false
+                                            if settings.show_global_checkbox
+                                                assign global_checkbox_show = settings.global_checkbox_show
+                                                if global_checkbox_show == 'all' or global_checkbox_show == 'product'
+                                                    assign has_global_checkbox = true
+                                                    assign global_checkbox_text = settings.global_checkbox_text
+                                                endif
+                                            endif
                                             if show_customization_option
                                                 assign has_customization_option = false
                                                 assign customization_option_type = settings.customization_option_type
@@ -698,17 +706,6 @@
                                                 endif
                                                 assign customization_option_1 = settings.customization_option_1
                                                 assign customization_option_2 = settings.customization_option_2
-                                            endif
-                                            if show_dynamic_checkout
-                                                assign show_global_checkbox = settings.show_global_checkbox
-                                                if show_global_checkbox
-                                                    assign has_global_checkbox = false
-                                                    assign global_checkbox_show = settings.global_checkbox_show
-                                                    if global_checkbox_show == 'all' or global_checkbox_show == 'product'
-                                                        assign has_global_checkbox = true
-                                                        assign global_checkbox_text = settings.global_checkbox_text
-                                                    endif
-                                                endif
                                             endif
                                             assign show_qty = block.settings.show_qty
                                             if show_qty
@@ -795,7 +792,8 @@
                                                             subtotal_style: subtotal_style,
                                                             enable_shake_affect: enable_shake_affect,
                                                             use_available_button_style: use_available_button_style,
-                                                            btn: btn
+                                                            btn: btn,
+                                                            terms_required: has_global_checkbox
                                                         %}
                                                         {%- if settings.show_wishlist -%}
                                                             {% render 'product-wishlist',
@@ -803,45 +801,19 @@
                                                             %}
                                                         {%- endif -%}
                                                     </div>
-                                                    {%- if settings.show_ask_an_expert or show_dynamic_checkout -%}
+                                                    {%- if settings.show_ask_an_expert or show_dynamic_checkout or has_global_checkbox -%}
                                                         <div class="productView-groupBottom">
-                                                            {%- if show_dynamic_checkout -%}
-                                                                {%- if has_global_checkbox or show_ask_an_expert -%}
-                                                                    <div class="productView-groupItem">
-                                                                        {%- if has_global_checkbox -%}
-                                                                            <global-checkbox class="productView-checkbox global-checkbox">
-                                                                                <input class="global-checkbox--input" type="checkbox" name="conditions" id="product_conditions_{{ product.id }}" data-target="#product-checkout-{{ section.id }}-{{ product.id }}">
-                                                                                <label class="global-checkbox--label form-label--checkbox" for="product_conditions_{{ product.id }}">
-                                                                                    {{ global_checkbox_text }}
-                                                                                </label>
-                                                                            </global-checkbox>
-                                                                        {%- endif -%}
-                                                                        {%- if show_ask_an_expert -%}
-                                                                            <div class="productView-askAnExpert clearfix">
-                                                                                <custom-modal-opener data-modal="#Modal-AskAnExpert">
-                                                                                    <span class="link text-underline link-underline clearfix" data-modal-opener>
-                                                                                        {%- if settings.ask_an_expert_icon_2 != blank -%}
-                                                                                            {{ settings.ask_an_expert_icon_2 }}
-                                                                                        {%- elsif settings.ask_an_expert_icon_1 != blank -%}
-                                                                                            {{ settings.ask_an_expert_icon_1 }}
-                                                                                        {%- endif -%}
-                                                                                        <span class="text">
-                                                                                            {{ 'ask_an_expert.general.text' | t}}
-                                                                                        </span>
-                                                                                    </span>
-                                                                                </custom-modal-opener>
-                                                                            </div>
-                                                                        {%- endif -%}
-                                                                    </div>
-                                                                {%- endif -%}
+                                                            {%- if has_global_checkbox or show_ask_an_expert -%}
                                                                 <div class="productView-groupItem">
-                                                                    <div class="productView-payment" {% if has_global_checkbox %} disabled="disabled"{% endif %} id="product-checkout-{{ section.id }}-{{ product.id }}"> 
-                                                                        {{ form | payment_button }}
-                                                                    </div>
-                                                                </div>
-                                                            {%- else -%}
-                                                                {%- if show_ask_an_expert -%}
-                                                                    <div class="productView-groupItem">
+                                                                    {%- if has_global_checkbox -%}
+                                                                        <global-checkbox class="productView-checkbox global-checkbox" data-require-atc>
+                                                                            <input class="global-checkbox--input" type="checkbox" name="conditions" id="product_conditions_{{ product.id }}" data-target="#product-checkout-{{ section.id }}-{{ product.id }}, #product-add-to-cart, #sticky-product-add-to-cart">
+                                                                            <label class="global-checkbox--label form-label--checkbox" for="product_conditions_{{ product.id }}">
+                                                                                {{ global_checkbox_text }}
+                                                                            </label>
+                                                                        </global-checkbox>
+                                                                    {%- endif -%}
+                                                                    {%- if show_ask_an_expert -%}
                                                                         <div class="productView-askAnExpert clearfix">
                                                                             <custom-modal-opener data-modal="#Modal-AskAnExpert">
                                                                                 <span class="link text-underline link-underline clearfix" data-modal-opener>
@@ -856,8 +828,15 @@
                                                                                 </span>
                                                                             </custom-modal-opener>
                                                                         </div>
+                                                                    {%- endif -%}
+                                                                </div>
+                                                            {%- endif -%}
+                                                            {%- if show_dynamic_checkout -%}
+                                                                <div class="productView-groupItem">
+                                                                    <div class="productView-payment" {% if has_global_checkbox %} disabled="disabled"{% endif %} id="product-checkout-{{ section.id }}-{{ product.id }}">
+                                                                        {{ form | payment_button }}
                                                                     </div>
-                                                                {%- endif -%}
+                                                                </div>
                                                             {%- endif -%}
                                                         </div>
                                                     {%- endif -%}

@@ -1,0 +1,81 @@
+{%- comment -%}
+  Outputs: per-wheel | per-pair | blank
+  Accepts: product (required), collection (optional — current collection page)
+{%- endcomment -%}
+{%- liquid
+  assign ff_wheel_pricing_type = ''
+  assign product_title_up = product.title | upcase
+  assign product_handle = product.handle | downcase
+
+  if product.tags contains 'BEADLOCK' or product.tags contains 'beadlock'
+    assign ff_wheel_pricing_type = 'beadlock'
+  elsif product.tags contains 'MONOBLOCK' or product.tags contains 'monoblock'
+    assign ff_wheel_pricing_type = 'monoblock'
+  elsif product.tags contains 'TWO-PIECE' or product.tags contains 'two-piece' or product.tags contains 'TWO PIECE'
+    assign ff_wheel_pricing_type = 'two-piece'
+  endif
+
+  if ff_wheel_pricing_type == blank and collection != blank
+    assign page_col = collection.handle | downcase
+    if page_col contains 'beadlock'
+      assign ff_wheel_pricing_type = 'beadlock'
+    elsif page_col contains 'two-piece' or page_col contains 'two_piece'
+      assign ff_wheel_pricing_type = 'two-piece'
+    elsif page_col contains 'monoblock'
+      assign ff_wheel_pricing_type = 'monoblock'
+    endif
+  endif
+
+  if ff_wheel_pricing_type == blank
+    assign ff_has_beadlock_col = false
+    assign ff_has_monoblock_col = false
+    assign ff_has_two_piece_col = false
+
+    for col in product.collections
+      assign col_handle = col.handle | downcase
+      if col_handle contains 'beadlock'
+        assign ff_has_beadlock_col = true
+      elsif col_handle contains 'two-piece' or col_handle contains 'two_piece' or col_handle contains 'two-piece-wheels'
+        assign ff_has_two_piece_col = true
+      elsif col_handle contains 'monoblock'
+        assign ff_has_monoblock_col = true
+      endif
+    endfor
+
+    if ff_has_monoblock_col
+      assign ff_wheel_pricing_type = 'monoblock'
+    elsif ff_has_two_piece_col
+      assign ff_wheel_pricing_type = 'two-piece'
+    elsif ff_has_beadlock_col
+      assign ff_wheel_pricing_type = 'beadlock'
+    endif
+  endif
+
+  if ff_wheel_pricing_type == blank
+    if product_handle contains 'beadlock' or product_title_up contains 'BEADLOCK'
+      assign ff_wheel_pricing_type = 'beadlock'
+    elsif product_title_up contains 'TWO-PIECE' or product_title_up contains '2-PIECE' or product_handle contains 'two-piece' or product_handle contains '2-piece'
+      assign ff_wheel_pricing_type = 'two-piece'
+    elsif product_title_up contains 'MONOBLOCK' or product_handle contains 'monoblock'
+      assign ff_wheel_pricing_type = 'monoblock'
+    endif
+  endif
+
+  if ff_wheel_pricing_type == blank and product.type != blank
+    assign product_type_up = product.type | upcase
+    if product_type_up contains 'BEADLOCK'
+      assign ff_wheel_pricing_type = 'beadlock'
+    elsif product_type_up contains 'TWO' and product_type_up contains 'PIECE'
+      assign ff_wheel_pricing_type = 'two-piece'
+    elsif product_type_up contains 'MONOBLOCK'
+      assign ff_wheel_pricing_type = 'monoblock'
+    endif
+  endif
+
+  assign ff_wheel_pricing_key = ''
+  if ff_wheel_pricing_type == 'beadlock'
+    assign ff_wheel_pricing_key = 'per-pair'
+  elsif ff_wheel_pricing_type == 'monoblock' or ff_wheel_pricing_type == 'two-piece'
+    assign ff_wheel_pricing_key = 'per-wheel'
+  endif
+-%}{{- ff_wheel_pricing_key -}}

@@ -25,13 +25,27 @@
     if target == product and product.price_varies
         assign money_price = 'products.product.price.from_price_html' | t: price: money_price
     endif
+
+    capture ff_wheel_pricing_key
+      render 'ff-wheel-pricing-note', product: product, collection: collection
+    endcapture
+    assign ff_wheel_pricing_key = ff_wheel_pricing_key | strip
+
+    assign ff_wheel_pricing_note = ''
+    if ff_wheel_pricing_key == 'per-wheel'
+      assign ff_wheel_pricing_note = '(priced per wheel)'
+    elsif ff_wheel_pricing_key == 'per-pair'
+      assign ff_wheel_pricing_note = '(priced by the pair)'
+    endif
 -%}
 
 <div class="price
     {%- if price_class %} {{ price_class }}{% endif -%}
     {%- if available == false %} price--sold-out {% endif -%}
     {%- if compare_at_price > price %} price--on-sale {% endif -%}
-    {%- if product.price_varies == false and product.compare_at_price_varies %} price--no-compare{% endif -%}">
+    {%- if product.price_varies == false and product.compare_at_price_varies %} price--no-compare{% endif -%}
+    {%- if ff_wheel_pricing_key != blank %} ff-price--{{ ff_wheel_pricing_key }}{% endif -%}"
+    {%- if ff_wheel_pricing_key != blank %} data-ff-pricing="{{ ff_wheel_pricing_key }}"{% endif -%}>
     <dl>
         {%- comment -%}
           Explanation of description list:
@@ -45,7 +59,7 @@
             </dt>
             <dd class="price__last">
                 <span class="price-item price-item--regular">
-                    {{ money_price }}
+                    {{ money_price }}{%- if ff_wheel_pricing_note != blank -%}<span class="price__wheel-inline">{{ ff_wheel_pricing_note }}</span>{%- endif -%}
                 </span>
             </dd>
         </div>
@@ -63,7 +77,7 @@
             </dt>
             <dd class="price__last">
                 <span class="price-item price-item--sale">
-                    {{ money_price }}
+                    {{ money_price }}{%- if ff_wheel_pricing_note != blank -%}<span class="price__wheel-inline">{{ ff_wheel_pricing_note }}</span>{%- endif -%}
                 </span>
             </dd>
         </div>
