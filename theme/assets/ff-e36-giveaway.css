@@ -469,10 +469,18 @@
 .ff-e36__terms {
   display: flex;
   flex-direction: column;
-  margin: 0 0 14px;
+  margin: 16px 0 0;
   border: 1px solid var(--ff-e36-line);
   background: rgba(0, 0, 0, 0.28);
   overflow: hidden;
+}
+
+.ff-e36__cta--checkout {
+  margin-top: 4px;
+}
+
+.ff-e36__cta--checkout + .ff-e36__cta-note {
+  margin-bottom: 0;
 }
 
 .ff-e36__terms-head {
