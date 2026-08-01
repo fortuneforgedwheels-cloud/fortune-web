@@ -167,33 +167,55 @@
             <input type="hidden" name="properties[Sweepstakes Giveaway]" value="{{ brand_title | escape }}">
 
             <div class="ff-e36__terms">
-              <div class="ff-e36__terms-row">
-                <input
-                  type="checkbox"
-                  id="ff-e36-terms-{{ section.id }}"
-                  name="properties[Official Rules Accepted]"
-                  value="Yes"
-                  data-ff-e36-terms
-                  required
-                  aria-required="true"
-                  aria-invalid="true"
-                  aria-describedby="ff-e36-terms-error-{{ section.id }}"
-                >
-                <label for="ff-e36-terms-{{ section.id }}">
-                  {{ terms_label }}
-                  {%- if section.settings.terms_link_label != blank and section.settings.terms_link_url != blank -%}
-                    <a href="{{ section.settings.terms_link_url }}" target="_blank" rel="noopener">{{ section.settings.terms_link_label | escape }}</a>
-                  {%- endif -%}
-                </label>
+              <div class="ff-e36__terms-head">
+                <div class="ff-e36__terms-row">
+                  <input
+                    type="checkbox"
+                    id="ff-e36-terms-{{ section.id }}"
+                    name="properties[Official Rules Accepted]"
+                    value="Yes"
+                    data-ff-e36-terms
+                    required
+                    aria-required="true"
+                    aria-invalid="true"
+                    aria-describedby="ff-e36-terms-error-{{ section.id }} ff-e36-terms-scroll-{{ section.id }}"
+                  >
+                  <label class="ff-e36__terms-label" for="ff-e36-terms-{{ section.id }}">
+                    {{ terms_label }}
+                    {%- if section.settings.terms_link_label != blank and section.settings.terms_link_url != blank -%}
+                      <a href="{{ section.settings.terms_link_url }}" target="_blank" rel="noopener">{{ section.settings.terms_link_label | escape }}</a>
+                    {%- endif -%}
+                  </label>
+                </div>
+                <p
+                  class="ff-e36__terms-error"
+                  id="ff-e36-terms-error-{{ section.id }}"
+                  data-ff-e36-terms-error
+                  data-message="{{ section.settings.terms_error | default: 'Please accept the Official Rules to continue.' | escape }}"
+                  hidden
+                  role="alert"
+                ></p>
               </div>
-              <p
-                class="ff-e36__terms-error"
-                id="ff-e36-terms-error-{{ section.id }}"
-                data-ff-e36-terms-error
-                data-message="{{ section.settings.terms_error | default: 'Please accept the Official Rules to continue.' | escape }}"
-                hidden
-                role="alert"
-              ></p>
+
+              <div
+                class="ff-e36__terms-scroll"
+                id="ff-e36-terms-scroll-{{ section.id }}"
+                tabindex="0"
+                role="region"
+                aria-label="{{ section.settings.fine_print_heading | default: 'Official Rules & Fine Print' | escape }}"
+              >
+                {%- if section.settings.fine_print != blank -%}
+                  <div class="ff-e36__terms-scroll-body">{{ section.settings.fine_print }}</div>
+                {%- elsif request.design_mode -%}
+                  <div class="ff-e36__terms-scroll-body">
+                    <p>Paste your California sweepstakes / Official Rules text in the section setting “Fine print”. Shoppers will scroll this box while the agree checkbox stays clickable above.</p>
+                  </div>
+                {%- else -%}
+                  <div class="ff-e36__terms-scroll-body">
+                    <p>Scroll to review the Official Rules, then check the box above to continue.</p>
+                  </div>
+                {%- endif -%}
+              </div>
             </div>
 
             <button type="submit" class="ff-e36__cta" data-ff-e36-cta disabled aria-disabled="true">
