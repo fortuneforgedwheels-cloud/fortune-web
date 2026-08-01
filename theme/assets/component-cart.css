@@ -260,14 +260,24 @@ main-cart-items{
 }
 
 .cart-remove{
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     vertical-align: middle;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    margin: 0 auto;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .cart-remove .icon{
     width: 19px;
     height: 19px;
     fill: var(--color-grey);
+    pointer-events: none;
 }
 
 .cart-item-block.cart-item-info{

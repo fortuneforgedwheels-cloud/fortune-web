@@ -11,7 +11,7 @@ quick-cart{
     position: relative;
     font-size: 0;
     letter-spacing: 0;
-    padding: 20px 0 0 0;
+    padding: 20px 48px 0 0;
 }
 
 .previewCartItem-image{
@@ -176,19 +176,32 @@ quick-cart{
 
 .previewCartItem-remove{
     position: absolute;
-    top: 5px;
-    left: -10px;
+    top: 8px;
+    right: 0;
+    left: auto;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
     background-color: var(--bg-black);
     border-radius: 50%;
-    padding: 6px;
     border: 1px solid var(--bg-black);
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .previewCartItem-remove svg{
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
     fill: var(--color-white);
     stroke: transparent;
+    pointer-events: none;
 }
 
 .previewCartItem + .previewCartItem{
@@ -433,10 +446,16 @@ body.dark-mode .halo-cart-sidebar .previewCartCollection .slick-dots li button {
         display: block;
     }
 
+    .previewCartItem{
+        padding-right: 48px;
+    }
+
     .previewCartItem-remove{
-        top: 18px;
+        top: 12px;
         left: auto;
-        right: 15px;
+        right: 8px;
+        width: 44px;
+        height: 44px;
         padding: 0;
         background-color: transparent;
         border-radius: 0;
