@@ -196,13 +196,56 @@
       {%- if giveaway != blank and variant != blank and variant.available -%}
         {% form 'product', giveaway, data-ff-e36-form: '', id: 'ff-e36-form' %}
           <input type="hidden" name="id" value="{{ variant.id }}">
-          <input type="hidden" name="quantity" value="1">
           <input type="hidden" name="return_to" value="/checkout">
           <input type="hidden" name="properties[Sweepstakes Terms Accepted]" value="" data-ff-e36-accepted-flag>
           <input type="hidden" name="properties[Sweepstakes Terms Accepted At]" value="" data-ff-e36-accepted-at>
           <input type="hidden" name="properties[Sweepstakes Terms Version]" value="{{ terms_version | escape }}" data-ff-e36-terms-version>
           <input type="hidden" name="properties[Sweepstakes Entry Page]" value="{{ request.path | escape }}">
           <input type="hidden" name="properties[Sweepstakes Giveaway]" value="{{ brand_title | escape }}">
+
+          {%- liquid
+            assign qty_max = section.settings.max_entries | default: 20
+            if qty_max < 1
+              assign qty_max = 20
+            endif
+            if qty_max > 99
+              assign qty_max = 99
+            endif
+          -%}
+          <div
+            class="ff-e36__qty"
+            data-ff-e36-qty
+            data-unit-cents="{{ variant.price }}"
+            data-money-format="{{ shop.money_format | escape }}"
+          >
+            <div class="ff-e36__qty-label-row">
+              <label class="ff-e36__qty-label" for="ff-e36-qty-{{ section.id }}">
+                {{ section.settings.qty_label | default: 'How many entries?' | escape }}
+              </label>
+              <p class="ff-e36__qty-hint">{{ section.settings.qty_hint | default: 'Max 20 per checkout' | escape }}</p>
+            </div>
+            <div class="ff-e36__qty-ctrl">
+              <button type="button" class="ff-e36__qty-btn" data-ff-e36-qty-minus aria-label="Fewer entries">−</button>
+              <input
+                id="ff-e36-qty-{{ section.id }}"
+                class="ff-e36__qty-input"
+                type="number"
+                name="quantity"
+                value="1"
+                min="1"
+                max="{{ qty_max }}"
+                step="1"
+                inputmode="numeric"
+                data-ff-e36-qty-input
+                aria-label="Number of entries"
+              >
+              <button type="button" class="ff-e36__qty-btn" data-ff-e36-qty-plus aria-label="More entries">+</button>
+            </div>
+            <div class="ff-e36__qty-meta">
+              <span data-ff-e36-qty-count>1 entry</span>
+              <span class="ff-e36__qty-total" data-ff-e36-qty-total>{{ variant.price | money }}</span>
+            </div>
+          </div>
 
           <div class="ff-e36__terms">
             <div class="ff-e36__terms-head">
@@ -437,6 +480,27 @@
       "id": "entry_blurb",
       "label": "Entry blurb",
       "default": "Official giveaway entry. Accept the rules below, then checkout to secure your spot."
+    },
+    {
+      "type": "text",
+      "id": "qty_label",
+      "label": "Quantity label",
+      "default": "How many entries?"
+    },
+    {
+      "type": "text",
+      "id": "qty_hint",
+      "label": "Quantity hint",
+      "default": "Max 20 per checkout"
+    },
+    {
+      "type": "range",
+      "id": "max_entries",
+      "label": "Max entries per checkout",
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "default": 20
     },
     {
       "type": "text",

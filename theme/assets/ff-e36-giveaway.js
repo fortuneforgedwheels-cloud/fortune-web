@@ -107,6 +107,74 @@
     } catch (e) {}
   }
 
+  function formatMoney(cents, format) {
+    if (window.Shopify && typeof Shopify.formatMoney === 'function') {
+      try {
+        return Shopify.formatMoney(cents, format || window.theme || undefined);
+      } catch (eFmt) {}
+    }
+    var value = (Number(cents) / 100).toFixed(2);
+    var fmt = format || '${{amount}}';
+    if (fmt.indexOf('{{amount_no_decimals}}') !== -1) {
+      return fmt.replace(/\{\{\s*amount_no_decimals\s*\}\}/g, String(Math.round(Number(cents) / 100)));
+    }
+    return fmt.replace(/\{\{\s*amount\s*\}\}/g, value).replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, value);
+  }
+
+  function initQty(root) {
+    var wrap = qs(root, '[data-ff-e36-qty]');
+    if (!wrap) return;
+    var input = qs(wrap, '[data-ff-e36-qty-input]');
+    var minus = qs(wrap, '[data-ff-e36-qty-minus]');
+    var plus = qs(wrap, '[data-ff-e36-qty-plus]');
+    var countEl = qs(wrap, '[data-ff-e36-qty-count]');
+    var totalEl = qs(wrap, '[data-ff-e36-qty-total]');
+    var unit = parseInt(wrap.getAttribute('data-unit-cents') || '0', 10) || 0;
+    var moneyFormat = wrap.getAttribute('data-money-format') || '${{amount}}';
+    var min = parseInt((input && input.min) || '1', 10) || 1;
+    var max = parseInt((input && input.max) || '20', 10) || 20;
+
+    function clamp(n) {
+      n = parseInt(n, 10);
+      if (isNaN(n)) n = min;
+      if (n < min) n = min;
+      if (n > max) n = max;
+      return n;
+    }
+
+    function refresh() {
+      if (!input) return;
+      var qty = clamp(input.value);
+      input.value = String(qty);
+      if (minus) minus.disabled = qty <= min;
+      if (plus) plus.disabled = qty >= max;
+      if (countEl) {
+        countEl.textContent = qty === 1 ? '1 entry' : qty + ' entries';
+      }
+      if (totalEl) {
+        totalEl.textContent = formatMoney(unit * qty, moneyFormat);
+      }
+    }
+
+    if (minus) {
+      minus.addEventListener('click', function () {
+        input.value = String(clamp(parseInt(input.value, 10) - 1));
+        refresh();
+      });
+    }
+    if (plus) {
+      plus.addEventListener('click', function () {
+        input.value = String(clamp(parseInt(input.value, 10) + 1));
+        refresh();
+      });
+    }
+    if (input) {
+      input.addEventListener('change', refresh);
+      input.addEventListener('input', refresh);
+    }
+    refresh();
+  }
+
   function initRoot(root) {
     if (!root || root.getAttribute('data-ff-e36-ready') === '1') return;
     root.setAttribute('data-ff-e36-ready', '1');
@@ -117,6 +185,8 @@
         nudgeHeroVideo(root);
       }, ms);
     });
+
+    initQty(root);
 
     var checkbox = qs(root, '[data-ff-e36-terms]');
     var form = qs(root, '[data-ff-e36-form]');

@@ -363,6 +363,109 @@
   line-height: 1.45;
 }
 
+.ff-e36__qty {
+  margin: 0 0 16px;
+  padding: 14px 12px;
+  border: 1px solid var(--ff-e36-line);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.ff-e36__qty-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.ff-e36__qty-label {
+  margin: 0;
+  color: var(--ff-e36-text);
+  font-family: var(--ff-e36-font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ff-e36__qty-hint {
+  margin: 0;
+  color: var(--ff-e36-faint);
+  font-size: 0.78rem;
+}
+
+.ff-e36__qty-ctrl {
+  display: grid;
+  grid-template-columns: 56px 1fr 56px;
+  gap: 8px;
+  align-items: center;
+}
+
+.ff-e36__qty-btn {
+  appearance: none;
+  width: 56px;
+  height: 56px;
+  border: 1px solid var(--ff-e36-line);
+  border-radius: 2px;
+  background: #18191e;
+  color: var(--ff-e36-text);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.ff-e36__qty-btn:hover,
+.ff-e36__qty-btn:focus-visible {
+  background: #22242b;
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.ff-e36__qty-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.ff-e36__qty-input {
+  width: 100%;
+  height: 56px;
+  margin: 0;
+  border: 1px solid var(--ff-e36-line);
+  border-radius: 2px;
+  background: #0b0c0f;
+  color: var(--ff-e36-text);
+  font-family: var(--ff-e36-font-display);
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.ff-e36__qty-input::-webkit-outer-spin-button,
+.ff-e36__qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.ff-e36__qty-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  color: var(--ff-e36-muted);
+  font-size: 0.92rem;
+}
+
+.ff-e36__qty-total {
+  color: var(--ff-e36-accent);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
 .ff-e36__terms {
   display: flex;
   flex-direction: column;
