@@ -3,11 +3,14 @@
 
 {%- liquid
   assign giveaway = section.settings.product
-  if giveaway == blank
-    assign giveaway = all_products['giveaway']
+  if giveaway == blank and section.settings.product_handle != blank
+    assign giveaway = all_products[section.settings.product_handle]
   endif
   if giveaway == blank
-    assign giveaway = all_products['win-our-e36-m3']
+    assign giveaway = all_products['1998-bmw-m3']
+  endif
+  if giveaway == blank
+    assign giveaway = all_products['giveaway']
   endif
 
   assign variant = blank
@@ -15,8 +18,11 @@
     assign variant = giveaway.selected_or_first_available_variant
   endif
 
-  # Prefer section Fine print; fall back to Shopify page body content.
-  assign rules_html = section.settings.fine_print
+  # Official Rules: html field, then richtext, then page body.
+  assign rules_html = section.settings.official_rules
+  if rules_html == blank
+    assign rules_html = section.settings.fine_print
+  endif
   if rules_html == blank and page.content != blank
     assign rules_html = page.content
   endif
@@ -69,12 +75,16 @@
               loading: 'eager',
               alt: brand_title
           }}
-        {%- elsif request.design_mode -%}
-          <div class="ff-e36__poster ff-e36__poster--empty">
-            <p>Select <strong>Hero video (MP4)</strong> in this section’s settings (left sidebar).</p>
-          </div>
         {%- else -%}
-          <div class="ff-e36__poster" style="background: linear-gradient(160deg, #1a1c22, #070708); min-height: 100%;" aria-hidden="true"></div>
+          <div class="ff-e36__poster ff-e36__poster--empty">
+            <p>
+              {%- if request.design_mode -%}
+                Left sidebar → <strong>Hero video (MP4)</strong> → select your video → Save.
+              {%- else -%}
+                Video coming soon.
+              {%- endif -%}
+            </p>
+          </div>
         {%- endif -%}
       </div>
 
@@ -162,9 +172,9 @@
       {%- else -%}
         <p class="ff-e36__soldout">
           {%- if request.design_mode -%}
-            Left sidebar → <strong>Giveaway product</strong> → pick your Giveaway product, then Save.
+            Left sidebar → <strong>Giveaway product</strong> → pick product → Save. The product must also be <strong>Active</strong> and published to the <strong>Online Store</strong> sales channel.
           {%- else -%}
-            {{ section.settings.missing_product_message | default: 'Entry product unavailable. Please check back soon.' | escape }}
+            {{ section.settings.missing_product_message | default: 'Entry product unavailable. Publish the giveaway product to your Online Store channel, then select it in Theme Editor.' | escape }}
           {%- endif -%}
         </p>
       {%- endif -%}
@@ -226,7 +236,7 @@
                   <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>{{ rules_html }}</div>
                 {%- else -%}
                   <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>
-                    <p>Official Rules will appear here once they are added in the Theme Editor Fine print setting.</p>
+                    <p><strong>Add your Official Rules:</strong> left sidebar → <strong>Official Rules (paste here)</strong> → paste → Save.</p>
                   </div>
                 {%- endif -%}
               </div>
@@ -283,7 +293,7 @@
                 </div>
               {%- else -%}
                 <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>
-                  <p>Official Rules will appear here once they are added in the Theme Editor Fine print setting.</p>
+                  <p><strong>Add your Official Rules:</strong> Edit theme → this page → E36 M3 Giveaway → scroll to <strong>Official Rules (paste here)</strong> → paste → Save.</p>
                 </div>
               {%- endif -%}
             </div>
@@ -386,7 +396,14 @@
       "type": "product",
       "id": "product",
       "label": "Giveaway product",
-      "info": "Required. Pick your Giveaway product here (even if it is draft/unpublished)."
+      "info": "Required. Product must be Active + published to Online Store (it can stay out of menus)."
+    },
+    {
+      "type": "text",
+      "id": "product_handle",
+      "label": "Product handle fallback",
+      "default": "1998-bmw-m3",
+      "info": "Used if the product picker is empty. Example: 1998-bmw-m3"
     },
     {
       "type": "text",
@@ -481,10 +498,16 @@
       "info": "Shown at the bottom of the Official Rules preview. Reveals the full terms when tapped."
     },
     {
+      "type": "html",
+      "id": "official_rules",
+      "label": "Official Rules (paste here)",
+      "info": "Paste your full CA sweepstakes / Official Rules text here. This is what shoppers scroll in the terms box."
+    },
+    {
       "type": "richtext",
       "id": "fine_print",
-      "label": "Fine print",
-      "info": "Paste Official Rules here. If blank, the page body from Online Store → Pages is used."
+      "label": "Fine print (backup)",
+      "info": "Backup if Official Rules above is empty. Page body content is used last."
     },
     {
       "type": "checkbox",
