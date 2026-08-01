@@ -239,16 +239,14 @@
       {%- endif -%}
     </div>
 
-    {%- if section.settings.fine_print != blank -%}
-      <details class="ff-e36__fineprint" {% if section.settings.fine_print_open %}open{% endif %}>
-        <summary>{{ section.settings.fine_print_heading | default: 'Official Rules & Fine Print' | escape }}</summary>
-        <div class="ff-e36__fineprint-body">{{ section.settings.fine_print }}</div>
-      </details>
-    {%- elsif request.design_mode -%}
-      <details class="ff-e36__fineprint">
-        <summary>Official Rules & Fine Print</summary>
-        <div class="ff-e36__fineprint-body"><p>Paste your California sweepstakes / Official Rules text in the section setting “Fine print”.</p></div>
-      </details>
+    {%- comment -%} Fine print scrolls inside the terms box above when the entry form is shown. {%- endcomment -%}
+    {%- if giveaway == blank or variant == blank or variant.available == false -%}
+      {%- if section.settings.fine_print != blank -%}
+        <details class="ff-e36__fineprint" {% if section.settings.fine_print_open %}open{% endif %}>
+          <summary>{{ section.settings.fine_print_heading | default: 'Official Rules & Fine Print' | escape }}</summary>
+          <div class="ff-e36__fineprint-body">{{ section.settings.fine_print }}</div>
+        </details>
+      {%- endif -%}
     {%- endif -%}
 
     <div class="ff-e36__sticky" data-ff-e36-sticky>
