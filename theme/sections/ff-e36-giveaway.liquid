@@ -172,6 +172,7 @@
                   <input
                     type="checkbox"
                     id="ff-e36-terms-{{ section.id }}"
+                    class="ff-e36__terms-input"
                     name="properties[Official Rules Accepted]"
                     value="Yes"
                     data-ff-e36-terms
@@ -180,11 +181,13 @@
                     aria-invalid="true"
                     aria-describedby="ff-e36-terms-error-{{ section.id }} ff-e36-terms-scroll-{{ section.id }}"
                   >
-                  <label class="ff-e36__terms-label" for="ff-e36-terms-{{ section.id }}">
-                    {{ terms_label }}
-                    {%- if section.settings.terms_link_label != blank and section.settings.terms_link_url != blank -%}
-                      <a href="{{ section.settings.terms_link_url }}" target="_blank" rel="noopener">{{ section.settings.terms_link_label | escape }}</a>
-                    {%- endif -%}
+                  <label class="form-label--checkbox ff-e36__terms-label" for="ff-e36-terms-{{ section.id }}">
+                    <span class="ff-e36__terms-label-text">
+                      {{ terms_label }}
+                      {%- if section.settings.terms_link_label != blank and section.settings.terms_link_url != blank -%}
+                        <a href="{{ section.settings.terms_link_url }}" target="_blank" rel="noopener">{{ section.settings.terms_link_label | escape }}</a>
+                      {%- endif -%}
+                    </span>
                   </label>
                 </div>
                 <p
