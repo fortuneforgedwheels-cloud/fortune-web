@@ -107,7 +107,7 @@
       </div>
     </div>
 
-    {%- comment -%} 2) Car write-up {%- endcomment -%}
+    {%- comment -%} 2) Car write-up (collapsed preview + View Build highlights) {%- endcomment -%}
     <div class="ff-e36__section ff-e36__section--story">
       <div class="ff-e36__section-inner">
         {%- if section.settings.story_kicker != blank -%}
@@ -117,7 +117,21 @@
           <h2 class="ff-e36__story-title">{{ section.settings.story_title | escape }}</h2>
         {%- endif -%}
         {%- if section.settings.story_body != blank -%}
-          <div class="ff-e36__story-body">{{ section.settings.story_body }}</div>
+          <div class="ff-e36__story-panel" data-ff-e36-story-panel>
+            <div class="ff-e36__story-clip" data-ff-e36-story-clip>
+              <div class="ff-e36__story-body" data-ff-e36-story-body>{{ section.settings.story_body }}</div>
+            </div>
+            <div class="ff-e36__story-more" data-ff-e36-story-more>
+              <button
+                type="button"
+                class="ff-e36__story-more-btn"
+                data-ff-e36-story-more-btn
+                aria-expanded="false"
+              >
+                {{ section.settings.story_more_label | default: 'View Build highlights' | escape }}
+              </button>
+            </div>
+          </div>
         {%- endif -%}
       </div>
     </div>
