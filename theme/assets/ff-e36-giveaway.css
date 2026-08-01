@@ -82,23 +82,10 @@
   pointer-events: none;
 }
 
-.ff-e36__hero-shade {
-  position: absolute;
-  inset: auto 0 0;
-  height: 42%;
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.72) 55%, rgba(0, 0, 0, 0.92) 100%);
-  pointer-events: none;
-}
-
 .ff-e36__hero-copy {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  padding: 20px 16px 18px;
   display: grid;
   gap: 8px;
+  margin: 0 0 14px;
 }
 
 .ff-e36__eyebrow {
@@ -129,7 +116,7 @@
 }
 
 .ff-e36__cta-bar {
-  padding: 14px 16px 8px;
+  padding: 18px 16px 12px;
   background: linear-gradient(180deg, rgba(7, 7, 8, 0.96), var(--ff-e36-bg));
   border-bottom: 1px solid var(--ff-e36-line);
 }
