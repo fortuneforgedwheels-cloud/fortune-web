@@ -234,7 +234,7 @@
           "type": "badge",
           "settings": {
             "icon": "lock",
-            "heading": "Fitment Guaranteed or money back",
+            "heading": "Guaranteed fit",
             "description": "Engineered specifically for your vehicle. Professional installation recommended. Perfect fitment, guaranteed.",
             "show_email": false,
             "contact_email": ""
