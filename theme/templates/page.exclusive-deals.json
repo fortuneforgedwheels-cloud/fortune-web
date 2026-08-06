@@ -31,23 +31,48 @@
       "blocks": {
         "deal_1": {
           "type": "deal",
-          "settings": {}
+          "settings": {
+            "product": "f-05sr",
+            "badge": "",
+            "title": "",
+            "blurb": ""
+          }
         },
         "deal_2": {
           "type": "deal",
-          "settings": {}
+          "settings": {
+            "product": "f-05x",
+            "badge": "",
+            "title": "",
+            "blurb": ""
+          }
         },
         "deal_3": {
           "type": "deal",
-          "settings": {}
+          "settings": {
+            "product": "ff-s10",
+            "badge": "",
+            "title": "",
+            "blurb": ""
+          }
         },
         "deal_4": {
           "type": "deal",
-          "settings": {}
+          "settings": {
+            "product": "876m-cs-style",
+            "badge": "",
+            "title": "",
+            "blurb": ""
+          }
         },
         "deal_5": {
           "type": "deal",
-          "settings": {}
+          "settings": {
+            "product": "forged-g8x-oem-style",
+            "badge": "",
+            "title": "",
+            "blurb": ""
+          }
         }
       },
       "block_order": [
@@ -58,19 +83,18 @@
         "deal_5"
       ],
       "settings": {
-        "eyebrow": "PRIVATE ACCESS",
-        "heading": "Exclusive deals",
-        "description": "<p>Private monoblock deals — five designs. Pick a design, choose finish + fitment path, and we’ll email you back.</p>",
-        "deals_eyebrow": "TOP 5 MONOBLOCKS",
+        "eyebrow": "INVASION ACCESS ONLY",
+        "heading": "YOUR NEXT SET. 50% OFF.",
+        "description": "<p>Today only \u2014 Our top five monoblock  designs. Pick a style, choose finish + fitment path, and production will begin. </p>",
+        "deals_eyebrow": "track tested favorites",
         "deals_heading": "Choose your design",
-        "deals_copy": "",
+        "deals_copy": "Each design is the same exclusive full-set price. One add to cart = the complete set.",
         "card_cta": "Select design",
-        "show_from_price": true,
         "missing_product_message": "Deal unavailable.",
         "modal_eyebrow": "EXCLUSIVE DEAL",
-        "modal_lead": "Choose how you want fitment handled, then submit — we’ll email you back to lock in your build.",
+        "modal_lead": "One add-to-cart = the full set. Same exclusive price on every design. Choose finish + fitment path, then checkout.",
         "path_specialist_title": "Let a specialist handle it",
-        "path_specialist_copy": "Pick a finish and your vehicle — we’ll email you back to sort proper fitment.",
+        "path_specialist_copy": "Pick a finish and your vehicle \u2014 we\u2019ll follow up after checkout to sort proper fitment.",
         "path_specs_title": "I know my specs",
         "path_specs_copy": "Pick a finish, enter your sizes, and your year / make / model.",
         "finish_label": "Wheel finish",
@@ -80,10 +104,14 @@
         "ymm_label": "Year / Make / Model",
         "ymm_placeholder": "e.g. 2024 BMW G80 M3",
         "notes_placeholder": "Anything else about your build (optional).",
-        "specialist_note": "A Fortune Forged specialist will email you back to sort proper fitment for your build.",
-        "submit_specialist_label": "Request specialist email",
-        "submit_specs_label": "Submit my specs",
-        "success_message": "Thanks — we got your exclusive deal request. A specialist will email you back to sort fitment for your build."
+        "specialist_note": "Adds 1 full set to cart at today\u2019s exclusive price. A specialist will follow up after checkout to confirm fitment.",
+        "submit_specialist_label": "Add full set to cart",
+        "submit_specs_label": "Add full set to cart",
+        "compare_at_price": 3379,
+        "deal_price": 2050,
+        "today_price_label": "Today\u2019s price",
+        "full_set_label": "Full set",
+        "checkout_product": "exclusive-deals-full-set"
       }
     }
   },

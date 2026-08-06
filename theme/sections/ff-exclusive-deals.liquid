@@ -8,14 +8,33 @@
   endif
   assign finish_list = section.settings.finish_options | default: 'Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal'
   assign finishes = finish_list | split: ','
-  assign contact_form_id = 'FFExclusiveDeals-' | append: section.id
   assign specs_example = section.settings.specs_example | default: 'Front: 20x10 ET10 / Rear 20x11 ET12'
+
+  assign deal_price_cents = section.settings.deal_price | times: 100
+  assign compare_price_cents = section.settings.compare_at_price | times: 100
+  if deal_price_cents == blank or deal_price_cents == 0
+    assign deal_price_cents = 205000
+  endif
+  if compare_price_cents == blank or compare_price_cents == 0
+    assign compare_price_cents = 337900
+  endif
+
+  assign checkout_product = section.settings.checkout_product
+  if checkout_product == blank
+    assign checkout_product = all_products['exclusive-deals-full-set']
+  endif
+  assign checkout_variant = blank
+  if checkout_product != blank
+    assign checkout_variant = checkout_product.selected_or_first_available_variant
+  endif
 -%}
 
 <section
   class="ff-xd"
   id="ff-xd-{{ section.id }}"
   data-ff-exclusive-deals
+  data-money-format="{{ shop.money_format | escape }}"
+  data-full-set-label="{{ section.settings.full_set_label | default: 'Full set' | escape }}"
   {{ section.shopify_attributes }}
 >
   <div class="ff-xd__hero">
@@ -80,19 +99,21 @@
               if deal_image == blank and deal != blank
                 assign deal_image = deal.featured_image
               endif
-              assign deal_price = blank
-              if deal != blank
-                assign deal_price = deal.price_min
+
+              assign atc_variant = checkout_variant
+              if atc_variant == blank and deal != blank
+                assign atc_variant = deal.selected_or_first_available_variant
               endif
             -%}
 
             <article
-              class="ff-xd__card{% if deal == blank %} is-disabled{% endif %}"
+              class="ff-xd__card{% if deal == blank or atc_variant == blank %} is-disabled{% endif %}"
               data-ff-xd-card
-              {% if deal != blank %}
+              {% if deal != blank and atc_variant != blank %}
                 data-ff-xd-open
                 data-design="{{ deal_title | escape }}"
                 data-product-id="{{ deal.id }}"
+                data-variant-id="{{ atc_variant.id }}"
                 data-product-url="{{ deal.url }}"
                 {% if deal_image != blank %}data-image="{{ deal_image | image_url: width: 900 }}"{% endif %}
                 tabindex="0"
@@ -133,9 +154,11 @@
 
                 {%- if deal != blank -%}
                   <div class="ff-xd__card-footer">
-                    {%- if deal_price != blank and section.settings.show_from_price -%}
-                      <p class="ff-xd__from-price">From {{ deal_price | money }}</p>
-                    {%- endif -%}
+                    <div class="ff-xd__price-stack">
+                      <p class="ff-xd__compare-price">{{ compare_price_cents | money }}</p>
+                      <p class="ff-xd__deal-price">{{ deal_price_cents | money }}</p>
+                      <p class="ff-xd__set-note">{{ section.settings.full_set_label | default: 'Full set' | escape }}</p>
+                    </div>
                     <span class="ff-xd__select-cta">{{ section.settings.card_cta | default: 'Select design' | escape }}</span>
                   </div>
                 {%- else -%}
@@ -156,6 +179,12 @@
           <p class="ff-xd__missing">Add up to 5 Deal blocks and pick a monoblock product for each.</p>
         {%- endif -%}
       </div>
+
+      {%- if checkout_product == blank and request.design_mode -%}
+        <p class="ff-xd__missing">
+          Set the Full-set checkout product in section settings (handle <code>exclusive-deals-full-set</code>), priced at {{ deal_price_cents | money }} with compare-at {{ compare_price_cents | money }}.
+        </p>
+      {%- endif -%}
     </div>
   </div>
 
@@ -163,8 +192,8 @@
     class="ff-xd__modal"
     id="ff-xd-modal-{{ section.id }}"
     data-ff-xd-modal
-    data-submit-specialist-label="{{ section.settings.submit_specialist_label | default: 'Request specialist email' | escape }}"
-    data-submit-specs-label="{{ section.settings.submit_specs_label | default: 'Submit my specs' | escape }}"
+    data-submit-specialist-label="{{ section.settings.submit_specialist_label | default: 'Add full set to cart' | escape }}"
+    data-submit-specs-label="{{ section.settings.submit_specs_label | default: 'Add full set to cart' | escape }}"
     hidden
     role="dialog"
     aria-modal="true"
@@ -182,27 +211,21 @@
         <div class="ff-xd__dialog-intro">
           <p class="ff-xd__eyebrow">{{ section.settings.modal_eyebrow | default: 'EXCLUSIVE DEAL' | escape }}</p>
           <h2 class="ff-xd__dialog-title" id="ff-xd-modal-title-{{ section.id }}" data-ff-xd-dialog-title>Design</h2>
-          <p class="ff-xd__dialog-lead">{{ section.settings.modal_lead | default: 'Choose how you want fitment handled, then submit — we’ll email you back to lock in your build.' | escape }}</p>
+          <div class="ff-xd__modal-price" aria-label="Deal pricing">
+            <span class="ff-xd__compare-price">{{ compare_price_cents | money }}</span>
+            <span class="ff-xd__deal-price">{{ deal_price_cents | money }}</span>
+            <span class="ff-xd__price-today">{{ section.settings.today_price_label | default: "Today’s price" | escape }}</span>
+          </div>
+          <p class="ff-xd__dialog-lead">{{ section.settings.modal_lead | default: 'One add-to-cart = the full set. Same exclusive price on every design. Choose finish + fitment path, then checkout.' | escape }}</p>
         </div>
       </div>
 
-      {%- form 'contact', id: contact_form_id, class: 'ff-xd__form' -%}
-        {%- if form.posted_successfully? -%}
-          <div class="ff-xd__success" role="status" data-ff-xd-success>
-            {{ section.settings.success_message | default: 'Thanks — we got your exclusive deal request. A specialist will email you back to sort fitment for your build.' | escape }}
-          </div>
-        {%- elsif form.errors -%}
-          <div class="ff-xd__form-error" role="alert">
-            {{ form.errors | default_errors }}
-          </div>
-        {%- endif -%}
-
-        <input type="hidden" name="contact[form_name]" value="Exclusive Deals Inquiry">
-        <input type="hidden" name="contact[design]" data-ff-xd-design-input value="">
-        <input type="hidden" name="contact[product_id]" data-ff-xd-product-id value="">
-        <input type="hidden" name="contact[help_preference]" data-ff-xd-help-preference value="Let a specialist handle it">
-        <input type="hidden" name="contact[finish]" data-ff-xd-finish-input value="">
-        <input type="hidden" name="contact[subject]" data-ff-xd-subject value="Exclusive Deals — fitment request">
+      <form class="ff-xd__form" data-ff-xd-form novalidate>
+        <input type="hidden" data-ff-xd-design-input value="">
+        <input type="hidden" data-ff-xd-product-id value="">
+        <input type="hidden" data-ff-xd-variant-id value="{% if checkout_variant != blank %}{{ checkout_variant.id }}{% endif %}">
+        <input type="hidden" data-ff-xd-help-preference value="Let a specialist handle it">
+        <input type="hidden" data-ff-xd-finish-input value="">
 
         <div class="ff-xd__path" role="radiogroup" aria-label="How should we help?">
           <p class="ff-xd__label">How should we help?</p>
@@ -214,7 +237,7 @@
           >
             <span>
               <strong>{{ section.settings.path_specialist_title | default: 'Let a specialist handle it' | escape }}</strong>
-              <em>{{ section.settings.path_specialist_copy | default: 'Pick a finish and your vehicle — we’ll email you back to sort proper fitment.' | escape }}</em>
+              <em>{{ section.settings.path_specialist_copy | default: 'Pick a finish and your vehicle — we’ll follow up after checkout to sort proper fitment.' | escape }}</em>
             </span>
           </button>
           <button
@@ -257,7 +280,6 @@
               class="ff-xd__input"
               id="ff-xd-specs-{{ section.id }}"
               type="text"
-              name="contact[wheel_specs]"
               data-ff-xd-specs
               placeholder="{{ specs_example | escape }}"
               autocomplete="off"
@@ -271,7 +293,6 @@
               class="ff-xd__input"
               id="ff-xd-ymm-{{ section.id }}"
               type="text"
-              name="contact[vehicle]"
               required
               data-ff-xd-ymm
               placeholder="{{ section.settings.ymm_placeholder | default: 'e.g. 2024 BMW G80 M3' | escape }}"
@@ -279,47 +300,12 @@
             >
           </div>
 
-          <div class="ff-xd__field">
-            <label class="ff-xd__label" for="ff-xd-name-{{ section.id }}">Name*</label>
-            <input
-              class="ff-xd__input"
-              id="ff-xd-name-{{ section.id }}"
-              type="text"
-              name="contact[name]"
-              required
-              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
-              autocomplete="name"
-            >
-          </div>
-          <div class="ff-xd__field">
-            <label class="ff-xd__label" for="ff-xd-email-{{ section.id }}">Email*</label>
-            <input
-              class="ff-xd__input"
-              id="ff-xd-email-{{ section.id }}"
-              type="email"
-              name="contact[email]"
-              required
-              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
-              autocomplete="email"
-            >
-          </div>
-          <div class="ff-xd__field ff-xd__field--full">
-            <label class="ff-xd__label" for="ff-xd-phone-{{ section.id }}">Phone</label>
-            <input
-              class="ff-xd__input"
-              id="ff-xd-phone-{{ section.id }}"
-              type="tel"
-              name="contact[phone]"
-              value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
-              autocomplete="tel"
-            >
-          </div>
           <div class="ff-xd__field ff-xd__field--full">
             <label class="ff-xd__label" for="ff-xd-notes-{{ section.id }}">Notes</label>
             <textarea
               class="ff-xd__input ff-xd__textarea"
               id="ff-xd-notes-{{ section.id }}"
-              name="contact[body]"
+              data-ff-xd-notes
               rows="3"
               placeholder="{{ section.settings.notes_placeholder | default: 'Anything else about your build (optional).' | escape }}"
             ></textarea>
@@ -327,14 +313,14 @@
         </div>
 
         <p class="ff-xd__assist" data-ff-xd-assist>
-          {{ section.settings.specialist_note | default: 'A Fortune Forged specialist will email you back to sort proper fitment for your build.' | escape }}
+          {{ section.settings.specialist_note | default: 'Adds 1 full set to cart at today’s exclusive price. A specialist will follow up after checkout to confirm fitment.' | escape }}
         </p>
         <p class="ff-xd__error" data-ff-xd-error hidden role="alert"></p>
 
-        <button type="submit" class="ff-xd__submit" data-ff-xd-submit>
-          {{ section.settings.submit_specialist_label | default: 'Request specialist email' | escape }}
+        <button type="submit" class="ff-xd__submit" data-ff-xd-submit {% unless checkout_variant %}disabled{% endunless %}>
+          {{ section.settings.submit_specialist_label | default: 'Add full set to cart' | escape }}
         </button>
-      {%- endform -%}
+      </form>
     </div>
   </div>
 </section>
@@ -371,7 +357,43 @@
       "type": "richtext",
       "id": "description",
       "label": "Description",
-      "default": "<p>Private monoblock deals — five designs. Pick a design, choose finish + fitment path, and we’ll email you back.</p>"
+      "default": "<p>Private monoblock deals — five designs, one exclusive full-set price. Pick a design and add the full set to cart.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Exclusive pricing (same for every design)"
+    },
+    {
+      "type": "number",
+      "id": "compare_at_price",
+      "label": "Original / compare-at price",
+      "default": 3379,
+      "info": "Shown crossed out. Example: 3379"
+    },
+    {
+      "type": "number",
+      "id": "deal_price",
+      "label": "Today’s deal price",
+      "default": 2050,
+      "info": "Shown as today’s price. Checkout uses the Full-set checkout product below — keep that product priced the same."
+    },
+    {
+      "type": "text",
+      "id": "today_price_label",
+      "label": "Today’s price label",
+      "default": "Today’s price"
+    },
+    {
+      "type": "text",
+      "id": "full_set_label",
+      "label": "Full-set label",
+      "default": "Full set"
+    },
+    {
+      "type": "product",
+      "id": "checkout_product",
+      "label": "Full-set checkout product",
+      "info": "ONE line item added to cart for any design. Price this product at today’s deal price with compare-at set to the original. Default handle: exclusive-deals-full-set"
     },
     {
       "type": "header",
@@ -392,19 +414,14 @@
     {
       "type": "textarea",
       "id": "deals_copy",
-      "label": "Deals supporting copy"
+      "label": "Deals supporting copy",
+      "default": "Each design is the same exclusive full-set price. One add to cart = the complete set."
     },
     {
       "type": "text",
       "id": "card_cta",
       "label": "Card CTA",
       "default": "Select design"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_from_price",
-      "label": "Show starting price on cards",
-      "default": true
     },
     {
       "type": "text",
@@ -414,7 +431,7 @@
     },
     {
       "type": "header",
-      "content": "Inquiry modal"
+      "content": "Checkout modal"
     },
     {
       "type": "text",
@@ -426,7 +443,7 @@
       "type": "textarea",
       "id": "modal_lead",
       "label": "Modal lead",
-      "default": "Choose how you want fitment handled, then submit — we’ll email you back to lock in your build."
+      "default": "One add-to-cart = the full set. Same exclusive price on every design. Choose finish + fitment path, then checkout."
     },
     {
       "type": "text",
@@ -438,7 +455,7 @@
       "type": "text",
       "id": "path_specialist_copy",
       "label": "Specialist path description",
-      "default": "Pick a finish and your vehicle — we’ll email you back to sort proper fitment."
+      "default": "Pick a finish and your vehicle — we’ll follow up after checkout to sort proper fitment."
     },
     {
       "type": "text",
@@ -499,25 +516,19 @@
       "type": "textarea",
       "id": "specialist_note",
       "label": "Specialist assist note",
-      "default": "A Fortune Forged specialist will email you back to sort proper fitment for your build."
+      "default": "Adds 1 full set to cart at today’s exclusive price. A specialist will follow up after checkout to confirm fitment."
     },
     {
       "type": "text",
       "id": "submit_specialist_label",
-      "label": "Submit label (specialist)",
-      "default": "Request specialist email"
+      "label": "Add to cart label (specialist)",
+      "default": "Add full set to cart"
     },
     {
       "type": "text",
       "id": "submit_specs_label",
-      "label": "Submit label (specs)",
-      "default": "Submit my specs"
-    },
-    {
-      "type": "textarea",
-      "id": "success_message",
-      "label": "Success message",
-      "default": "Thanks — we got your exclusive deal request. A specialist will email you back to sort fitment for your build."
+      "label": "Add to cart label (specs)",
+      "default": "Add full set to cart"
     }
   ],
   "blocks": [
@@ -528,8 +539,8 @@
         {
           "type": "product",
           "id": "product",
-          "label": "Monoblock product",
-          "info": "Clicking the card opens the finish + fitment inquiry modal for this design."
+          "label": "Monoblock design product",
+          "info": "Used for the card image/title. Checkout always adds the Full-set checkout product (qty 1 = full set)."
         },
         {
           "type": "text",

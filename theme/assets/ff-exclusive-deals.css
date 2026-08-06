@@ -268,11 +268,44 @@
 
 .ff-xd__card-footer {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 12px;
   margin-top: auto;
   padding-top: 8px;
+}
+
+.ff-xd__price-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ff-xd__compare-price {
+  margin: 0;
+  color: var(--ff-xd-faint);
+  font-family: var(--ff-xd-font-display);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: line-through;
+}
+
+.ff-xd__deal-price {
+  margin: 0;
+  color: var(--ff-xd-gold);
+  font-family: var(--ff-xd-font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.ff-xd__set-note {
+  margin: 2px 0 0;
+  color: var(--ff-xd-muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .ff-xd__from-price {
@@ -285,6 +318,32 @@
   color: var(--ff-xd-gold);
   font-family: var(--ff-xd-font-display);
   font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ff-xd__modal-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 14px;
+  margin: 12px 0 0;
+}
+
+.ff-xd__modal-price .ff-xd__compare-price {
+  font-size: 1.15rem;
+}
+
+.ff-xd__modal-price .ff-xd__deal-price {
+  font-size: clamp(1.6rem, 4vw, 2rem);
+}
+
+.ff-xd__price-today {
+  color: var(--ff-xd-muted);
+  font-family: var(--ff-xd-font-display);
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;

@@ -16,7 +16,6 @@
     var assist = root.querySelector('[data-ff-xd-assist]');
     var helpPreference = root.querySelector('[data-ff-xd-help-preference]');
     var submitBtn = root.querySelector('[data-ff-xd-submit]');
-    var subject = root.querySelector('[data-ff-xd-subject]');
 
     root.querySelectorAll('[data-ff-xd-help-mode]').forEach(function (btn) {
       var active = btn.getAttribute('data-ff-xd-help-mode') === mode;
@@ -29,27 +28,36 @@
       specsInput.required = !specialist;
       if (specialist) specsInput.value = '';
     }
-    if (assist) assist.hidden = !specialist;
+    if (assist) assist.hidden = false;
     if (helpPreference) {
       helpPreference.value = specialist
         ? 'Let a specialist handle it'
         : 'I know my specs';
     }
-    if (subject) {
-      subject.value = specialist
-        ? 'Exclusive Deals — specialist fitment request'
-        : 'Exclusive Deals — customer specs';
-    }
     if (submitBtn) {
       submitBtn.textContent = specialist
-        ? (submitBtn.getAttribute('data-label-specialist') || 'Request specialist email')
-        : (submitBtn.getAttribute('data-label-specs') || 'Submit my specs');
+        ? (submitBtn.getAttribute('data-label-specialist') || 'Add full set to cart')
+        : (submitBtn.getAttribute('data-label-specs') || 'Add full set to cart');
     }
   }
 
   function syncFinish(root) {
     var finishInput = root.querySelector('[data-ff-xd-finish-input]');
     if (finishInput) finishInput.value = selectedFinish(root);
+  }
+
+  function openCartDrawer() {
+    if (window.Shopify && typeof Shopify.getCart === 'function') {
+      try {
+        Shopify.getCart(function () {
+          document.body.classList.add('cart-sidebar-show');
+        });
+        return;
+      } catch (e) {
+        /* fall through */
+      }
+    }
+    window.location.href = '/cart';
   }
 
   function openModal(root, card) {
@@ -59,10 +67,12 @@
     var design = card.getAttribute('data-design') || 'Design';
     var image = card.getAttribute('data-image') || '';
     var productId = card.getAttribute('data-product-id') || '';
+    var variantId = card.getAttribute('data-variant-id') || '';
 
     var titleEl = modal.querySelector('[data-ff-xd-dialog-title]');
     var designInput = modal.querySelector('[data-ff-xd-design-input]');
     var productInput = modal.querySelector('[data-ff-xd-product-id]');
+    var variantInput = modal.querySelector('[data-ff-xd-variant-id]');
     var img = modal.querySelector('[data-ff-xd-dialog-img]');
     var imgEmpty = modal.querySelector('[data-ff-xd-dialog-img-empty]');
     var errorEl = modal.querySelector('[data-ff-xd-error]');
@@ -70,6 +80,7 @@
     if (titleEl) titleEl.textContent = design;
     if (designInput) designInput.value = design;
     if (productInput) productInput.value = productId;
+    if (variantInput && variantId) variantInput.value = variantId;
     if (errorEl) errorEl.hidden = true;
 
     if (img) {
@@ -154,9 +165,11 @@
       });
     });
 
-    var form = modal.querySelector('form');
+    var form = modal.querySelector('[data-ff-xd-form]');
     if (form) {
       form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
         var errorEl = modal.querySelector('[data-ff-xd-error]');
         syncFinish(modal);
 
@@ -164,9 +177,14 @@
         var mode = selectedHelpMode(modal);
         var ymm = modal.querySelector('[data-ff-xd-ymm]');
         var specs = modal.querySelector('[data-ff-xd-specs]');
+        var notes = modal.querySelector('[data-ff-xd-notes]');
+        var designInput = modal.querySelector('[data-ff-xd-design-input]');
+        var variantInput = modal.querySelector('[data-ff-xd-variant-id]');
+        var helpPreference = modal.querySelector('[data-ff-xd-help-preference]');
+        var atcBtn = modal.querySelector('[data-ff-xd-submit]');
+        var fullSetLabel = root.getAttribute('data-full-set-label') || 'Full set';
 
         if (!finish) {
-          event.preventDefault();
           if (errorEl) {
             errorEl.textContent = 'Please select a wheel finish.';
             errorEl.hidden = false;
@@ -175,7 +193,6 @@
         }
 
         if (ymm && !String(ymm.value || '').trim()) {
-          event.preventDefault();
           if (errorEl) {
             errorEl.textContent = 'Please enter year, make, and model.';
             errorEl.hidden = false;
@@ -184,7 +201,6 @@
         }
 
         if (mode === 'specs' && specs && !String(specs.value || '').trim()) {
-          event.preventDefault();
           if (errorEl) {
             errorEl.textContent = 'Please enter your wheel specs.';
             errorEl.hidden = false;
@@ -192,17 +208,79 @@
           return;
         }
 
+        var variantId = variantInput ? Number(variantInput.value) : 0;
+        if (!variantId) {
+          if (errorEl) {
+            errorEl.textContent = 'Checkout product unavailable. Please refresh and try again.';
+            errorEl.hidden = false;
+          }
+          return;
+        }
+
         if (errorEl) errorEl.hidden = true;
+
+        var properties = {
+          'Package': fullSetLabel,
+          'Wheel Design': designInput ? designInput.value : '',
+          'Finish': finish,
+          'Vehicle': ymm ? String(ymm.value || '').trim() : '',
+          'Fitment path': helpPreference ? helpPreference.value : ''
+        };
+
+        if (mode === 'specs' && specs) {
+          properties['Wheel specs'] = String(specs.value || '').trim();
+        }
+        if (notes && String(notes.value || '').trim()) {
+          properties['Notes'] = String(notes.value || '').trim();
+        }
+
+        var defaultLabel = atcBtn
+          ? (atcBtn.getAttribute('data-label-specialist') || atcBtn.textContent.trim() || 'Add full set to cart')
+          : 'Add full set to cart';
+
+        if (atcBtn) {
+          atcBtn.disabled = true;
+          atcBtn.textContent = 'Adding…';
+        }
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            items: [{
+              id: variantId,
+              quantity: 1,
+              properties: properties
+            }]
+          })
+        })
+          .then(function (response) {
+            if (!response.ok) throw new Error('cart-add-failed');
+            return response.json();
+          })
+          .then(function () {
+            if (atcBtn) {
+              atcBtn.disabled = false;
+              atcBtn.textContent = defaultLabel;
+            }
+            closeModal(root);
+            openCartDrawer();
+          })
+          .catch(function () {
+            if (atcBtn) {
+              atcBtn.disabled = false;
+              atcBtn.textContent = defaultLabel;
+            }
+            if (errorEl) {
+              errorEl.textContent = 'Could not add to cart. Make sure the exclusive full-set product is available on the Online Store.';
+              errorEl.hidden = false;
+            }
+          });
       });
     }
 
     setHelpMode(modal, selectedHelpMode(modal));
     syncFinish(modal);
-
-    if (modal.querySelector('[data-ff-xd-success]')) {
-      modal.hidden = false;
-      document.documentElement.classList.add('ff-xd-modal-open');
-    }
   }
 
   function boot() {
