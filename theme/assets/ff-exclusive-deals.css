@@ -430,11 +430,6 @@ html.ff-xd-modal-open {
   gap: 10px;
 }
 
-.ff-xd__path legend {
-  padding: 0;
-  margin: 0 0 8px;
-}
-
 .ff-xd__choice {
   display: block;
   width: 100%;
