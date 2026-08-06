@@ -178,6 +178,8 @@
 
 .productView.is-ff-826m-certified .productView-variants,
 .productView.is-ff-826m-certified .line-item-property__field,
+body.is-ff-826m-certified [data-ff-826m-hide-certified],
+body.is-ff-826m-certified [data-ff-826m-variant-hidden],
 body.is-ff-826m-certified .selector-wrapper[data-ff-826m-spec-field],
 body.is-ff-826m-certified [data-ff-826m-spec-field] {
   display: none !important;
