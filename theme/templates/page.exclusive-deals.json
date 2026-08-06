@@ -60,12 +60,30 @@
       "settings": {
         "eyebrow": "PRIVATE ACCESS",
         "heading": "Exclusive deals",
-        "description": "<p>Private monoblock deals — five designs, special pricing. Pick your options and check out.</p>",
+        "description": "<p>Private monoblock deals — five designs. Pick a design, choose finish + fitment path, and we’ll email you back.</p>",
         "deals_eyebrow": "TOP 5 MONOBLOCKS",
         "deals_heading": "Choose your design",
         "deals_copy": "",
-        "atc_label": "Add to cart",
-        "missing_product_message": "Deal unavailable."
+        "card_cta": "Select design",
+        "show_from_price": true,
+        "missing_product_message": "Deal unavailable.",
+        "modal_eyebrow": "EXCLUSIVE DEAL",
+        "modal_lead": "Choose how you want fitment handled, then submit — we’ll email you back to lock in your build.",
+        "path_specialist_title": "Let a specialist handle it",
+        "path_specialist_copy": "Pick a finish and your vehicle — we’ll email you back to sort proper fitment.",
+        "path_specs_title": "I know my specs",
+        "path_specs_copy": "Pick a finish, enter your sizes, and your year / make / model.",
+        "finish_label": "Wheel finish",
+        "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal",
+        "specs_label": "Wheel specs",
+        "specs_example": "Front: 20x10 ET10 / Rear 20x11 ET12",
+        "ymm_label": "Year / Make / Model",
+        "ymm_placeholder": "e.g. 2024 BMW G80 M3",
+        "notes_placeholder": "Anything else about your build (optional).",
+        "specialist_note": "A Fortune Forged specialist will email you back to sort proper fitment for your build.",
+        "submit_specialist_label": "Request specialist email",
+        "submit_specs_label": "Submit my specs",
+        "success_message": "Thanks — we got your exclusive deal request. A specialist will email you back to sort fitment for your build."
       }
     }
   },

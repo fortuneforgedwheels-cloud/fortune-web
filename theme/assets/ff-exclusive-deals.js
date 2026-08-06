@@ -1,244 +1,212 @@
 (function () {
-  function formatMoney(cents, format) {
-    if (window.Shopify && typeof Shopify.formatMoney === 'function') {
-      try {
-        return Shopify.formatMoney(cents, format || window.money_format);
-      } catch (e) {
-        /* fall through */
+  function selectedFinish(root) {
+    var active = root.querySelector('[data-ff-xd-finish].is-selected');
+    return active ? active.getAttribute('data-ff-xd-finish') || '' : '';
+  }
+
+  function selectedHelpMode(root) {
+    var active = root.querySelector('[data-ff-xd-help-mode].is-selected');
+    return active ? active.getAttribute('data-ff-xd-help-mode') || 'specialist' : 'specialist';
+  }
+
+  function setHelpMode(root, mode) {
+    var specialist = mode === 'specialist';
+    var specsWrap = root.querySelector('[data-ff-xd-specs-wrap]');
+    var specsInput = root.querySelector('[data-ff-xd-specs]');
+    var assist = root.querySelector('[data-ff-xd-assist]');
+    var helpPreference = root.querySelector('[data-ff-xd-help-preference]');
+    var submitBtn = root.querySelector('[data-ff-xd-submit]');
+    var subject = root.querySelector('[data-ff-xd-subject]');
+
+    root.querySelectorAll('[data-ff-xd-help-mode]').forEach(function (btn) {
+      var active = btn.getAttribute('data-ff-xd-help-mode') === mode;
+      btn.classList.toggle('is-selected', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+
+    if (specsWrap) specsWrap.hidden = specialist;
+    if (specsInput) {
+      specsInput.required = !specialist;
+      if (specialist) specsInput.value = '';
+    }
+    if (assist) assist.hidden = !specialist;
+    if (helpPreference) {
+      helpPreference.value = specialist
+        ? 'Let a specialist handle it'
+        : 'I know my specs';
+    }
+    if (subject) {
+      subject.value = specialist
+        ? 'Exclusive Deals — specialist fitment request'
+        : 'Exclusive Deals — customer specs';
+    }
+    if (submitBtn) {
+      submitBtn.textContent = specialist
+        ? (submitBtn.getAttribute('data-label-specialist') || 'Request specialist email')
+        : (submitBtn.getAttribute('data-label-specs') || 'Submit my specs');
+    }
+  }
+
+  function syncFinish(root) {
+    var finishInput = root.querySelector('[data-ff-xd-finish-input]');
+    if (finishInput) finishInput.value = selectedFinish(root);
+  }
+
+  function openModal(root, card) {
+    var modal = root.querySelector('[data-ff-xd-modal]');
+    if (!modal) return;
+
+    var design = card.getAttribute('data-design') || 'Design';
+    var image = card.getAttribute('data-image') || '';
+    var productId = card.getAttribute('data-product-id') || '';
+
+    var titleEl = modal.querySelector('[data-ff-xd-dialog-title]');
+    var designInput = modal.querySelector('[data-ff-xd-design-input]');
+    var productInput = modal.querySelector('[data-ff-xd-product-id]');
+    var img = modal.querySelector('[data-ff-xd-dialog-img]');
+    var imgEmpty = modal.querySelector('[data-ff-xd-dialog-img-empty]');
+    var errorEl = modal.querySelector('[data-ff-xd-error]');
+
+    if (titleEl) titleEl.textContent = design;
+    if (designInput) designInput.value = design;
+    if (productInput) productInput.value = productId;
+    if (errorEl) errorEl.hidden = true;
+
+    if (img) {
+      if (image) {
+        img.src = image;
+        img.alt = design;
+        img.hidden = false;
+        if (imgEmpty) imgEmpty.hidden = true;
+      } else {
+        img.removeAttribute('src');
+        img.hidden = true;
+        if (imgEmpty) imgEmpty.hidden = false;
       }
     }
-    var value = (Number(cents) / 100).toFixed(2);
-    if (!format) return '$' + value;
-    return format
-      .replace(/\{\{\s*amount\s*\}\}/, value)
-      .replace(/\{\{\s*amount_no_decimals\s*\}\}/, String(Math.round(Number(cents) / 100)))
-      .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/, value.replace('.', ','));
-  }
 
-  function parseVariants(buy) {
-    var el = buy.querySelector('[data-ff-xd-variants]');
-    if (!el) return [];
-    try {
-      var data = JSON.parse(el.textContent || '[]');
-      return Array.isArray(data) ? data : [];
-    } catch (e) {
-      return [];
+    setHelpMode(modal, 'specialist');
+    syncFinish(modal);
+    modal.hidden = false;
+    document.documentElement.classList.add('ff-xd-modal-open');
+
+    var focusTarget = modal.querySelector('[data-ff-xd-help-mode].is-selected') || modal.querySelector('[data-ff-xd-close]');
+    if (focusTarget) {
+      try { focusTarget.focus(); } catch (e) {}
     }
   }
 
-  function selectedOptions(buy) {
-    var options = [];
-    Array.prototype.slice.call(buy.querySelectorAll('[data-ff-xd-option]')).forEach(function (group) {
-      var active = group.querySelector('.ff-xd__chip.is-active');
-      options.push(active ? active.getAttribute('data-ff-xd-option-value') || '' : '');
-    });
-    return options;
+  function closeModal(root) {
+    var modal = root.querySelector('[data-ff-xd-modal]');
+    if (!modal) return;
+    modal.hidden = true;
+    document.documentElement.classList.remove('ff-xd-modal-open');
   }
 
-  function findVariant(variants, options) {
-    for (var i = 0; i < variants.length; i++) {
-      var v = variants[i];
-      var match =
-        (options[0] == null || options[0] === '' || v.option1 === options[0]) &&
-        (options[1] == null || options[1] === '' || v.option2 === options[1]) &&
-        (options[2] == null || options[2] === '' || v.option3 === options[2]);
-      if (match) return v;
+  function init(root) {
+    var modal = root.querySelector('[data-ff-xd-modal]');
+    if (!modal) return;
+
+    var submitBtn = modal.querySelector('[data-ff-xd-submit]');
+    if (submitBtn) {
+      var specialistLabel = modal.getAttribute('data-submit-specialist-label');
+      var specsLabel = modal.getAttribute('data-submit-specs-label');
+      if (specialistLabel) submitBtn.setAttribute('data-label-specialist', specialistLabel);
+      if (specsLabel) submitBtn.setAttribute('data-label-specs', specsLabel);
     }
-    return null;
-  }
 
-  function clampQty(value) {
-    var n = parseInt(value, 10);
-    if (isNaN(n) || n < 1) n = 1;
-    if (n > 20) n = 20;
-    return n;
-  }
-
-  function updateAvailability(buy, variants, current) {
-    Array.prototype.slice.call(buy.querySelectorAll('[data-ff-xd-option]')).forEach(function (group, optionIndex) {
-      var chips = Array.prototype.slice.call(group.querySelectorAll('[data-ff-xd-option-value]'));
-      chips.forEach(function (chip) {
-        var value = chip.getAttribute('data-ff-xd-option-value') || '';
-        var probe = selectedOptions(buy).slice();
-        probe[optionIndex] = value;
-        var variant = findVariant(variants, probe);
-        var available = !!(variant && variant.available);
-        chip.classList.toggle('is-unavailable', !available);
-        chip.setAttribute('aria-disabled', available ? 'false' : 'true');
+    root.querySelectorAll('[data-ff-xd-open]').forEach(function (card) {
+      card.addEventListener('click', function () {
+        openModal(root, card);
       });
-    });
-
-    var priceEl = buy.querySelector('[data-ff-xd-price]');
-    var atc = buy.querySelector('[data-ff-xd-atc]');
-    var moneyFormat = buy.getAttribute('data-money-format') || window.money_format;
-    var defaultLabel = atc ? atc.getAttribute('data-label-default') || atc.textContent.trim() : 'Add to cart';
-
-    if (atc && !atc.getAttribute('data-label-default')) {
-      atc.setAttribute('data-label-default', defaultLabel);
-    }
-
-    if (!current) {
-      if (atc) {
-        atc.disabled = true;
-        atc.textContent = 'Unavailable';
-        atc.removeAttribute('data-variant-id');
-      }
-      return;
-    }
-
-    if (priceEl) {
-      var html = formatMoney(current.price, moneyFormat);
-      if (current.compare_at_price && current.compare_at_price > current.price) {
-        html += ' <span class="ff-xd__compare">' + formatMoney(current.compare_at_price, moneyFormat) + '</span>';
-      }
-      priceEl.innerHTML = html;
-    }
-
-    var img = buy.closest('[data-ff-xd-card]');
-    if (img && current.featured_image) {
-      var mediaImg = img.querySelector('.ff-xd__card-img');
-      if (mediaImg && mediaImg.getAttribute('src') !== current.featured_image) {
-        mediaImg.setAttribute('src', current.featured_image);
-      }
-    }
-
-    if (atc) {
-      atc.setAttribute('data-variant-id', String(current.id));
-      atc.disabled = !current.available;
-      atc.textContent = current.available
-        ? (atc.getAttribute('data-label-default') || 'Add to cart')
-        : 'Sold out';
-    }
-  }
-
-  function syncCard(buy) {
-    var variants = parseVariants(buy);
-    var options = selectedOptions(buy);
-    var current = findVariant(variants, options);
-    if (!current) {
-      for (var i = 0; i < variants.length; i++) {
-        if (variants[i].available) {
-          current = variants[i];
-          break;
+      card.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openModal(root, card);
         }
-      }
-    }
-    if (!current) current = variants[0] || null;
-    updateAvailability(buy, variants, current);
-    return current;
-  }
-
-  function openCartDrawer() {
-    if (window.Shopify && typeof Shopify.getCart === 'function') {
-      try {
-        Shopify.getCart(function () {
-          document.body.classList.add('cart-sidebar-show');
-        });
-        return;
-      } catch (e) {
-        /* fall through */
-      }
-    }
-    window.location.href = '/cart';
-  }
-
-  function initBuy(buy) {
-    var variants = parseVariants(buy);
-    var qtyInput = buy.querySelector('[data-ff-xd-qty]');
-    var minus = buy.querySelector('[data-ff-xd-qty-minus]');
-    var plus = buy.querySelector('[data-ff-xd-qty-plus]');
-    var atc = buy.querySelector('[data-ff-xd-atc]');
-    var errorEl = buy.querySelector('[data-ff-xd-error]');
-
-    Array.prototype.slice.call(buy.querySelectorAll('[data-ff-xd-option]')).forEach(function (group) {
-      Array.prototype.slice.call(group.querySelectorAll('[data-ff-xd-option-value]')).forEach(function (chip) {
-        chip.addEventListener('click', function () {
-          Array.prototype.slice.call(group.querySelectorAll('[data-ff-xd-option-value]')).forEach(function (other) {
-            var active = other === chip;
-            other.classList.toggle('is-active', active);
-            other.setAttribute('aria-selected', active ? 'true' : 'false');
-          });
-          if (errorEl) errorEl.hidden = true;
-          syncCard(buy);
-        });
       });
     });
 
-    function setQty(next) {
-      if (!qtyInput) return;
-      qtyInput.value = String(clampQty(next));
-    }
-
-    if (minus) {
-      minus.addEventListener('click', function () {
-        setQty((parseInt(qtyInput && qtyInput.value, 10) || 1) - 1);
+    modal.querySelectorAll('[data-ff-xd-close]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        closeModal(root);
       });
-    }
-    if (plus) {
-      plus.addEventListener('click', function () {
-        setQty((parseInt(qtyInput && qtyInput.value, 10) || 1) + 1);
-      });
-    }
-    if (qtyInput) {
-      qtyInput.addEventListener('change', function () {
-        setQty(qtyInput.value);
-      });
-    }
+    });
 
-    if (atc) {
-      atc.addEventListener('click', function () {
-        var current = syncCard(buy);
-        var qty = clampQty(qtyInput ? qtyInput.value : 1);
-        var defaultLabel = atc.getAttribute('data-label-default') || 'Add to cart';
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !modal.hidden) closeModal(root);
+    });
 
-        if (!current || !current.id || !current.available) {
+    modal.querySelectorAll('[data-ff-xd-help-mode]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setHelpMode(modal, btn.getAttribute('data-ff-xd-help-mode') || 'specialist');
+      });
+    });
+
+    modal.querySelectorAll('[data-ff-xd-finish]').forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        modal.querySelectorAll('[data-ff-xd-finish]').forEach(function (other) {
+          var active = other === chip;
+          other.classList.toggle('is-selected', active);
+          other.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        syncFinish(modal);
+      });
+    });
+
+    var form = modal.querySelector('form');
+    if (form) {
+      form.addEventListener('submit', function (event) {
+        var errorEl = modal.querySelector('[data-ff-xd-error]');
+        syncFinish(modal);
+
+        var finish = selectedFinish(modal);
+        var mode = selectedHelpMode(modal);
+        var ymm = modal.querySelector('[data-ff-xd-ymm]');
+        var specs = modal.querySelector('[data-ff-xd-specs]');
+
+        if (!finish) {
+          event.preventDefault();
           if (errorEl) {
-            errorEl.textContent = 'That option is unavailable. Pick another combination.';
+            errorEl.textContent = 'Please select a wheel finish.';
             errorEl.hidden = false;
           }
           return;
         }
 
-        atc.disabled = true;
-        atc.textContent = 'Adding…';
-        if (errorEl) errorEl.hidden = true;
+        if (ymm && !String(ymm.value || '').trim()) {
+          event.preventDefault();
+          if (errorEl) {
+            errorEl.textContent = 'Please enter year, make, and model.';
+            errorEl.hidden = false;
+          }
+          return;
+        }
 
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            items: [{ id: Number(current.id), quantity: qty }]
-          })
-        })
-          .then(function (response) {
-            if (!response.ok) throw new Error('cart-add-failed');
-            return response.json();
-          })
-          .then(function () {
-            atc.disabled = false;
-            atc.textContent = defaultLabel;
-            openCartDrawer();
-          })
-          .catch(function () {
-            atc.disabled = false;
-            atc.textContent = defaultLabel;
-            if (errorEl) {
-              errorEl.textContent = 'Could not add to cart. Please try again.';
-              errorEl.hidden = false;
-            }
-          });
+        if (mode === 'specs' && specs && !String(specs.value || '').trim()) {
+          event.preventDefault();
+          if (errorEl) {
+            errorEl.textContent = 'Please enter your wheel specs.';
+            errorEl.hidden = false;
+          }
+          return;
+        }
+
+        if (errorEl) errorEl.hidden = true;
       });
     }
 
-    syncCard(buy);
-  }
+    setHelpMode(modal, selectedHelpMode(modal));
+    syncFinish(modal);
 
-  function init(root) {
-    Array.prototype.slice.call(root.querySelectorAll('[data-ff-xd-buy]')).forEach(initBuy);
+    if (modal.querySelector('[data-ff-xd-success]')) {
+      modal.hidden = false;
+      document.documentElement.classList.add('ff-xd-modal-open');
+    }
   }
 
   function boot() {
-    Array.prototype.slice.call(document.querySelectorAll('[data-ff-exclusive-deals]')).forEach(init);
+    document.querySelectorAll('[data-ff-exclusive-deals]').forEach(init);
   }
 
   if (document.readyState === 'loading') {

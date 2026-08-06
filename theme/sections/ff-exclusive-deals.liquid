@@ -6,6 +6,10 @@
   if brand_title == blank
     assign brand_title = 'Exclusive deals'
   endif
+  assign finish_list = section.settings.finish_options | default: 'Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal'
+  assign finishes = finish_list | split: ','
+  assign contact_form_id = 'FFExclusiveDeals-' | append: section.id
+  assign specs_example = section.settings.specs_example | default: 'Front: 20x10 ET10 / Rear 20x11 ET12'
 -%}
 
 <section
@@ -76,13 +80,28 @@
               if deal_image == blank and deal != blank
                 assign deal_image = deal.featured_image
               endif
-              assign current_variant = blank
+              assign deal_price = blank
               if deal != blank
-                assign current_variant = deal.selected_or_first_available_variant
+                assign deal_price = deal.price_min
               endif
             -%}
 
-            <article class="ff-xd__card" data-ff-xd-card {{ block.shopify_attributes }}>
+            <article
+              class="ff-xd__card{% if deal == blank %} is-disabled{% endif %}"
+              data-ff-xd-card
+              {% if deal != blank %}
+                data-ff-xd-open
+                data-design="{{ deal_title | escape }}"
+                data-product-id="{{ deal.id }}"
+                data-product-url="{{ deal.url }}"
+                {% if deal_image != blank %}data-image="{{ deal_image | image_url: width: 900 }}"{% endif %}
+                tabindex="0"
+                role="button"
+                aria-haspopup="dialog"
+                aria-controls="ff-xd-modal-{{ section.id }}"
+              {% endif %}
+              {{ block.shopify_attributes }}
+            >
               {%- if block.settings.badge != blank -%}
                 <p class="ff-xd__badge">{{ block.settings.badge | escape }}</p>
               {%- endif -%}
@@ -105,108 +124,19 @@
               </div>
 
               <div class="ff-xd__card-body">
-                <h3 class="ff-xd__card-title">{{ deal_title | escape }}</h3>
+                <h3 class="ff-xd__card-title">{{ deal_title | default: 'Monoblock design' | escape }}</h3>
                 {%- if deal_blurb != blank -%}
                   <p class="ff-xd__card-blurb">{{ deal_blurb | escape }}</p>
                 {%- elsif deal != blank and deal.description != blank -%}
-                  <p class="ff-xd__card-blurb">{{ deal.description | strip_html | truncate: 140 }}</p>
+                  <p class="ff-xd__card-blurb">{{ deal.description | strip_html | truncate: 120 }}</p>
                 {%- endif -%}
 
-                {%- if deal != blank and current_variant != blank -%}
-                  <div
-                    class="ff-xd__buy"
-                    data-ff-xd-buy
-                    data-product-id="{{ deal.id }}"
-                    data-money-format="{{ shop.money_format | escape }}"
-                  >
-                    <script type="application/json" data-ff-xd-variants>
-                      [
-                        {%- for variant in deal.variants -%}
-                          {
-                            "id": {{ variant.id | json }},
-                            "available": {{ variant.available | json }},
-                            "price": {{ variant.price | json }},
-                            "compare_at_price": {{ variant.compare_at_price | json }},
-                            "title": {{ variant.title | json }},
-                            "option1": {{ variant.option1 | json }},
-                            "option2": {{ variant.option2 | json }},
-                            "option3": {{ variant.option3 | json }},
-                            "featured_image": {% if variant.featured_image %}{{ variant.featured_image | image_url: width: 1200 | json }}{% else %}null{% endif %}
-                          }{%- unless forloop.last -%},{%- endunless -%}
-                        {%- endfor -%}
-                      ]
-                    </script>
-
-                    {%- unless deal.has_only_default_variant -%}
-                      {%- for option in deal.options_with_values -%}
-                        {%- assign option_index = forloop.index0 -%}
-                        <div class="ff-xd__option" data-ff-xd-option data-option-index="{{ option_index }}">
-                          <p class="ff-xd__option-label">{{ option.name | escape }}</p>
-                          <div class="ff-xd__option-values" role="listbox" aria-label="{{ option.name | escape }}">
-                            {%- liquid
-                              assign active_value = current_variant.options[option_index]
-                            -%}
-                            {%- for value in option.values -%}
-                              {%- liquid
-                                assign is_active = false
-                                if value == active_value
-                                  assign is_active = true
-                                endif
-                              -%}
-                              <button
-                                type="button"
-                                class="ff-xd__chip{% if is_active %} is-active{% endif %}"
-                                role="option"
-                                aria-selected="{% if is_active %}true{% else %}false{% endif %}"
-                                data-ff-xd-option-value="{{ value | escape }}"
-                              >
-                                {{ value | escape }}
-                              </button>
-                            {%- endfor -%}
-                          </div>
-                        </div>
-                      {%- endfor -%}
-                    {%- endunless -%}
-
-                    <div class="ff-xd__price-row">
-                      <p class="ff-xd__price" data-ff-xd-price>
-                        {{ current_variant.price | money }}
-                        {%- if current_variant.compare_at_price > current_variant.price -%}
-                          <span class="ff-xd__compare">{{ current_variant.compare_at_price | money }}</span>
-                        {%- endif -%}
-                      </p>
-                      <div class="ff-xd__qty">
-                        <button type="button" class="ff-xd__qty-btn" data-ff-xd-qty-minus aria-label="Decrease quantity">−</button>
-                        <input
-                          class="ff-xd__qty-input"
-                          type="number"
-                          value="1"
-                          min="1"
-                          max="20"
-                          step="1"
-                          inputmode="numeric"
-                          data-ff-xd-qty
-                          aria-label="Quantity"
-                        >
-                        <button type="button" class="ff-xd__qty-btn" data-ff-xd-qty-plus aria-label="Increase quantity">+</button>
-                      </div>
-                    </div>
-
-                    <p class="ff-xd__error" data-ff-xd-error hidden role="alert"></p>
-
-                    <button
-                      type="button"
-                      class="ff-xd__atc"
-                      data-ff-xd-atc
-                      data-variant-id="{{ current_variant.id }}"
-                      {% unless current_variant.available %}disabled{% endunless %}
-                    >
-                      {%- if current_variant.available -%}
-                        {{ section.settings.atc_label | default: 'Add to cart' | escape }}
-                      {%- else -%}
-                        Sold out
-                      {%- endif -%}
-                    </button>
+                {%- if deal != blank -%}
+                  <div class="ff-xd__card-footer">
+                    {%- if deal_price != blank and section.settings.show_from_price -%}
+                      <p class="ff-xd__from-price">From {{ deal_price | money }}</p>
+                    {%- endif -%}
+                    <span class="ff-xd__select-cta">{{ section.settings.card_cta | default: 'Select design' | escape }}</span>
                   </div>
                 {%- else -%}
                   <p class="ff-xd__missing">
@@ -226,6 +156,185 @@
           <p class="ff-xd__missing">Add up to 5 Deal blocks and pick a monoblock product for each.</p>
         {%- endif -%}
       </div>
+    </div>
+  </div>
+
+  <div
+    class="ff-xd__modal"
+    id="ff-xd-modal-{{ section.id }}"
+    data-ff-xd-modal
+    data-submit-specialist-label="{{ section.settings.submit_specialist_label | default: 'Request specialist email' | escape }}"
+    data-submit-specs-label="{{ section.settings.submit_specs_label | default: 'Submit my specs' | escape }}"
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="ff-xd-modal-title-{{ section.id }}"
+  >
+    <button type="button" class="ff-xd__modal-backdrop" data-ff-xd-close aria-label="Close"></button>
+    <div class="ff-xd__dialog" role="document">
+      <button type="button" class="ff-xd__modal-close" data-ff-xd-close aria-label="Close">×</button>
+
+      <div class="ff-xd__dialog-top">
+        <div class="ff-xd__dialog-media">
+          <img class="ff-xd__dialog-img" data-ff-xd-dialog-img src="" alt="" width="600" height="600" hidden>
+          <span class="ff-xd__dialog-img-empty" data-ff-xd-dialog-img-empty aria-hidden="true"></span>
+        </div>
+        <div class="ff-xd__dialog-intro">
+          <p class="ff-xd__eyebrow">{{ section.settings.modal_eyebrow | default: 'EXCLUSIVE DEAL' | escape }}</p>
+          <h2 class="ff-xd__dialog-title" id="ff-xd-modal-title-{{ section.id }}" data-ff-xd-dialog-title>Design</h2>
+          <p class="ff-xd__dialog-lead">{{ section.settings.modal_lead | default: 'Choose how you want fitment handled, then submit — we’ll email you back to lock in your build.' | escape }}</p>
+        </div>
+      </div>
+
+      {%- form 'contact', id: contact_form_id, class: 'ff-xd__form' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="ff-xd__success" role="status" data-ff-xd-success>
+            {{ section.settings.success_message | default: 'Thanks — we got your exclusive deal request. A specialist will email you back to sort fitment for your build.' | escape }}
+          </div>
+        {%- elsif form.errors -%}
+          <div class="ff-xd__form-error" role="alert">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <input type="hidden" name="contact[form_name]" value="Exclusive Deals Inquiry">
+        <input type="hidden" name="contact[design]" data-ff-xd-design-input value="">
+        <input type="hidden" name="contact[product_id]" data-ff-xd-product-id value="">
+        <input type="hidden" name="contact[help_preference]" data-ff-xd-help-preference value="Let a specialist handle it">
+        <input type="hidden" name="contact[finish]" data-ff-xd-finish-input value="">
+        <input type="hidden" name="contact[subject]" data-ff-xd-subject value="Exclusive Deals — fitment request">
+
+        <div class="ff-xd__path" role="radiogroup" aria-label="How should we help?">
+          <p class="ff-xd__label">How should we help?</p>
+          <button
+            type="button"
+            class="ff-xd__choice is-selected"
+            data-ff-xd-help-mode="specialist"
+            aria-pressed="true"
+          >
+            <span>
+              <strong>{{ section.settings.path_specialist_title | default: 'Let a specialist handle it' | escape }}</strong>
+              <em>{{ section.settings.path_specialist_copy | default: 'Pick a finish and your vehicle — we’ll email you back to sort proper fitment.' | escape }}</em>
+            </span>
+          </button>
+          <button
+            type="button"
+            class="ff-xd__choice"
+            data-ff-xd-help-mode="specs"
+            aria-pressed="false"
+          >
+            <span>
+              <strong>{{ section.settings.path_specs_title | default: 'I know my specs' | escape }}</strong>
+              <em>{{ section.settings.path_specs_copy | default: 'Pick a finish, enter your sizes, and your year / make / model.' | escape }}</em>
+            </span>
+          </button>
+        </div>
+
+        <div class="ff-xd__fields">
+          <div class="ff-xd__field ff-xd__field--full">
+            <p class="ff-xd__label" id="ff-xd-finish-label-{{ section.id }}">{{ section.settings.finish_label | default: 'Wheel finish' | escape }}*</p>
+            <div class="ff-xd__finishes" role="listbox" aria-labelledby="ff-xd-finish-label-{{ section.id }}" data-ff-xd-finishes>
+              {%- for finish in finishes -%}
+                {%- assign finish_name = finish | strip -%}
+                {%- if finish_name != blank -%}
+                  <button
+                    type="button"
+                    class="ff-xd__finish{% if forloop.first %} is-selected{% endif %}"
+                    role="option"
+                    aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                    data-ff-xd-finish="{{ finish_name | escape }}"
+                  >
+                    {{ finish_name | escape }}
+                  </button>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <div class="ff-xd__field ff-xd__field--full" data-ff-xd-specs-wrap hidden>
+            <label class="ff-xd__label" for="ff-xd-specs-{{ section.id }}">{{ section.settings.specs_label | default: 'Wheel specs' | escape }}*</label>
+            <input
+              class="ff-xd__input"
+              id="ff-xd-specs-{{ section.id }}"
+              type="text"
+              name="contact[wheel_specs]"
+              data-ff-xd-specs
+              placeholder="{{ specs_example | escape }}"
+              autocomplete="off"
+            >
+            <p class="ff-xd__hint">Example: {{ specs_example | escape }}</p>
+          </div>
+
+          <div class="ff-xd__field ff-xd__field--full">
+            <label class="ff-xd__label" for="ff-xd-ymm-{{ section.id }}">{{ section.settings.ymm_label | default: 'Year / Make / Model' | escape }}*</label>
+            <input
+              class="ff-xd__input"
+              id="ff-xd-ymm-{{ section.id }}"
+              type="text"
+              name="contact[vehicle]"
+              required
+              data-ff-xd-ymm
+              placeholder="{{ section.settings.ymm_placeholder | default: 'e.g. 2024 BMW G80 M3' | escape }}"
+              autocomplete="off"
+            >
+          </div>
+
+          <div class="ff-xd__field">
+            <label class="ff-xd__label" for="ff-xd-name-{{ section.id }}">Name*</label>
+            <input
+              class="ff-xd__input"
+              id="ff-xd-name-{{ section.id }}"
+              type="text"
+              name="contact[name]"
+              required
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              autocomplete="name"
+            >
+          </div>
+          <div class="ff-xd__field">
+            <label class="ff-xd__label" for="ff-xd-email-{{ section.id }}">Email*</label>
+            <input
+              class="ff-xd__input"
+              id="ff-xd-email-{{ section.id }}"
+              type="email"
+              name="contact[email]"
+              required
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              autocomplete="email"
+            >
+          </div>
+          <div class="ff-xd__field ff-xd__field--full">
+            <label class="ff-xd__label" for="ff-xd-phone-{{ section.id }}">Phone</label>
+            <input
+              class="ff-xd__input"
+              id="ff-xd-phone-{{ section.id }}"
+              type="tel"
+              name="contact[phone]"
+              value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+              autocomplete="tel"
+            >
+          </div>
+          <div class="ff-xd__field ff-xd__field--full">
+            <label class="ff-xd__label" for="ff-xd-notes-{{ section.id }}">Notes</label>
+            <textarea
+              class="ff-xd__input ff-xd__textarea"
+              id="ff-xd-notes-{{ section.id }}"
+              name="contact[body]"
+              rows="3"
+              placeholder="{{ section.settings.notes_placeholder | default: 'Anything else about your build (optional).' | escape }}"
+            ></textarea>
+          </div>
+        </div>
+
+        <p class="ff-xd__assist" data-ff-xd-assist>
+          {{ section.settings.specialist_note | default: 'A Fortune Forged specialist will email you back to sort proper fitment for your build.' | escape }}
+        </p>
+        <p class="ff-xd__error" data-ff-xd-error hidden role="alert"></p>
+
+        <button type="submit" class="ff-xd__submit" data-ff-xd-submit>
+          {{ section.settings.submit_specialist_label | default: 'Request specialist email' | escape }}
+        </button>
+      {%- endform -%}
     </div>
   </div>
 </section>
@@ -262,7 +371,7 @@
       "type": "richtext",
       "id": "description",
       "label": "Description",
-      "default": "<p>Private monoblock deals — five designs, special pricing. Pick your options and check out.</p>"
+      "default": "<p>Private monoblock deals — five designs. Pick a design, choose finish + fitment path, and we’ll email you back.</p>"
     },
     {
       "type": "header",
@@ -287,15 +396,128 @@
     },
     {
       "type": "text",
-      "id": "atc_label",
-      "label": "Add to cart label",
-      "default": "Add to cart"
+      "id": "card_cta",
+      "label": "Card CTA",
+      "default": "Select design"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_from_price",
+      "label": "Show starting price on cards",
+      "default": true
     },
     {
       "type": "text",
       "id": "missing_product_message",
       "label": "Missing product message",
       "default": "Deal unavailable."
+    },
+    {
+      "type": "header",
+      "content": "Inquiry modal"
+    },
+    {
+      "type": "text",
+      "id": "modal_eyebrow",
+      "label": "Modal eyebrow",
+      "default": "EXCLUSIVE DEAL"
+    },
+    {
+      "type": "textarea",
+      "id": "modal_lead",
+      "label": "Modal lead",
+      "default": "Choose how you want fitment handled, then submit — we’ll email you back to lock in your build."
+    },
+    {
+      "type": "text",
+      "id": "path_specialist_title",
+      "label": "Specialist path title",
+      "default": "Let a specialist handle it"
+    },
+    {
+      "type": "text",
+      "id": "path_specialist_copy",
+      "label": "Specialist path description",
+      "default": "Pick a finish and your vehicle — we’ll email you back to sort proper fitment."
+    },
+    {
+      "type": "text",
+      "id": "path_specs_title",
+      "label": "Specs path title",
+      "default": "I know my specs"
+    },
+    {
+      "type": "text",
+      "id": "path_specs_copy",
+      "label": "Specs path description",
+      "default": "Pick a finish, enter your sizes, and your year / make / model."
+    },
+    {
+      "type": "text",
+      "id": "finish_label",
+      "label": "Finish label",
+      "default": "Wheel finish"
+    },
+    {
+      "type": "text",
+      "id": "finish_options",
+      "label": "Finish options",
+      "default": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal",
+      "info": "Comma-separated list"
+    },
+    {
+      "type": "text",
+      "id": "specs_label",
+      "label": "Specs label",
+      "default": "Wheel specs"
+    },
+    {
+      "type": "text",
+      "id": "specs_example",
+      "label": "Specs example / placeholder",
+      "default": "Front: 20x10 ET10 / Rear 20x11 ET12"
+    },
+    {
+      "type": "text",
+      "id": "ymm_label",
+      "label": "Vehicle label",
+      "default": "Year / Make / Model"
+    },
+    {
+      "type": "text",
+      "id": "ymm_placeholder",
+      "label": "Vehicle placeholder",
+      "default": "e.g. 2024 BMW G80 M3"
+    },
+    {
+      "type": "text",
+      "id": "notes_placeholder",
+      "label": "Notes placeholder",
+      "default": "Anything else about your build (optional)."
+    },
+    {
+      "type": "textarea",
+      "id": "specialist_note",
+      "label": "Specialist assist note",
+      "default": "A Fortune Forged specialist will email you back to sort proper fitment for your build."
+    },
+    {
+      "type": "text",
+      "id": "submit_specialist_label",
+      "label": "Submit label (specialist)",
+      "default": "Request specialist email"
+    },
+    {
+      "type": "text",
+      "id": "submit_specs_label",
+      "label": "Submit label (specs)",
+      "default": "Submit my specs"
+    },
+    {
+      "type": "textarea",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks — we got your exclusive deal request. A specialist will email you back to sort fitment for your build."
     }
   ],
   "blocks": [
@@ -307,13 +529,13 @@
           "type": "product",
           "id": "product",
           "label": "Monoblock product",
-          "info": "Each product can have different Shopify options/variants — they show automatically."
+          "info": "Clicking the card opens the finish + fitment inquiry modal for this design."
         },
         {
           "type": "text",
           "id": "badge",
           "label": "Badge",
-          "info": "Optional. Example: Exclusive, 15% off"
+          "info": "Optional. Example: Exclusive, Limited"
         },
         {
           "type": "text",
