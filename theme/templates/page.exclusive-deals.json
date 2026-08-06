@@ -1,0 +1,76 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": false,
+        "breadcrumb_alignment": "left",
+        "show_page_title": false,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "ff_exclusive_deals": {
+      "type": "ff-exclusive-deals",
+      "blocks": {
+        "deal_1": {
+          "type": "deal",
+          "settings": {}
+        },
+        "deal_2": {
+          "type": "deal",
+          "settings": {}
+        },
+        "deal_3": {
+          "type": "deal",
+          "settings": {}
+        },
+        "deal_4": {
+          "type": "deal",
+          "settings": {}
+        },
+        "deal_5": {
+          "type": "deal",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "deal_1",
+        "deal_2",
+        "deal_3",
+        "deal_4",
+        "deal_5"
+      ],
+      "settings": {
+        "eyebrow": "PRIVATE ACCESS",
+        "heading": "Exclusive deals",
+        "description": "<p>Private monoblock deals — five designs, special pricing. Pick your options and check out.</p>",
+        "deals_eyebrow": "TOP 5 MONOBLOCKS",
+        "deals_heading": "Choose your design",
+        "deals_copy": "",
+        "atc_label": "Add to cart",
+        "missing_product_message": "Deal unavailable."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ff_exclusive_deals"
+  ]
+}
