@@ -23,7 +23,9 @@
     "theme:info": "bash scripts/with-env.sh shopify theme info --path theme",
     "setup:check": "node scripts/check-setup.mjs",
     "theme:pull-vehicles": "node scripts/pull-apex-vehicles.mjs",
-    "theme:build-ff-fitments": "node scripts/build-ff-fitments.mjs"
+    "theme:build-ff-fitments": "node scripts/build-ff-fitments.mjs",
+    "shop:update-beadlock-prices": "node scripts/update-beadlock-prices.mjs",
+    "shop:build-beadlock-restore-csv": "node scripts/build-beadlock-restore-csv.mjs"
   },
   "engines": {
     "node": ">=20"
