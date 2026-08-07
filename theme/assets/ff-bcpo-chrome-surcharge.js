@@ -266,6 +266,69 @@
     if (ticks > 60) clearInterval(timer);
   }, 250);
 
-  document.addEventListener('DOMContentLoaded', patchAll);
+  function propertyMap(item) {
+    var props = item && item.properties ? item.properties : {};
+    var out = {};
+    Object.keys(props).forEach(function (key) {
+      out[String(key).replace(/\s+/g, ' ').trim().toUpperCase()] = props[key];
+    });
+    return out;
+  }
+
+  function expectedChromeFromCart(items) {
+    var expected = 0;
+    (items || []).forEach(function (item) {
+      if (!item) return;
+      if (String(item.handle || '') === ADDON_HANDLE) return;
+      if (item.product_id && config().productId && String(item.product_id) === String(config().productId)) return;
+      var props = propertyMap(item);
+      if (isChromeValue(props['FACE COLOR'])) expected += 1;
+      if (isChromeValue(props['RING COLOR'])) expected += 1;
+    });
+    return expected;
+  }
+
+  function existingChromeAddonQty(items) {
+    var qty = 0;
+    (items || []).forEach(function (item) {
+      if (!item) return;
+      if (String(item.handle || '') === ADDON_HANDLE) qty += item.quantity || 0;
+      else if (String(item.id || '') === String(addonVariantId())) qty += item.quantity || 0;
+    });
+    return qty;
+  }
+
+  function reconcileCartChromeSurcharge() {
+    if (!addonVariantId()) return Promise.resolve(null);
+    return fetch('/cart.js', { credentials: 'same-origin', headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.json(); })
+      .then(function (cart) {
+        var items = (cart && cart.items) || [];
+        var expected = expectedChromeFromCart(items);
+        var existing = existingChromeAddonQty(items);
+        var missing = expected - existing;
+        if (missing > 0) return addChromeAddonLines(missing);
+        return null;
+      })
+      .catch(function () { return null; });
+  }
+
+  function maybeReconcileOnCartPage() {
+    if (!/\/cart\/?$/.test(location.pathname || '')) return;
+    reconcileCartChromeSurcharge().then(function (result) {
+      if (!result) return;
+      try {
+        document.dispatchEvent(new CustomEvent('cart:updated'));
+        // Refresh cart UI if present.
+        if (window.jQuery) window.jQuery(document).trigger('cart.requestComplete', [result]);
+        location.reload();
+      } catch (e) {}
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    patchAll();
+    maybeReconcileOnCartPage();
+  });
   window.addEventListener('load', patchAll);
 })();
