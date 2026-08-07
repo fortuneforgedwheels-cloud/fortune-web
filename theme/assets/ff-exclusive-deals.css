@@ -86,12 +86,19 @@
   background:
     linear-gradient(
       180deg,
-      rgba(10, 10, 10, 0.1) 0%,
-      rgba(10, 10, 10, 0.18) 38%,
-      rgba(10, 10, 10, 0.55) 68%,
-      rgba(10, 10, 10, 0.94) 100%
+      rgba(7, 7, 7, 0.12) 0%,
+      rgba(7, 7, 7, 0.08) 28%,
+      rgba(7, 7, 7, 0.35) 48%,
+      rgba(7, 7, 7, 0.72) 66%,
+      rgba(7, 7, 7, 0.92) 82%,
+      #070707 100%
     ),
-    linear-gradient(90deg, rgba(10, 10, 10, 0.35) 0%, transparent 55%);
+    linear-gradient(
+      90deg,
+      rgba(7, 7, 7, 0.45) 0%,
+      rgba(7, 7, 7, 0.18) 42%,
+      transparent 72%
+    );
 }
 
 .ff-xd__hero-copy {
@@ -99,7 +106,7 @@
   z-index: 2;
   width: min(1120px, calc(100% - 40px));
   margin: 0 auto;
-  padding: 0 0 36px;
+  padding: 72px 0 48px;
   animation: ff-xd-rise 0.9s ease-out both;
 }
 
@@ -111,6 +118,7 @@
   font-weight: 700;
   letter-spacing: 0.26em;
   text-transform: uppercase;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55);
 }
 
 .ff-xd__title {
@@ -122,6 +130,7 @@
   letter-spacing: 0.02em;
   line-height: 0.95;
   text-transform: uppercase;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.65);
 }
 
 .ff-xd__lede {
@@ -130,6 +139,7 @@
   color: var(--ff-xd-muted);
   font-size: clamp(1rem, 1.8vw, 1.15rem);
   line-height: 1.5;
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.7);
 }
 
 .ff-xd__lede p {
