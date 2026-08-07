@@ -138,14 +138,24 @@
         .filter(Boolean);
     }
 
-    function valuesForColor(root, title) {
+    function colorOptionMeta(root, title) {
       const wanted = normalizeTitle(title);
       const opt = getBcpoVirtualOptions().find((o) => normalizeTitle(o.title) === wanted);
       let values = [];
+      const prices = {};
       if (opt && Array.isArray(opt.values) && opt.values.length) {
-        values = opt.values
-          .map((v) => (v && typeof v === 'object' ? v.key : v))
-          .filter(Boolean);
+        opt.values.forEach((v) => {
+          if (!v) return;
+          if (typeof v === 'object') {
+            if (!v.key) return;
+            values.push(v.key);
+            if (v.price != null && String(v.price) !== '' && Number(v.price) > 0) {
+              prices[v.key] = String(v.price);
+            }
+          } else {
+            values.push(v);
+          }
+        });
       } else {
         values = (FALLBACK_COLORS[wanted] || []).slice();
       }
@@ -155,15 +165,30 @@
         if (extras.length) {
           values = extras.concat(values.filter((v) => extras.indexOf(v) === -1));
         }
+        // Guaranteed Chrome surcharge display even if BCPO payload is stale.
+        if (values.indexOf('Chrome') !== -1) {
+          prices.Chrome = '250';
+        }
       }
-      return values;
+      return { values: values, prices: prices };
+    }
+
+    function valuesForColor(root, title) {
+      return colorOptionMeta(root, title).values;
+    }
+
+    function labelForColorValue(value, prices) {
+      const price = prices && prices[value];
+      if (!price || Number(price) <= 0) return value;
+      return value + ' (+$' + price + ')';
     }
 
     function populateColorSelects(root) {
       COLOR_TITLES.forEach((title) => {
         const select = root.querySelector('[data-ff-826m-color-select="' + title + '"]');
         if (!select) return;
-        const values = valuesForColor(root, title);
+        const meta = colorOptionMeta(root, title);
+        const values = meta.values;
         if (!values.length) return;
 
         const current = select.value;
@@ -172,7 +197,14 @@
           .filter(Boolean);
         const same =
           existing.length === values.length && values.every((v, i) => existing[i] === v);
-        if (same) return;
+        if (same) {
+          // Refresh labels if surcharge text is missing.
+          Array.from(select.options).forEach((opt) => {
+            if (!opt.value) return;
+            opt.textContent = labelForColorValue(opt.value, meta.prices);
+          });
+          return;
+        }
 
         select.innerHTML = '';
         const placeholder = document.createElement('option');
@@ -182,7 +214,7 @@
         values.forEach((value) => {
           const opt = document.createElement('option');
           opt.value = value;
-          opt.textContent = value;
+          opt.textContent = labelForColorValue(value, meta.prices);
           select.appendChild(opt);
         });
         if (current && values.indexOf(current) !== -1) select.value = current;

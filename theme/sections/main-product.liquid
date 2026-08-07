@@ -5,6 +5,10 @@
 {{ 'component-rte.css' | asset_url | stylesheet_tag }}
 {{ 'component-product-form.css' | asset_url | stylesheet_tag }}
 
+{%- if product.tags contains 'BEADLOCK' or product.tags contains 'beadlock' -%}
+  <script src="{{ 'ff-bcpo-chrome-surcharge.js' | asset_url }}"></script>
+{%- endif -%}
+
 {%- liquid
     assign current_variant = product.selected_or_first_available_variant
     assign variantCount = product.variants | size
