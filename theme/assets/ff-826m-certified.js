@@ -483,7 +483,7 @@
           setMode(root, currentMode(root));
         } catch (e) {}
 
-        const hasValues = COLOR_TITLES.every((title) => valuesForColor(title).length > 0);
+        const hasValues = COLOR_TITLES.every((title) => valuesForColor(root, title).length > 0);
         const hasBcpo = COLOR_TITLES.some((title) => !!findBcpoSelectByTitle(title));
         if ((hasValues && hasBcpo) || tries >= 30) {
           window.clearInterval(timer);
