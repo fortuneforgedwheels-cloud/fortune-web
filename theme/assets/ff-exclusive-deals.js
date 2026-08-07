@@ -114,6 +114,26 @@
     document.documentElement.classList.remove('ff-xd-modal-open');
   }
 
+  function nudgeHeroVideo(root) {
+    var video = root.querySelector('.ff-xd__hero-media video, video.ff-xd__hero-video');
+    if (!video) return;
+    try {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('playsinline', 'true');
+      video.autoplay = true;
+      video.setAttribute('autoplay', '');
+      if (video.paused) {
+        var playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(function () {});
+        }
+      }
+    } catch (e) {}
+  }
+
   function init(root) {
     var modal = root.querySelector('[data-ff-xd-modal]');
     if (!modal) return;

@@ -38,8 +38,14 @@
   {{ section.shopify_attributes }}
 >
   <div class="ff-xd__hero">
-    <div class="ff-xd__hero-media" aria-hidden="true">
-      {%- if section.settings.hero_image != blank -%}
+    <div class="ff-xd__hero-media" data-ff-autoplay-video aria-hidden="true">
+      {%- if section.settings.hero_video != blank -%}
+        {% render 'ff-autoplay-video',
+          video: section.settings.hero_video,
+          poster: section.settings.hero_image,
+          class: 'ff-xd__hero-video'
+        %}
+      {%- elsif section.settings.hero_image != blank -%}
         {{
           section.settings.hero_image
           | image_url: width: 2400
@@ -52,7 +58,11 @@
             alt: brand_title
         }}
       {%- else -%}
-        <span class="ff-xd__hero-fallback"></span>
+        <span class="ff-xd__hero-fallback">
+          {%- if request.design_mode -%}
+            <span class="ff-xd__hero-fallback-note">Add a Hero video (MP4) in this section’s settings.</span>
+          {%- endif -%}
+        </span>
       {%- endif -%}
     </div>
     <div class="ff-xd__hero-shade" aria-hidden="true"></div>
@@ -64,7 +74,7 @@
       {%- if section.settings.description != blank -%}
         <div class="ff-xd__lede">{{ section.settings.description }}</div>
       {%- elsif request.design_mode -%}
-        <p class="ff-xd__lede">Add a description and hero image in this section’s settings.</p>
+        <p class="ff-xd__lede">Add a description and hero video in this section’s settings.</p>
       {%- endif -%}
     </div>
   </div>
@@ -337,9 +347,16 @@
       "content": "Hero"
     },
     {
+      "type": "video",
+      "id": "hero_video",
+      "label": "Hero video (MP4)",
+      "info": "Full-bleed autoplay video at the top of the page. Theme Editor media wins — re-select after theme updates if it goes blank."
+    },
+    {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Hero image"
+      "label": "Hero poster / fallback image",
+      "info": "Optional. Used as the video poster, or as the hero if no video is set."
     },
     {
       "type": "text",

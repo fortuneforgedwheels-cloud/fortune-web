@@ -38,23 +38,44 @@
   z-index: 0;
 }
 
-.ff-xd__hero-img {
+.ff-xd__hero-img,
+.ff-xd__hero-video,
+.ff-xd__hero-media video {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 35%;
+  object-position: center center;
   display: block;
+  border: 0;
+}
+
+.ff-xd__hero-img {
+  object-position: center 35%;
   transform: scale(1.045);
   animation: ff-xd-ken 1.5s ease-out forwards;
 }
 
+.ff-xd__hero-video,
+.ff-xd__hero-media video {
+  pointer-events: none;
+  transform: scale(1.02);
+}
+
 .ff-xd__hero-fallback {
-  display: block;
+  display: grid;
+  place-items: center;
   width: 100%;
   height: 100%;
   background:
     radial-gradient(80% 60% at 70% 20%, rgba(194, 167, 107, 0.2), transparent 55%),
     linear-gradient(145deg, #161616 0%, #0a0a0a 55%, #14100a 100%);
+}
+
+.ff-xd__hero-fallback-note {
+  color: rgba(243, 241, 236, 0.72);
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 1rem;
 }
 
 .ff-xd__hero-shade {
