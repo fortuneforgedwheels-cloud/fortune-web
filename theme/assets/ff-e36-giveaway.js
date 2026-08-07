@@ -90,6 +90,7 @@
   }
 
   function nudgeHeroVideo(root) {
+    if (window.__ffInAppBrowser || document.documentElement.classList.contains('ff-inapp')) return;
     var video = qs(root, '.ff-e36__video-wrap video, video.ff-e36__video');
     if (!video) return;
     try {

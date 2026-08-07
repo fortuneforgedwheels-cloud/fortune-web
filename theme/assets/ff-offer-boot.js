@@ -160,6 +160,10 @@ function ffThemeAsset(name, bust) {
     video.setAttribute('loop', '');
     video.setAttribute('playsinline', 'true');
     video.setAttribute('webkit-playsinline', 'true');
+    video.setAttribute('x5-playsinline', 'true');
+    video.setAttribute('x5-video-player-type', 'h5');
+    video.setAttribute('x5-video-player-fullscreen', 'false');
+    video.disablePictureInPicture = true;
     video.querySelectorAll('img').forEach(function (img) {
       img.remove();
     });
@@ -211,6 +215,7 @@ function ffThemeAsset(name, bust) {
 
   /* iOS blocks autoplay when several muted videos call play() — only one may play. */
   function healHeroVideos() {
+    if (window.__ffInAppBrowser || document.documentElement.classList.contains('ff-inapp')) return;
     injectHardcodedHeroVideos();
     var isMobile = mqHeroMobile.matches;
     var heroes = document.querySelectorAll('[data-ff-hero]');
@@ -300,6 +305,7 @@ function ffThemeAsset(name, bust) {
       } else {
         function nudgeVisibleHero() {
           try {
+            if (window.__ffInAppBrowser || document.documentElement.classList.contains('ff-inapp')) return;
             var isMobile = mqHeroMobile.matches;
             var hero = document.querySelector('[data-ff-hero]');
             if (!hero) return;

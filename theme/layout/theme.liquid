@@ -20,6 +20,138 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta name="theme-color" content="">
+        <script>
+          /* TikTok / Instagram / FB in-app browsers hijack <video> into native fullscreen.
+             Detect early, freeze autoplay to posters, and keep the page usable. */
+          (function () {
+            try {
+              var ua = navigator.userAgent || '';
+              var isTikTok = /tiktok|musical_ly|bytedancewebview|ttwebview|bytes?dance/i.test(ua);
+              var isInApp = isTikTok || /FBAN|FBAV|Instagram|Line\/|MicroMessenger|Snapchat|Pinterest|Twitter/i.test(ua);
+              if (!isInApp) return;
+              var root = document.documentElement;
+              root.classList.add('ff-inapp');
+              if (isTikTok) root.classList.add('ff-tiktok');
+              window.__ffInAppBrowser = true;
+              window.__ffTikTokBrowser = isTikTok;
+
+              function hardenAttrs(video) {
+                video.controls = false;
+                video.removeAttribute('controls');
+                video.muted = true;
+                video.defaultMuted = true;
+                video.playsInline = true;
+                video.setAttribute('muted', '');
+                video.setAttribute('playsinline', 'true');
+                video.setAttribute('webkit-playsinline', 'true');
+                video.setAttribute('x5-playsinline', 'true');
+                video.setAttribute('x5-video-player-type', 'h5');
+                video.setAttribute('x5-video-player-fullscreen', 'false');
+                video.setAttribute('disablepictureinpicture', '');
+                video.disablePictureInPicture = true;
+              }
+
+              function freezeVideo(video) {
+                if (!video || video.nodeName !== 'VIDEO' || video.dataset.ffInappFrozen === '1') return;
+                video.dataset.ffInappFrozen = '1';
+                try { video.pause(); } catch (e0) {}
+                video.autoplay = false;
+                video.removeAttribute('autoplay');
+                video.setAttribute('preload', 'none');
+                try { video.preload = 'none'; } catch (e1) {}
+                hardenAttrs(video);
+
+                var poster = video.getAttribute('poster') || '';
+                if (!poster) {
+                  /* Stop network playback attempts that trigger native fullscreen. */
+                  try {
+                    video.removeAttribute('src');
+                    video.querySelectorAll('source').forEach(function (s) { s.remove(); });
+                    video.load();
+                  } catch (e2) {}
+                  return;
+                }
+
+                var img = document.createElement('img');
+                img.className = ((video.className || '') + ' ff-inapp-poster').trim();
+                img.src = poster;
+                img.alt = video.getAttribute('alt') || '';
+                img.setAttribute('decoding', 'async');
+                img.setAttribute('data-ff-inapp-poster', '1');
+                if (video.parentNode) {
+                  video.parentNode.insertBefore(img, video);
+                }
+                video.setAttribute('hidden', '');
+                video.style.display = 'none';
+                try {
+                  video.removeAttribute('src');
+                  video.querySelectorAll('source').forEach(function (s) { s.remove(); });
+                  video.load();
+                } catch (e3) {}
+              }
+
+              function scan(rootNode) {
+                var scope = rootNode && rootNode.querySelectorAll ? rootNode : document;
+                scope.querySelectorAll('video').forEach(freezeVideo);
+                if (rootNode && rootNode.nodeName === 'VIDEO') freezeVideo(rootNode);
+              }
+
+              scan(document);
+              var mo = new MutationObserver(function (mutations) {
+                mutations.forEach(function (m) {
+                  if (m.type === 'childList') {
+                    m.addedNodes.forEach(function (node) {
+                      if (node.nodeType !== 1) return;
+                      scan(node);
+                    });
+                  } else if (m.type === 'attributes' && m.target && m.target.nodeName === 'VIDEO') {
+                    freezeVideo(m.target);
+                  }
+                });
+              });
+              function observe() {
+                if (!document.documentElement) return;
+                mo.observe(document.documentElement, {
+                  childList: true,
+                  subtree: true,
+                  attributes: true,
+                  attributeFilter: ['autoplay', 'src']
+                });
+                scan(document);
+              }
+              if (document.documentElement) observe();
+              else document.addEventListener('DOMContentLoaded', observe, { once: true });
+
+              ['webkitbeginfullscreen', 'fullscreenchange', 'webkitfullscreenchange'].forEach(function (evt) {
+                document.addEventListener(evt, function () {
+                  document.querySelectorAll('video').forEach(function (video) {
+                    try { video.pause(); } catch (e) {}
+                    if (document.fullscreenElement === video || document.webkitFullscreenElement === video) {
+                      try {
+                        if (document.exitFullscreen) document.exitFullscreen();
+                        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                      } catch (e4) {}
+                    }
+                  });
+                }, true);
+              });
+            } catch (e) {}
+          })();
+        </script>
+        <style>
+          html.ff-inapp video[data-ff-inapp-frozen='1'],
+          html.ff-inapp video[hidden][data-ff-inapp-frozen='1'] {
+            display: none !important;
+          }
+          html.ff-inapp .ff-inapp-poster {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            pointer-events: none;
+          }
+        </style>
         {%- comment -%}
           CRITICAL: Shopify IndexController caches bare / as a frozen HTML snapshot
           (even after theme publish/delete). Using `now` opts homepage Liquid out of

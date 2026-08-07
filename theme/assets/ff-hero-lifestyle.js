@@ -48,6 +48,9 @@
     video.setAttribute('loop', '');
     video.setAttribute('playsinline', 'true');
     video.setAttribute('webkit-playsinline', 'true');
+    video.setAttribute('x5-playsinline', 'true');
+    video.setAttribute('x5-video-player-type', 'h5');
+    video.setAttribute('x5-video-player-fullscreen', 'false');
     video.setAttribute('disablepictureinpicture', '');
     video.querySelectorAll('img').forEach(function (img) {
       img.remove();
@@ -62,6 +65,7 @@
   }
 
   function tryPlay(video) {
+    if (window.__ffInAppBrowser || document.documentElement.classList.contains('ff-inapp')) return;
     if (isPlaying(video)) return;
     prepare(video);
     video.autoplay = true;

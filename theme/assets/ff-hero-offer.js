@@ -62,6 +62,7 @@
   }
 
   function tryPlay(video) {
+    if (window.__ffInAppBrowser || document.documentElement.classList.contains('ff-inapp')) return;
     if (isPlaying(video)) return;
     prepare(video);
     video.autoplay = true;

@@ -191,6 +191,7 @@
   }
 
   function nudgeHeroVideo(root) {
+    if (window.__ffInAppBrowser || document.documentElement.classList.contains('ff-inapp')) return;
     var video = root.querySelector('.ff-xd__hero-media video, video.ff-xd__hero-video');
     if (!video) return;
     try {

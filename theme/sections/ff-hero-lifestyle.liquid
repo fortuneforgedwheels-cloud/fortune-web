@@ -177,6 +177,7 @@
                   {%- if forloop.first -%}
                     <script>
                       (function () {
+                        if (window.__ffInAppBrowser || document.documentElement.classList.contains('ff-inapp')) return;
                         var layer = document.currentScript && document.currentScript.parentElement;
                         var v = layer && layer.querySelector('video.ff-hero__video--mobile');
                         if (!v) return;
@@ -241,11 +242,13 @@
   <script>
     /* Immediate nudge only — do not storm play()/pause() (that froze the first frame). */
     (function () {
+      if (window.__ffInAppBrowser || document.documentElement.classList.contains('ff-inapp')) return;
       var mq = window.matchMedia('(max-width: 749.98px)');
       function playing(v) {
         return v && !v.paused && !v.ended && v.readyState > 2;
       }
       function kick() {
+        if (window.__ffInAppBrowser || document.documentElement.classList.contains('ff-inapp')) return;
         var isMobile = mq.matches;
         var hero = document.querySelector('[data-ff-hero]');
         if (!hero) return;
