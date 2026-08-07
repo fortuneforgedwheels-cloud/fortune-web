@@ -1,0 +1,465 @@
+{{ 'ff-finish-options.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.show_section -%}
+  <section class="ff-fo" id="ff-fo-{{ section.id }}" data-ff-finish-options>
+    {%- comment -%} 1) Hero {%- endcomment -%}
+    <header class="ff-fo__hero">
+      <div class="ff-fo__hero-media" aria-hidden="true">
+        {%- if section.settings.hero_image != blank -%}
+          {{
+            section.settings.hero_image
+            | image_url: width: 2400
+            | image_tag:
+              class: 'ff-fo__hero-img',
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '800, 1200, 1600, 2000, 2400',
+              sizes: '100vw',
+              alt: ''
+          }}
+        {%- else -%}
+          <div class="ff-fo__hero-fallback"></div>
+        {%- endif -%}
+        <div class="ff-fo__hero-shade"></div>
+      </div>
+      <div class="ff-fo__hero-copy">
+        <h1 class="ff-fo__hero-title">{{ section.settings.hero_title | default: 'Finish Options' | escape }}</h1>
+        {%- if section.settings.hero_logo != blank -%}
+          {{
+            section.settings.hero_logo
+            | image_url: width: 480
+            | image_tag:
+              class: 'ff-fo__hero-logo',
+              loading: 'eager',
+              widths: '240, 360, 480',
+              sizes: '180px',
+              alt: section.settings.hero_logo_alt | default: 'Forged Club'
+          }}
+        {%- elsif section.settings.hero_brand != blank -%}
+          <p class="ff-fo__hero-brand">{{ section.settings.hero_brand | escape }}</p>
+        {%- endif -%}
+      </div>
+    </header>
+
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'color_group' -%}
+          <div class="ff-fo__group" id="ff-fo-group-{{ block.id }}" {{ block.shopify_attributes }}>
+            <div class="ff-fo__group-inner">
+              {%- if block.settings.heading != blank -%}
+                <h2 class="ff-fo__group-title">{{ block.settings.heading | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <div class="ff-fo__group-copy">{{ block.settings.description }}</div>
+              {%- endif -%}
+              <div class="ff-fo__swatches">
+                {%- for i in (1..12) -%}
+                  {%- liquid
+                    assign name_key = 'finish_' | append: i | append: '_name'
+                    assign image_key = 'finish_' | append: i | append: '_image'
+                    assign color_key = 'finish_' | append: i | append: '_color'
+                    assign name = block.settings[name_key]
+                    assign image = block.settings[image_key]
+                    assign swatch_color = block.settings[color_key]
+                  -%}
+                  {%- if name != blank -%}
+                    <figure class="ff-fo__swatch">
+                      <div class="ff-fo__swatch-disc" style="{% if swatch_color != blank %}--ff-fo-swatch: {{ swatch_color }};{% endif %}">
+                        {%- if image != blank -%}
+                          {{
+                            image
+                            | image_url: width: 480
+                            | image_tag:
+                              class: 'ff-fo__swatch-img',
+                              loading: 'lazy',
+                              widths: '240, 360, 480',
+                              sizes: '(max-width: 749px) 30vw, 140px',
+                              alt: name
+                          }}
+                        {%- else -%}
+                          <span class="ff-fo__swatch-fallback" aria-hidden="true">
+                            <svg viewBox="0 0 64 64" class="ff-fo__swatch-mark"><path d="M18 14h10l8 18 8-18h10L38 50H26L18 14z" fill="currentColor"/></svg>
+                          </span>
+                        {%- endif -%}
+                      </div>
+                      <figcaption class="ff-fo__swatch-name">{{ name | escape }}</figcaption>
+                    </figure>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
+
+        {%- when 'premium_intro' -%}
+          <div class="ff-fo__premium" id="ff-fo-premium-{{ block.id }}" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <div class="ff-fo__premium-media">
+                {{
+                  block.settings.image
+                  | image_url: width: 2000
+                  | image_tag:
+                    class: 'ff-fo__premium-img',
+                    loading: 'lazy',
+                    widths: '800, 1200, 1600, 2000',
+                    sizes: '100vw',
+                    alt: block.settings.image_alt | default: block.settings.heading | default: 'Premium Finish'
+                }}
+              </div>
+            {%- endif -%}
+            <div class="ff-fo__premium-copy">
+              {%- if block.settings.heading != blank -%}
+                <h2 class="ff-fo__premium-title">{{ block.settings.heading | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.subheading != blank -%}
+                <p class="ff-fo__premium-sub">{{ block.settings.subheading | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.copy != blank -%}
+                <div class="ff-fo__premium-body">{{ block.settings.copy }}</div>
+              {%- endif -%}
+            </div>
+          </div>
+
+        {%- when 'divider_image' -%}
+          {%- if block.settings.image != blank -%}
+            <div class="ff-fo__divider" {{ block.shopify_attributes }}>
+              {{
+                block.settings.image
+                | image_url: width: 2200
+                | image_tag:
+                  class: 'ff-fo__divider-img',
+                  loading: 'lazy',
+                  widths: '900, 1400, 1800, 2200',
+                  sizes: '100vw',
+                  alt: block.settings.image_alt | default: ''
+              }}
+            </div>
+          {%- endif -%}
+
+        {%- when 'closing' -%}
+          <div class="ff-fo__closing" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <div class="ff-fo__closing-media">
+                {{
+                  block.settings.image
+                  | image_url: width: 2000
+                  | image_tag:
+                    class: 'ff-fo__closing-img',
+                    loading: 'lazy',
+                    widths: '800, 1200, 1600, 2000',
+                    sizes: '(max-width: 989px) 100vw, 920px',
+                    alt: block.settings.image_alt | default: 'Forged Club finish samples'
+                }}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.caption != blank -%}
+              <p class="ff-fo__closing-caption">{{ block.settings.caption | escape }}</p>
+            {%- endif -%}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FF Finish Options",
+  "tag": "section",
+  "class": "section-ff-finish-options",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image",
+      "info": "Tray of finish discs works best (edge-to-edge)."
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero title",
+      "default": "Finish Options"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_logo",
+      "label": "Hero brand logo (Forged Club)"
+    },
+    {
+      "type": "text",
+      "id": "hero_logo_alt",
+      "label": "Logo alt text",
+      "default": "Forged Club"
+    },
+    {
+      "type": "text",
+      "id": "hero_brand",
+      "label": "Brand text fallback",
+      "default": "FORGED CLUB"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "color_group",
+      "name": "Color group",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "STANDARD COLOR"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Our standard opaque color finishes include gloss/satin Black, White, Gunmetal Grey, Champagne, Bronze, and Silver. All of our finishes are constructed of a solid color layer and a high-strength clear powder coat. Resulting in a finish that is stunning and guarantees quality.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Finish 1"
+        },
+        { "type": "text", "id": "finish_1_name", "label": "Name", "default": "Black" },
+        { "type": "image_picker", "id": "finish_1_image", "label": "Swatch image" },
+        { "type": "color", "id": "finish_1_color", "label": "Fallback color", "default": "#111111" },
+        {
+          "type": "header",
+          "content": "Finish 2"
+        },
+        { "type": "text", "id": "finish_2_name", "label": "Name", "default": "White" },
+        { "type": "image_picker", "id": "finish_2_image", "label": "Swatch image" },
+        { "type": "color", "id": "finish_2_color", "label": "Fallback color", "default": "#EDE8DF" },
+        {
+          "type": "header",
+          "content": "Finish 3"
+        },
+        { "type": "text", "id": "finish_3_name", "label": "Name", "default": "Silver" },
+        { "type": "image_picker", "id": "finish_3_image", "label": "Swatch image" },
+        { "type": "color", "id": "finish_3_color", "label": "Fallback color", "default": "#C5C8CC" },
+        {
+          "type": "header",
+          "content": "Finish 4"
+        },
+        { "type": "text", "id": "finish_4_name", "label": "Name", "default": "Gunmetal Grey" },
+        { "type": "image_picker", "id": "finish_4_image", "label": "Swatch image" },
+        { "type": "color", "id": "finish_4_color", "label": "Fallback color", "default": "#4B4F55" },
+        {
+          "type": "header",
+          "content": "Finish 5"
+        },
+        { "type": "text", "id": "finish_5_name", "label": "Name", "default": "Champagne" },
+        { "type": "image_picker", "id": "finish_5_image", "label": "Swatch image" },
+        { "type": "color", "id": "finish_5_color", "label": "Fallback color", "default": "#C4B08A" },
+        {
+          "type": "header",
+          "content": "Finish 6"
+        },
+        { "type": "text", "id": "finish_6_name", "label": "Name", "default": "Bronze" },
+        { "type": "image_picker", "id": "finish_6_image", "label": "Swatch image" },
+        { "type": "color", "id": "finish_6_color", "label": "Fallback color", "default": "#8A5A2B" },
+        {
+          "type": "header",
+          "content": "Finish 7"
+        },
+        { "type": "text", "id": "finish_7_name", "label": "Name" },
+        { "type": "image_picker", "id": "finish_7_image", "label": "Swatch image" },
+        { "type": "color", "id": "finish_7_color", "label": "Fallback color", "default": "#888888" },
+        {
+          "type": "header",
+          "content": "Finish 8"
+        },
+        { "type": "text", "id": "finish_8_name", "label": "Name" },
+        { "type": "image_picker", "id": "finish_8_image", "label": "Swatch image" },
+        { "type": "color", "id": "finish_8_color", "label": "Fallback color", "default": "#888888" },
+        {
+          "type": "header",
+          "content": "Finish 9"
+        },
+        { "type": "text", "id": "finish_9_name", "label": "Name" },
+        { "type": "image_picker", "id": "finish_9_image", "label": "Swatch image" },
+        { "type": "color", "id": "finish_9_color", "label": "Fallback color", "default": "#888888" },
+        {
+          "type": "header",
+          "content": "Finish 10"
+        },
+        { "type": "text", "id": "finish_10_name", "label": "Name" },
+        { "type": "image_picker", "id": "finish_10_image", "label": "Swatch image" },
+        { "type": "color", "id": "finish_10_color", "label": "Fallback color", "default": "#888888" },
+        {
+          "type": "header",
+          "content": "Finish 11"
+        },
+        { "type": "text", "id": "finish_11_name", "label": "Name" },
+        { "type": "image_picker", "id": "finish_11_image", "label": "Swatch image" },
+        { "type": "color", "id": "finish_11_color", "label": "Fallback color", "default": "#888888" },
+        {
+          "type": "header",
+          "content": "Finish 12"
+        },
+        { "type": "text", "id": "finish_12_name", "label": "Name" },
+        { "type": "image_picker", "id": "finish_12_image", "label": "Swatch image" },
+        { "type": "color", "id": "finish_12_color", "label": "Fallback color", "default": "#888888" }
+      ]
+    },
+    {
+      "type": "premium_intro",
+      "name": "Premium intro",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Feature image",
+          "info": "Car / lifestyle image above the Premium Finish copy."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "PREMIUM FINISH"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "BRUSHED / POLISH"
+        },
+        {
+          "type": "richtext",
+          "id": "copy",
+          "label": "Copy",
+          "default": "<p>Step into the realm of sophistication with our Premium Finish. Either brushed or polished, each with a transparent top coat to provide protection and complete the look.</p><p>Brushed finish offers timeless, premium, hand-crafted aesthetics done by the most skilled technicians.</p><p>Polished finish provides an immaculate, mirror-like shine that reflects a clean and high-class aesthetic.</p>"
+        }
+      ]
+    },
+    {
+      "type": "divider_image",
+      "name": "Full-bleed image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Alt text"
+        }
+      ]
+    },
+    {
+      "type": "closing",
+      "name": "Closing visual",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Forged Club sample box / palette shot."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Alt text",
+          "default": "Forged Club finish samples"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "default": "FORGED CLUB — Get Ready"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FF Finish Options",
+      "blocks": [
+        {
+          "type": "color_group",
+          "settings": {
+            "heading": "STANDARD COLOR",
+            "finish_1_name": "Black",
+            "finish_2_name": "White",
+            "finish_3_name": "Silver",
+            "finish_4_name": "Gunmetal Grey",
+            "finish_5_name": "Champagne",
+            "finish_6_name": "Bronze"
+          }
+        },
+        {
+          "type": "color_group",
+          "settings": {
+            "heading": "SPECIAL COLOR",
+            "description": "<p>Upgrade your wheel aesthetics with our exclusive Special Color Finishes, a premium selection that offers a wide variety of color choices beyond our standard palette. These showcase an array of both metallic and flat colors to give your vehicle a unique and personal edge.</p>",
+            "finish_1_name": "Pearl White",
+            "finish_1_color": "#EFE6D8",
+            "finish_2_name": "24K Gold",
+            "finish_2_color": "#C6A24A",
+            "finish_3_name": "Candy Red",
+            "finish_3_color": "#9B1C1C",
+            "finish_4_name": "Indigo Blue",
+            "finish_4_color": "#3A4F7A",
+            "finish_5_name": "Ambergold",
+            "finish_5_color": "#8A6A2F",
+            "finish_6_name": "Rose Gold",
+            "finish_6_color": "#C9A7A0",
+            "finish_7_name": "Olive",
+            "finish_7_color": "#6B6B3A",
+            "finish_8_name": "Dusty Blue",
+            "finish_8_color": "#6F8599",
+            "finish_9_name": "Navy",
+            "finish_9_color": "#1C2A44",
+            "finish_10_name": "Burnt Orange",
+            "finish_10_color": "#C45A1A",
+            "finish_11_name": "Lime",
+            "finish_11_color": "#A8C23A",
+            "finish_12_name": "Gloss Black",
+            "finish_12_color": "#0A0A0A"
+          }
+        },
+        {
+          "type": "premium_intro"
+        },
+        {
+          "type": "color_group",
+          "settings": {
+            "heading": "BRUSHED / POLISH",
+            "description": "<p>Step into the realm of sophistication with our Premium Finish. Either brushed or polished, each with a transparent top coat to provide protection and complete the look.</p><p>Brushed finish offers timeless, premium, hand-crafted aesthetics done by the most skilled technicians.</p><p>Polished finish provides an immaculate, mirror-like shine that reflects a clean and high-class aesthetic.</p>",
+            "finish_1_name": "Polish Clear",
+            "finish_1_color": "#D7DADF",
+            "finish_2_name": "Brushed Clear",
+            "finish_2_color": "#B8BDC4",
+            "finish_3_name": "Satin Clear",
+            "finish_3_color": "#8E949B",
+            "finish_4_name": "Dark Clear",
+            "finish_4_color": "#3A3D42",
+            "finish_5_name": "Blue Clear",
+            "finish_5_color": "#2F4D7A",
+            "finish_6_name": "Bronze Clear",
+            "finish_6_color": "#7A5530"
+          }
+        },
+        {
+          "type": "closing"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
