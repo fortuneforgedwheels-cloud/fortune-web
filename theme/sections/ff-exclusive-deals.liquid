@@ -1,5 +1,5 @@
-{{ 'ff-exclusive-deals-v3.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'ff-exclusive-deals-v3.js' | asset_url }}" defer></script>
+{{ 'ff-exclusive-deals-v4.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ff-exclusive-deals-v4.js' | asset_url }}" defer></script>
 
 {%- liquid
   assign brand_title = section.settings.heading | default: 'Exclusive deals'
@@ -310,19 +310,32 @@
                     id="ff-xd-sheen-panel-{{ sheen_key }}-{{ section.id }}"
                     data-ff-xd-sheen-panel="{{ sheen_key | escape }}"
                   >
-                    {%- for finish in sheen_options -%}
-                      {%- assign finish_name = finish | strip -%}
-                      {%- if finish_name != blank -%}
-                        <button
-                          type="button"
-                          class="ff-xd__sheen-option"
-                          data-ff-xd-finish="{{ finish_name | escape }}"
-                          data-finish-family="{{ sheen_key | escape }}"
-                        >
-                          {{ finish_name | escape }}
-                        </button>
-                      {%- endif -%}
-                    {%- endfor -%}
+                    <div class="ff-xd__sheen-panel-head">
+                      <span class="ff-xd__sheen-panel-title">{{ sheen | escape }} finishes</span>
+                      <button
+                        type="button"
+                        class="ff-xd__sheen-panel-close"
+                        data-ff-xd-sheen-close
+                        aria-label="Close {{ sheen | escape }} finishes"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="ff-xd__sheen-panel-options">
+                      {%- for finish in sheen_options -%}
+                        {%- assign finish_name = finish | strip -%}
+                        {%- if finish_name != blank -%}
+                          <button
+                            type="button"
+                            class="ff-xd__sheen-option"
+                            data-ff-xd-finish="{{ finish_name | escape }}"
+                            data-finish-family="{{ sheen_key | escape }}"
+                          >
+                            {{ finish_name | escape }}
+                          </button>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
                   </div>
                 {%- endfor -%}
               </div>
