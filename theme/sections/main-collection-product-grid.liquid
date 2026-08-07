@@ -154,6 +154,7 @@
                         <div class="collection">
                             <ul class="productListing{% if layout == '1' %} productList{% else %} productGrid column-{{ layout }}{% endif %} list-{{ layout }} col-{{ col }} list-unstyled" id="main-collection-product-grid" data-id="{{ section.id }}">
                                 {%- for product in collection.products -%}
+                                    {%- unless product.tags contains 'ff-hide-catalog' -%}
                                     <li class="product">
                                         {% render 'product-card',
                                             product_card_product: product,
@@ -167,6 +168,7 @@
                                             loading: true
                                         %}
                                     </li>
+                                    {%- endunless -%}
                                 {%- endfor -%}
                             </ul>
                             {%- if paginate.pages > 1 -%}

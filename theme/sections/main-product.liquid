@@ -6,6 +6,28 @@
 {{ 'component-product-form.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
+  assign ff_hide_public_pdp = false
+  if product.tags contains 'ff-hide-catalog'
+    assign ff_hide_public_pdp = true
+  elsif product.handle == 'chrome-finish-surcharge' or product.handle == 'exclusive-deals-full-set' or product.handle == '1998-bmw-m3'
+    assign ff_hide_public_pdp = true
+  endif
+-%}
+{%- if ff_hide_public_pdp -%}
+  {%- liquid
+    assign ff_redirect = routes.root_url
+    if product.handle == 'exclusive-deals-full-set'
+      assign ff_redirect = pages['exclusive-deals'].url | default: '/pages/exclusive-deals'
+    elsif product.handle == '1998-bmw-m3'
+      assign ff_redirect = pages['e36-giveaway'].url | default: pages['giveaway'].url | default: routes.root_url
+    endif
+  -%}
+  <script>window.location.replace({{ ff_redirect | json }});</script>
+  <noscript><meta http-equiv="refresh" content="0;url={{ ff_redirect }}"></noscript>
+  <p class="visually-hidden">This product is not available in the public catalog.</p>
+{%- else -%}
+
+{%- liquid
   assign ff_load_chrome_surcharge = false
   if product.tags contains 'BEADLOCK' or product.tags contains 'beadlock'
     assign ff_load_chrome_surcharge = true
@@ -1514,6 +1536,8 @@
 {% render 'schema',
     product: product
 %}
+
+{%- endif -%}
 
 {% schema %}
 {

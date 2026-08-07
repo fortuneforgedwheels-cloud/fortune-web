@@ -13,6 +13,21 @@
 {% endcomment %}
 
 {%- liquid
+    assign ff_catalog_hidden = false
+    if product_card_product != blank
+      if product_card_product.tags contains 'ff-hide-catalog'
+        assign ff_catalog_hidden = true
+      elsif product_card_product.handle == 'chrome-finish-surcharge'
+        assign ff_catalog_hidden = true
+      elsif product_card_product.handle == 'exclusive-deals-full-set'
+        assign ff_catalog_hidden = true
+      elsif product_card_product.handle == '1998-bmw-m3'
+        assign ff_catalog_hidden = true
+      endif
+    endif
+-%}
+{%- unless ff_catalog_hidden -%}
+{%- liquid
     assign product_swatch_option = settings.swatch | downcase
     assign isColor = false
     for option in product_card_product.options_with_values
@@ -235,3 +250,4 @@
         loading: loading
     %}
 {%- endif -%}
+{%- endunless -%}

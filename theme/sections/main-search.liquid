@@ -150,6 +150,9 @@
                             <div class="collection resultListing">
                                 <ul class="productListing{% if layout == '1' %} productList{% else %} productGrid column-{{ layout }}{% endif %} list-{{ layout }} list-unstyled" id="main-collection-product-grid" data-id="{{ section.id }}">
                                     {%- for item in search.results -%}
+                                        {%- if item.object_type == 'product' and item.tags contains 'ff-hide-catalog' -%}
+                                          {%- continue -%}
+                                        {%- endif -%}
                                         <li class="product">
                                             {%- if item.object_type == 'product' -%}
                                                 {% render 'product-card',

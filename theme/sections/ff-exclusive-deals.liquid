@@ -29,6 +29,7 @@
   if checkout_product != blank
     assign checkout_variant = checkout_product.selected_or_first_available_variant
   endif
+  assign checkout_variant_id = checkout_variant.id | default: 54530952528147
 -%}
 
 <section
