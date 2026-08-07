@@ -607,6 +607,43 @@ html.ff-xd-modal-open {
   text-transform: uppercase;
 }
 
+.ff-xd__finish-groups {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 600px) {
+  .ff-xd__finish-groups {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.ff-xd__finish-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+}
+
+.ff-xd__finish-group-label {
+  color: var(--ff-xd-gold);
+  font-family: var(--ff-xd-font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ff-xd__finish-select {
+  cursor: pointer;
+}
+
+.ff-xd__finish-select.is-filled {
+  border-color: var(--ff-xd-gold);
+  background: rgba(194, 167, 107, 0.1);
+}
+
 .ff-xd__finishes {
   display: flex;
   flex-wrap: wrap;

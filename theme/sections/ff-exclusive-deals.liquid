@@ -1,13 +1,15 @@
 {{ 'ff-exclusive-deals-v2.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'ff-exclusive-deals.js' | asset_url }}" defer></script>
+<script src="{{ 'ff-exclusive-deals-v2.js' | asset_url }}" defer></script>
 
 {%- liquid
   assign brand_title = section.settings.heading | default: 'Exclusive deals'
   if brand_title == blank
     assign brand_title = 'Exclusive deals'
   endif
-  assign finish_list = section.settings.finish_options | default: 'Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal'
-  assign finishes = finish_list | split: ','
+  assign gloss_finishes = 'Gloss Black,Gloss Bronze,Gloss Gunmetal,Gloss Silver,Gloss White,Gloss Champagne Gold' | split: ','
+  assign satin_finishes = 'Satin Black,Satin Gunmetal,Satin Bronze,Motorsport Gold,OEM 827M CS Satin Gold,Satin Titanium,Satin Graphite,Satin Silver,Satin Anthracite,Satin White' | split: ','
+  assign brushed_finishes = 'Brushed Clear (#1 Best Seller),Brushed Titanium,Brushed Bronze,Brushed Champagne,Brushed Light Gold,Brushed Gunmetal,Brushed Graphite,Brushed Black,Brushed Silver,Brushed Copper' | split: ','
+  assign polished_finishes = 'Polished' | split: ','
   assign specs_example = section.settings.specs_example | default: 'Front: 20x10 ET10 / Rear 20x11 ET12'
 
   assign deal_price_cents = section.settings.deal_price | times: 100
@@ -266,21 +268,83 @@
         <div class="ff-xd__fields">
           <div class="ff-xd__field ff-xd__field--full">
             <p class="ff-xd__label" id="ff-xd-finish-label-{{ section.id }}">{{ section.settings.finish_label | default: 'Wheel finish' | escape }}*</p>
-            <div class="ff-xd__finishes" role="listbox" aria-labelledby="ff-xd-finish-label-{{ section.id }}" data-ff-xd-finishes>
-              {%- for finish in finishes -%}
-                {%- assign finish_name = finish | strip -%}
-                {%- if finish_name != blank -%}
-                  <button
-                    type="button"
-                    class="ff-xd__finish{% if forloop.first %} is-selected{% endif %}"
-                    role="option"
-                    aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                    data-ff-xd-finish="{{ finish_name | escape }}"
-                  >
-                    {{ finish_name | escape }}
-                  </button>
-                {%- endif -%}
-              {%- endfor -%}
+            <div
+              class="ff-xd__finish-groups"
+              role="group"
+              aria-labelledby="ff-xd-finish-label-{{ section.id }}"
+              data-ff-xd-finishes
+            >
+              <label class="ff-xd__finish-group" for="ff-xd-finish-gloss-{{ section.id }}">
+                <span class="ff-xd__finish-group-label">Gloss</span>
+                <select
+                  class="ff-xd__input ff-xd__finish-select"
+                  id="ff-xd-finish-gloss-{{ section.id }}"
+                  data-ff-xd-finish-select
+                  data-finish-family="gloss"
+                >
+                  <option value="">Select gloss…</option>
+                  {%- for finish in gloss_finishes -%}
+                    {%- assign finish_name = finish | strip -%}
+                    {%- if finish_name != blank -%}
+                      <option value="{{ finish_name | escape }}">{{ finish_name | escape }}</option>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </select>
+              </label>
+
+              <label class="ff-xd__finish-group" for="ff-xd-finish-satin-{{ section.id }}">
+                <span class="ff-xd__finish-group-label">Satin</span>
+                <select
+                  class="ff-xd__input ff-xd__finish-select"
+                  id="ff-xd-finish-satin-{{ section.id }}"
+                  data-ff-xd-finish-select
+                  data-finish-family="satin"
+                >
+                  <option value="">Select satin…</option>
+                  {%- for finish in satin_finishes -%}
+                    {%- assign finish_name = finish | strip -%}
+                    {%- if finish_name != blank -%}
+                      <option value="{{ finish_name | escape }}">{{ finish_name | escape }}</option>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </select>
+              </label>
+
+              <label class="ff-xd__finish-group" for="ff-xd-finish-brushed-{{ section.id }}">
+                <span class="ff-xd__finish-group-label">Brushed</span>
+                <select
+                  class="ff-xd__input ff-xd__finish-select"
+                  id="ff-xd-finish-brushed-{{ section.id }}"
+                  data-ff-xd-finish-select
+                  data-finish-family="brushed"
+                >
+                  <option value="">Select brushed…</option>
+                  {%- for finish in brushed_finishes -%}
+                    {%- assign finish_name = finish | strip -%}
+                    {%- if finish_name != blank -%}
+                      <option value="{{ finish_name | escape }}">{{ finish_name | escape }}</option>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </select>
+              </label>
+
+              <label class="ff-xd__finish-group" for="ff-xd-finish-polished-{{ section.id }}">
+                <span class="ff-xd__finish-group-label">Polished</span>
+                <select
+                  class="ff-xd__input ff-xd__finish-select"
+                  id="ff-xd-finish-polished-{{ section.id }}"
+                  data-ff-xd-finish-select
+                  data-finish-family="polished"
+                >
+                  <option value="">Select polished…</option>
+                  {%- for finish in polished_finishes -%}
+                    {%- assign finish_name = finish | strip -%}
+                    {%- if finish_name != blank -%}
+                      <option value="{{ finish_name | escape }}">{{ finish_name | escape }}</option>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </select>
+              </label>
             </div>
           </div>
 
@@ -493,11 +557,8 @@
       "default": "Wheel finish"
     },
     {
-      "type": "text",
-      "id": "finish_options",
-      "label": "Finish options",
-      "default": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal",
-      "info": "Comma-separated list"
+      "type": "paragraph",
+      "content": "Finish choices are fixed as Gloss / Satin / Brushed / Polished dropdowns on this page."
     },
     {
       "type": "text",
