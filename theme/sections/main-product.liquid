@@ -40,6 +40,27 @@
       assign ff_certified_offset = '+15'
       assign ff_certified_make_ph = 'e.g. BMW'
       assign ff_certified_model_ph = 'e.g. M3'
+    elsif ff_product_handle == 'g87-beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '930M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET15'
+      assign ff_certified_offset = '+15'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. G87 M2'
+    elsif ff_product_title_up contains '930M' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '930M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET15'
+      assign ff_certified_offset = '+15'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. G87 M2'
+    elsif ff_product_title_up contains '930M' and product.tags contains 'beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '930M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET15'
+      assign ff_certified_offset = '+15'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. G87 M2'
     elsif ff_product_handle == 'cadillac-ct5-v-blackwing-oem-beadlock'
       assign ff_certified_beadlock = true
       assign ff_certified_path_label = 'CT5-V Beadlock checkout'
