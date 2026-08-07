@@ -236,7 +236,7 @@
       <form class="ff-xd__form" data-ff-xd-form novalidate>
         <input type="hidden" data-ff-xd-design-input value="">
         <input type="hidden" data-ff-xd-product-id value="">
-        <input type="hidden" data-ff-xd-variant-id value="{% if checkout_variant != blank %}{{ checkout_variant.id }}{% endif %}">
+        <input type="hidden" data-ff-xd-variant-id value="{{ checkout_variant_id }}">
         <input type="hidden" data-ff-xd-help-preference value="Let a specialist handle it">
         <input type="hidden" data-ff-xd-finish-input value="">
 
@@ -386,7 +386,7 @@
         </p>
         <p class="ff-xd__error" data-ff-xd-error hidden role="alert"></p>
 
-        <button type="submit" class="ff-xd__submit" data-ff-xd-submit {% unless checkout_variant %}disabled{% endunless %}>
+        <button type="submit" class="ff-xd__submit" data-ff-xd-submit>
           {{ section.settings.submit_specialist_label | default: 'Add full set to cart' | escape }}
         </button>
       </form>
