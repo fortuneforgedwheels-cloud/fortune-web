@@ -1,6 +1,6 @@
 (function () {
   try {
-    const HIDE_TITLES = ['WIDTH', 'OFFSET', 'LUG PATTERN'];
+    const HIDE_TITLES = ['SIZE', 'DIAMETER', 'WIDTH', 'OFFSET', 'LUG PATTERN'];
 
     function normalizeTitle(text) {
       return String(text || '')
