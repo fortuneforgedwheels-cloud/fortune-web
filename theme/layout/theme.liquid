@@ -112,8 +112,14 @@
           <script>location.replace('/pages/faq?view=forgeflow');</script>
         {%- endif -%}
         {{ content_for_header }}
+        {%- assign ff_chrome_addon_global = all_products['chrome-finish-surcharge'] -%}
         <script>
-          /* Beadlock Chrome face/ring finish surcharge: always $250 each. */
+          window.FF_CHROME_SURCHARGE = Object.assign({}, window.FF_CHROME_SURCHARGE || {}, {
+            variantId: {{ ff_chrome_addon_global.selected_or_first_available_variant.id | default: 54535047840019 | json }},
+            handle: {{ ff_chrome_addon_global.handle | default: 'chrome-finish-surcharge' | json }},
+            amount: 250
+          });
+          /* Beadlock Chrome face/ring finish surcharge: always $250 each (display + checkout line item). */
           (function () {
             var PRICE = '250';
             function patch(data) {
@@ -153,6 +159,7 @@
             }
           })();
         </script>
+        <script src="{{ 'ff-bcpo-chrome-surcharge.js' | asset_url }}" defer></script>
         <script>
           /* Immediate escape from sticky IndexController caches onto fresh autoplay homepage. */
           (function () {

@@ -13,8 +13,16 @@
   if product.metafields.bcpo.bcpo_data != blank
     assign ff_load_chrome_surcharge = true
   endif
+  assign ff_chrome_addon = all_products['chrome-finish-surcharge']
 -%}
 {%- if ff_load_chrome_surcharge -%}
+  <script>
+    window.FF_CHROME_SURCHARGE = Object.assign({}, window.FF_CHROME_SURCHARGE || {}, {
+      variantId: {{ ff_chrome_addon.selected_or_first_available_variant.id | default: 54535047840019 | json }},
+      handle: {{ ff_chrome_addon.handle | default: 'chrome-finish-surcharge' | json }},
+      amount: 250
+    });
+  </script>
   <script src="{{ 'ff-bcpo-chrome-surcharge.js' | asset_url }}"></script>
 {%- endif -%}
 
