@@ -1,8 +1,18 @@
 (function () {
   try {
-    const COLOR_TITLES = ['FACE COLOR', 'RING COLOR', 'BOLT COLOR', 'HARDWARE COLOR'];
-    const COLOR_ORDER = ['FACE COLOR', 'RING COLOR', 'BOLT COLOR', 'HARDWARE COLOR'];
-    const HIDE_TITLES = ['SIZE', 'DIAMETER', 'WIDTH', 'OFFSET', 'LUG PATTERN'];
+    const COLOR_TITLES = ['FACE COLOR', 'RING COLOR', 'BOLT COLOR'];
+    const HIDE_ALWAYS_IN_CERTIFIED = [
+      'SIZE',
+      'DIAMETER',
+      'WIDTH',
+      'OFFSET',
+      'LUG PATTERN',
+      'LEAD TIME PREFERENCE',
+      'FACE COLOR',
+      'RING COLOR',
+      'BOLT COLOR',
+      'HARDWARE COLOR',
+    ];
 
     function normalizeTitle(text) {
       return String(text || '')
@@ -41,55 +51,126 @@
       return Array.from(document.querySelectorAll('[name="properties[' + safe + ']"]'));
     }
 
-    function findOptionNodes(productView) {
-      const results = [];
-      const seen = new Set();
-
-      function pushNode(node, title) {
-        if (!node || seen.has(node)) return;
-        // Prefer outermost unique wrappers — skip if an ancestor is already tracked
-        for (let i = 0; i < results.length; i++) {
-          if (results[i].wrapper.contains(node)) return;
-          if (node.contains(results[i].wrapper)) {
-            seen.delete(results[i].wrapper);
-            results.splice(i, 1);
-            i -= 1;
-          }
-        }
-        seen.add(node);
-        results.push({ wrapper: node, title: title || '' });
+    function getBcpoVirtualOptions() {
+      if (window.bcpo_data && Array.isArray(window.bcpo_data.virtual_options)) {
+        return window.bcpo_data.virtual_options;
       }
-
-      productView
-        .querySelectorAll('.selector-wrapper, [class*="bcpo-option"], [class*="bcpo_option"], [id*="bcpo"], .line-item-property__field')
-        .forEach((node) => {
-          if (node.closest('[data-ff-826m-path]') && !node.closest('[data-ff-826m-color-slot]')) return;
-          const titleEl = node.querySelector('.bcpo-title, .bcpo-label, label, legend, .form-label, .form__label');
-          if (!titleEl) return;
-          const key = optionKeyFromLabel(titleEl.textContent);
-          if (!key) return;
-          pushNode(node, key);
-        });
-
-      // Catch property inputs by name when wrappers are odd / late-injected
-      HIDE_TITLES.concat(COLOR_TITLES).forEach((name) => {
-        propertyFields(name).forEach((el) => {
-          if (el.closest('[data-ff-826m-path]') && !el.closest('[data-ff-826m-color-slot]')) return;
-          const wrapper =
-            el.closest('.selector-wrapper') ||
-            el.closest('[class*="bcpo"]') ||
-            el.closest('.line-item-property__field') ||
-            el.closest('.product-form__input') ||
-            el.parentElement;
-          pushNode(wrapper, name);
-        });
-      });
-
-      return results;
+      return [];
     }
 
-    function isColorTitle(title) {
-      return COLOR_TITLES.indexOf(normalizeTitle(title)) !== -1;
+    function valuesForColor(title) {
+      const wanted = normalizeTitle(title);
+      const opt = getBcpoVirtualOptions().find((o) => normalizeTitle(o.title) === wanted);
+      if (!opt || !Array.isArray(opt.values)) return [];
+      return opt.values
+        .map((v) => (v && typeof v === 'object' ? v.key : v))
+        .filter(Boolean);
+    }
+
+    function populateColorSelects(root) {
+      COLOR_TITLES.forEach((title) => {
+        const select = root.querySelector('[data-ff-826m-color-select="' + title + '"]');
+        if (!select) return;
+        const values = valuesForColor(title);
+        if (!values.length) return;
+
+        const current = select.value;
+        const existing = Array.from(select.options)
+          .map((o) => o.value)
+          .filter(Boolean);
+        const same =
+          existing.length === values.length && values.every((v, i) => existing[i] === v);
+        if (same) return;
+
+        select.innerHTML = '';
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = 'Choose one';
+        select.appendChild(placeholder);
+        values.forEach((value) => {
+          const opt = document.createElement('option');
+          opt.value = value;
+          opt.textContent = value;
+          select.appendChild(opt);
+        });
+        if (current && values.indexOf(current) !== -1) select.value = current;
+      });
+    }
+
+    function findBcpoWrapperByTitle(title) {
+      const wanted = normalizeTitle(title);
+      const titles = document.querySelectorAll('.bcpo-title, .bcpo-front-dd-label, .bcpo-label');
+      for (let i = 0; i < titles.length; i++) {
+        if (optionKeyFromLabel(titles[i].textContent) !== wanted) continue;
+        return (
+          titles[i].closest('.selector-wrapper') ||
+          titles[i].closest('[class*="bcpo"]') ||
+          titles[i].parentElement
+        );
+      }
+      return null;
+    }
+
+    function findBcpoSelectByTitle(title) {
+      const wrapper = findBcpoWrapperByTitle(title);
+      if (!wrapper) return null;
+      return wrapper.querySelector('select, .bcpo-dd, .bcpo-select');
+    }
+
+    function syncColorToBcpo(title, value) {
+      const field = findBcpoSelectByTitle(title);
+      if (!field || !value) return false;
+
+      if (field.tagName === 'SELECT') {
+        const options = Array.from(field.options);
+        const match =
+          options.find((opt) => opt.value === value || opt.text.trim() === value) ||
+          options.find((opt) => opt.value.includes(value) || opt.text.includes(value));
+        if (!match) return false;
+        if (field.value !== match.value) {
+          field.value = match.value;
+          field.dispatchEvent(new Event('change', { bubbles: true }));
+          field.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        return true;
+      }
+
+      return false;
+    }
+
+    function ensureHiddenPropertyInputs(root, certified) {
+      const form = getForm(root);
+      if (!form) return;
+
+      COLOR_TITLES.forEach((title) => {
+        const select = root.querySelector('[data-ff-826m-color-select="' + title + '"]');
+        const name = 'properties[' + title + ']';
+        let hidden = form.querySelector('input[data-ff-826m-color-hidden="' + title + '"]');
+
+        // If BCPO field exists, prefer it and remove our hidden fallback
+        const bcpoField = findBcpoSelectByTitle(title);
+        if (bcpoField) {
+          if (hidden) hidden.remove();
+          if (select) select.removeAttribute('name');
+          return;
+        }
+
+        if (!certified) {
+          if (hidden) hidden.remove();
+          if (select) select.removeAttribute('name');
+          return;
+        }
+
+        if (!hidden) {
+          hidden = document.createElement('input');
+          hidden.type = 'hidden';
+          hidden.setAttribute('data-ff-826m-color-hidden', title);
+          hidden.name = name;
+          form.appendChild(hidden);
+        }
+        hidden.value = select ? select.value : '';
+        if (select) select.removeAttribute('name');
+      });
     }
 
     function setFieldValue(field, desired) {
@@ -103,15 +184,6 @@
           options.find((opt) => opt.value.includes(wanted) || opt.text.includes(wanted));
         if (!match || field.value === match.value) return Boolean(match);
         field.value = match.value;
-        field.dispatchEvent(new Event('change', { bubbles: true }));
-        return true;
-      }
-
-      if (field.type === 'radio' || field.type === 'checkbox') {
-        const wantedUp = wanted.toUpperCase();
-        if (String(field.value).trim().toUpperCase() !== wantedUp) return false;
-        if (field.checked) return true;
-        field.checked = true;
         field.dispatchEvent(new Event('change', { bubbles: true }));
         return true;
       }
@@ -134,6 +206,12 @@
         if (!radio.checked) radio.click();
       });
 
+      // BCPO size dropdown if present
+      const sizeSelect = findBcpoSelectByTitle('SIZE');
+      if (sizeSelect && sizeSelect.tagName === 'SELECT') {
+        setFieldValue(sizeSelect, size);
+      }
+
       if (variantId) {
         const form = getForm(root);
         const idInput = form && form.querySelector('input[name="id"], select[name="id"]');
@@ -141,24 +219,6 @@
           idInput.value = variantId;
           idInput.dispatchEvent(new Event('change', { bubbles: true }));
         }
-      }
-    }
-
-    function rememberHome(wrapper) {
-      if (wrapper.__ff826mHome) return;
-      wrapper.__ff826mHome = {
-        parent: wrapper.parentNode,
-        next: wrapper.nextSibling,
-      };
-    }
-
-    function restoreHome(wrapper) {
-      const home = wrapper.__ff826mHome;
-      if (!home || !home.parent) return;
-      if (home.next && home.next.parentNode === home.parent) {
-        home.parent.insertBefore(wrapper, home.next);
-      } else {
-        home.parent.appendChild(wrapper);
       }
     }
 
@@ -171,65 +231,47 @@
 
       Object.keys(map).forEach((name) => {
         propertyFields(name).forEach((field) => setFieldValue(field, map[name]));
+        const bcpo = findBcpoSelectByTitle(name);
+        if (bcpo) setFieldValue(bcpo, map[name]);
       });
 
       selectCertifiedSize(root);
     }
 
-    function syncOptionVisibility(root, certified) {
-      const productView = getProductView(root);
-      const colorSlot = root.querySelector('[data-ff-826m-color-slot]');
-      const nodes = findOptionNodes(productView);
-      const colorNodes = [];
+    function hideBcpoFields(certified) {
+      const titles = document.querySelectorAll('.bcpo-title, .bcpo-front-dd-label');
+      titles.forEach((titleEl) => {
+        const key = optionKeyFromLabel(titleEl.textContent);
+        const wrapper =
+          titleEl.closest('.selector-wrapper') ||
+          titleEl.closest('[class*="bcpo-simple"]') ||
+          titleEl.parentElement;
+        if (!wrapper || wrapper.closest('[data-ff-826m-path]')) return;
 
-      nodes.forEach(({ wrapper, title }) => {
-        const color = isColorTitle(title);
-        rememberHome(wrapper);
-
-        if (certified) {
-          if (color) {
-            colorNodes.push({ wrapper: wrapper, title: normalizeTitle(title) });
-            wrapper.style.removeProperty('display');
-            wrapper.setAttribute('aria-hidden', 'false');
-            wrapper.setAttribute('data-ff-826m-color-field', '1');
-          } else {
-            wrapper.style.setProperty('display', 'none', 'important');
-            wrapper.setAttribute('aria-hidden', 'true');
-            wrapper.setAttribute('data-ff-826m-spec-field', '1');
-            const field = wrapper.querySelector('select, input, textarea');
-            if (field) {
-              if (!field.hasAttribute('data-ff-826m-was-required')) {
-                field.setAttribute('data-ff-826m-was-required', field.required ? '1' : '0');
-              }
-              field.required = false;
-            }
-          }
-        } else {
-          restoreHome(wrapper);
+        if (certified && HIDE_ALWAYS_IN_CERTIFIED.indexOf(key) !== -1) {
+          wrapper.style.setProperty('display', 'none', 'important');
+          wrapper.setAttribute('aria-hidden', 'true');
+          wrapper.setAttribute('data-ff-826m-spec-field', '1');
+        } else if (!certified && wrapper.getAttribute('data-ff-826m-spec-field') === '1') {
           wrapper.style.removeProperty('display');
           wrapper.setAttribute('aria-hidden', 'false');
           wrapper.removeAttribute('data-ff-826m-spec-field');
-          wrapper.removeAttribute('data-ff-826m-color-field');
-          const field = wrapper.querySelector('select, input, textarea');
-          if (field && field.getAttribute('data-ff-826m-was-required') === '1') {
-            field.required = true;
-          }
+        } else if (certified && key && COLOR_TITLES.indexOf(key) === -1) {
+          // Hide any other BCPO option rows in certified mode
+          wrapper.style.setProperty('display', 'none', 'important');
+          wrapper.setAttribute('aria-hidden', 'true');
+          wrapper.setAttribute('data-ff-826m-spec-field', '1');
         }
       });
+    }
 
-      if (certified && colorSlot) {
-        // Place colors in FACE → RING → BOLT order under certified panel
-        COLOR_ORDER.forEach((wanted) => {
-          colorNodes.forEach(({ wrapper, title }) => {
-            if (title !== wanted) return;
-            if (wrapper.parentNode !== colorSlot) colorSlot.appendChild(wrapper);
-          });
-        });
-        // Any leftover color titles not in order list
-        colorNodes.forEach(({ wrapper }) => {
-          if (wrapper.parentNode !== colorSlot) colorSlot.appendChild(wrapper);
-        });
-      }
+    function syncAllColors(root) {
+      COLOR_TITLES.forEach((title) => {
+        const select = root.querySelector('[data-ff-826m-color-select="' + title + '"]');
+        if (!select || !select.value) return;
+        syncColorToBcpo(title, select.value);
+      });
+      ensureHiddenPropertyInputs(root, currentMode(root) === 'certified');
     }
 
     function setMode(root, mode) {
@@ -256,9 +298,17 @@
         if (!certified) input.setCustomValidity('');
         input.disabled = !certified;
       });
+      root.querySelectorAll('[data-ff-826m-color-select]').forEach((select) => {
+        select.required = certified;
+        select.disabled = !certified;
+        if (!certified) select.setCustomValidity('');
+      });
 
+      populateColorSelects(root);
       if (certified) applyCertifiedOptions(root);
-      syncOptionVisibility(root, certified);
+      hideBcpoFields(certified);
+      ensureHiddenPropertyInputs(root, certified);
+      if (certified) syncAllColors(root);
     }
 
     function currentMode(root) {
@@ -268,15 +318,33 @@
 
     function validateCertified(root, event) {
       if (currentMode(root) !== 'certified') return;
-      const missing = Array.from(root.querySelectorAll('[data-ff-826m-required-certified]')).filter(
+
+      const ymmMissing = Array.from(root.querySelectorAll('[data-ff-826m-required-certified]')).filter(
         (input) => !input.disabled && !String(input.value || '').trim()
       );
-      if (!missing.length) return;
-      missing[0].focus();
-      missing[0].setCustomValidity('Please enter your vehicle year, make, and model.');
-      missing[0].reportValidity();
-      event.preventDefault();
-      event.stopPropagation();
+      if (ymmMissing.length) {
+        ymmMissing[0].focus();
+        ymmMissing[0].setCustomValidity('Please enter your vehicle year, make, and model.');
+        ymmMissing[0].reportValidity();
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      for (let i = 0; i < COLOR_TITLES.length; i++) {
+        const select = root.querySelector('[data-ff-826m-color-select="' + COLOR_TITLES[i] + '"]');
+        if (select && !select.disabled && !String(select.value || '').trim()) {
+          select.focus();
+          select.setCustomValidity('Please choose a ' + COLOR_TITLES[i].toLowerCase() + '.');
+          select.reportValidity();
+          event.preventDefault();
+          event.stopPropagation();
+          return;
+        }
+      }
+
+      syncAllColors(root);
+      applyCertifiedOptions(root);
     }
 
     function bind(root) {
@@ -295,37 +363,44 @@
         });
       });
 
+      root.querySelectorAll('[data-ff-826m-color-select]').forEach((select) => {
+        select.addEventListener('change', function () {
+          select.setCustomValidity('');
+          const title = select.getAttribute('data-ff-826m-color-select');
+          syncColorToBcpo(title, select.value);
+          ensureHiddenPropertyInputs(root, currentMode(root) === 'certified');
+        });
+      });
+
       const form = getForm(root);
       if (form) {
         form.addEventListener(
           'submit',
           function (event) {
             if (currentMode(root) !== 'certified') return;
-            applyCertifiedOptions(root);
-            syncOptionVisibility(root, true);
             validateCertified(root, event);
           },
           true
         );
       }
 
-      // Short, finite retry — BCPO may inject color fields after paint.
       let tries = 0;
       const timer = window.setInterval(function () {
         tries += 1;
         try {
+          populateColorSelects(root);
           setMode(root, currentMode(root));
         } catch (e) {}
 
-        const productView = getProductView(root);
-        const colorsFound = findOptionNodes(productView).some(({ title }) => isColorTitle(title));
-        if (colorsFound || tries >= 25) {
+        const hasValues = COLOR_TITLES.every((title) => valuesForColor(title).length > 0);
+        const hasBcpo = COLOR_TITLES.some((title) => !!findBcpoSelectByTitle(title));
+        if ((hasValues && hasBcpo) || tries >= 30) {
           window.clearInterval(timer);
           try {
             setMode(root, currentMode(root));
           } catch (e) {}
         }
-      }, 300);
+      }, 250);
 
       setMode(root, currentMode(root));
     }

@@ -145,20 +145,39 @@
   color: var(--ff-826m-ink);
 }
 
-.ff-826m-path__field input {
+.ff-826m-path__field input,
+.ff-826m-path__select {
+  appearance: none;
+  -webkit-appearance: none;
   width: 100%;
   min-height: 44px;
-  padding: 10px 12px;
+  padding: 10px 36px 10px 12px;
   border: 1px solid var(--ff-826m-line);
-  background: #0f0f0f;
+  border-radius: 0;
+  background-color: #ffffff;
+  background-image: linear-gradient(45deg, transparent 50%, #333 50%),
+    linear-gradient(135deg, #333 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
   font-size: 15px;
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
-  color: var(--ff-826m-ink);
+  color: #111111;
+  cursor: pointer;
 }
 
-.ff-826m-path__field input:focus {
+.ff-826m-path__field input {
+  background-image: none;
+  padding-right: 12px;
+  background-color: #0f0f0f;
+  color: var(--ff-826m-ink);
+  cursor: text;
+}
+
+.ff-826m-path__field input:focus,
+.ff-826m-path__select:focus {
   outline: 2px solid var(--ff-826m-gold);
   outline-offset: 1px;
   border-color: var(--ff-826m-gold);
