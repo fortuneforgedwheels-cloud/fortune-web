@@ -1,5 +1,5 @@
-{{ 'ff-exclusive-deals-v2.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'ff-exclusive-deals-v2.js' | asset_url }}" defer></script>
+{{ 'ff-exclusive-deals-v3.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ff-exclusive-deals-v3.js' | asset_url }}" defer></script>
 
 {%- liquid
   assign brand_title = section.settings.heading | default: 'Exclusive deals'
@@ -269,82 +269,63 @@
           <div class="ff-xd__field ff-xd__field--full">
             <p class="ff-xd__label" id="ff-xd-finish-label-{{ section.id }}">{{ section.settings.finish_label | default: 'Wheel finish' | escape }}*</p>
             <div
-              class="ff-xd__finish-groups"
+              class="ff-xd__sheens"
               role="group"
               aria-labelledby="ff-xd-finish-label-{{ section.id }}"
               data-ff-xd-finishes
             >
-              <label class="ff-xd__finish-group" for="ff-xd-finish-gloss-{{ section.id }}">
-                <span class="ff-xd__finish-group-label">Gloss</span>
-                <select
-                  class="ff-xd__input ff-xd__finish-select"
-                  id="ff-xd-finish-gloss-{{ section.id }}"
-                  data-ff-xd-finish-select
-                  data-finish-family="gloss"
-                >
-                  <option value="">Select gloss…</option>
-                  {%- for finish in gloss_finishes -%}
-                    {%- assign finish_name = finish | strip -%}
-                    {%- if finish_name != blank -%}
-                      <option value="{{ finish_name | escape }}">{{ finish_name | escape }}</option>
-                    {%- endif -%}
-                  {%- endfor -%}
-                </select>
-              </label>
+              {%- assign sheen_families = 'Brushed,Satin,Gloss,Polished' | split: ',' -%}
+              <div class="ff-xd__sheen-grid">
+                {%- for sheen in sheen_families -%}
+                  {%- assign sheen_key = sheen | downcase -%}
+                  <div class="ff-xd__sheen" data-ff-xd-sheen="{{ sheen_key | escape }}">
+                    <button
+                      type="button"
+                      class="ff-xd__sheen-trigger"
+                      data-ff-xd-sheen-trigger
+                      aria-expanded="false"
+                      aria-controls="ff-xd-sheen-panel-{{ sheen_key }}-{{ section.id }}"
+                    >
+                      <span class="ff-xd__sheen-name">{{ sheen | escape }}</span>
+                      <span class="ff-xd__sheen-picked" data-ff-xd-sheen-picked hidden></span>
+                    </button>
+                  </div>
+                {%- endfor -%}
+              </div>
 
-              <label class="ff-xd__finish-group" for="ff-xd-finish-satin-{{ section.id }}">
-                <span class="ff-xd__finish-group-label">Satin</span>
-                <select
-                  class="ff-xd__input ff-xd__finish-select"
-                  id="ff-xd-finish-satin-{{ section.id }}"
-                  data-ff-xd-finish-select
-                  data-finish-family="satin"
-                >
-                  <option value="">Select satin…</option>
-                  {%- for finish in satin_finishes -%}
-                    {%- assign finish_name = finish | strip -%}
-                    {%- if finish_name != blank -%}
-                      <option value="{{ finish_name | escape }}">{{ finish_name | escape }}</option>
-                    {%- endif -%}
-                  {%- endfor -%}
-                </select>
-              </label>
-
-              <label class="ff-xd__finish-group" for="ff-xd-finish-brushed-{{ section.id }}">
-                <span class="ff-xd__finish-group-label">Brushed</span>
-                <select
-                  class="ff-xd__input ff-xd__finish-select"
-                  id="ff-xd-finish-brushed-{{ section.id }}"
-                  data-ff-xd-finish-select
-                  data-finish-family="brushed"
-                >
-                  <option value="">Select brushed…</option>
-                  {%- for finish in brushed_finishes -%}
-                    {%- assign finish_name = finish | strip -%}
-                    {%- if finish_name != blank -%}
-                      <option value="{{ finish_name | escape }}">{{ finish_name | escape }}</option>
-                    {%- endif -%}
-                  {%- endfor -%}
-                </select>
-              </label>
-
-              <label class="ff-xd__finish-group" for="ff-xd-finish-polished-{{ section.id }}">
-                <span class="ff-xd__finish-group-label">Polished</span>
-                <select
-                  class="ff-xd__input ff-xd__finish-select"
-                  id="ff-xd-finish-polished-{{ section.id }}"
-                  data-ff-xd-finish-select
-                  data-finish-family="polished"
-                >
-                  <option value="">Select polished…</option>
-                  {%- for finish in polished_finishes -%}
-                    {%- assign finish_name = finish | strip -%}
-                    {%- if finish_name != blank -%}
-                      <option value="{{ finish_name | escape }}">{{ finish_name | escape }}</option>
-                    {%- endif -%}
-                  {%- endfor -%}
-                </select>
-              </label>
+              <div class="ff-xd__sheen-panels">
+                {%- for sheen in sheen_families -%}
+                  {%- assign sheen_key = sheen | downcase -%}
+                  {%- if sheen_key == 'gloss' -%}
+                    {%- assign sheen_options = gloss_finishes -%}
+                  {%- elsif sheen_key == 'satin' -%}
+                    {%- assign sheen_options = satin_finishes -%}
+                  {%- elsif sheen_key == 'brushed' -%}
+                    {%- assign sheen_options = brushed_finishes -%}
+                  {%- else -%}
+                    {%- assign sheen_options = polished_finishes -%}
+                  {%- endif -%}
+                  <div
+                    class="ff-xd__sheen-panel"
+                    id="ff-xd-sheen-panel-{{ sheen_key }}-{{ section.id }}"
+                    data-ff-xd-sheen-panel="{{ sheen_key | escape }}"
+                  >
+                    {%- for finish in sheen_options -%}
+                      {%- assign finish_name = finish | strip -%}
+                      {%- if finish_name != blank -%}
+                        <button
+                          type="button"
+                          class="ff-xd__sheen-option"
+                          data-ff-xd-finish="{{ finish_name | escape }}"
+                          data-finish-family="{{ sheen_key | escape }}"
+                        >
+                          {{ finish_name | escape }}
+                        </button>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endfor -%}
+              </div>
             </div>
           </div>
 
