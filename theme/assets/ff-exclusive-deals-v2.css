@@ -121,6 +121,14 @@
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55);
 }
 
+.ff-xd__hero-copy .ff-xd__eyebrow {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 0.4em 0.7em 0.35em;
+  background: #000;
+  text-shadow: none;
+}
+
 .ff-xd__title {
   margin: 0;
   max-width: 14ch;
