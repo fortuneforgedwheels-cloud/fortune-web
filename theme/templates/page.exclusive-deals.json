@@ -123,7 +123,6 @@
         "path_specs_title": "I know my specs",
         "path_specs_copy": "Pick a finish, enter your sizes, and your year / make / model.",
         "finish_label": "Wheel finish",
-        "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal",
         "specs_label": "Wheel specs",
         "specs_example": "Front: 20x10 ET10 / Rear 20x11 ET12",
         "ymm_label": "Year / Make / Model",
