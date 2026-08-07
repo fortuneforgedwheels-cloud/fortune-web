@@ -51,9 +51,80 @@
       return Array.from(document.querySelectorAll('[name="properties[' + safe + ']"]'));
     }
 
+    const FALLBACK_COLORS = {
+      'FACE COLOR': [
+        'Polished',
+        'Chrome',
+        'Gloss black',
+        'Brushed silver',
+        'Satin black',
+        'Brushed Champagne',
+        'Brushed bronze',
+        'Light brushed gold',
+        'Matte bronze',
+        'Gloss bronze',
+        'Matte black',
+        'Motorsport gold',
+        'Brushed gunmetal',
+        'Brushed light gold',
+        'Satin Gunmetal',
+        'Gloss white',
+      ],
+      'RING COLOR': [
+        'Polished',
+        'Chrome',
+        'Gloss black',
+        'Brushed silver',
+        'Satin black',
+        'Brushed Champagne',
+        'Brushed bronze',
+        'Light brushed gold',
+        'Matte bronze',
+        'Gloss bronze',
+        'Matte black',
+        'Motorsport gold',
+        'Brushed gunmetal',
+        'Brushed light gold',
+        'Satin Gunmetal',
+        'Gloss white',
+      ],
+      'BOLT COLOR': ['Raw', 'silver', 'black', 'white', 'red', 'blue', 'orange', 'gold', 'yellow'],
+    };
+
     function getBcpoVirtualOptions() {
       if (window.bcpo_data && Array.isArray(window.bcpo_data.virtual_options)) {
         return window.bcpo_data.virtual_options;
+      }
+
+      const scripts = document.querySelectorAll('script:not([src])');
+      for (let i = 0; i < scripts.length; i++) {
+        const text = scripts[i].textContent || '';
+        const marker = 'bcpo_data=';
+        const start = text.indexOf(marker);
+        if (start === -1) continue;
+        const jsonStart = text.indexOf('{', start);
+        if (jsonStart === -1) continue;
+        let depth = 0;
+        let end = -1;
+        for (let j = jsonStart; j < text.length; j++) {
+          const ch = text.charAt(j);
+          if (ch === '{') depth += 1;
+          if (ch === '}') {
+            depth -= 1;
+            if (depth === 0) {
+              end = j + 1;
+              break;
+            }
+          }
+        }
+        if (end === -1) continue;
+        try {
+          const data = JSON.parse(text.slice(jsonStart, end));
+          if (data && Array.isArray(data.virtual_options)) {
+            window.bcpo_data = data;
+            return data.virtual_options;
+          }
+        } catch (e) {}
       }
       return [];
     }
@@ -61,10 +132,12 @@
     function valuesForColor(title) {
       const wanted = normalizeTitle(title);
       const opt = getBcpoVirtualOptions().find((o) => normalizeTitle(o.title) === wanted);
-      if (!opt || !Array.isArray(opt.values)) return [];
-      return opt.values
-        .map((v) => (v && typeof v === 'object' ? v.key : v))
-        .filter(Boolean);
+      if (opt && Array.isArray(opt.values) && opt.values.length) {
+        return opt.values
+          .map((v) => (v && typeof v === 'object' ? v.key : v))
+          .filter(Boolean);
+      }
+      return FALLBACK_COLORS[wanted] || [];
     }
 
     function populateColorSelects(root) {
