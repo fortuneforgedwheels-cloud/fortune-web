@@ -22,7 +22,7 @@
 -%}
 
 <div
-  class="ff-826m-path is-certified"
+  class="ff-826m-path"
   id="ff-826m-path-{{ product.id }}"
   data-ff-826m-path
   data-product-id="{{ product.id }}"
@@ -34,10 +34,29 @@
   data-certified-lug="{{ certified_lug | escape }}"
 >
   <p class="ff-826m-path__eyebrow">{{ path_label | escape }}</p>
-  <h2 class="ff-826m-path__heading">Fortune Certified Specs</h2>
+  <h2 class="ff-826m-path__heading">How do you want to spec this pair?</h2>
   <p class="ff-826m-path__intro">
-    Fitment is locked to <strong>{{ certified_fitment | escape }}</strong>. Enter your year, make, and model, then choose ring, face, and bolt colors below.
+    Choose Fortune Certified Specs for a locked <strong>{{ certified_fitment | escape }}</strong> package, or select your own size, width, offset, and lug pattern.
   </p>
+
+  <div class="ff-826m-path__choices" role="radiogroup" aria-label="Spec path">
+    <label class="ff-826m-path__choice">
+      <input type="radio" name="ff_826m_path_{{ product.id }}" value="certified" checked>
+      <span class="ff-826m-path__choice-card">
+        <span class="ff-826m-path__choice-title">Fortune Certified Specs</span>
+        <span class="ff-826m-path__choice-meta">
+          Fitment locked to <strong>{{ certified_fitment | escape }}</strong>. Enter year / make / model, then choose ring, face, and bolt colors.
+        </span>
+      </span>
+    </label>
+    <label class="ff-826m-path__choice">
+      <input type="radio" name="ff_826m_path_{{ product.id }}" value="custom">
+      <span class="ff-826m-path__choice-card">
+        <span class="ff-826m-path__choice-title">Select my own specs</span>
+        <span class="ff-826m-path__choice-meta">Choose size, width, offset, lug pattern, colors, and vehicle details yourself.</span>
+      </span>
+    </label>
+  </div>
 
   <div class="ff-826m-path__certified" data-ff-826m-certified-panel>
     <div class="ff-826m-path__badge">
@@ -55,15 +74,21 @@
           autocomplete="off"
           placeholder="{{ ymm_placeholder | escape }}"
           data-ff-826m-required-certified
-          required
         >
       </label>
     </div>
 
-    <p class="ff-826m-path__hint">Size, width, offset, and lug pattern are set automatically — no diameter or spec selection needed.</p>
+    <p class="ff-826m-path__hint">
+      Size is hard-selected to {{ certified_fitment | escape }}. Next, choose ring color, face color, and bolt color below.
+    </p>
 
     <input type="hidden" name="properties[Spec Path]" value="Fortune Certified Specs" form="{{ form_id }}" data-ff-826m-certified-prop>
     <input type="hidden" name="properties[Certified Fitment]" value="{{ certified_fitment | escape }}" form="{{ form_id }}" data-ff-826m-certified-prop>
+  </div>
+
+  <div class="ff-826m-path__custom" data-ff-826m-custom-panel hidden>
+    <p class="ff-826m-path__hint">Use the size, width, offset, lug pattern, color, and vehicle fields below to build your own spec.</p>
+    <input type="hidden" name="properties[Spec Path]" value="Select my own specs" form="{{ form_id }}" data-ff-826m-custom-prop disabled>
   </div>
 </div>
 

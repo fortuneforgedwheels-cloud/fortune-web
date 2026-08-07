@@ -116,7 +116,8 @@
       });
 
       if (variantId) {
-        const idInput = getForm(root) && getForm(root).querySelector('input[name="id"], select[name="id"]');
+        const form = getForm(root);
+        const idInput = form && form.querySelector('input[name="id"], select[name="id"]');
         if (idInput && String(idInput.value) !== String(variantId)) {
           idInput.value = variantId;
           idInput.dispatchEvent(new Event('change', { bubbles: true }));
@@ -124,17 +125,26 @@
       }
     }
 
-    function hideSpecFields() {
+    function hideSpecFields(certified) {
       findOptionWrappers().forEach(({ wrapper, field }) => {
         wrapper.setAttribute('data-ff-826m-spec-field', '1');
-        wrapper.style.setProperty('display', 'none', 'important');
-        wrapper.setAttribute('aria-hidden', 'true');
+        if (certified) {
+          wrapper.style.setProperty('display', 'none', 'important');
+          wrapper.setAttribute('aria-hidden', 'true');
+        } else {
+          wrapper.style.removeProperty('display');
+          wrapper.setAttribute('aria-hidden', 'false');
+        }
 
         if (!field) return;
-        if (!field.hasAttribute('data-ff-826m-was-required')) {
-          field.setAttribute('data-ff-826m-was-required', field.required ? '1' : '0');
+        if (certified) {
+          if (!field.hasAttribute('data-ff-826m-was-required')) {
+            field.setAttribute('data-ff-826m-was-required', field.required ? '1' : '0');
+          }
+          field.required = false;
+        } else if (field.getAttribute('data-ff-826m-was-required') === '1') {
+          field.required = true;
         }
-        field.required = false;
       });
     }
 
@@ -157,27 +167,42 @@
       selectCertifiedSize(root);
     }
 
-    function setCertifiedMode(root) {
+    function setMode(root, mode) {
+      const certified = mode === 'certified';
       const productView = getProductView(root);
+      const certifiedPanel = root.querySelector('[data-ff-826m-certified-panel]');
+      const customPanel = root.querySelector('[data-ff-826m-custom-panel]');
 
-      root.classList.add('is-certified');
-      productView.classList.add('is-ff-826m-certified');
-      document.body.classList.add('is-ff-826m-certified');
+      root.classList.toggle('is-certified', certified);
+      productView.classList.toggle('is-ff-826m-certified', certified);
+      document.body.classList.toggle('is-ff-826m-certified', certified);
+
+      if (certifiedPanel) certifiedPanel.hidden = !certified;
+      if (customPanel) customPanel.hidden = certified;
 
       root.querySelectorAll('[data-ff-826m-certified-prop]').forEach((el) => {
-        el.disabled = false;
+        el.disabled = !certified;
+      });
+      root.querySelectorAll('[data-ff-826m-custom-prop]').forEach((el) => {
+        el.disabled = certified;
       });
       root.querySelectorAll('[data-ff-826m-required-certified]').forEach((input) => {
-        input.required = true;
-        input.disabled = false;
-        input.setCustomValidity('');
+        input.required = certified;
+        if (!certified) input.setCustomValidity('');
+        input.disabled = !certified;
       });
 
-      applyCertifiedOptions(root);
-      hideSpecFields();
+      if (certified) applyCertifiedOptions(root);
+      hideSpecFields(certified);
+    }
+
+    function currentMode(root) {
+      const checked = root.querySelector('input[type="radio"][name^="ff_826m_path_"]:checked');
+      return checked ? checked.value : 'certified';
     }
 
     function validateCertified(root, event) {
+      if (currentMode(root) !== 'certified') return;
       const missing = Array.from(root.querySelectorAll('[data-ff-826m-required-certified]')).filter(
         (input) => !input.disabled && !String(input.value || '').trim()
       );
@@ -193,6 +218,12 @@
       if (root.dataset.ff826mBound === '1') return;
       root.dataset.ff826mBound = '1';
 
+      root.querySelectorAll('input[type="radio"][name^="ff_826m_path_"]').forEach((radio) => {
+        radio.addEventListener('change', function () {
+          setMode(root, radio.value);
+        });
+      });
+
       root.querySelectorAll('[data-ff-826m-required-certified]').forEach((input) => {
         input.addEventListener('input', function () {
           input.setCustomValidity('');
@@ -204,8 +235,9 @@
         form.addEventListener(
           'submit',
           function (event) {
+            if (currentMode(root) !== 'certified') return;
             applyCertifiedOptions(root);
-            hideSpecFields();
+            hideSpecFields(true);
             validateCertified(root, event);
           },
           true
@@ -217,20 +249,22 @@
       const timer = window.setInterval(function () {
         tries += 1;
         try {
-          applyCertifiedOptions(root);
-          hideSpecFields();
+          if (currentMode(root) === 'certified') {
+            applyCertifiedOptions(root);
+            hideSpecFields(true);
+          }
         } catch (e) {}
 
         const found = propertyFields('WIDTH').length + propertyFields('OFFSET').length;
         if (found > 0 || tries >= 20) {
           window.clearInterval(timer);
           try {
-            setCertifiedMode(root);
+            setMode(root, currentMode(root));
           } catch (e) {}
         }
       }, 300);
 
-      setCertifiedMode(root);
+      setMode(root, currentMode(root));
     }
 
     function init() {
