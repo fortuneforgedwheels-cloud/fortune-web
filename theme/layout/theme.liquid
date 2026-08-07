@@ -351,21 +351,15 @@
     </head>
     {%- liquid
         assign page_type = request.page_type | replace: 'customers/', ''
-        if settings.show_dark_mode
-            assign default_dark_mode = settings.default_dark_mode
-        endif
     -%}
     {%- assign ff_page_cache_bust = "now" | date: "%s%N" -%}
-    <body data-ff-bust="{{ ff_page_cache_bust }}" class="body-full template-{{ page_type }} skin-{{ settings.layout }}{% if settings.select_layout and enable_iso_rtl %} rtl{% endif %}{% if default_dark_mode %} dark-mode{% endif %}">
-        {%- if settings.show_dark_mode -%}
-            <script>
-                {%- if default_dark_mode -%}
-                    localStorage.getItem('theme') === 'light' ? document.body.classList.remove('dark-mode') : document.body.classList.add('dark-mode');
-                {%- else -%}
-                    localStorage.getItem('theme') === 'dark' ? document.body.classList.add('dark-mode') : document.body.classList.remove('dark-mode');
-                {%- endif -%}
-            </script>
-        {%- endif -%}
+    <body data-ff-bust="{{ ff_page_cache_bust }}" class="body-full template-{{ page_type }} skin-{{ settings.layout }}{% if settings.select_layout and enable_iso_rtl %} rtl{% endif %} dark-mode">
+        <script>
+            try {
+                if (localStorage.getItem('theme') === 'light') localStorage.removeItem('theme');
+            } catch (e) {}
+            document.body.classList.add('dark-mode');
+        </script>
         <a class="skip-to-content-link visually-hidden" href="#MainContent">
             {{ "accessibility.skip_to_text" | t }}
         </a>
