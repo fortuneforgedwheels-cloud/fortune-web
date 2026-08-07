@@ -189,6 +189,8 @@
 .ff-xd__card:nth-child(3) { animation-delay: 0.15s; }
 .ff-xd__card:nth-child(4) { animation-delay: 0.2s; }
 .ff-xd__card:nth-child(5) { animation-delay: 0.25s; }
+.ff-xd__card:nth-child(6) { animation-delay: 0.3s; }
+.ff-xd__card:nth-child(7) { animation-delay: 0.35s; }
 
 .ff-xd__card:hover:not(.is-disabled),
 .ff-xd__card:focus-visible {

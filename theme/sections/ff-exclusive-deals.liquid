@@ -176,7 +176,7 @@
         {%- endfor -%}
 
         {%- if deal_count == 0 and request.design_mode -%}
-          <p class="ff-xd__missing">Add up to 5 Deal blocks and pick a monoblock product for each.</p>
+          <p class="ff-xd__missing">Add up to 7 Deal blocks and pick a monoblock product for each.</p>
         {%- endif -%}
       </div>
 
@@ -330,7 +330,7 @@
   "name": "Exclusive Deals",
   "tag": "div",
   "class": "ff-xd-section",
-  "max_blocks": 5,
+  "max_blocks": 7,
   "settings": [
     {
       "type": "header",
@@ -357,7 +357,7 @@
       "type": "richtext",
       "id": "description",
       "label": "Description",
-      "default": "<p>Private monoblock deals — five designs, one exclusive full-set price. Pick a design and add the full set to cart.</p>"
+      "default": "<p>Private monoblock deals — pick a design and add the full set to cart at today’s exclusive price.</p>"
     },
     {
       "type": "header",
@@ -403,7 +403,7 @@
       "type": "text",
       "id": "deals_eyebrow",
       "label": "Deals eyebrow",
-      "default": "TOP 5 MONOBLOCKS"
+      "default": "TOP MONOBLOCKS"
     },
     {
       "type": "text",
@@ -570,6 +570,8 @@
     {
       "name": "Exclusive Deals",
       "blocks": [
+        { "type": "deal" },
+        { "type": "deal" },
         { "type": "deal" },
         { "type": "deal" },
         { "type": "deal" },
