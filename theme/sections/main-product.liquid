@@ -16,6 +16,7 @@
     assign ff_certified_offset = '+15'
     assign ff_certified_make_ph = 'e.g. BMW'
     assign ff_certified_model_ph = 'e.g. M3'
+    assign ff_certified_extra_face_ring_colors = ''
     assign ff_product_title_up = product.title | upcase
     assign ff_product_handle = product.handle | downcase
     if ff_product_title_up contains '826M' and product.tags contains 'BEADLOCK'
@@ -60,6 +61,30 @@
       assign ff_certified_offset = '+40'
       assign ff_certified_make_ph = 'e.g. Cadillac'
       assign ff_certified_model_ph = 'e.g. CT5-V Blackwing'
+    elsif ff_product_handle == 's650-mustang-gt-oem-styled-beadlock-pair'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'S650 Mustang Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET50'
+      assign ff_certified_offset = '+50'
+      assign ff_certified_make_ph = 'e.g. Ford'
+      assign ff_certified_model_ph = 'e.g. S650 Mustang GT'
+      assign ff_certified_extra_face_ring_colors = 'Match OEM gloss gray|Match OEM satin black'
+    elsif ff_product_title_up contains 'S650' and ff_product_title_up contains 'MUSTANG' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'S650 Mustang Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET50'
+      assign ff_certified_offset = '+50'
+      assign ff_certified_make_ph = 'e.g. Ford'
+      assign ff_certified_model_ph = 'e.g. S650 Mustang GT'
+      assign ff_certified_extra_face_ring_colors = 'Match OEM gloss gray|Match OEM satin black'
+    elsif ff_product_title_up contains 'S650' and ff_product_title_up contains 'MUSTANG' and product.tags contains 'beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'S650 Mustang Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET50'
+      assign ff_certified_offset = '+50'
+      assign ff_certified_make_ph = 'e.g. Ford'
+      assign ff_certified_model_ph = 'e.g. S650 Mustang GT'
+      assign ff_certified_extra_face_ring_colors = 'Match OEM gloss gray|Match OEM satin black'
     endif
     assign ff_826m_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
     assign colors_bg = section.settings.colors_bg
@@ -1016,6 +1041,7 @@
                                               certified_fitment: ff_certified_fitment,
                                               certified_size: ff_certified_size,
                                               certified_width: ff_certified_width,
+                                              extra_face_ring_colors: ff_certified_extra_face_ring_colors,
                                               certified_offset: ff_certified_offset,
                                               ymm_make_placeholder: ff_certified_make_ph,
                                               ymm_model_placeholder: ff_certified_model_ph

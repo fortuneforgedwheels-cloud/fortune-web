@@ -129,22 +129,40 @@
       return [];
     }
 
-    function valuesForColor(title) {
+    function extraFaceRingColors(root) {
+      const raw = root.getAttribute('data-extra-face-ring-colors') || '';
+      if (!raw.trim()) return [];
+      return raw
+        .split('|')
+        .map((v) => v.trim())
+        .filter(Boolean);
+    }
+
+    function valuesForColor(root, title) {
       const wanted = normalizeTitle(title);
       const opt = getBcpoVirtualOptions().find((o) => normalizeTitle(o.title) === wanted);
+      let values = [];
       if (opt && Array.isArray(opt.values) && opt.values.length) {
-        return opt.values
+        values = opt.values
           .map((v) => (v && typeof v === 'object' ? v.key : v))
           .filter(Boolean);
+      } else {
+        values = (FALLBACK_COLORS[wanted] || []).slice();
       }
-      return FALLBACK_COLORS[wanted] || [];
+
+      if (wanted === 'FACE COLOR' || wanted === 'RING COLOR') {
+        extraFaceRingColors(root).forEach((extra) => {
+          if (values.indexOf(extra) === -1) values.push(extra);
+        });
+      }
+      return values;
     }
 
     function populateColorSelects(root) {
       COLOR_TITLES.forEach((title) => {
         const select = root.querySelector('[data-ff-826m-color-select="' + title + '"]');
         if (!select) return;
-        const values = valuesForColor(title);
+        const values = valuesForColor(root, title);
         if (!values.length) return;
 
         const current = select.value;

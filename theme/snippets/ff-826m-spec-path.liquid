@@ -32,6 +32,7 @@
   data-certified-width="{{ certified_width | escape }}"
   data-certified-offset="{{ certified_offset | escape }}"
   data-certified-lug="{{ certified_lug | escape }}"
+  {% if extra_face_ring_colors != blank %}data-extra-face-ring-colors="{{ extra_face_ring_colors | escape }}"{% endif %}
 >
   <p class="ff-826m-path__eyebrow">{{ path_label | escape }}</p>
   <h2 class="ff-826m-path__heading">How do you want to spec this pair?</h2>
