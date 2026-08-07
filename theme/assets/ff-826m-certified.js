@@ -1,5 +1,22 @@
 (function () {
   try {
+    function patchBcpoChromePrices() {
+      const data = window.bcpo_data;
+      if (!data || !Array.isArray(data.virtual_options)) return;
+      data.virtual_options.forEach((vo) => {
+        const title = String(vo.title || '')
+          .replace(/\s+/g, ' ')
+          .trim()
+          .toUpperCase();
+        if (title !== 'FACE COLOR' && title !== 'RING COLOR') return;
+        (vo.values || []).forEach((value) => {
+          if (!value || typeof value !== 'object') return;
+          if (String(value.key || '').toLowerCase() !== 'chrome') return;
+          value.price = '250';
+        });
+      });
+    }
+
     const COLOR_TITLES = ['FACE COLOR', 'RING COLOR', 'BOLT COLOR'];
     const HIDE_ALWAYS_IN_CERTIFIED = [
       'SIZE',
@@ -93,6 +110,7 @@
 
     function getBcpoVirtualOptions() {
       if (window.bcpo_data && Array.isArray(window.bcpo_data.virtual_options)) {
+        patchBcpoChromePrices();
         return window.bcpo_data.virtual_options;
       }
 
@@ -122,6 +140,7 @@
           const data = JSON.parse(text.slice(jsonStart, end));
           if (data && Array.isArray(data.virtual_options)) {
             window.bcpo_data = data;
+            patchBcpoChromePrices();
             return data.virtual_options;
           }
         } catch (e) {}
@@ -512,6 +531,7 @@
       const timer = window.setInterval(function () {
         tries += 1;
         try {
+          patchBcpoChromePrices();
           populateColorSelects(root);
           setMode(root, currentMode(root));
         } catch (e) {}
@@ -521,6 +541,7 @@
         if ((hasValues && hasBcpo) || tries >= 30) {
           window.clearInterval(timer);
           try {
+            patchBcpoChromePrices();
             setMode(root, currentMode(root));
           } catch (e) {}
         }
