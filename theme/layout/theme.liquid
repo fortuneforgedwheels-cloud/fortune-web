@@ -119,9 +119,14 @@
             handle: {{ ff_chrome_addon_global.handle | default: 'chrome-finish-surcharge' | json }},
             amount: 250
           });
-          /* Beadlock Chrome face/ring finish surcharge: always $250 each (display + checkout line item). */
+          /* ffChromeChargeV2: patch display prices + add real $250 checkout line items. */
           (function () {
+            if (window.__ffChromeChargeV2) return;
+            window.__ffChromeChargeV2 = true;
             var PRICE = '250';
+            var pending = 0;
+            var adding = false;
+
             function patch(data) {
               if (!data || !Array.isArray(data.virtual_options)) return data;
               for (var i = 0; i < data.virtual_options.length; i++) {
@@ -141,6 +146,7 @@
               }
               return data;
             }
+
             var current = window.bcpo_data;
             try {
               Object.defineProperty(window, 'bcpo_data', {
@@ -157,6 +163,119 @@
             } catch (e) {
               if (window.bcpo_data) patch(window.bcpo_data);
             }
+
+            function isChrome(val) {
+              return String(val || '')
+                .replace(/\s*\(\+\$?\d+.*?\)\s*$/i, '')
+                .trim()
+                .toLowerCase() === 'chrome';
+            }
+
+            function readColor(title) {
+              var wanted = String(title || '')
+                .replace(/\s+/g, ' ')
+                .trim()
+                .toUpperCase();
+              var root = document.querySelector('[data-ff-826m-path]');
+              if (root) {
+                var mode = root.querySelector('input[type="radio"][name^="ff_826m_path_"]:checked');
+                var certified = mode && mode.value === 'certified';
+                var select = root.querySelector('[data-ff-826m-color-select="' + title + '"]');
+                if (certified && select && select.value) return select.value;
+              }
+              var labels = document.querySelectorAll('.bcpo-title, .bcpo-front-dd-label, .bcpo-label');
+              for (var i = 0; i < labels.length; i++) {
+                var label = String(labels[i].textContent || '')
+                  .replace(/\s+/g, ' ')
+                  .trim()
+                  .toUpperCase()
+                  .split(':')[0]
+                  .trim();
+                if (label !== wanted) continue;
+                var wrap =
+                  labels[i].closest('.selector-wrapper') ||
+                  labels[i].closest('[class*="bcpo"]') ||
+                  labels[i].parentElement;
+                if (!wrap) continue;
+                var field = wrap.querySelector('select');
+                if (field) return field.value || (field.options[field.selectedIndex] && field.options[field.selectedIndex].text);
+              }
+              return '';
+            }
+
+            function chromeCount() {
+              var n = 0;
+              if (isChrome(readColor('FACE COLOR'))) n += 1;
+              if (isChrome(readColor('RING COLOR'))) n += 1;
+              return n;
+            }
+
+            function addAddon(qty) {
+              var variantId = window.FF_CHROME_SURCHARGE && window.FF_CHROME_SURCHARGE.variantId;
+              if (!variantId || !qty) return Promise.resolve();
+              adding = true;
+              return fetch('/cart/add.js', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({
+                  items: [
+                    {
+                      id: Number(variantId),
+                      quantity: qty,
+                      properties: {
+                        _Surcharge: 'Chrome finish',
+                        'Chrome selections': String(qty),
+                        Note: qty > 1 ? 'Face + Ring Chrome (+$250 each)' : 'Chrome finish (+$250)',
+                      },
+                    },
+                  ],
+                }),
+              })
+                .catch(function () {})
+                .finally(function () {
+                  adding = false;
+                });
+            }
+
+            function remember() {
+              pending = chromeCount();
+              return pending;
+            }
+
+            function flush() {
+              var qty = pending;
+              pending = 0;
+              return addAddon(qty);
+            }
+
+            if (typeof window.fetch === 'function') {
+              var originalFetch = window.fetch.bind(window);
+              window.fetch = function (input, init) {
+                var url = typeof input === 'string' ? input : input && input.url;
+                var isAdd = String(url || '').indexOf('/cart/add') !== -1 && !adding;
+                if (isAdd) remember();
+                return originalFetch(input, init).then(function (response) {
+                  if (!isAdd || !response || !response.ok) return response;
+                  return flush().then(function () {
+                    return response;
+                  });
+                });
+              };
+            }
+
+            document.addEventListener(
+              'submit',
+              function (event) {
+                var form = event.target;
+                if (!form || !form.getAttribute) return;
+                var action = form.getAttribute('action') || '';
+                var type = form.getAttribute('data-type') || '';
+                if (action.indexOf('/cart/add') === -1 && type !== 'add-to-cart-form') return;
+                remember();
+              },
+              true
+            );
           })();
         </script>
         <script src="{{ 'ff-bcpo-chrome-surcharge.js' | asset_url }}" defer></script>

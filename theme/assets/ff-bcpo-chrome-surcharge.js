@@ -252,9 +252,12 @@
 
   installSetter();
   patchAll();
-  installFetchHook();
-  installFormHook();
-  installJqueryAjaxHook();
+  // Layout inline ffChromeChargeV2 owns ATC line-item charging when present.
+  if (!window.__ffChromeChargeV2) {
+    installFetchHook();
+    installFormHook();
+    installJqueryAjaxHook();
+  }
 
   var ticks = 0;
   var timer = setInterval(function () {
