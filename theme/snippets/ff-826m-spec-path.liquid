@@ -78,9 +78,9 @@
       </label>
     </div>
 
-    <p class="ff-826m-path__hint">
-      Size is hard-selected to {{ certified_fitment | escape }}. Next, choose ring color, face color, and bolt color below.
-    </p>
+    <div class="ff-826m-path__colors" data-ff-826m-color-slot>
+      <p class="ff-826m-path__hint">Choose face, ring, and bolt color:</p>
+    </div>
 
     <input type="hidden" name="properties[Spec Path]" value="Fortune Certified Specs" form="{{ form_id }}" data-ff-826m-certified-prop>
     <input type="hidden" name="properties[Certified Fitment]" value="{{ certified_fitment | escape }}" form="{{ form_id }}" data-ff-826m-certified-prop>

@@ -1,5 +1,7 @@
 (function () {
   try {
+    const COLOR_TITLES = ['FACE COLOR', 'RING COLOR', 'BOLT COLOR', 'HARDWARE COLOR'];
+    const COLOR_ORDER = ['FACE COLOR', 'RING COLOR', 'BOLT COLOR', 'HARDWARE COLOR'];
     const HIDE_TITLES = ['SIZE', 'DIAMETER', 'WIDTH', 'OFFSET', 'LUG PATTERN'];
 
     function normalizeTitle(text) {
@@ -39,38 +41,55 @@
       return Array.from(document.querySelectorAll('[name="properties[' + safe + ']"]'));
     }
 
-    function findOptionWrappers() {
+    function findOptionNodes(productView) {
       const results = [];
       const seen = new Set();
 
-      HIDE_TITLES.forEach((name) => {
+      function pushNode(node, title) {
+        if (!node || seen.has(node)) return;
+        // Prefer outermost unique wrappers — skip if an ancestor is already tracked
+        for (let i = 0; i < results.length; i++) {
+          if (results[i].wrapper.contains(node)) return;
+          if (node.contains(results[i].wrapper)) {
+            seen.delete(results[i].wrapper);
+            results.splice(i, 1);
+            i -= 1;
+          }
+        }
+        seen.add(node);
+        results.push({ wrapper: node, title: title || '' });
+      }
+
+      productView
+        .querySelectorAll('.selector-wrapper, [class*="bcpo-option"], [class*="bcpo_option"], [id*="bcpo"], .line-item-property__field')
+        .forEach((node) => {
+          if (node.closest('[data-ff-826m-path]') && !node.closest('[data-ff-826m-color-slot]')) return;
+          const titleEl = node.querySelector('.bcpo-title, .bcpo-label, label, legend, .form-label, .form__label');
+          if (!titleEl) return;
+          const key = optionKeyFromLabel(titleEl.textContent);
+          if (!key) return;
+          pushNode(node, key);
+        });
+
+      // Catch property inputs by name when wrappers are odd / late-injected
+      HIDE_TITLES.concat(COLOR_TITLES).forEach((name) => {
         propertyFields(name).forEach((el) => {
+          if (el.closest('[data-ff-826m-path]') && !el.closest('[data-ff-826m-color-slot]')) return;
           const wrapper =
             el.closest('.selector-wrapper') ||
             el.closest('[class*="bcpo"]') ||
+            el.closest('.line-item-property__field') ||
             el.closest('.product-form__input') ||
             el.parentElement;
-          if (!wrapper || seen.has(wrapper)) return;
-          seen.add(wrapper);
-          results.push({ wrapper, title: name, field: el });
-        });
-      });
-
-      document.querySelectorAll('.selector-wrapper, [class*="bcpo-"]').forEach((node) => {
-        if (seen.has(node)) return;
-        const titleEl = node.querySelector('.bcpo-title, .bcpo-label, label, legend');
-        if (!titleEl) return;
-        const key = optionKeyFromLabel(titleEl.textContent);
-        if (!HIDE_TITLES.includes(key)) return;
-        seen.add(node);
-        results.push({
-          wrapper: node,
-          title: key,
-          field: node.querySelector('select, input, textarea'),
+          pushNode(wrapper, name);
         });
       });
 
       return results;
+    }
+
+    function isColorTitle(title) {
+      return COLOR_TITLES.indexOf(normalizeTitle(title)) !== -1;
     }
 
     function setFieldValue(field, desired) {
@@ -125,27 +144,22 @@
       }
     }
 
-    function hideSpecFields(certified) {
-      findOptionWrappers().forEach(({ wrapper, field }) => {
-        wrapper.setAttribute('data-ff-826m-spec-field', '1');
-        if (certified) {
-          wrapper.style.setProperty('display', 'none', 'important');
-          wrapper.setAttribute('aria-hidden', 'true');
-        } else {
-          wrapper.style.removeProperty('display');
-          wrapper.setAttribute('aria-hidden', 'false');
-        }
+    function rememberHome(wrapper) {
+      if (wrapper.__ff826mHome) return;
+      wrapper.__ff826mHome = {
+        parent: wrapper.parentNode,
+        next: wrapper.nextSibling,
+      };
+    }
 
-        if (!field) return;
-        if (certified) {
-          if (!field.hasAttribute('data-ff-826m-was-required')) {
-            field.setAttribute('data-ff-826m-was-required', field.required ? '1' : '0');
-          }
-          field.required = false;
-        } else if (field.getAttribute('data-ff-826m-was-required') === '1') {
-          field.required = true;
-        }
-      });
+    function restoreHome(wrapper) {
+      const home = wrapper.__ff826mHome;
+      if (!home || !home.parent) return;
+      if (home.next && home.next.parentNode === home.parent) {
+        home.parent.insertBefore(wrapper, home.next);
+      } else {
+        home.parent.appendChild(wrapper);
+      }
     }
 
     function applyCertifiedOptions(root) {
@@ -159,12 +173,63 @@
         propertyFields(name).forEach((field) => setFieldValue(field, map[name]));
       });
 
-      findOptionWrappers().forEach(({ wrapper, title }) => {
-        const field = wrapper.querySelector('select, input');
-        if (field && map[title] != null) setFieldValue(field, map[title]);
+      selectCertifiedSize(root);
+    }
+
+    function syncOptionVisibility(root, certified) {
+      const productView = getProductView(root);
+      const colorSlot = root.querySelector('[data-ff-826m-color-slot]');
+      const nodes = findOptionNodes(productView);
+      const colorNodes = [];
+
+      nodes.forEach(({ wrapper, title }) => {
+        const color = isColorTitle(title);
+        rememberHome(wrapper);
+
+        if (certified) {
+          if (color) {
+            colorNodes.push({ wrapper: wrapper, title: normalizeTitle(title) });
+            wrapper.style.removeProperty('display');
+            wrapper.setAttribute('aria-hidden', 'false');
+            wrapper.setAttribute('data-ff-826m-color-field', '1');
+          } else {
+            wrapper.style.setProperty('display', 'none', 'important');
+            wrapper.setAttribute('aria-hidden', 'true');
+            wrapper.setAttribute('data-ff-826m-spec-field', '1');
+            const field = wrapper.querySelector('select, input, textarea');
+            if (field) {
+              if (!field.hasAttribute('data-ff-826m-was-required')) {
+                field.setAttribute('data-ff-826m-was-required', field.required ? '1' : '0');
+              }
+              field.required = false;
+            }
+          }
+        } else {
+          restoreHome(wrapper);
+          wrapper.style.removeProperty('display');
+          wrapper.setAttribute('aria-hidden', 'false');
+          wrapper.removeAttribute('data-ff-826m-spec-field');
+          wrapper.removeAttribute('data-ff-826m-color-field');
+          const field = wrapper.querySelector('select, input, textarea');
+          if (field && field.getAttribute('data-ff-826m-was-required') === '1') {
+            field.required = true;
+          }
+        }
       });
 
-      selectCertifiedSize(root);
+      if (certified && colorSlot) {
+        // Place colors in FACE → RING → BOLT order under certified panel
+        COLOR_ORDER.forEach((wanted) => {
+          colorNodes.forEach(({ wrapper, title }) => {
+            if (title !== wanted) return;
+            if (wrapper.parentNode !== colorSlot) colorSlot.appendChild(wrapper);
+          });
+        });
+        // Any leftover color titles not in order list
+        colorNodes.forEach(({ wrapper }) => {
+          if (wrapper.parentNode !== colorSlot) colorSlot.appendChild(wrapper);
+        });
+      }
     }
 
     function setMode(root, mode) {
@@ -193,7 +258,7 @@
       });
 
       if (certified) applyCertifiedOptions(root);
-      hideSpecFields(certified);
+      syncOptionVisibility(root, certified);
     }
 
     function currentMode(root) {
@@ -237,26 +302,24 @@
           function (event) {
             if (currentMode(root) !== 'certified') return;
             applyCertifiedOptions(root);
-            hideSpecFields(true);
+            syncOptionVisibility(root, true);
             validateCertified(root, event);
           },
           true
         );
       }
 
-      // Short, finite retry only — apps may inject WIDTH/OFFSET after paint.
+      // Short, finite retry — BCPO may inject color fields after paint.
       let tries = 0;
       const timer = window.setInterval(function () {
         tries += 1;
         try {
-          if (currentMode(root) === 'certified') {
-            applyCertifiedOptions(root);
-            hideSpecFields(true);
-          }
+          setMode(root, currentMode(root));
         } catch (e) {}
 
-        const found = propertyFields('WIDTH').length + propertyFields('OFFSET').length;
-        if (found > 0 || tries >= 20) {
+        const productView = getProductView(root);
+        const colorsFound = findOptionNodes(productView).some(({ title }) => isColorTitle(title));
+        if (colorsFound || tries >= 25) {
           window.clearInterval(timer);
           try {
             setMode(root, currentMode(root));
