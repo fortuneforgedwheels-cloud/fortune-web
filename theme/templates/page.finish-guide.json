@@ -31,50 +31,140 @@
           "type": "color_group",
           "settings": {
             "heading": "STANDARD COLOR",
-            "description": "<p>Our standard opaque color finishes include gloss/satin Black, White, Gunmetal Grey, Champagne, Bronze, and Silver. All of our finishes are constructed of a solid color layer and a high-strength clear powder coat. Resulting in a finish that is stunning and guarantees quality.</p>",
-            "finish_1_name": "Black",
-            "finish_1_color": "#111111",
-            "finish_2_name": "White",
-            "finish_2_color": "#EDE8DF",
-            "finish_3_name": "Silver",
-            "finish_3_color": "#C5C8CC",
-            "finish_4_name": "Gunmetal Grey",
-            "finish_4_color": "#4B4F55",
-            "finish_5_name": "Champagne",
-            "finish_5_color": "#C4B08A",
-            "finish_6_name": "Bronze",
-            "finish_6_color": "#8A5A2B"
+            "description": "<p>Our standard opaque color finishes include gloss/satin Black, White, Gunmetal Grey, Champagne, Bronze, and Silver. All of our finishes are constructed of a solid color layer and a high-strength clear powder coat. Resulting in a finish that is stunning and guarantees quality.</p>"
+          }
+        },
+        "std_black": {
+          "type": "swatch",
+          "settings": {
+            "name": "Black",
+            "color": "#111111"
+          }
+        },
+        "std_white": {
+          "type": "swatch",
+          "settings": {
+            "name": "White",
+            "color": "#EDE8DF"
+          }
+        },
+        "std_silver": {
+          "type": "swatch",
+          "settings": {
+            "name": "Silver",
+            "color": "#C5C8CC"
+          }
+        },
+        "std_gunmetal": {
+          "type": "swatch",
+          "settings": {
+            "name": "Gunmetal Grey",
+            "color": "#4B4F55"
+          }
+        },
+        "std_champagne": {
+          "type": "swatch",
+          "settings": {
+            "name": "Champagne",
+            "color": "#C4B08A"
+          }
+        },
+        "std_bronze": {
+          "type": "swatch",
+          "settings": {
+            "name": "Bronze",
+            "color": "#8A5A2B"
           }
         },
         "special": {
           "type": "color_group",
           "settings": {
             "heading": "SPECIAL COLOR",
-            "description": "<p>Upgrade your wheel aesthetics with our exclusive Special Color Finishes, a premium selection that offers a wide variety of color choices beyond our standard palette. These showcase an array of both metallic and flat colors to give your vehicle a unique and personal edge.</p>",
-            "finish_1_name": "Pearl White",
-            "finish_1_color": "#EFE6D8",
-            "finish_2_name": "24K Gold",
-            "finish_2_color": "#C6A24A",
-            "finish_3_name": "Candy Red",
-            "finish_3_color": "#9B1C1C",
-            "finish_4_name": "Indigo Blue",
-            "finish_4_color": "#3A4F7A",
-            "finish_5_name": "Ambergold",
-            "finish_5_color": "#8A6A2F",
-            "finish_6_name": "Rose Gold",
-            "finish_6_color": "#C9A7A0",
-            "finish_7_name": "Olive",
-            "finish_7_color": "#6B6B3A",
-            "finish_8_name": "Dusty Blue",
-            "finish_8_color": "#6F8599",
-            "finish_9_name": "Navy",
-            "finish_9_color": "#1C2A44",
-            "finish_10_name": "Burnt Orange",
-            "finish_10_color": "#C45A1A",
-            "finish_11_name": "Lime",
-            "finish_11_color": "#A8C23A",
-            "finish_12_name": "Gloss Black",
-            "finish_12_color": "#0A0A0A"
+            "description": "<p>Upgrade your wheel aesthetics with our exclusive Special Color Finishes, a premium selection that offers a wide variety of color choices beyond our standard palette. These showcase an array of both metallic and flat colors to give your vehicle a unique and personal edge.</p>"
+          }
+        },
+        "sp_pearl": {
+          "type": "swatch",
+          "settings": {
+            "name": "Pearl White",
+            "color": "#EFE6D8"
+          }
+        },
+        "sp_gold": {
+          "type": "swatch",
+          "settings": {
+            "name": "24K Gold",
+            "color": "#C6A24A"
+          }
+        },
+        "sp_candy": {
+          "type": "swatch",
+          "settings": {
+            "name": "Candy Red",
+            "color": "#9B1C1C"
+          }
+        },
+        "sp_indigo": {
+          "type": "swatch",
+          "settings": {
+            "name": "Indigo Blue",
+            "color": "#3A4F7A"
+          }
+        },
+        "sp_amber": {
+          "type": "swatch",
+          "settings": {
+            "name": "Ambergold",
+            "color": "#8A6A2F"
+          }
+        },
+        "sp_rose": {
+          "type": "swatch",
+          "settings": {
+            "name": "Rose Gold",
+            "color": "#C9A7A0"
+          }
+        },
+        "sp_olive": {
+          "type": "swatch",
+          "settings": {
+            "name": "Olive",
+            "color": "#6B6B3A"
+          }
+        },
+        "sp_dusty": {
+          "type": "swatch",
+          "settings": {
+            "name": "Dusty Blue",
+            "color": "#6F8599"
+          }
+        },
+        "sp_navy": {
+          "type": "swatch",
+          "settings": {
+            "name": "Navy",
+            "color": "#1C2A44"
+          }
+        },
+        "sp_orange": {
+          "type": "swatch",
+          "settings": {
+            "name": "Burnt Orange",
+            "color": "#C45A1A"
+          }
+        },
+        "sp_lime": {
+          "type": "swatch",
+          "settings": {
+            "name": "Lime",
+            "color": "#A8C23A"
+          }
+        },
+        "sp_gloss": {
+          "type": "swatch",
+          "settings": {
+            "name": "Gloss Black",
+            "color": "#0A0A0A"
           }
         },
         "premium": {
@@ -89,33 +179,87 @@
           "type": "color_group",
           "settings": {
             "heading": "BRUSHED / POLISH",
-            "description": "<p>Step into the realm of sophistication with our Premium Finish. Either brushed or polished, each with a transparent top coat to provide protection and complete the look.</p><p>Brushed finish offers timeless, premium, hand-crafted aesthetics done by the most skilled technicians.</p><p>Polished finish provides an immaculate, mirror-like shine that reflects a clean and high-class aesthetic.</p>",
-            "finish_1_name": "Polish Clear",
-            "finish_1_color": "#D7DADF",
-            "finish_2_name": "Brushed Clear",
-            "finish_2_color": "#B8BDC4",
-            "finish_3_name": "Satin Clear",
-            "finish_3_color": "#8E949B",
-            "finish_4_name": "Dark Clear",
-            "finish_4_color": "#3A3D42",
-            "finish_5_name": "Blue Clear",
-            "finish_5_color": "#2F4D7A",
-            "finish_6_name": "Bronze Clear",
-            "finish_6_color": "#7A5530"
+            "description": "<p>Step into the realm of sophistication with our Premium Finish. Either brushed or polished, each with a transparent top coat to provide protection and complete the look.</p><p>Brushed finish offers timeless, premium, hand-crafted aesthetics done by the most skilled technicians.</p><p>Polished finish provides an immaculate, mirror-like shine that reflects a clean and high-class aesthetic.</p>"
+          }
+        },
+        "br_polish": {
+          "type": "swatch",
+          "settings": {
+            "name": "Polish Clear",
+            "color": "#D7DADF"
+          }
+        },
+        "br_brushed": {
+          "type": "swatch",
+          "settings": {
+            "name": "Brushed Clear",
+            "color": "#B8BDC4"
+          }
+        },
+        "br_satin": {
+          "type": "swatch",
+          "settings": {
+            "name": "Satin Clear",
+            "color": "#8E949B"
+          }
+        },
+        "br_dark": {
+          "type": "swatch",
+          "settings": {
+            "name": "Dark Clear",
+            "color": "#3A3D42"
+          }
+        },
+        "br_blue": {
+          "type": "swatch",
+          "settings": {
+            "name": "Blue Clear",
+            "color": "#2F4D7A"
+          }
+        },
+        "br_bronze": {
+          "type": "swatch",
+          "settings": {
+            "name": "Bronze Clear",
+            "color": "#7A5530"
           }
         },
         "closing": {
           "type": "closing",
           "settings": {
-            "caption": "FORGED CLUB — Get Ready"
+            "caption": "FORGED CLUB \u2014 Get Ready"
           }
         }
       },
       "block_order": [
         "standard",
+        "std_black",
+        "std_white",
+        "std_silver",
+        "std_gunmetal",
+        "std_champagne",
+        "std_bronze",
         "special",
+        "sp_pearl",
+        "sp_gold",
+        "sp_candy",
+        "sp_indigo",
+        "sp_amber",
+        "sp_rose",
+        "sp_olive",
+        "sp_dusty",
+        "sp_navy",
+        "sp_orange",
+        "sp_lime",
+        "sp_gloss",
         "premium",
         "brushed",
+        "br_polish",
+        "br_brushed",
+        "br_satin",
+        "br_dark",
+        "br_blue",
+        "br_bronze",
         "closing"
       ],
       "settings": {

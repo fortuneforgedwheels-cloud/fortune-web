@@ -189,6 +189,10 @@
   display: block;
 }
 
+.ff-fo__swatch-disc.has-image {
+  background: #111;
+}
+
 .ff-fo__swatch-fallback {
   position: absolute;
   inset: 0;
