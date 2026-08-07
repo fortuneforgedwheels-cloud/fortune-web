@@ -135,6 +135,8 @@
   }
 
   function init(root) {
+    nudgeHeroVideo(root);
+
     var modal = root.querySelector('[data-ff-xd-modal]');
     if (!modal) return;
 
