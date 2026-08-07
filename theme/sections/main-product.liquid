@@ -142,6 +142,27 @@
       assign ff_certified_make_ph = 'e.g. Ford'
       assign ff_certified_model_ph = 'e.g. S650 Mustang GT'
       assign ff_certified_extra_face_ring_colors = 'Match OEM gloss gray|Match OEM satin black'
+    elsif ff_product_handle == '513m-beadlocks'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '513M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_title_up contains '513M' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '513M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_title_up contains '513M' and product.tags contains 'beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '513M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
     endif
     assign ff_826m_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
     assign colors_bg = section.settings.colors_bg
