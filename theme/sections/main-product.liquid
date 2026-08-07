@@ -163,6 +163,27 @@
       assign ff_certified_offset = '+40'
       assign ff_certified_make_ph = 'e.g. BMW'
       assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_handle == '437m-style-beadlocks'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '437M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_title_up contains '437M' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '437M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_title_up contains '437M' and product.tags contains 'beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '437M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
     endif
     assign ff_826m_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
     assign colors_bg = section.settings.colors_bg
