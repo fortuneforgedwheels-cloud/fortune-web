@@ -151,9 +151,10 @@
       }
 
       if (wanted === 'FACE COLOR' || wanted === 'RING COLOR') {
-        extraFaceRingColors(root).forEach((extra) => {
-          if (values.indexOf(extra) === -1) values.push(extra);
-        });
+        const extras = extraFaceRingColors(root);
+        if (extras.length) {
+          values = extras.concat(values.filter((v) => extras.indexOf(v) === -1));
+        }
       }
       return values;
     }
