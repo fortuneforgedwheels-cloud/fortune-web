@@ -124,26 +124,17 @@
       }
     }
 
-    function hideSpecFields(certified) {
+    function hideSpecFields() {
       findOptionWrappers().forEach(({ wrapper, field }) => {
         wrapper.setAttribute('data-ff-826m-spec-field', '1');
-        if (certified) {
-          wrapper.style.setProperty('display', 'none', 'important');
-          wrapper.setAttribute('aria-hidden', 'true');
-        } else {
-          wrapper.style.removeProperty('display');
-          wrapper.setAttribute('aria-hidden', 'false');
-        }
+        wrapper.style.setProperty('display', 'none', 'important');
+        wrapper.setAttribute('aria-hidden', 'true');
 
         if (!field) return;
-        if (certified) {
-          if (!field.hasAttribute('data-ff-826m-was-required')) {
-            field.setAttribute('data-ff-826m-was-required', field.required ? '1' : '0');
-          }
-          field.required = false;
-        } else if (field.getAttribute('data-ff-826m-was-required') === '1') {
-          field.required = true;
+        if (!field.hasAttribute('data-ff-826m-was-required')) {
+          field.setAttribute('data-ff-826m-was-required', field.required ? '1' : '0');
         }
+        field.required = false;
       });
     }
 
@@ -166,42 +157,27 @@
       selectCertifiedSize(root);
     }
 
-    function setMode(root, mode) {
-      const certified = mode === 'certified';
+    function setCertifiedMode(root) {
       const productView = getProductView(root);
-      const certifiedPanel = root.querySelector('[data-ff-826m-certified-panel]');
-      const customPanel = root.querySelector('[data-ff-826m-custom-panel]');
 
-      root.classList.toggle('is-certified', certified);
-      productView.classList.toggle('is-ff-826m-certified', certified);
-      document.body.classList.toggle('is-ff-826m-certified', certified);
-
-      if (certifiedPanel) certifiedPanel.hidden = !certified;
-      if (customPanel) customPanel.hidden = certified;
+      root.classList.add('is-certified');
+      productView.classList.add('is-ff-826m-certified');
+      document.body.classList.add('is-ff-826m-certified');
 
       root.querySelectorAll('[data-ff-826m-certified-prop]').forEach((el) => {
-        el.disabled = !certified;
-      });
-      root.querySelectorAll('[data-ff-826m-custom-prop]').forEach((el) => {
-        el.disabled = certified;
+        el.disabled = false;
       });
       root.querySelectorAll('[data-ff-826m-required-certified]').forEach((input) => {
-        input.required = certified;
-        if (!certified) input.setCustomValidity('');
-        input.disabled = !certified;
+        input.required = true;
+        input.disabled = false;
+        input.setCustomValidity('');
       });
 
-      if (certified) applyCertifiedOptions(root);
-      hideSpecFields(certified);
-    }
-
-    function currentMode(root) {
-      const checked = root.querySelector('input[type="radio"][name^="ff_826m_path_"]:checked');
-      return checked ? checked.value : 'certified';
+      applyCertifiedOptions(root);
+      hideSpecFields();
     }
 
     function validateCertified(root, event) {
-      if (currentMode(root) !== 'certified') return;
       const missing = Array.from(root.querySelectorAll('[data-ff-826m-required-certified]')).filter(
         (input) => !input.disabled && !String(input.value || '').trim()
       );
@@ -217,12 +193,6 @@
       if (root.dataset.ff826mBound === '1') return;
       root.dataset.ff826mBound = '1';
 
-      root.querySelectorAll('input[type="radio"][name^="ff_826m_path_"]').forEach((radio) => {
-        radio.addEventListener('change', function () {
-          setMode(root, radio.value);
-        });
-      });
-
       root.querySelectorAll('[data-ff-826m-required-certified]').forEach((input) => {
         input.addEventListener('input', function () {
           input.setCustomValidity('');
@@ -234,36 +204,33 @@
         form.addEventListener(
           'submit',
           function (event) {
-            if (currentMode(root) !== 'certified') return;
             applyCertifiedOptions(root);
-            hideSpecFields(true);
+            hideSpecFields();
             validateCertified(root, event);
           },
           true
         );
       }
 
-      // Short, finite retry only — safe finite retry.
+      // Short, finite retry only — apps may inject WIDTH/OFFSET after paint.
       let tries = 0;
       const timer = window.setInterval(function () {
         tries += 1;
         try {
-          if (currentMode(root) === 'certified') {
-            applyCertifiedOptions(root);
-            hideSpecFields(true);
-          }
+          applyCertifiedOptions(root);
+          hideSpecFields();
         } catch (e) {}
 
         const found = propertyFields('WIDTH').length + propertyFields('OFFSET').length;
         if (found > 0 || tries >= 20) {
           window.clearInterval(timer);
           try {
-            setMode(root, currentMode(root));
+            setCertifiedMode(root);
           } catch (e) {}
         }
       }, 300);
 
-      setMode(root, currentMode(root));
+      setCertifiedMode(root);
     }
 
     function init() {
