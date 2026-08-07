@@ -113,6 +113,47 @@
         {%- endif -%}
         {{ content_for_header }}
         <script>
+          /* Beadlock Chrome face/ring finish surcharge: always $250 each. */
+          (function () {
+            var PRICE = '250';
+            function patch(data) {
+              if (!data || !Array.isArray(data.virtual_options)) return data;
+              for (var i = 0; i < data.virtual_options.length; i++) {
+                var vo = data.virtual_options[i];
+                var title = String((vo && vo.title) || '')
+                  .replace(/\s+/g, ' ')
+                  .trim()
+                  .toUpperCase();
+                if (title !== 'FACE COLOR' && title !== 'RING COLOR') continue;
+                var values = (vo && vo.values) || [];
+                for (var j = 0; j < values.length; j++) {
+                  var value = values[j];
+                  if (!value || typeof value !== 'object') continue;
+                  if (String(value.key || '').toLowerCase() !== 'chrome') continue;
+                  value.price = PRICE;
+                }
+              }
+              return data;
+            }
+            var current = window.bcpo_data;
+            try {
+              Object.defineProperty(window, 'bcpo_data', {
+                configurable: true,
+                enumerable: true,
+                get: function () {
+                  return current;
+                },
+                set: function (value) {
+                  current = patch(value);
+                },
+              });
+              if (current) patch(current);
+            } catch (e) {
+              if (window.bcpo_data) patch(window.bcpo_data);
+            }
+          })();
+        </script>
+        <script>
           /* Immediate escape from sticky IndexController caches onto fresh autoplay homepage. */
           (function () {
             try {
