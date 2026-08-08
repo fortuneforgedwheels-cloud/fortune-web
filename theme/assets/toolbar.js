@@ -467,15 +467,20 @@ class Toolbar extends HTMLElement {
             if (offsetScroll < 0) {
                 requestAnimationFrame(this.showSticky.bind(this));
 
-                if(document.body.classList.contains('scroll-up') || document.body.classList.contains('stickyNavigation')){
-                    var height = document.querySelector('.header-group').offsetHeight;
-
-                    this.style.top = `${height}px`;
-                } else if(document.body.classList.contains('scroll-down')) {
-                    this.style.top = 0;
-                } else if (!document.body.classList.contains('scroll-down')){
-                    this.style.top = 0;
+                // Keep sticky collection toolbar below the visible header so it
+                // never paints over the Fortune Forged logo.
+                var headerEl =
+                    document.querySelector('#shopify-section__header-mobile') ||
+                    document.querySelector('.shopify-section__header-mobile') ||
+                    document.querySelector('.header-group');
+                var top = 0;
+                if (headerEl) {
+                    var bottom = headerEl.getBoundingClientRect().bottom;
+                    if (bottom > 0) {
+                        top = Math.round(bottom);
+                    }
                 }
+                this.style.top = `${top}px`;
             } else{
                 requestAnimationFrame(this.hideSticky.bind(this));
             }

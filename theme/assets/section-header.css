@@ -58,7 +58,8 @@
     .shopify-section-header-sticky .header-mobile {
         position: sticky;
         top: 0;
-        z-index: 10;
+        /* Above sticky collection toolbar (z-index 15) so the logo stays visible */
+        z-index: 30;
     }
 
     .shopify-section-header-hidden,
@@ -551,7 +552,27 @@
     }
 
     .header-mobile__item--cart {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
         padding-right: 5px;
+    }
+
+    .header-mobile__item--cart .header-mobile--search-beside-cart {
+        margin-left: 0;
+    }
+
+    .header-mobile__item--cart .header-mobile--search-beside-cart .header__icon--search .icon,
+    .header-mobile__item--cart .header-mobile--search-beside-cart .icon-search {
+        width: 22px;
+        height: 22px;
+        fill: currentColor;
+        color: var(--icon-color, #fff);
+    }
+
+    .header-mobile__item--cart .header-mobile--icon + .header-mobile--icon {
+        margin-left: 0;
     }
 
     .header-mobile--icon{

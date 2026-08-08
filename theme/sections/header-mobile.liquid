@@ -197,6 +197,28 @@
                                     </a>
                                 </div>
                             {%- when 'cart' -%}
+                                {%- liquid
+                                  assign ff_mobile_search_block_on = false
+                                  for b in section.blocks
+                                    if b.type == 'search'
+                                      assign ff_mobile_search_block_on = true
+                                    endif
+                                  endfor
+                                -%}
+                                {%- unless ff_mobile_search_block_on -%}
+                                  <side-drawer-opener class="header-mobile--icon header-mobile--search-beside-cart" data-side-drawer="#Drawer-Search" style="--icon-color: {{ block.settings.icon_color | default: '#ffffff' }};">
+                                    <button class="header__iconItem header__search t-button link focus-inset" type="button" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+                                      <span class="header__icon header__icon--search link focus-inset modal__toggle" data-search-mobile role="button" tabindex="0">
+                                        <span>
+                                          {% render 'icon-search',
+                                            icon_search: icon_search,
+                                            class: 'modal__toggle-open icon icon-search'
+                                          %}
+                                        </span>
+                                      </span>
+                                    </button>
+                                  </side-drawer-opener>
+                                {%- endunless -%}
                                 <div class="header-mobile--icon" style="--icon-color: {{ block.settings.icon_color }};--cart-count-background: {{ block.settings.cart_count_background }};--cart-count-color: {{ block.settings.cart_count_color }};">
                                     <a {% if settings.show_quick_cart %}{% if settings.quick_cart_type == 'popup' %} data-open-cart-popup href="javascript:void(0)"{% else %}data-cart-sidebar href="javascript:void(0)"{% endif %}{% else %}href="{{ routes.cart_url }}"{% endif %} class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble mobile" role="button">
                                         {%- if style_function_group == '2' -%}
