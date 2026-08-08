@@ -1,5 +1,5 @@
-{{ 'ff-e36-giveaway.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'ff-e36-giveaway.js' | asset_url }}" defer></script>
+{{ 'ff-e36-giveaway-v2.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ff-e36-giveaway-v2.js' | asset_url }}" defer></script>
 
 {%- liquid
   assign giveaway = section.settings.product
@@ -140,24 +140,101 @@
     <div class="ff-e36__entry" id="ff-e36-entry" data-ff-e36-entry>
       {%- if giveaway != blank and variant != blank -%}
         <div class="ff-e36__entry-top">
-          <div class="ff-e36__entry-media">
-            {%- if giveaway.featured_media != blank -%}
+          {%- liquid
+            assign entry_images = giveaway.media | where: 'media_type', 'image'
+            assign entry_image_count = entry_images.size
+            if entry_image_count == 0 and giveaway.featured_media != blank
+              assign entry_image_count = 1
+            endif
+          -%}
+          <div
+            class="ff-e36__entry-media{% if entry_image_count > 1 %} ff-e36__entry-media--gallery{% endif %}"
+            data-ff-e36-gallery
+            {% if entry_image_count > 1 %}
+              role="region"
+              aria-roledescription="carousel"
+              aria-label="{{ giveaway.title | escape }} photos"
+            {% endif %}
+          >
+            {%- if entry_images.size > 0 -%}
+              <div class="ff-e36__gallery-viewport">
+                <div class="ff-e36__gallery-track" data-ff-e36-gallery-track>
+                  {%- for media in entry_images -%}
+                    {%- liquid
+                      assign entry_alt = media.alt | default: giveaway.title
+                    -%}
+                    <div
+                      class="ff-e36__gallery-slide{% if forloop.first %} is-active{% endif %}"
+                      data-ff-e36-gallery-slide
+                      {% unless forloop.first %}aria-hidden="true"{% endunless %}
+                    >
+                      {%- if forloop.first -%}
+                        {{
+                          media
+                          | image_url: width: 1200
+                          | image_tag:
+                            loading: 'eager',
+                            widths: '300, 450, 600, 900, 1200',
+                            sizes: '(min-width: 750px) 320px, 90vw',
+                            alt: entry_alt,
+                            class: 'ff-e36__gallery-img'
+                        }}
+                      {%- else -%}
+                        {{
+                          media
+                          | image_url: width: 1200
+                          | image_tag:
+                            loading: 'lazy',
+                            widths: '300, 450, 600, 900, 1200',
+                            sizes: '(min-width: 750px) 320px, 90vw',
+                            alt: entry_alt,
+                            class: 'ff-e36__gallery-img'
+                        }}
+                      {%- endif -%}
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+              {%- if entry_images.size > 1 -%}
+                <button
+                  type="button"
+                  class="ff-e36__gallery-arrow ff-e36__gallery-arrow--prev"
+                  data-ff-e36-gallery-prev
+                  aria-label="Previous photo"
+                >
+                  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                    <path d="M14.5 5.5 8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  class="ff-e36__gallery-arrow ff-e36__gallery-arrow--next"
+                  data-ff-e36-gallery-next
+                  aria-label="Next photo"
+                >
+                  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                    <path d="M9.5 5.5 16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <p class="ff-e36__gallery-status visually-hidden" data-ff-e36-gallery-status aria-live="polite"></p>
+              {%- endif -%}
+            {%- elsif giveaway.featured_media != blank -%}
               {%- liquid
                 assign entry_alt = giveaway.featured_media.alt | default: giveaway.title
               -%}
               {{
                 giveaway.featured_media
-                | image_url: width: 600
+                | image_url: width: 1200
                 | image_tag:
                   loading: 'lazy',
-                  widths: '200, 300, 400, 600',
-                  sizes: '(min-width: 750px) 140px, 40vw',
+                  widths: '300, 450, 600, 900, 1200',
+                  sizes: '(min-width: 750px) 320px, 90vw',
                   alt: entry_alt
               }}
             {%- elsif section.settings.hero_poster != blank -%}
               {{
                 section.settings.hero_poster
-                | image_url: width: 600
+                | image_url: width: 1200
                 | image_tag:
                   loading: 'lazy',
                   alt: brand_title
