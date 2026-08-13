@@ -334,15 +334,176 @@
       return false;
     }
 
+    function sizeKeyOf(value) {
+      return String(value || '')
+        .replace(/\s+/g, '')
+        .replace(/"/g, '')
+        .toUpperCase();
+    }
+
+    function displaySize(size) {
+      const raw = String(size || '').trim();
+      if (!raw) return raw;
+      // Prefer storefront casing like 18x11 over 18X11
+      return raw.replace(/X/gi, 'x');
+    }
+
+    function certifiedLockActive(root) {
+      return Boolean(root && currentMode(root) === 'certified' && root.getAttribute('data-certified-variant-id'));
+    }
+
+    function applyCertifiedToFormData(fd) {
+      const root = getRoot();
+      if (!certifiedLockActive(root) || !fd || typeof fd.set !== 'function') return;
+      // Only rewrite product/cart payloads (must already include a variant id).
+      if (typeof fd.has === 'function' && !fd.has('id')) return;
+      const variantId = root.getAttribute('data-certified-variant-id');
+      if (variantId) fd.set('id', String(variantId));
+    }
+
+    function applyCertifiedToUrlEncoded(body) {
+      const root = getRoot();
+      if (!certifiedLockActive(root) || typeof body !== 'string') return body;
+      const variantId = root.getAttribute('data-certified-variant-id');
+      if (!variantId) return body;
+      let next = body.replace(/(^|&)id=\d+/g, '$1id=' + encodeURIComponent(variantId));
+      if (next.indexOf('id=') === -1) {
+        next += (next ? '&' : '') + 'id=' + encodeURIComponent(variantId);
+      }
+      return next;
+    }
+
+    function applyCertifiedToJsonBody(body) {
+      const root = getRoot();
+      if (!certifiedLockActive(root) || typeof body !== 'string') return body;
+      const variantId = root.getAttribute('data-certified-variant-id');
+      if (!variantId) return body;
+      try {
+        const data = JSON.parse(body);
+        if (data && typeof data === 'object') {
+          if (Object.prototype.hasOwnProperty.call(data, 'id')) data.id = Number(variantId) || variantId;
+          if (Object.prototype.hasOwnProperty.call(data, 'items') && Array.isArray(data.items)) {
+            data.items.forEach((item) => {
+              if (item && typeof item === 'object') item.id = Number(variantId) || variantId;
+            });
+          }
+          return JSON.stringify(data);
+        }
+      } catch (e) {}
+      return body;
+    }
+
+    function isCartAddUrl(url) {
+      const s = String(url || '');
+      return s.indexOf('/cart/add') !== -1;
+    }
+
+    function installNetworkLocks() {
+      if (window.__ff826mNetworkLock) return;
+      window.__ff826mNetworkLock = true;
+
+      const nativeFetch = window.fetch;
+      if (typeof nativeFetch === 'function') {
+        window.fetch = function (input, init) {
+          try {
+            const url = typeof input === 'string' ? input : input && input.url;
+            if (isCartAddUrl(url) && init && init.body) {
+              if (typeof FormData !== 'undefined' && init.body instanceof FormData) {
+                applyCertifiedToFormData(init.body);
+              } else if (typeof init.body === 'string') {
+                if (init.body.trim().charAt(0) === '{') {
+                  init = Object.assign({}, init, { body: applyCertifiedToJsonBody(init.body) });
+                } else {
+                  init = Object.assign({}, init, { body: applyCertifiedToUrlEncoded(init.body) });
+                }
+              }
+            }
+          } catch (e) {}
+          return nativeFetch.apply(this, arguments.length === 1 ? [input] : [input, init]);
+        };
+      }
+
+      const XHR = window.XMLHttpRequest;
+      if (XHR && XHR.prototype) {
+        const open = XHR.prototype.open;
+        const send = XHR.prototype.send;
+        XHR.prototype.open = function (method, url) {
+          this.__ff826mUrl = url;
+          return open.apply(this, arguments);
+        };
+        XHR.prototype.send = function (body) {
+          try {
+            if (isCartAddUrl(this.__ff826mUrl) && body) {
+              if (typeof FormData !== 'undefined' && body instanceof FormData) {
+                applyCertifiedToFormData(body);
+              } else if (typeof body === 'string') {
+                if (body.trim().charAt(0) === '{') body = applyCertifiedToJsonBody(body);
+                else body = applyCertifiedToUrlEncoded(body);
+              }
+            }
+          } catch (e) {}
+          return send.call(this, body);
+        };
+      }
+    }
+
+    function installFormDataLock() {
+      // BCPO sets window.FormData and stores the previous as bcpo.ogFormData.
+      // Always wrap the *current* FormData so our id rewrite runs last.
+      const Current = window.FormData;
+      if (!Current || Current.__ff826mCertified) return;
+
+      function LockedFormData(form, submitter) {
+        let fd;
+        if (arguments.length === 0) fd = new Current();
+        else if (arguments.length === 1) fd = new Current(form);
+        else fd = new Current(form, submitter);
+        try {
+          applyCertifiedToFormData(fd);
+        } catch (e) {}
+        return fd;
+      }
+      LockedFormData.__ff826mCertified = true;
+      LockedFormData.prototype = Current.prototype;
+      window.FormData = LockedFormData;
+    }
+
+    function keepFormDataLockInstalled() {
+      installFormDataLock();
+      installNetworkLocks();
+      if (window.__ff826mFormDataWatch) return;
+      window.__ff826mFormDataWatch = window.setInterval(function () {
+        try {
+          if (!window.FormData || !window.FormData.__ff826mCertified) installFormDataLock();
+        } catch (e) {}
+      }, 400);
+    }
+
     function forceCertifiedVariantId(root) {
       const variantId = root.getAttribute('data-certified-variant-id');
       if (!variantId) return;
       const form = getForm(root);
-      if (!form) return;
-      form.querySelectorAll('input[name="id"], select[name="id"]').forEach((idInput) => {
+      const scope = getProductView(root);
+      const targets = [];
+      if (form) {
+        form.querySelectorAll('input[name="id"], select[name="id"]').forEach((el) => targets.push(el));
+      }
+      // Also catch installment / sticky / BCPO clones outside the main form
+      scope.querySelectorAll('input[name="id"], select[name="id"]').forEach((el) => {
+        if (targets.indexOf(el) === -1) targets.push(el);
+      });
+      document.querySelectorAll('input[name="id"][form], select[name="id"][form]').forEach((el) => {
+        const formId = el.getAttribute('form');
+        if (form && formId && form.id && formId === form.id && targets.indexOf(el) === -1) {
+          targets.push(el);
+        }
+      });
+      targets.forEach((idInput) => {
         if (String(idInput.value) !== String(variantId)) {
           idInput.value = variantId;
+          idInput.setAttribute('value', variantId);
           idInput.dispatchEvent(new Event('change', { bubbles: true }));
+          idInput.dispatchEvent(new Event('input', { bubbles: true }));
         }
       });
     }
@@ -351,27 +512,43 @@
       const size = root.getAttribute('data-certified-size') || '18X11';
       const variantId = root.getAttribute('data-certified-variant-id');
       const productView = getProductView(root);
-      const sizeKey = String(size).replace(/\s+/g, '').toUpperCase();
+      const sizeKey = sizeKeyOf(size);
 
       const radios = productView.querySelectorAll(
-        '.productView-variants input.product-form__radio, variant-radios input.product-form__radio, input[type="radio"][name*="option"]'
+        '.productView-variants input.product-form__radio, variant-radios input.product-form__radio, input[type="radio"][name*="size"], input[type="radio"][name*="option"]'
       );
+      let matchedRadio = null;
       radios.forEach((radio) => {
-        const value = String(radio.value || '').replace(/\s+/g, '').toUpperCase();
-        if (value !== sizeKey) return;
-        radio.checked = true;
-        if (!radio.checked) radio.click();
-        radio.dispatchEvent(new Event('change', { bubbles: true }));
+        const valueKey = sizeKeyOf(radio.value);
+        const dataId = radio.getAttribute('data-variant-id');
+        const isMatch =
+          valueKey === sizeKey || (variantId && dataId && String(dataId) === String(variantId));
+        if (!isMatch) return;
+        matchedRadio = radio;
+        if (!radio.checked) {
+          radio.checked = true;
+          radio.click();
+          radio.dispatchEvent(new Event('change', { bubbles: true }));
+          radio.dispatchEvent(new Event('input', { bubbles: true }));
+        }
       });
+      if (matchedRadio && matchedRadio.id) {
+        const label = productView.querySelector('label[for="' + matchedRadio.id + '"]');
+        if (label) {
+          // Some themes only update variant state from label interaction
+          label.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+        }
+      }
 
       // Native / BCPO size dropdown if present
       const sizeSelect = findBcpoSelectByTitle('SIZE') || findBcpoSelectByTitle('DIAMETER');
       if (sizeSelect && sizeSelect.tagName === 'SELECT') {
         setFieldValue(sizeSelect, size);
+        setFieldValue(sizeSelect, displaySize(size));
       }
-      productView.querySelectorAll('select[name*="option"], select.product-form__input').forEach((sel) => {
+      productView.querySelectorAll('select[name*="option"], select.product-form__input, select[name*="SIZE"], select[name*="size"]').forEach((sel) => {
         const opts = Array.from(sel.options || []);
-        const match = opts.find((o) => String(o.value || '').replace(/\s+/g, '').toUpperCase() === sizeKey);
+        const match = opts.find((o) => sizeKeyOf(o.value) === sizeKey || sizeKeyOf(o.text) === sizeKey);
         if (match && sel.value !== match.value) {
           sel.value = match.value;
           sel.dispatchEvent(new Event('change', { bubbles: true }));
@@ -380,7 +557,6 @@
 
       forceCertifiedVariantId(root);
       if (variantId) {
-        // Keep a data marker for ATC click interceptor
         root.setAttribute('data-ff-locked-variant-id', String(variantId));
       }
     }
@@ -514,6 +690,8 @@
       if (root.dataset.ff826mBound === '1') return;
       root.dataset.ff826mBound = '1';
 
+      keepFormDataLockInstalled();
+
       root.querySelectorAll('input[type="radio"][name^="ff_826m_path_"]').forEach((radio) => {
         radio.addEventListener('change', function () {
           setMode(root, radio.value);
@@ -542,6 +720,7 @@
           function (event) {
             if (currentMode(root) !== 'certified') return;
             validateCertified(root, event);
+            applyCertifiedOptions(root);
             forceCertifiedVariantId(root);
           },
           true
@@ -549,20 +728,36 @@
       }
 
       // Theme ATC uses button click + FormData (not form submit). Force size/id first.
+      // BCPO also patches FormData — keepFormDataLockInstalled rewrites id after BCPO.
       const productView = getProductView(root);
-      productView.addEventListener(
-        'click',
-        function (event) {
-          if (currentMode(root) !== 'certified') return;
-          const btn = event.target && event.target.closest
-            ? event.target.closest('[data-btn-addtocart], button[name="add"], .product-form__submit, [data-add-to-cart]')
+      const lockOnAtc = function (event) {
+        if (currentMode(root) !== 'certified') return;
+        const btn =
+          event.target && event.target.closest
+            ? event.target.closest(
+                '[data-btn-addtocart], button[name="add"], .product-form__submit, [data-add-to-cart], .shopify-payment-button__button'
+              )
             : null;
-          if (!btn) return;
-          applyCertifiedOptions(root);
-          forceCertifiedVariantId(root);
-        },
-        true
-      );
+        if (!btn) return;
+        applyCertifiedOptions(root);
+        forceCertifiedVariantId(root);
+        installFormDataLock();
+      };
+      productView.addEventListener('click', lockOnAtc, true);
+      document.addEventListener('click', lockOnAtc, true);
+      productView.addEventListener('pointerdown', lockOnAtc, true);
+
+      // Stay locked while certified — BCPO/theme often reset option radios to the first size.
+      if (!root.__ff826mLockTimer) {
+        root.__ff826mLockTimer = window.setInterval(function () {
+          try {
+            if (currentMode(root) !== 'certified') return;
+            applyCertifiedOptions(root);
+            forceCertifiedVariantId(root);
+            installFormDataLock();
+          } catch (e) {}
+        }, 600);
+      }
 
       let tries = 0;
       const timer = window.setInterval(function () {
@@ -571,6 +766,7 @@
           patchBcpoChromePrices();
           populateColorSelects(root);
           setMode(root, currentMode(root));
+          installFormDataLock();
         } catch (e) {}
 
         const hasValues = COLOR_TITLES.every((title) => valuesForColor(root, title).length > 0);
@@ -580,6 +776,7 @@
           try {
             patchBcpoChromePrices();
             setMode(root, currentMode(root));
+            installFormDataLock();
           } catch (e) {}
         }
       }, 250);
@@ -588,6 +785,7 @@
     }
 
     function init() {
+      keepFormDataLockInstalled();
       const root = getRoot();
       if (!root) return;
       bind(root);
