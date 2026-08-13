@@ -297,6 +297,22 @@
       assign ff_certified_make_ph = 'e.g. BMW'
       assign ff_certified_model_ph = 'e.g. G80 M3'
     endif
+    if ff_certified_beadlock and product.selected_variant == nil
+      assign ff_certified_size_key = ff_certified_size | upcase | replace: ' ', ''
+      assign ff_certified_variant_found = false
+      for variant in product.variants
+        assign ff_variant_size_key = variant.option1 | upcase | replace: ' ', ''
+        if ff_variant_size_key == ff_certified_size_key
+          if ff_certified_variant_found == false or variant.available
+            assign current_variant = variant
+            assign ff_certified_variant_found = true
+          endif
+          if variant.available
+            break
+          endif
+        endif
+      endfor
+    endif
     assign ff_826m_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
     assign colors_bg = section.settings.colors_bg
     assign padding_top = section.settings.padding_top 
