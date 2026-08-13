@@ -317,7 +317,7 @@
       container.querySelectorAll('.ff-sbv__fitment-option').forEach(function (b) {
         b.hidden = false;
       });
-      if (labelEl) labelEl.textContent = 'Select a fitment · ' + sourceLabel;
+      if (labelEl) labelEl.textContent = 'Select a fitment';
       if (toggleBtn) {
         toggleBtn.hidden = true;
         toggleBtn.textContent = 'Change fitment';
