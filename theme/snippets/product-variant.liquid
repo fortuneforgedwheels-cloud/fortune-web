@@ -19,12 +19,23 @@
                 <legend class="form__label">
                     {{ option.name | append: ':' }}
                     <span data-header-option>
-                        {{ option.selected_value }}
+                        {%- if current_variant -%}
+                          {{ current_variant.options[option_index] }}
+                        {%- else -%}
+                          {{ option.selected_value }}
+                        {%- endif -%}
                     </span>
                 </legend>
                 {%- assign values = '' -%}
                 {%- for variant in product.variants -%}
                     {%- assign value = variant.options[option_index] -%}
+                    {%- liquid
+                      if current_variant
+                        assign ff_selected_option_value = current_variant.options[option_index]
+                      else
+                        assign ff_selected_option_value = option.selected_value
+                      endif
+                    -%}
                     {%- unless values contains value -%}
                         {%- liquid
                             assign values = values | join: ';'
@@ -34,7 +45,7 @@
                         <input class="product-form__radio" type="radio" id="option-{{ section.id }}-{{ product.id }}-{{ option.name | handle }}-{{ forloop.index0 | prepend: prefix }}"
                             name="{{ option.name | handle }}-{{ product.id }}-{{ section.id | prepend: prefix }}"
                             value="{{ value | escape }}"
-                            {% if option.selected_value == value %}checked{% endif %}
+                            {% if ff_selected_option_value == value %}checked{% endif %}
                             {% if is_swatch and show_variant_image_group %}data-filter=".filter-{{ value | handle }}"{% endif %}
                             data-variant-id="{{ variant.id }}"
                         >
@@ -79,7 +90,11 @@
                 <label class="form__label" for="option-{{ forloop.index0 | prepend: prefix }}">
                     {{ option.name | append: ':' }}
                     <span data-header-option>
-                        {{ option.selected_value }}
+                        {%- if current_variant -%}
+                          {{ current_variant.options[forloop.index0] }}
+                        {%- else -%}
+                          {{ option.selected_value }}
+                        {%- endif -%}
                     </span>
                 </label>
                 <div class="form__select select">
@@ -87,8 +102,15 @@
                         class="select__select"
                         name="options[{{ option.name | escape }}-{{ product.id }}-{{ section.id | prepend: prefix }}]"
                     >
+                        {%- liquid
+                          if current_variant
+                            assign ff_selected_option_value = current_variant.options[forloop.index0]
+                          else
+                            assign ff_selected_option_value = option.selected_value
+                          endif
+                        -%}
                         {%- for value in option.values -%}
-                            <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                            <option value="{{ value | escape }}" {% if ff_selected_option_value == value %}selected="selected"{% endif %}>
                                 {{ value }}
                             </option>
                         {%- endfor -%}
