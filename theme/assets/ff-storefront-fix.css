@@ -2,3 +2,39 @@
 .ff-about__story-video-hint {
   display: none !important;
 }
+
+/* Cart / drawer line-item properties: one label+value per row with spacing */
+.cart-item-properties,
+.previewCartItem-properties,
+.quickCartWrap .card-properties {
+  display: grid !important;
+  grid-template-columns: max-content minmax(0, 1fr) !important;
+  column-gap: 10px !important;
+  row-gap: 6px !important;
+  flex-wrap: unset !important;
+}
+
+.cart-item-properties .definitionList-key,
+.cart-item-properties .definitionList-value,
+.previewCartItem-properties .definitionList-key,
+.previewCartItem-properties .definitionList-value,
+.quickCartWrap .card-properties .definitionList-key,
+.quickCartWrap .card-properties .definitionList-value {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.35 !important;
+}
+
+.cart-item-properties .definitionList-key,
+.previewCartItem-properties .definitionList-key,
+.quickCartWrap .card-properties .definitionList-key {
+  white-space: nowrap !important;
+}
+
+.cart-item-properties .definitionList-value,
+.previewCartItem-properties .definitionList-value,
+.quickCartWrap .card-properties .definitionList-value {
+  margin-left: 0 !important;
+  min-width: 0 !important;
+  overflow-wrap: anywhere !important;
+}

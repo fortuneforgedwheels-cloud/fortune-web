@@ -171,9 +171,11 @@ main-cart-items{
 }
 
 .cart-item-properties{
-    display: flex;
-    flex-wrap: wrap;
-    margin: 5px 0 0 0;
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: 10px;
+    row-gap: 6px;
+    margin: 8px 0 0 0;
 }
 
 .cart-item-properties .definitionList-key,
@@ -182,13 +184,19 @@ main-cart-items{
     font-weight: var(--font-weight-normal);
     color: var(--color-text2);
     letter-spacing: var(--letter-spacing);
-    line-height: var(--line-height);
+    line-height: 1.35;
     margin: 0;
-    padding: 13px 0;
+    padding: 0;
+}
+
+.cart-item-properties .definitionList-key{
+    white-space: nowrap;
 }
 
 .cart-item-properties .definitionList-value{
-    margin-left: 5px;
+    margin-left: 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .cart-item-allocation{

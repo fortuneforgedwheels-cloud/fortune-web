@@ -104,8 +104,10 @@ quick-cart{
 }
 
 .previewCartItem-properties{
-    display: flex;
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: 8px;
+    row-gap: 4px;
     margin: 0 0 7px 0;
 }
 
@@ -119,21 +121,20 @@ quick-cart{
     font-weight: var(--font-weight-normal);
     color: var(--color-text2);
     letter-spacing: var(--letter-spacing);
-    line-height: var(--line-height);
+    line-height: 1.35;
     margin: 0;
-    padding: 2px 0;
+    padding: 0;
     text-align: left;
 }
 
 .previewCartItem-properties .definitionList-key{
-    flex: none;
+    white-space: nowrap;
 }
 
 .previewCartItem-properties .definitionList-value {
-    flex: 1;
-    margin-left: 5px;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    margin-left: 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .previewCartItem-price{
@@ -696,32 +697,34 @@ body.dark-mode .halo-cart-sidebar .previewCartCollection .slick-dots li button {
     }
 
     .quickCartWrap .card-properties{
-        display: flex;
-        flex-wrap: nowrap;
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        column-gap: 8px;
+        row-gap: 4px;
         margin: 0;
     }
 
     .quickCartWrap .card-properties .definitionList-key,
     .quickCartWrap .card-properties .definitionList-value{
-         font-size: var(--font-size);
+        font-size: var(--font-size);
         font-weight: var(--font-weight-normal);
         color: var(--color-text2);
         letter-spacing: var(--letter-spacing);
-        line-height: var(--line-height);
+        line-height: 1.35;
         margin: 0;
-        padding: 2px 0;
+        padding: 0;
         text-align: left;
     }
 
     .quickCartWrap .card-properties .definitionList-key{
         float: none;
+        white-space: nowrap;
     }
 
     .quickCartWrap .card-properties .definitionList-value{
-        flex: 1;
-        margin-left: 5px;
-        text-overflow: ellipsis;
-        overflow: hidden;
+        margin-left: 0;
+        min-width: 0;
+        overflow-wrap: anywhere;
     }
 
     .quickCartWrap .card-action{

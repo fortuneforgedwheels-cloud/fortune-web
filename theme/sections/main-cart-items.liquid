@@ -115,7 +115,8 @@
                                                         <dl class="cart-item-properties definitionList">
                                                             {%- for property in item.properties -%}
                                                                 {%- assign property_first_char = property.first | slice: 0 -%}
-                                                                {%- if property.last != blank and property_first_char != '_' -%}
+                                                                {%- capture ff_prop_visible -%}{% render 'ff-cart-property-visible', key: property.first, value: property.last %}{%- endcapture -%}
+                                                                {%- if property.last != blank and property_first_char != '_' and ff_prop_visible != blank -%}
                                                                     <dt class="definitionList-key" data-property-item data-property-name="{{ property.first }}" data-property-value="{% if property.last contains '/uploads/' %}
 {% assign file_type = property.last | split: '.' | last | downcase %}
 {% assign file_types = 'jpg,jpeg,webp,gif,png,apng,avif,svg,bmp,ico,tiff' | split: ',' %}
