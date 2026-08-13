@@ -1,0 +1,50 @@
+/* Giveaway entry tickets on customer order page */
+.ff-entry-tickets {
+  margin: 20px 0 28px;
+  padding: 18px 18px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 55%),
+    #121317;
+  color: #f4f5f7;
+}
+
+.ff-entry-tickets__title {
+  margin: 0 0 8px;
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ff-entry-tickets__master {
+  margin: 0 0 12px;
+  color: rgba(244, 245, 247, 0.82);
+  font-size: 0.95rem;
+}
+
+.ff-entry-tickets__list {
+  margin: 0;
+  padding: 0 0 0 1.25rem;
+  display: grid;
+  gap: 6px;
+}
+
+.ff-entry-tickets__list code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #fff;
+}
+
+.ff-entry-tickets__note,
+.ff-entry-tickets__hint {
+  margin: 12px 0 0;
+  color: rgba(244, 245, 247, 0.68);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.ff-entry-tickets__hint {
+  margin-top: 8px;
+}

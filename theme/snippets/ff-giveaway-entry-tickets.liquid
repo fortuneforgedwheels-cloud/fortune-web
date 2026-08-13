@@ -1,0 +1,110 @@
+{%- comment -%}
+  Giveaway entry tickets for an order.
+
+  Rules:
+  - Paid E36 giveaway product (handle 1998-bmw-m3, or tag giveaway-entry):
+    1 ticket per quantity
+  - Invasion exclusive wheel set (handle exclusive-deals-full-set, or tag invasion-wheel-set):
+    +3 bonus tickets automatically
+
+  Ticket format uses the Shopify order name (e.g. FF001-1, FF001-2, FF001-3).
+
+  Usage:
+    {% render 'ff-giveaway-entry-tickets', order: order %}
+    {% render 'ff-giveaway-entry-tickets', order: order, format: 'email' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign ff_order = order
+  if ff_order == blank
+    assign ff_order = checkout
+  endif
+
+  assign paid_entries = 0
+  assign bonus_entries = 0
+  assign has_giveaway = false
+  assign has_wheel_set = false
+
+  if ff_order != blank
+    for line_item in ff_order.line_items
+      assign handle = ''
+      if line_item.product != blank
+        assign handle = line_item.product.handle
+      endif
+      assign tags = line_item.product.tags | join: ',' | downcase
+
+      if handle == '1998-bmw-m3' or tags contains 'giveaway-entry'
+        assign paid_entries = paid_entries | plus: line_item.quantity
+        assign has_giveaway = true
+      endif
+
+      if handle == 'exclusive-deals-full-set' or tags contains 'invasion-wheel-set' or tags contains 'bimmer-invasion'
+        assign bonus_entries = bonus_entries | plus: 3
+        assign has_wheel_set = true
+      endif
+    endfor
+  endif
+
+  assign total_entries = paid_entries | plus: bonus_entries
+  assign master_name = ff_order.name
+-%}
+
+{%- if total_entries > 0 and master_name != blank -%}
+  {%- if format == 'email' -%}
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin:24px 0;border:1px solid #222;border-radius:8px;">
+      <tr>
+        <td style="padding:20px;font-family:Arial,Helvetica,sans-serif;color:#111;">
+          <h2 style="margin:0 0 8px;font-size:18px;line-height:1.3;">Your giveaway entry tickets</h2>
+          <p style="margin:0 0 14px;font-size:14px;line-height:1.5;">
+            Master order: <strong>{{ master_name }}</strong>
+          </p>
+          <ol style="margin:0;padding-left:22px;font-size:15px;line-height:1.7;font-weight:700;">
+            {%- for i in (1..total_entries) -%}
+              <li style="margin:0 0 4px;">{{ master_name }}-{{ i }}</li>
+            {%- endfor -%}
+          </ol>
+              {%- if has_wheel_set -%}
+            <p style="margin:14px 0 0;font-size:13px;line-height:1.45;color:#444;">
+              Includes 3 bonus entries from your Invasion wheel set
+              {%- if paid_entries > 0 -%}
+                , plus {{ paid_entries }} purchased
+                {%- if paid_entries == 1 %} entry{% else %} entries{% endif -%}
+              {%- endif -%}.
+            </p>
+          {%- elsif paid_entries > 1 -%}
+            <p style="margin:14px 0 0;font-size:13px;line-height:1.45;color:#444;">
+              One ticket for each giveaway entry in this order.
+            </p>
+          {%- endif -%}
+          <p style="margin:12px 0 0;font-size:12px;line-height:1.4;color:#666;">
+            Keep this email — these ticket numbers are what we use for the drawing.
+          </p>
+        </td>
+      </tr>
+    </table>
+  {%- else -%}
+    <div class="ff-entry-tickets" data-ff-entry-tickets>
+      <h3 class="ff-entry-tickets__title">Your giveaway entry tickets</h3>
+      <p class="ff-entry-tickets__master">
+        Master order: <strong>{{ master_name }}</strong>
+      </p>
+      <ol class="ff-entry-tickets__list">
+        {%- for i in (1..total_entries) -%}
+          <li><code>{{ master_name }}-{{ i }}</code></li>
+        {%- endfor -%}
+      </ol>
+          {%- if has_wheel_set -%}
+            <p class="ff-entry-tickets__note">
+              Includes 3 bonus entries from your Invasion wheel set
+              {%- if paid_entries > 0 -%}
+                , plus {{ paid_entries }} purchased
+                {%- if paid_entries == 1 %} entry{% else %} entries{% endif -%}
+              {%- endif -%}.
+            </p>
+          {%- elsif paid_entries > 1 -%}
+            <p class="ff-entry-tickets__note">One ticket for each giveaway entry in this order.</p>
+          {%- endif -%}
+          <p class="ff-entry-tickets__hint">Save these numbers — they are what we use for the drawing.</p>
+    </div>
+  {%- endif -%}
+{%- endif -%}
