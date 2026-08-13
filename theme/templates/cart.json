@@ -67,8 +67,9 @@
     },
     "165690273230621a40": {
       "type": "halo-product-block-4",
+      "disabled": true,
       "settings": {
-        "display_product_block": true,
+        "display_product_block": false,
         "container": "1770",
         "boxed_container": false,
         "padding_top": 65,
