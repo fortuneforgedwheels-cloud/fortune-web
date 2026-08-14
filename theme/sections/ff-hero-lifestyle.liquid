@@ -1,4 +1,4 @@
-{{ 'ff-hero-lifestyle.css' | asset_url | stylesheet_tag }}
+{{ 'ff-hero-lifestyle-v2.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'ff-offer-boot-v2.js' | asset_url }}" defer></script>
 
 {%- if section.settings.show_hero -%}
@@ -83,41 +83,108 @@
               {%- comment -%}
                 Theme Editor media ONLY. No hardcoded CDN fallbacks — those made
                 uploads look like they "never saved" on the live site.
-                Priority: editor video → editor image → placeholder.
+                Per-viewport media type (video/image) + framing (fit/position/zoom).
               {%- endcomment -%}
               {%- liquid
+                assign desktop_media_type = block.settings.desktop_media_type | default: 'video'
+                assign mobile_media_type = block.settings.mobile_media_type | default: 'video'
                 assign slide_video = block.settings.video
                 assign slide_mobile_video = block.settings.mobile_video
+                assign slide_image = block.settings.image
+                assign slide_mobile_image = block.settings.mobile_image
+
+                assign desktop_fit = block.settings.desktop_media_fit | default: 'cover'
+                assign desktop_pos = block.settings.desktop_media_position | default: 'center'
+                assign desktop_zoom_pct = block.settings.desktop_media_zoom | default: 100
+                assign desktop_zoom = desktop_zoom_pct | times: 0.01
+
+                assign mobile_fit = block.settings.mobile_media_fit | default: 'cover'
+                assign mobile_pos = block.settings.mobile_media_position | default: 'center'
+                assign mobile_zoom_pct = block.settings.mobile_media_zoom | default: 100
+                assign mobile_zoom = mobile_zoom_pct | times: 0.01
+
+                assign desktop_use_video = false
+                assign desktop_use_image = false
+                if desktop_media_type == 'image'
+                  if slide_image != blank
+                    assign desktop_use_image = true
+                  elsif slide_video != blank
+                    assign desktop_use_video = true
+                  endif
+                else
+                  if slide_video != blank
+                    assign desktop_use_video = true
+                  elsif slide_image != blank
+                    assign desktop_use_image = true
+                  endif
+                endif
+
+                assign mobile_use_video = false
+                assign mobile_use_image = false
+                if mobile_media_type == 'image'
+                  if slide_mobile_image != blank
+                    assign mobile_use_image = true
+                  elsif slide_image != blank
+                    assign mobile_use_image = true
+                  elsif slide_mobile_video != blank
+                    assign mobile_use_video = true
+                  elsif slide_video != blank
+                    assign mobile_use_video = true
+                  endif
+                else
+                  if slide_mobile_video != blank
+                    assign mobile_use_video = true
+                  elsif slide_video != blank
+                    assign mobile_use_video = true
+                  elsif slide_mobile_image != blank
+                    assign mobile_use_image = true
+                  elsif slide_image != blank
+                    assign mobile_use_image = true
+                  endif
+                endif
 
                 assign has_desktop_media = false
-                if slide_video != blank or block.settings.image != blank
+                if desktop_use_video or desktop_use_image
                   assign has_desktop_media = true
                 endif
                 assign has_mobile_media = false
-                if slide_mobile_video != blank or block.settings.mobile_image != blank or slide_video != blank or block.settings.image != blank
+                if mobile_use_video or mobile_use_image
                   assign has_mobile_media = true
+                endif
+
+                assign mobile_image_src = slide_mobile_image
+                if mobile_image_src == blank
+                  assign mobile_image_src = slide_image
                 endif
               -%}
               {%- if has_desktop_media or has_mobile_media -%}
-                <div class="ff-hero__media-desktop" data-ff-desktop-layer>
+                <div
+                  class="ff-hero__media-desktop"
+                  data-ff-desktop-layer
+                  style="
+                    --ff-media-fit-desktop: {{ desktop_fit }};
+                    --ff-media-pos-desktop: {{ desktop_pos }};
+                    --ff-media-zoom-desktop: {{ desktop_zoom }};
+                  "
+                >
                   {%- liquid
                     assign desktop_autoplay_mode = 'off'
                     if forloop.first
                       assign desktop_autoplay_mode = 'on'
                     endif
                   -%}
-                  {%- if slide_video != blank -%}
+                  {%- if desktop_use_video -%}
                     {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--desktop', autoplay_mode: desktop_autoplay_mode %}
-                  {%- elsif block.settings.image != blank -%}
+                  {%- elsif desktop_use_image -%}
                     <img
                       class="ff-hero__image"
-                      src="{{ block.settings.image | image_url: width: 2400 }}"
+                      src="{{ slide_image | image_url: width: 2400 }}"
                       srcset="
-                        {{ block.settings.image | image_url: width: 800 }} 800w,
-                        {{ block.settings.image | image_url: width: 1200 }} 1200w,
-                        {{ block.settings.image | image_url: width: 1600 }} 1600w,
-                        {{ block.settings.image | image_url: width: 2000 }} 2000w,
-                        {{ block.settings.image | image_url: width: 2400 }} 2400w
+                        {{ slide_image | image_url: width: 800 }} 800w,
+                        {{ slide_image | image_url: width: 1200 }} 1200w,
+                        {{ slide_image | image_url: width: 1600 }} 1600w,
+                        {{ slide_image | image_url: width: 2000 }} 2000w,
+                        {{ slide_image | image_url: width: 2400 }} 2400w
                       "
                       sizes="100vw"
                       alt="{{ block.settings.title | escape }}"
@@ -130,7 +197,15 @@
                     <div class="ff-hero__placeholder" aria-hidden="true"></div>
                   {%- endif -%}
                 </div>
-                <div class="ff-hero__media-mobile" data-ff-mobile-layer>
+                <div
+                  class="ff-hero__media-mobile"
+                  data-ff-mobile-layer
+                  style="
+                    --ff-media-fit-mobile: {{ mobile_fit }};
+                    --ff-media-pos-mobile: {{ mobile_pos }};
+                    --ff-media-zoom-mobile: {{ mobile_zoom }};
+                  "
+                >
                   {%- comment -%}
                     Only the first slide's mobile video gets HTML autoplay.
                     iOS blocks autoplay when many videos compete; JS plays the rest.
@@ -140,19 +215,21 @@
                     if forloop.first
                       assign mobile_autoplay_mode = 'on'
                     endif
+                    assign mobile_video_src = slide_mobile_video
+                    if mobile_video_src == blank
+                      assign mobile_video_src = slide_video
+                    endif
                   -%}
-                  {%- if slide_mobile_video != blank -%}
-                    {% render 'ff-autoplay-video', video: slide_mobile_video, class: 'ff-hero__video ff-hero__video--mobile', autoplay_mode: mobile_autoplay_mode %}
-                  {%- elsif slide_video != blank -%}
-                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback', autoplay_mode: mobile_autoplay_mode %}
-                  {%- elsif block.settings.mobile_image != blank -%}
+                  {%- if mobile_use_video -%}
+                    {% render 'ff-autoplay-video', video: mobile_video_src, class: 'ff-hero__video ff-hero__video--mobile', autoplay_mode: mobile_autoplay_mode %}
+                  {%- elsif mobile_use_image and mobile_image_src != blank -%}
                     <img
                       class="ff-hero__image"
-                      src="{{ block.settings.mobile_image | image_url: width: 1200 }}"
+                      src="{{ mobile_image_src | image_url: width: 1200 }}"
                       srcset="
-                        {{ block.settings.mobile_image | image_url: width: 600 }} 600w,
-                        {{ block.settings.mobile_image | image_url: width: 900 }} 900w,
-                        {{ block.settings.mobile_image | image_url: width: 1200 }} 1200w
+                        {{ mobile_image_src | image_url: width: 600 }} 600w,
+                        {{ mobile_image_src | image_url: width: 900 }} 900w,
+                        {{ mobile_image_src | image_url: width: 1200 }} 1200w
                       "
                       sizes="100vw"
                       alt="{{ block.settings.title | escape }}"
@@ -160,16 +237,6 @@
                       width="1200"
                       height="1600"
                       data-ff-mobile-image
-                    >
-                  {%- elsif block.settings.image != blank -%}
-                    <img
-                      class="ff-hero__image"
-                      src="{{ block.settings.image | image_url: width: 1200 }}"
-                      alt="{{ block.settings.title | escape }}"
-                      loading="{{ img_loading }}"
-                      width="1200"
-                      height="1600"
-                      data-ff-mobile-fallback
                     >
                   {%- else -%}
                     <div class="ff-hero__placeholder" aria-hidden="true"></div>
@@ -367,32 +434,130 @@
           "content": "Desktop media"
         },
         {
+          "type": "select",
+          "id": "desktop_media_type",
+          "label": "Desktop media type",
+          "options": [
+            { "value": "video", "label": "Video" },
+            { "value": "image", "label": "Image" }
+          ],
+          "default": "video",
+          "info": "Choose Image to show a still photo on desktop even if a video is also uploaded."
+        },
+        {
           "type": "video",
           "id": "video",
           "label": "Desktop video",
-          "info": "Shown on large screens only. Muted, looping. Upload a separate Mobile video below for phones."
+          "info": "Used when Desktop media type is Video. Muted, looping."
         },
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Desktop image fallback",
-          "info": "Used on desktop when no desktop video is set (and as the video poster)."
+          "label": "Desktop image",
+          "info": "Used when Desktop media type is Image (or as fallback if no desktop video is set)."
+        },
+        {
+          "type": "select",
+          "id": "desktop_media_fit",
+          "label": "Desktop fit",
+          "options": [
+            { "value": "cover", "label": "Fill (crop to cover)" },
+            { "value": "contain", "label": "Fit (show full media)" }
+          ],
+          "default": "cover"
+        },
+        {
+          "type": "select",
+          "id": "desktop_media_position",
+          "label": "Desktop focal point",
+          "options": [
+            { "value": "center", "label": "Center" },
+            { "value": "top", "label": "Top" },
+            { "value": "bottom", "label": "Bottom" },
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" },
+            { "value": "top left", "label": "Top left" },
+            { "value": "top right", "label": "Top right" },
+            { "value": "bottom left", "label": "Bottom left" },
+            { "value": "bottom right", "label": "Bottom right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "range",
+          "id": "desktop_media_zoom",
+          "label": "Desktop zoom",
+          "min": 100,
+          "max": 160,
+          "step": 2,
+          "unit": "%",
+          "default": 100,
+          "info": "Zoom in to reframe the crop on desktop."
         },
         {
           "type": "header",
           "content": "Mobile media"
         },
         {
+          "type": "select",
+          "id": "mobile_media_type",
+          "label": "Mobile media type",
+          "options": [
+            { "value": "video", "label": "Video" },
+            { "value": "image", "label": "Image" }
+          ],
+          "default": "video",
+          "info": "Choose Image to show a still photo on phones even if a video is also uploaded."
+        },
+        {
           "type": "video",
           "id": "mobile_video",
           "label": "Mobile video",
-          "info": "Shown on phones only. Upload a different clip here — it will not replace the desktop video."
+          "info": "Used when Mobile media type is Video. Falls back to desktop video if empty."
         },
         {
           "type": "image_picker",
           "id": "mobile_image",
-          "label": "Mobile image fallback",
-          "info": "Used on phones when no mobile video is set. If both mobile video and image are empty, desktop media is used."
+          "label": "Mobile image",
+          "info": "Used when Mobile media type is Image. Falls back to desktop image if empty."
+        },
+        {
+          "type": "select",
+          "id": "mobile_media_fit",
+          "label": "Mobile fit",
+          "options": [
+            { "value": "cover", "label": "Fill (crop to cover)" },
+            { "value": "contain", "label": "Fit (show full media)" }
+          ],
+          "default": "cover"
+        },
+        {
+          "type": "select",
+          "id": "mobile_media_position",
+          "label": "Mobile focal point",
+          "options": [
+            { "value": "center", "label": "Center" },
+            { "value": "top", "label": "Top" },
+            { "value": "bottom", "label": "Bottom" },
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" },
+            { "value": "top left", "label": "Top left" },
+            { "value": "top right", "label": "Top right" },
+            { "value": "bottom left", "label": "Bottom left" },
+            { "value": "bottom right", "label": "Bottom right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "range",
+          "id": "mobile_media_zoom",
+          "label": "Mobile zoom",
+          "min": 100,
+          "max": 160,
+          "step": 2,
+          "unit": "%",
+          "default": 100,
+          "info": "Zoom in to reframe the crop on phones."
         },
         {
           "type": "text",
