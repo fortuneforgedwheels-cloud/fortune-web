@@ -298,7 +298,7 @@ function ffThemeAsset(name, bust) {
             return !!root.querySelector(freshHeroSel);
           },
           'ff-hero-lifestyle',
-          ffThemeAsset('ff-hero-lifestyle.css', 'editor2'),
+          ffThemeAsset('ff-hero-lifestyle-v2.css', 'editor2'),
           'ff-hero-lifestyle',
           'ff-home-editor-always'
         );
