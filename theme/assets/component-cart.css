@@ -172,10 +172,14 @@ main-cart-items{
 
 .cart-item-properties{
     display: grid;
-    grid-template-columns: max-content minmax(0, 1fr);
-    column-gap: 10px;
-    row-gap: 6px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    column-gap: 12px;
+    row-gap: 8px;
+    align-items: start;
     margin: 8px 0 0 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .cart-item-properties .definitionList-key,
@@ -184,19 +188,25 @@ main-cart-items{
     font-weight: var(--font-weight-normal);
     color: var(--color-text2);
     letter-spacing: var(--letter-spacing);
-    line-height: 1.35;
+    line-height: 1.4;
     margin: 0;
     padding: 0;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .cart-item-properties .definitionList-key{
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: normal;
+    font-weight: var(--font-weight-semibold, 600);
 }
 
 .cart-item-properties .definitionList-value{
     margin-left: 0;
     min-width: 0;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
+    word-break: normal;
 }
 
 .cart-item-allocation{
