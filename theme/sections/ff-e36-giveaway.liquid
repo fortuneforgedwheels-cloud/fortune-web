@@ -274,10 +274,10 @@
         {% form 'product', giveaway, data-ff-e36-form: '', id: 'ff-e36-form' %}
           <input type="hidden" name="id" value="{{ variant.id }}">
           <input type="hidden" name="return_to" value="/checkout">
-          <input type="hidden" name="properties[Sweepstakes Terms Accepted]" value="" data-ff-e36-accepted-flag>
-          <input type="hidden" name="properties[Sweepstakes Terms Accepted At]" value="" data-ff-e36-accepted-at>
-          <input type="hidden" name="properties[Sweepstakes Terms Version]" value="{{ terms_version | escape }}" data-ff-e36-terms-version>
-          <input type="hidden" name="properties[Sweepstakes Entry Page]" value="{{ request.path | escape }}">
+          <input type="hidden" name="properties[_Sweepstakes Terms Accepted]" value="" data-ff-e36-accepted-flag>
+          <input type="hidden" name="properties[_Sweepstakes Terms Accepted At]" value="" data-ff-e36-accepted-at>
+          <input type="hidden" name="properties[_Sweepstakes Terms Version]" value="{{ terms_version | escape }}" data-ff-e36-terms-version>
+          <input type="hidden" name="properties[_Sweepstakes Entry Page]" value="{{ request.path | escape }}">
           <input type="hidden" name="properties[Sweepstakes Giveaway]" value="{{ brand_title | escape }}">
 
           {%- liquid
