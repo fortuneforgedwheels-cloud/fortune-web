@@ -105,10 +105,14 @@ quick-cart{
 
 .previewCartItem-properties{
     display: grid;
-    grid-template-columns: max-content minmax(0, 1fr);
-    column-gap: 8px;
-    row-gap: 4px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    column-gap: 10px;
+    row-gap: 6px;
+    align-items: start;
     margin: 0 0 7px 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .previewCartItem-properties:empty{
@@ -121,20 +125,26 @@ quick-cart{
     font-weight: var(--font-weight-normal);
     color: var(--color-text2);
     letter-spacing: var(--letter-spacing);
-    line-height: 1.35;
+    line-height: 1.4;
     margin: 0;
     padding: 0;
     text-align: left;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .previewCartItem-properties .definitionList-key{
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: normal;
+    font-weight: var(--font-weight-semibold, 600);
 }
 
 .previewCartItem-properties .definitionList-value {
     margin-left: 0;
     min-width: 0;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
+    word-break: normal;
 }
 
 .previewCartItem-price{
@@ -698,10 +708,14 @@ body.dark-mode .halo-cart-sidebar .previewCartCollection .slick-dots li button {
 
     .quickCartWrap .card-properties{
         display: grid;
-        grid-template-columns: max-content minmax(0, 1fr);
-        column-gap: 8px;
-        row-gap: 4px;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+        column-gap: 10px;
+        row-gap: 6px;
+        align-items: start;
         margin: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .quickCartWrap .card-properties .definitionList-key,
@@ -710,21 +724,27 @@ body.dark-mode .halo-cart-sidebar .previewCartCollection .slick-dots li button {
         font-weight: var(--font-weight-normal);
         color: var(--color-text2);
         letter-spacing: var(--letter-spacing);
-        line-height: 1.35;
+        line-height: 1.4;
         margin: 0;
         padding: 0;
         text-align: left;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .quickCartWrap .card-properties .definitionList-key{
         float: none;
-        white-space: nowrap;
+        white-space: normal;
+        overflow-wrap: break-word;
+        word-break: normal;
+        font-weight: var(--font-weight-semibold, 600);
     }
 
     .quickCartWrap .card-properties .definitionList-value{
         margin-left: 0;
         min-width: 0;
-        overflow-wrap: anywhere;
+        overflow-wrap: break-word;
+        word-break: normal;
     }
 
     .quickCartWrap .card-action{

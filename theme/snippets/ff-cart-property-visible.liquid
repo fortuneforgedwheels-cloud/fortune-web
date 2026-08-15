@@ -12,6 +12,10 @@
     assign ff_hide = true
   endif
 
+  if ff_key == 'sweepstakes terms accepted at' or ff_key == 'sweepstakes terms version' or ff_key == 'sweepstakes entry page'
+    assign ff_hide = true
+  endif
+
   if ff_val contains 'apex guide' or ff_val contains 'fortune forged guide'
     assign ff_hide = true
   endif
