@@ -6,7 +6,7 @@
 <div id="Cart-Content-Sidebar">
     {%- unless cart == empty -%}
         <div class="previewCart">
-            {%- if settings.show_calculator_free_shipping_message -%}
+            {%- if settings.show_calculator_free_shipping_message and cart.requires_shipping -%}
                 <div class="previewCartMessage">
                     {% render 'halo-calculator-shipping',
                         sectionId: 'Cart-Shipping-Message'
@@ -149,7 +149,11 @@
                         {{ 'sections.cart.shipping' | t }}
                     </div>
                     <div class="previewCartTotals-value">
-                        {{ 'sections.cart.shipping_text' | t }}
+                        {%- if cart.requires_shipping -%}
+                            {{ 'sections.cart.shipping_text' | t }}
+                        {%- else -%}
+                            No shipping required
+                        {%- endif -%}
                     </div>
                 </li>
             </ul>

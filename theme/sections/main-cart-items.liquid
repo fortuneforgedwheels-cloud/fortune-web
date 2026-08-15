@@ -379,7 +379,7 @@
                     </div>
                     <div class="cart-content-item" data-cart-totals>
                         <form action="{{ routes.cart_url }}" method="post" novalidate>
-                            {%- if settings.show_calculator_free_shipping_message -%}
+                            {%- if settings.show_calculator_free_shipping_message and cart.requires_shipping -%}
                                 {%- assign sectionId = 'Cart-Shipping-Message-' | append: section.id -%}
                                 {% render 'halo-calculator-shipping',
                                     sectionId: sectionId
@@ -416,7 +416,7 @@
                                         <span class="text"><span class="bcpo-cart-original-total">{{ cart.total_price | money }}</span></span>
                                     </div>
                                 </li>
-                                {%- if show_shipping_rate_calculator -%}
+                                {%- if show_shipping_rate_calculator and cart.requires_shipping -%}
                                     <li class="cart-total cart-total-shipping">
                                         <div class="cart-total-label">
                                             <span class="text">{{ 'sections.cart.shipping' | t }}</span>
@@ -425,6 +425,15 @@
                                         {% render 'shipping-rates-calculator',
                                             default_country: shipping_rate_calculator_default_country
                                         %}
+                                    </li>
+                                {%- elsif cart.items.size > 0 and cart.requires_shipping == false -%}
+                                    <li class="cart-total cart-total-shipping cart-total-shipping--digital">
+                                        <div class="cart-total-label">
+                                            <span class="text">{{ 'sections.cart.shipping' | t }}</span>
+                                        </div>
+                                        <div class="cart-total-value">
+                                            <span class="text">No shipping required</span>
+                                        </div>
                                     </li>
                                 {%- endif -%}
                                 {%- if show_coupon_code -%}

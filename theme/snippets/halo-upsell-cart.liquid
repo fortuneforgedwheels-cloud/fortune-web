@@ -1,7 +1,7 @@
 {%- unless cart == empty -%}
 	<div id="Cart-Content-Upsell">
 		<div class="previewModal clearfix">
-		   	{%- if settings.show_calculator_free_shipping_message -%}
+		   	{%- if settings.show_calculator_free_shipping_message and cart.requires_shipping -%}
 		    	<div class="previewModal-top">
 		    		<div class="previewCartMessage">
 		    			{% render 'halo-calculator-shipping',
