@@ -1,4 +1,4 @@
-{{ 'ff-826m-certified.css' | asset_url | stylesheet_tag }}
+{{ 'ff-826m-certified-v2.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
   assign path_label = path_label | default: 'Beadlock checkout'
@@ -7,6 +7,8 @@
   assign certified_width = certified_width | default: '11"'
   assign certified_offset = certified_offset | default: '+15'
   assign certified_lug = certified_lug | default: "PLUG N' PLAY || KEEP OEM SPECS"
+  assign certified_tire = certified_tire | default: ''
+  assign unit_noun = unit_noun | default: 'pair'
   assign ymm_make_placeholder = ymm_make_placeholder | default: 'BMW'
   assign ymm_model_placeholder = ymm_model_placeholder | default: 'M3'
   assign ymm_placeholder = 'e.g. 2023 ' | append: ymm_make_placeholder | append: ' ' | append: ymm_model_placeholder
@@ -32,10 +34,11 @@
   data-certified-width="{{ certified_width | escape }}"
   data-certified-offset="{{ certified_offset | escape }}"
   data-certified-lug="{{ certified_lug | escape }}"
+  {% if certified_tire != blank %}data-certified-tire="{{ certified_tire | escape }}"{% endif %}
   {% if extra_face_ring_colors != blank %}data-extra-face-ring-colors="{{ extra_face_ring_colors | escape }}"{% endif %}
 >
   <p class="ff-826m-path__eyebrow">{{ path_label | escape }}</p>
-  <h2 class="ff-826m-path__heading">How do you want to spec this pair?</h2>
+  <h2 class="ff-826m-path__heading">How do you want to spec this {{ unit_noun | escape }}?</h2>
 
   <div class="ff-826m-path__choices" role="radiogroup" aria-label="Spec path">
     <label class="ff-826m-path__choice">
@@ -43,7 +46,7 @@
       <span class="ff-826m-path__choice-card">
         <span class="ff-826m-path__choice-title">Fortune Certified Specs</span>
         <span class="ff-826m-path__choice-meta">
-          Sizing: {{ certified_fitment | escape }}, fits flush to fender. Just pick a color scheme.
+          Sizing: {{ certified_fitment | escape }}, fits flush to fender.{% if certified_tire != blank %} Preferred tire: {{ certified_tire | escape }}.{% endif %} Just pick a color scheme.
         </span>
       </span>
     </label>
@@ -60,6 +63,9 @@
     <div class="ff-826m-path__badge">
       <span>Certified fitment locked</span>
       <strong>{{ certified_fitment | escape }}</strong>
+      {%- if certified_tire != blank -%}
+        <span class="ff-826m-path__badge-tire">Preferred tire {{ certified_tire | escape }}</span>
+      {%- endif -%}
     </div>
 
     <div class="ff-826m-path__ymm">
@@ -100,6 +106,9 @@
 
     <input type="hidden" name="properties[Spec Path]" value="Fortune Certified Specs" form="{{ form_id }}" data-ff-826m-certified-prop>
     <input type="hidden" name="properties[Certified Fitment]" value="{{ certified_fitment | escape }}" form="{{ form_id }}" data-ff-826m-certified-prop>
+    {%- if certified_tire != blank -%}
+      <input type="hidden" name="properties[Preferred Tire]" value="{{ certified_tire | escape }}" form="{{ form_id }}" data-ff-826m-certified-prop>
+    {%- endif -%}
   </div>
 
   <div class="ff-826m-path__custom" data-ff-826m-custom-panel hidden>

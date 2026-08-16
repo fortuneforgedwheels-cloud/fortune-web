@@ -60,9 +60,44 @@
     assign ff_certified_make_ph = 'e.g. BMW'
     assign ff_certified_model_ph = 'e.g. M3'
     assign ff_certified_extra_face_ring_colors = ''
+    assign ff_certified_tire = ''
+    assign ff_certified_unit_noun = 'pair'
     assign ff_product_title_up = product.title | upcase
     assign ff_product_handle = product.handle | downcase
-    if ff_product_title_up contains '826M' and product.tags contains 'BEADLOCK'
+    if ff_product_handle == '826m-style-beadlocks-complete-set-of-4'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '826M X3M/X5M Beadlock checkout'
+      assign ff_certified_fitment = '20x10.5 ET20'
+      assign ff_certified_size = '20x10.5'
+      assign ff_certified_width = '10.5"'
+      assign ff_certified_offset = '+20'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. X3M'
+      assign ff_certified_tire = '295/40/20'
+      assign ff_certified_unit_noun = 'set'
+    elsif ff_product_title_up contains '826M' and ff_product_title_up contains 'SET OF 4' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '826M X3M/X5M Beadlock checkout'
+      assign ff_certified_fitment = '20x10.5 ET20'
+      assign ff_certified_size = '20x10.5'
+      assign ff_certified_width = '10.5"'
+      assign ff_certified_offset = '+20'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. X3M'
+      assign ff_certified_tire = '295/40/20'
+      assign ff_certified_unit_noun = 'set'
+    elsif ff_product_title_up contains '826M' and ff_product_title_up contains 'COMPLETE SET' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '826M X3M/X5M Beadlock checkout'
+      assign ff_certified_fitment = '20x10.5 ET20'
+      assign ff_certified_size = '20x10.5'
+      assign ff_certified_width = '10.5"'
+      assign ff_certified_offset = '+20'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. X3M'
+      assign ff_certified_tire = '295/40/20'
+      assign ff_certified_unit_noun = 'set'
+    elsif ff_product_title_up contains '826M' and product.tags contains 'BEADLOCK'
       assign ff_certified_beadlock = true
       assign ff_certified_path_label = '826M Beadlock checkout'
       assign ff_certified_fitment = '18x11 ET15'
@@ -296,6 +331,22 @@
       assign ff_certified_offset = '+15'
       assign ff_certified_make_ph = 'e.g. BMW'
       assign ff_certified_model_ph = 'e.g. G80 M3'
+    endif
+    if ff_certified_beadlock and product.selected_variant == nil
+      assign ff_certified_size_key = ff_certified_size | upcase | replace: ' ', ''
+      assign ff_certified_variant_found = false
+      for variant in product.variants
+        assign ff_variant_size_key = variant.option1 | upcase | replace: ' ', ''
+        if ff_variant_size_key == ff_certified_size_key
+          if ff_certified_variant_found == false or variant.available
+            assign current_variant = variant
+            assign ff_certified_variant_found = true
+          endif
+          if variant.available
+            break
+          endif
+        endif
+      endfor
     endif
     assign ff_826m_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
     assign colors_bg = section.settings.colors_bg
@@ -1254,6 +1305,8 @@
                                               certified_width: ff_certified_width,
                                               extra_face_ring_colors: ff_certified_extra_face_ring_colors,
                                               certified_offset: ff_certified_offset,
+                                              certified_tire: ff_certified_tire,
+                                              unit_noun: ff_certified_unit_noun,
                                               ymm_make_placeholder: ff_certified_make_ph,
                                               ymm_model_placeholder: ff_certified_model_ph
                                             %}
