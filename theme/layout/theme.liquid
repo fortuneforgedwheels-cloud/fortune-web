@@ -17,6 +17,8 @@
 <html class="no-js" lang="{{ request.locale.iso_code }}" {% if settings.select_layout and enable_iso_rtl %} dir="rtl" {% endif %}>
     <head>
         <meta charset="utf-8">
+        <meta name="google-site-verification" content="e4erDnVARSpGHR4Km89jrCIYqeh6MlzmdnL9mlp5Fzs" />
+        <!-- ff-google-verify:2026-08-17b -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta name="theme-color" content="">
@@ -243,7 +245,11 @@
           <meta http-equiv="refresh" content="0;url=/pages/faq?view=forgeflow">
           <script>location.replace('/pages/faq?view=forgeflow');</script>
         {%- endif -%}
-        {{ content_for_header }}
+        {%- comment -%}
+          Legacy Google verification content still comes through content_for_header.
+          Rewrite it to the current Merchant Center token (Preferences UI no longer has this field).
+        {%- endcomment -%}
+        {{ content_for_header | replace: 'HN41jlka3i7wDw-3Rg4uSKjK1fjh6sWDKBWAvDl2bis', 'e4erDnVARSpGHR4Km89jrCIYqeh6MlzmdnL9mlp5Fzs' }}
         {%- assign ff_chrome_addon_global = all_products['chrome-finish-surcharge'] -%}
         <script>
           window.FF_CHROME_SURCHARGE = Object.assign({}, window.FF_CHROME_SURCHARGE || {}, {
@@ -480,6 +486,7 @@
         })();
       </script>
     {%- endif -%}
+    <meta name="google-site-verification" content="e4erDnVARSpGHR4Km89jrCIYqeh6MlzmdnL9mlp5Fzs">
     </head>
     {%- liquid
         assign page_type = request.page_type | replace: 'customers/', ''
