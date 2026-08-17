@@ -244,7 +244,18 @@
           <meta http-equiv="refresh" content="0;url=/pages/faq?view=forgeflow">
           <script>location.replace('/pages/faq?view=forgeflow');</script>
         {%- endif -%}
-        {{ content_for_header }}
+        {%- comment -%}
+          Strip Preferences-injected google-site-verification metas so Merchant Center
+          only sees the current token from this theme (old Preferences codes break verify).
+        {%- endcomment -%}
+        {%- capture ff_content_for_header -%}{{ content_for_header }}{%- endcapture -%}
+        {%- assign ff_content_for_header = ff_content_for_header
+          | remove: '<meta name="google-site-verification" content="HN41jlka3i7wDw-3Rg4uSKjK1fjh6sWDKBWAvDl2bis">'
+          | remove: '<meta name="google-site-verification" content="HN41jlka3i7wDw-3Rg4uSKjK1fjh6sWDKBWAvDl2bis" />'
+          | remove: '<meta name="google-site-verification" content="e4erDnVARSpGHR4Km89jrCIYqeh6MlzmdnL9mlp5Fzs">'
+          | remove: '<meta name="google-site-verification" content="e4erDnVARSpGHR4Km89jrCIYqeh6MlzmdnL9mlp5Fzs" />'
+        -%}
+        {{ ff_content_for_header }}
         {%- assign ff_chrome_addon_global = all_products['chrome-finish-surcharge'] -%}
         <script>
           window.FF_CHROME_SURCHARGE = Object.assign({}, window.FF_CHROME_SURCHARGE || {}, {
