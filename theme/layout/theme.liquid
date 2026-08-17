@@ -250,12 +250,12 @@
         {%- endcomment -%}
         {%- capture ff_content_for_header -%}{{ content_for_header }}{%- endcapture -%}
         {%- assign ff_content_for_header = ff_content_for_header
-          | remove: '<meta name="google-site-verification" content="HN41jlka3i7wDw-3Rg4uSKjK1fjh6sWDKBWAvDl2bis">'
-          | remove: '<meta name="google-site-verification" content="HN41jlka3i7wDw-3Rg4uSKjK1fjh6sWDKBWAvDl2bis" />'
-          | remove: '<meta name="google-site-verification" content="e4erDnVARSpGHR4Km89jrCIYqeh6MlzmdnL9mlp5Fzs">'
-          | remove: '<meta name="google-site-verification" content="e4erDnVARSpGHR4Km89jrCIYqeh6MlzmdnL9mlp5Fzs" />'
+          | replace: 'HN41jlka3i7wDw-3Rg4uSKjK1fjh6sWDKBWAvDl2bis', 'FF_STRIPPED_OLD_GOOGLE_TOKEN'
+          | remove: '<meta name="google-site-verification" content="FF_STRIPPED_OLD_GOOGLE_TOKEN">'
+          | remove: '<meta name="google-site-verification" content="FF_STRIPPED_OLD_GOOGLE_TOKEN" />'
         -%}
         {{ ff_content_for_header }}
+        <!-- ff-gv-strip:{{ ff_content_for_header | size }} -->
         {%- assign ff_chrome_addon_global = all_products['chrome-finish-surcharge'] -%}
         <script>
           window.FF_CHROME_SURCHARGE = Object.assign({}, window.FF_CHROME_SURCHARGE || {}, {
