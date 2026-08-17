@@ -246,13 +246,10 @@
           <script>location.replace('/pages/faq?view=forgeflow');</script>
         {%- endif -%}
         {%- comment -%}
-          Preferences still stores an old Google verification code. Rewrite it to the
-          current Merchant Center token so verify does not see a stale content value.
+          Legacy Google verification content still comes through content_for_header.
+          Rewrite it to the current Merchant Center token (Preferences UI no longer has this field).
         {%- endcomment -%}
-        {%- capture ff_content_for_header -%}{{ content_for_header }}{%- endcapture -%}
-        {{ ff_content_for_header
-          | replace: 'HN41jlka3i7wDw-3Rg4uSKjK1fjh6sWDKBWAvDl2bis', 'e4erDnVARSpGHR4Km89jrCIYqeh6MlzmdnL9mlp5Fzs'
-        }}
+        {{ content_for_header | replace: 'HN41jlka3i7wDw-3Rg4uSKjK1fjh6sWDKBWAvDl2bis', 'e4erDnVARSpGHR4Km89jrCIYqeh6MlzmdnL9mlp5Fzs' }}
         {%- assign ff_chrome_addon_global = all_products['chrome-finish-surcharge'] -%}
         <script>
           window.FF_CHROME_SURCHARGE = Object.assign({}, window.FF_CHROME_SURCHARGE || {}, {
