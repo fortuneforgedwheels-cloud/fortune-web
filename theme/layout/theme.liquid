@@ -246,16 +246,13 @@
           <script>location.replace('/pages/faq?view=forgeflow');</script>
         {%- endif -%}
         {%- comment -%}
-          Strip Preferences-injected google-site-verification metas so Merchant Center
-          only sees the current token from this theme (old Preferences codes break verify).
+          Preferences still stores an old Google verification code. Rewrite it to the
+          current Merchant Center token so verify does not see a stale content value.
         {%- endcomment -%}
         {%- capture ff_content_for_header -%}{{ content_for_header }}{%- endcapture -%}
-        {%- assign ff_content_for_header = ff_content_for_header
-          | replace: 'HN41jlka3i7wDw-3Rg4uSKjK1fjh6sWDKBWAvDl2bis', 'FF_STRIPPED_OLD_GOOGLE_TOKEN'
-          | remove: '<meta name="google-site-verification" content="FF_STRIPPED_OLD_GOOGLE_TOKEN">'
-          | remove: '<meta name="google-site-verification" content="FF_STRIPPED_OLD_GOOGLE_TOKEN" />'
-        -%}
-        {{ ff_content_for_header }}
+        {{ ff_content_for_header
+          | replace: 'HN41jlka3i7wDw-3Rg4uSKjK1fjh6sWDKBWAvDl2bis', 'e4erDnVARSpGHR4Km89jrCIYqeh6MlzmdnL9mlp5Fzs'
+        }}
         {%- assign ff_chrome_addon_global = all_products['chrome-finish-surcharge'] -%}
         <script>
           window.FF_CHROME_SURCHARGE = Object.assign({}, window.FF_CHROME_SURCHARGE || {}, {
