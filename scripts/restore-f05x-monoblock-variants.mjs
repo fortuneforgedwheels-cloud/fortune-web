@@ -15,3 +15,8 @@
  * SHOPIFY_CLIENT_SECRET with write_products.
  */
 console.log('See file header for F-05X restore notes. This script is documentation-only.');
+
+/**
+ * Also added COLOR value "Hyper silver" (price 0) to F-05X bcpo_data
+ * metafield 52619079483667 on 2026-08-24.
+ */
