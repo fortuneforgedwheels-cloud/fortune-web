@@ -79,23 +79,26 @@
       {%- endif -%}
     </div>
     <div class="ff-xd__hero-shade" aria-hidden="true"></div>
-    <div class="ff-xd__hero-copy">
-      {%- if section.settings.eyebrow != blank -%}
-        <p class="ff-xd__eyebrow">{{ section.settings.eyebrow | escape }}</p>
-      {%- endif -%}
-      <h1 class="ff-xd__title">{{ brand_title | escape }}</h1>
-      <p class="ff-xd__offer">
-        <span class="ff-xd__offer-price">{{ deal_price_cents | money }}</span>
-        <span class="ff-xd__offer-sep" aria-hidden="true"> · </span>
-        <span class="ff-xd__offer-meta">{{ hero_offer_suffix | escape }}</span>
-      </p>
-      {%- if section.settings.description != blank -%}
-        <div class="ff-xd__lede">{{ section.settings.description }}</div>
-      {%- else -%}
-        <p class="ff-xd__lede">Choose a design. Pick your finish and fitment. Checkout today.</p>
-      {%- endif -%}
+    <div class="ff-xd__hero-cta">
       <a class="ff-xd__hero-jump" href="#ff-xd-deals" data-ff-xd-jump-deals>CHOOSE DESIGN</a>
     </div>
+  </div>
+
+  <div class="ff-xd__hero-copy">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ff-xd__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
+    <h1 class="ff-xd__title">{{ brand_title | escape }}</h1>
+    <p class="ff-xd__offer">
+      <span class="ff-xd__offer-price">{{ deal_price_cents | money }}</span>
+      <span class="ff-xd__offer-sep" aria-hidden="true"> · </span>
+      <span class="ff-xd__offer-meta">{{ hero_offer_suffix | escape }}</span>
+    </p>
+    {%- if section.settings.description != blank -%}
+      <div class="ff-xd__lede">{{ section.settings.description }}</div>
+    {%- else -%}
+      <p class="ff-xd__lede">Choose a design. Pick your finish and fitment. Checkout today.</p>
+    {%- endif -%}
   </div>
 
   <div class="ff-xd__deals" id="ff-xd-deals">

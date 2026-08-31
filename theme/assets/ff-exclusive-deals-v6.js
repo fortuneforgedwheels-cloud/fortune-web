@@ -171,7 +171,7 @@
 
   function bindSticky(root) {
     var sticky = root.querySelector('[data-ff-xd-sticky]');
-    var hero = root.querySelector('.ff-xd__hero');
+    var intro = root.querySelector('.ff-xd__hero-copy') || root.querySelector('.ff-xd__hero');
     if (!sticky) return;
 
     updateSticky(root, null);
@@ -276,21 +276,45 @@
     if (window.__ffInAppBrowser || document.documentElement.classList.contains('ff-inapp')) return;
     var video = root.querySelector('.ff-xd__hero-media video, video.ff-xd__hero-video');
     if (!video) return;
-    try {
-      video.muted = true;
-      video.defaultMuted = true;
-      video.playsInline = true;
-      video.setAttribute('muted', '');
-      video.setAttribute('playsinline', 'true');
-      video.autoplay = true;
-      video.setAttribute('autoplay', '');
-      if (video.paused) {
-        var playPromise = video.play();
-        if (playPromise && typeof playPromise.catch === 'function') {
-          playPromise.catch(function () {});
+
+    function tryPlay() {
+      try {
+        video.controls = false;
+        video.removeAttribute('controls');
+        video.muted = true;
+        video.defaultMuted = true;
+        video.playsInline = true;
+        video.setAttribute('muted', '');
+        video.setAttribute('playsinline', 'true');
+        video.autoplay = true;
+        video.setAttribute('autoplay', '');
+        video.setAttribute('preload', 'auto');
+        if (video.paused) {
+          var playPromise = video.play();
+          if (playPromise && typeof playPromise.then === 'function') {
+            playPromise.then(function () {
+              video.removeAttribute('poster');
+            }).catch(function () {});
+          }
         }
-      }
-    } catch (e) {}
+      } catch (e) {}
+    }
+
+    tryPlay();
+    video.addEventListener('loadeddata', tryPlay, { once: true });
+    video.addEventListener('canplay', tryPlay, { once: true });
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && video.paused) tryPlay();
+          });
+        },
+        { threshold: 0.2 }
+      );
+      io.observe(video);
+    }
   }
 
   function init(root) {

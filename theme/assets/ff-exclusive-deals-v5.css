@@ -33,24 +33,16 @@
 /* —— Hero —— */
 .ff-xd__hero {
   position: relative;
-  min-height: min(42svh, 380px);
-  max-height: 520px;
-  display: flex;
-  align-items: flex-end;
-  overflow: hidden;
   background: #000;
-}
-
-@media (min-width: 750px) {
-  .ff-xd__hero {
-    min-height: min(52vh, 520px);
-  }
+  overflow: hidden;
 }
 
 .ff-xd__hero-media {
-  position: absolute;
-  inset: 0;
+  position: relative;
   z-index: 0;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
 }
 
 .ff-xd__hero-img,
@@ -58,9 +50,16 @@
 .ff-xd__hero-media video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   display: block;
+  pointer-events: none;
+  background: #000;
+}
+
+.ff-xd__hero-video::-webkit-media-controls,
+.ff-xd__hero-media video::-webkit-media-controls {
+  display: none !important;
 }
 
 .ff-xd__hero-fallback {
@@ -68,6 +67,7 @@
   place-items: center;
   width: 100%;
   height: 100%;
+  min-height: 200px;
   background: #111;
   color: var(--ff-xd-muted);
   padding: 24px;
@@ -76,21 +76,30 @@
 
 .ff-xd__hero-shade {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 1;
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.55) 48%, rgba(0, 0, 0, 0.92) 100%);
+  height: 42%;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.72) 100%);
   pointer-events: none;
 }
 
-.ff-xd__hero-copy {
-  position: relative;
+.ff-xd__hero-cta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 2;
-  width: 100%;
-  max-width: 720px;
-  padding: 28px 18px 26px;
+  display: flex;
+  justify-content: center;
+  padding: 14px 18px 16px;
+}
+
+.ff-xd__hero-copy {
+  background: #0a0a0a;
+  padding: 22px 18px 8px;
   text-align: center;
-  margin: 0 auto;
 }
 
 .ff-xd__eyebrow {
@@ -150,7 +159,7 @@
 }
 
 .ff-xd__lede {
-  margin: 0 auto 16px;
+  margin: 0 auto;
   max-width: 28rem;
   color: var(--ff-xd-muted);
   font-size: 0.92rem;
