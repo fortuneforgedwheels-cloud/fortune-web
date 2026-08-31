@@ -1,5 +1,5 @@
-{{ 'ff-e36-giveaway-v2.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'ff-e36-giveaway-v2.js' | asset_url }}" defer></script>
+{{ 'ff-e36-giveaway-v3.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ff-e36-giveaway-v3.js' | asset_url }}" defer></script>
 
 {%- liquid
   assign giveaway = section.settings.product
@@ -18,7 +18,6 @@
     assign variant = giveaway.selected_or_first_available_variant
   endif
 
-  # Official Rules: html field, then richtext, then page body.
   assign rules_html = section.settings.official_rules
   if rules_html == blank
     assign rules_html = section.settings.fine_print
@@ -35,17 +34,33 @@
   if cta_label == blank
     assign cta_label = 'GET MY ENTRY'
   endif
-  assign checkout_label = section.settings.checkout_label | default: 'ENTER NOW — CHECKOUT'
+  assign checkout_label = section.settings.checkout_label | default: 'ENTER NOW'
   if checkout_label == blank
-    assign checkout_label = 'ENTER NOW — CHECKOUT'
+    assign checkout_label = 'ENTER NOW'
   endif
   assign terms_version = section.settings.terms_version | default: '1'
   if terms_version == blank
     assign terms_version = '1'
   endif
-  assign terms_label = section.settings.terms_checkbox_label | default: 'I have read and agree to the terms and conditions'
-  if terms_label == blank
-    assign terms_label = 'I have read and agree to the terms and conditions'
+  assign rules_link_label = section.settings.terms_link_label | default: 'Official Rules & Terms'
+  if rules_link_label == blank
+    assign rules_link_label = 'Official Rules & Terms'
+  endif
+  assign build_highlights = section.settings.build_highlights | default: 'S52 INLINE-SIX · 5-SPEED ZF · COILOVERS · REINFORCED REAR · FORTUNE FORGED F-05X'
+  assign story_more_label = section.settings.story_more_label | default: 'VIEW FULL BUILD'
+  if story_more_label == blank
+    assign story_more_label = 'VIEW FULL BUILD'
+  endif
+  assign how_heading = section.settings.how_heading | default: 'HOW IT WORKS'
+  assign how_1_title = section.settings.how_1_title | default: 'ENTER'
+  assign how_1_body = section.settings.how_1_body | default: '$20 per entry. Unlimited entries.'
+  assign how_2_title = section.settings.how_2_title | default: 'BE THERE'
+  assign how_2_body = section.settings.how_2_body | default: 'Entry is exclusive to eligible Bimmer Invasion attendees.'
+  assign how_3_title = section.settings.how_3_title | default: 'WIN'
+  assign how_3_body = section.settings.how_3_body | default: 'Winner selected at the event.'
+  assign sticky_cta_label = section.settings.sticky_cta_label | default: 'ENTER NOW'
+  if sticky_cta_label == blank
+    assign sticky_cta_label = 'ENTER NOW'
   endif
 -%}
 
@@ -55,7 +70,6 @@
     data-ff-e36-giveaway
     {{ section.shopify_attributes }}
   >
-    {%- comment -%} 1) Full-bleed video + brand + GET MY ENTRY {%- endcomment -%}
     <div class="ff-e36__hero">
       <div class="ff-e36__video-wrap" data-ff-autoplay-video data-ff-e36-video-wrap>
         {%- if section.settings.hero_video != blank -%}
@@ -101,164 +115,20 @@
         <button type="button" class="ff-e36__cta" data-ff-e36-scroll-entry>
           {{ cta_label | escape }}
         </button>
-        {%- if section.settings.cta_note != blank -%}
-          <p class="ff-e36__cta-note">{{ section.settings.cta_note | escape }}</p>
-        {%- endif -%}
       </div>
     </div>
 
-    {%- comment -%} 2) Car write-up (collapsed preview + View Build highlights) {%- endcomment -%}
-    <div class="ff-e36__section ff-e36__section--story">
-      <div class="ff-e36__section-inner">
-        {%- if section.settings.story_kicker != blank -%}
-          <p class="ff-e36__story-kicker">{{ section.settings.story_kicker | escape }}</p>
-        {%- endif -%}
-        {%- if section.settings.story_title != blank -%}
-          <h2 class="ff-e36__story-title">{{ section.settings.story_title | escape }}</h2>
-        {%- endif -%}
-        {%- if section.settings.story_body != blank -%}
-          <div class="ff-e36__story-panel" data-ff-e36-story-panel>
-            <div class="ff-e36__story-clip" data-ff-e36-story-clip>
-              <div class="ff-e36__story-body" data-ff-e36-story-body>{{ section.settings.story_body }}</div>
-            </div>
-            <div class="ff-e36__story-more" data-ff-e36-story-more>
-              <button
-                type="button"
-                class="ff-e36__story-more-btn"
-                data-ff-e36-story-more-btn
-                aria-expanded="false"
-              >
-                {{ section.settings.story_more_label | default: 'View Build highlights' | escape }}
-              </button>
-            </div>
-          </div>
-        {%- endif -%}
-      </div>
-    </div>
-
-    {%- comment -%} 3) Product entry + required terms (terms always show when rules exist) {%- endcomment -%}
     <div class="ff-e36__entry" id="ff-e36-entry" data-ff-e36-entry>
       {%- if giveaway != blank and variant != blank -%}
-        <div class="ff-e36__entry-top">
-          {%- liquid
-            assign entry_images = giveaway.media | where: 'media_type', 'image'
-            assign entry_image_count = entry_images.size
-            if entry_image_count == 0 and giveaway.featured_media != blank
-              assign entry_image_count = 1
-            endif
-          -%}
-          <div
-            class="ff-e36__entry-media{% if entry_image_count > 1 %} ff-e36__entry-media--gallery{% endif %}"
-            data-ff-e36-gallery
-            {% if entry_image_count > 1 %}
-              role="region"
-              aria-roledescription="carousel"
-              aria-label="{{ giveaway.title | escape }} photos"
-            {% endif %}
-          >
-            {%- if entry_images.size > 0 -%}
-              <div class="ff-e36__gallery-viewport">
-                <div class="ff-e36__gallery-track" data-ff-e36-gallery-track>
-                  {%- for media in entry_images -%}
-                    {%- liquid
-                      assign entry_alt = media.alt | default: giveaway.title
-                    -%}
-                    <div
-                      class="ff-e36__gallery-slide{% if forloop.first %} is-active{% endif %}"
-                      data-ff-e36-gallery-slide
-                      {% unless forloop.first %}aria-hidden="true"{% endunless %}
-                    >
-                      {%- if forloop.first -%}
-                        {{
-                          media
-                          | image_url: width: 1200
-                          | image_tag:
-                            loading: 'eager',
-                            widths: '300, 450, 600, 900, 1200',
-                            sizes: '(min-width: 750px) 320px, 90vw',
-                            alt: entry_alt,
-                            class: 'ff-e36__gallery-img'
-                        }}
-                      {%- else -%}
-                        {{
-                          media
-                          | image_url: width: 1200
-                          | image_tag:
-                            loading: 'lazy',
-                            widths: '300, 450, 600, 900, 1200',
-                            sizes: '(min-width: 750px) 320px, 90vw',
-                            alt: entry_alt,
-                            class: 'ff-e36__gallery-img'
-                        }}
-                      {%- endif -%}
-                    </div>
-                  {%- endfor -%}
-                </div>
-              </div>
-              {%- if entry_images.size > 1 -%}
-                <button
-                  type="button"
-                  class="ff-e36__gallery-arrow ff-e36__gallery-arrow--prev"
-                  data-ff-e36-gallery-prev
-                  aria-label="Previous photo"
-                >
-                  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
-                    <path d="M14.5 5.5 8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  class="ff-e36__gallery-arrow ff-e36__gallery-arrow--next"
-                  data-ff-e36-gallery-next
-                  aria-label="Next photo"
-                >
-                  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
-                    <path d="M9.5 5.5 16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
-                <p class="ff-e36__gallery-status visually-hidden" data-ff-e36-gallery-status aria-live="polite"></p>
-              {%- endif -%}
-            {%- elsif giveaway.featured_media != blank -%}
-              {%- liquid
-                assign entry_alt = giveaway.featured_media.alt | default: giveaway.title
-              -%}
-              {{
-                giveaway.featured_media
-                | image_url: width: 1200
-                | image_tag:
-                  loading: 'lazy',
-                  widths: '300, 450, 600, 900, 1200',
-                  sizes: '(min-width: 750px) 320px, 90vw',
-                  alt: entry_alt
-              }}
-            {%- elsif section.settings.hero_poster != blank -%}
-              {{
-                section.settings.hero_poster
-                | image_url: width: 1200
-                | image_tag:
-                  loading: 'lazy',
-                  alt: brand_title
-              }}
+        <div class="ff-e36__entry-intro">
+          <h2 class="ff-e36__entry-heading">{{ section.settings.entry_heading | default: giveaway.title | escape }}</h2>
+          <p class="ff-e36__entry-price">
+            {%- if variant.price == 0 -%}
+              {{ section.settings.free_price_label | default: 'FREE ENTRY' | escape }}
+            {%- else -%}
+              <span data-ff-e36-unit-price>{{ variant.price | money }}</span><span class="ff-e36__entry-price-suffix"> / ENTRY</span>
             {%- endif -%}
-          </div>
-          <div>
-            <h2 class="ff-e36__entry-heading">{{ section.settings.entry_heading | default: giveaway.title | escape }}</h2>
-            <p class="ff-e36__entry-price">
-              {%- if variant.price == 0 -%}
-                {{ section.settings.free_price_label | default: 'FREE ENTRY' | escape }}
-              {%- else -%}
-                {{ variant.price | money }}
-                {%- if variant.compare_at_price > variant.price -%}
-                  <span style="opacity:0.55;text-decoration:line-through;margin-left:0.4em;font-size:0.85em;">{{ variant.compare_at_price | money }}</span>
-                {%- endif -%}
-              {%- endif -%}
-            </p>
-            {%- if section.settings.entry_blurb != blank -%}
-              <p class="ff-e36__entry-desc">{{ section.settings.entry_blurb | escape }}</p>
-            {%- elsif giveaway.description != blank -%}
-              <div class="ff-e36__entry-desc">{{ giveaway.description | strip_html | truncate: 180 }}</div>
-            {%- endif -%}
-          </div>
+          </p>
         </div>
       {%- else -%}
         <p class="ff-e36__soldout">
@@ -294,12 +164,12 @@
             data-ff-e36-qty
             data-unit-cents="{{ variant.price }}"
             data-money-format="{{ shop.money_format | escape }}"
+            data-cta-prefix="ENTER NOW — "
           >
             <div class="ff-e36__qty-label-row">
               <label class="ff-e36__qty-label" for="ff-e36-qty-{{ section.id }}">
-                {{ section.settings.qty_label | default: 'How many entries?' | escape }}
+                {{ section.settings.qty_label | default: 'HOW MANY ENTRIES?' | escape }}
               </label>
-              <p class="ff-e36__qty-hint">{{ section.settings.qty_hint | default: 'Max 20 per checkout. Each entry gets its own ticket after payment.' | escape }}</p>
             </div>
             <div class="ff-e36__qty-ctrl">
               <button type="button" class="ff-e36__qty-btn" data-ff-e36-qty-minus aria-label="Fewer entries">−</button>
@@ -318,18 +188,10 @@
               >
               <button type="button" class="ff-e36__qty-btn" data-ff-e36-qty-plus aria-label="More entries">+</button>
             </div>
-            <div class="ff-e36__qty-meta">
-              <span data-ff-e36-qty-count>1 entry</span>
-              <span class="ff-e36__qty-total" data-ff-e36-qty-total>{{ variant.price | money }}</span>
-            </div>
+            <p class="ff-e36__qty-meta" aria-live="polite">
+              <span data-ff-e36-qty-count>1 ENTRY</span><span class="ff-e36__qty-meta-sep" aria-hidden="true"> · </span><span class="ff-e36__qty-total" data-ff-e36-qty-total>{{ variant.price | money }}</span>
+            </p>
           </div>
-
-          <button type="submit" class="ff-e36__cta ff-e36__cta--checkout" data-ff-e36-cta disabled aria-disabled="true">
-            {{ checkout_label | escape }}
-          </button>
-          {%- if section.settings.checkout_note != blank -%}
-            <p class="ff-e36__cta-note">{{ section.settings.checkout_note | escape }}</p>
-          {%- endif -%}
 
           <div class="ff-e36__terms">
             <div class="ff-e36__terms-head">
@@ -344,14 +206,18 @@
                   required
                   aria-required="true"
                   aria-invalid="true"
-                  aria-describedby="ff-e36-terms-error-{{ section.id }} ff-e36-terms-scroll-{{ section.id }}"
+                  aria-describedby="ff-e36-terms-error-{{ section.id }}"
                 >
                 <label class="form-label--checkbox ff-e36__terms-label" for="ff-e36-terms-{{ section.id }}">
                   <span class="ff-e36__terms-label-text">
-                    {{ terms_label }}
-                    {%- if section.settings.terms_link_label != blank and section.settings.terms_link_url != blank -%}
-                      <a href="{{ section.settings.terms_link_url }}" target="_blank" rel="noopener">{{ section.settings.terms_link_label | escape }}</a>
-                    {%- endif -%}
+                    I agree to the
+                    <button
+                      type="button"
+                      class="ff-e36__rules-link"
+                      data-ff-e36-open-rules
+                      aria-haspopup="dialog"
+                      aria-controls="ff-e36-rules-dialog-{{ section.id }}"
+                    >{{ rules_link_label | escape }}</button>
                   </span>
                 </label>
               </div>
@@ -364,30 +230,15 @@
                 role="alert"
               ></p>
             </div>
-            <div class="ff-e36__terms-panel" data-ff-e36-terms-panel>
-              <div
-                class="ff-e36__terms-scroll"
-                id="ff-e36-terms-scroll-{{ section.id }}"
-                tabindex="0"
-                role="region"
-                aria-label="{{ section.settings.fine_print_heading | default: 'Official Rules & Fine Print' | escape }}"
-                data-ff-e36-terms-scroll
-              >
-                {%- if rules_html != blank -%}
-                  <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>{{ rules_html }}</div>
-                {%- else -%}
-                  <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>
-                    <p><strong>Add your Official Rules:</strong> left sidebar → <strong>Official Rules (paste here)</strong> → paste → Save.</p>
-                  </div>
-                {%- endif -%}
-              </div>
-              <div class="ff-e36__terms-more" data-ff-e36-terms-more>
-                <button type="button" class="ff-e36__terms-more-btn" data-ff-e36-load-more aria-expanded="false" aria-controls="ff-e36-terms-scroll-{{ section.id }}">
-                  {{ section.settings.load_more_label | default: 'Load more' | escape }}
-                </button>
-              </div>
-            </div>
           </div>
+
+          <button
+            type="submit"
+            class="ff-e36__cta ff-e36__cta--checkout"
+            data-ff-e36-cta
+            disabled
+            aria-disabled="true"
+          >ENTER NOW — {{ variant.price | money }}</button>
         {% endform %}
       {%- else -%}
         {%- if giveaway != blank and variant != blank and variant.available == false -%}
@@ -403,48 +254,219 @@
                 class="ff-e36__terms-input"
                 disabled
                 aria-invalid="true"
-                aria-describedby="ff-e36-terms-scroll-{{ section.id }}"
               >
               <label class="form-label--checkbox ff-e36__terms-label" for="ff-e36-terms-{{ section.id }}">
-                <span class="ff-e36__terms-label-text">{{ terms_label }}</span>
+                <span class="ff-e36__terms-label-text">
+                  I agree to the
+                  <button
+                    type="button"
+                    class="ff-e36__rules-link"
+                    data-ff-e36-open-rules
+                    aria-haspopup="dialog"
+                    aria-controls="ff-e36-rules-dialog-{{ section.id }}"
+                  >{{ rules_link_label | escape }}</button>
+                </span>
               </label>
-            </div>
-          </div>
-          <div class="ff-e36__terms-panel" data-ff-e36-terms-panel>
-            <div
-              class="ff-e36__terms-scroll"
-              id="ff-e36-terms-scroll-{{ section.id }}"
-              tabindex="0"
-              role="region"
-              aria-label="{{ section.settings.fine_print_heading | default: 'Official Rules & Fine Print' | escape }}"
-              data-ff-e36-terms-scroll
-            >
-              {%- if rules_html != blank -%}
-                <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>{{ rules_html }}</div>
-              {%- elsif request.design_mode -%}
-                <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>
-                  <p>Paste Official Rules in this section’s <strong>Fine print</strong> setting (left sidebar), or in the page content under Online Store → Pages.</p>
-                </div>
-              {%- else -%}
-                <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>
-                  <p><strong>Add your Official Rules:</strong> Edit theme → this page → E36 M3 Giveaway → scroll to <strong>Official Rules (paste here)</strong> → paste → Save.</p>
-                </div>
-              {%- endif -%}
-            </div>
-            <div class="ff-e36__terms-more" data-ff-e36-terms-more>
-              <button type="button" class="ff-e36__terms-more-btn" data-ff-e36-load-more aria-expanded="false" aria-controls="ff-e36-terms-scroll-{{ section.id }}">
-                {{ section.settings.load_more_label | default: 'Load more' | escape }}
-              </button>
             </div>
           </div>
         </div>
       {%- endif -%}
     </div>
 
+    <div class="ff-e36__section ff-e36__section--prize" id="ff-e36-prize">
+      <div class="ff-e36__section-inner">
+        {%- if section.settings.story_kicker != blank -%}
+          <p class="ff-e36__story-kicker">{{ section.settings.story_kicker | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.story_title != blank -%}
+          <h2 class="ff-e36__story-title">{{ section.settings.story_title | escape }}</h2>
+        {%- endif -%}
+
+        {%- if giveaway != blank -%}
+          {%- liquid
+            assign entry_images = giveaway.media | where: 'media_type', 'image'
+            assign entry_image_count = entry_images.size
+            if entry_image_count == 0 and giveaway.featured_media != blank
+              assign entry_image_count = 1
+            endif
+          -%}
+          <div
+            class="ff-e36__prize-media{% if entry_image_count > 1 %} ff-e36__prize-media--gallery{% endif %}"
+            data-ff-e36-gallery
+            {% if entry_image_count > 1 %}
+              role="region"
+              aria-roledescription="carousel"
+              aria-label="{{ giveaway.title | escape }} photos"
+            {% endif %}
+          >
+            {%- if entry_images.size > 0 -%}
+              <div class="ff-e36__gallery-viewport">
+                <div class="ff-e36__gallery-track" data-ff-e36-gallery-track>
+                  {%- for media in entry_images -%}
+                    {%- liquid
+                      assign entry_alt = media.alt | default: giveaway.title
+                    -%}
+                    <div
+                      class="ff-e36__gallery-slide{% if forloop.first %} is-active{% endif %}"
+                      data-ff-e36-gallery-slide
+                      {% unless forloop.first %}aria-hidden="true"{% endunless %}
+                    >
+                      {%- if forloop.first -%}
+                        {{
+                          media
+                          | image_url: width: 1600
+                          | image_tag:
+                            loading: 'eager',
+                            widths: '400, 600, 900, 1200, 1600',
+                            sizes: '(min-width: 750px) 720px, 100vw',
+                            alt: entry_alt,
+                            class: 'ff-e36__gallery-img'
+                        }}
+                      {%- else -%}
+                        {{
+                          media
+                          | image_url: width: 1600
+                          | image_tag:
+                            loading: 'lazy',
+                            widths: '400, 600, 900, 1200, 1600',
+                            sizes: '(min-width: 750px) 720px, 100vw',
+                            alt: entry_alt,
+                            class: 'ff-e36__gallery-img'
+                        }}
+                      {%- endif -%}
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+              {%- if entry_images.size > 1 -%}
+                <button type="button" class="ff-e36__gallery-arrow ff-e36__gallery-arrow--prev" data-ff-e36-gallery-prev aria-label="Previous photo">
+                  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M14.5 5.5 8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button type="button" class="ff-e36__gallery-arrow ff-e36__gallery-arrow--next" data-ff-e36-gallery-next aria-label="Next photo">
+                  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M9.5 5.5 16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <p class="ff-e36__gallery-status visually-hidden" data-ff-e36-gallery-status aria-live="polite"></p>
+              {%- endif -%}
+            {%- elsif giveaway.featured_media != blank -%}
+              {%- liquid
+                assign entry_alt = giveaway.featured_media.alt | default: giveaway.title
+              -%}
+              {{
+                giveaway.featured_media
+                | image_url: width: 1600
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '400, 600, 900, 1200, 1600',
+                  sizes: '(min-width: 750px) 720px, 100vw',
+                  alt: entry_alt,
+                  class: 'ff-e36__gallery-img'
+              }}
+            {%- elsif section.settings.hero_poster != blank -%}
+              {{
+                section.settings.hero_poster
+                | image_url: width: 1600
+                | image_tag:
+                  loading: 'lazy',
+                  alt: brand_title,
+                  class: 'ff-e36__gallery-img'
+              }}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if build_highlights != blank -%}
+          <p class="ff-e36__highlights">{{ build_highlights | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.story_body != blank -%}
+          <div class="ff-e36__story-panel" data-ff-e36-story-panel>
+            <div class="ff-e36__story-clip" data-ff-e36-story-clip>
+              <div class="ff-e36__story-body" data-ff-e36-story-body>{{ section.settings.story_body }}</div>
+            </div>
+            <div class="ff-e36__story-more" data-ff-e36-story-more>
+              <button type="button" class="ff-e36__story-more-btn" data-ff-e36-story-more-btn aria-expanded="false">
+                {{ story_more_label | escape }}
+              </button>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="ff-e36__section ff-e36__section--how">
+      <div class="ff-e36__section-inner">
+        {%- if how_heading != blank -%}
+          <h2 class="ff-e36__how-heading">{{ how_heading | escape }}</h2>
+        {%- endif -%}
+        <ol class="ff-e36__how-list">
+          <li class="ff-e36__how-item">
+            <p class="ff-e36__how-step"><span class="ff-e36__how-num">01</span> — {{ how_1_title | escape }}</p>
+            {%- if how_1_body != blank -%}<p class="ff-e36__how-body">{{ how_1_body | escape }}</p>{%- endif -%}
+          </li>
+          <li class="ff-e36__how-item">
+            <p class="ff-e36__how-step"><span class="ff-e36__how-num">02</span> — {{ how_2_title | escape }}</p>
+            {%- if how_2_body != blank -%}<p class="ff-e36__how-body">{{ how_2_body | escape }}</p>{%- endif -%}
+          </li>
+          <li class="ff-e36__how-item">
+            <p class="ff-e36__how-step"><span class="ff-e36__how-num">03</span> — {{ how_3_title | escape }}</p>
+            {%- if how_3_body != blank -%}<p class="ff-e36__how-body">{{ how_3_body | escape }}</p>{%- endif -%}
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div
+      class="ff-e36__rules-modal"
+      id="ff-e36-rules-dialog-{{ section.id }}"
+      data-ff-e36-rules-modal
+      hidden
+    >
+      <div class="ff-e36__rules-backdrop" data-ff-e36-close-rules tabindex="-1"></div>
+      <div
+        class="ff-e36__rules-sheet"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="ff-e36-rules-title-{{ section.id }}"
+        data-ff-e36-rules-sheet
+      >
+        <div class="ff-e36__rules-sheet-head">
+          <h2 class="ff-e36__rules-sheet-title" id="ff-e36-rules-title-{{ section.id }}">
+            {{ section.settings.fine_print_heading | default: 'Official Rules & Fine Print' | escape }}
+          </h2>
+          <button type="button" class="ff-e36__rules-close" data-ff-e36-close-rules aria-label="Close Official Rules">×</button>
+        </div>
+        <div
+          class="ff-e36__rules-sheet-body"
+          id="ff-e36-terms-scroll-{{ section.id }}"
+          tabindex="0"
+          data-ff-e36-terms-scroll
+        >
+          {%- if rules_html != blank -%}
+            <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>{{ rules_html }}</div>
+          {%- else -%}
+            <div class="ff-e36__terms-scroll-body" data-ff-e36-terms-body>
+              <p><strong>Add your Official Rules:</strong> left sidebar → <strong>Official Rules (paste here)</strong> → paste → Save.</p>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
     <div class="ff-e36__sticky" data-ff-e36-sticky>
-      <button type="button" class="ff-e36__cta" data-ff-e36-scroll-entry>
-        {{ cta_label | escape }}
-      </button>
+      <div class="ff-e36__sticky-inner">
+        <p class="ff-e36__sticky-price">
+          {%- if giveaway != blank and variant != blank and variant.price == 0 -%}
+            {{ section.settings.free_price_label | default: 'FREE ENTRY' | escape }}
+          {%- elsif giveaway != blank and variant != blank -%}
+            <span data-ff-e36-sticky-unit>{{ variant.price | money }}</span><span> / ENTRY</span>
+          {%- else -%}
+            ENTRY
+          {%- endif -%}
+        </p>
+        <button type="button" class="ff-e36__sticky-cta" data-ff-e36-scroll-entry>
+          {{ sticky_cta_label | escape }}
+        </button>
+      </div>
     </div>
   </section>
 
@@ -486,7 +508,7 @@
       "type": "textarea",
       "id": "subtitle",
       "label": "Supporting line",
-      "default": "One entry. One legendary E36 M3. Enter in under a minute."
+      "default": "$20 PER ENTRY · WINNER CHOSEN TODAY"
     },
     {
       "type": "text",
@@ -514,7 +536,7 @@
       "type": "text",
       "id": "story_title",
       "label": "Story headline",
-      "default": "A real E36 M3 — built to be driven"
+      "default": "ONE E36 M3 — BUILT TO BE DRIVEN"
     },
     {
       "type": "richtext",
@@ -526,9 +548,69 @@
       "type": "text",
       "id": "story_more_label",
       "label": "Story expand button",
-      "default": "View Build highlights",
+      "default": "VIEW FULL BUILD",
       "info": "Shown under the story preview. Reveals the full write-up when tapped."
     },
+
+    {
+      "type": "textarea",
+      "id": "build_highlights",
+      "label": "Build highlights (short line)",
+      "default": "S52 INLINE-SIX · 5-SPEED ZF · COILOVERS · REINFORCED REAR · FORTUNE FORGED F-05X"
+    },
+    {
+      "type": "header",
+      "content": "How it works"
+    },
+    {
+      "type": "text",
+      "id": "how_heading",
+      "label": "How it works heading",
+      "default": "HOW IT WORKS"
+    },
+    {
+      "type": "text",
+      "id": "how_1_title",
+      "label": "Step 1 title",
+      "default": "ENTER"
+    },
+    {
+      "type": "text",
+      "id": "how_1_body",
+      "label": "Step 1 body",
+      "default": "$20 per entry. Unlimited entries."
+    },
+    {
+      "type": "text",
+      "id": "how_2_title",
+      "label": "Step 2 title",
+      "default": "BE THERE"
+    },
+    {
+      "type": "text",
+      "id": "how_2_body",
+      "label": "Step 2 body",
+      "default": "Entry is exclusive to eligible Bimmer Invasion attendees."
+    },
+    {
+      "type": "text",
+      "id": "how_3_title",
+      "label": "Step 3 title",
+      "default": "WIN"
+    },
+    {
+      "type": "text",
+      "id": "how_3_body",
+      "label": "Step 3 body",
+      "default": "Winner selected at the event."
+    },
+    {
+      "type": "text",
+      "id": "sticky_cta_label",
+      "label": "Sticky bar CTA",
+      "default": "ENTER NOW"
+    },
+
     {
       "type": "header",
       "content": "Entry product"
@@ -562,7 +644,7 @@
       "type": "text",
       "id": "qty_label",
       "label": "Quantity label",
-      "default": "How many entries?"
+      "default": "HOW MANY ENTRIES?"
     },
     {
       "type": "text",
@@ -589,7 +671,7 @@
       "type": "text",
       "id": "checkout_label",
       "label": "Checkout button label",
-      "default": "ENTER NOW — CHECKOUT"
+      "default": "ENTER NOW"
     },
     {
       "type": "text",
@@ -617,12 +699,13 @@
       "type": "richtext",
       "id": "terms_checkbox_label",
       "label": "Checkbox label",
-      "default": "<p>I have read and agree to the terms and conditions</p>"
+      "default": "<p>I agree to the Official Rules & Terms</p>"
     },
     {
       "type": "text",
       "id": "terms_link_label",
-      "label": "Optional rules link label"
+      "label": "Rules link label (opens modal)",
+      "default": "Official Rules & Terms"
     },
     {
       "type": "url",
@@ -663,7 +746,7 @@
       "type": "html",
       "id": "official_rules",
       "label": "Official Rules (paste here)",
-      "info": "Paste your full CA sweepstakes / Official Rules text here. This is what shoppers scroll in the terms box."
+      "info": "Paste your full CA sweepstakes / Official Rules text here. Shown in the Official Rules modal."
     },
     {
       "type": "richtext",
