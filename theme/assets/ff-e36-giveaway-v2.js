@@ -28,14 +28,116 @@
 
   function setCtaEnabled(root, enabled) {
     qsa(root, '[data-ff-e36-cta]').forEach(function (btn) {
-      btn.disabled = !enabled;
-      btn.setAttribute('aria-disabled', enabled ? 'false' : 'true');
-      btn.classList.toggle('is-disabled', !enabled);
+      var isCheckout = btn.hasAttribute('data-ff-e36-checkout-cta');
+      if (isCheckout) return;
+      btn.disabled = false;
+      btn.setAttribute('aria-disabled', 'false');
+      btn.classList.remove('is-disabled');
     });
+    var checkoutBtn = qs(root, '[data-ff-e36-checkout-cta]');
+    if (checkoutBtn) {
+      checkoutBtn.disabled = !enabled;
+      checkoutBtn.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+      checkoutBtn.classList.toggle('is-disabled', !enabled);
+    }
     var form = qs(root, '[data-ff-e36-form]');
     if (form) {
       form.setAttribute('data-terms-ok', enabled ? 'true' : 'false');
     }
+  }
+
+  function padCount(n) {
+    n = Math.max(0, parseInt(n, 10) || 0);
+    return n < 10 ? '0' + n : String(n);
+  }
+
+  function initLaunchCountdown(root) {
+    var enabled = root.getAttribute('data-ff-e36-launch-enabled') === 'true';
+    var launchAt = root.getAttribute('data-ff-e36-launch-at') || '';
+    var targetMs = Date.parse(launchAt);
+    var countdownEl = qs(root, '[data-ff-e36-countdown]');
+    var timerId = null;
+    var live = !enabled || !targetMs || isNaN(targetMs);
+
+    function setLiveState(isLive) {
+      live = isLive;
+      root.setAttribute('data-ff-e36-launch-live', isLive ? 'true' : 'false');
+      root.classList.toggle('ff-e36--launch-locked', !isLive);
+      if (countdownEl) countdownEl.hidden = isLive;
+    }
+
+    function updateCountdown() {
+      if (!enabled || !targetMs || isNaN(targetMs)) {
+        setLiveState(true);
+        return true;
+      }
+
+      var diff = targetMs - Date.now();
+      if (diff <= 0) {
+        setLiveState(true);
+        if (timerId) {
+          clearInterval(timerId);
+          timerId = null;
+        }
+        root.dispatchEvent(new CustomEvent('ff-e36-launch-live'));
+        return true;
+      }
+
+      setLiveState(false);
+      var totalSec = Math.floor(diff / 1000);
+      var days = Math.floor(totalSec / 86400);
+      totalSec %= 86400;
+      var hours = Math.floor(totalSec / 3600);
+      totalSec %= 3600;
+      var mins = Math.floor(totalSec / 60);
+      var secs = totalSec % 60;
+
+      if (countdownEl) {
+        var daysEl = qs(countdownEl, '[data-ff-e36-countdown-days]');
+        var hoursEl = qs(countdownEl, '[data-ff-e36-countdown-hours]');
+        var minsEl = qs(countdownEl, '[data-ff-e36-countdown-minutes]');
+        var secsEl = qs(countdownEl, '[data-ff-e36-countdown-seconds]');
+        if (daysEl) daysEl.textContent = padCount(days);
+        if (hoursEl) hoursEl.textContent = padCount(hours);
+        if (minsEl) minsEl.textContent = padCount(mins);
+        if (secsEl) secsEl.textContent = padCount(secs);
+      }
+      return false;
+    }
+
+    setLiveState(live);
+    if (!live) {
+      updateCountdown();
+      timerId = setInterval(updateCountdown, 1000);
+    } else if (countdownEl) {
+      countdownEl.hidden = true;
+    }
+
+    return {
+      isLive: function () {
+        if (!enabled || !targetMs || isNaN(targetMs)) return true;
+        return live || Date.now() >= targetMs;
+      }
+    };
+  }
+
+  function syncCheckoutLabels(root, launch) {
+    var checkoutBtn = qs(root, '[data-ff-e36-checkout-cta]');
+    if (!checkoutBtn) return;
+    var liveLabel = root.getAttribute('data-ff-e36-checkout-label') || checkoutBtn.textContent.trim();
+    var lockedLabel = root.getAttribute('data-ff-e36-locked-checkout-label') || 'ENTRIES OPEN SOON';
+    checkoutBtn.textContent = launch.isLive() ? liveLabel : lockedLabel;
+
+    var launchNote = qs(root, '[data-ff-e36-launch-note]');
+    var checkoutNote = qs(root, '[data-ff-e36-checkout-note]');
+    if (launchNote) launchNote.hidden = launch.isLive();
+    if (checkoutNote) checkoutNote.hidden = !launch.isLive();
+  }
+
+  function setQtyLocked(root, locked) {
+    var wrap = qs(root, '[data-ff-e36-qty]');
+    if (!wrap) return;
+    wrap.classList.toggle('is-locked', locked);
   }
 
   function syncHiddenFields(root, checked) {
@@ -286,31 +388,41 @@
     initGallery(root);
     initQty(root);
 
+    var launch = initLaunchCountdown(root);
     var checkbox = qs(root, '[data-ff-e36-terms]');
     var form = qs(root, '[data-ff-e36-form]');
     var err = qs(root, '[data-ff-e36-terms-error]');
 
     function refresh() {
-      var ok = !!(checkbox && checkbox.checked);
-      setCtaEnabled(root, ok);
-      syncHiddenFields(root, ok);
+      var termsOk = !!(checkbox && checkbox.checked);
+      var canCheckout = termsOk && launch.isLive();
+      setCtaEnabled(root, canCheckout);
+      setQtyLocked(root, !launch.isLive());
+      syncCheckoutLabels(root, launch);
+      syncHiddenFields(root, termsOk && launch.isLive());
       if (err) {
         err.hidden = true;
         err.textContent = '';
       }
       if (checkbox) {
-        checkbox.setAttribute('aria-invalid', ok ? 'false' : 'true');
+        checkbox.setAttribute('aria-invalid', canCheckout ? 'false' : 'true');
       }
     }
+
+    root.addEventListener('ff-e36-launch-live', refresh);
 
     if (checkbox) {
       checkbox.addEventListener('change', function () {
         refresh();
-        updateCartAttributes(root, checkbox.checked);
+        if (launch.isLive()) {
+          updateCartAttributes(root, checkbox.checked);
+        }
       });
       refresh();
     } else {
-      setCtaEnabled(root, true);
+      setCtaEnabled(root, launch.isLive());
+      setQtyLocked(root, !launch.isLive());
+      syncCheckoutLabels(root, launch);
     }
 
     qsa(root, '[data-ff-e36-scroll-entry]').forEach(function (btn) {
@@ -394,6 +506,23 @@
 
     if (form) {
       form.addEventListener('submit', function (e) {
+        if (!launch.isLive()) {
+          e.preventDefault();
+          if (err) {
+            err.hidden = false;
+            err.textContent = 'Entries are not open yet. Please wait for the countdown to finish.';
+          }
+          var countdown = qs(root, '[data-ff-e36-countdown]');
+          if (countdown) {
+            try {
+              countdown.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } catch (scrollErr) {
+              countdown.scrollIntoView(true);
+            }
+          }
+          return false;
+        }
+
         if (checkbox && !checkbox.checked) {
           e.preventDefault();
           if (err) {
