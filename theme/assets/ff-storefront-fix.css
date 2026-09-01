@@ -3,15 +3,23 @@
   display: none !important;
 }
 
-/* Cart / drawer line-item properties: one label+value per row with spacing */
+/*
+  Cart / drawer line-item properties.
+  Avoid max-content + nowrap on long labels — that left the value column
+  only a few pixels wide and wrapped timestamps character-by-character.
+*/
 .cart-item-properties,
 .previewCartItem-properties,
 .quickCartWrap .card-properties {
   display: grid !important;
-  grid-template-columns: max-content minmax(0, 1fr) !important;
-  column-gap: 10px !important;
-  row-gap: 6px !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) !important;
+  column-gap: 12px !important;
+  row-gap: 8px !important;
+  align-items: start !important;
   flex-wrap: unset !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .cart-item-properties .definitionList-key,
@@ -22,13 +30,18 @@
 .quickCartWrap .card-properties .definitionList-value {
   margin: 0 !important;
   padding: 0 !important;
-  line-height: 1.35 !important;
+  line-height: 1.4 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .cart-item-properties .definitionList-key,
 .previewCartItem-properties .definitionList-key,
 .quickCartWrap .card-properties .definitionList-key {
-  white-space: nowrap !important;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  word-break: normal !important;
+  font-weight: 600 !important;
 }
 
 .cart-item-properties .definitionList-value,
@@ -36,5 +49,36 @@
 .quickCartWrap .card-properties .definitionList-value {
   margin-left: 0 !important;
   min-width: 0 !important;
-  overflow-wrap: anywhere !important;
+  overflow-wrap: break-word !important;
+  word-break: normal !important;
+  hyphens: none !important;
+}
+
+/* Narrow drawers: stack label above value so long props stay readable */
+@media (max-width: 749.98px) {
+  .cart-item-properties,
+  .previewCartItem-properties,
+  .quickCartWrap .card-properties {
+    grid-template-columns: 1fr !important;
+    row-gap: 2px !important;
+  }
+
+  .cart-item-properties .definitionList-key,
+  .previewCartItem-properties .definitionList-key,
+  .quickCartWrap .card-properties .definitionList-key {
+    margin-top: 6px !important;
+  }
+
+  .cart-item-properties .definitionList-key:first-child,
+  .previewCartItem-properties .definitionList-key:first-child,
+  .quickCartWrap .card-properties .definitionList-key:first-child {
+    margin-top: 0 !important;
+  }
+
+  .cart-item-properties .definitionList-value,
+  .previewCartItem-properties .definitionList-value,
+  .quickCartWrap .card-properties .definitionList-value {
+    margin-bottom: 4px !important;
+    opacity: 0.92;
+  }
 }
