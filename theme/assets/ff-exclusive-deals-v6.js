@@ -97,7 +97,13 @@
       btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
 
-    if (specsWrap) specsWrap.hidden = specialist;
+    if (specsWrap) {
+      if (specialist) {
+        specsWrap.setAttribute('hidden', '');
+      } else {
+        specsWrap.removeAttribute('hidden');
+      }
+    }
     if (specsInput) {
       specsInput.required = !specialist;
       if (specialist) specsInput.value = '';
@@ -198,16 +204,16 @@
       sticky.hidden = !visible;
     }
 
-    if (hero && 'IntersectionObserver' in window) {
+    if (intro && 'IntersectionObserver' in window) {
       var io = new IntersectionObserver(
         function (entries) {
           entries.forEach(function (entry) {
-            showSticky(!(entry.isIntersecting && entry.intersectionRatio >= 0.4));
+            showSticky(!(entry.isIntersecting && entry.intersectionRatio >= 0.15));
           });
         },
-        { threshold: [0, 0.25, 0.4, 0.75, 1] }
+        { threshold: [0, 0.15, 0.35, 0.75, 1] }
       );
-      io.observe(hero);
+      io.observe(intro);
     } else {
       showSticky(true);
     }

@@ -787,7 +787,8 @@ html.ff-xd-modal-open {
 }
 
 .ff-xd__assist[hidden],
-.ff-xd__error[hidden] {
+.ff-xd__error[hidden],
+[data-ff-xd-specs-wrap][hidden] {
   display: none !important;
 }
 
@@ -904,6 +905,6 @@ html.ff-xd-modal-open .ff-xd__sticky {
 }
 
 
-.ff-xd__field {
+.ff-xd__field:not([hidden]) {
   display: block;
 }
