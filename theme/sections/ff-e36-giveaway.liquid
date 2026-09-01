@@ -47,12 +47,23 @@
   if terms_label == blank
     assign terms_label = 'I have read and agree to the terms and conditions'
   endif
+
+  assign launch_countdown_enabled = section.settings.launch_countdown_enabled
+  assign launch_at_iso = section.settings.launch_at_iso | default: '2026-09-12T12:00:00-07:00'
+  assign launch_countdown_eyebrow = section.settings.launch_countdown_eyebrow | default: 'ENTRIES OPEN IN'
+  assign launch_countdown_note = section.settings.launch_countdown_note | default: 'September 12 at 12:00 PM Pacific'
+  assign launch_locked_checkout_label = section.settings.launch_locked_checkout_label | default: 'ENTRIES OPEN SOON'
+  assign launch_locked_checkout_note = section.settings.launch_locked_checkout_note | default: 'Checkout unlocks when the countdown ends.'
 -%}
 
   <section
     class="ff-e36"
     id="ff-e36-{{ section.id }}"
     data-ff-e36-giveaway
+    data-ff-e36-launch-enabled="{% if launch_countdown_enabled %}true{% else %}false{% endif %}"
+    data-ff-e36-launch-at="{{ launch_at_iso | escape }}"
+    data-ff-e36-checkout-label="{{ checkout_label | escape }}"
+    data-ff-e36-locked-checkout-label="{{ launch_locked_checkout_label | escape }}"
     {{ section.shopify_attributes }}
   >
     {%- comment -%} 1) Full-bleed video + brand + GET MY ENTRY {%- endcomment -%}
@@ -87,6 +98,33 @@
           </div>
         {%- endif -%}
       </div>
+
+      {%- if launch_countdown_enabled -%}
+        <div class="ff-e36__countdown" data-ff-e36-countdown aria-live="polite">
+          <p class="ff-e36__countdown-eyebrow">{{ launch_countdown_eyebrow | escape }}</p>
+          <div class="ff-e36__countdown-grid" role="timer">
+            <div class="ff-e36__countdown-unit">
+              <span class="ff-e36__countdown-value" data-ff-e36-countdown-days>00</span>
+              <span class="ff-e36__countdown-label">Days</span>
+            </div>
+            <div class="ff-e36__countdown-unit">
+              <span class="ff-e36__countdown-value" data-ff-e36-countdown-hours>00</span>
+              <span class="ff-e36__countdown-label">Hours</span>
+            </div>
+            <div class="ff-e36__countdown-unit">
+              <span class="ff-e36__countdown-value" data-ff-e36-countdown-minutes>00</span>
+              <span class="ff-e36__countdown-label">Minutes</span>
+            </div>
+            <div class="ff-e36__countdown-unit">
+              <span class="ff-e36__countdown-value" data-ff-e36-countdown-seconds>00</span>
+              <span class="ff-e36__countdown-label">Seconds</span>
+            </div>
+          </div>
+          {%- if launch_countdown_note != blank -%}
+            <p class="ff-e36__countdown-note">{{ launch_countdown_note | escape }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
 
       <div class="ff-e36__cta-bar" data-ff-e36-hero-cta>
         <div class="ff-e36__hero-copy">
@@ -324,11 +362,16 @@
             </div>
           </div>
 
-          <button type="submit" class="ff-e36__cta ff-e36__cta--checkout" data-ff-e36-cta disabled aria-disabled="true">
+          <button type="submit" class="ff-e36__cta ff-e36__cta--checkout" data-ff-e36-cta disabled aria-disabled="true" data-ff-e36-checkout-cta>
             {{ checkout_label | escape }}
           </button>
+          {%- if launch_countdown_enabled -%}
+            <p class="ff-e36__cta-note ff-e36__launch-note" data-ff-e36-launch-note hidden>
+              {{ launch_locked_checkout_note | escape }}
+            </p>
+          {%- endif -%}
           {%- if section.settings.checkout_note != blank -%}
-            <p class="ff-e36__cta-note">{{ section.settings.checkout_note | escape }}</p>
+            <p class="ff-e36__cta-note" data-ff-e36-checkout-note>{{ section.settings.checkout_note | escape }}</p>
           {%- endif -%}
 
           <div class="ff-e36__terms">
@@ -499,6 +542,48 @@
       "id": "cta_note",
       "label": "Note under GET MY ENTRY",
       "default": "Takes less than 60 seconds · Limited-time giveaway"
+    },
+    {
+      "type": "header",
+      "content": "Launch countdown (hype mode)"
+    },
+    {
+      "type": "checkbox",
+      "id": "launch_countdown_enabled",
+      "label": "Lock checkout until launch time",
+      "default": true,
+      "info": "Turn OFF on launch day (or after) to restore normal checkout immediately — no code change needed."
+    },
+    {
+      "type": "text",
+      "id": "launch_at_iso",
+      "label": "Launch date & time (Pacific)",
+      "default": "2026-09-12T12:00:00-07:00",
+      "info": "ISO format with Pacific offset. Sept 12 2026 noon = 2026-09-12T12:00:00-07:00 (PDT). Checkout unlocks automatically when this time passes."
+    },
+    {
+      "type": "text",
+      "id": "launch_countdown_eyebrow",
+      "label": "Countdown eyebrow",
+      "default": "ENTRIES OPEN IN"
+    },
+    {
+      "type": "text",
+      "id": "launch_countdown_note",
+      "label": "Countdown note",
+      "default": "September 12 at 12:00 PM Pacific"
+    },
+    {
+      "type": "text",
+      "id": "launch_locked_checkout_label",
+      "label": "Checkout button label (before launch)",
+      "default": "ENTRIES OPEN SOON"
+    },
+    {
+      "type": "text",
+      "id": "launch_locked_checkout_note",
+      "label": "Note under checkout button (before launch)",
+      "default": "Checkout unlocks when the countdown ends."
     },
     {
       "type": "header",
