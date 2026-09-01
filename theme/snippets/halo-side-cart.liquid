@@ -18,10 +18,12 @@
                     {%- liquid
                         assign current_variant = item.product.selected_or_first_available_variant
                     -%}
-                    <li class="previewCartItem clearfix" data-cart-item>
+                    <li class="previewCartItem clearfix{% if item.image == blank %} previewCartItem--no-image{% endif %}" data-cart-item>
+                        {%- if item.image != blank -%}
                         <a href="{{ item.url }}" class="previewCartItem-image">
                             <img srcset="{{ item.image | img_url: '110x' }}" src="{{ item.image | img_url: '110x' }}" alt="{{ item.title | escape }}" sizes="110px" loading="lazy">
                         </a>
+                        {%- endif -%}
                         <div class="previewCartItem-content">
                             <a class="previewCartItem-name link-underline" href="{{ item.url }}">
                                 <span class="text">{{ item.product.title }}</span>
@@ -98,42 +100,6 @@
                 {%- endfor -%}
             </ul>
         </div>
-        {%- if settings.show_quick_cart_popular_product -%}
-            {%- liquid
-                assign collection = collections[settings.quick_cart_popular_product_collection]
-                assign limit = settings.quick_cart_popular_product_show
-                assign show_dots = settings.quick_cart_popular_product_dots
-                assign show_arrows = settings.quick_cart_popular_product_arrows
-            -%}
-            <div class="previewCartCollection">
-                {% if settings.quick_cart_popular_product_title != blank %}
-                    <div class="previewCartTitle text-left">
-                        {{ settings.quick_cart_popular_product_title | escape }}         
-                    </div>
-                {% endif %}
-                <div class="previewCartProduct" data-product-collection-cart>
-                    <div class="previewCartCarousel products-carousel" data-item-dots="{{ show_dots }}" data-item-arrows="{{ show_arrows }}"
-                    >
-                        {%- for product in collection.products limit: limit -%}
-                            <div class="product">
-                                {% render 'product-card-custom-2',
-                                    product_card_product: product
-                                %}
-                            </div>
-                        {%- else -%}
-                            {%- for product in (1..limit) -%}
-                                <div class="product">
-                                    {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-                                    {% render 'product-card-custom-placeholder-2',
-                                        index: current
-                                    %}
-                                </div>
-                            {%- endfor -%}
-                        {%- endfor -%}
-                    </div>
-                </div>
-            </div>
-        {%- endif -%}
         <div class="previewCartInfo">
             <ul class="previewCartTotalsPrice list-unstyled">
                 <li class="previewCartTotals subTotal clearfix">

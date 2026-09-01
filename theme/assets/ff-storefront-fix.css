@@ -1,4 +1,13 @@
-/* About live-fix helpers */
+.previewCartItem--no-image .previewCartItem-content {
+  width: 100% !important;
+  padding-left: 0 !important;
+}
+
+.halo-cart-sidebar .previewCartCollection,
+.quickCartWrap .previewCartCollection {
+  display: none !important;
+}
+
 .ff-about__story-video-hint {
   display: none !important;
 }
