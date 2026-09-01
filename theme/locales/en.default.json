@@ -318,7 +318,7 @@
       "note_placeholder": "Special instructions for seller...",
       "continue_shopping": "Continue Shopping",
       "shipping": "Shipping",
-      "shipping_text": "Taxes and shipping fee will be calculated at checkout",
+      "shipping_text": "Taxes and shipping fee will be calculated at checkout if applicable",
       "empty": "Your cart is empty",
       "cart_error": "There was an error while updating your cart. Please try again.",
       "cart_quantity_error_html": "You can only add [quantity] of this item to your cart.",
