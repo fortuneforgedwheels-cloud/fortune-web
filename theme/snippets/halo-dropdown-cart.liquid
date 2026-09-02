@@ -260,40 +260,4 @@
             </div>>
         {%- endunless -%}
     </div>
-    {%- if settings.show_quick_cart_popular_product -%}
-        {%- liquid
-            assign collection = collections[settings.quick_cart_popular_product_collection]
-            assign limit = settings.quick_cart_popular_product_show
-            assign show_dots = settings.quick_cart_popular_product_dots
-            assign show_arrows = settings.quick_cart_popular_product_arrows
-        -%}
-        <div class="previewCartCollection">
-            {%- if settings.quick_cart_popular_product_title != blank -%}
-                <div class="previewCartTitle text-left">
-                    {{ settings.quick_cart_popular_product_title | escape }}         
-                </div>
-            {%- endif -%}
-            <div class="previewCartProduct" data-product-collection-cart>
-                <div class="previewCartCarousel products-carousel" data-item-dots="{{ show_dots }}" data-item-arrows="{{ show_arrows }}"
-                >
-                    {%- for product in collection.products limit: limit -%}
-                        <div class="product">
-                            {% render 'product-card-custom',
-                                product_card_product: product
-                            %}
-                        </div>
-                    {%- else -%}
-                        {%- for product in (1..limit) -%}
-                            <div class="product">
-                                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-                                {% render 'product-card-custom-placeholder',
-                                    index: current
-                                %}
-                            </div>
-                        {%- endfor -%}
-                    {%- endfor -%}
-                </div>
-            </div>
-        </div>
-    {%- endif -%}
 </div>

@@ -1,5 +1,5 @@
-{{ 'ff-exclusive-deals-v4.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'ff-exclusive-deals-v5.js' | asset_url }}" defer></script>
+{{ 'ff-exclusive-deals-v5.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ff-exclusive-deals-v6.js' | asset_url }}" defer></script>
 
 {%- liquid
   assign brand_title = section.settings.heading | default: 'Exclusive deals'
@@ -11,6 +11,12 @@
   assign brushed_finishes = 'Brushed Clear (#1 Best Seller),Brushed Titanium,Brushed Bronze,Brushed Champagne,Brushed Light Gold,Brushed Gunmetal,Brushed Graphite,Brushed Black,Brushed Silver,Brushed Copper' | split: ','
   assign polished_finishes = 'Polished' | split: ','
   assign specs_example = section.settings.specs_example | default: 'Front: 20x10 ET10 / Rear 20x11 ET12'
+
+  assign hero_offer_suffix = section.settings.hero_offer_suffix | default: 'EVENT PRICE · COMPLETE SET OF 4 · SHIPPING INCLUDED'
+  assign sticky_browse_label = section.settings.sticky_browse_label | default: 'CHOOSE DESIGN'
+  assign sticky_continue_label = section.settings.sticky_continue_label | default: 'CONTINUE'
+  assign path_specialist_badge = section.settings.path_specialist_badge | default: 'RECOMMENDED'
+  assign cta_reassure = section.settings.cta_reassure | default: 'Complete set of 4 · Shipping included · Fitment confirmed by Fortune Forged'
 
   assign deal_price_cents = section.settings.deal_price | times: 100
   assign compare_price_cents = section.settings.compare_at_price | times: 100
@@ -38,6 +44,10 @@
   data-ff-exclusive-deals
   data-money-format="{{ shop.money_format | escape }}"
   data-full-set-label="{{ section.settings.full_set_label | default: 'Full set' | escape }}"
+  data-deal-price="{{ deal_price_cents }}"
+  data-deal-price-money="{{ deal_price_cents | money | escape }}"
+  data-sticky-browse="{{ sticky_browse_label | escape }}"
+  data-sticky-continue="{{ sticky_continue_label | escape }}"
   {{ section.shopify_attributes }}
 >
   <div class="ff-xd__hero">
@@ -69,17 +79,26 @@
       {%- endif -%}
     </div>
     <div class="ff-xd__hero-shade" aria-hidden="true"></div>
-    <div class="ff-xd__hero-copy">
-      {%- if section.settings.eyebrow != blank -%}
-        <p class="ff-xd__eyebrow">{{ section.settings.eyebrow | escape }}</p>
-      {%- endif -%}
-      <h1 class="ff-xd__title">{{ brand_title | escape }}</h1>
-      {%- if section.settings.description != blank -%}
-        <div class="ff-xd__lede">{{ section.settings.description }}</div>
-      {%- elsif request.design_mode -%}
-        <p class="ff-xd__lede">Add a description and hero video in this section’s settings.</p>
-      {%- endif -%}
+    <div class="ff-xd__hero-cta">
+      <a class="ff-xd__hero-jump" href="#ff-xd-deals" data-ff-xd-jump-deals>CHOOSE DESIGN</a>
     </div>
+  </div>
+
+  <div class="ff-xd__hero-copy">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ff-xd__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
+    <h1 class="ff-xd__title">{{ brand_title | escape }}</h1>
+    <p class="ff-xd__offer">
+      <span class="ff-xd__offer-price">{{ deal_price_cents | money }}</span>
+      <span class="ff-xd__offer-sep" aria-hidden="true"> · </span>
+      <span class="ff-xd__offer-meta">{{ hero_offer_suffix | escape }}</span>
+    </p>
+    {%- if section.settings.description != blank -%}
+      <div class="ff-xd__lede">{{ section.settings.description }}</div>
+    {%- else -%}
+      <p class="ff-xd__lede">Choose a design. Pick your finish and fitment. Checkout today.</p>
+    {%- endif -%}
   </div>
 
   <div class="ff-xd__deals" id="ff-xd-deals">
@@ -90,9 +109,6 @@
             <p class="ff-xd__eyebrow">{{ section.settings.deals_eyebrow | escape }}</p>
           {%- endif -%}
           <h2 class="ff-xd__deals-heading">{{ section.settings.deals_heading | escape }}</h2>
-          {%- if section.settings.deals_copy != blank -%}
-            <p class="ff-xd__deals-copy">{{ section.settings.deals_copy | escape }}</p>
-          {%- endif -%}
         </header>
       {%- endif -%}
 
@@ -149,7 +165,7 @@
                       class: 'ff-xd__card-img',
                       loading: 'lazy',
                       widths: '400, 600, 800, 1200',
-                      sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw',
+                      sizes: '(min-width: 750px) 33vw, 50vw',
                       alt: deal_title
                   }}
                 {%- else -%}
@@ -159,20 +175,13 @@
 
               <div class="ff-xd__card-body">
                 <h3 class="ff-xd__card-title">{{ deal_title | default: 'Monoblock design' | escape }}</h3>
-                {%- if deal_blurb != blank -%}
-                  <p class="ff-xd__card-blurb">{{ deal_blurb | escape }}</p>
-                {%- elsif deal != blank and deal.description != blank -%}
-                  <p class="ff-xd__card-blurb">{{ deal.description | strip_html | truncate: 120 }}</p>
-                {%- endif -%}
-
                 {%- if deal != blank -%}
                   <div class="ff-xd__card-footer">
                     <div class="ff-xd__price-stack">
                       <p class="ff-xd__compare-price">{{ compare_price_cents | money }}</p>
                       <p class="ff-xd__deal-price">{{ deal_price_cents | money }}</p>
-                      <p class="ff-xd__set-note">{{ section.settings.full_set_label | default: 'Full set' | escape }}</p>
                     </div>
-                    <span class="ff-xd__select-cta">{{ section.settings.card_cta | default: 'Select design' | escape }}</span>
+                    <span class="ff-xd__select-cta">{{ section.settings.card_cta | default: 'SELECT' | escape }}</span>
                   </div>
                 {%- else -%}
                   <p class="ff-xd__missing">
@@ -205,8 +214,8 @@
     class="ff-xd__modal"
     id="ff-xd-modal-{{ section.id }}"
     data-ff-xd-modal
-    data-submit-specialist-label="{{ section.settings.submit_specialist_label | default: 'Add full set to cart' | escape }}"
-    data-submit-specs-label="{{ section.settings.submit_specs_label | default: 'Add full set to cart' | escape }}"
+    data-submit-specialist-label="{{ section.settings.submit_specialist_label | default: 'ADD FULL SET' | escape }} — {{ deal_price_cents | money | escape }}"
+    data-submit-specs-label="{{ section.settings.submit_specs_label | default: 'ADD FULL SET' | escape }} — {{ deal_price_cents | money | escape }}"
     hidden
     role="dialog"
     aria-modal="true"
@@ -227,9 +236,8 @@
           <div class="ff-xd__modal-price" aria-label="Deal pricing">
             <span class="ff-xd__compare-price">{{ compare_price_cents | money }}</span>
             <span class="ff-xd__deal-price">{{ deal_price_cents | money }}</span>
-            <span class="ff-xd__price-today">{{ section.settings.today_price_label | default: "Today’s price" | escape }}</span>
           </div>
-          <p class="ff-xd__dialog-lead">{{ section.settings.modal_lead | default: 'One add-to-cart = the full set. Same exclusive price on every design. Choose finish + fitment path, then checkout.' | escape }}</p>
+          <p class="ff-xd__price-today">EVENT PRICE · SET OF 4 · SHIPPING INCLUDED</p>
         </div>
       </div>
 
@@ -248,9 +256,10 @@
             data-ff-xd-help-mode="specialist"
             aria-pressed="true"
           >
+            <span class="ff-xd__choice-badge">{{ path_specialist_badge | escape }}</span>
             <span>
               <strong>{{ section.settings.path_specialist_title | default: 'Let a specialist handle it' | escape }}</strong>
-              <em>{{ section.settings.path_specialist_copy | default: 'Pick a finish and your vehicle — we’ll follow up after checkout to sort proper fitment.' | escape }}</em>
+              <em>{{ section.settings.path_specialist_copy | default: 'Pick a finish and your vehicle — we’ll confirm perfect fitment after checkout.' | escape }}</em>
             </span>
           </button>
           <button
@@ -370,26 +379,39 @@
           </div>
 
           <div class="ff-xd__field ff-xd__field--full">
-            <label class="ff-xd__label" for="ff-xd-notes-{{ section.id }}">Notes</label>
+            <label class="ff-xd__label" for="ff-xd-notes-{{ section.id }}">Notes — optional</label>
             <textarea
               class="ff-xd__input ff-xd__textarea"
               id="ff-xd-notes-{{ section.id }}"
               data-ff-xd-notes
-              rows="3"
+              rows="2"
               placeholder="{{ section.settings.notes_placeholder | default: 'Anything else about your build (optional).' | escape }}"
             ></textarea>
           </div>
         </div>
 
-        <p class="ff-xd__assist" data-ff-xd-assist>
-          {{ section.settings.specialist_note | default: 'Adds 1 full set to cart at today’s exclusive price. A specialist will follow up after checkout to confirm fitment.' | escape }}
-        </p>
-        <p class="ff-xd__error" data-ff-xd-error hidden role="alert"></p>
-
-        <button type="submit" class="ff-xd__submit" data-ff-xd-submit>
-          {{ section.settings.submit_specialist_label | default: 'Add full set to cart' | escape }}
-        </button>
+        <div class="ff-xd__checkout-bar">
+          <p class="ff-xd__reassure">{{ cta_reassure | escape }}</p>
+          <p class="ff-xd__assist" data-ff-xd-assist hidden>
+            {{ section.settings.specialist_note | default: 'Adds 1 full set to cart at today’s exclusive price. A specialist will follow up after checkout to confirm fitment.' | escape }}
+          </p>
+          <p class="ff-xd__error" data-ff-xd-error hidden role="alert"></p>
+          <button type="submit" class="ff-xd__submit" data-ff-xd-submit>
+            {{ section.settings.submit_specialist_label | default: 'ADD FULL SET' | escape }} — {{ deal_price_cents | money }}
+          </button>
+        </div>
       </form>
+    </div>
+  </div>
+  <div class="ff-xd__sticky" data-ff-xd-sticky data-mode="browse" hidden>
+    <div class="ff-xd__sticky-inner">
+      <p class="ff-xd__sticky-bid">
+        <span data-ff-xd-sticky-meta>EVENT PRICE</span>
+        <span data-ff-xd-sticky-price>{{ deal_price_cents | money }}</span>
+      </p>
+      <button type="button" class="ff-xd__sticky-cta" data-ff-xd-sticky-cta>
+        {{ sticky_browse_label | escape }}
+      </button>
     </div>
   </div>
 </section>
@@ -409,7 +431,7 @@
       "type": "video",
       "id": "hero_video",
       "label": "Hero video (MP4)",
-      "info": "Full-bleed autoplay video at the top of the page. Theme Editor media wins — re-select after theme updates if it goes blank."
+      "info": "Full-bleed autoplay video at the top of the page. Theme Editor media wins \u2014 re-select after theme updates if it goes blank."
     },
     {
       "type": "image_picker",
@@ -421,19 +443,19 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "PRIVATE ACCESS"
+      "default": "INVASION ACCESS ONLY"
     },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Exclusive deals"
+      "default": "YOUR NEXT SET. 40% OFF."
     },
     {
       "type": "richtext",
       "id": "description",
       "label": "Description",
-      "default": "<p>Private monoblock deals — pick a design and add the full set to cart at today’s exclusive price.</p>"
+      "default": "<p>Choose a design. Pick your finish and fitment. Checkout today.</p>"
     },
     {
       "type": "header",
@@ -449,15 +471,15 @@
     {
       "type": "number",
       "id": "deal_price",
-      "label": "Today’s deal price",
+      "label": "Today\u2019s deal price",
       "default": 2050,
-      "info": "Shown as today’s price. Checkout uses the Full-set checkout product below — keep that product priced the same."
+      "info": "Shown as today\u2019s price. Checkout uses the Full-set checkout product below \u2014 keep that product priced the same."
     },
     {
       "type": "text",
       "id": "today_price_label",
-      "label": "Today’s price label",
-      "default": "Today’s price"
+      "label": "Today\u2019s price label",
+      "default": "Today\u2019s price"
     },
     {
       "type": "text",
@@ -469,7 +491,7 @@
       "type": "product",
       "id": "checkout_product",
       "label": "Full-set checkout product",
-      "info": "ONE line item added to cart for any design. Price this product at today’s deal price with compare-at set to the original. Default handle: exclusive-deals-full-set"
+      "info": "ONE line item added to cart for any design. Price this product at today\u2019s deal price with compare-at set to the original. Default handle: exclusive-deals-full-set"
     },
     {
       "type": "header",
@@ -497,7 +519,7 @@
       "type": "text",
       "id": "card_cta",
       "label": "Card CTA",
-      "default": "Select design"
+      "default": "SELECT"
     },
     {
       "type": "text",
@@ -531,7 +553,7 @@
       "type": "text",
       "id": "path_specialist_copy",
       "label": "Specialist path description",
-      "default": "Pick a finish and your vehicle — we’ll follow up after checkout to sort proper fitment."
+      "default": "Pick a finish and your vehicle \u2014 we\u2019ll confirm perfect fitment after checkout."
     },
     {
       "type": "text",
@@ -589,19 +611,53 @@
       "type": "textarea",
       "id": "specialist_note",
       "label": "Specialist assist note",
-      "default": "Adds 1 full set to cart at today’s exclusive price. A specialist will follow up after checkout to confirm fitment."
+      "default": "Adds 1 full set to cart at today\u2019s exclusive price. A specialist will follow up after checkout to confirm fitment."
     },
     {
       "type": "text",
       "id": "submit_specialist_label",
       "label": "Add to cart label (specialist)",
-      "default": "Add full set to cart"
+      "default": "ADD FULL SET"
     },
     {
       "type": "text",
       "id": "submit_specs_label",
       "label": "Add to cart label (specs)",
-      "default": "Add full set to cart"
+      "default": "ADD FULL SET"
+    },
+    {
+      "type": "header",
+      "content": "Event UI labels"
+    },
+    {
+      "type": "text",
+      "id": "hero_offer_suffix",
+      "label": "Hero offer suffix",
+      "default": "EVENT PRICE \u00b7 COMPLETE SET OF 4 \u00b7 SHIPPING INCLUDED"
+    },
+    {
+      "type": "text",
+      "id": "sticky_browse_label",
+      "label": "Sticky bar browse CTA",
+      "default": "CHOOSE DESIGN"
+    },
+    {
+      "type": "text",
+      "id": "sticky_continue_label",
+      "label": "Sticky bar continue CTA",
+      "default": "CONTINUE"
+    },
+    {
+      "type": "text",
+      "id": "path_specialist_badge",
+      "label": "Specialist path badge",
+      "default": "RECOMMENDED"
+    },
+    {
+      "type": "text",
+      "id": "cta_reassure",
+      "label": "CTA reassurance line",
+      "default": "Complete set of 4 \u00b7 Shipping included \u00b7 Fitment confirmed by Fortune Forged"
     }
   ],
   "blocks": [
@@ -643,13 +699,27 @@
     {
       "name": "Exclusive Deals",
       "blocks": [
-        { "type": "deal" },
-        { "type": "deal" },
-        { "type": "deal" },
-        { "type": "deal" },
-        { "type": "deal" },
-        { "type": "deal" },
-        { "type": "deal" }
+        {
+          "type": "deal"
+        },
+        {
+          "type": "deal"
+        },
+        {
+          "type": "deal"
+        },
+        {
+          "type": "deal"
+        },
+        {
+          "type": "deal"
+        },
+        {
+          "type": "deal"
+        },
+        {
+          "type": "deal"
+        }
       ]
     }
   ]
