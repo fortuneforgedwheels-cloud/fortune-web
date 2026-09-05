@@ -1258,6 +1258,15 @@
                                               ymm_model_placeholder: ff_certified_model_ph
                                             %}
                                         {%- endif -%}
+                                        {%- comment -%}
+                                          Non-certified wheels without SIZE/Diameter variants still need
+                                          a diameter choice (e.g. FF-06 beadlock before variants restored).
+                                        {%- endcomment -%}
+                                        {% render 'ff-diameter-fallback',
+                                          product: product,
+                                          form_id: ff_826m_form_id,
+                                          ff_certified_beadlock: ff_certified_beadlock
+                                        %}
                                         {%- if variantCount > 0 and product.has_only_default_variant != true -%}
                                             {%- liquid
                                                 assign padding_top = block.settings.padding_top

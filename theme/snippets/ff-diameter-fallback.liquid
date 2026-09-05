@@ -1,0 +1,55 @@
+{%- comment -%}
+  Fallback Diameter picker for wheel PDPs that are NOT Fortune Certified
+  and do not already expose a Shopify SIZE / Diameter option.
+
+  Renders a required line-item property so custom-spec orders always
+  capture diameter even when product variants were never configured.
+{%- endcomment -%}
+{%- liquid
+  assign ff_needs_diameter = false
+  assign ff_has_size_option = false
+
+  for option in product.options_with_values
+    assign option_name = option.name | downcase | strip
+    if option_name == 'size' or option_name == 'diameter'
+      assign ff_has_size_option = true
+    endif
+  endfor
+
+  unless ff_has_size_option
+    if product.tags contains 'BEADLOCK' or product.tags contains 'beadlock' or product.tags contains 'MONOBLOCK' or product.tags contains 'monoblock' or product.tags contains 'FF'
+      assign ff_needs_diameter = true
+    endif
+  endunless
+
+  if ff_certified_beadlock
+    assign ff_needs_diameter = false
+  endif
+-%}
+{%- if ff_needs_diameter -%}
+  <div class="ff-diameter-fallback productView-variants halo-productOptions element-spacing" data-ff-diameter-fallback>
+    <div class="product-form__input product-form__input--dropdown" data-product-attribute="set-select">
+      <label class="form__label" for="ff-diameter-fallback-{{ product.id }}">
+        Diameter:
+      </label>
+      <div class="form__select select">
+        <select
+          id="ff-diameter-fallback-{{ product.id }}"
+          class="select__select"
+          name="properties[Diameter]"
+          required
+          form="{{ form_id }}"
+        >
+          <option value="" selected disabled>Select diameter</option>
+          <option value="15&quot;">15"</option>
+          <option value="17&quot;">17"</option>
+          <option value="18&quot;">18"</option>
+          <option value="19&quot;">19"</option>
+          <option value="20&quot;">20"</option>
+          <option value="21&quot;">21"</option>
+          <option value="22&quot;">22"</option>
+        </select>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
