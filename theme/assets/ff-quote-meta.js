@@ -1,10 +1,13 @@
 /**
- * Fortune Forged Build Quote → Meta Lead + QuoteSubmitted
+ * Fortune Forged Build Quote → Meta Lead + quotesubmitted
  *
  * Fires ONLY after Shopify server-confirmed success:
  *   form.posted_successfully? → [data-ff-quote-success]
  *
- * Uses existing window.fbq from Shopify Facebook/Instagram (Web Pixels).
+ * Wiring:
+ *   1) Shopify.analytics.publish('quotesubmitted') for Web Pixels / Custom Pixel
+ *   2) window.fbq('trackCustom', 'quotesubmitted') when classic fbq exists
+ *
  * Does NOT init/reinstall the Pixel. Does NOT send value/revenue.
  */
 (function () {
@@ -148,17 +151,53 @@
     safeRemove(PENDING_KEY);
   }
 
-  function fireMetaEvents(eventId) {
-    if (typeof window.fbq !== 'function') return false;
-    var payload = {
+  function buildPayload() {
+    return {
       content_name: 'Quote Request',
       form_name: FORM_NAME,
       lead_type: 'website_quote',
     };
+  }
+
+  function publishShopifyQuoteEvent(eventId, payload) {
+    try {
+      if (
+        !window.Shopify ||
+        !window.Shopify.analytics ||
+        typeof window.Shopify.analytics.publish !== 'function'
+      ) {
+        return false;
+      }
+      window.Shopify.analytics.publish('quotesubmitted', {
+        content_name: payload.content_name,
+        form_name: payload.form_name,
+        lead_type: payload.lead_type,
+        event_id: eventId,
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function fireFbqQuoteEvents(eventId, payload) {
+    if (typeof window.fbq !== 'function') return false;
     var options = { eventID: eventId };
     window.fbq('track', 'Lead', payload, options);
-    window.fbq('trackCustom', 'QuoteSubmitted', payload, options);
+    window.fbq('trackCustom', 'quotesubmitted', payload, options);
     return true;
+  }
+
+  function fireMetaEvents(eventId) {
+    var payload = buildPayload();
+    var published = publishShopifyQuoteEvent(eventId, payload);
+    var tracked = false;
+    try {
+      tracked = fireFbqQuoteEvents(eventId, payload);
+    } catch (e) {
+      tracked = false;
+    }
+    return published || tracked;
   }
 
   function tryFireFromServerSuccess() {
@@ -182,14 +221,12 @@
     function attempt() {
       attempts += 1;
       try {
-        if (typeof window.fbq === 'function') {
-          if (wasFired(pending.eventId)) {
-            safeRemove(PENDING_KEY);
-            return;
-          }
-          if (fireMetaEvents(pending.eventId)) {
-            markFired(pending.eventId);
-          }
+        if (wasFired(pending.eventId)) {
+          safeRemove(PENDING_KEY);
+          return;
+        }
+        if (fireMetaEvents(pending.eventId)) {
+          markFired(pending.eventId);
           return;
         }
       } catch (e) {
