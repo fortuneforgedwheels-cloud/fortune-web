@@ -276,7 +276,9 @@
   </script>
 {%- endif -%}
 
-{% render 'ff-shop-by-vehicle-bar' %}
+{%- if section.settings.show_shop_by_vehicle_bar -%}
+  {% render 'ff-shop-by-vehicle-bar' %}
+{%- endif -%}
 
 {% schema %}
 {
@@ -289,6 +291,13 @@
       "id": "show_hero",
       "label": "Show hero",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shop_by_vehicle_bar",
+      "label": "Show Shop by Vehicle bar under hero",
+      "default": true,
+      "info": "Turn off when Shop by Vehicle is already a separate homepage section."
     },
     {
       "type": "range",
