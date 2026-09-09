@@ -15,10 +15,18 @@
         "slide_mono": {
           "type": "slide",
           "settings": {
+            "desktop_media_type": "video",
             "video": "shopify://files/videos/Video Apr 27 2026, 9 57 19 PM.mov",
             "image": "shopify://shop_images/IMG_2176.jpg",
+            "desktop_media_fit": "cover",
+            "desktop_media_position": "center",
+            "desktop_media_zoom": 100,
+            "mobile_media_type": "video",
             "mobile_video": "shopify://files/videos/medeeee3_1_prob4.MP4",
             "mobile_image": "shopify://shop_images/BMW_F80_25MP_HighQuality.jpg",
+            "mobile_media_fit": "cover",
+            "mobile_media_position": "center",
+            "mobile_media_zoom": 100,
             "title": "Monoblock Forged",
             "title_size": 42,
             "title_align": "left",
@@ -30,10 +38,16 @@
         "slide_two": {
           "type": "slide",
           "settings": {
-            "video": "shopify://files/videos/G80 done 2.MP4",
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_6.58.56_PM.png",
-            "mobile_video": "shopify://files/videos/G80 done 2.MP4",
-            "mobile_image": "shopify://shop_images/IMG_0287_2.jpg",
+            "desktop_media_type": "image",
+            "image": "shopify://shop_images/Mediabymarius-1275.jpg",
+            "desktop_media_fit": "cover",
+            "desktop_media_position": "center",
+            "desktop_media_zoom": 100,
+            "mobile_media_type": "image",
+            "mobile_image": "shopify://shop_images/Mediabymarius-1275.jpg",
+            "mobile_media_fit": "cover",
+            "mobile_media_position": "center",
+            "mobile_media_zoom": 100,
             "title": "Two-Piece Forged",
             "title_size": 42,
             "title_align": "left",
@@ -45,10 +59,18 @@
         "slide_bead": {
           "type": "slide",
           "settings": {
+            "desktop_media_type": "image",
             "video": "shopify://files/videos/fortune 1080 rev 1.MP4",
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM_c0f745e4-4f88-4373-8d62-148cfcbbe059.png",
+            "image": "shopify://shop_images/IMG_4094.jpg",
+            "desktop_media_fit": "cover",
+            "desktop_media_position": "center",
+            "desktop_media_zoom": 100,
+            "mobile_media_type": "video",
             "mobile_video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E.mov",
             "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
+            "mobile_media_fit": "cover",
+            "mobile_media_position": "center",
+            "mobile_media_zoom": 100,
             "title": "Beadlock Forged",
             "title_size": 42,
             "title_align": "left",
@@ -70,7 +92,8 @@
         "content_h_align": "left",
         "content_v_align": "bottom",
         "content_offset_x": 0,
-        "content_offset_y": 0
+        "content_offset_y": 0,
+        "show_shop_by_vehicle_bar": false
       }
     },
     "ff_top_selling_monoblocks_home": {
@@ -625,12 +648,27 @@
       "settings": {
         "custom_liquid": ""
       }
+    },
+    "ff_shop_by_vehicle_home": {
+      "type": "ff-shop-by-vehicle",
+      "settings": {
+        "show_section": true,
+        "compact_mode": true,
+        "heading": "SHOP BY VEHICLE",
+        "go_label": "GO",
+        "go_target": "",
+        "build_url": "/pages/shop-by-vehicle?view=shop-by-vehicle-build",
+        "helper": "Select your vehicle and click GO to choose fitment, wheel style, and finish.",
+        "bar_color": "#0a0a0a",
+        "padding_y": 10
+      }
     }
   },
   "order": [
     "ff_hero_editor_always_20260801c",
-    "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
+    "ff_shop_by_vehicle_home",
+    "ff_top_selling_monoblocks_home",
     "ff_fan_favorites_main",
     "ff_value_props_main",
     "ff_trust_badges_home",
