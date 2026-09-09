@@ -1,14 +1,30 @@
+/* Meta Pixel base code — loaded in theme because Shopify APP pixel
+ * does not expose window.fbq for custom event tracking.
+ * Init uses autoConfig:false and never fires PageView/Lead here;
+ * only quotesubmitted is tracked on server-confirmed quote success.
+ */
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '957616219550824', {autoConfig: false});
+
 /**
- * Fortune Forged Build Quote → Meta Lead + quotesubmitted
+ * Fortune Forged Build Quote → quotesubmitted (Meta custom event)
  *
  * Fires ONLY after Shopify server-confirmed success:
  *   form.posted_successfully? → [data-ff-quote-success]
  *
  * Wiring:
- *   1) Shopify.analytics.publish('quotesubmitted') for Web Pixels / Custom Pixel
- *   2) window.fbq('trackCustom', 'quotesubmitted') when classic fbq exists
+ *   1) Shopify.analytics.publish('quotesubmitted') for Web Pixels
+ *   2) window.fbq('trackCustom', 'quotesubmitted') via theme-loaded pixel
  *
- * Does NOT init/reinstall the Pixel. Does NOT send value/revenue.
+ * Does NOT fire PageView/Lead. Does NOT send value/revenue.
  */
 (function () {
   if (window.__ffQuoteMetaBoot) return;
@@ -183,7 +199,6 @@
   function fireFbqQuoteEvents(eventId, payload) {
     if (typeof window.fbq !== 'function') return false;
     var options = { eventID: eventId };
-    window.fbq('track', 'Lead', payload, options);
     window.fbq('trackCustom', 'quotesubmitted', payload, options);
     return true;
   }
