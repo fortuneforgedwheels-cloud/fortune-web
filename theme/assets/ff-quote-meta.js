@@ -61,7 +61,7 @@
 
   function isQuoteForm(form) {
     if (!form || form.tagName !== 'FORM') return false;
-    if ((form.id || '').indexOf('FFQuoteForm-') === 0) return true;
+    if ((form.id || '').indexOf('FFQuoteForm-') !== 0) return false;
     var nameInput = form.querySelector('input[name="contact[form_name]"]');
     return !!(nameInput && nameInput.value === FORM_NAME);
   }
@@ -77,12 +77,13 @@
     return isQuoteForm(candidate) ? candidate : null;
   }
 
-  function hasServerConfirmedQuoteSuccess() {
+  function getServerConfirmedQuoteForm() {
     var nodes = document.querySelectorAll('[data-ff-quote-success]');
     for (var i = 0; i < nodes.length; i++) {
-      if (formNearSuccess(nodes[i])) return true;
+      var form = formNearSuccess(nodes[i]);
+      if (form) return form;
     }
-    return false;
+    return null;
   }
 
   function newEventId() {
@@ -161,10 +162,16 @@
   }
 
   function tryFireFromServerSuccess() {
-    if (!hasServerConfirmedQuoteSuccess()) return;
+    var confirmedForm = getServerConfirmedQuoteForm();
+    if (!confirmedForm) return;
 
     var pending = getValidPending();
     if (!pending) return;
+
+    if (!pending.formId || pending.formId !== confirmedForm.id) {
+      safeRemove(PENDING_KEY);
+      return;
+    }
 
     if (wasFired(pending.eventId)) {
       safeRemove(PENDING_KEY);
