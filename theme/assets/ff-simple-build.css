@@ -163,6 +163,119 @@
   line-height: 1.4;
 }
 
+.ff-build__style-browse {
+  display: block;
+  margin-top: 10px;
+  color: var(--ff-ink);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.72;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.ff-build__style:hover .ff-build__style-browse,
+.ff-build__style.is-selected .ff-build__style-browse {
+  opacity: 1;
+  color: var(--ff-gold);
+}
+
+.ff-build__wheel-browser {
+  margin: 14px 0 8px;
+  padding: 16px;
+  border: 1px solid rgba(220, 225, 230, 0.45);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.ff-build__wheel-browser-head {
+  margin-bottom: 12px;
+}
+
+.ff-build__wheel-browser-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.ff-build__wheel-browser-copy {
+  margin: 4px 0 0;
+  color: var(--ff-muted);
+  font-size: 1rem;
+}
+
+.ff-build__wheels {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  max-height: 420px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.ff-build__wheel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid var(--ff-line);
+  background: #0f0f0f;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.ff-build__wheel:hover,
+.ff-build__wheel.is-selected {
+  border-color: var(--ff-gold);
+  transform: translateY(-1px);
+}
+
+.ff-build__wheel-media {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #151515;
+}
+
+.ff-build__wheel-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ff-build__wheel-placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--ff-muted);
+  font-weight: 700;
+}
+
+.ff-build__wheel-title {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.ff-build__wheel-price {
+  display: block;
+  margin-top: 2px;
+  color: var(--ff-gold);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.ff-build__wheel-selected {
+  margin: 12px 0 0;
+  font-size: 1.05rem;
+}
+
 .ff-build__choice-prompt {
   margin: 16px 0 8px;
   color: var(--ff-ink);
@@ -467,6 +580,10 @@
   .ff-quote__grid,
   .ff-quote__picks {
     grid-template-columns: 1fr;
+  }
+
+  .ff-build__wheels {
+    grid-template-columns: 1fr 1fr;
   }
 
   .ff-build__step-label {
