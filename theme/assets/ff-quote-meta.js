@@ -1,11 +1,30 @@
+/* Meta Pixel base code — loaded in theme because Shopify APP pixel
+ * does not expose window.fbq for custom event tracking.
+ * Init uses autoConfig:false and never fires PageView/Lead here;
+ * only quotesubmitted is tracked on server-confirmed quote success.
+ */
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '957616219550824', {autoConfig: false});
+
 /**
- * Fortune Forged Build Quote → Meta Lead + QuoteSubmitted
+ * Fortune Forged Build Quote → quotesubmitted (Meta custom event)
  *
  * Fires ONLY after Shopify server-confirmed success:
  *   form.posted_successfully? → [data-ff-quote-success]
  *
- * Uses existing window.fbq from Shopify Facebook/Instagram (Web Pixels).
- * Does NOT init/reinstall the Pixel. Does NOT send value/revenue.
+ * Wiring:
+ *   1) Shopify.analytics.publish('quotesubmitted') for Web Pixels
+ *   2) window.fbq('trackCustom', 'quotesubmitted') via theme-loaded pixel
+ *
+ * Does NOT fire PageView/Lead. Does NOT send value/revenue.
  */
 (function () {
   if (window.__ffQuoteMetaBoot) return;
@@ -148,17 +167,52 @@
     safeRemove(PENDING_KEY);
   }
 
-  function fireMetaEvents(eventId) {
-    if (typeof window.fbq !== 'function') return false;
-    var payload = {
+  function buildPayload() {
+    return {
       content_name: 'Quote Request',
       form_name: FORM_NAME,
       lead_type: 'website_quote',
     };
+  }
+
+  function publishShopifyQuoteEvent(eventId, payload) {
+    try {
+      if (
+        !window.Shopify ||
+        !window.Shopify.analytics ||
+        typeof window.Shopify.analytics.publish !== 'function'
+      ) {
+        return false;
+      }
+      window.Shopify.analytics.publish('quotesubmitted', {
+        content_name: payload.content_name,
+        form_name: payload.form_name,
+        lead_type: payload.lead_type,
+        event_id: eventId,
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function fireFbqQuoteEvents(eventId, payload) {
+    if (typeof window.fbq !== 'function') return false;
     var options = { eventID: eventId };
-    window.fbq('track', 'Lead', payload, options);
-    window.fbq('trackCustom', 'QuoteSubmitted', payload, options);
+    window.fbq('trackCustom', 'quotesubmitted', payload, options);
     return true;
+  }
+
+  function fireMetaEvents(eventId) {
+    var payload = buildPayload();
+    var published = publishShopifyQuoteEvent(eventId, payload);
+    var tracked = false;
+    try {
+      tracked = fireFbqQuoteEvents(eventId, payload);
+    } catch (e) {
+      tracked = false;
+    }
+    return published || tracked;
   }
 
   function tryFireFromServerSuccess() {
@@ -182,14 +236,12 @@
     function attempt() {
       attempts += 1;
       try {
-        if (typeof window.fbq === 'function') {
-          if (wasFired(pending.eventId)) {
-            safeRemove(PENDING_KEY);
-            return;
-          }
-          if (fireMetaEvents(pending.eventId)) {
-            markFired(pending.eventId);
-          }
+        if (wasFired(pending.eventId)) {
+          safeRemove(PENDING_KEY);
+          return;
+        }
+        if (fireMetaEvents(pending.eventId)) {
+          markFired(pending.eventId);
           return;
         }
       } catch (e) {
