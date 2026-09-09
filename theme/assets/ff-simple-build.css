@@ -298,6 +298,21 @@
   margin: 8px 0 12px;
 }
 
+.ff-build__spec-grid[hidden],
+.ff-build__beadlock-qty[hidden],
+.ff-build__spec-axle[hidden] {
+  display: none !important;
+}
+
+.ff-build__beadlock-qty {
+  margin: 8px 0 16px;
+}
+
+.ff-build__spec-grid--rear-only {
+  grid-template-columns: 1fr;
+  max-width: 420px;
+}
+
 .ff-build__spec-block {
   margin: 0;
   padding: 0;

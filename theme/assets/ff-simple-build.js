@@ -77,6 +77,7 @@
       wheelPriceCents: 0,
       wheelUnit: 'wheel',
       variants: [],
+      beadlockQty: '',
       frontDiameter: '',
       rearDiameter: '',
       frontWidth: '',
@@ -148,10 +149,15 @@
     var frontWidthOptions = root.querySelector('[data-front-width-options]');
     var rearWidthOptions = root.querySelector('[data-rear-width-options]');
     var finishOptions = root.querySelector('[data-finish-options]');
+    var beadlockQtyBlock = root.querySelector('[data-beadlock-qty]');
+    var sizeSpecs = root.querySelector('[data-size-specs]');
+    var frontSpecs = root.querySelector('[data-front-specs]');
+    var rearSpecs = root.querySelector('[data-rear-specs]');
     var frontDiameterValue = root.querySelector('[data-front-diameter-value]');
     var rearDiameterValue = root.querySelector('[data-rear-diameter-value]');
     var frontWidthValue = root.querySelector('[data-front-width-value]');
     var rearWidthValue = root.querySelector('[data-rear-width-value]');
+    var beadlockQtyValue = root.querySelector('[data-beadlock-qty-value]');
     var centerCapValue = root.querySelector('[data-center-cap-value]');
     var fitmentStyleValue = root.querySelector('[data-fitment-style-value]');
     var estimateValue = root.querySelector('[data-estimate-value]');
@@ -190,7 +196,23 @@
       return !!(state.style && state.wheelTitle);
     }
 
+    function isBeadlock() {
+      return state.style === 'Beadlock' || state.wheelUnit === 'pair';
+    }
+
+    function isBeadlockPair() {
+      return isBeadlock() && state.beadlockQty === 'pair';
+    }
+
+    function isBeadlockFull() {
+      return isBeadlock() && state.beadlockQty === 'full';
+    }
+
     function canContinueSize() {
+      if (isBeadlock() && !state.beadlockQty) return false;
+      if (isBeadlockPair()) {
+        return !!(state.rearDiameter && state.rearWidth);
+      }
       return !!(state.frontDiameter && state.rearDiameter && state.frontWidth && state.rearWidth);
     }
 
@@ -198,7 +220,18 @@
       if (styleContinue) styleContinue.disabled = !canContinueStyle();
       if (styleHint) styleHint.hidden = canContinueStyle();
       if (sizeContinue) sizeContinue.disabled = !canContinueSize();
-      if (sizeHint) sizeHint.hidden = canContinueSize();
+      if (sizeHint) {
+        sizeHint.hidden = canContinueSize();
+        if (!canContinueSize()) {
+          if (isBeadlock() && !state.beadlockQty) {
+            sizeHint.textContent = 'Choose pair (2) or full set (4), then select specs.';
+          } else if (isBeadlockPair()) {
+            sizeHint.textContent = 'Select rear diameter and width to continue.';
+          } else {
+            sizeHint.textContent = 'Select front and rear diameter and width to continue.';
+          }
+        }
+      }
       if (finishContinue) finishContinue.disabled = !state.finish;
       if (finishHint) finishHint.hidden = !!state.finish;
       if (capContinue) capContinue.disabled = !state.centerCap;
@@ -208,17 +241,36 @@
     }
 
     function syncSpecFields() {
-      if (frontDiameterValue) frontDiameterValue.value = state.frontDiameter ? state.frontDiameter + '"' : '';
+      if (frontDiameterValue) {
+        frontDiameterValue.value =
+          !isBeadlockPair() && state.frontDiameter ? state.frontDiameter + '"' : '';
+      }
       if (rearDiameterValue) rearDiameterValue.value = state.rearDiameter ? state.rearDiameter + '"' : '';
-      if (frontWidthValue) frontWidthValue.value = state.frontWidth ? String(state.frontWidth) : '';
+      if (frontWidthValue) {
+        frontWidthValue.value = !isBeadlockPair() && state.frontWidth ? String(state.frontWidth) : '';
+      }
       if (rearWidthValue) rearWidthValue.value = state.rearWidth ? String(state.rearWidth) : '';
+      if (beadlockQtyValue) {
+        beadlockQtyValue.value = isBeadlock()
+          ? state.beadlockQty === 'pair'
+            ? 'Pair (2)'
+            : state.beadlockQty === 'full'
+              ? 'Full set (4)'
+              : ''
+          : '';
+      }
       if (centerCapValue) centerCapValue.value = state.centerCap || '';
       if (fitmentStyleValue) fitmentStyleValue.value = state.fitment || '';
       if (estimateValue) estimateValue.value = state.estimateLabel || '';
       if (designInput) designInput.value = state.wheelTitle || '';
       if (finishInput) finishInput.value = state.finish || '';
-      if (frontSizeInput && state.frontDiameter && state.frontWidth) {
-        frontSizeInput.value = formatInch(state.frontDiameter) + 'x' + formatInch(state.frontWidth);
+      if (frontSizeInput) {
+        frontSizeInput.value =
+          !isBeadlockPair() && state.frontDiameter && state.frontWidth
+            ? formatInch(state.frontDiameter) + 'x' + formatInch(state.frontWidth)
+            : isBeadlockPair()
+              ? 'N/A — pair (rear only)'
+              : '';
       }
       if (rearSizeInput && state.rearDiameter && state.rearWidth) {
         rearSizeInput.value = formatInch(state.rearDiameter) + 'x' + formatInch(state.rearWidth);
@@ -227,25 +279,39 @@
 
     function refreshSummary() {
       var vehicle = (hiddenVehicle && hiddenVehicle.value) || (manual && manual.value.trim()) || '';
-      var hasSize = !!(state.frontDiameter && state.frontWidth && state.rearDiameter && state.rearWidth);
+      var hasSize = canContinueSize();
       if (summary) {
         summary.hidden = !(vehicle || state.style || state.wheelTitle || hasSize || state.finish);
       }
       if (summaryVehicle) summaryVehicle.textContent = vehicle || '—';
-      if (summaryStyle) summaryStyle.textContent = state.style || '—';
+      if (summaryStyle) {
+        summaryStyle.textContent = state.style
+          ? state.style +
+            (isBeadlock() && state.beadlockQty
+              ? state.beadlockQty === 'pair'
+                ? ' · Pair (2)'
+                : ' · Full set (4)'
+              : '')
+          : '—';
+      }
       if (summaryWheelRow) summaryWheelRow.hidden = !state.wheelTitle;
       if (summaryWheel) summaryWheel.textContent = state.wheelTitle || '—';
       if (summarySizeRow) summarySizeRow.hidden = !hasSize;
       if (summarySize && hasSize) {
-        summarySize.textContent =
-          'F ' +
-          formatInch(state.frontDiameter) +
-          'x' +
-          formatInch(state.frontWidth) +
-          ' · R ' +
-          formatInch(state.rearDiameter) +
-          'x' +
-          formatInch(state.rearWidth);
+        if (isBeadlockPair()) {
+          summarySize.textContent =
+            'Rear ' + formatInch(state.rearDiameter) + 'x' + formatInch(state.rearWidth) + ' (pair)';
+        } else {
+          summarySize.textContent =
+            'F ' +
+            formatInch(state.frontDiameter) +
+            'x' +
+            formatInch(state.frontWidth) +
+            ' · R ' +
+            formatInch(state.rearDiameter) +
+            'x' +
+            formatInch(state.rearWidth);
+        }
       }
       if (summaryFinishRow) summaryFinishRow.hidden = !state.finish;
       if (summaryFinish) summaryFinish.textContent = state.finish || '—';
@@ -443,6 +509,7 @@
       state.wheelPrice = '';
       state.wheelPriceCents = 0;
       state.variants = [];
+      state.beadlockQty = '';
       state.frontDiameter = '';
       state.rearDiameter = '';
       state.frontWidth = '';
@@ -458,7 +525,7 @@
       root.querySelectorAll('[data-wheel-select]').forEach(function (btn) {
         btn.classList.remove('is-selected');
       });
-      root.querySelectorAll('[data-cap-select], [data-fitment-select], [data-finish-chip]').forEach(function (el) {
+      root.querySelectorAll('[data-cap-select], [data-fitment-select], [data-finish-chip], [data-beadlock-qty-select]').forEach(function (el) {
         el.classList.remove('is-selected');
       });
       if (wheelSelected) wheelSelected.hidden = true;
@@ -466,6 +533,7 @@
       if (!keepStyle) {
         /* style may already be cleared by caller */
       }
+      syncBeadlockSizeUi();
       syncSpecFields();
       refreshContinue();
       refreshSummary();
@@ -482,6 +550,7 @@
       state.wheelPriceCents = Number(btn.getAttribute('data-wheel-price-cents')) || 0;
       state.wheelUnit = btn.getAttribute('data-wheel-unit') || (style === 'Beadlock' ? 'pair' : 'wheel');
       state.variants = parseVariants(btn);
+      state.beadlockQty = '';
       state.frontDiameter = '';
       state.rearDiameter = '';
       state.frontWidth = '';
@@ -493,7 +562,7 @@
       root.querySelectorAll('[data-wheel-select]').forEach(function (el) {
         el.classList.toggle('is-selected', el === btn);
       });
-      root.querySelectorAll('[data-cap-select], [data-fitment-select], [data-finish-chip]').forEach(function (el) {
+      root.querySelectorAll('[data-cap-select], [data-fitment-select], [data-finish-chip], [data-beadlock-qty-select]').forEach(function (el) {
         el.classList.remove('is-selected');
       });
       if (designInput) designInput.value = state.wheelTitle;
@@ -513,6 +582,7 @@
           unitLabel() +
           ').';
       }
+      syncBeadlockSizeUi();
       syncSpecFields();
       refreshContinue();
       refreshSummary();
@@ -545,28 +615,68 @@
       });
     }
 
-    function buildSizeOptions() {
-      var diameters = diametersAvailable();
-      renderChips(
-        frontDiameterOptions,
-        diameters,
-        state.frontDiameter,
-        function (item) {
-          state.frontDiameter = item.diameter;
-          state.frontPriceCents = item.price;
-          state.frontWidth = '';
-          buildWidthOptions('front');
-          updateEstimate();
-          refreshContinue();
-          refreshSummary();
-          syncSpecFields();
-          buildSizeOptions();
-        },
-        'diameter',
-        function (item) {
-          return formatInch(item.diameter) + '"';
+    function syncBeadlockSizeUi() {
+      var beadlock = isBeadlock();
+      if (beadlockQtyBlock) beadlockQtyBlock.hidden = !beadlock;
+      root.querySelectorAll('[data-beadlock-qty-select]').forEach(function (btn) {
+        btn.classList.toggle(
+          'is-selected',
+          btn.getAttribute('data-beadlock-qty-value') === state.beadlockQty
+        );
+      });
+
+      var showSpecs = !beadlock || !!state.beadlockQty;
+      if (sizeSpecs) sizeSpecs.hidden = !showSpecs;
+      if (frontSpecs) frontSpecs.hidden = isBeadlockPair();
+      if (rearSpecs) rearSpecs.hidden = !showSpecs;
+
+      if (isBeadlockPair()) {
+        state.frontDiameter = '';
+        state.frontWidth = '';
+        state.frontPriceCents = 0;
+      }
+
+      if (sizeSpecs && !sizeSpecs.hidden) {
+        if (!isBeadlockPair()) {
+          sizeSpecs.classList.remove('ff-build__spec-grid--rear-only');
+        } else {
+          sizeSpecs.classList.add('ff-build__spec-grid--rear-only');
         }
-      );
+      }
+    }
+
+    function buildSizeOptions() {
+      syncBeadlockSizeUi();
+      if (sizeSpecs && sizeSpecs.hidden) {
+        updateEstimate();
+        refreshContinue();
+        return;
+      }
+
+      var diameters = diametersAvailable();
+      if (!isBeadlockPair()) {
+        renderChips(
+          frontDiameterOptions,
+          diameters,
+          state.frontDiameter,
+          function (item) {
+            state.frontDiameter = item.diameter;
+            state.frontPriceCents = item.price;
+            state.frontWidth = '';
+            buildWidthOptions('front');
+            updateEstimate();
+            refreshContinue();
+            refreshSummary();
+            syncSpecFields();
+            buildSizeOptions();
+          },
+          'diameter',
+          function (item) {
+            return formatInch(item.diameter) + '"';
+          }
+        );
+        buildWidthOptions('front');
+      }
       renderChips(
         rearDiameterOptions,
         diameters,
@@ -587,7 +697,6 @@
           return formatInch(item.diameter) + '"';
         }
       );
-      buildWidthOptions('front');
       buildWidthOptions('rear');
       updateEstimate();
       refreshContinue();
@@ -598,6 +707,10 @@
       var container = axle === 'front' ? frontWidthOptions : rearWidthOptions;
       var selected = axle === 'front' ? state.frontWidth : state.rearWidth;
       if (!container) return;
+      if (axle === 'front' && isBeadlockPair()) {
+        container.innerHTML = '';
+        return;
+      }
       if (!diameter) {
         container.innerHTML = '<p class="ff-build__hint">Choose a diameter first.</p>';
         return;
@@ -644,13 +757,12 @@
 
       var total = 0;
       var detail = '';
-      if (state.wheelUnit === 'pair') {
+      if (isBeadlockPair()) {
+        total = rear;
+        detail = money(rear) + ' rear pair';
+      } else if (isBeadlockFull() || state.wheelUnit === 'pair') {
         total = front + rear;
-        detail =
-          money(front) +
-          ' front pair + ' +
-          money(rear) +
-          ' rear pair';
+        detail = money(front) + ' front pair + ' + money(rear) + ' rear pair';
       } else {
         total = front * 2 + rear * 2;
         detail =
@@ -663,14 +775,17 @@
 
       if (isChromeFinish(state.finish)) {
         var chromeEach = 25000;
-        var chromeCount = state.wheelUnit === 'pair' ? 4 : 4;
+        var chromeCount = isBeadlockPair() ? 2 : 4;
         total += chromeEach * chromeCount;
         detail += ' + Chrome +$250 × ' + chromeCount;
       }
 
       if (state.centerCapPrice) {
-        total += state.centerCapPrice * 100;
-        detail += ' + caps +$' + state.centerCapPrice;
+        var capTotal = isBeadlockPair()
+          ? Math.round(state.centerCapPrice / 2)
+          : state.centerCapPrice;
+        total += capTotal * 100;
+        detail += ' + caps +$' + capTotal;
       }
 
       state.estimateCents = total;
@@ -846,6 +961,23 @@
     root.querySelectorAll('[data-wheel-select]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         setWheel(btn);
+      });
+    });
+
+    root.querySelectorAll('[data-beadlock-qty-select]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.beadlockQty = btn.getAttribute('data-beadlock-qty-value') || '';
+        if (state.beadlockQty === 'pair') {
+          state.frontDiameter = '';
+          state.frontWidth = '';
+          state.frontPriceCents = 0;
+        }
+        syncBeadlockSizeUi();
+        buildSizeOptions();
+        updateEstimate();
+        refreshContinue();
+        refreshSummary();
+        syncSpecFields();
       });
     });
 

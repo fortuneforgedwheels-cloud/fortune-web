@@ -150,23 +150,43 @@
       <p class="ff-build__panel-copy">{{ section.settings.step_size_copy | default: 'Pick front and rear diameter and width. Prices shown are from the selected wheel’s live product listing on the site.' | escape }}</p>
       <p class="ff-build__pricing-note" data-size-price-note>Select a diameter to see that spec’s website price.</p>
 
-      <div class="ff-build__spec-grid">
-        <fieldset class="ff-build__spec-block">
-          <legend class="ff-build__label">Front diameter*</legend>
-          <div class="ff-build__chip-row" data-front-diameter-options role="list"></div>
-        </fieldset>
-        <fieldset class="ff-build__spec-block">
-          <legend class="ff-build__label">Rear diameter*</legend>
-          <div class="ff-build__chip-row" data-rear-diameter-options role="list"></div>
-        </fieldset>
-        <fieldset class="ff-build__spec-block">
-          <legend class="ff-build__label">Front width*</legend>
-          <div class="ff-build__chip-row" data-front-width-options role="list"></div>
-        </fieldset>
-        <fieldset class="ff-build__spec-block">
-          <legend class="ff-build__label">Rear width*</legend>
-          <div class="ff-build__chip-row" data-rear-width-options role="list"></div>
-        </fieldset>
+      <div class="ff-build__beadlock-qty" data-beadlock-qty hidden>
+        <p class="ff-build__label">Beadlock quantity*</p>
+        <div class="ff-build__option-cards" role="list">
+          <button type="button" class="ff-build__option-card" data-beadlock-qty-select data-beadlock-qty-value="pair" role="listitem">
+            <span class="ff-build__option-name">Pair (2)</span>
+            <span class="ff-build__option-desc">Two beadlock wheels — typically for the rear. We’ll only ask for rear diameter and width.</span>
+            <span class="ff-build__option-price">Priced by the pair</span>
+          </button>
+          <button type="button" class="ff-build__option-card" data-beadlock-qty-select data-beadlock-qty-value="full" role="listitem">
+            <span class="ff-build__option-name">Full set (4)</span>
+            <span class="ff-build__option-desc">Four beadlock wheels — choose front and rear diameter and width.</span>
+            <span class="ff-build__option-price">Two pairs</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="ff-build__spec-grid" data-size-specs hidden>
+        <div class="ff-build__spec-axle" data-front-specs>
+          <fieldset class="ff-build__spec-block">
+            <legend class="ff-build__label">Front diameter*</legend>
+            <div class="ff-build__chip-row" data-front-diameter-options role="list"></div>
+          </fieldset>
+          <fieldset class="ff-build__spec-block">
+            <legend class="ff-build__label">Front width*</legend>
+            <div class="ff-build__chip-row" data-front-width-options role="list"></div>
+          </fieldset>
+        </div>
+        <div class="ff-build__spec-axle" data-rear-specs>
+          <fieldset class="ff-build__spec-block">
+            <legend class="ff-build__label">Rear diameter*</legend>
+            <div class="ff-build__chip-row" data-rear-diameter-options role="list"></div>
+          </fieldset>
+          <fieldset class="ff-build__spec-block">
+            <legend class="ff-build__label">Rear width*</legend>
+            <div class="ff-build__chip-row" data-rear-width-options role="list"></div>
+          </fieldset>
+        </div>
       </div>
 
       <p class="ff-build__estimate" data-size-estimate hidden></p>
