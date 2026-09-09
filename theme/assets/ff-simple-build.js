@@ -118,11 +118,12 @@
     var submitBtn = root.querySelector('[data-submit-label]');
     var submitHint = root.querySelector('[data-submit-hint]');
     var quoteForm = root.querySelector('form.ff-quote');
-    var budgetValue = root.querySelector('[data-budget-value]');
     var timelineValue = root.querySelector('[data-timeline-value]');
+    var nowDiscountValue = root.querySelector('[data-now-discount-value]');
+    var nowOffer = root.querySelector('[data-now-offer]');
+    var nowDiscountCheck = root.querySelector('[data-now-discount]');
     var intentValue = root.querySelector('[data-intent-value]');
     var intentCheck = root.querySelector('[data-intent-check]');
-    var budgetWarn = root.querySelector('[data-budget-warn]');
     var summary = root.querySelector('[data-build-summary]');
     var summaryVehicle = root.querySelector('[data-summary-vehicle]');
     var summaryStyle = root.querySelector('[data-summary-style]');
@@ -746,46 +747,36 @@
       return el ? el.value : '';
     }
 
-    function budgetLooksLow(budget) {
-      if (!budget || budget.indexOf('Not sure') !== -1) return false;
-      if (budget.indexOf('Under $2,500') !== -1) return true;
-      if (budget.indexOf('$2,500') !== -1 && /2-Piece|Beadlock/i.test(state.style)) return true;
-      if (state.estimateCents && budget.indexOf('Under $2,500') === -1) {
-        var max = 0;
-        if (budget.indexOf('$2,500–$4,000') !== -1) max = 400000;
-        if (budget.indexOf('$4,000–$6,000') !== -1) max = 600000;
-        if (budget.indexOf('$6,000+') !== -1) return false;
-        if (max && state.estimateCents > max) return true;
-      }
-      return false;
-    }
-
     function syncQualify() {
-      var budget = selectedRadio('ff_budget');
       var timeline = selectedRadio('ff_timeline');
       var intentOk = !!(intentCheck && intentCheck.checked);
+      var isNow = timeline === 'Now';
 
-      if (budgetValue) budgetValue.value = budget;
       if (timelineValue) timelineValue.value = timeline;
       if (intentValue) intentValue.value = intentOk ? 'Yes — serious buyer, understands price range' : '';
 
-      root.querySelectorAll('[data-budget-pick]').forEach(function (input) {
-        var label = input.closest('.ff-quote__pick');
-        if (label) label.classList.toggle('is-selected', !!input.checked);
-      });
       root.querySelectorAll('[data-timeline-pick]').forEach(function (input) {
         var label = input.closest('.ff-quote__pick');
         if (label) label.classList.toggle('is-selected', !!input.checked);
       });
 
-      if (budgetWarn) budgetWarn.hidden = !budgetLooksLow(budget);
+      if (nowOffer) nowOffer.hidden = !isNow;
+      if (!isNow && nowDiscountCheck) nowDiscountCheck.checked = false;
+      if (nowDiscountValue) {
+        nowDiscountValue.value =
+          isNow && nowDiscountCheck && nowDiscountCheck.checked
+            ? 'Yes — wants 10% discount to order now'
+            : isNow
+              ? 'Now selected — declined 10% discount offer'
+              : '';
+      }
 
-      var ready = !!(budget && timeline && intentOk);
+      var ready = !!(timeline && intentOk);
       if (submitBtn) submitBtn.disabled = !ready;
       if (submitHint) {
         submitHint.hidden = ready;
         if (!ready) {
-          submitHint.textContent = 'Choose budget, timing, and confirm you’re ready to continue.';
+          submitHint.textContent = 'Choose timing and confirm you’re ready to continue.';
         }
       }
     }
@@ -890,9 +881,10 @@
       });
     });
 
-    root.querySelectorAll('[data-budget-pick], [data-timeline-pick]').forEach(function (input) {
+    root.querySelectorAll('[data-timeline-pick]').forEach(function (input) {
       input.addEventListener('change', syncQualify);
     });
+    if (nowDiscountCheck) nowDiscountCheck.addEventListener('change', syncQualify);
     if (intentCheck) intentCheck.addEventListener('change', syncQualify);
 
     root.querySelectorAll('[data-next]').forEach(function (btn) {
@@ -961,10 +953,9 @@
         syncQualify();
         syncSpecFields();
         updateEstimate();
-        var budget = selectedRadio('ff_budget');
         var timeline = selectedRadio('ff_timeline');
         var intentOk = !!(intentCheck && intentCheck.checked);
-        if (!budget || !timeline || !intentOk) {
+        if (!timeline || !intentOk) {
           event.preventDefault();
           syncQualify();
           return false;
