@@ -16,7 +16,14 @@
   <input type="hidden" name="contact[selected_style]" id="ff-selected-style-{{ section.id }}" value="">
   <input type="hidden" name="contact[selected_price_range]" id="ff-selected-price-{{ section.id }}" value="">
   <input type="hidden" name="contact[selected_wheel]" id="ff-selected-wheel-{{ section.id }}" value="" data-selected-wheel>
-  <input type="hidden" name="contact[help_preference]" id="ff-help-preference-{{ section.id }}" value="I know my specs">
+  <input type="hidden" name="contact[front_diameter]" value="" data-front-diameter-value>
+  <input type="hidden" name="contact[rear_diameter]" value="" data-rear-diameter-value>
+  <input type="hidden" name="contact[front_width]" value="" data-front-width-value>
+  <input type="hidden" name="contact[rear_width]" value="" data-rear-width-value>
+  <input type="hidden" name="contact[center_cap]" value="" data-center-cap-value>
+  <input type="hidden" name="contact[fitment_style]" value="" data-fitment-style-value>
+  <input type="hidden" name="contact[estimated_total]" value="" data-estimate-value>
+  <input type="hidden" name="contact[help_preference]" id="ff-help-preference-{{ section.id }}" value="Configured in quote builder">
   <input type="hidden" name="contact[budget_range]" id="ff-budget-value-{{ section.id }}" value="" data-budget-value>
   <input type="hidden" name="contact[purchase_timeline]" id="ff-timeline-value-{{ section.id }}" value="" data-timeline-value>
   <input type="hidden" name="contact[serious_buyer]" id="ff-intent-value-{{ section.id }}" value="" data-intent-value>
@@ -68,20 +75,13 @@
     </div>
   </fieldset>
 
-  <fieldset class="ff-quote__path">
+  <fieldset class="ff-quote__path" hidden>
     <legend class="ff-build__label">How should we help?</legend>
     <label class="ff-quote__choice">
       <input type="radio" name="ff_help_mode" value="specs" checked data-help-mode>
       <span>
         <strong>I know my sizes / finish</strong>
-        <em>I’ll type them below (optional but helpful)</em>
-      </span>
-    </label>
-    <label class="ff-quote__choice">
-      <input type="radio" name="ff_help_mode" value="specialist" data-help-mode>
-      <span>
-        <strong>Have a specialist guide me</strong>
-        <em>We’ll email or call you back to assist</em>
+        <em>Configured in earlier steps</em>
       </span>
     </label>
   </fieldset>
@@ -121,22 +121,22 @@
     <div class="ff-quote__field ff-quote__specs">
       <label class="ff-build__label" for="ff-design-{{ section.id }}">Desired design</label>
       <input class="ff-build__input" id="ff-design-{{ section.id }}" type="text" name="contact[design]"
-        placeholder="Wheel model / design name (optional)" value="">
+        placeholder="Wheel model / design name (optional)" value="" readonly>
     </div>
     <div class="ff-quote__field ff-quote__specs">
       <label class="ff-build__label" for="ff-front-{{ section.id }}">Front size</label>
       <input class="ff-build__input" id="ff-front-{{ section.id }}" type="text" name="contact[front_size]"
-        placeholder="e.g. 20x9.5" value="" data-spec-field>
+        placeholder="e.g. 20x9.5" value="" data-spec-field readonly>
     </div>
     <div class="ff-quote__field ff-quote__specs">
       <label class="ff-build__label" for="ff-rear-{{ section.id }}">Rear size</label>
       <input class="ff-build__input" id="ff-rear-{{ section.id }}" type="text" name="contact[rear_size]"
-        placeholder="e.g. 20x11" value="" data-spec-field>
+        placeholder="e.g. 20x11" value="" data-spec-field readonly>
     </div>
     <div class="ff-quote__field ff-quote__specs">
       <label class="ff-build__label" for="ff-finish-{{ section.id }}">Finish</label>
       <input class="ff-build__input" id="ff-finish-{{ section.id }}" type="text" name="contact[finish]"
-        placeholder="Brushed, polished, gloss black…" value="" data-spec-field>
+        placeholder="Brushed, polished, gloss black…" value="" data-spec-field readonly>
     </div>
     <div class="ff-quote__field ff-quote__field--full">
       <label class="ff-build__label" for="ff-notes-{{ section.id }}">Anything else?</label>
@@ -146,7 +146,7 @@
   </div>
 
   <p class="ff-quote__assist-note" data-assist-note hidden>
-    Leave sizes and finish blank if you’re unsure. A Fortune Forged fitment specialist will email or call you back to assist.
+    Your sizes, finish, caps, and fitment preference from earlier steps are included with this request.
   </p>
 
   <label class="ff-quote__intent">

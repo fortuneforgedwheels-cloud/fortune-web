@@ -44,8 +44,8 @@
 .ff-build__steps {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
   margin: 32px 0 28px;
   padding: 0;
 }
@@ -53,11 +53,12 @@
 .ff-build__step {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
+  gap: 8px;
+  padding: 10px 8px;
   border: 1px solid var(--ff-line);
   background: rgba(255, 255, 255, 0.02);
   opacity: 0.55;
+  min-width: 0;
 }
 
 .ff-build__step.is-active,
@@ -67,22 +68,26 @@
 }
 
 .ff-build__step-num {
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
   border-radius: 999px;
   display: inline-grid;
   place-items: center;
   background: var(--ff-gold);
   color: #111;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
 }
 
 .ff-build__step-label {
-  font-size: 15px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ff-build__panel {
@@ -284,6 +289,145 @@
 .ff-build__wheel-selected {
   margin: 12px 0 0;
   font-size: 1.05rem;
+}
+
+.ff-build__spec-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 16px;
+  margin: 8px 0 12px;
+}
+
+.ff-build__spec-block {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.ff-build__chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.ff-build__chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--ff-line);
+  background: #0f0f0f;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.ff-build__chip:hover,
+.ff-build__chip.is-selected {
+  border-color: var(--ff-gold);
+  transform: translateY(-1px);
+}
+
+.ff-build__chip-label {
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.ff-build__chip-price {
+  color: var(--ff-gold);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.ff-build__chip--finish {
+  min-width: 140px;
+}
+
+.ff-build__estimate {
+  margin: 8px 0 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(220, 225, 230, 0.35);
+  background: rgba(220, 225, 230, 0.06);
+  color: var(--ff-ink);
+  font-size: 1.02rem;
+  font-weight: 600;
+}
+
+.ff-build__finish-groups {
+  display: grid;
+  gap: 18px;
+  margin: 8px 0 12px;
+}
+
+.ff-build__finish-group-title {
+  margin: 0 0 8px;
+  color: var(--ff-muted);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ff-build__option-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 8px 0 12px;
+}
+
+.ff-build__option-cards--stack {
+  grid-template-columns: 1fr;
+}
+
+.ff-build__option-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid var(--ff-line);
+  background: #0f0f0f;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.ff-build__option-card:hover,
+.ff-build__option-card.is-selected {
+  border-color: var(--ff-gold);
+  transform: translateY(-1px);
+}
+
+.ff-build__option-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ff-build__option-desc {
+  color: var(--ff-muted);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.ff-build__option-price {
+  color: var(--ff-gold);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.ff-quote__field .ff-build__input[readonly] {
+  opacity: 0.85;
+  cursor: default;
 }
 
 .ff-build__choice-prompt {
@@ -585,10 +729,15 @@
 }
 
 @media (max-width: 749px) {
-  .ff-build__steps,
+  .ff-build__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .ff-build__styles,
   .ff-quote__grid,
-  .ff-quote__picks {
+  .ff-quote__picks,
+  .ff-build__spec-grid,
+  .ff-build__option-cards {
     grid-template-columns: 1fr;
   }
 
@@ -597,7 +746,7 @@
   }
 
   .ff-build__step-label {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 
