@@ -10,7 +10,7 @@
       {% endif %}
     </header>
 
-    <ol class="ff-build__steps" aria-label="Order steps">
+    <ol class="ff-build__steps" aria-label="Order steps" data-build-steps hidden>
       <li class="ff-build__step is-active" data-step="1">
         <span class="ff-build__step-num">1</span>
         <span class="ff-build__step-label">{{ section.settings.step1_label | escape }}</span>
@@ -21,6 +21,22 @@
       </li>
       <li class="ff-build__step" data-step="3">
         <span class="ff-build__step-num">3</span>
+        <span class="ff-build__step-label">{{ section.settings.step_size_label | default: 'SIZE' | escape }}</span>
+      </li>
+      <li class="ff-build__step" data-step="4">
+        <span class="ff-build__step-num">4</span>
+        <span class="ff-build__step-label">{{ section.settings.step_finish_label | default: 'FINISH' | escape }}</span>
+      </li>
+      <li class="ff-build__step" data-step="5">
+        <span class="ff-build__step-num">5</span>
+        <span class="ff-build__step-label">{{ section.settings.step_cap_label | default: 'CAPS' | escape }}</span>
+      </li>
+      <li class="ff-build__step" data-step="6">
+        <span class="ff-build__step-num">6</span>
+        <span class="ff-build__step-label">{{ section.settings.step_fitment_label | default: 'FITMENT' | escape }}</span>
+      </li>
+      <li class="ff-build__step" data-step="7">
+        <span class="ff-build__step-num">7</span>
         <span class="ff-build__step-label">{{ section.settings.step3_label | escape }}</span>
       </li>
     </ol>
@@ -50,51 +66,242 @@
       <p class="ff-build__panel-copy">{{ section.settings.step2_copy | escape }}</p>
       <p class="ff-build__pricing-note">{{ section.settings.step2_hint | escape }}</p>
 
+      <p class="ff-build__choice-prompt">{{ section.settings.style_prompt | default: 'Hover or tap a setup to browse every wheel — pick one, then continue' | escape }}</p>
+
+      {%- liquid
+        assign mono_link = section.settings.monoblock_link | default: '/collections/monoblock-wheels'
+        assign two_link = section.settings.twopiece_link | default: '/collections/two-piece-wheels'
+        assign bead_link = section.settings.beadlock_link | default: '/collections/beadlock-wheels'
+        if mono_link contains 'shopify://collections/'
+          assign mono_handle = mono_link | remove: 'shopify://collections/'
+        else
+          assign mono_handle = mono_link | split: '/collections/' | last | split: '/' | first | split: '?' | first
+        endif
+        if two_link contains 'shopify://collections/'
+          assign two_handle = two_link | remove: 'shopify://collections/'
+        else
+          assign two_handle = two_link | split: '/collections/' | last | split: '/' | first | split: '?' | first
+        endif
+        if bead_link contains 'shopify://collections/'
+          assign bead_handle = bead_link | remove: 'shopify://collections/'
+        else
+          assign bead_handle = bead_link | split: '/collections/' | last | split: '/' | first | split: '?' | first
+        endif
+        assign mono_collection = collections[mono_handle]
+        assign two_collection = collections[two_handle]
+        assign bead_collection = collections[bead_handle]
+        assign mono_price = section.settings.monoblock_price | default: 'Typically $2,300–$3,500+ for a set of 4'
+        assign two_price = section.settings.twopiece_price | default: 'Typically $4,000–$4,500+ for a set of 4'
+        assign bead_price = section.settings.beadlock_price | default: 'Typically $1,999 per pair · most builds need 2 pairs'
+      -%}
+
+      <div class="ff-build__styles" role="list" data-style-cards>
+        <button type="button" class="ff-build__style" data-style="Monoblock" data-style-select data-price-range="{{ mono_price | escape }}" role="listitem">
+          <span class="ff-build__style-name">Monoblock</span>
+          <span class="ff-build__style-desc">{{ section.settings.monoblock_desc | escape }}</span>
+          <span class="ff-build__style-price">{{ mono_price | escape }}</span>
+          <span class="ff-build__style-browse">Browse all Monoblock →</span>
+        </button>
+        <button type="button" class="ff-build__style" data-style="2-Piece" data-style-select data-price-range="{{ two_price | escape }}" role="listitem">
+          <span class="ff-build__style-name">2-Piece</span>
+          <span class="ff-build__style-desc">{{ section.settings.twopiece_desc | escape }}</span>
+          <span class="ff-build__style-price">{{ two_price | escape }}</span>
+          <span class="ff-build__style-browse">Browse all 2-Piece →</span>
+        </button>
+        <button type="button" class="ff-build__style" data-style="Beadlock" data-style-select data-price-range="{{ bead_price | escape }}" role="listitem">
+          <span class="ff-build__style-name">Beadlock</span>
+          <span class="ff-build__style-desc">{{ section.settings.beadlock_desc | escape }}</span>
+          <span class="ff-build__style-price">{{ bead_price | escape }}</span>
+          <span class="ff-build__style-browse">Browse all Beadlock →</span>
+        </button>
+      </div>
+
+      <div class="ff-build__wheel-browser" data-wheel-browser hidden>
+        <div class="ff-build__wheel-browser-head">
+          <p class="ff-build__wheel-browser-title" data-wheel-browser-title>All Monoblock wheels</p>
+          <p class="ff-build__wheel-browser-copy">{{ section.settings.wheel_pick_hint | default: 'Tap a wheel to select it for your quote.' | escape }}</p>
+        </div>
+        {% render 'ff-build-wheel-grid', collection: mono_collection, style_name: 'Monoblock', price_range: mono_price %}
+        {% render 'ff-build-wheel-grid', collection: two_collection, style_name: '2-Piece', price_range: two_price %}
+        {% render 'ff-build-wheel-grid', collection: bead_collection, style_name: 'Beadlock', price_range: bead_price %}
+        <p class="ff-build__wheel-selected" data-wheel-selected hidden>
+          Selected: <strong data-wheel-selected-label></strong>
+        </p>
+      </div>
+
       {% if section.settings.hottest_link != blank %}
-        <a class="ff-build__hottest" href="{{ section.settings.hottest_link }}" data-style="Hottest designs">
+        <a class="ff-build__hottest" href="{{ section.settings.hottest_link }}">
           <span class="ff-build__style-name">{{ section.settings.hottest_label | escape }}</span>
           <span class="ff-build__style-desc">{{ section.settings.hottest_desc | escape }}</span>
         </a>
       {% endif %}
 
-      <div class="ff-build__styles">
-        <button type="button" class="ff-build__style" data-style="Monoblock" data-style-select>
-          <span class="ff-build__style-name">Monoblock</span>
-          <span class="ff-build__style-desc">{{ section.settings.monoblock_desc | escape }}</span>
-        </button>
-        <button type="button" class="ff-build__style" data-style="2-Piece" data-style-select>
-          <span class="ff-build__style-name">2-Piece</span>
-          <span class="ff-build__style-desc">{{ section.settings.twopiece_desc | escape }}</span>
-        </button>
-        <button type="button" class="ff-build__style" data-style="Beadlock" data-style-select>
-          <span class="ff-build__style-name">Beadlock</span>
-          <span class="ff-build__style-desc">{{ section.settings.beadlock_desc | escape }}</span>
-        </button>
-      </div>
-
-      <div class="ff-build__browse-links" hidden data-browse-links>
-        <p class="ff-build__panel-copy">Browse that setup, or continue to quote with it selected.</p>
-        <div class="ff-build__nav-row">
-          <a class="ff-build__browse button button--primary" href="{{ section.settings.monoblock_link }}" data-browse-for="Monoblock">Browse Monoblock</a>
-          <a class="ff-build__browse button button--primary" href="{{ section.settings.twopiece_link }}" data-browse-for="2-Piece" hidden>Browse 2-Piece</a>
-          <a class="ff-build__browse button button--primary" href="{{ section.settings.beadlock_link }}" data-browse-for="Beadlock" hidden>Browse Beadlock</a>
-          <button type="button" class="ff-build__next button button--secondary" data-next="3">Continue to quote</button>
-        </div>
-      </div>
-
       <div class="ff-build__nav-row ff-build__nav-row--split">
         <button type="button" class="ff-build__back" data-back="1">Back</button>
-        <button type="button" class="ff-build__next button button--primary" data-next="3" data-skip-quote>
-          {{ section.settings.quote_cta | escape }}
+        <button type="button" class="ff-build__next button button--primary" data-next="3" data-need-style disabled>
+          {{ section.settings.continue_to_size_label | default: 'Continue — choose diameters & widths' | escape }}
         </button>
       </div>
+      <p class="ff-build__hint" data-style-hint hidden>{{ section.settings.style_required_hint | default: 'Pick a setup and a wheel above, then continue.' | escape }}</p>
     </div>
 
     <div class="ff-build__panel" data-panel="3" hidden>
+      <h2 class="ff-build__panel-title">{{ section.settings.step_size_heading | default: 'Choose your diameters & widths' | escape }}</h2>
+      <p class="ff-build__panel-copy">{{ section.settings.step_size_copy | default: 'Pick front and rear diameter and width. Prices shown are from the selected wheel’s live product listing on the site.' | escape }}</p>
+      <p class="ff-build__pricing-note" data-size-price-note>Select a diameter to see that spec’s website price.</p>
+
+      <div class="ff-build__beadlock-qty" data-beadlock-qty hidden>
+        <p class="ff-build__label">Beadlock quantity*</p>
+        <div class="ff-build__option-cards" role="list">
+          <button type="button" class="ff-build__option-card" data-beadlock-qty-select data-beadlock-qty-value="pair" role="listitem">
+            <span class="ff-build__option-name">Pair (2)</span>
+            <span class="ff-build__option-desc">Two beadlock wheels — typically for the rear. We’ll only ask for rear diameter and width.</span>
+            <span class="ff-build__option-price">Priced by the pair</span>
+          </button>
+          <button type="button" class="ff-build__option-card" data-beadlock-qty-select data-beadlock-qty-value="full" role="listitem">
+            <span class="ff-build__option-name">Full set (4)</span>
+            <span class="ff-build__option-desc">Four beadlock wheels — choose front and rear diameter and width.</span>
+            <span class="ff-build__option-price">Two pairs</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="ff-build__spec-grid" data-size-specs hidden>
+        <div class="ff-build__spec-axle" data-front-specs>
+          <fieldset class="ff-build__spec-block">
+            <legend class="ff-build__label">Front diameter*</legend>
+            <div class="ff-build__chip-row" data-front-diameter-options role="list"></div>
+          </fieldset>
+          <fieldset class="ff-build__spec-block">
+            <legend class="ff-build__label">Front width*</legend>
+            <div class="ff-build__chip-row" data-front-width-options role="list"></div>
+          </fieldset>
+        </div>
+        <div class="ff-build__spec-axle" data-rear-specs>
+          <fieldset class="ff-build__spec-block">
+            <legend class="ff-build__label">Rear diameter*</legend>
+            <div class="ff-build__chip-row" data-rear-diameter-options role="list"></div>
+          </fieldset>
+          <fieldset class="ff-build__spec-block">
+            <legend class="ff-build__label">Rear width*</legend>
+            <div class="ff-build__chip-row" data-rear-width-options role="list"></div>
+          </fieldset>
+        </div>
+      </div>
+
+      <p class="ff-build__estimate" data-size-estimate hidden></p>
+
+      <div class="ff-build__nav-row ff-build__nav-row--split">
+        <button type="button" class="ff-build__back" data-back="2">Back</button>
+        <button type="button" class="ff-build__next button button--primary" data-next="4" data-need-size disabled>
+          Continue — choose finish
+        </button>
+      </div>
+      <p class="ff-build__hint" data-size-hint hidden>Select front and rear diameter and width to continue.</p>
+    </div>
+
+    <div class="ff-build__panel" data-panel="4" hidden>
+      <h2 class="ff-build__panel-title">{{ section.settings.step_finish_heading | default: 'Choose your finish' | escape }}</h2>
+      <p class="ff-build__panel-copy">{{ section.settings.step_finish_copy | default: 'Pick the finish family for your set. Chrome finishes add +$250 per wheel (site surcharge).' | escape }}</p>
+      <div class="ff-build__finish-groups" data-finish-options></div>
+      <div class="ff-build__nav-row ff-build__nav-row--split">
+        <button type="button" class="ff-build__back" data-back="3">Back</button>
+        <button type="button" class="ff-build__next button button--primary" data-next="5" data-need-finish disabled>
+          Continue — center caps
+        </button>
+      </div>
+      <p class="ff-build__hint" data-finish-hint hidden>Select a finish to continue.</p>
+    </div>
+
+    <div class="ff-build__panel" data-panel="5" hidden>
+      <h2 class="ff-build__panel-title">{{ section.settings.step_cap_heading | default: 'Choose your center caps' | escape }}</h2>
+      <p class="ff-build__panel-copy">{{ section.settings.step_cap_copy | default: 'Select a center cap style for your set of 4.' | escape }}</p>
+      <div class="ff-build__option-cards" role="list" data-cap-options>
+        <button type="button" class="ff-build__option-card" data-cap-select data-cap="OE styled" data-cap-price="0" role="listitem">
+          <span class="ff-build__option-name">OE styled</span>
+          <span class="ff-build__option-desc">Factory-style center caps</span>
+          <span class="ff-build__option-price">Free</span>
+        </button>
+        <button type="button" class="ff-build__option-card" data-cap-select data-cap="Billet aluminum logo cap" data-cap-price="50" role="listitem">
+          <span class="ff-build__option-name">Billet aluminum logo cap</span>
+          <span class="ff-build__option-desc">Machined Fortune Forged logo caps</span>
+          <span class="ff-build__option-price">+$50 for a set of 4</span>
+        </button>
+      </div>
+      <div class="ff-build__nav-row ff-build__nav-row--split">
+        <button type="button" class="ff-build__back" data-back="4">Back</button>
+        <button type="button" class="ff-build__next button button--primary" data-next="6" data-need-cap disabled>
+          Continue — fitment style
+        </button>
+      </div>
+      <p class="ff-build__hint" data-cap-hint hidden>Select a center cap style to continue.</p>
+    </div>
+
+    <div class="ff-build__panel" data-panel="6" hidden>
+      <h2 class="ff-build__panel-title">{{ section.settings.step_fitment_heading | default: 'FITMENT STYLE' | escape }}*</h2>
+      <p class="ff-build__panel-copy">{{ section.settings.step_fitment_copy | default: 'Tell us how you want the wheels to sit. Our team will confirm offsets for your vehicle.' | escape }}</p>
+      <div class="ff-build__option-cards ff-build__option-cards--stack" role="list" data-fitment-options>
+        <button type="button" class="ff-build__option-card" data-fitment-select data-fitment="OEM-STYLE" role="listitem">
+          <span class="ff-build__option-name">OEM-STYLE</span>
+          <span class="ff-build__option-desc">Matches factory wheel fitment and specifications. Some customers prefer to keep the factory look, while many choose wider widths or adjusted offsets because OEM fitment often leaves the wheels sitting farther inside the fenders. If you want to maintain factory specifications, we can build the wheels that way.</span>
+        </button>
+        <button type="button" class="ff-build__option-card" data-fitment-select data-fitment="FLUSH" role="listitem">
+          <span class="ff-build__option-name">FLUSH</span>
+          <span class="ff-build__option-desc">Our most popular option. We adjust wheel widths and offsets for your vehicle to achieve a more flush appearance — bringing the wheels outward toward the fenders while maintaining proper clearance and functionality.</span>
+        </button>
+        <button type="button" class="ff-build__option-card" data-fitment-select data-fitment="NOT SURE" role="listitem">
+          <span class="ff-build__option-name">NOT SURE</span>
+          <span class="ff-build__option-desc">If you're not sure which widths, offsets, or fitment style are best, that's completely fine. Our fitment specialists will review your vehicle and intended use and recommend the best setup based on your goals — you don't need every specification before requesting a quote.</span>
+        </button>
+      </div>
+      <div class="ff-build__nav-row ff-build__nav-row--split">
+        <button type="button" class="ff-build__back" data-back="5">Back</button>
+        <button type="button" class="ff-build__next button button--primary" data-next="7" data-need-fitment disabled>
+          Continue — request quote
+        </button>
+      </div>
+      <p class="ff-build__hint" data-fitment-hint hidden>Select a fitment style preference to continue.</p>
+    </div>
+
+    <div class="ff-build__panel" data-panel="7" hidden>
       <h2 class="ff-build__panel-title">{{ section.settings.step3_heading | escape }}</h2>
       <p class="ff-build__panel-copy">{{ section.settings.step3_copy | escape }}</p>
+      <div class="ff-build__summary" data-build-summary hidden>
+        <p class="ff-build__summary-line">
+          <span class="ff-build__summary-label">Vehicle</span>
+          <strong data-summary-vehicle></strong>
+        </p>
+        <p class="ff-build__summary-line">
+          <span class="ff-build__summary-label">Setup</span>
+          <strong data-summary-style></strong>
+        </p>
+        <p class="ff-build__summary-line" data-summary-wheel-row hidden>
+          <span class="ff-build__summary-label">Wheel</span>
+          <strong data-summary-wheel></strong>
+        </p>
+        <p class="ff-build__summary-line" data-summary-size-row hidden>
+          <span class="ff-build__summary-label">Sizes</span>
+          <strong data-summary-size></strong>
+        </p>
+        <p class="ff-build__summary-line" data-summary-finish-row hidden>
+          <span class="ff-build__summary-label">Finish</span>
+          <strong data-summary-finish></strong>
+        </p>
+        <p class="ff-build__summary-line" data-summary-cap-row hidden>
+          <span class="ff-build__summary-label">Center caps</span>
+          <strong data-summary-cap></strong>
+        </p>
+        <p class="ff-build__summary-line" data-summary-fitment-row hidden>
+          <span class="ff-build__summary-label">Fitment</span>
+          <strong data-summary-fitment></strong>
+        </p>
+        <p class="ff-build__summary-line ff-build__summary-line--price">
+          <span class="ff-build__summary-label">Est. from site pricing</span>
+          <strong data-summary-price></strong>
+        </p>
+      </div>
       {% render 'ff-quote-form', section: section %}
-      <button type="button" class="ff-build__back" data-back="2">Back</button>
+      <button type="button" class="ff-build__back" data-back="6">Back</button>
     </div>
   </div>
 
@@ -142,6 +349,7 @@
 </section>
 
 <script src="{{ 'ff-simple-build.js' | asset_url }}" defer></script>
+<script src="{{ 'ff-quote-meta.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
@@ -271,6 +479,108 @@
     },
     {
       "type": "text",
+      "id": "style_prompt",
+      "label": "Style choice prompt",
+      "default": "Hover or tap a setup to browse every wheel — pick one, then continue"
+    },
+    {
+      "type": "text",
+      "id": "wheel_pick_hint",
+      "label": "Wheel picker hint",
+      "default": "Tap a wheel to select it for your quote."
+    },
+    {
+      "type": "text",
+      "id": "continue_to_quote_label",
+      "label": "Continue to quote button",
+      "default": "Continue — see my quote options"
+    },
+    {
+      "type": "text",
+      "id": "continue_to_size_label",
+      "label": "Continue to size label",
+      "default": "Continue — choose diameters & widths"
+    },
+    {
+      "type": "text",
+      "id": "step_size_label",
+      "label": "Size step label",
+      "default": "SIZE"
+    },
+    {
+      "type": "text",
+      "id": "step_size_heading",
+      "label": "Size step heading",
+      "default": "Choose your diameters & widths"
+    },
+    {
+      "type": "textarea",
+      "id": "step_size_copy",
+      "label": "Size step copy",
+      "default": "Pick front and rear diameter and width. Prices shown are from the selected wheel’s live product listing on the site."
+    },
+    {
+      "type": "text",
+      "id": "step_finish_label",
+      "label": "Finish step label",
+      "default": "FINISH"
+    },
+    {
+      "type": "text",
+      "id": "step_finish_heading",
+      "label": "Finish step heading",
+      "default": "Choose your finish"
+    },
+    {
+      "type": "textarea",
+      "id": "step_finish_copy",
+      "label": "Finish step copy",
+      "default": "Pick the finish family for your set. Chrome finishes add +$250 per wheel (site surcharge)."
+    },
+    {
+      "type": "text",
+      "id": "step_cap_label",
+      "label": "Center cap step label",
+      "default": "CAPS"
+    },
+    {
+      "type": "text",
+      "id": "step_cap_heading",
+      "label": "Center cap step heading",
+      "default": "Choose your center caps"
+    },
+    {
+      "type": "textarea",
+      "id": "step_cap_copy",
+      "label": "Center cap step copy",
+      "default": "Select a center cap style for your set of 4."
+    },
+    {
+      "type": "text",
+      "id": "step_fitment_label",
+      "label": "Fitment step label",
+      "default": "FITMENT"
+    },
+    {
+      "type": "text",
+      "id": "step_fitment_heading",
+      "label": "Fitment step heading",
+      "default": "Fitment style"
+    },
+    {
+      "type": "textarea",
+      "id": "step_fitment_copy",
+      "label": "Fitment step copy",
+      "default": "Tell us how you want the wheels to sit. Our team will confirm offsets for your vehicle."
+    },
+    {
+      "type": "text",
+      "id": "style_required_hint",
+      "label": "Style required hint",
+      "default": "Pick a setup and a wheel above, then continue."
+    },
+    {
+      "type": "text",
       "id": "hottest_label",
       "label": "Hottest designs label",
       "default": "Browse the hottest designs"
@@ -289,8 +599,9 @@
     {
       "type": "text",
       "id": "quote_cta",
-      "label": "Skip to quote button",
-      "default": "Skip to custom quote"
+      "label": "Skip to quote button (legacy)",
+      "default": "Skip to custom quote",
+      "info": "Kept for older theme settings. New flow requires a style selection."
     },
     {
       "type": "url",
@@ -304,6 +615,12 @@
       "default": "One-piece forged strength · priced individually"
     },
     {
+      "type": "text",
+      "id": "monoblock_price",
+      "label": "Monoblock typical price",
+      "default": "Typically $2,300–$3,500+ for a set of 4"
+    },
+    {
       "type": "url",
       "id": "twopiece_link",
       "label": "2-Piece collection"
@@ -313,6 +630,12 @@
       "id": "twopiece_desc",
       "label": "2-Piece description",
       "default": "Modular fitment & finish · priced individually"
+    },
+    {
+      "type": "text",
+      "id": "twopiece_price",
+      "label": "2-Piece typical price",
+      "default": "Typically $4,000–$4,500+ for a set of 4"
     },
     {
       "type": "url",
@@ -327,15 +650,49 @@
     },
     {
       "type": "text",
+      "id": "beadlock_price",
+      "label": "Beadlock typical price",
+      "default": "Typically $1,999 per pair · most builds need 2 pairs"
+    },
+    {
+      "type": "text",
       "id": "step3_heading",
       "label": "Step 3 heading",
-      "default": "Request your build"
+      "default": "Almost done — confirm you’re ready"
     },
     {
       "type": "textarea",
       "id": "step3_copy",
       "label": "Step 3 copy",
-      "default": "Enter the custom details you already know — or leave fitment blank and a specialist will email or call you back to help."
+      "default": "Tell us your budget and timing so we can prepare an accurate quote. Serious buyers get priority follow-up."
+    },
+    {
+      "type": "header",
+      "content": "Qualification (final step)"
+    },
+    {
+      "type": "text",
+      "id": "budget_legend",
+      "label": "Budget legend (legacy unused)",
+      "default": "What’s your budget for a full set?"
+    },
+    {
+      "type": "text",
+      "id": "timeline_legend",
+      "label": "Timeline legend",
+      "default": "When would you like to get started?"
+    },
+    {
+      "type": "textarea",
+      "id": "intent_label",
+      "label": "Intent checkbox label",
+      "default": "I understand Fortune Forged wheels are a premium product, and I’m interested in receiving a quote for my vehicle."
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit button label",
+      "default": "Submit my quote request"
     },
     {
       "type": "header",
