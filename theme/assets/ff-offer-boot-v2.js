@@ -383,6 +383,7 @@ function ffThemeAsset(name, bust) {
  * Fortune Forged $100-off offer popup bootloader.
  * Injects markup if missing, then opens after delay.
  * Uses a fresh storage key so prior test dismissals don't block it.
+ * Blacked out for the full calendar day of Sept 12, 2026 (America/Los_Angeles).
  */
 (function () {
   if (window.__ffOfferBootV4) return;
@@ -393,6 +394,9 @@ function ffThemeAsset(name, bust) {
   var EXPIRE_DAYS = 14;
   var OFFER_CODE = 'EMAIL100';
   var CSS_HREF = ffThemeAsset('ff-offer-popup-v2.css','email100');
+  /* Midnight Sept 12 → midnight Sept 13, Pacific (giveaway launch day) */
+  var BLACKOUT_TZ = 'America/Los_Angeles';
+  var BLACKOUT_YMD = '2026-09-12';
 
   function ready(fn) {
     if (document.readyState === 'loading') {
@@ -400,6 +404,34 @@ function ffThemeAsset(name, bust) {
     } else {
       fn();
     }
+  }
+
+  function isOfferBlackoutDay() {
+    try {
+      var parts = new Intl.DateTimeFormat('en-US', {
+        timeZone: BLACKOUT_TZ,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).formatToParts(new Date());
+      var map = {};
+      parts.forEach(function (p) {
+        if (p.type !== 'literal') map[p.type] = p.value;
+      });
+      return map.year + '-' + map.month + '-' + map.day === BLACKOUT_YMD;
+    } catch (e) {
+      var now = Date.now();
+      return now >= Date.parse('2026-09-12T00:00:00-07:00') && now < Date.parse('2026-09-13T00:00:00-07:00');
+    }
+  }
+
+  function hideOfferRoots() {
+    document.querySelectorAll('[data-ff-offer]').forEach(function (el) {
+      el.hidden = true;
+      el.setAttribute('aria-hidden', 'true');
+      el.setAttribute('data-ff-offer-blackout', '1');
+    });
+    document.documentElement.classList.remove('ff-offer-open');
   }
 
   function hideForms() {
@@ -606,6 +638,11 @@ function ffThemeAsset(name, bust) {
       return;
     }
 
+    if (isOfferBlackoutDay()) {
+      hideOfferRoots();
+      return;
+    }
+
     if (!wasDismissed()) {
       window.setTimeout(openPopup, isNaN(delay) ? DELAY_MS : delay);
     }
@@ -615,11 +652,18 @@ function ffThemeAsset(name, bust) {
   window.setInterval(hideForms, 1000);
 
   ready(function () {
-    ensureCss();
     // Clear legacy dismiss key from earlier testing
     try {
       localStorage.removeItem('ff-offer-popup-dismissed');
     } catch (e) {}
+
+    var force = /(?:\?|&)ff_offer=1(?:&|$)/.test(location.search);
+    if (isOfferBlackoutDay() && !force) {
+      hideOfferRoots();
+      return;
+    }
+
+    ensureCss();
 
     var roots = document.querySelectorAll('[data-ff-offer]');
     var root = roots.length ? roots[0] : ensureMarkup();
