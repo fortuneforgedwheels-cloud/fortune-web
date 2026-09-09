@@ -204,12 +204,22 @@
 }
 
 .ff-build__wheels {
-  display: grid;
+  display: none;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
   max-height: 420px;
   overflow: auto;
   padding-right: 4px;
+}
+
+/* Only one style collection visible at a time */
+.ff-build__wheels.is-active {
+  display: grid;
+}
+
+.ff-build__wheels[hidden],
+.ff-build__wheel-browser[hidden] {
+  display: none !important;
 }
 
 .ff-build__wheel {

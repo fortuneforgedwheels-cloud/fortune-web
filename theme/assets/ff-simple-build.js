@@ -90,8 +90,21 @@
       if (!wheelBrowser || !style) return;
       wheelBrowser.hidden = false;
       if (wheelBrowserTitle) wheelBrowserTitle.textContent = 'All ' + style + ' wheels';
+      /* Exactly one collection grid on screen — hide the other two */
       root.querySelectorAll('[data-wheels-panel]').forEach(function (panel) {
-        panel.hidden = panel.getAttribute('data-wheels-panel') !== style;
+        var match = panel.getAttribute('data-wheels-panel') === style;
+        panel.hidden = !match;
+        panel.classList.toggle('is-active', match);
+      });
+    }
+
+    function hideWheelBrowser() {
+      if (!wheelBrowser) return;
+      if (state.wheelTitle) return;
+      wheelBrowser.hidden = true;
+      root.querySelectorAll('[data-wheels-panel]').forEach(function (panel) {
+        panel.hidden = true;
+        panel.classList.remove('is-active');
       });
     }
 
@@ -243,12 +256,12 @@
       btn.addEventListener('mouseenter', function () {
         if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
           clearTimeout(hoverTimer);
-          setStyle(
-            btn.getAttribute('data-style') || '',
-            btn.getAttribute('data-price-range') || '',
-            { showBrowser: true }
-          );
+          /* Preview only this style’s wheels — never stack multiple groups */
+          showWheelBrowser(btn.getAttribute('data-style') || '');
         }
+      });
+      btn.addEventListener('focus', function () {
+        showWheelBrowser(btn.getAttribute('data-style') || '');
       });
     });
 
@@ -256,13 +269,27 @@
       styleCards.addEventListener('mouseleave', function () {
         clearTimeout(hoverTimer);
         hoverTimer = setTimeout(function () {
-          if (!state.wheelTitle && !root.querySelector('[data-style-select].is-selected')) {
-            /* keep open if a style is selected */
+          if (wheelBrowser.matches(':hover')) return;
+          if (state.style) {
+            showWheelBrowser(state.style);
+          } else {
+            hideWheelBrowser();
           }
-        }, 120);
+        }, 160);
       });
       wheelBrowser.addEventListener('mouseenter', function () {
         clearTimeout(hoverTimer);
+      });
+      wheelBrowser.addEventListener('mouseleave', function () {
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(function () {
+          if (styleCards.matches(':hover')) return;
+          if (state.style) {
+            showWheelBrowser(state.style);
+          } else if (!state.wheelTitle) {
+            hideWheelBrowser();
+          }
+        }, 160);
       });
     }
 
