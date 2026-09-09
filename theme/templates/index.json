@@ -30,10 +30,8 @@
         "slide_two": {
           "type": "slide",
           "settings": {
-            "video": "shopify://files/videos/G80 done 2.MP4",
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_6.58.56_PM.png",
-            "mobile_video": "shopify://files/videos/G80 done 2.MP4",
-            "mobile_image": "shopify://shop_images/IMG_0287_2.jpg",
+            "image": "shopify://shop_images/Mediabymarius-1275.jpg",
+            "mobile_image": "shopify://shop_images/Mediabymarius-1275.jpg",
             "title": "Two-Piece Forged",
             "title_size": 42,
             "title_align": "left",
@@ -46,7 +44,7 @@
           "type": "slide",
           "settings": {
             "video": "shopify://files/videos/fortune 1080 rev 1.MP4",
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM_c0f745e4-4f88-4373-8d62-148cfcbbe059.png",
+            "image": "shopify://shop_images/IMG_4094.jpg",
             "mobile_video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E.mov",
             "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
             "title": "Beadlock Forged",
@@ -70,23 +68,8 @@
         "content_h_align": "left",
         "content_v_align": "bottom",
         "content_offset_x": 0,
-        "content_offset_y": 0
-      }
-    },
-    "ff_top_selling_monoblocks_home": {
-      "type": "ff-top-selling-monoblocks",
-      "settings": {
-        "show_section": true,
-        "heading": "Top selling monoblocks",
-        "collection": "monoblock-wheels",
-        "left_collection": "monoblock-wheels",
-        "product_limit": 8,
-        "buy_label": "Buy Now",
-        "empty_text": "Add monoblock products to this collection",
-        "view_label": "Shop all monoblocks",
-        "view_link": "shopify://collections/monoblock-wheels",
-        "padding_top": 40,
-        "padding_bottom": 64
+        "content_offset_y": 0,
+        "show_shop_by_vehicle_bar": false
       }
     },
     "ff_simple_build_main": {
@@ -109,18 +92,28 @@
         "step2_heading": "Choose your setup",
         "step2_copy": "Browse the hottest designs, pick Monoblock, 2-Piece, or Beadlock — or skip straight to a custom quote.",
         "step2_hint": "Beadlock wheels are priced by the pair. Standard monoblock and two piece wheels are priced individually.",
+        "style_prompt": "Tap one option to continue",
+        "continue_to_quote_label": "Continue — see my quote options",
+        "style_required_hint": "Pick a setup above so we can show the right price range.",
         "hottest_label": "Browse the hottest designs",
         "hottest_desc": "See recent Fortune Forged builds and popular styles",
         "hottest_link": "/#project-gallery",
         "quote_cta": "Skip to custom quote",
         "monoblock_link": "shopify://collections/monoblock-wheels",
-        "monoblock_desc": "One-piece forged strength · priced individually",
+        "monoblock_desc": "Lightweight, single piece wheels · priced individually",
+        "monoblock_price": "Between $2,300–$3,500+ for a set of 4",
         "twopiece_link": "shopify://collections/two-piece-wheels",
-        "twopiece_desc": "Modular fitment & finish · priced individually",
+        "twopiece_desc": "Modular design & show ready · priced individually",
+        "twopiece_price": "Between $4,000–$4,500+ for a set of 4",
         "beadlock_link": "shopify://collections/beadlock-wheels",
-        "beadlock_desc": "Off-road lock-ring builds · priced by the pair",
+        "beadlock_desc": "Purpose built, drag racing beadlock wheels· Priced by the pair",
+        "beadlock_price": "From $1,999 per pair.",
         "step3_heading": "Request your build",
         "step3_copy": "Enter the custom details you already know — or leave fitment blank and a specialist will email or call you back to help.",
+        "budget_legend": "What’s your budget for a full set?",
+        "timeline_legend": "When do you want to order?",
+        "intent_label": "I understand Fortune Forged wheels are a premium forged product, I’ve seen the typical price range, and I’m requesting this quote because I’m seriously considering a purchase.",
+        "submit_label": "Submit my quote request",
         "modal_eyebrow": "Quote received",
         "modal_title": "You're on the list — one more thing",
         "modal_lead": "Thanks for requesting a quote. Our team will follow up shortly with pricing, fitment, and next steps.",
@@ -130,6 +123,34 @@
         "modal_cta": "Yes — I'm interested",
         "modal_dismiss": "Maybe later",
         "modal_thanks": "Perfect. When we follow up on your quote, we'll include media day details and help coordinate after installation."
+      }
+    },
+    "ff_shop_by_vehicle_home": {
+      "type": "ff-shop-by-vehicle",
+      "settings": {
+        "show_section": true,
+        "heading": "SHOP BY VEHICLE",
+        "go_label": "GO",
+        "go_target": "",
+        "helper": "Select your vehicle and click GO to choose fitment, wheel style, and finish.",
+        "bar_color": "#0a0a0a",
+        "padding_y": 10
+      }
+    },
+    "ff_top_selling_monoblocks_home": {
+      "type": "ff-top-selling-monoblocks",
+      "settings": {
+        "show_section": true,
+        "heading": "Top selling monoblocks",
+        "collection": "monoblock-wheels",
+        "left_collection": "monoblock-wheels",
+        "product_limit": 8,
+        "buy_label": "Buy Now",
+        "empty_text": "Add monoblock products to this collection",
+        "view_label": "Shop all monoblocks",
+        "view_link": "shopify://collections/monoblock-wheels",
+        "padding_top": 40,
+        "padding_bottom": 64
       }
     },
     "ff_fan_favorites_main": {
@@ -629,8 +650,9 @@
   },
   "order": [
     "ff_hero_editor_always_20260801c",
-    "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
+    "ff_shop_by_vehicle_home",
+    "ff_top_selling_monoblocks_home",
     "ff_fan_favorites_main",
     "ff_value_props_main",
     "ff_trust_badges_home",
