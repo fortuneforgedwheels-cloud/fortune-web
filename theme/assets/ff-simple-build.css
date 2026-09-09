@@ -50,6 +50,10 @@
   padding: 0;
 }
 
+.ff-build__steps[hidden] {
+  display: none !important;
+}
+
 .ff-build__step {
   display: flex;
   align-items: center;

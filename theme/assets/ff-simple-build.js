@@ -165,10 +165,12 @@
     var modalDialog = root.querySelector('[data-ff-modal-dialog]');
     var modalThanks = root.querySelector('[data-ff-modal-thanks]');
     var modalActions = root.querySelector('.ff-media-modal__actions');
+    var stepsBar = root.querySelector('[data-build-steps]');
     var previousFocus = null;
     var hoverTimer = null;
 
     function setStep(n) {
+      if (stepsBar) stepsBar.hidden = n < 2;
       root.querySelectorAll('[data-step]').forEach(function (el) {
         var step = Number(el.getAttribute('data-step'));
         el.classList.toggle('is-active', step === n);
