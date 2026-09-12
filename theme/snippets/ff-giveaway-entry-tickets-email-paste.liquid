@@ -1,28 +1,51 @@
 {%- comment -%}
   SOURCE OF TRUTH for Admin paste (notifications cannot {% render %} theme snippets).
 
-  1) Settings → Notifications → Order confirmation
-     Paste the block between EMAIL_START / EMAIL_END into the email body.
+  CRITICAL for Bimmer Invasion drawing:
+  1) Settings → Notifications → Order confirmation → Edit code
+     Paste EVERYTHING between EMAIL_START and EMAIL_END into the email body
+     (near the top, after the order number / greeting is fine).
+  2) Settings → Checkout → Order status page → Additional scripts (if available)
+     Paste everything between STATUS_START and STATUS_END.
 
-  2) Settings → Checkout → Order status page → Additional scripts
-     (if available on your plan) paste the block between STATUS_START / STATUS_END.
+  After pasting, place a test Exclusive Deals order and confirm the email lists:
+    FF####-1, FF####-2, FF####-3, FF####-4, FF####-5
 
-  Ticket rules match theme snippet ff-giveaway-entry-tickets:
-  - 1998-bmw-m3 (or tag giveaway-entry): 1 ticket per qty
-  - exclusive-deals-full-set (or invasion tags): +5 bonus tickets
+  Rules:
+  - 1998-bmw-m3 / giveaway-entry: 1 ticket per qty
+  - exclusive-deals-full-set / invasion tags / Exclusive Deals title / Invasion Bonus Entries property: +5
 {%- endcomment -%}
 
 {%- comment -%} EMAIL_START {%- endcomment -%}
 {% assign paid_entries = 0 %}
 {% assign bonus_entries = 0 %}
 {% for line_item in line_items %}
-  {% assign handle = line_item.product.handle %}
-  {% assign tags = line_item.product.tags | join: ',' | downcase %}
-  {% if handle == '1998-bmw-m3' or tags contains 'giveaway-entry' %}
+  {% assign handle = '' %}
+  {% assign tags = '' %}
+  {% assign line_title = line_item.title | downcase %}
+  {% if line_item.product %}
+    {% assign handle = line_item.product.handle %}
+    {% assign tags = line_item.product.tags | join: ',' | downcase %}
+  {% endif %}
+  {% if handle == '1998-bmw-m3' or tags contains 'giveaway-entry' or line_title contains 'giveaway entry' %}
     {% assign paid_entries = paid_entries | plus: line_item.quantity %}
   {% endif %}
+  {% assign line_bonus = 0 %}
   {% if handle == 'exclusive-deals-full-set' or tags contains 'invasion-wheel-set' or tags contains 'bimmer-invasion' %}
-    {% assign bonus_entries = bonus_entries | plus: 5 %}
+    {% assign line_bonus = 5 %}
+  {% elsif line_title contains 'exclusive deals' %}
+    {% assign line_bonus = 5 %}
+  {% endif %}
+  {% if line_bonus == 0 %}
+    {% for property in line_item.properties %}
+      {% assign prop_key = property.first | downcase %}
+      {% if prop_key == 'invasion bonus entries' or prop_key == 'giveaway ticket count' %}
+        {% assign line_bonus = property.last | plus: 0 %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  {% if line_bonus > 0 %}
+    {% assign bonus_entries = bonus_entries | plus: line_bonus %}
   {% endif %}
 {% endfor %}
 {% assign total_entries = paid_entries | plus: bonus_entries %}
@@ -33,6 +56,7 @@
       <h2 style="margin:0 0 8px;font-size:18px;line-height:1.3;">Your giveaway entry tickets</h2>
       <p style="margin:0 0 14px;font-size:14px;line-height:1.5;">
         Master order: <strong>{{ name }}</strong>
+        · {{ total_entries }} drawing ticket{% if total_entries != 1 %}s{% endif %}
       </p>
       <ol style="margin:0;padding-left:22px;font-size:15px;line-height:1.7;font-weight:700;">
         {% for i in (1..total_entries) %}
@@ -45,7 +69,7 @@
       </p>
       {% endif %}
       <p style="margin:12px 0 0;font-size:12px;line-height:1.4;color:#666;">
-        Keep this email — these ticket numbers are what we use for the drawing.
+        Keep this email — these ticket numbers ({{ name }}-1 … {{ name }}-{{ total_entries }}) are what we use for the drawing.
       </p>
     </td>
   </tr>
@@ -57,20 +81,39 @@
 {% assign paid_entries = 0 %}
 {% assign bonus_entries = 0 %}
 {% for line_item in line_items %}
-  {% assign handle = line_item.product.handle %}
-  {% assign tags = line_item.product.tags | join: ',' | downcase %}
-  {% if handle == '1998-bmw-m3' or tags contains 'giveaway-entry' %}
+  {% assign handle = '' %}
+  {% assign tags = '' %}
+  {% assign line_title = line_item.title | downcase %}
+  {% if line_item.product %}
+    {% assign handle = line_item.product.handle %}
+    {% assign tags = line_item.product.tags | join: ',' | downcase %}
+  {% endif %}
+  {% if handle == '1998-bmw-m3' or tags contains 'giveaway-entry' or line_title contains 'giveaway entry' %}
     {% assign paid_entries = paid_entries | plus: line_item.quantity %}
   {% endif %}
+  {% assign line_bonus = 0 %}
   {% if handle == 'exclusive-deals-full-set' or tags contains 'invasion-wheel-set' or tags contains 'bimmer-invasion' %}
-    {% assign bonus_entries = bonus_entries | plus: 5 %}
+    {% assign line_bonus = 5 %}
+  {% elsif line_title contains 'exclusive deals' %}
+    {% assign line_bonus = 5 %}
+  {% endif %}
+  {% if line_bonus == 0 %}
+    {% for property in line_item.properties %}
+      {% assign prop_key = property.first | downcase %}
+      {% if prop_key == 'invasion bonus entries' or prop_key == 'giveaway ticket count' %}
+        {% assign line_bonus = property.last | plus: 0 %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  {% if line_bonus > 0 %}
+    {% assign bonus_entries = bonus_entries | plus: line_bonus %}
   {% endif %}
 {% endfor %}
 {% assign total_entries = paid_entries | plus: bonus_entries %}
 {% if total_entries > 0 %}
 <div id="ff-entry-tickets" style="margin:24px 0;padding:18px;border:1px solid #222;background:#111;color:#fff;font-family:Arial,Helvetica,sans-serif;">
   <h2 style="margin:0 0 8px;font-size:20px;">Your giveaway entry tickets</h2>
-  <p style="margin:0 0 12px;">Master order: <strong>{{ order_name }}</strong></p>
+  <p style="margin:0 0 12px;">Master order: <strong>{{ order_name }}</strong> · {{ total_entries }} tickets</p>
   <ol style="margin:0;padding-left:22px;font-size:16px;font-weight:700;line-height:1.7;">
     {% for i in (1..total_entries) %}
       <li>{{ order_name }}-{{ i }}</li>
