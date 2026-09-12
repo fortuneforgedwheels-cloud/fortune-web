@@ -189,12 +189,8 @@ main-cart-items{
 }
 
 .cart-item-properties{
-    display: grid;
-    grid-template-columns: max-content minmax(0, 1fr);
-    column-gap: 8px;
-    row-gap: 2px;
-    align-items: start;
-    margin: 8px 0 0 0;
+    display: block;
+    margin: 6px 0 0 0;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
