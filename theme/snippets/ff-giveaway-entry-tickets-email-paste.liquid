@@ -3,17 +3,16 @@
 
   CRITICAL — re-paste after every ticket-logic change:
   1) Settings → Notifications → Order confirmation → Edit code
-     Paste EVERYTHING between EMAIL_START and EMAIL_END into the email body
-     (after the payment if/elsif/else {% endif %} / delivery_instructions block is fine).
+     Paste EVERYTHING between EMAIL_START and EMAIL_END into the email body.
+     Put it OUTSIDE any {% if financial_status %} / payment pending branches
+     (right after the opening {% capture email_body %} is safest).
   2) Optional: Order status page → Additional scripts → STATUS_START…STATUS_END.
 
-  Why Exclusive Deals worked but "1998 BMW M3 × 2" did not:
-  Exclusive Deals matches on title ("exclusive deals") + Invasion Bonus Entries property.
-  Paid entries must also match title "1998 … M3" when product.handle/tags are missing in email Liquid.
-
-  Ticket IDs are derived as {{ name }}-1 … {{ name }}-N — they are NOT separate Shopify orders
-  and will not appear as their own rows in Admin unless you also store cart attributes
-  (theme JS writes "Giveaway ticket count" + "Giveaway ticket IDs" format for Admin).
+  Email Liquid quirks this paste avoids:
+  - Do NOT use product.tags | join — in notifications tags are already a string;
+    join can break the loop for tagged products.
+  - Do NOT use `and` / `or` in one tag — use nested ifs / single contains.
+  - Match title "bmw m3" so "1998 BMW M3" works even when product is blank.
 {%- endcomment -%}
 
 {%- comment -%} EMAIL_START {%- endcomment -%}
@@ -26,36 +25,62 @@
   {% assign line_title = line_item.title | downcase %}
   {% if line_item.product %}
     {% assign handle = line_item.product.handle | downcase %}
-    {% assign tags = line_item.product.tags | join: ',' | downcase %}
+    {% comment %} tags are already a comma-separated string in notification Liquid — do not join {% endcomment %}
+    {% assign tags = line_item.product.tags | downcase %}
     {% assign product_title = line_item.product.title | downcase %}
     {% if product_title != blank %}
       {% assign line_title = line_title | append: ' ' | append: product_title %}
     {% endif %}
   {% endif %}
   {% assign is_paid_line = false %}
-  {% if handle == '1998-bmw-m3' or tags contains 'giveaway-entry' or line_title contains 'giveaway entry' %}
+  {% if handle == '1998-bmw-m3' %}
     {% assign is_paid_line = true %}
-  {% elsif line_title contains '1998' and line_title contains 'm3' %}
+  {% endif %}
+  {% if tags contains 'giveaway-entry' %}
+    {% assign is_paid_line = true %}
+  {% endif %}
+  {% if line_title contains 'giveaway entry' %}
+    {% assign is_paid_line = true %}
+  {% endif %}
+  {% if line_title contains 'bmw m3' %}
+    {% assign is_paid_line = true %}
+  {% endif %}
+  {% if line_title contains '1998 bmw' %}
     {% assign is_paid_line = true %}
   {% endif %}
   {% if is_paid_line %}
     {% assign paid_entries = paid_entries | plus: line_item.quantity %}
   {% endif %}
   {% assign line_bonus = 0 %}
-  {% if handle == 'exclusive-deals-full-set' or tags contains 'invasion-wheel-set' or tags contains 'bimmer-invasion' %}
+  {% if handle == 'exclusive-deals-full-set' %}
     {% assign line_bonus = 5 %}
-  {% elsif line_title contains 'exclusive deals' %}
+  {% endif %}
+  {% if tags contains 'invasion-wheel-set' %}
+    {% assign line_bonus = 5 %}
+  {% endif %}
+  {% if tags contains 'bimmer-invasion' %}
+    {% assign line_bonus = 5 %}
+  {% endif %}
+  {% if line_title contains 'exclusive deals' %}
     {% assign line_bonus = 5 %}
   {% endif %}
   {% for property in line_item.properties %}
     {% assign prop_key = property.first | downcase %}
     {% assign prop_val = property.last | plus: 0 %}
-    {% if prop_key == 'invasion bonus entries' and prop_val > line_bonus %}
-      {% assign line_bonus = prop_val %}
+    {% if prop_key == 'invasion bonus entries' %}
+      {% if prop_val > line_bonus %}
+        {% assign line_bonus = prop_val %}
+      {% endif %}
     {% endif %}
     {% unless is_paid_line %}
       {% if line_bonus == 0 %}
-        {% if prop_key == 'paid giveaway entries' or prop_key == 'giveaway ticket count' %}
+        {% if prop_key == 'paid giveaway entries' %}
+          {% if prop_val > 0 %}
+            {% assign paid_entries = paid_entries | plus: prop_val %}
+            {% assign is_paid_line = true %}
+          {% endif %}
+        {% endif %}
+        {% if prop_key == 'giveaway ticket count' %}
           {% if prop_val > 0 %}
             {% assign paid_entries = paid_entries | plus: prop_val %}
             {% assign is_paid_line = true %}
@@ -67,6 +92,18 @@
   {% if line_bonus > 0 %}
     {% assign bonus_entries = bonus_entries | plus: line_bonus %}
     {% assign has_wheel_set = true %}
+  {% endif %}
+{% endfor %}
+{% comment %} Cart attributes fallback (theme JS writes these at checkout) {% endcomment %}
+{% for attribute in attributes %}
+  {% assign attr_key = attribute.first | downcase %}
+  {% if attr_key == 'giveaway ticket count' %}
+    {% assign attr_tickets = attribute.last | plus: 0 %}
+    {% if attr_tickets > paid_entries %}
+      {% if bonus_entries == 0 %}
+        {% assign paid_entries = attr_tickets %}
+      {% endif %}
+    {% endif %}
   {% endif %}
 {% endfor %}
 {% assign total_entries = paid_entries | plus: bonus_entries %}
@@ -112,32 +149,31 @@
   {% assign line_title = line_item.title | downcase %}
   {% if line_item.product %}
     {% assign handle = line_item.product.handle | downcase %}
-    {% assign tags = line_item.product.tags | join: ',' | downcase %}
+    {% assign tags = line_item.product.tags | downcase %}
     {% assign product_title = line_item.product.title | downcase %}
     {% if product_title != blank %}
       {% assign line_title = line_title | append: ' ' | append: product_title %}
     {% endif %}
   {% endif %}
   {% assign is_paid_line = false %}
-  {% if handle == '1998-bmw-m3' or tags contains 'giveaway-entry' or line_title contains 'giveaway entry' %}
-    {% assign is_paid_line = true %}
-  {% elsif line_title contains '1998' and line_title contains 'm3' %}
-    {% assign is_paid_line = true %}
-  {% endif %}
+  {% if handle == '1998-bmw-m3' %}{% assign is_paid_line = true %}{% endif %}
+  {% if tags contains 'giveaway-entry' %}{% assign is_paid_line = true %}{% endif %}
+  {% if line_title contains 'giveaway entry' %}{% assign is_paid_line = true %}{% endif %}
+  {% if line_title contains 'bmw m3' %}{% assign is_paid_line = true %}{% endif %}
+  {% if line_title contains '1998 bmw' %}{% assign is_paid_line = true %}{% endif %}
   {% if is_paid_line %}
     {% assign paid_entries = paid_entries | plus: line_item.quantity %}
   {% endif %}
   {% assign line_bonus = 0 %}
-  {% if handle == 'exclusive-deals-full-set' or tags contains 'invasion-wheel-set' or tags contains 'bimmer-invasion' %}
-    {% assign line_bonus = 5 %}
-  {% elsif line_title contains 'exclusive deals' %}
-    {% assign line_bonus = 5 %}
-  {% endif %}
+  {% if handle == 'exclusive-deals-full-set' %}{% assign line_bonus = 5 %}{% endif %}
+  {% if tags contains 'invasion-wheel-set' %}{% assign line_bonus = 5 %}{% endif %}
+  {% if tags contains 'bimmer-invasion' %}{% assign line_bonus = 5 %}{% endif %}
+  {% if line_title contains 'exclusive deals' %}{% assign line_bonus = 5 %}{% endif %}
   {% for property in line_item.properties %}
     {% assign prop_key = property.first | downcase %}
     {% assign prop_val = property.last | plus: 0 %}
-    {% if prop_key == 'invasion bonus entries' and prop_val > line_bonus %}
-      {% assign line_bonus = prop_val %}
+    {% if prop_key == 'invasion bonus entries' %}
+      {% if prop_val > line_bonus %}{% assign line_bonus = prop_val %}{% endif %}
     {% endif %}
     {% unless is_paid_line %}
       {% if line_bonus == 0 %}

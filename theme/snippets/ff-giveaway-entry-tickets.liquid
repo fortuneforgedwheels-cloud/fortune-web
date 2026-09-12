@@ -45,9 +45,9 @@
       assign is_paid_line = false
       if handle == '1998-bmw-m3' or tags contains 'giveaway-entry' or line_title contains 'giveaway entry'
         assign is_paid_line = true
-      elsif line_title contains '1998' and line_title contains 'm3'
+      elsif line_title contains 'bmw m3'
         assign is_paid_line = true
-      elsif line_title contains 'bmw m3' and line_title contains 'giveaway'
+      elsif line_title contains '1998 bmw'
         assign is_paid_line = true
       endif
 
