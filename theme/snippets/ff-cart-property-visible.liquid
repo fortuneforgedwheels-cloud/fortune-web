@@ -1,0 +1,22 @@
+{%- comment -%}
+  Returns blank when a cart line property should be hidden from customers.
+  Usage: {% capture _ff_hide %}{% render 'ff-cart-property-visible', key: property.first, value: property.last %}{% endcapture %}
+  Hidden when capture is blank.
+{%- endcomment -%}
+{%- liquid
+  assign ff_key = key | strip | downcase
+  assign ff_val = value | strip | downcase
+  assign ff_hide = false
+
+  if ff_key == 'fitment source' or ff_key == 'wheel design' or ff_key == 'construction' or ff_key == 'fitment tier' or ff_key == 'chassis'
+    assign ff_hide = true
+  endif
+
+  if ff_val contains 'apex guide' or ff_val contains 'fortune forged guide'
+    assign ff_hide = true
+  endif
+
+  unless ff_hide
+    echo '1'
+  endunless
+-%}

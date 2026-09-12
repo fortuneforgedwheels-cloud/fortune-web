@@ -10,6 +10,7 @@
 {% endcomment %}
 
 {{ 'customer.css' | asset_url | stylesheet_tag }}
+{{ 'ff-giveaway-entry-tickets.css' | asset_url | stylesheet_tag }}
 
 <div class="account-page">
     <div class="container">
@@ -29,6 +30,7 @@
                             <div class="account-desc text-left">
                                 <p>{{ 'customer.order.date_html' | t: date: order_date }}</p>
                             </div>
+                            {% render 'ff-giveaway-entry-tickets', order: order %}
                             {%- if order.cancelled -%}
                                 {%- assign cancelled_at = order.cancelled_at | time_tag: format: "date_at_time" -%}
                                 <div class="account-message">

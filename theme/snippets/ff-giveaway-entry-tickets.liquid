@@ -2,10 +2,11 @@
   Giveaway entry tickets for an order.
 
   Rules:
-  - Paid E36 giveaway product (handle 1998-bmw-m3, or tag giveaway-entry):
-    1 ticket per quantity
-  - Invasion exclusive wheel set (handle exclusive-deals-full-set, or tag invasion-wheel-set / bimmer-invasion,
-    or line title contains "exclusive deals", or property "Invasion Bonus Entries"):
+  - Paid E36 giveaway product (handle 1998-bmw-m3, tag giveaway-entry,
+    title like "1998 BMW M3" / "giveaway entry", or property "Paid giveaway entries"):
+    1 ticket per quantity (or property value when product data is missing)
+  - Invasion exclusive wheel set (handle exclusive-deals-full-set, invasion tags,
+    title contains "exclusive deals", or property "Invasion Bonus Entries"):
     +5 bonus tickets automatically
 
   Ticket format uses the Shopify order name (e.g. FF1110-1 … FF1110-5).
@@ -33,11 +34,24 @@
       assign tags = ''
       assign line_title = line_item.title | default: '' | downcase
       if line_item.product != blank
-        assign handle = line_item.product.handle
+        assign handle = line_item.product.handle | default: '' | downcase
         assign tags = line_item.product.tags | join: ',' | downcase
+        assign product_title = line_item.product.title | default: '' | downcase
+        if product_title != blank
+          assign line_title = line_title | append: ' ' | append: product_title
+        endif
       endif
 
+      assign is_paid_line = false
       if handle == '1998-bmw-m3' or tags contains 'giveaway-entry' or line_title contains 'giveaway entry'
+        assign is_paid_line = true
+      elsif line_title contains '1998' and line_title contains 'm3'
+        assign is_paid_line = true
+      elsif line_title contains 'bmw m3' and line_title contains 'giveaway'
+        assign is_paid_line = true
+      endif
+
+      if is_paid_line
         assign paid_entries = paid_entries | plus: line_item.quantity
         assign has_giveaway = true
       endif
@@ -49,12 +63,26 @@
         assign line_bonus = 5
       endif
 
-      if line_bonus == 0 and line_item.properties != blank
+      if line_item.properties != blank
         for property in line_item.properties
           assign prop_key = property.first | downcase
-          if prop_key == 'invasion bonus entries' or prop_key == 'giveaway ticket count'
-            assign line_bonus = property.last | plus: 0
+          assign prop_val = property.last | plus: 0
+          if prop_key == 'invasion bonus entries' and prop_val > 0
+            if line_bonus < prop_val
+              assign line_bonus = prop_val
+            endif
           endif
+          unless is_paid_line
+            if line_bonus == 0
+              if prop_key == 'paid giveaway entries' or prop_key == 'giveaway ticket count'
+                if prop_val > 0
+                  assign paid_entries = paid_entries | plus: prop_val
+                  assign has_giveaway = true
+                  assign is_paid_line = true
+                endif
+              endif
+            endif
+          endunless
         endfor
       endif
 

@@ -5,11 +5,15 @@
  *
  * Rules:
  *   paid  = qty of lines where handle is 1998-bmw-m3 OR tags include giveaway-entry
+ *           OR title looks like "1998 BMW M3" / "giveaway entry"
  *   bonus = +5 per line where handle is exclusive-deals-full-set
  *           OR tags include invasion-wheel-set OR bimmer-invasion
+ *           OR title contains "exclusive deals"
  *           (fixed +5 per matching line item — not × quantity)
  *   tickets = `${orderName}-${i}` for i in 1..paid+bonus
  *
+ * NOTE: Ticket IDs are derived — they are not separate Shopify orders and do not
+ * appear as their own Admin order rows.
  * Usage:
  *   node scripts/e36-giveaway-entry-audit.mjs --self-test
  *   node scripts/e36-giveaway-entry-audit.mjs --csv path/to/orders.csv

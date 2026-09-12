@@ -346,7 +346,7 @@
           'Fitment path': helpPreference ? helpPreference.value : '',
           'Invasion Bonus Entries': '5',
           'Giveaway ticket count': '5',
-          'Drawing note': 'You get 5 entry tickets after checkout (ORDER-1 through ORDER-5)'
+          'Drawing note': 'After payment tickets are ORDER#-1 … ORDER#-5 (listed in confirmation email)'
         };
 
         if (mode === 'specs' && specs) {
@@ -379,6 +379,19 @@
           .then(function (response) {
             if (!response.ok) throw new Error('cart-add-failed');
             return response.json();
+          })
+          .then(function () {
+            /* Cart attributes show under Admin → Order → Additional details */
+            return fetch('/cart/update.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify({
+                attributes: {
+                  'Giveaway ticket count': '5',
+                  'Giveaway ticket IDs': 'Format after payment: {Order#}-1 through {Order#}-5 (see confirmation email)'
+                }
+              })
+            }).catch(function () { /* non-blocking */ });
           })
           .then(function () {
             if (atcBtn) {
