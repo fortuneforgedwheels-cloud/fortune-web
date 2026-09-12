@@ -5,9 +5,9 @@
  *
  * Rules:
  *   paid  = qty of lines where handle is 1998-bmw-m3 OR tags include giveaway-entry
- *   bonus = +3 per line where handle is exclusive-deals-full-set
+ *   bonus = +5 per line where handle is exclusive-deals-full-set
  *           OR tags include invasion-wheel-set OR bimmer-invasion
- *           (fixed +3 per matching line item — not × quantity)
+ *           (fixed +5 per matching line item — not × quantity)
  *   tickets = `${orderName}-${i}` for i in 1..paid+bonus
  *
  * Usage:
@@ -92,7 +92,7 @@ export function calculateOrderEntries(order) {
       paid += linePaid;
     }
     if (isWheelSetBonusLine(handle, tags)) {
-      lineBonus = 3; // fixed +3 per matching line — matches Liquid
+      lineBonus = 5; // fixed +5 per matching line — matches Liquid
       bonus += lineBonus;
     }
 
@@ -310,14 +310,14 @@ function runSelfTests() {
       },
     },
     {
-      name: 'wheel set alone → +3 bonus',
+      name: 'wheel set alone → +5 entries',
       order: { order_name: '#1003', lines: [{ product_handle: WHEEL_SET_HANDLE, quantity: 1 }] },
-      expect: { paid: 0, bonus: 3, total: 3, tickets: ['#1003-1', '#1003-2', '#1003-3'] },
+      expect: { paid: 0, bonus: 5, total: 5, tickets: ['#1003-1', '#1003-2', '#1003-3', '#1003-4', '#1003-5'] },
     },
     {
-      name: 'wheel set qty 2 still +3 per line (Liquid does not × qty)',
+      name: 'wheel set qty 2 still +5 per line (Liquid does not × qty)',
       order: { order_name: '#1004', lines: [{ product_handle: WHEEL_SET_HANDLE, quantity: 2 }] },
-      expect: { paid: 0, bonus: 3, total: 3 },
+      expect: { paid: 0, bonus: 5, total: 5 },
     },
     {
       name: 'giveaway + wheel set',
@@ -330,9 +330,9 @@ function runSelfTests() {
       },
       expect: {
         paid: 2,
-        bonus: 3,
-        total: 5,
-        tickets: ['FF1005-1', 'FF1005-2', 'FF1005-3', 'FF1005-4', 'FF1005-5'],
+        bonus: 5,
+        total: 7,
+        tickets: ['FF1005-1', 'FF1005-2', 'FF1005-3', 'FF1005-4', 'FF1005-5', 'FF1005-6', 'FF1005-7'],
       },
     },
     {
@@ -349,7 +349,7 @@ function runSelfTests() {
         order_name: '#1007',
         lines: [{ product_handle: 'wheels', quantity: 1, tags: 'bimmer-invasion' }],
       },
-      expect: { paid: 0, bonus: 3, total: 3 },
+      expect: { paid: 0, bonus: 5, total: 5 },
     },
     {
       name: 'unrelated product → 0 tickets',
@@ -416,7 +416,7 @@ function runSelfTests() {
   const summary = buildSummaryRows(fromCsv);
   assert(summary.length === 2, 'csv should yield 2 giveaway orders');
   assert(summary[0].order_name === '#2001', 'csv sort order');
-  assert(summary[0].total_entries === 5, 'csv #2001 total');
+  assert(summary[0].total_entries === 7, 'csv #2001 total');
   assert(summary[1].total_entries === 1, 'csv #2002 total');
   console.log('  ✓ csv parse + summary');
   passed += 1;
