@@ -1,0 +1,32 @@
+{%- comment -%}
+  Adds E36 GIVEAWAY to the main nav when the page is not already present
+  in the assigned Shopify menu (main-menu).
+  Live page handle: win-our-e36-m3 (template: e36-giveaway).
+{%- endcomment -%}
+{%- assign ff_e36_url = '/pages/win-our-e36-m3' -%}
+{%- assign ff_e36_page = pages['win-our-e36-m3'] -%}
+{%- if ff_e36_page == blank -%}
+  {%- assign ff_e36_page = pages['e36-giveaway'] -%}
+{%- endif -%}
+{%- if ff_e36_page != blank -%}
+  {%- assign ff_e36_url = ff_e36_page.url -%}
+{%- endif -%}
+{%- assign ff_e36_in_menu = false -%}
+{%- for link in menu -%}
+  {%- if link.url == ff_e36_url or link.url contains 'win-our-e36-m3' or link.url contains 'e36-giveaway' or link.url contains '/pages/giveaway' -%}
+    {%- assign ff_e36_in_menu = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- unless ff_e36_in_menu -%}
+  <li class="menu-lv-item menu-lv-1 text-left no-megamenu">
+    <a
+      href="{{ ff_e36_url }}"
+      class="menu-lv-1__action list-menu__item list-menu__item--end link focus-inset{% if request.path == ff_e36_url or request.path contains 'win-our-e36-m3' %} is-active{% endif %}"
+      role="button"
+      {% if request.path == ff_e36_url or request.path contains 'win-our-e36-m3' %}aria-current="page"{% endif %}
+    >
+      <span class="text">E36 GIVEAWAY</span>
+    </a>
+  </li>
+{%- endunless -%}
