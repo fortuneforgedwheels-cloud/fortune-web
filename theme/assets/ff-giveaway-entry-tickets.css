@@ -1,0 +1,37 @@
+.ff-entry-tickets {
+  margin: 1.5rem 0 2rem;
+  padding: 1.25rem 1.35rem;
+  border: 2px solid #c9a227;
+  background: #111;
+  color: #fff;
+  border-radius: 10px;
+}
+.ff-entry-tickets__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
+  color: #c9a227;
+}
+.ff-entry-tickets__master {
+  margin: 0 0 0.85rem;
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+.ff-entry-tickets__list {
+  margin: 0;
+  padding-left: 1.35rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.7;
+}
+.ff-entry-tickets__list code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: #fff;
+  background: transparent;
+}
+.ff-entry-tickets__note,
+.ff-entry-tickets__hint {
+  margin: 0.85rem 0 0;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
