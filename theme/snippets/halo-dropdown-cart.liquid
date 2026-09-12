@@ -47,7 +47,7 @@
                                                     {% endif %}
                                                 {% endif %}
                                             >
-
+                                                {%- if item.image -%}
                                                     <img srcset="
                                                         {%- if image.width >= 165 -%}
                                                             {{ image | img_url: '165x' }} 165w,
@@ -73,7 +73,8 @@
                                                         loading="lazy"
                                                         class="motion-reduce"
                                                     >
-                                                                                            </a>
+                                                {%- endif -%}
+                                            </a>
                                             {%- endif -%}
                                         </div>
                                     </div>
@@ -255,30 +256,7 @@
                         {{ 'sections.cart.view_cart' | t }}
                     </a>
                 </div>
-            </div>>
+            </div>
         {%- endunless -%}
     </div>
-            <div class="previewCartProduct" data-product-collection-cart>
-                <div class="previewCartCarousel products-carousel" data-item-dots="{{ show_dots }}" data-item-arrows="{{ show_arrows }}"
-                >
-                    {%- for product in collection.products limit: limit -%}
-                        <div class="product">
-                            {% render 'product-card-custom',
-                                product_card_product: product
-                            %}
-                        </div>
-                    {%- else -%}
-                        {%- for product in (1..limit) -%}
-                            <div class="product">
-                                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-                                {% render 'product-card-custom-placeholder',
-                                    index: current
-                                %}
-                            </div>
-                        {%- endfor -%}
-                    {%- endfor -%}
-                </div>
-            </div>
-        </div>
-    {%- endif -%}
-</div>
+    </div>
