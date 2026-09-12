@@ -14,7 +14,7 @@
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) !important;
   column-gap: 12px !important;
-  row-gap: 8px !important;
+  row-gap: 4px !important;
   align-items: start !important;
   flex-wrap: unset !important;
   width: 100% !important;
@@ -54,32 +54,21 @@
   hyphens: none !important;
 }
 
-/* Narrow drawers: stack label above value so long props stay readable */
+/* Keep label + value on one row even on phones — avoid tall stacked gaps */
 @media (max-width: 749.98px) {
   .cart-item-properties,
   .previewCartItem-properties,
   .quickCartWrap .card-properties {
-    grid-template-columns: 1fr !important;
-    row-gap: 2px !important;
+    grid-template-columns: max-content minmax(0, 1fr) !important;
+    column-gap: 8px !important;
+    row-gap: 3px !important;
   }
 
   .cart-item-properties .definitionList-key,
   .previewCartItem-properties .definitionList-key,
   .quickCartWrap .card-properties .definitionList-key {
-    margin-top: 6px !important;
-  }
-
-  .cart-item-properties .definitionList-key:first-child,
-  .previewCartItem-properties .definitionList-key:first-child,
-  .quickCartWrap .card-properties .definitionList-key:first-child {
-    margin-top: 0 !important;
-  }
-
-  .cart-item-properties .definitionList-value,
-  .previewCartItem-properties .definitionList-value,
-  .quickCartWrap .card-properties .definitionList-value {
-    margin-bottom: 4px !important;
-    opacity: 0.92;
+    white-space: nowrap !important;
+    font-weight: 600 !important;
   }
 }
 
@@ -100,5 +89,15 @@
   .previewCartItem-properties,
   .quickCartWrap .card-properties {
     row-gap: 2px !important;
+  }
+}
+
+
+@media (max-width: 1024px) {
+  .cart-item-block.cart-item-remove {
+    display: none !important;
+  }
+  .cart-item-name-row .cart-remove--inline {
+    display: inline-flex !important;
   }
 }

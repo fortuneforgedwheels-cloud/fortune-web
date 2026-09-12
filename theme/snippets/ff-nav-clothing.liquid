@@ -1,0 +1,28 @@
+{%- comment -%}
+  Adds CLOTHING to the main nav when the collection is not already present
+  in the assigned Shopify menu (main-menu).
+{%- endcomment -%}
+{%- assign ff_clothing_url = '/collections/clothing' -%}
+{%- assign ff_clothing_collection = collections['clothing'] -%}
+{%- if ff_clothing_collection != blank -%}
+  {%- assign ff_clothing_url = ff_clothing_collection.url -%}
+{%- endif -%}
+{%- assign ff_clothing_in_menu = false -%}
+{%- for link in menu -%}
+  {%- if link.url == ff_clothing_url or link.url contains '/collections/clothing' or link.title == 'Clothing' or link.title == 'CLOTHING' -%}
+    {%- assign ff_clothing_in_menu = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- unless ff_clothing_in_menu -%}
+  <li class="menu-lv-item menu-lv-1 text-left no-megamenu">
+    <a
+      href="{{ ff_clothing_url }}"
+      class="menu-lv-1__action list-menu__item list-menu__item--end link focus-inset{% if request.path == ff_clothing_url or request.path contains '/collections/clothing' %} is-active{% endif %}"
+      role="button"
+      {% if request.path == ff_clothing_url or request.path contains '/collections/clothing' %}aria-current="page"{% endif %}
+    >
+      <span class="text">CLOTHING</span>
+    </a>
+  </li>
+{%- endunless -%}

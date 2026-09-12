@@ -116,7 +116,7 @@ quick-cart{
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
     column-gap: 10px;
-    row-gap: 6px;
+    row-gap: 4px;
     align-items: start;
     margin: 0 0 7px 0;
     width: 100%;
@@ -732,7 +732,7 @@ body.dark-mode .halo-cart-sidebar .previewCartCollection .slick-dots li button {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
         column-gap: 10px;
-        row-gap: 6px;
+        row-gap: 4px;
         align-items: start;
         margin: 0;
         width: 100%;

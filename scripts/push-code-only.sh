@@ -43,6 +43,7 @@ fi
 export PATH="${ROOT}/node_modules/.bin:${PATH}"
 echo "==> Pushing code-only files to theme ${THEME_ID} (no settings_data / templates)"
 bash scripts/with-env.sh shopify theme push \
+  --nodelete \
   --path theme \
   --theme "$THEME_ID" \
   "${ALLOW_LIVE_FLAG[@]}" \

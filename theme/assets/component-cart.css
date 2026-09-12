@@ -192,7 +192,7 @@ main-cart-items{
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
     column-gap: 12px;
-    row-gap: 8px;
+    row-gap: 4px;
     align-items: start;
     margin: 8px 0 0 0;
     width: 100%;
