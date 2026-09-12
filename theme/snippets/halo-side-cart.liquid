@@ -18,10 +18,12 @@
                     {%- liquid
                         assign current_variant = item.product.selected_or_first_available_variant
                     -%}
-                    <li class="previewCartItem clearfix" data-cart-item>
+                    <li class="previewCartItem clearfix{% if item.image == blank %} previewCartItem--no-image{% endif %}" data-cart-item>
+                        {%- if item.image != blank -%}
                         <a href="{{ item.url }}" class="previewCartItem-image">
-                            <img srcset="{{ item.image | img_url: '110x' }}" src="{{ item.image | img_url: '110x' }}" alt="{{ item.title | escape }}" sizes="110px" loading="lazy">
+                            <img srcset="{{ item.image | image_url: width: 110 }}" src="{{ item.image | image_url: width: 110 }}" alt="{{ item.title | escape }}" sizes="110px" loading="lazy" width="110" height="110">
                         </a>
+                        {%- endif -%}
                         <div class="previewCartItem-content">
                             <a class="previewCartItem-name link-underline" href="{{ item.url }}">
                                 <span class="text">{{ item.product.title }}</span>
@@ -89,8 +91,9 @@
                                     </label>
                                     <input class="form-input quantity" name="quantity" id="updates{{ item.id }}" data-qtt-id1="quantity{{ item.id }}" value="{{ item.quantity }}" type="number"{% if item.variant.inventory_management != null and item.variant.inventory_quantity > 0 %} data-inventory-quantity="{{ item.variant.inventory_quantity }}"{% endif %} data-cart-quantity data-cart-quantity-id="{{ item.id }}" data-line="{{ item.key }}"/>
                                 </div>
-                                <a href="javascript:void(0)" class="previewCartItem-remove" data-cart-remove data-cart-remove-id="{{ item.id }}" data-line="{{ item.key }}" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}">
+                                <a href="javascript:void(0)" class="previewCartItem-remove" data-cart-remove data-cart-remove-id="{{ item.id }}" data-line="{{ item.key }}" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}" title="Remove">
                                     {% render 'icon-close' %}
+                                    <span class="previewCartItem-removeLabel">Remove</span>
                                 </a>
                             </div>
                         </div>
