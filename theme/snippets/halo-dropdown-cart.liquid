@@ -35,6 +35,7 @@
                                                 assign portrait_aspect_ratio = settings.quick_cart_dropdown_portrait_aspect_ratio
                                                 assign current_variant = item.product.selected_or_first_available_variant
                                             -%}
+                                            {%- if item.image -%}
                                             <a class="card-media card-media--{{ media_size }}" href="{{ item.url }}"
                                                 {% if media_size == 'adapt' %}
                                                     style="padding-bottom: {{ 1 | divided_by: image.aspect_ratio | times: 100 }}%;"
@@ -46,7 +47,7 @@
                                                     {% endif %}
                                                 {% endif %}
                                             >
-                                                {%- if item.image -%}
+
                                                     <img srcset="
                                                         {%- if image.width >= 165 -%}
                                                             {{ image | img_url: '165x' }} 165w,
@@ -72,11 +73,8 @@
                                                         loading="lazy"
                                                         class="motion-reduce"
                                                     >
-                                                {%- else -%}
-                                                    {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-                                                    {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
-                                                {%- endif -%}
-                                            </a>
+                                                                                            </a>
+                                            {%- endif -%}
                                         </div>
                                     </div>
                                     <div class="card-information">
@@ -121,7 +119,8 @@
                                             <dl class="card-properties definitionList">
                                                 {%- for property in item.properties -%}
                                                     {%- assign property_first_char = property.first | slice: 0 -%}
-                                                    {%- if property.last != blank and property_first_char != '_' -%}
+                                                    {%- capture ff_prop_visible -%}{% render 'ff-cart-property-visible', key: property.first, value: property.last %}{%- endcapture -%}
+                                                    {%- if property.last != blank and property_first_char != '_' and ff_prop_visible != blank -%}
                                                         <dt class="definitionList-key" data-property-item data-property-name="{{ property.first }}" data-property-value="{% if property.last contains '/uploads/' %}{{ property.last | split: '/' | last }}{% else %}{{ property.last }}{% endif %}">{{ property.first }}:</dt>
                                                         <dd class="definitionList-value">
                                                             {%- if property.last contains '/uploads/' -%}
@@ -259,19 +258,6 @@
             </div>>
         {%- endunless -%}
     </div>
-    {%- if settings.show_quick_cart_popular_product -%}
-        {%- liquid
-            assign collection = collections[settings.quick_cart_popular_product_collection]
-            assign limit = settings.quick_cart_popular_product_show
-            assign show_dots = settings.quick_cart_popular_product_dots
-            assign show_arrows = settings.quick_cart_popular_product_arrows
-        -%}
-        <div class="previewCartCollection">
-            {%- if settings.quick_cart_popular_product_title != blank -%}
-                <div class="previewCartTitle text-left">
-                    {{ settings.quick_cart_popular_product_title | escape }}         
-                </div>
-            {%- endif -%}
             <div class="previewCartProduct" data-product-collection-cart>
                 <div class="previewCartCarousel products-carousel" data-item-dots="{{ show_dots }}" data-item-arrows="{{ show_arrows }}"
                 >
