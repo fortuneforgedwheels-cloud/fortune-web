@@ -87,6 +87,10 @@ main-cart-items{
     padding: 0 15px 0 0;
 }
 
+.cart-item-block-left--no-image{
+    display: none;
+}
+
 .cart-item-block-right{
     position: relative;
 }

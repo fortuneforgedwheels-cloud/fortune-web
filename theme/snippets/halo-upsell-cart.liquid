@@ -76,9 +76,11 @@
 		    		{%- for item in cart.items -%}
 		    			<li class="previewCartItem">
 		    				<div class="previewCartItem-detail">
+			    				{%- if item.image != blank -%}
 			    				<a href="{{ item.url }}" class="previewCartItem-image">
-			                        <img srcset="{{ item.image | img_url: '110x' }}" src="{{ item.image | img_url: '110x' }}" alt="{{ item.title | escape }}" sizes="110px" loading="lazy">
+			                        <img srcset="{{ item.image | image_url: width: 110 }}" src="{{ item.image | image_url: width: 110 }}" alt="{{ item.title | escape }}" sizes="110px" loading="lazy" width="110" height="110">
 			                    </a>
+			    				{%- endif -%}
 			                    <div class="previewCartItem-content">
 			                    	<a class="previewCartItem-name link-underline" href="{{ item.url }}">
 			                            <span class="text">{{ item.product.title }}</span>

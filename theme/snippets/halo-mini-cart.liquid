@@ -10,10 +10,12 @@
         endif
 	-%}
 	<div class="product-added clearfix" data-json="{{ product | json }}">
+        {%- if item.image != blank -%}
         <a class="product-image" href="{{ item.url }}">
         	{% render 'icon-external-link' %}
-        	<img srcset="{{ item.image | img_url: '110x' }}" src="{{ item.image | img_url: '90x' }}" alt="{{ item.title | escape }}" sizes="110px" loading="lazy">
+        	<img srcset="{{ item.image | image_url: width: 110 }}" src="{{ item.image | image_url: width: 90 }}" alt="{{ item.title | escape }}" sizes="110px" loading="lazy" width="110" height="110">
         </a>
+        {%- endif -%}
         <div class="product-info">
             <div class="product-title">
                 <a class="title" href="{{ product.url }}">
