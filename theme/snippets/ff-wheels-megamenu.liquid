@@ -9,6 +9,11 @@
     [data-navigation] .ff-wheels-mega > .ff-wheels-mega__panel,
     [data-navigation] .ff-wheels-mega > .menu-lv__megamenu.ff-wheels-mega__panel {
       display: block !important;
+      position: absolute !important;
+      left: 0 !important;
+      right: 0 !important;
+      top: 100% !important;
+      width: 100% !important;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
@@ -16,6 +21,7 @@
       padding-top: 8px !important;
       transform: none !important;
       z-index: 120 !important;
+      /* Must stay out of document flow or the header grows a huge black gap */
     }
     [data-navigation] .ff-wheels-mega > .ff-wheels-mega__panel::before {
       content: "";
