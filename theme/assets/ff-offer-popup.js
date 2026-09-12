@@ -5,6 +5,10 @@
  * Uses a fresh storage key so prior test dismissals don't block it.
  */
 (function () {
+  // Temporarily disabled — re-enable by setting to true when Torrin wants the popup back.
+  var FF_OFFER_POPUP_ENABLED = false;
+  if (!FF_OFFER_POPUP_ENABLED) return;
+
   if (window.__ffOfferBootV3) return;
   window.__ffOfferBootV3 = true;
 

@@ -1,5 +1,5 @@
 {{ 'ff-hero-lifestyle.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'ff-offer-boot-v2.js' | asset_url }}" defer></script>
+{% comment %} Offer popup temporarily disabled {% endcomment %}
 
 {%- if section.settings.show_hero -%}
   {%- liquid

@@ -1,3 +1,8 @@
+{%- comment -%}
+  Offer popup temporarily disabled. Re-enable by restoring theme.liquid render
+  and setting FF_OFFER_POPUP_ENABLED = true in ff-offer-boot-v2.js.
+{%- endcomment -%}
+{%- unless true -%}
 {%- unless ff_offer_popup_included -%}
 {%- assign ff_offer_popup_included = true -%}
 {{ 'ff-offer-popup-v2.css' | asset_url | stylesheet_tag }}
@@ -85,4 +90,5 @@
   </div>
 </div>
 <script src="{{ 'ff-offer-boot-v2.js' | asset_url }}" defer></script>
+{%- endunless -%}
 {%- endunless -%}
