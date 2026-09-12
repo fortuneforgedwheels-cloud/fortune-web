@@ -8,7 +8,15 @@
   assign ff_val = value | strip | downcase
   assign ff_hide = false
 
-  if ff_key == 'fitment source' or ff_key == 'wheel design' or ff_key == 'construction' or ff_key == 'fitment tier' or ff_key == 'chassis'
+  if ff_key == 'fitment source' or ff_key == 'construction' or ff_key == 'fitment tier' or ff_key == 'chassis'
+    assign ff_hide = true
+  endif
+
+  if ff_key == 'sweepstakes terms accepted at' or ff_key == 'sweepstakes terms version' or ff_key == 'sweepstakes entry page'
+    assign ff_hide = true
+  endif
+
+  if ff_key == 'giveaway ticket count' or ff_key == 'your entry tickets' or ff_key == 'drawing note'
     assign ff_hide = true
   endif
 

@@ -74,7 +74,8 @@
                                     <tr class="cart-item" data-item-row data-cart-item {% if item.product.variants.size != 0 %}{% unless item.variant.title contains 'Default' %}data-cart-edit-productItem{% endunless %}{% endif %} data-line="{{ item.key }}">
                                         <td class="cart-item-block cart-item-info" colspan="2">
                                             <div class="cart-item-wrapper">
-                                                <div class="cart-item-block-left">
+                                                <div class="cart-item-block-left{% if item.image == blank %} cart-item-block-left--no-image{% endif %}">
+                                                    {%- if item.image != blank -%}
                                                     <a class="cart-item-image image-{{ media_size }}" href="{{ item.url }}"
                                                         {% if media_size == 'adapt' %}
                                                             style="padding-bottom: {{ 1 | divided_by: item.image.aspect_ratio | times: 100 }}%;"
@@ -89,18 +90,24 @@
                                                         {% endif %}
                                                     >
                                                         {% render 'icon-external-link' %}
-                                                        <img srcset="{{ item.image | img_url: '160x' }}" src="{{ item.image | img_url: '160x' }}" alt="{{ item.title | escape }}" sizes="160px" loading="lazy">
+                                                        <img srcset="{{ item.image | image_url: width: 160 }}" src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" sizes="160px" loading="lazy" width="160" height="160">
                                                     </a>
+                                                    {%- endif -%}
                                                 </div>
                                                 <div class="cart-item-block-right">
                                                     {%- if section.settings.show_vendor -%}
                                                         <p class="cart-item-vendor">{{ item.product.vendor }}</p>
                                                     {%- endif -%}
+                                                    <div class="cart-item-name-row">
                                                     <h4 class="cart-item-name">
                                                         <a href="{{ item.url }}" class="link link-underline">
                                                             <span class="text">{{ item.product.title | escape }}</span>
                                                         </a>
                                                     </h4>
+                                                    <a class="cart-remove cart-remove--inline" href="javascript:void(0)" data-cart-remove data-cart-remove-id="{{ item.id }}" data-line="{{ item.key }}" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}">
+                                                        <span class="cart-remove__label">Remove</span>
+                                                    </a>
+                                                    </div>
                                                     {%- if item.product.variants.size != 0 -%}
                                                         {%- unless item.variant.title contains 'Default' -%}
                                                             <div class="cart-item-option">
@@ -312,8 +319,9 @@
                                             {%- endif -%}
                                         </td>
                                         <td class="cart-item-block cart-item-remove" colspan="1">
-                                            <a class="cart-remove" href="javascript:void(0)" data-cart-remove data-cart-remove-id="{{ item.id }}" data-line="{{ item.key }}" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}">
+                                            <a class="cart-remove cart-remove--cell" href="javascript:void(0)" data-cart-remove data-cart-remove-id="{{ item.id }}" data-line="{{ item.key }}" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}">
                                                 {% render 'icon-remove' %}
+                                                <span class="cart-remove__label">Remove</span>
                                             </a>
                                         </td>
                                     </tr>
