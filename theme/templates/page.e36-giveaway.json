@@ -1,0 +1,77 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": false,
+        "breadcrumb_alignment": "left",
+        "show_page_title": false,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "ff_e36_giveaway": {
+      "type": "ff-e36-giveaway",
+      "settings": {
+        "hero_poster": "shopify://shop_images/DSC03036_2.jpg",
+        "eyebrow": "FORTUNE FORGED GIVEAWAY",
+        "brand_title": "WIN OUR E36 M3",
+        "subtitle": "Starts Today. Ends Today. One Legendary E36 M3.",
+        "cta_label": "GET MY ENTRY",
+        "cta_note": "Secure SSL Encrypted Checkout",
+        "launch_countdown_enabled": false,
+        "launch_at_iso": "2026-09-12T12:00:00-07:00",
+        "launch_countdown_eyebrow": "ENTRIES OPEN IN",
+        "launch_countdown_note": "September 12 at 12:00 PM Pacific",
+        "launch_locked_checkout_label": "ENTRIES OPEN SOON",
+        "launch_locked_checkout_note": "Checkout unlocks when the countdown ends.",
+        "story_kicker": "THE PRIZE",
+        "story_title": "one E36 M3 \u2014 built to be driven",
+        "story_body": "<p>This E36 M3 wasn't built to sit in a garage\u2014it was built to be enjoyed. The chassis has been refreshed with a comprehensive selection of Garagistic components, including polyurethane subframe and differential bushings, reinforced rear subframe mounting points, a chassis-mounted self-centering short shifter, and a DSSR paired to the factory 5-speed ZF transmission with a fresh OEM clutch. A refreshed cooling system keeps the drivetrain reliable, while the original S52 inline-six remains healthy and mechanically stock, delivering the balanced driving experience that made the E36 M3 a benchmark for BMW M.</p><p>Finished in a deep British Racing Green-inspired wrap supplied by Aura Vinyl and installed by The Wrap Father, the exterior complements the car's timeless design while remaining true to its enthusiast roots. The result is a thoughtfully refreshed driver's car that emphasizes reliability, precision, and the character that has made the E36 M3 one of BMW's most respected platforms.</p><h3>Build Highlights</h3><ul><li>Healthy, mechanically stock BMW S52 inline-six</li><li>Factory 5-speed ZF manual transmission</li><li>Fresh OEM clutch</li><li>Garagistic chassis-mounted self-centering short shifter</li><li>Garagistic DSSR (Double Shear Selector Rod)</li><li>Garagistic polyurethane rear subframe bushings</li><li>Garagistic polyurethane differential bushings</li><li>Reinforced rear subframe mounting points</li><li>Refreshed cooling system</li><li>British Racing Green-inspired wrap by Aura Vinyl, installed by The Wrap Father</li></ul>",
+        "story_more_label": "View Build highlights",
+        "product": "1998-bmw-m3",
+        "product_handle": "1998-bmw-m3",
+        "entry_heading": "",
+        "entry_blurb": "Official giveaway entry. Accept the rules below, then checkout to secure your spot.",
+        "qty_label": "How many entries?",
+        "qty_hint": "Add as many as you wish",
+        "max_entries": 20,
+        "free_price_label": "FREE ENTRY",
+        "checkout_label": "ENTER NOW \u2014 CHECKOUT",
+        "checkout_note": "You will complete checkout to confirm your entry.",
+        "soldout_message": "Entries are closed for now.",
+        "missing_product_message": "Entry product unavailable. Please check back soon.",
+        "terms_checkbox_label": "<p>I have read and agree to the terms and conditions</p>",
+        "terms_link_label": "",
+        "terms_link_url": "",
+        "terms_version": "1",
+        "terms_error": "Please accept the Official Rules to continue.",
+        "fine_print_heading": "OFFICIAL TERMS",
+        "load_more_label": "Load more",
+        "official_rules": "PARTICIPANT ACKNOWLEDGMENT, ASSUMPTION OF RESPONSIBILITY, AND AGREEMENT TO OFFICIAL SWEEPSTAKES RULES\n\nPLEASE READ THIS AGREEMENT CAREFULLY. THIS IS A LEGALLY BINDING AGREEMENT BETWEEN YOU (\u201cENTRANT\u201d) AND FORTUNE FORGED WHEELS LLC (\u201cSPONSOR\u201d).\nBY SELECTING THE \u201cI AGREE\u201d CHECKBOX, SUBMITTING AN ENTRY, OR OTHERWISE PARTICIPATING IN THIS PROMOTION, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTAND, AND VOLUNTARILY AGREE TO BE LEGALLY BOUND BY THESE TERMS, THE OFFICIAL SWEEPSTAKES RULES, THE TERMS &amp; CONDITIONS, AND THE PRIVACY POLICY. IF YOU DO NOT AGREE, DO NOT PARTICIPATE.\nBy selecting \u201cI Agree,\u201d I acknowledge, represent, warrant, and agree that:\n\n\n1. Eligibility. I certify that I am at least eighteen (18) years of age, possess the legal capacity to enter into this agreement, and meet all eligibility requirements contained in the Official Sweepstakes Rules. I further understand that to be eligible to enter and win this Promotion, I must be an attendee of Bimmer Invasion Los Angeles at Fairplex in Pomona, California, on September 12, 2026, and must satisfy all attendance and verification requirements contained in the Official Sweepstakes Rules.\n\n\n2. Review of Rules. I have had the opportunity to read the Official Sweepstakes Rules in their entirety before participating, and I understand that they govern every aspect of this Promotion, including eligibility, methods of entry, event-attendance requirements, winner selection, prize distribution, limitations, and Sponsor\u2019s rights.\n\n\n3. Official Rules Govern. I understand and agree that the Official Sweepstakes Rules constitute the controlling agreement governing this Promotion. If there is any conflict between advertising, promotional materials, social media posts, verbal statements, or other communications and the Official Sweepstakes Rules, the Official Sweepstakes Rules shall control.\n\n\n4. Random Drawing. I understand that the winner will be selected by random drawing in accordance with the procedures described in the Official Sweepstakes Rules and that Sponsor\u2019s decisions regarding administration of the Promotion, eligibility, interpretation of the Rules, and winner determination shall be final and binding to the fullest extent permitted by applicable law.\n\n\n5. No Purchase Necessary. I understand that NO PURCHASE IS NECESSARY TO ENTER OR WIN and that A PURCHASE OR PAYMENT OF ANY KIND WILL NOT INCREASE MY CHANCES OF WINNING. A no-cost method of entry is available by using promotional code \u201cNOCOSTENTRY\u201d at checkout for one (1) free entry, subject to the eligibility requirements and limitations contained in the Official Sweepstakes Rules. Use of the NOCOSTENTRY code does not waive or modify the requirement that an entrant must be an eligible attendee of Bimmer Invasion Los Angeles at Fairplex in Pomona, California, on September 12, 2026.\n\n\n6. Verification. I understand that Sponsor may verify my identity, age, attendance at Bimmer Invasion Los Angeles, eligibility, and compliance with the Official Sweepstakes Rules before awarding any prize. Sponsor may require government-issued identification, proof of event attendance, and other reasonably necessary documentation. Failure to establish eligibility may result in disqualification.\n\n\n7. Disqualification. I understand that Sponsor reserves the right to disqualify any participant who provides false or misleading information, fails to satisfy the event-attendance requirement, attempts to manipulate the Promotion, uses automated or unauthorized entry methods, violates the Official Sweepstakes Rules, or engages in conduct that compromises the fairness or integrity of the Promotion.\n\n\n8. Prize Acceptance. If I am selected as the potential winner, I understand that I may be required to execute affidavits of eligibility, liability releases, publicity releases where permitted by law, tax documentation, vehicle transfer documents, and any other reasonably necessary paperwork before the prize is awarded.\n\n\n9. Taxes and Ownership Costs. I understand that I am solely responsible for all federal, state, and local taxes, title fees, registration fees, insurance premiums, licensing costs, inspection fees, transportation expenses, and any other costs associated with accepting, registering, maintaining, or operating the prize unless expressly stated otherwise in the Official Sweepstakes Rules.\n\n\n10. Vehicle Condition. I understand that the prize vehicle will be transferred subject to the conditions described in the Official Sweepstakes Rules and any accompanying disclosures provided by Sponsor. I acknowledge that I have the opportunity to review those disclosures before accepting the prize.\n\n\n11. Release of Liability. To the fullest extent permitted by applicable law, I agree to release, discharge, and hold harmless Fortune Forged Wheels LLC and its owners, officers, directors, members, employees, contractors, agents, affiliates, sponsors, manufacturers, vendors, event organizers, successors, assigns, and representatives from claims arising from my participation in the Promotion or my acceptance, ownership, or use of the prize, except to the extent liability cannot legally be waived.\n\n\n12. Compliance with Applicable Law. I understand that this Promotion is intended to be administered in accordance with applicable federal, state, and local laws and that any provision found to be invalid or unenforceable shall not affect the validity of the remaining provisions.\n\n\n13. Entire Agreement. I acknowledge that the Official Sweepstakes Rules, Terms &amp; Conditions, Privacy Policy, and this Participant Acknowledgment constitute the complete agreement between Sponsor and me regarding this Promotion and supersede any prior oral or written statements concerning the Promotion.\n\n\n14. Electronic Acceptance. I understand and agree that selecting the \u201cI Agree\u201d checkbox constitutes my electronic signature and has the same legal force and effect as a handwritten signature. I further acknowledge that Sponsor may retain electronic records of my acceptance, including the date, time, and other transaction information associated with my entry.\n\n\n15. Voluntary Participation. I acknowledge that I have had the opportunity to review these documents, ask any questions before participating, and voluntarily choose to participate subject to all applicable terms and conditions.",
+        "fine_print": "",
+        "fine_print_open": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ff_e36_giveaway"
+  ]
+}
