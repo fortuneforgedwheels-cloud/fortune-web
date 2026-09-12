@@ -346,6 +346,7 @@
           'Fitment path': helpPreference ? helpPreference.value : '',
           'Invasion Bonus Entries': '5',
           'Giveaway ticket count': '5',
+          'Your entry tickets': '5 tickets · IDs are this order number-1 through -5 (example #FF0001-1)',
           'Drawing note': 'After payment tickets are ORDER#-1 … ORDER#-5 (listed in confirmation email)'
         };
 
@@ -389,7 +390,8 @@
                 attributes: {
                   'Giveaway ticket count': '5',
                   'Giveaway ticket IDs': 'Format after payment: {Order#}-1 through {Order#}-5 (see confirmation email)'
-                }
+                },
+                note: 'GIVEAWAY ENTRY TICKETS: 5 Invasion bonus tickets. IDs = your order number-1 through -5 (example #FF0001-1). Keep your confirmation email.'
               })
             }).catch(function () { /* non-blocking */ });
           })

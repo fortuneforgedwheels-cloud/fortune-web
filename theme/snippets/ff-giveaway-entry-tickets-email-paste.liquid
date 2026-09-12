@@ -1,209 +1,171 @@
 {%- comment -%}
-  SOURCE OF TRUTH for Admin paste (notifications cannot {% render %} theme snippets).
-
-  CRITICAL — re-paste after every ticket-logic change:
+  ============================================================================
+  PASTE THIS INTO SHOPIFY ADMIN (theme cannot inject notification Liquid)
+  ============================================================================
   1) Settings → Notifications → Order confirmation → Edit code
-     Paste EVERYTHING between EMAIL_START and EMAIL_END into the email body.
-     Put it OUTSIDE any {% if financial_status %} / payment pending branches
-     (right after the opening {% capture email_body %} is safest).
-  2) Optional: Order status page → Additional scripts → STATUS_START…STATUS_END.
+  2) DELETE any older "giveaway entry tickets" / paid_entries / bonus_entries block
+  3) Paste EVERYTHING between FF_TICKETS_EMAIL_START and FF_TICKETS_EMAIL_END
+     as the FIRST thing inside {% capture email_body %}
+     (must NOT be inside any {% if financial_status %} / payment branch)
+  4) Save
+  5) Also paste FF_TICKETS_STATUS_START…END into:
+     Settings → Checkout → Order status page → Additional scripts
+     (this powers “View your order” after checkout)
 
-  Email Liquid quirks this paste avoids:
-  - Do NOT use product.tags | join — in notifications tags are already a string;
-    join can break the loop for tagged products.
-  - Do NOT use `and` / `or` in one tag — use nested ifs / single contains.
-  - Match title "bmw m3" so "1998 BMW M3" works even when product is blank.
+  How tickets are counted (in order):
+  A) Line property "Invasion Bonus Entries" or "Giveaway ticket count"
+  B) Cart attribute "Giveaway ticket count"
+  C) Title fallback: "bmw" / "giveaway" → qty; "exclusive" → +5
+  ============================================================================
 {%- endcomment -%}
 
-{%- comment -%} EMAIL_START {%- endcomment -%}
-{% assign paid_entries = 0 %}
-{% assign bonus_entries = 0 %}
-{% assign has_wheel_set = false %}
+{%- comment -%} FF_TICKETS_EMAIL_START {%- endcomment -%}
+{% assign ff_ticket_total = 0 %}
+{% assign ff_ticket_bonus = false %}
 {% for line_item in line_items %}
-  {% assign handle = '' %}
-  {% assign tags = '' %}
-  {% assign line_title = line_item.title | downcase %}
-  {% if line_item.product %}
-    {% assign handle = line_item.product.handle | downcase %}
-    {% comment %} tags are already a comma-separated string in notification Liquid — do not join {% endcomment %}
-    {% assign tags = line_item.product.tags | downcase %}
-    {% assign product_title = line_item.product.title | downcase %}
-    {% if product_title != blank %}
-      {% assign line_title = line_title | append: ' ' | append: product_title %}
-    {% endif %}
-  {% endif %}
-  {% assign is_paid_line = false %}
-  {% if handle == '1998-bmw-m3' %}
-    {% assign is_paid_line = true %}
-  {% endif %}
-  {% if tags contains 'giveaway-entry' %}
-    {% assign is_paid_line = true %}
-  {% endif %}
-  {% if line_title contains 'giveaway entry' %}
-    {% assign is_paid_line = true %}
-  {% endif %}
-  {% if line_title contains 'bmw m3' %}
-    {% assign is_paid_line = true %}
-  {% endif %}
-  {% if line_title contains '1998 bmw' %}
-    {% assign is_paid_line = true %}
-  {% endif %}
-  {% if is_paid_line %}
-    {% assign paid_entries = paid_entries | plus: line_item.quantity %}
-  {% endif %}
-  {% assign line_bonus = 0 %}
-  {% if handle == 'exclusive-deals-full-set' %}
-    {% assign line_bonus = 5 %}
-  {% endif %}
-  {% if tags contains 'invasion-wheel-set' %}
-    {% assign line_bonus = 5 %}
-  {% endif %}
-  {% if tags contains 'bimmer-invasion' %}
-    {% assign line_bonus = 5 %}
-  {% endif %}
-  {% if line_title contains 'exclusive deals' %}
-    {% assign line_bonus = 5 %}
-  {% endif %}
+  {% assign ff_line_tickets = 0 %}
   {% for property in line_item.properties %}
-    {% assign prop_key = property.first | downcase %}
-    {% assign prop_val = property.last | plus: 0 %}
-    {% if prop_key == 'invasion bonus entries' %}
-      {% if prop_val > line_bonus %}
-        {% assign line_bonus = prop_val %}
+    {% assign ff_pk = property.first | downcase %}
+    {% assign ff_pv = property.last | plus: 0 %}
+    {% if ff_pk == 'invasion bonus entries' %}
+      {% if ff_pv > ff_line_tickets %}
+        {% assign ff_line_tickets = ff_pv %}
+        {% assign ff_ticket_bonus = true %}
       {% endif %}
     {% endif %}
-    {% unless is_paid_line %}
-      {% if line_bonus == 0 %}
-        {% if prop_key == 'paid giveaway entries' %}
-          {% if prop_val > 0 %}
-            {% assign paid_entries = paid_entries | plus: prop_val %}
-            {% assign is_paid_line = true %}
-          {% endif %}
-        {% endif %}
-        {% if prop_key == 'giveaway ticket count' %}
-          {% if prop_val > 0 %}
-            {% assign paid_entries = paid_entries | plus: prop_val %}
-            {% assign is_paid_line = true %}
-          {% endif %}
-        {% endif %}
-      {% endif %}
-    {% endunless %}
   {% endfor %}
-  {% if line_bonus > 0 %}
-    {% assign bonus_entries = bonus_entries | plus: line_bonus %}
-    {% assign has_wheel_set = true %}
+  {% if ff_line_tickets == 0 %}
+    {% for property in line_item.properties %}
+      {% assign ff_pk = property.first | downcase %}
+      {% assign ff_pv = property.last | plus: 0 %}
+      {% if ff_pk == 'giveaway ticket count' %}
+        {% if ff_pv > 0 %}
+          {% assign ff_line_tickets = ff_pv %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
   {% endif %}
-{% endfor %}
-{% comment %} Cart attributes fallback (theme JS writes these at checkout) {% endcomment %}
-{% for attribute in attributes %}
-  {% assign attr_key = attribute.first | downcase %}
-  {% if attr_key == 'giveaway ticket count' %}
-    {% assign attr_tickets = attribute.last | plus: 0 %}
-    {% if attr_tickets > paid_entries %}
-      {% if bonus_entries == 0 %}
-        {% assign paid_entries = attr_tickets %}
+  {% if ff_line_tickets == 0 %}
+    {% assign ff_title = line_item.title | downcase %}
+    {% if ff_title contains 'exclusive' %}
+      {% assign ff_line_tickets = 5 %}
+      {% assign ff_ticket_bonus = true %}
+    {% else %}
+      {% if ff_title contains 'bmw' %}
+        {% assign ff_line_tickets = line_item.quantity %}
+      {% else %}
+        {% if ff_title contains 'giveaway' %}
+          {% assign ff_line_tickets = line_item.quantity %}
+        {% else %}
+          {% if ff_title contains 'm3' %}
+            {% assign ff_line_tickets = line_item.quantity %}
+          {% endif %}
+        {% endif %}
       {% endif %}
     {% endif %}
   {% endif %}
+  {% assign ff_ticket_total = ff_ticket_total | plus: ff_line_tickets %}
 {% endfor %}
-{% assign total_entries = paid_entries | plus: bonus_entries %}
-{% if total_entries > 0 %}
-<table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin:24px 0;border:1px solid #222;border-radius:8px;">
+{% if ff_ticket_total == 0 %}
+  {% for attribute in attributes %}
+    {% assign ff_ak = attribute.first | downcase %}
+    {% if ff_ak == 'giveaway ticket count' %}
+      {% assign ff_ticket_total = attribute.last | plus: 0 %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+{% if ff_ticket_total > 0 %}
+<table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin:24px 0;border:2px solid #111;border-radius:8px;background:#fff;">
   <tr>
     <td style="padding:20px;font-family:Arial,Helvetica,sans-serif;color:#111;">
-      <h2 style="margin:0 0 8px;font-size:18px;line-height:1.3;">Your giveaway entry tickets</h2>
+      <h2 style="margin:0 0 8px;font-size:20px;line-height:1.3;">Your giveaway entry tickets</h2>
       <p style="margin:0 0 14px;font-size:14px;line-height:1.5;">
         Master order: <strong>{{ name }}</strong>
-        · {{ total_entries }} drawing ticket{% if total_entries != 1 %}s{% endif %}
+        · {{ ff_ticket_total }} drawing ticket{% if ff_ticket_total != 1 %}s{% endif %}
       </p>
-      <ol style="margin:0;padding-left:22px;font-size:15px;line-height:1.7;font-weight:700;">
-        {% for i in (1..total_entries) %}
+      <ol style="margin:0;padding-left:22px;font-size:16px;line-height:1.8;font-weight:700;">
+        {% for i in (1..ff_ticket_total) %}
           <li style="margin:0 0 4px;">{{ name }}-{{ i }}</li>
         {% endfor %}
       </ol>
-      {% if has_wheel_set %}
-      <p style="margin:14px 0 0;font-size:13px;line-height:1.45;color:#444;">
-        Includes 5 entries from your Invasion wheel set{% if paid_entries > 0 %}, plus {{ paid_entries }} purchased entry ticket(s){% endif %}.
-      </p>
-      {% elsif paid_entries > 1 %}
-      <p style="margin:14px 0 0;font-size:13px;line-height:1.45;color:#444;">
-        One ticket for each giveaway entry in this order.
-      </p>
+      {% if ff_ticket_bonus %}
+      <p style="margin:14px 0 0;font-size:13px;line-height:1.45;color:#444;">Includes Invasion wheel-set bonus entries.</p>
       {% endif %}
       <p style="margin:12px 0 0;font-size:12px;line-height:1.4;color:#666;">
-        Keep this email — these ticket numbers ({{ name }}-1 … {{ name }}-{{ total_entries }}) are what we use for the drawing.
+        Save these numbers ({{ name }}-1 … {{ name }}-{{ ff_ticket_total }}). They are what we use for the drawing — not separate Shopify orders.
       </p>
     </td>
   </tr>
 </table>
 {% endif %}
-{%- comment -%} EMAIL_END {%- endcomment -%}
+{%- comment -%} FF_TICKETS_EMAIL_END {%- endcomment -%}
 
-{%- comment -%} STATUS_START — order status / thank-you additional scripts {%- endcomment -%}
-{% assign paid_entries = 0 %}
-{% assign bonus_entries = 0 %}
-{% assign has_wheel_set = false %}
+{%- comment -%} FF_TICKETS_STATUS_START {%- endcomment -%}
+{% assign ff_ticket_total = 0 %}
+{% assign ff_ticket_bonus = false %}
+{% assign ff_order_label = order_name | default: name %}
 {% for line_item in line_items %}
-  {% assign handle = '' %}
-  {% assign tags = '' %}
-  {% assign line_title = line_item.title | downcase %}
-  {% if line_item.product %}
-    {% assign handle = line_item.product.handle | downcase %}
-    {% assign tags = line_item.product.tags | downcase %}
-    {% assign product_title = line_item.product.title | downcase %}
-    {% if product_title != blank %}
-      {% assign line_title = line_title | append: ' ' | append: product_title %}
-    {% endif %}
-  {% endif %}
-  {% assign is_paid_line = false %}
-  {% if handle == '1998-bmw-m3' %}{% assign is_paid_line = true %}{% endif %}
-  {% if tags contains 'giveaway-entry' %}{% assign is_paid_line = true %}{% endif %}
-  {% if line_title contains 'giveaway entry' %}{% assign is_paid_line = true %}{% endif %}
-  {% if line_title contains 'bmw m3' %}{% assign is_paid_line = true %}{% endif %}
-  {% if line_title contains '1998 bmw' %}{% assign is_paid_line = true %}{% endif %}
-  {% if is_paid_line %}
-    {% assign paid_entries = paid_entries | plus: line_item.quantity %}
-  {% endif %}
-  {% assign line_bonus = 0 %}
-  {% if handle == 'exclusive-deals-full-set' %}{% assign line_bonus = 5 %}{% endif %}
-  {% if tags contains 'invasion-wheel-set' %}{% assign line_bonus = 5 %}{% endif %}
-  {% if tags contains 'bimmer-invasion' %}{% assign line_bonus = 5 %}{% endif %}
-  {% if line_title contains 'exclusive deals' %}{% assign line_bonus = 5 %}{% endif %}
+  {% assign ff_line_tickets = 0 %}
   {% for property in line_item.properties %}
-    {% assign prop_key = property.first | downcase %}
-    {% assign prop_val = property.last | plus: 0 %}
-    {% if prop_key == 'invasion bonus entries' %}
-      {% if prop_val > line_bonus %}{% assign line_bonus = prop_val %}{% endif %}
+    {% assign ff_pk = property.first | downcase %}
+    {% assign ff_pv = property.last | plus: 0 %}
+    {% if ff_pk == 'invasion bonus entries' %}
+      {% if ff_pv > ff_line_tickets %}
+        {% assign ff_line_tickets = ff_pv %}
+        {% assign ff_ticket_bonus = true %}
+      {% endif %}
     {% endif %}
-    {% unless is_paid_line %}
-      {% if line_bonus == 0 %}
-        {% if prop_key == 'paid giveaway entries' or prop_key == 'giveaway ticket count' %}
-          {% if prop_val > 0 %}
-            {% assign paid_entries = paid_entries | plus: prop_val %}
-            {% assign is_paid_line = true %}
+  {% endfor %}
+  {% if ff_line_tickets == 0 %}
+    {% for property in line_item.properties %}
+      {% assign ff_pk = property.first | downcase %}
+      {% assign ff_pv = property.last | plus: 0 %}
+      {% if ff_pk == 'giveaway ticket count' %}
+        {% if ff_pv > 0 %}{% assign ff_line_tickets = ff_pv %}{% endif %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  {% if ff_line_tickets == 0 %}
+    {% assign ff_title = line_item.title | downcase %}
+    {% if ff_title contains 'exclusive' %}
+      {% assign ff_line_tickets = 5 %}
+      {% assign ff_ticket_bonus = true %}
+    {% else %}
+      {% if ff_title contains 'bmw' %}
+        {% assign ff_line_tickets = line_item.quantity %}
+      {% else %}
+        {% if ff_title contains 'giveaway' %}
+          {% assign ff_line_tickets = line_item.quantity %}
+        {% else %}
+          {% if ff_title contains 'm3' %}
+            {% assign ff_line_tickets = line_item.quantity %}
           {% endif %}
         {% endif %}
       {% endif %}
-    {% endunless %}
-  {% endfor %}
-  {% if line_bonus > 0 %}
-    {% assign bonus_entries = bonus_entries | plus: line_bonus %}
-    {% assign has_wheel_set = true %}
+    {% endif %}
   {% endif %}
+  {% assign ff_ticket_total = ff_ticket_total | plus: ff_line_tickets %}
 {% endfor %}
-{% assign total_entries = paid_entries | plus: bonus_entries %}
-{% if total_entries > 0 %}
-<div id="ff-entry-tickets" style="margin:24px 0;padding:18px;border:1px solid #222;background:#111;color:#fff;font-family:Arial,Helvetica,sans-serif;">
-  <h2 style="margin:0 0 8px;font-size:20px;">Your giveaway entry tickets</h2>
-  <p style="margin:0 0 12px;">Master order: <strong>{{ order_name }}</strong> · {{ total_entries }} tickets</p>
+{% if ff_ticket_total == 0 %}
+  {% for attribute in attributes %}
+    {% assign ff_ak = attribute.first | downcase %}
+    {% if ff_ak == 'giveaway ticket count' %}
+      {% assign ff_ticket_total = attribute.last | plus: 0 %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+{% if ff_ticket_total > 0 %}
+<div id="ff-giveaway-tickets" style="margin:24px 0;padding:18px;border:2px solid #c5a46a;background:#111;color:#fff;font-family:Arial,Helvetica,sans-serif;">
+  <h2 style="margin:0 0 8px;font-size:20px;color:#c5a46a;">Your giveaway entry tickets</h2>
+  <p style="margin:0 0 12px;">Master order: <strong>{{ ff_order_label }}</strong> · {{ ff_ticket_total }} tickets</p>
   <ol style="margin:0;padding-left:22px;font-size:16px;font-weight:700;line-height:1.7;">
-    {% for i in (1..total_entries) %}
-      <li>{{ order_name }}-{{ i }}</li>
+    {% for i in (1..ff_ticket_total) %}
+      <li>{{ ff_order_label }}-{{ i }}</li>
     {% endfor %}
   </ol>
-  {% if has_wheel_set %}
-  <p style="margin:12px 0 0;opacity:.8;font-size:13px;">Includes 5 entries from your Invasion wheel set.</p>
+  {% if ff_ticket_bonus %}
+  <p style="margin:12px 0 0;opacity:.85;font-size:13px;">Includes Invasion wheel-set bonus entries.</p>
   {% endif %}
 </div>
 {% endif %}
-{%- comment -%} STATUS_END {%- endcomment -%}
+{%- comment -%} FF_TICKETS_STATUS_END {%- endcomment -%}

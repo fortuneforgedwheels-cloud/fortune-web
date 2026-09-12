@@ -318,6 +318,7 @@
           <input type="hidden" name="properties[Sweepstakes Entry Page]" value="{{ request.path | escape }}">
           <input type="hidden" name="properties[Sweepstakes Giveaway]" value="{{ brand_title | escape }}">
           <input type="hidden" name="properties[Giveaway ticket count]" value="1" data-ff-e36-ticket-count>
+          <input type="hidden" name="properties[Your entry tickets]" value="1 ticket · IDs are this order number-1 (example #FF0001-1)" data-ff-e36-ticket-visible>
           <input type="hidden" name="properties[Drawing note]" value="After payment tickets are ORDER#-1 … ORDER#-1 (listed in confirmation email)" data-ff-e36-ticket-note>
 
           {%- liquid

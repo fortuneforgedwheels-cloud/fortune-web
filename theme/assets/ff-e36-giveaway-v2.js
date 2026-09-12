@@ -157,11 +157,25 @@
     return qty;
   }
 
+  function ticketVisibleLabel(qty) {
+    if (qty === 1) {
+      return '1 ticket · ID is this order number-1 (example #FF0001-1)';
+    }
+    return (
+      qty +
+      ' tickets · IDs are this order number-1 through -' +
+      qty +
+      ' (example #FF0001-1)'
+    );
+  }
+
   function syncTicketFields(root) {
     var qty = currentEntryQty(root);
     var countProp = qs(root, '[data-ff-e36-ticket-count]');
     var noteProp = qs(root, '[data-ff-e36-ticket-note]');
+    var visibleProp = qs(root, '[data-ff-e36-ticket-visible]');
     if (countProp) countProp.value = String(qty);
+    if (visibleProp) visibleProp.value = ticketVisibleLabel(qty);
     if (noteProp) {
       noteProp.value =
         'After payment tickets are ORDER#-1 … ORDER#-' + qty + ' (listed in confirmation email)';
@@ -178,11 +192,19 @@
     attributes[ATTR_AT] = checked ? isoNow() : '';
     attributes[ATTR_VERSION] = checked ? version : '';
     attributes[ATTR_PAGE] = checked ? pagePath : '';
-    /* Visible in Admin → Order → Additional details (not separate Shopify orders) */
-    attributes[ATTR_TICKET_COUNT] = checked ? String(qty) : '';
-    attributes[ATTR_TICKET_IDS] = checked
-      ? 'Format after payment: {Order#}-1 through {Order#}-' + qty + ' (see confirmation email)'
-      : '';
+    /* Always stamp ticket count so Order confirmation Liquid can read attributes[] */
+    attributes[ATTR_TICKET_COUNT] = String(qty);
+    attributes[ATTR_TICKET_IDS] =
+      'Format after payment: {Order#}-1 through {Order#}-' + qty + ' (see confirmation email)';
+
+    var payload = { attributes: attributes };
+    /* Stock Shopify emails often print {{ note }} — belt-and-suspenders if custom ticket block missing */
+    payload.note =
+      'GIVEAWAY ENTRY TICKETS: ' +
+      qty +
+      ' ticket(s). IDs = your order number-1 through -' +
+      qty +
+      ' (example #FF0001-1). Keep your confirmation email.';
 
     return fetch('/cart/update.js', {
       method: 'POST',
@@ -191,7 +213,7 @@
         Accept: 'application/json'
       },
       credentials: 'same-origin',
-      body: JSON.stringify({ attributes: attributes })
+      body: JSON.stringify(payload)
     }).catch(function () {
       /* non-blocking — line item props still capture on submit */
     });
@@ -285,9 +307,7 @@
       }
       syncTicketFields(root);
       var checkbox = qs(root, '[data-ff-e36-terms]');
-      if (checkbox && checkbox.checked) {
-        updateCartAttributes(root, true);
-      }
+      updateCartAttributes(root, !!(checkbox && checkbox.checked));
     }
 
     if (minus) {
