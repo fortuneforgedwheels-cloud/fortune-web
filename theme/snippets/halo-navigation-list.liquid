@@ -270,6 +270,9 @@
             {% render 'ff-nav-finish-options', menu: menu %}
         {%- endif -%}
     {%- endfor -%}
+    {% render 'ff-nav-clothing', menu: menu %}
+    {% render 'ff-nav-e36-giveaway', menu: menu %}
+    {% render 'ff-nav-exclusive-deals', menu: menu %}
     {%- if block.settings.show_resize_menu -%}
         <li class="menu-lv-item menu-lv-toggle menu-lv-1 text-left no-megamenu visually-hidden" data-menu-lv-toggle>
             <p class="menu-lv-1__action list-menu__item link focus-inset">
