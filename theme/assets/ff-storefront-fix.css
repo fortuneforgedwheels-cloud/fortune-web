@@ -69,3 +69,6 @@
     display: inline-flex !important;
   }
 }
+
+/* Offer popup temporarily disabled */
+#ff-offer-popup,.ff-offer,[data-ff-offer]{display:none!important;visibility:hidden!important;pointer-events:none!important;}
