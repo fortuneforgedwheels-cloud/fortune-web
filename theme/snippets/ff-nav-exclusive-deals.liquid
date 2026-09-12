@@ -1,0 +1,33 @@
+{%- comment -%}
+  Adds EXCLUSIVE DEALS to the main nav when the page is not already present
+  in the assigned Shopify menu (main-menu).
+  Live page handle: exclusive-deals (template: exclusive-deals).
+  Keep this published for Bimmer Invasion — do not gate or unpublish.
+{%- endcomment -%}
+{%- assign ff_xd_url = '/pages/exclusive-deals' -%}
+{%- assign ff_xd_page = pages['exclusive-deals'] -%}
+{%- if ff_xd_page == blank -%}
+  {%- assign ff_xd_page = pages['exclusive-deals-bimmer-invasion'] -%}
+{%- endif -%}
+{%- if ff_xd_page != blank -%}
+  {%- assign ff_xd_url = ff_xd_page.url -%}
+{%- endif -%}
+{%- assign ff_xd_in_menu = false -%}
+{%- for link in menu -%}
+  {%- if link.url == ff_xd_url or link.url contains 'exclusive-deals' -%}
+    {%- assign ff_xd_in_menu = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- unless ff_xd_in_menu -%}
+  <li class="menu-lv-item menu-lv-1 text-left no-megamenu">
+    <a
+      href="{{ ff_xd_url }}"
+      class="menu-lv-1__action list-menu__item list-menu__item--end link focus-inset{% if request.path == ff_xd_url or request.path contains 'exclusive-deals' %} is-active{% endif %}"
+      role="button"
+      {% if request.path == ff_xd_url or request.path contains 'exclusive-deals' %}aria-current="page"{% endif %}
+    >
+      <span class="text">EXCLUSIVE DEALS</span>
+    </a>
+  </li>
+{%- endunless -%}

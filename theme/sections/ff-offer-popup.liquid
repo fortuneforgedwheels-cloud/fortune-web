@@ -1,11 +1,19 @@
-{% render 'ff-offer-popup' %}
+{% comment %}
+  Offer popup temporarily disabled.
+  Re-enable: restore {% render 'ff-offer-popup' %} below and set
+  FF_OFFER_POPUP_ENABLED = true in assets/ff-offer-boot-v2.js
+{% endcomment %}
 
 {% schema %}
 {
   "name": "FF Offer Popup",
-  "tag": "div",
+  "tag": "section",
   "class": "section-ff-offer-popup",
   "settings": [],
-  "presets": [{ "name": "FF Offer Popup" }]
+  "presets": [
+    {
+      "name": "FF Offer Popup"
+    }
+  ]
 }
 {% endschema %}

@@ -45,5 +45,6 @@ echo "==> Pushing code-only files to theme ${THEME_ID} (no settings_data / templ
 bash scripts/with-env.sh shopify theme push \
   --path theme \
   --theme "$THEME_ID" \
+  --nodelete \
   "${ALLOW_LIVE_FLAG[@]}" \
   "${ONLY_ARGS[@]}"
