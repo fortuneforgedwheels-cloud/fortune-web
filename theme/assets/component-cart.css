@@ -87,8 +87,26 @@ main-cart-items{
     padding: 0 15px 0 0;
 }
 
+.cart-item-block-left--no-image{
+    display: none;
+}
+
 .cart-item-block-right{
     position: relative;
+}
+
+.cart-item-name-row{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 6px 0;
+}
+
+.cart-item-name-row .cart-item-name{
+    margin: 0;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 .cart-item-image{
@@ -171,11 +189,11 @@ main-cart-items{
 }
 
 .cart-item-properties{
-    display: grid;
-    grid-template-columns: max-content minmax(0, 1fr);
-    column-gap: 10px;
-    row-gap: 6px;
-    margin: 8px 0 0 0;
+    display: block;
+    margin: 6px 0 0 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .cart-item-properties .definitionList-key,
@@ -184,19 +202,25 @@ main-cart-items{
     font-weight: var(--font-weight-normal);
     color: var(--color-text2);
     letter-spacing: var(--letter-spacing);
-    line-height: 1.35;
+    line-height: 1.4;
     margin: 0;
     padding: 0;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .cart-item-properties .definitionList-key{
     white-space: nowrap;
+    overflow-wrap: break-word;
+    word-break: normal;
+    font-weight: var(--font-weight-semibold, 600);
 }
 
 .cart-item-properties .definitionList-value{
     margin-left: 0;
     min-width: 0;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
+    word-break: normal;
 }
 
 .cart-item-allocation{
@@ -271,14 +295,20 @@ main-cart-items{
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
     vertical-align: middle;
-    width: 44px;
-    height: 44px;
+    width: auto;
     min-width: 44px;
+    height: 44px;
     min-height: 44px;
-    margin: 0 auto;
+    margin: 0;
+    padding: 0 8px;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    text-decoration: none;
+    color: var(--color-text2);
+    cursor: pointer;
+    z-index: 2;
 }
 
 .cart-remove .icon{
@@ -286,6 +316,40 @@ main-cart-items{
     height: 19px;
     fill: var(--color-grey);
     pointer-events: none;
+    flex: 0 0 auto;
+}
+
+.cart-remove__label{
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold, 600);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: inherit;
+    pointer-events: none;
+}
+
+.cart-remove--inline{
+    flex: 0 0 auto;
+    padding: 0;
+    height: auto;
+    min-height: 32px;
+    color: var(--color-text2);
+    opacity: 0.85;
+}
+
+.cart-remove--inline .cart-remove__label{
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.cart-remove--cell{
+    margin: 0 auto;
+}
+
+.cart-item-block.cart-item-remove{
+    height: auto;
+    min-height: 44px;
 }
 
 .cart-item-block.cart-item-info{

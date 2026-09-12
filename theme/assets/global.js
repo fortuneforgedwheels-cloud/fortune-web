@@ -364,7 +364,8 @@ Shopify.removeItem = function(line, callback) {
     var params = {
         type: 'POST',
         url: `${window.routes.cart}/change.js`,
-        data:  'quantity=0&id='+line,
+        /* Object form so line keys with ":" are encoded correctly */
+        data: { quantity: 0, id: String(line) },
         dataType: 'json',
         success: function(cart) {
             if ((typeof callback) === 'function') {
