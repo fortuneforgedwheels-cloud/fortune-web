@@ -82,6 +82,9 @@
             if title == 'warranty' or link.url contains '/pages/warranty'
               continue
             endif
+            if title == 'e36-giveaway' or title == 'exclusive-deals' or link.url contains 'win-our-e36-m3' or link.url contains 'e36-giveaway' or link.url contains '/pages/giveaway' or link.url contains 'exclusive-deals'
+              continue
+            endif
             assign show_resize_menu = block.settings.show_resize_menu
             assign sale_item_lv1 = block.settings.sale_item_1 | split: "," | strip | downcase | handle
             assign sale_item_lv2 = block.settings.sale_item_2 | split: "," | strip | downcase | handle
@@ -270,6 +273,8 @@
             {% render 'ff-nav-finish-options', menu: menu %}
         {%- endif -%}
     {%- endfor -%}
+    {% render 'ff-nav-clothing', menu: menu %}
+    {%- comment -%} E36 + Exclusive Deals nav archived — pages remain in admin/theme editor {%- endcomment -%}
     {%- if block.settings.show_resize_menu -%}
         <li class="menu-lv-item menu-lv-toggle menu-lv-1 text-left no-megamenu visually-hidden" data-menu-lv-toggle>
             <p class="menu-lv-1__action list-menu__item link focus-inset">

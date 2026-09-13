@@ -5,6 +5,10 @@
  * Uses a fresh storage key so prior test dismissals don't block it.
  */
 (function () {
+  // Temporarily disabled — set true to bring the $100-off popup back.
+  var FF_OFFER_POPUP_ENABLED = false;
+  if (!FF_OFFER_POPUP_ENABLED) return;
+
   if (window.__ffOfferBootV3) return;
   window.__ffOfferBootV3 = true;
 
