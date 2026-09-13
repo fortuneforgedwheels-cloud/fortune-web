@@ -1,3 +1,6 @@
+{%- unless request.design_mode -%}
+  {% render 'ff-archive-page-gate' %}
+{%- else -%}
 {{ 'ff-e36-giveaway-v2.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'ff-e36-giveaway-v2.js' | asset_url }}" defer></script>
 
@@ -447,6 +450,8 @@
       </button>
     </div>
   </section>
+
+{%- endunless -%}
 
 {% schema %}
 {

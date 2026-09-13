@@ -1,0 +1,21 @@
+{%- comment -%}
+  Soft-archive storefront gate for retired campaign pages (E36 giveaway,
+  Exclusive Deals). Public visitors are sent home. Theme editor / design
+  mode still renders the page so Torrin can review it in admin.
+
+  View later: Shopify Admin → Online Store → Themes → Customize →
+  navigate to the page, or Online Store → Pages for the page record.
+{%- endcomment -%}
+{%- unless request.design_mode -%}
+  <script>
+    (function () {
+      try {
+        window.location.replace({{ routes.root_url | json }});
+      } catch (e) {}
+    })();
+  </script>
+  <noscript>
+    <meta http-equiv="refresh" content="0;url={{ routes.root_url }}">
+  </noscript>
+  <p class="visually-hidden">This page is archived and is not available on the storefront.</p>
+{%- endunless -%}
