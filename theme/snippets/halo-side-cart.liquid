@@ -19,9 +19,11 @@
                         assign current_variant = item.product.selected_or_first_available_variant
                     -%}
                     <li class="previewCartItem clearfix" data-cart-item>
+                        {%- if item.image != blank -%}
                         <a href="{{ item.url }}" class="previewCartItem-image">
                             <img srcset="{{ item.image | img_url: '110x' }}" src="{{ item.image | img_url: '110x' }}" alt="{{ item.title | escape }}" sizes="110px" loading="lazy">
                         </a>
+                        {%- endif -%}
                         <div class="previewCartItem-content">
                             <a class="previewCartItem-name link-underline" href="{{ item.url }}">
                                 <span class="text">{{ item.product.title }}</span>

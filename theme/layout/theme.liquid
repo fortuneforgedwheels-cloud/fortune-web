@@ -267,7 +267,7 @@
                   .replace(/\s+/g, ' ')
                   .trim()
                   .toUpperCase();
-                if (title !== 'FACE COLOR' && title !== 'RING COLOR') continue;
+                if (title !== 'FACE COLOR' && title !== 'RING COLOR' && title !== 'COLOR') continue;
                 var values = (vo && vo.values) || [];
                 for (var j = 0; j < values.length; j++) {
                   var value = values[j];

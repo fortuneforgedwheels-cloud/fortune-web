@@ -72,9 +72,6 @@
                                                         loading="lazy"
                                                         class="motion-reduce"
                                                     >
-                                                {%- else -%}
-                                                    {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-                                                    {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
                                                 {%- endif -%}
                                             </a>
                                         </div>
