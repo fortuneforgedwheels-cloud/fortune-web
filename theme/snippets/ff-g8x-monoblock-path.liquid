@@ -1,0 +1,109 @@
+{{ 'ff-826m-certified.css' | asset_url | stylesheet_tag }}
+{{ 'ff-g8x-monoblock-path.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign style_code = style_code | default: '827M+'
+  assign set_handle = 'g8x-fitment-full-set'
+  assign set_product = all_products[set_handle]
+  assign variant_19_20 = blank
+  assign variant_20_20 = blank
+  if set_product != blank
+    for variant in set_product.variants
+      assign style_key = variant.option1 | strip
+      assign setup_key = variant.option2 | strip
+      if style_key == style_code and setup_key == '19/20'
+        assign variant_19_20 = variant
+      endif
+      if style_key == style_code and setup_key == '20/20'
+        assign variant_20_20 = variant
+      endif
+    endfor
+  endif
+-%}
+
+<div
+  class="ff-826m-path ff-g8x-mono"
+  id="ff-g8x-mono-{{ product.id }}"
+  data-ff-g8x-mono-path
+  data-product-id="{{ product.id }}"
+  data-product-handle="{{ product.handle | escape }}"
+  data-style-code="{{ style_code | escape }}"
+  data-form-id="{{ form_id }}"
+  data-set-handle="{{ set_handle }}"
+  data-set-price="3100"
+  data-variant-19-20="{{ variant_19_20.id }}"
+  data-variant-20-20="{{ variant_20_20.id }}"
+>
+  <p class="ff-826m-path__eyebrow">{{ style_code | escape }} ordering</p>
+  <h2 class="ff-826m-path__heading">How do you want to order this set?</h2>
+  <p class="ff-826m-path__intro">Choose custom sizing, or lock in a true plug-and-play G8X fitment package.</p>
+
+  <div class="ff-826m-path__choices" role="radiogroup" aria-label="Order path">
+    <label class="ff-826m-path__choice">
+      <input type="radio" name="ff_g8x_mono_path_{{ product.id }}" value="custom" checked>
+      <span class="ff-826m-path__choice-card">
+        <span class="ff-826m-path__choice-title">Enter custom specs</span>
+        <span class="ff-826m-path__choice-meta">Use the diameter, width, offset, lug pattern, lead time, and vehicle fields below.</span>
+      </span>
+    </label>
+    <label class="ff-826m-path__choice">
+      <input type="radio" name="ff_g8x_mono_path_{{ product.id }}" value="g8x">
+      <span class="ff-826m-path__choice-card">
+        <span class="ff-826m-path__choice-title">Buy G8X fitment</span>
+        <span class="ff-826m-path__choice-meta">Full set of 4 — pick 19/20&quot; or 20/20&quot; plug-and-play, then choose a finish. $3,100.00</span>
+      </span>
+    </label>
+  </div>
+
+  <div class="ff-g8x-mono__g8x" data-ff-g8x-mono-g8x-panel hidden>
+    <div class="ff-826m-path__badge">
+      <span>G8X package</span>
+      <strong>$3,100.00 full set of 4</strong>
+    </div>
+
+    <p class="ff-826m-path__hint">Select your setup:</p>
+    <div class="ff-g8x-mono__setups" role="radiogroup" aria-label="G8X setup">
+      <label class="ff-g8x-mono__setup">
+        <input type="radio" name="ff_g8x_mono_setup_{{ product.id }}" value="19/20" data-ff-g8x-mono-setup>
+        <span class="ff-g8x-mono__setup-card">
+          <span class="ff-g8x-mono__setup-title">19/20&quot; setup</span>
+          <span class="ff-g8x-mono__setup-specs">19x10 ET10 &amp; 20x11 ET12</span>
+          <span class="ff-g8x-mono__setup-note">True flush plug and play fitment</span>
+        </span>
+      </label>
+      <label class="ff-g8x-mono__setup">
+        <input type="radio" name="ff_g8x_mono_setup_{{ product.id }}" value="20/20" data-ff-g8x-mono-setup>
+        <span class="ff-g8x-mono__setup-card">
+          <span class="ff-g8x-mono__setup-title">20/20&quot; setup</span>
+          <span class="ff-g8x-mono__setup-specs">20x10 ET10 &amp; 20x11 ET12</span>
+          <span class="ff-g8x-mono__setup-note">Plug and play fitment</span>
+        </span>
+      </label>
+    </div>
+
+    <div class="ff-g8x-mono__finish" data-ff-g8x-mono-finish-slot>
+      <p class="ff-826m-path__hint">Select a finish:</p>
+      <label class="ff-826m-path__field">
+        <span>Finish</span>
+        <select class="ff-826m-path__select" data-ff-g8x-mono-finish required>
+          <option value="">Choose one</option>
+        </select>
+      </label>
+    </div>
+
+    <input type="hidden" name="properties[Spec Path]" value="Buy G8X fitment" form="{{ form_id }}" data-ff-g8x-mono-g8x-prop disabled>
+    <input type="hidden" name="properties[G8X Setup]" value="" form="{{ form_id }}" data-ff-g8x-mono-g8x-prop data-ff-g8x-mono-setup-prop disabled>
+    <input type="hidden" name="properties[G8X Specs]" value="" form="{{ form_id }}" data-ff-g8x-mono-g8x-prop data-ff-g8x-mono-specs-prop disabled>
+    <input type="hidden" name="properties[Fitment]" value="G8X plug and play" form="{{ form_id }}" data-ff-g8x-mono-g8x-prop disabled>
+    <input type="hidden" name="properties[Package]" value="Full set of 4 — $3,100.00" form="{{ form_id }}" data-ff-g8x-mono-g8x-prop disabled>
+    <input type="hidden" name="properties[Finish]" value="" form="{{ form_id }}" data-ff-g8x-mono-g8x-prop data-ff-g8x-mono-finish-prop disabled>
+    <input type="hidden" name="properties[Wheel Style]" value="{{ style_code | escape }}" form="{{ form_id }}" data-ff-g8x-mono-g8x-prop disabled>
+  </div>
+
+  <div class="ff-g8x-mono__custom" data-ff-g8x-mono-custom-panel>
+    <p class="ff-826m-path__hint">Use the diameter and option fields below to build custom specs.</p>
+    <input type="hidden" name="properties[Spec Path]" value="Enter custom specs" form="{{ form_id }}" data-ff-g8x-mono-custom-prop>
+  </div>
+</div>
+
+<script src="{{ 'ff-g8x-monoblock-path.js' | asset_url }}" defer></script>
