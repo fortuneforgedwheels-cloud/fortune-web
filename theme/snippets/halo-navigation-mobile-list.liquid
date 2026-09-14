@@ -23,6 +23,9 @@
 				if ff_nav_title == 'warranty' or link.url contains '/pages/warranty'
 					continue
 				endif
+				if ff_nav_title == 'e36-giveaway' or ff_nav_title == 'exclusive-deals' or link.url contains 'win-our-e36-m3' or link.url contains 'e36-giveaway' or link.url contains '/pages/giveaway' or link.url contains 'exclusive-deals'
+					continue
+				endif
 			-%}
 			<li class="menu-lv-item menu-lv-2 text-left{% if link.links != blank %} dropdown{% endif %}">
 				{%- if link.links == blank -%}

@@ -1,3 +1,6 @@
+{%- unless request.design_mode -%}
+  {% render 'ff-archive-page-gate' %}
+{%- else -%}
 {{ 'ff-exclusive-deals-v4.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'ff-exclusive-deals-v5.js' | asset_url }}" defer></script>
 
@@ -393,6 +396,8 @@
     </div>
   </div>
 </section>
+
+{%- endunless -%}
 
 {% schema %}
 {
