@@ -239,18 +239,47 @@
   }
 
   function rewritePrice(root, g8x) {
+    var setPrice = money(root.getAttribute('data-set-price') || '3100');
     var nodes = document.querySelectorAll(
-      '.productView-price .price-item--regular, .productView-price .money, .productView-price [data-product-price], .price__regular .price-item--regular'
+      '.productView-price .price-item--regular, .productView-price .money, .productView-price [data-product-price], .price__regular .price-item--regular, [data-product-subtotal], .productView-subTotal-value, .bcpo-cart-item-price'
     );
     nodes.forEach(function (node) {
       if (g8x) {
         if (!node.getAttribute('data-ff-g8x-mono-price-orig')) {
           node.setAttribute('data-ff-g8x-mono-price-orig', node.textContent);
         }
-        node.textContent = money(root.getAttribute('data-set-price') || '3100') + ' / set';
+        node.textContent = setPrice + ' / set';
       } else if (node.getAttribute('data-ff-g8x-mono-price-orig')) {
         node.textContent = node.getAttribute('data-ff-g8x-mono-price-orig');
         node.removeAttribute('data-ff-g8x-mono-price-orig');
+      }
+    });
+
+    document.querySelectorAll('[data-btn-addToCart], button[name="add"].product-form__submit').forEach(function (btn) {
+      if (g8x) {
+        if (!btn.getAttribute('data-ff-g8x-mono-btn-orig')) {
+          btn.setAttribute('data-ff-g8x-mono-btn-orig', btn.innerHTML);
+        }
+        btn.innerHTML = 'CHECKOUT - ' + setPrice;
+      } else if (btn.getAttribute('data-ff-g8x-mono-btn-orig')) {
+        btn.innerHTML = btn.getAttribute('data-ff-g8x-mono-btn-orig');
+        btn.removeAttribute('data-ff-g8x-mono-btn-orig');
+      }
+    });
+  }
+
+  function lockQuantity(g8x) {
+    document.querySelectorAll('input.quantity__input, input[name="quantity"]').forEach(function (input) {
+      if (g8x) {
+        if (!input.getAttribute('data-ff-g8x-mono-qty-orig')) {
+          input.setAttribute('data-ff-g8x-mono-qty-orig', input.value || '1');
+        }
+        input.value = '1';
+        input.setAttribute('value', '1');
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      } else if (input.getAttribute('data-ff-g8x-mono-qty-orig')) {
+        input.value = input.getAttribute('data-ff-g8x-mono-qty-orig');
+        input.removeAttribute('data-ff-g8x-mono-qty-orig');
       }
     });
   }
@@ -284,6 +313,7 @@
 
     populateFinish(root);
     hideBcpo(g8x);
+    lockQuantity(g8x);
     rewritePrice(root, g8x);
     if (g8x) {
       updateSetupProps(root);
@@ -349,14 +379,35 @@
     };
   }
 
+  function isChromeFinish(root) {
+    var finish = root.querySelector('[data-ff-g8x-mono-finish]');
+    if (!finish) return false;
+    return (
+      String(finish.value || '')
+        .replace(/\s*\(\+\$?\d+.*?\)\s*$/i, '')
+        .trim()
+        .toLowerCase() === 'chrome'
+    );
+  }
+
   function addSet(root) {
+    var items = [{ id: Number(variantId(root)), quantity: 1, properties: buildProperties(root) }];
+    if (isChromeFinish(root) && window.FF_CHROME_SURCHARGE && window.FF_CHROME_SURCHARGE.variantId) {
+      items.push({
+        id: Number(window.FF_CHROME_SURCHARGE.variantId),
+        quantity: 1,
+        properties: {
+          _Surcharge: 'Chrome finish',
+          Note: 'Chrome finish surcharge for G8X set',
+          'Chrome selections': root.getAttribute('data-style-code') || 'G8X set'
+        }
+      });
+    }
     return fetch((window.routes && window.routes.cart_add_url) || '/cart/add.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       credentials: 'same-origin',
-      body: JSON.stringify({
-        items: [{ id: Number(variantId(root)), quantity: 1, properties: buildProperties(root) }]
-      })
+      body: JSON.stringify({ items: items })
     }).then(function (res) {
       if (!res.ok) {
         return res.text().then(function (t) {
@@ -380,6 +431,8 @@
     root.querySelectorAll('[data-ff-g8x-mono-setup]').forEach(function (radio) {
       radio.addEventListener('change', function () {
         updateSetupProps(root);
+        lockQuantity(true);
+        rewritePrice(root, true);
       });
     });
 

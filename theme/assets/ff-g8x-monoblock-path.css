@@ -65,14 +65,28 @@
   margin-bottom: 8px;
 }
 
-body.is-ff-g8x-mono-g8x .productView-price .price-item,
-body.is-ff-g8x-mono-g8x .productView-price .price,
-body.is-ff-g8x-mono-g8x [data-product-price],
-body.is-ff-g8x-mono-g8x .price__regular .price-item--regular {
-  /* JS also rewrites text; this keeps layout stable */
-}
-
 body.is-ff-g8x-mono-g8x .productView-variants,
 body.is-ff-g8x-mono-g8x [data-ff-g8x-mono-hide-diameter] {
   display: none !important;
+}
+
+/* Full set is always qty 1 — no quantity stepper in G8X mode */
+body.is-ff-g8x-mono-g8x quantity-input,
+body.is-ff-g8x-mono-g8x .productView-quantity,
+body.is-ff-g8x-mono-g8x .quantity__group,
+body.is-ff-g8x-mono-g8x .quantity__button,
+body.is-ff-g8x-mono-g8x .quantity__label,
+body.is-ff-g8x-mono-g8x .productView-groupTop .productView-quantity,
+body.is-ff-g8x-mono-g8x .productView-groupTop quantity-input {
+  display: none !important;
+}
+
+body.is-ff-g8x-mono-g8x .productView-groupTop {
+  align-items: stretch;
+}
+
+body.is-ff-g8x-mono-g8x .productView-action,
+body.is-ff-g8x-mono-g8x .product-form__buttons,
+body.is-ff-g8x-mono-g8x [data-btn-addToCart] {
+  width: 100%;
 }
