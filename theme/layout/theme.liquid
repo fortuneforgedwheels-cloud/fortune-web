@@ -565,10 +565,10 @@
             {{ 'section-footer.css' | asset_url | stylesheet_tag }}
             {% sections 'footer-group' %}
         </div>
-        {% comment %} Offer popup temporarily disabled {% endcomment %}
+        {% render 'ff-offer-popup' %}
         {{ 'ff-storefront-fix.css' | asset_url | stylesheet_tag }}
         <script src="{{ 'ff-about-route.js' | asset_url }}" defer></script>
-        {% comment %} {% comment %} Offer popup boot temporarily disabled {% endcomment %} {% endcomment %}
+        <script src="{{ 'ff-offer-boot-v2.js' | asset_url }}" defer></script>
         {{ 'rtl-section-header.css' | asset_url | stylesheet_tag }}
         {{ 'rtl-section-footer.css' | asset_url | stylesheet_tag }}
         {% render 'halo-popup' %}
