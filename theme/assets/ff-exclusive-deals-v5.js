@@ -343,8 +343,7 @@
           'Wheel Design': designInput ? designInput.value : '',
           'Finish': finish,
           'Vehicle': ymm ? String(ymm.value || '').trim() : '',
-          'Fitment path': helpPreference ? helpPreference.value : '',
-          'Invasion Bonus Entries': '3'
+          'Fitment path': helpPreference ? helpPreference.value : ''
         };
 
         if (mode === 'specs' && specs) {

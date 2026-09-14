@@ -337,7 +337,14 @@
                                                 --spacing-bottom-tablet: {{ padding_bottom | times: 0.75 | round: 0 | append: 'px' }};"
                                         >
                                             <label class="form-label" for="Cart-note">{{ 'sections.cart.note' | t }}</label>
-                                            <textarea class="form-input form-input-placeholder" name="note" id="Cart-note" placeholder="{{ 'sections.cart.note_placeholder' | t }}">{{ cart.note }}</textarea>
+                                            {%- liquid
+                                              assign ff_cart_note = cart.note
+                                              assign ff_cart_note_down = ff_cart_note | downcase
+                                              if ff_cart_note_down contains 'giveaway entry tickets' or ff_cart_note_down contains 'invasion bonus tickets' or ff_cart_note_down contains 'your entry tickets'
+                                                assign ff_cart_note = ''
+                                              endif
+                                            -%}
+                                            <textarea class="form-input form-input-placeholder" name="note" id="Cart-note" placeholder="{{ 'sections.cart.note_placeholder' | t }}">{{ ff_cart_note }}</textarea>
                                         </cart-note>
                                     </div>
                                 {%- when 'gift_wrapper' -%}

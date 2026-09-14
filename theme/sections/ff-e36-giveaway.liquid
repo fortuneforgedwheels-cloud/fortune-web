@@ -299,7 +299,7 @@
               <label class="ff-e36__qty-label" for="ff-e36-qty-{{ section.id }}">
                 {{ section.settings.qty_label | default: 'How many entries?' | escape }}
               </label>
-              <p class="ff-e36__qty-hint">{{ section.settings.qty_hint | default: 'Max 20 per checkout. Each entry gets its own ticket after payment.' | escape }}</p>
+              <p class="ff-e36__qty-hint">{{ section.settings.qty_hint | default: 'Max 20 per checkout.' | escape }}</p>
             </div>
             <div class="ff-e36__qty-ctrl">
               <button type="button" class="ff-e36__qty-btn" data-ff-e36-qty-minus aria-label="Fewer entries">−</button>
@@ -595,7 +595,7 @@
       "type": "text",
       "id": "checkout_note",
       "label": "Note under checkout button",
-      "default": "After payment you’ll see your master order plus entry tickets (ORDER-1, ORDER-2, …) on confirmation and email."
+      "default": "You will complete checkout to confirm your entry."
     },
     {
       "type": "text",

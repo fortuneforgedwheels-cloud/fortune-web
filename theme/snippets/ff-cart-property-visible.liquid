@@ -12,7 +12,15 @@
     assign ff_hide = true
   endif
 
+  if ff_key == 'invasion bonus entries' or ff_key == 'giveaway ticket count' or ff_key == 'giveaway ticket ids' or ff_key == 'your entry tickets' or ff_key == 'drawing note' or ff_key == 'paid giveaway entries'
+    assign ff_hide = true
+  endif
+
   if ff_val contains 'apex guide' or ff_val contains 'fortune forged guide'
+    assign ff_hide = true
+  endif
+
+  if ff_val contains 'giveaway entry ticket' or ff_val contains 'order number-1 through'
     assign ff_hide = true
   endif
 
