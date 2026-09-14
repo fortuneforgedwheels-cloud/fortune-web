@@ -9,19 +9,12 @@
   assign ff_hide_public_pdp = false
   if product.tags contains 'ff-hide-catalog'
     assign ff_hide_public_pdp = true
-  elsif product.handle == 'chrome-finish-surcharge' or product.handle == 'exclusive-deals-full-set' or product.handle == '1998-bmw-m3'
+  elsif product.handle == 'chrome-finish-surcharge' or product.handle == 'exclusive-deals-full-set' or product.handle == '1998-bmw-m3' or product.handle == 'g8x-fitment-full-set'
     assign ff_hide_public_pdp = true
   endif
 -%}
 {%- if ff_hide_public_pdp -%}
-  {%- liquid
-    assign ff_redirect = routes.root_url
-    if product.handle == 'exclusive-deals-full-set'
-      assign ff_redirect = pages['exclusive-deals'].url | default: '/pages/exclusive-deals'
-    elsif product.handle == '1998-bmw-m3'
-      assign ff_redirect = pages['e36-giveaway'].url | default: pages['giveaway'].url | default: routes.root_url
-    endif
-  -%}
+  {%- assign ff_redirect = routes.root_url -%}
   <script>window.location.replace({{ ff_redirect | json }});</script>
   <noscript><meta http-equiv="refresh" content="0;url={{ ff_redirect }}"></noscript>
   <p class="visually-hidden">This product is not available in the public catalog.</p>
@@ -298,6 +291,15 @@
       assign ff_certified_model_ph = 'e.g. G80 M3'
     endif
     assign ff_826m_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
+    assign ff_g8x_mono_path = false
+    assign ff_g8x_mono_style = ''
+    if product.handle == 'forged-g8x-oem-style'
+      assign ff_g8x_mono_path = true
+      assign ff_g8x_mono_style = '826M+'
+    elsif product.handle == '876m-cs-style'
+      assign ff_g8x_mono_path = true
+      assign ff_g8x_mono_style = '827M+'
+    endif
     assign colors_bg = section.settings.colors_bg
     assign padding_top = section.settings.padding_top 
     assign padding_bottom = section.settings.padding_bottom
@@ -1244,6 +1246,13 @@
                                             {%- endif -%}
                                         {%- endif -%}
                                     {%- when 'variant_picker' -%}
+                                        {%- if ff_g8x_mono_path -%}
+                                            {% render 'ff-g8x-monoblock-path',
+                                              product: product,
+                                              form_id: ff_826m_form_id,
+                                              style_code: ff_g8x_mono_style
+                                            %}
+                                        {%- endif -%}
                                         {%- if ff_certified_beadlock -%}
                                             {% render 'ff-826m-spec-path',
                                               product: product,

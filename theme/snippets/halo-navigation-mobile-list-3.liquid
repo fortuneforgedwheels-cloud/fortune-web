@@ -5,6 +5,9 @@
 		if ff_link_handle == 'shop-by-style'
 			assign ff_link_label = 'WHEELS'
 		endif
+		if ff_link_handle == 'e36-giveaway' or ff_link_handle == 'exclusive-deals' or link.url contains 'win-our-e36-m3' or link.url contains 'e36-giveaway' or link.url contains '/pages/giveaway' or link.url contains 'exclusive-deals'
+			continue
+		endif
 	-%}
 	{%- if ff_link_handle == 'shop-by-style' -%}
 		{% render 'ff-wheels-megamenu' %}

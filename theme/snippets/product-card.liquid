@@ -17,7 +17,7 @@
     if product_card_product != blank
       if product_card_product.tags contains 'ff-hide-catalog'
         assign ff_catalog_hidden = true
-      elsif product_card_product.handle == 'chrome-finish-surcharge'
+      elsif product_card_product.handle == 'chrome-finish-surcharge' or product_card_product.handle == 'g8x-fitment-full-set'
         assign ff_catalog_hidden = true
       elsif product_card_product.handle == 'exclusive-deals-full-set'
         assign ff_catalog_hidden = true
