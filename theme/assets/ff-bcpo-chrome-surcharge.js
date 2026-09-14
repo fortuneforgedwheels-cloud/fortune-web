@@ -28,7 +28,7 @@
     var changed = false;
     data.virtual_options.forEach(function (vo) {
       var title = normalizeTitle(vo && vo.title);
-      if (title !== 'FACE COLOR' && title !== 'RING COLOR') return;
+      if (title !== 'FACE COLOR' && title !== 'RING COLOR' && title !== 'COLOR') return;
       (vo.values || []).forEach(function (value) {
         if (!value || typeof value !== 'object') return;
         if (String(value.key || '').toLowerCase() !== 'chrome') return;

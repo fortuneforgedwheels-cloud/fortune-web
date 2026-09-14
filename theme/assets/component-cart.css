@@ -663,3 +663,19 @@ body.dark-mode .cart-content-item[data-cart-totals] {
         width: 470px;
     }
 }
+
+/* FF: never show cart no-image placeholders */
+.cart-item-block-left:empty,
+.cart-item-image:not(:has(img[src]:not([src=""]))),
+.cart-item .placeholder-svg,
+.previewCartItem .placeholder-svg,
+.previewCartList .placeholder-svg,
+.card-product .placeholder-svg {
+  display: none !important;
+}
+.cart-item-wrapper:not(:has(.cart-item-image img)) .cart-item-block-left {
+  display: none;
+}
+.previewCartItem:not(:has(.previewCartItem-image img)) .previewCartItem-image {
+  display: none;
+}
