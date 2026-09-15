@@ -68,8 +68,7 @@
         "content_h_align": "left",
         "content_v_align": "bottom",
         "content_offset_x": 0,
-        "content_offset_y": 0,
-        "show_shop_by_vehicle_bar": true
+        "content_offset_y": 0
       }
     },
     "ff_simple_build_main": {
@@ -113,6 +112,59 @@
         "modal_cta": "Yes — I'm interested",
         "modal_dismiss": "Maybe later",
         "modal_thanks": "Perfect. When we follow up on your quote, we'll include media day details and help coordinate after installation."
+      }
+    },
+    "ff_featured_specs_home": {
+      "type": "ff-featured-specs",
+      "blocks": {
+        "platform_c8": {
+          "type": "platform",
+          "settings": {
+            "label": "827M OEM+ G8X SPEC",
+            "image": "shopify://shop_images/Viewrecentphotos2.png",
+            "product": "827m-oem-g8x-spec",
+            "link": ""
+          }
+        },
+        "platform_g8x": {
+          "type": "platform",
+          "settings": {
+            "label": "F-05Sr F8X flush fit",
+            "image": "shopify://shop_images/View_recent_photos_4.png",
+            "link": "/pages/shop-by-vehicle-bmw"
+          }
+        },
+        "platform_g20": {
+          "type": "platform",
+          "settings": {
+            "label": "A90 SUPRA OEM+ BEADLOCK",
+            "image": "shopify://shop_images/IMG_6134.jpg",
+            "link": "/pages/shop-by-vehicle-bmw-g20"
+          }
+        },
+        "platform_AexcTx": {
+          "type": "platform",
+          "settings": {
+            "label": "G20 FULL BEADLOCK SET",
+            "image": "shopify://shop_images/Screenshot_2026-09-14_at_11.32.00_PM.png",
+            "product": "",
+            "link": "/pages/shop-by-vehicle-bmw-g20"
+          }
+        }
+      },
+      "block_order": [
+        "platform_c8",
+        "platform_g8x",
+        "platform_g20",
+        "platform_AexcTx"
+      ],
+      "settings": {
+        "show_section": true,
+        "heading": "Shop featured specs",
+        "subheading": "See a setup you like? Order. Install. Drive.",
+        "fallback_link": "/pages/shop-by-vehicle",
+        "padding_top": 28,
+        "padding_bottom": 36
       }
     },
     "ff_top_selling_monoblocks_home": {
@@ -623,69 +675,6 @@
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "custom_liquid": ""
-      }
-    },
-    "ff_featured_specs_home": {
-      "type": "ff-featured-specs",
-      "blocks": {
-        "platform_gt4": {
-          "type": "platform",
-          "settings": {
-            "label": "GT4 / RS",
-            "link": "/pages/shop-by-vehicle"
-          }
-        },
-        "platform_c8": {
-          "type": "platform",
-          "settings": {
-            "label": "C8 / Z",
-            "link": "/pages/shop-by-vehicle"
-          }
-        },
-        "platform_g8x": {
-          "type": "platform",
-          "settings": {
-            "label": "G8X M2 / M3 / M4",
-            "link": "/pages/shop-by-vehicle-bmw"
-          }
-        },
-        "platform_a90": {
-          "type": "platform",
-          "settings": {
-            "label": "A90 SUPRA",
-            "link": "/pages/shop-by-vehicle"
-          }
-        },
-        "platform_f80": {
-          "type": "platform",
-          "settings": {
-            "label": "F80 / F82",
-            "link": "/pages/shop-by-vehicle-bmw-f80"
-          }
-        },
-        "platform_g20": {
-          "type": "platform",
-          "settings": {
-            "label": "G20 / G42",
-            "link": "/pages/shop-by-vehicle-bmw-g20"
-          }
-        }
-      },
-      "block_order": [
-        "platform_gt4",
-        "platform_c8",
-        "platform_g8x",
-        "platform_a90",
-        "platform_f80",
-        "platform_g20"
-      ],
-      "settings": {
-        "show_section": true,
-        "heading": "Shop featured specs",
-        "subheading": "See a setup you like? Order. Install. Drive.",
-        "fallback_link": "/pages/shop-by-vehicle",
-        "padding_top": 28,
-        "padding_bottom": 36
       }
     }
   },
