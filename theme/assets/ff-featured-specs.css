@@ -15,7 +15,7 @@
 
 .ff-specs__header {
   margin: 0 0 18px;
-  text-align: left;
+  text-align: center;
 }
 
 .ff-specs__heading {
@@ -30,7 +30,7 @@
 }
 
 .ff-specs__subheading {
-  margin: 8px 0 0;
+  margin: 8px auto 0;
   max-width: 40rem;
   font-family: Jost, "Barlow Semi Condensed", sans-serif;
   font-size: clamp(0.95rem, 1.4vw, 1.05rem);
