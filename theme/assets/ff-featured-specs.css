@@ -94,7 +94,6 @@
   object-fit: cover;
   object-position: center center;
   display: block;
-  filter: grayscale(1) contrast(1.05);
   transform: scale(1.01);
   transition: transform 0.35s ease;
 }
