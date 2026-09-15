@@ -544,6 +544,24 @@
     font-weight: var(--font-weight);
 }
 
+.productView-specSummary{
+    margin: 0 0 14px;
+    max-width: 36rem;
+    font-family: var(--font-2-family, inherit);
+    font-size: 0.92rem;
+    font-weight: 400;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.productView-specSummary p{
+    margin: 0 0 0.4rem;
+}
+
+.productView-specSummary p:last-child{
+    margin-bottom: 0;
+}
+
 .productView-promotion{
     font-size: 0;
     letter-spacing: 0;

@@ -55,7 +55,7 @@
           "type": "title",
           "settings": {
             "padding_top": 0,
-            "padding_bottom": 15,
+            "padding_bottom": 8,
             "font_family": "font_1",
             "font_size": 30,
             "font_weight": "400",
@@ -73,7 +73,7 @@
         "text_648cT9": {
           "type": "text",
           "settings": {
-            "text": "Qty 1 = full set of 4 wheels. Flush offset \u2014 bolt-on and ready to install.",
+            "text": "",
             "padding_top": 0,
             "padding_bottom": 14,
             "font_family": "font_1",
@@ -81,7 +81,8 @@
             "font_weight": "500",
             "text_transform": "none",
             "text_color": "#ffffff"
-          }
+          },
+          "disabled": true
         },
         "0a9b5cbb-2238-4065-8944-6a7db2fcfc2a": {
           "type": "inventory",
