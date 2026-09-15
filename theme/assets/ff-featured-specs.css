@@ -1,7 +1,7 @@
 .ff-specs {
   --ff-specs-bg: #ffffff;
   --ff-specs-ink: #111111;
-  --ff-specs-bar: rgba(10, 10, 10, 0.72);
+  --ff-specs-bar: rgba(10, 10, 10, 0.48);
   --ff-specs-line: #d9d9d9;
   background: var(--ff-specs-bg);
   color: var(--ff-specs-ink);
