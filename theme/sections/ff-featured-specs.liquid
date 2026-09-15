@@ -1,0 +1,176 @@
+{{ 'ff-featured-specs.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.show_section -%}
+  <section
+    class="ff-specs"
+    id="ff-specs-{{ section.id }}"
+    data-ff-specs
+    style="
+      --ff-specs-pad-top: {{ section.settings.padding_top }}px;
+      --ff-specs-pad-bottom: {{ section.settings.padding_bottom }}px;
+    "
+  >
+    <div class="ff-specs__inner">
+      {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+        <header class="ff-specs__header">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="ff-specs__heading">{{ section.settings.heading | escape }}</h2>
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            <p class="ff-specs__subheading">{{ section.settings.subheading | escape }}</p>
+          {%- endif -%}
+        </header>
+      {%- endif -%}
+
+      <div class="ff-specs__stage">
+        <div class="ff-specs__rail" data-ff-specs-rail tabindex="0" role="list" aria-label="{{ section.settings.heading | default: 'Featured specs' | escape }}">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'platform' -%}
+              {%- liquid
+                assign label = block.settings.label
+                assign link = block.settings.link
+                if link == blank
+                  assign link = section.settings.fallback_link
+                endif
+                if link == blank
+                  assign link = routes.root_url
+                endif
+              -%}
+              <a
+                class="ff-specs__card"
+                href="{{ link }}"
+                role="listitem"
+                {{ block.shopify_attributes }}
+              >
+                <span class="ff-specs__media" aria-hidden="true">
+                  {%- if block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 900
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '320, 480, 640, 900',
+                        sizes: '(max-width: 749px) 78vw, 280px',
+                        alt: ''
+                    }}
+                  {%- else -%}
+                    <span class="ff-specs__placeholder"></span>
+                  {%- endif -%}
+                </span>
+                {%- if label != blank -%}
+                  <span class="ff-specs__label">{{ label | escape }}</span>
+                {%- endif -%}
+                <span class="visually-hidden">{{ label | default: 'Featured platform' | escape }}</span>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="ff-specs__nav" aria-label="Featured specs controls">
+          <button type="button" class="ff-specs__btn" data-ff-specs-prev aria-label="Scroll featured specs left">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M15.5 5.5 L9 12 l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+            </svg>
+          </button>
+          <button type="button" class="ff-specs__btn" data-ff-specs-next aria-label="Scroll featured specs right">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M8.5 5.5 L15 12 l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="{{ 'ff-featured-specs.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FF Featured Specs",
+  "tag": "section",
+  "class": "section-ff-featured-specs",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop featured specs"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Jump into popular platforms with fitment already dialed."
+    },
+    {
+      "type": "url",
+      "id": "fallback_link",
+      "label": "Fallback link",
+      "info": "Used when a platform card has no link of its own."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "platform",
+      "name": "Platform",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "G8X M2 / M3 / M4"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Car image",
+          "info": "Use a grayscale side/3-quarter car photo or illustration."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FF Featured Specs",
+      "blocks": [
+        { "type": "platform", "settings": { "label": "GT4 / RS" } },
+        { "type": "platform", "settings": { "label": "C8 / Z" } },
+        { "type": "platform", "settings": { "label": "G8X M2 / M3 / M4" } },
+        { "type": "platform", "settings": { "label": "A90 SUPRA" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

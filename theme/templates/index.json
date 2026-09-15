@@ -30,10 +30,8 @@
         "slide_two": {
           "type": "slide",
           "settings": {
-            "video": "shopify://files/videos/G80 done 2.MP4",
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_6.58.56_PM.png",
-            "mobile_video": "shopify://files/videos/G80 done 2.MP4",
-            "mobile_image": "shopify://shop_images/IMG_0287_2.jpg",
+            "image": "shopify://shop_images/Mediabymarius-1275.jpg",
+            "mobile_image": "shopify://shop_images/Mediabymarius-1275.jpg",
             "title": "Two-Piece Forged",
             "title_size": 42,
             "title_align": "left",
@@ -46,7 +44,7 @@
           "type": "slide",
           "settings": {
             "video": "shopify://files/videos/fortune 1080 rev 1.MP4",
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM_c0f745e4-4f88-4373-8d62-148cfcbbe059.png",
+            "image": "shopify://shop_images/IMG_4094.jpg",
             "mobile_video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E.mov",
             "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
             "title": "Beadlock Forged",
@@ -70,23 +68,8 @@
         "content_h_align": "left",
         "content_v_align": "bottom",
         "content_offset_x": 0,
-        "content_offset_y": 0
-      }
-    },
-    "ff_top_selling_monoblocks_home": {
-      "type": "ff-top-selling-monoblocks",
-      "settings": {
-        "show_section": true,
-        "heading": "Top selling monoblocks",
-        "collection": "monoblock-wheels",
-        "left_collection": "monoblock-wheels",
-        "product_limit": 8,
-        "buy_label": "Buy Now",
-        "empty_text": "Add monoblock products to this collection",
-        "view_label": "Shop all monoblocks",
-        "view_link": "shopify://collections/monoblock-wheels",
-        "padding_top": 40,
-        "padding_bottom": 64
+        "content_offset_y": 0,
+        "show_shop_by_vehicle_bar": true
       }
     },
     "ff_simple_build_main": {
@@ -114,11 +97,11 @@
         "hottest_link": "/#project-gallery",
         "quote_cta": "Skip to custom quote",
         "monoblock_link": "shopify://collections/monoblock-wheels",
-        "monoblock_desc": "One-piece forged strength · priced individually",
+        "monoblock_desc": "Lightweight, single piece wheels · priced individually",
         "twopiece_link": "shopify://collections/two-piece-wheels",
-        "twopiece_desc": "Modular fitment & finish · priced individually",
+        "twopiece_desc": "Modular design & show ready · priced individually",
         "beadlock_link": "shopify://collections/beadlock-wheels",
-        "beadlock_desc": "Off-road lock-ring builds · priced by the pair",
+        "beadlock_desc": "Purpose built, drag racing beadlock wheels· Priced by the pair",
         "step3_heading": "Request your build",
         "step3_copy": "Enter the custom details you already know — or leave fitment blank and a specialist will email or call you back to help.",
         "modal_eyebrow": "Quote received",
@@ -130,6 +113,22 @@
         "modal_cta": "Yes — I'm interested",
         "modal_dismiss": "Maybe later",
         "modal_thanks": "Perfect. When we follow up on your quote, we'll include media day details and help coordinate after installation."
+      }
+    },
+    "ff_top_selling_monoblocks_home": {
+      "type": "ff-top-selling-monoblocks",
+      "settings": {
+        "show_section": true,
+        "heading": "Top selling monoblocks",
+        "collection": "monoblock-wheels",
+        "left_collection": "monoblock-wheels",
+        "product_limit": 8,
+        "buy_label": "Buy Now",
+        "empty_text": "Add monoblock products to this collection",
+        "view_label": "Shop all monoblocks",
+        "view_link": "shopify://collections/monoblock-wheels",
+        "padding_top": 40,
+        "padding_bottom": 64
       }
     },
     "ff_fan_favorites_main": {
@@ -625,12 +624,76 @@
       "settings": {
         "custom_liquid": ""
       }
+    },
+    "ff_featured_specs_home": {
+      "type": "ff-featured-specs",
+      "blocks": {
+        "platform_gt4": {
+          "type": "platform",
+          "settings": {
+            "label": "GT4 / RS",
+            "link": "/pages/shop-by-vehicle"
+          }
+        },
+        "platform_c8": {
+          "type": "platform",
+          "settings": {
+            "label": "C8 / Z",
+            "link": "/pages/shop-by-vehicle"
+          }
+        },
+        "platform_g8x": {
+          "type": "platform",
+          "settings": {
+            "label": "G8X M2 / M3 / M4",
+            "link": "/pages/shop-by-vehicle-bmw"
+          }
+        },
+        "platform_a90": {
+          "type": "platform",
+          "settings": {
+            "label": "A90 SUPRA",
+            "link": "/pages/shop-by-vehicle"
+          }
+        },
+        "platform_f80": {
+          "type": "platform",
+          "settings": {
+            "label": "F80 / F82",
+            "link": "/pages/shop-by-vehicle-bmw-f80"
+          }
+        },
+        "platform_g20": {
+          "type": "platform",
+          "settings": {
+            "label": "G20 / G42",
+            "link": "/pages/shop-by-vehicle-bmw-g20"
+          }
+        }
+      },
+      "block_order": [
+        "platform_gt4",
+        "platform_c8",
+        "platform_g8x",
+        "platform_a90",
+        "platform_f80",
+        "platform_g20"
+      ],
+      "settings": {
+        "show_section": true,
+        "heading": "Shop featured specs",
+        "subheading": "Jump into popular platforms with fitment already dialed.",
+        "fallback_link": "/pages/shop-by-vehicle",
+        "padding_top": 28,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
     "ff_hero_editor_always_20260801c",
-    "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
+    "ff_featured_specs_home",
+    "ff_top_selling_monoblocks_home",
     "ff_fan_favorites_main",
     "ff_value_props_main",
     "ff_trust_badges_home",
