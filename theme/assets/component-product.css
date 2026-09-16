@@ -562,6 +562,26 @@
     margin-bottom: 0;
 }
 
+/* Featured-spec fitment: large selectable boxes (19/20 · 20/20) */
+.product-form__input:has(input[value="20/20"]),
+.product-form__input:has(input[value="19/20"]){
+    margin: 6px 0 10px;
+}
+
+.product-form__input:has(input[value="20/20"]) .product-form__label,
+.product-form__input:has(input[value="19/20"]) .product-form__label{
+    margin: 6px 10px 6px 0;
+}
+
+.product-form__input:has(input[value="20/20"]) .product-form__label .text,
+.product-form__input:has(input[value="19/20"]) .product-form__label .text{
+    min-width: 7.5rem;
+    padding: 0.85rem 1.25rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
 .productView-promotion{
     font-size: 0;
     letter-spacing: 0;
