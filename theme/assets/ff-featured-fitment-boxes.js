@@ -1,4 +1,24 @@
 (function () {
+  function hideNativeFitmentRows(root) {
+    var scope =
+      document.getElementById('product-option-' + root.dataset.sectionId + '-' + root.dataset.productId) ||
+      document.querySelector('.productView-variants');
+    if (!scope) return;
+
+    scope.setAttribute('data-ff-fitment-boxes', 'true');
+
+    scope.querySelectorAll('.product-form__input, fieldset.product-form__input, .product-form__input--dropdown').forEach(function (row) {
+      var hasFitmentRadio = row.querySelector('input[value="20/20"], input[value="19/20"], input[name*="fitment"]');
+      var hasFitmentSelect = row.querySelector('select option[value="20/20"], select option[value="19/20"]');
+      var legend = row.querySelector('legend, .form__label');
+      var legendIsFitment = legend && /fitment/i.test(legend.textContent || '');
+      if (hasFitmentRadio || hasFitmentSelect || legendIsFitment) {
+        row.style.display = 'none';
+        row.setAttribute('data-ff-fitment-native-hidden', 'true');
+      }
+    });
+  }
+
   function findNativeFitmentInput(root, value) {
     var scope =
       document.getElementById('product-option-' + root.dataset.sectionId + '-' + root.dataset.productId) ||
@@ -39,7 +59,9 @@
     if (!native.checked) {
       native.checked = true;
       native.dispatchEvent(new Event('change', { bubbles: true }));
-      native.click();
+      try {
+        native.click();
+      } catch (e) {}
     }
   }
 
@@ -47,10 +69,7 @@
     if (!root || root.dataset.ffFitmentReady === '1') return;
     root.dataset.ffFitmentReady = '1';
 
-    var variants = document.getElementById(
-      'product-option-' + root.dataset.sectionId + '-' + root.dataset.productId
-    );
-    if (variants) variants.setAttribute('data-ff-fitment-boxes', 'true');
+    hideNativeFitmentRows(root);
 
     var checked = root.querySelector('input[data-ff-fitment-value]:checked');
     if (checked) applyFitment(root, checked.value);
@@ -71,4 +90,5 @@
   } else {
     boot();
   }
+  window.addEventListener('load', boot);
 })();
