@@ -1267,6 +1267,8 @@
                                               ymm_make_placeholder: ff_certified_make_ph,
                                               ymm_model_placeholder: ff_certified_model_ph
                                             %}
+                                        {%- elsif product.tags contains 'FEATURED-SPEC' -%}
+                                            {% render 'ff-featured-fitment-boxes', product: product, section: section %}
                                         {%- endif -%}
                                         {%- if variantCount > 0 and product.has_only_default_variant != true -%}
                                             {%- liquid
