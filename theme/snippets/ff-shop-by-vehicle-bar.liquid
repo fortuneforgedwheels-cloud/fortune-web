@@ -14,26 +14,6 @@
     if (!el) return;
     el.style.setProperty('--ff-sbv-bg', '#0a0a0a');
     el.style.setProperty('--ff-sbv-pad-y', '10px');
-
-    var toggle = el.querySelector('[data-ff-sbv-toggle]');
-    if (!toggle) return;
-
-    function isMobile() {
-      return window.matchMedia('(max-width: 900px)').matches;
-    }
-
-    toggle.addEventListener('click', function () {
-      if (!isMobile()) return;
-      var open = el.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-
-    window.addEventListener('resize', function () {
-      if (!isMobile()) {
-        el.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
-    });
   })();
 </script>
   <div class="ff-sbv__inner">
@@ -92,5 +72,31 @@
     </div>
   </div>
 </section>
+
+<script>
+  (function () {
+    var el = document.getElementById('ff-sbv-home');
+    if (!el) return;
+    var toggle = el.querySelector('[data-ff-sbv-toggle]');
+    if (!toggle) return;
+
+    function isMobile() {
+      return window.matchMedia('(max-width: 900px)').matches;
+    }
+
+    toggle.addEventListener('click', function () {
+      if (!isMobile()) return;
+      var open = el.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    window.addEventListener('resize', function () {
+      if (!isMobile()) {
+        el.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  })();
+</script>
 
 <script src="{{ 'ff-shop-by-vehicle-v3.js' | asset_url }}" defer></script>
