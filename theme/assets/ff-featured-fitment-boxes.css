@@ -10,20 +10,8 @@
   margin-bottom: 14px;
 }
 
-/* Hide native Fitment row — boxes replace it (radios stay in DOM for variant sync) */
+/* Force-hide native Fitment row (boxes replace it) */
 .ff-fitment-native-hidden,
-body:has([data-ff-featured-fitment]) .productView-variants .product-form__input:has(input[value='20/20']),
-body:has([data-ff-featured-fitment]) .productView-variants .product-form__input:has(input[value='19/20']),
-body:has([data-ff-featured-fitment]) .productView-variants .product-form__input--dropdown:has(select option[value='20/20']),
-body:has([data-ff-featured-fitment]) .sticky-form .product-form__input:has(input[value='20/20']),
-body:has([data-ff-featured-fitment]) .sticky-form .product-form__input--dropdown:has(select option[value='20/20']) {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
+[data-ff-fitment-native-hidden='true'] {
+  display: none !important;
 }

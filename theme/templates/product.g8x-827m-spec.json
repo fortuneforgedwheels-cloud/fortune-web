@@ -246,7 +246,10 @@
       ],
       "custom_css": [
         ".shopify-payment-button {display: none;}",
-        ".productView-quantity {max-width: 220px; justify-content: center;}"
+        ".productView-quantity {max-width: 220px; justify-content: center;}",
+        ".ff-fitment-native-hidden, [data-ff-fitment-native-hidden='true'] { display: none !important; }",
+        ".productView-variants .product-form__input:has(input[name*='fitment']) { display: none !important; }",
+        ".productView-variants .product-form__input--dropdown:has(select option[value='20/20']) { display: none !important; }"
       ],
       "settings": {
         "colors_bg": "",
