@@ -178,7 +178,7 @@
               <p class="ff-forge__cta-text">{{ block.settings.text | escape }}</p>
             {%- endif -%}
             {%- if block.settings.button_label != blank -%}
-              <a class="ff-forge__cta-btn" href="{{ block.settings.button_link | default: '/collections/all' }}">
+              <a class="ff-forge__cta-btn" href="{{ block.settings.button_link | default: '/#order' }}">
                 {{ block.settings.button_label | escape }}
               </a>
             {%- endif -%}
@@ -294,7 +294,7 @@
           "type": "text",
           "id": "button_label",
           "label": "Button label",
-          "default": "Shop wheels"
+          "default": "Get quote"
         },
         {
           "type": "url",
