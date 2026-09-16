@@ -566,6 +566,42 @@
   font-size: 0.68rem;
 }
 
+/* Compact bar toggle: heading on desktop, accordion control on mobile */
+.ff-sbv__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: default;
+  font: inherit;
+  line-height: 1;
+}
+
+.ff-sbv__chevron {
+  display: none;
+  width: 14px;
+  height: 14px;
+  color: var(--ff-sbv-gold);
+  transition: transform 160ms ease;
+  flex-shrink: 0;
+}
+
+.ff-sbv--compact.is-open .ff-sbv__chevron {
+  transform: rotate(180deg);
+}
+
+.ff-sbv__collapse {
+  width: 100%;
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+}
+
 /* ─── build page ─── */
 .ff-sbv--page {
   --ff-sbv-pad-y: 32px;
@@ -819,8 +855,51 @@
     grid-template-columns: 1fr;
     max-width: 360px;
   }
+
+  /* Homepage SBV: collapsed by default so #order quote appears sooner */
+  .ff-sbv--compact {
+    --ff-sbv-pad-y: 6px;
+  }
+
+  .ff-sbv--compact .ff-sbv__toggle {
+    width: 100%;
+    min-height: 36px;
+    padding: 6px 4px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .ff-sbv--compact .ff-sbv__chevron {
+    display: block;
+  }
+
+  .ff-sbv--compact:not(.is-open) .ff-sbv__collapse {
+    display: none;
+  }
+
+  .ff-sbv--compact.is-open .ff-sbv__collapse {
+    display: grid;
+  }
+
+  .ff-sbv--compact .ff-sbv__field select,
+  .ff-sbv--compact .ff-sbv__go {
+    height: 34px;
+  }
+
+  .ff-sbv--compact .ff-sbv__helper {
+    display: none;
+  }
 }
 
 @media (max-width: 560px) {
   .ff-sbv__form { grid-template-columns: 1fr; }
+
+  /* Keep compact bar 2-up when expanded — shorter than stacked singles */
+  .ff-sbv--compact .ff-sbv__form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ff-sbv--compact .ff-sbv__go {
+    grid-column: 1 / -1;
+  }
 }
