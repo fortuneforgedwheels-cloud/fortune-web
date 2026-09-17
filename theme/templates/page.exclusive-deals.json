@@ -50,7 +50,7 @@
         "deal_3": {
           "type": "deal",
           "settings": {
-            "product": "ff-s10",
+            "product": "ff-s10r",
             "badge": "",
             "title": "",
             "blurb": ""
@@ -77,7 +77,7 @@
         "deal_6": {
           "type": "deal",
           "settings": {
-            "product": "",
+            "product": "ff-s10",
             "badge": "",
             "title": "",
             "blurb": ""
@@ -86,7 +86,7 @@
         "deal_7": {
           "type": "deal",
           "settings": {
-            "product": "",
+            "product": "ff-rs",
             "badge": "",
             "title": "",
             "blurb": ""
@@ -103,23 +103,24 @@
         "deal_7"
       ],
       "settings": {
-        "eyebrow": "INVASION ACCESS ONLY",
+        "hero_video": "shopify://files/videos/SnapInsta.to_AQNvCRzwLiDg38uN_FghCCYcMLzCkHjBoAtrKlZyHA8lXj6YBmV0XVU9BakZAfHEYpMDv_03DwrCeeyDzywpFpmNvkMnsxposkWd17c.mp4",
+        "eyebrow": "",
         "heading": "YOUR NEXT SET. 40% OFF.",
-        "description": "<p>Today only \u2014 our hottest forged designs,<em><strong> as cheap as you will ever see them</strong></em>... Pick a style, choose finish + fitment path, and secure your next forged wheels. </p>",
+        "description": "<p>SELECT MONOBLOCK STYLES ONLY</p>",
         "compare_at_price": 3379,
         "deal_price": 2050,
-        "today_price_label": "Today\u2019s price",
+        "today_price_label": "Today’s price",
         "full_set_label": "Full set",
         "checkout_product": "exclusive-deals-full-set",
-        "deals_eyebrow": "track tested favorites",
-        "deals_heading": "Choose your design",
+        "deals_eyebrow": "",
+        "deals_heading": "",
         "deals_copy": "Each design is the same exclusive full-set price. One add to cart = the complete set.",
         "card_cta": "Select design",
         "missing_product_message": "Deal unavailable.",
         "modal_eyebrow": "price includes all four wheels shipped",
         "modal_lead": "One add-to-cart = the full set. Same exclusive price on every design. Choose finish + fitment path, then checkout.",
         "path_specialist_title": "Let a specialist handle it",
-        "path_specialist_copy": "Pick a finish and your vehicle \u2014 we\u2019ll follow up after checkout to sort proper fitment.",
+        "path_specialist_copy": "Pick a finish and your vehicle — we’ll follow up after checkout to sort proper fitment.",
         "path_specs_title": "I know my specs",
         "path_specs_copy": "Pick a finish, enter your sizes, and your year / make / model.",
         "finish_label": "Wheel finish",
@@ -128,7 +129,7 @@
         "ymm_label": "Year / Make / Model",
         "ymm_placeholder": "e.g. 2024 BMW G80 M3",
         "notes_placeholder": "Anything else about your build (optional).",
-        "specialist_note": "Adds 1 full set to cart at today\u2019s exclusive price. A specialist will follow up after checkout to confirm fitment.",
+        "specialist_note": "Adds 1 full set to cart at today’s exclusive price. A specialist will follow up after checkout to confirm fitment.",
         "submit_specialist_label": "Add full set to cart",
         "submit_specs_label": "Add full set to cart"
       }

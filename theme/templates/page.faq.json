@@ -52,11 +52,22 @@
             "question_4": "Do you offer discounts for military personnel or first responders?",
             "answer_4": "<p>We do! As a small gesture of gratitude, we offer a 5% discount on any order for active-duty military members, veterans, and first responders.</p><p>To apply, please email us from your official or verifiable email address and let us know which items you’d like to purchase. We’ll provide a unique discount code for your order.</p>"
           }
+        },
+        "cat_oem_caps": {
+          "type": "category",
+          "settings": {
+            "title": "OEM Center Caps",
+            "question_1": "What does OEM Center Cap Compatible mean?",
+            "answer_1": "<p>OEM Center Cap Compatible — This Fortune Forged aftermarket wheel is manufactured to accept compatible factory/OEM center caps, allowing you to reuse your existing center caps where applicable. OEM center caps are not manufactured, sold, supplied, or included by Fortune Forged Wheels.</p><p>Fortune Forged wheels are independently manufactured aftermarket products. OEM center-cap compatibility does not mean the wheel is an OEM product, an officially licensed product, or that Fortune Forged is affiliated with, sponsored by, endorsed by, approved by, or authorized by any vehicle manufacturer.</p>",
+            "question_2": "Are OEM or manufacturer-branded center caps included with my wheels?",
+            "answer_2": "<p>No. Unless a specific product listing expressly and accurately states otherwise, OEM/manufacturer-branded center caps are not sold or included by Fortune Forged Wheels. The purpose of OEM center-cap compatibility is to allow you to reuse your own compatible factory/OEM center caps on your new Fortune Forged aftermarket wheels.</p><p>Where a Fortune Forged logo center cap is offered as an option, that cap is a Fortune Forged aftermarket part—not a vehicle-manufacturer OEM center cap.</p>"
+          }
         }
       },
       "block_order": [
         "cat_shipping",
-        "cat_support"
+        "cat_support",
+        "cat_oem_caps"
       ],
       "settings": {
         "show_section": true,

@@ -22,6 +22,11 @@
                         {{ option.selected_value }}
                     </span>
                 </legend>
+                {%- if option_name contains 'center cap' -%}
+                    <p class="ff-oem-cap-note product-form__oem-cap-note">
+                        OEM Center Cap Compatible — designed to accept your existing compatible OEM center caps. OEM center caps not included or sold by Fortune Forged Wheels. Fortune Forged logo center caps, when selected, are Fortune Forged aftermarket parts.
+                    </p>
+                {%- endif -%}
                 {%- assign values = '' -%}
                 {%- for variant in product.variants -%}
                     {%- assign value = variant.options[option_index] -%}
@@ -82,6 +87,12 @@
                         {{ option.selected_value }}
                     </span>
                 </label>
+                {%- assign option_name_dd = option.name | downcase -%}
+                {%- if option_name_dd contains 'center cap' -%}
+                    <p class="ff-oem-cap-note product-form__oem-cap-note">
+                        OEM Center Cap Compatible — designed to accept your existing compatible OEM center caps. OEM center caps not included or sold by Fortune Forged Wheels. Fortune Forged logo center caps, when selected, are Fortune Forged aftermarket parts.
+                    </p>
+                {%- endif -%}
                 <div class="form__select select">
                     <select id="option-{{ forloop.index0 | prepend: prefix }}"
                         class="select__select"

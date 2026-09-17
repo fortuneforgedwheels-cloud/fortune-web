@@ -204,7 +204,7 @@
           "settings": {
             "title": "Bespoke",
             "image": "shopify://shop_images/IMG_2125.jpg",
-            "text": "We offer a virtually limitless customization to complement your vehicle's aesthetic. Choose from hand brushed, polished, chrome, satin, gloss, or custom powder-coated finishes, paired with bespoke hardware, center caps, and accent options. Whether configured as a monoblock, two-piece, or a beadlock design, each set is crafted to reflect your vision.",
+            "text": "We offer a virtually limitless customization to complement your vehicle's aesthetic. Choose from hand brushed, polished, chrome, satin, gloss, or custom powder-coated finishes, paired with bespoke hardware, Fortune Forged center-cap options, and accents. Where noted, wheels are OEM Center Cap Compatible—manufactured to accept your existing compatible factory/OEM center caps. OEM center caps are not manufactured, sold, supplied, or included by Fortune Forged Wheels. Whether configured as a monoblock, two-piece, or a beadlock design, each set is crafted to reflect your vision.",
             "link_label": "CUSTOM FINISHES & ONE-OFF BUILDS",
             "link": "shopify://collections/beadlock-wheels"
           }
@@ -234,7 +234,7 @@
           "type": "badge",
           "settings": {
             "icon": "lock",
-            "heading": "Guaranteed fit",
+            "heading": "Fitment Guaranteed or money back",
             "description": "Engineered specifically for your vehicle. Professional installation recommended. Perfect fitment, guaranteed.",
             "show_email": false,
             "contact_email": ""
