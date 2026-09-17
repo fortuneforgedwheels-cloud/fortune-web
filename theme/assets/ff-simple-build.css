@@ -18,7 +18,7 @@
 
 .ff-build__gated {
   position: relative;
-  margin-top: 28px;
+  margin-top: 18px;
 }
 
 .ff-build__gate {
@@ -29,7 +29,8 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(8, 8, 8, 0.55);
+  border-radius: inherit;
+  background: rgba(8, 8, 8, 0.62);
   backdrop-filter: blur(1.5px);
   -webkit-backdrop-filter: blur(1.5px);
 }
@@ -38,12 +39,15 @@
   display: flex;
 }
 
-.ff-build__gated.is-locked .ff-build__steps,
 .ff-build__gated.is-locked .ff-build__panel {
   filter: grayscale(1) brightness(0.55);
   opacity: 0.55;
   pointer-events: none;
   user-select: none;
+}
+
+.ff-build__gated.is-locked .ff-build__steps {
+  pointer-events: none;
 }
 
 .ff-build__gate-btn {

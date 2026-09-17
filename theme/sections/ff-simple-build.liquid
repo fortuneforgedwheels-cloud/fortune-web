@@ -10,13 +10,6 @@
       {% endif %}
     </header>
 
-    <div class="ff-build__gated is-locked" data-ff-build-gate>
-      <div class="ff-build__gate" data-ff-build-gate-overlay>
-        <button type="button" class="ff-build__gate-btn" data-ff-build-unlock>
-          {{ section.settings.gate_label | default: 'BUILD MY QUOTE' | escape }}
-        </button>
-      </div>
-
     <ol class="ff-build__steps" aria-label="Order steps">
       <li class="ff-build__step is-active" data-step="1">
         <span class="ff-build__step-num">1</span>
@@ -31,6 +24,13 @@
         <span class="ff-build__step-label">{{ section.settings.step3_label | escape }}</span>
       </li>
     </ol>
+
+    <div class="ff-build__gated is-locked" data-ff-build-gate>
+      <div class="ff-build__gate" data-ff-build-gate-overlay>
+        <button type="button" class="ff-build__gate-btn" data-ff-build-unlock>
+          {{ section.settings.gate_label | default: 'BUILD MY QUOTE' | escape }}
+        </button>
+      </div>
 
     <div class="ff-build__panel is-active" data-panel="1">
       <h2 class="ff-build__panel-title">{{ section.settings.step1_heading | escape }}</h2>
