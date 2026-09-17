@@ -41,9 +41,10 @@ if [[ ! -x "${ROOT}/node_modules/.bin/shopify" ]]; then
 fi
 
 export PATH="${ROOT}/node_modules/.bin:${PATH}"
-echo "==> Pushing code-only files to theme ${THEME_ID} (no settings_data / templates)"
+echo "==> Pushing code-only files to theme ${THEME_ID} (no settings_data / templates; --nodelete)"
 bash scripts/with-env.sh shopify theme push \
   --path theme \
   --theme "$THEME_ID" \
+  --nodelete \
   "${ALLOW_LIVE_FLAG[@]}" \
   "${ONLY_ARGS[@]}"

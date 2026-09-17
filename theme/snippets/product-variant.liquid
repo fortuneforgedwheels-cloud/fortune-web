@@ -3,10 +3,25 @@
         assign product_swatch_option = settings.swatch | downcase
         assign swatch_style = settings.swatch_style
         assign hide_unavailable_variants = settings.hide_unavailable_variants
+        assign ff_hide_fitment_option = false
+        if product.tags contains 'FEATURED-SPEC'
+            for _ff_opt in product.options_with_values
+                assign _ff_opt_name = _ff_opt.name | downcase
+                if _ff_opt_name == 'fitment'
+                    assign ff_hide_fitment_option = true
+                    break
+                endif
+            endfor
+        endif
     -%}
     <variant-radios class="{% unless request.design_mode %} no-js-hidden{% endunless %} product-option has-default{% if hide_unavailable_variants %} hide-unavailable{% endif %}" data-product="{{ product.id }}" data-section="{{ section.id }}" data-url="{{ product.url }}" data-update-url="{{ updateURL }}" data-update-cart="{{ updateCart }}" data-update-template="{{ updateTemplate }}" data-update-sticky="{{ updateSticky }}">
         {%- for option in product.options_with_values -%}
             {%- liquid
+                assign option_name_down = option.name | downcase
+                assign ff_is_hidden_fitment = false
+                if ff_hide_fitment_option and option_name_down == 'fitment'
+                    assign ff_is_hidden_fitment = true
+                endif
                 assign is_swatch = false
                 assign option_name = option.name | downcase
                 if product_swatch_option contains option_name
@@ -15,7 +30,7 @@
                 assign swatch_type = settings.swatch_type
                 assign option_index = forloop.index0
             -%}
-            <fieldset class="js product-form__input{% if is_swatch %} product-form__swatch{% endif %} clearfix {{ prefix }}" data-product-attribute="set-rectangle" data-option-index="{{ forloop.index0 }}">
+            <fieldset class="js product-form__input{% if is_swatch %} product-form__swatch{% endif %} clearfix {{ prefix }}{% if ff_is_hidden_fitment %} ff-fitment-native-hidden{% endif %}" data-product-attribute="set-rectangle" data-option-index="{{ forloop.index0 }}"{% if ff_is_hidden_fitment %} aria-hidden="true"{% endif %}>
                 <legend class="form__label">
                     {{ option.name | append: ':' }}
                     <span data-header-option>
@@ -72,10 +87,29 @@
         </script>
     </variant-radios>
 {%- else -%}
-    {%- assign hide_unavailable_variants = settings.hide_unavailable_variants -%}
+    {%- liquid
+        assign hide_unavailable_variants = settings.hide_unavailable_variants
+        assign ff_hide_fitment_option = false
+        if product.tags contains 'FEATURED-SPEC'
+            for _ff_opt in product.options_with_values
+                assign _ff_opt_name = _ff_opt.name | downcase
+                if _ff_opt_name == 'fitment'
+                    assign ff_hide_fitment_option = true
+                    break
+                endif
+            endfor
+        endif
+    -%}
     <variant-selects class="{% unless request.design_mode %} no-js-hidden{% endunless %} product-option has-default{% if hide_unavailable_variants %} hide-unavailable{% endif %}" data-product="{{ product.id }}" data-section="{{ section.id }}" data-url="{{ product.url }}" data-update-url="{{ updateURL }}" data-update-cart="{{ updateCart }}" data-update-template="{{ updateTemplate }}" data-update-sticky="{{ updateSticky }}">
         {%- for option in product.options_with_values -%}
-            <div class="product-form__input product-form__input--dropdown" data-product-attribute="set-select" data-option-index="{{ forloop.index0 }}">
+            {%- liquid
+                assign option_name_down = option.name | downcase
+                assign ff_is_hidden_fitment = false
+                if ff_hide_fitment_option and option_name_down == 'fitment'
+                    assign ff_is_hidden_fitment = true
+                endif
+            -%}
+            <div class="product-form__input product-form__input--dropdown{% if ff_is_hidden_fitment %} ff-fitment-native-hidden{% endif %}" data-product-attribute="set-select" data-option-index="{{ forloop.index0 }}"{% if ff_is_hidden_fitment %} aria-hidden="true"{% endif %}>
                 <label class="form__label" for="option-{{ forloop.index0 | prepend: prefix }}">
                     {{ option.name | append: ':' }}
                     <span data-header-option>
