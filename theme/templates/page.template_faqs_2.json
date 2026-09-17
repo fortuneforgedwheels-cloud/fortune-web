@@ -57,10 +57,10 @@
           "type": "category",
           "settings": {
             "title": "OEM Center Caps",
-            "question_1": "What does OEM Center Cap Compatible mean?",
-            "answer_1": "<p>OEM Center Cap Compatible \u2014 This Fortune Forged aftermarket wheel is manufactured to accept compatible factory/OEM center caps, allowing you to reuse your existing center caps where applicable. OEM center caps are not manufactured, sold, supplied, or included by Fortune Forged Wheels.</p><p>Fortune Forged wheels are independently manufactured aftermarket products. OEM center-cap compatibility does not mean the wheel is an OEM product, an officially licensed product, or that Fortune Forged is affiliated with, sponsored by, endorsed by, approved by, or authorized by any vehicle manufacturer.</p>",
-            "question_2": "Are OEM or manufacturer-branded center caps included with my wheels?",
-            "answer_2": "<p>No. Unless a specific product listing expressly and accurately states otherwise, OEM/manufacturer-branded center caps are not sold or included by Fortune Forged Wheels. The purpose of OEM center-cap compatibility is to allow you to reuse your own compatible factory/OEM center caps on your new Fortune Forged aftermarket wheels.</p><p>Where a Fortune Forged logo center cap is offered as an option, that cap is a Fortune Forged aftermarket part\u2014not a vehicle-manufacturer OEM center cap.</p>"
+            "question_1": "Do you sell or produce OEM / factory center caps?",
+            "answer_1": "<p>Fortune Forged Wheels does not manufacture, sell, supply, or produce OEM or manufacturer-branded center caps for any vehicle brand. We provide Fortune Forged logo center caps, or \u2014 when specified at order \u2014 manufacture your wheels to accept reuse of your own compatible factory/OEM center caps. OEM/factory center caps are not included with the wheels.</p><p>Fortune Forged wheels are independently manufactured aftermarket products. Center-cap compatibility or OEM-style naming does not mean the wheel is an OEM product, an officially licensed product, or that Fortune Forged is affiliated with, sponsored by, endorsed by, approved by, or authorized by any vehicle manufacturer.</p>",
+            "question_2": "What center cap options do I have with Fortune Forged wheels?",
+            "answer_2": "<p>No. Fortune Forged does not sell or produce OEM/manufacturer-branded center caps, regardless of the vehicle company. Unless a listing expressly and accurately states otherwise, OEM/factory center caps are not included. You can order Fortune Forged logo center caps, or specify that your wheels should be manufactured to accept reuse of your existing compatible factory center caps.</p>"
           }
         }
       },
