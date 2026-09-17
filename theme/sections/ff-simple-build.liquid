@@ -10,6 +10,13 @@
       {% endif %}
     </header>
 
+    <div class="ff-build__gated is-locked" data-ff-build-gate>
+      <div class="ff-build__gate" data-ff-build-gate-overlay>
+        <button type="button" class="ff-build__gate-btn" data-ff-build-unlock>
+          {{ section.settings.gate_label | default: 'BUILD MY QUOTE' | escape }}
+        </button>
+      </div>
+
     <ol class="ff-build__steps" aria-label="Order steps">
       <li class="ff-build__step is-active" data-step="1">
         <span class="ff-build__step-num">1</span>
@@ -153,6 +160,7 @@
       {% render 'ff-quote-form', section: section %}
       <button type="button" class="ff-build__back" data-back="2">Back</button>
     </div>
+    </div>
   </div>
 
   <div
@@ -244,6 +252,13 @@
       "id": "subtitle",
       "label": "Subtitle",
       "default": "Three steps. Tell us your vehicle, choose a setup, request a build."
+    },
+    {
+      "type": "text",
+      "id": "gate_label",
+      "label": "Start button label",
+      "default": "BUILD MY QUOTE",
+      "info": "Shown over the greyed-out form until the customer starts."
     },
     {
       "type": "range",

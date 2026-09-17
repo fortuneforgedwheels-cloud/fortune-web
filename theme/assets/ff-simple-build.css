@@ -16,6 +16,63 @@
   margin: 0 auto;
 }
 
+.ff-build__gated {
+  position: relative;
+  margin-top: 28px;
+}
+
+.ff-build__gate {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(8, 8, 8, 0.55);
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+}
+
+.ff-build__gated.is-locked .ff-build__gate {
+  display: flex;
+}
+
+.ff-build__gated.is-locked .ff-build__steps,
+.ff-build__gated.is-locked .ff-build__panel {
+  filter: grayscale(1) brightness(0.55);
+  opacity: 0.55;
+  pointer-events: none;
+  user-select: none;
+}
+
+.ff-build__gate-btn {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 16px 34px;
+  background: #f3f1ec;
+  color: #111;
+  font-family: inherit;
+  font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.ff-build__gate-btn:hover {
+  transform: translateY(-1px);
+  background: #fff;
+}
+
+.ff-build__gate-btn:focus-visible {
+  outline: 2px solid #c2a76b;
+  outline-offset: 3px;
+}
+
 .ff-build__eyebrow {
   margin: 0 0 8px;
   color: #c2a76b;

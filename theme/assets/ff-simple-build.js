@@ -40,6 +40,20 @@
     var modalActions = root.querySelector('.ff-media-modal__actions');
     var previousFocus = null;
     var hoverTimer = null;
+    var gate = root.querySelector('[data-ff-build-gate]');
+    var unlockBtn = root.querySelector('[data-ff-build-unlock]');
+
+    function unlockGate() {
+      if (!gate) return;
+      gate.classList.remove('is-locked');
+      if (manual) {
+        try { manual.focus(); } catch (e) {}
+      }
+    }
+
+    if (unlockBtn) {
+      unlockBtn.addEventListener('click', unlockGate);
+    }
 
     function setStep(n) {
       root.querySelectorAll('[data-step]').forEach(function (el) {
@@ -379,6 +393,7 @@
     } catch (e) {}
 
     if (success || justSubmitted) {
+      unlockGate();
       setStep(3);
       openModal();
       if (root.id) {
