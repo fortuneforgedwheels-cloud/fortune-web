@@ -50,49 +50,106 @@
       <p class="ff-build__panel-copy">{{ section.settings.step2_copy | escape }}</p>
       <p class="ff-build__pricing-note">{{ section.settings.step2_hint | escape }}</p>
 
+      <p class="ff-build__choice-prompt">{{ section.settings.style_prompt | default: 'Hover or tap a setup to browse every wheel — pick one, then continue' | escape }}</p>
+
+      {%- liquid
+        assign mono_link = section.settings.monoblock_link | default: '/collections/monoblock-wheels'
+        assign two_link = section.settings.twopiece_link | default: '/collections/two-piece-wheels'
+        assign bead_link = section.settings.beadlock_link | default: '/collections/beadlock-wheels'
+        if mono_link contains 'shopify://collections/'
+          assign mono_handle = mono_link | remove: 'shopify://collections/'
+        else
+          assign mono_handle = mono_link | split: '/collections/' | last | split: '/' | first | split: '?' | first
+        endif
+        if two_link contains 'shopify://collections/'
+          assign two_handle = two_link | remove: 'shopify://collections/'
+        else
+          assign two_handle = two_link | split: '/collections/' | last | split: '/' | first | split: '?' | first
+        endif
+        if bead_link contains 'shopify://collections/'
+          assign bead_handle = bead_link | remove: 'shopify://collections/'
+        else
+          assign bead_handle = bead_link | split: '/collections/' | last | split: '/' | first | split: '?' | first
+        endif
+        assign mono_collection = collections[mono_handle]
+        assign two_collection = collections[two_handle]
+        assign bead_collection = collections[bead_handle]
+        assign mono_price = section.settings.monoblock_price | default: 'Typically $2,300–$3,500+ for a set of 4'
+        assign two_price = section.settings.twopiece_price | default: 'Typically $4,000–$4,500+ for a set of 4'
+        assign bead_price = section.settings.beadlock_price | default: 'Typically $1,999 per pair · most builds need 2 pairs'
+      -%}
+
+      <div class="ff-build__styles" role="list" data-style-cards>
+        <button type="button" class="ff-build__style" data-style="Monoblock" data-style-select data-price-range="{{ mono_price | escape }}" role="listitem">
+          <span class="ff-build__style-name">Monoblock</span>
+          <span class="ff-build__style-desc">{{ section.settings.monoblock_desc | escape }}</span>
+          <span class="ff-build__style-price">{{ mono_price | escape }}</span>
+          <span class="ff-build__style-browse">Browse all Monoblock →</span>
+        </button>
+        <button type="button" class="ff-build__style" data-style="2-Piece" data-style-select data-price-range="{{ two_price | escape }}" role="listitem">
+          <span class="ff-build__style-name">2-Piece</span>
+          <span class="ff-build__style-desc">{{ section.settings.twopiece_desc | escape }}</span>
+          <span class="ff-build__style-price">{{ two_price | escape }}</span>
+          <span class="ff-build__style-browse">Browse all 2-Piece →</span>
+        </button>
+        <button type="button" class="ff-build__style" data-style="Beadlock" data-style-select data-price-range="{{ bead_price | escape }}" role="listitem">
+          <span class="ff-build__style-name">Beadlock</span>
+          <span class="ff-build__style-desc">{{ section.settings.beadlock_desc | escape }}</span>
+          <span class="ff-build__style-price">{{ bead_price | escape }}</span>
+          <span class="ff-build__style-browse">Browse all Beadlock →</span>
+        </button>
+      </div>
+
+      <div class="ff-build__wheel-browser" data-wheel-browser hidden>
+        <div class="ff-build__wheel-browser-head">
+          <p class="ff-build__wheel-browser-title" data-wheel-browser-title>All Monoblock wheels</p>
+          <p class="ff-build__wheel-browser-copy">{{ section.settings.wheel_pick_hint | default: 'Tap a wheel to select it for your quote.' | escape }}</p>
+        </div>
+        {% render 'ff-build-wheel-grid', collection: mono_collection, style_name: 'Monoblock', price_range: mono_price %}
+        {% render 'ff-build-wheel-grid', collection: two_collection, style_name: '2-Piece', price_range: two_price %}
+        {% render 'ff-build-wheel-grid', collection: bead_collection, style_name: 'Beadlock', price_range: bead_price %}
+        <p class="ff-build__wheel-selected" data-wheel-selected hidden>
+          Selected: <strong data-wheel-selected-label></strong>
+        </p>
+      </div>
+
       {% if section.settings.hottest_link != blank %}
-        <a class="ff-build__hottest" href="{{ section.settings.hottest_link }}" data-style="Hottest designs">
+        <a class="ff-build__hottest" href="{{ section.settings.hottest_link }}">
           <span class="ff-build__style-name">{{ section.settings.hottest_label | escape }}</span>
           <span class="ff-build__style-desc">{{ section.settings.hottest_desc | escape }}</span>
         </a>
       {% endif %}
 
-      <div class="ff-build__styles">
-        <button type="button" class="ff-build__style" data-style="Monoblock" data-style-select>
-          <span class="ff-build__style-name">Monoblock</span>
-          <span class="ff-build__style-desc">{{ section.settings.monoblock_desc | escape }}</span>
-        </button>
-        <button type="button" class="ff-build__style" data-style="2-Piece" data-style-select>
-          <span class="ff-build__style-name">2-Piece</span>
-          <span class="ff-build__style-desc">{{ section.settings.twopiece_desc | escape }}</span>
-        </button>
-        <button type="button" class="ff-build__style" data-style="Beadlock" data-style-select>
-          <span class="ff-build__style-name">Beadlock</span>
-          <span class="ff-build__style-desc">{{ section.settings.beadlock_desc | escape }}</span>
-        </button>
-      </div>
-
-      <div class="ff-build__browse-links" hidden data-browse-links>
-        <p class="ff-build__panel-copy">Browse that setup, or continue to quote with it selected.</p>
-        <div class="ff-build__nav-row">
-          <a class="ff-build__browse button button--primary" href="{{ section.settings.monoblock_link }}" data-browse-for="Monoblock">Browse Monoblock</a>
-          <a class="ff-build__browse button button--primary" href="{{ section.settings.twopiece_link }}" data-browse-for="2-Piece" hidden>Browse 2-Piece</a>
-          <a class="ff-build__browse button button--primary" href="{{ section.settings.beadlock_link }}" data-browse-for="Beadlock" hidden>Browse Beadlock</a>
-          <button type="button" class="ff-build__next button button--secondary" data-next="3">Continue to quote</button>
-        </div>
-      </div>
-
       <div class="ff-build__nav-row ff-build__nav-row--split">
         <button type="button" class="ff-build__back" data-back="1">Back</button>
-        <button type="button" class="ff-build__next button button--primary" data-next="3" data-skip-quote>
-          {{ section.settings.quote_cta | escape }}
+        <button type="button" class="ff-build__next button button--primary" data-next="3" data-need-style disabled>
+          {{ section.settings.continue_to_quote_label | default: 'Continue — see my quote options' | escape }}
         </button>
       </div>
+      <p class="ff-build__hint" data-style-hint hidden>{{ section.settings.style_required_hint | default: 'Pick a setup and a wheel above, then continue.' | escape }}</p>
     </div>
 
     <div class="ff-build__panel" data-panel="3" hidden>
       <h2 class="ff-build__panel-title">{{ section.settings.step3_heading | escape }}</h2>
       <p class="ff-build__panel-copy">{{ section.settings.step3_copy | escape }}</p>
+      <div class="ff-build__summary" data-build-summary hidden>
+        <p class="ff-build__summary-line">
+          <span class="ff-build__summary-label">Vehicle</span>
+          <strong data-summary-vehicle></strong>
+        </p>
+        <p class="ff-build__summary-line">
+          <span class="ff-build__summary-label">Setup</span>
+          <strong data-summary-style></strong>
+        </p>
+        <p class="ff-build__summary-line" data-summary-wheel-row hidden>
+          <span class="ff-build__summary-label">Wheel</span>
+          <strong data-summary-wheel></strong>
+        </p>
+        <p class="ff-build__summary-line ff-build__summary-line--price">
+          <span class="ff-build__summary-label">Typical price</span>
+          <strong data-summary-price></strong>
+        </p>
+      </div>
       {% render 'ff-quote-form', section: section %}
       <button type="button" class="ff-build__back" data-back="2">Back</button>
     </div>
@@ -271,6 +328,30 @@
     },
     {
       "type": "text",
+      "id": "style_prompt",
+      "label": "Style choice prompt",
+      "default": "Hover or tap a setup to browse every wheel — pick one, then continue"
+    },
+    {
+      "type": "text",
+      "id": "wheel_pick_hint",
+      "label": "Wheel picker hint",
+      "default": "Tap a wheel to select it for your quote."
+    },
+    {
+      "type": "text",
+      "id": "continue_to_quote_label",
+      "label": "Continue to quote button",
+      "default": "Continue — see my quote options"
+    },
+    {
+      "type": "text",
+      "id": "style_required_hint",
+      "label": "Style required hint",
+      "default": "Pick a setup and a wheel above, then continue."
+    },
+    {
+      "type": "text",
       "id": "hottest_label",
       "label": "Hottest designs label",
       "default": "Browse the hottest designs"
@@ -289,8 +370,9 @@
     {
       "type": "text",
       "id": "quote_cta",
-      "label": "Skip to quote button",
-      "default": "Skip to custom quote"
+      "label": "Skip to quote button (legacy)",
+      "default": "Skip to custom quote",
+      "info": "Kept for older theme settings. New flow requires a style selection."
     },
     {
       "type": "url",
@@ -304,6 +386,12 @@
       "default": "One-piece forged strength · priced individually"
     },
     {
+      "type": "text",
+      "id": "monoblock_price",
+      "label": "Monoblock typical price",
+      "default": "Typically $2,300–$3,500+ for a set of 4"
+    },
+    {
       "type": "url",
       "id": "twopiece_link",
       "label": "2-Piece collection"
@@ -313,6 +401,12 @@
       "id": "twopiece_desc",
       "label": "2-Piece description",
       "default": "Modular fitment & finish · priced individually"
+    },
+    {
+      "type": "text",
+      "id": "twopiece_price",
+      "label": "2-Piece typical price",
+      "default": "Typically $4,000–$4,500+ for a set of 4"
     },
     {
       "type": "url",
@@ -327,15 +421,49 @@
     },
     {
       "type": "text",
+      "id": "beadlock_price",
+      "label": "Beadlock typical price",
+      "default": "Typically $1,999 per pair · most builds need 2 pairs"
+    },
+    {
+      "type": "text",
       "id": "step3_heading",
       "label": "Step 3 heading",
-      "default": "Request your build"
+      "default": "Almost done — confirm you’re ready"
     },
     {
       "type": "textarea",
       "id": "step3_copy",
       "label": "Step 3 copy",
-      "default": "Enter the custom details you already know — or leave fitment blank and a specialist will email or call you back to help."
+      "default": "Tell us your budget and timing so we can prepare an accurate quote. Serious buyers get priority follow-up."
+    },
+    {
+      "type": "header",
+      "content": "Qualification (step 3)"
+    },
+    {
+      "type": "text",
+      "id": "budget_legend",
+      "label": "Budget legend",
+      "default": "What’s your budget for a full set?"
+    },
+    {
+      "type": "text",
+      "id": "timeline_legend",
+      "label": "Timeline legend",
+      "default": "When do you want to order?"
+    },
+    {
+      "type": "textarea",
+      "id": "intent_label",
+      "label": "Intent checkbox label",
+      "default": "I understand Fortune Forged wheels are a premium forged product, I’ve seen the typical price range, and I’m requesting this quote because I’m seriously considering a purchase."
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit button label",
+      "default": "Submit my quote request"
     },
     {
       "type": "header",
