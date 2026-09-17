@@ -1,0 +1,207 @@
+/* Shared option tiles — match Fortune Certified Spec choice cards */
+
+:root {
+  --ff-tile-ink: #f5f5f5;
+  --ff-tile-muted: #b0aea8;
+  --ff-tile-line: #2e2e2e;
+  --ff-tile-bg: #141414;
+  --ff-tile-active: #dce1e6;
+  --ff-tile-active-bg: rgba(220, 225, 230, 0.14);
+}
+
+/* Hide native selects once tiled (keep in DOM for BCPO / form sync) */
+select.ff-option-tiles__native,
+.ff-option-tiles-host > select.ff-option-tiles__native,
+.selector-wrapper > select.ff-option-tiles__native,
+.ff-826m-path__field > select.ff-option-tiles__native,
+.product-form__input--dropdown select.ff-option-tiles__native,
+.form__select select.ff-option-tiles__native {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.ff-option-tiles {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+  width: 100%;
+  margin: 8px 0 4px;
+}
+
+@media (min-width: 560px) {
+  .ff-option-tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ff-option-tiles[data-count="1"] {
+    grid-template-columns: 1fr;
+  }
+
+  .ff-option-tiles[data-dense="true"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .ff-option-tiles[data-dense="true"] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.ff-option-tiles__choice {
+  display: block;
+  cursor: pointer;
+  margin: 0;
+}
+
+.ff-option-tiles__choice input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ff-option-tiles__card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--ff-tile-line);
+  background: var(--ff-tile-bg);
+  border-radius: 0;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.ff-option-tiles__choice input:checked + .ff-option-tiles__card {
+  border-color: var(--ff-tile-active);
+  background: var(--ff-tile-active-bg);
+  box-shadow: inset 0 0 0 1px var(--ff-tile-active), 0 0 0 1px var(--ff-tile-active);
+}
+
+.ff-option-tiles__choice input:focus-visible + .ff-option-tiles__card {
+  outline: 2px solid var(--ff-tile-active);
+  outline-offset: 2px;
+}
+
+.ff-option-tiles__choice input:disabled + .ff-option-tiles__card {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ff-option-tiles__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ff-tile-ink);
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+.ff-option-tiles__choice input:checked + .ff-option-tiles__card .ff-option-tiles__title {
+  color: #f0f3f5;
+}
+
+/* Native Shopify variant radios → same tile language */
+variant-radios .product-form__input:not(.product-form__swatch),
+fieldset.product-form__input:not(.product-form__swatch) {
+  display: grid !important;
+  gap: 10px;
+  grid-template-columns: 1fr;
+  font-size: inherit;
+  margin: 0 0 18px;
+}
+
+@media (min-width: 560px) {
+  variant-radios .product-form__input:not(.product-form__swatch),
+  fieldset.product-form__input:not(.product-form__swatch) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+variant-radios .product-form__input:not(.product-form__swatch) > .form__label,
+fieldset.product-form__input:not(.product-form__swatch) > .form__label,
+fieldset.product-form__input:not(.product-form__swatch) > legend.form__label {
+  grid-column: 1 / -1;
+  margin: 0 0 2px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ff-tile-ink);
+}
+
+variant-radios .product-form__input:not(.product-form__swatch) .product-form__label,
+fieldset.product-form__input:not(.product-form__swatch) .product-form__label {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+variant-radios .product-form__input:not(.product-form__swatch) .product-form__label .text,
+fieldset.product-form__input:not(.product-form__swatch) .product-form__label .text {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  padding: 14px 16px;
+  border: 1px solid var(--ff-tile-line);
+  border-radius: 0;
+  background: var(--ff-tile-bg);
+  color: var(--ff-tile-ink);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: left;
+  text-transform: none;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+variant-radios .product-form__input:not(.product-form__swatch) .product-form__radio:checked + .product-form__label .text,
+fieldset.product-form__input:not(.product-form__swatch) .product-form__radio:checked + .product-form__label .text {
+  border-color: var(--ff-tile-active);
+  background: var(--ff-tile-active-bg);
+  box-shadow: inset 0 0 0 1px var(--ff-tile-active), 0 0 0 1px var(--ff-tile-active);
+  color: #f0f3f5;
+}
+
+/* BCPO wrapper polish */
+.selector-wrapper.bcpo-default,
+.selector-wrapper.bcpo-simple,
+.selector-wrapper.bcpo-select1,
+.selector-wrapper.bcpo-xs,
+.ff-826m-path__field {
+  position: relative;
+}
+
+.selector-wrapper .bcpo-title,
+.selector-wrapper .bcpo-front-dd-label,
+.selector-wrapper .bcpo-label,
+.ff-826m-path__field > span {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ff-tile-ink);
+}
+
+/* Soften leftover Halo select chrome when tiles not yet built */
+.productView .single-option-selector,
+.productView .selector-wrapper select,
+.product-form__input--dropdown .select__select {
+  border-radius: 0;
+  border: 1px solid var(--ff-tile-line);
+  background: #0f0f0f;
+  color: var(--ff-tile-ink);
+}
