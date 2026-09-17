@@ -1,5 +1,14 @@
 /*
  * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+/*
+ * ------------------------------------------------------------
  * The Forging Process — Fortune Forged manufacturing page
  * ------------------------------------------------------------
  */
@@ -102,8 +111,8 @@
           "type": "cta",
           "settings": {
             "text": "Ready to build your set?",
-            "button_label": "Shop wheels",
-            "button_link": "shopify://collections/all"
+            "button_label": "Get quote",
+            "button_link": "/#order"
           }
         }
       },

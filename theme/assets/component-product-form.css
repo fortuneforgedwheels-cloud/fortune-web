@@ -6,6 +6,19 @@
     margin: 0;
 }
 
+.product-form__oem-cap-note,
+.ff-oem-cap-note {
+    display: block;
+    margin: 0.35rem 0 0.75rem;
+    max-width: 36rem;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    letter-spacing: normal;
+    font-weight: var(--font-weight-normal, 400);
+    color: var(--color-text2, #8a8a8a);
+    text-transform: none;
+}
+
 .product-form__input .form__label{
     display: block;
     margin: 0 0 3px 0;
