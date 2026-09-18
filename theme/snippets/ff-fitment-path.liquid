@@ -1,0 +1,27 @@
+{% comment %}
+  Recommended vs advanced fitment preference (cart property only).
+  Does not remove existing width/offset option UIs — those stay available for advanced customers.
+{% endcomment %}
+{%- render 'ff-wheel-context', product: product -%}
+{%- if ff_is_fullset_priced -%}
+  <div class="ff-fitment-path" data-ff-fitment-path>
+    <p class="ff-fitment-path__title">Fitment preference</p>
+    <div class="ff-fitment-path__options">
+      <label class="ff-fitment-path__option">
+        <input type="radio" name="properties[Fitment Method]" value="Have Fortune Forged build my fitment" checked data-ff-fitment-mode="recommended">
+        <span>
+          <strong>Have Fortune Forged build my fitment</strong>
+          <em>Recommended — tell us your vehicle, diameter, and finish. We determine width &amp; offset.</em>
+        </span>
+      </label>
+      <label class="ff-fitment-path__option">
+        <input type="radio" name="properties[Fitment Method]" value="I know my wheel specs" data-ff-fitment-mode="advanced">
+        <span>
+          <strong>I know my wheel specs</strong>
+          <em>Advanced — enter exact width, offset, and other measurements below if you prefer.</em>
+        </span>
+      </label>
+    </div>
+    <input type="hidden" name="properties[Order Type]" value="Full Set">
+  </div>
+{%- endif -%}

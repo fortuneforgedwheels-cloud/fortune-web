@@ -1,0 +1,15 @@
+{% comment %} Concise PDP confidence signals for full-set forged wheels. {% endcomment %}
+{%- render 'ff-wheel-context', product: product -%}
+{%- if ff_is_fullset_priced -%}
+  <ul class="ff-pdp-confidence" data-ff-pdp-confidence>
+    <li>Custom vehicle-specific fitment verified before production</li>
+    <li>Custom widths &amp; offsets built for your car</li>
+    <li>Factory brake clearance checked for your setup</li>
+    <li>Direct bolt-on configuration</li>
+    <li>Built to order — FULL SET pricing includes shipping</li>
+  </ul>
+  <p class="ff-oem-cap-note">
+    OEM center caps shown for fitment/compatibility demonstration only and are not included unless explicitly stated.
+    Designed for compatibility with the customer’s OEM center caps where specified. Fortune Forged is not affiliated with vehicle manufacturers.
+  </p>
+{%- endif -%}

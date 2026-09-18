@@ -1,4 +1,11 @@
 {%- assign button_id = 'product-add-to-cart' | prepend: prefix -%}
+{%- render 'ff-wheel-context', product: product -%}
+{%- liquid
+  assign ff_atc_label = 'products.product.add_to_cart' | t
+  if ff_is_fullset_priced
+    assign ff_atc_label = 'ADD FULL SET TO CART'
+  endif
+-%}
 <div class="productView-action{% unless settings.show_wishlist %} productView-action-2{% endunless %}">
     <input type="hidden" name="id" value="{{ current_variant.id }}">
     <div class="product-form__buttons">
@@ -17,10 +24,10 @@
                                 {{ 'products.product.sub_total' | t : value : '' }}
                                 {{ subtotal | money }}
                             {%- else -%}
-                                {{ 'products.product.add_to_cart' | t}}
+                                {{ ff_atc_label }}
                             {%- endif -%}
                         {%- else -%}
-                            {{ 'products.product.add_to_cart' | t}}
+                            {{ ff_atc_label }}
                         {%- endif -%}
                     {%- else -%}
                         {%- if show_subtotal_text -%}
@@ -48,10 +55,10 @@
                             {{ 'products.product.sub_total' | t : value : '' }}
                             {{ subtotal | money }}
                         {%- else -%}
-                            {{ 'products.product.add_to_cart' | t}}
+                            {{ ff_atc_label }}
                         {%- endif -%}
                     {%- else -%}
-                        {{ 'products.product.add_to_cart' | t}}
+                        {{ ff_atc_label }}
                     {%- endif -%}
                 </button>
             {%- endif -%}

@@ -62,8 +62,8 @@
           <span class="ff-build__style-name">Monoblock</span>
           <span class="ff-build__style-desc">{{ section.settings.monoblock_desc | escape }}</span>
         </button>
-        <button type="button" class="ff-build__style" data-style="2-Piece" data-style-select>
-          <span class="ff-build__style-name">2-Piece</span>
+        <button type="button" class="ff-build__style" data-style="Two-Piece" data-style-select data-style-alias="2-Piece">
+          <span class="ff-build__style-name">Two-Piece</span>
           <span class="ff-build__style-desc">{{ section.settings.twopiece_desc | escape }}</span>
         </button>
         <button type="button" class="ff-build__style" data-style="Beadlock" data-style-select>
@@ -76,7 +76,7 @@
         <p class="ff-build__panel-copy">Browse that setup, or continue to quote with it selected.</p>
         <div class="ff-build__nav-row">
           <a class="ff-build__browse button button--primary" href="{{ section.settings.monoblock_link }}" data-browse-for="Monoblock">Browse Monoblock</a>
-          <a class="ff-build__browse button button--primary" href="{{ section.settings.twopiece_link }}" data-browse-for="2-Piece" hidden>Browse 2-Piece</a>
+          <a class="ff-build__browse button button--primary" href="{{ section.settings.twopiece_link }}" data-browse-for="Two-Piece" hidden>Browse Two-Piece</a>
           <a class="ff-build__browse button button--primary" href="{{ section.settings.beadlock_link }}" data-browse-for="Beadlock" hidden>Browse Beadlock</a>
           <button type="button" class="ff-build__next button button--secondary" data-next="3">Continue to quote</button>
         </div>
@@ -142,6 +142,7 @@
 </section>
 
 <script src="{{ 'ff-simple-build.js' | asset_url }}" defer></script>
+<script src="{{ 'ff-quote-meta.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
@@ -267,7 +268,7 @@
       "type": "textarea",
       "id": "step2_hint",
       "label": "Pricing note",
-      "default": "Beadlock wheels are priced by the pair. Standard monoblock and two piece wheels are priced individually."
+      "default": "Beadlock wheels are priced by the pair. Monoblock and Two-Piece full sets are priced shipped."
     },
     {
       "type": "text",
@@ -301,18 +302,18 @@
       "type": "text",
       "id": "monoblock_desc",
       "label": "Monoblock description",
-      "default": "One-piece forged strength · priced individually"
+      "default": "Forged Monoblock · FULL SET from $2,890 shipped"
     },
     {
       "type": "url",
       "id": "twopiece_link",
-      "label": "2-Piece collection"
+      "label": "Two-Piece collection"
     },
     {
       "type": "text",
       "id": "twopiece_desc",
-      "label": "2-Piece description",
-      "default": "Modular fitment & finish · priced individually"
+      "label": "Two-Piece description",
+      "default": "Forged Two-Piece · FULL SET from $3,950 shipped"
     },
     {
       "type": "url",

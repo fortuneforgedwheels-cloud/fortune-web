@@ -454,3 +454,39 @@ html.ff-modal-open {
   color: var(--ff-ink);
   line-height: 1.45;
 }
+
+.ff-quote__qualify {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.25rem;
+}
+
+.ff-quote__pick {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--ff-line);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ff-quote__pick.is-selected {
+  border-color: rgba(194, 167, 107, 0.65);
+  background: rgba(194, 167, 107, 0.08);
+}
+
+.ff-quote__pick input {
+  margin: 0;
+}
+
+.ff-quote__intent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.65rem;
+  align-items: start;
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}

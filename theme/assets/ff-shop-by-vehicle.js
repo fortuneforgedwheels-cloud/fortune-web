@@ -426,7 +426,7 @@
     var tireNote = fit.tirePick ? ('Tires: ' + fit.tirePick) : '';
     var fitmentNote = [note, tireNote].filter(Boolean).join(' · ');
     var construction = state.wheelStyle === 'mono' ? 'Monoblock'
-      : (state.wheelStyle === 'two' ? '2-Piece' : 'Beadlock');
+      : (state.wheelStyle === 'two' ? 'Two-Piece' : 'Beadlock');
 
     var baseProps = {
       'Vehicle': vehicle,
@@ -464,41 +464,18 @@
       return items;
     }
 
-    if (isSquare(fit.front, fit.rear)) {
-      items.push({
-        id: Number(design.variantId),
-        quantity: 4,
-        properties: Object.assign({}, baseProps, {
-          'Position': 'Front & Rear (square)',
-          'Size': fit.front,
-          'Front Size': fit.front,
-          'Rear Size': fit.rear,
-          'Fitment': fitmentNote,
-        }),
-      });
-      return items;
-    }
-
+    // Monoblock / Two-Piece checkout prices are FULL SET amounts — add qty 1.
     items.push({
       id: Number(design.variantId),
-      quantity: 2,
+      quantity: 1,
       properties: Object.assign({}, baseProps, {
-        'Position': 'Front',
-        'Size': fit.front,
+        'Order Type': 'Full Set',
+        'Position': isSquare(fit.front, fit.rear) ? 'Front & Rear (square)' : 'Front & Rear (staggered)',
+        'Size': isSquare(fit.front, fit.rear) ? fit.front : (fit.front + ' / ' + fit.rear),
         'Front Size': fit.front,
         'Rear Size': fit.rear,
         'Fitment': fitmentNote,
-      }),
-    });
-    items.push({
-      id: Number(design.variantId),
-      quantity: 2,
-      properties: Object.assign({}, baseProps, {
-        'Position': 'Rear',
-        'Size': fit.rear,
-        'Front Size': fit.front,
-        'Rear Size': fit.rear,
-        'Fitment': fitmentNote,
+        'Fitment Method': 'Have Fortune Forged build my fitment',
       }),
     });
     return items;
@@ -513,18 +490,42 @@
     return null;
   }
 
-  function getVehicleFromQuery() {
-    var params = new URLSearchParams(window.location.search);
-    return {
-      year: params.get('year') || '',
-      make: params.get('make') || '',
-      model: params.get('model') || '',
-      chassis: params.get('chassis') || '',
-      slug: params.get('slug') || '',
-      boltPattern: params.get('bolt') || '',
-      centerBore: params.get('bore') || '',
-    };
-  }
+    function getStoredVehicle() {
+      try {
+        var raw = sessionStorage.getItem('ffVehicleSelection');
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function getVehicleFromQuery() {
+      var params = new URLSearchParams(window.location.search);
+      var fromQuery = {
+        year: params.get('year') || '',
+        make: params.get('make') || '',
+        model: params.get('model') || '',
+        chassis: params.get('chassis') || '',
+        slug: params.get('slug') || '',
+        boltPattern: params.get('bolt') || '',
+        centerBore: params.get('bore') || '',
+      };
+      if (fromQuery.year && fromQuery.make && fromQuery.model) return fromQuery;
+      var stored = getStoredVehicle();
+      if (stored && stored.year && stored.make && stored.model) {
+        return {
+          year: stored.year || '',
+          make: stored.make || '',
+          model: stored.model || '',
+          chassis: stored.chassis || '',
+          slug: stored.slug || '',
+          boltPattern: stored.boltPattern || stored.bolt || '',
+          centerBore: stored.centerBore || stored.bore || '',
+        };
+      }
+      return fromQuery;
+    }
 
   /* ── main init ── */
   function init(root) {
@@ -609,7 +610,7 @@
 
     function updatePageVehicle() {
       if (pageVehicleEl && state.vehicleLabel) {
-        pageVehicleEl.textContent = state.vehicleLabel;
+        pageVehicleEl.textContent = 'Showing wheels available for your ' + state.vehicleLabel + '.';
       }
     }
 

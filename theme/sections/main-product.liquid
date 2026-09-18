@@ -1,6 +1,7 @@
 {{ 'component-product.css' | asset_url | stylesheet_tag }}
 {{ 'component-review.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'ff-fullset-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-badge.css' | asset_url | stylesheet_tag }}
 {{ 'component-rte.css' | asset_url | stylesheet_tag }}
 {{ 'component-product-form.css' | asset_url | stylesheet_tag }}
@@ -473,6 +474,7 @@
                                                 use_variant: true,
                                                 price_class: 'price--large'
                                             -%}
+                                            {%- render 'ff-pdp-confidence', product: product -%}
                                         </div>
                                     {%- when 'promotion' -%}
                                         {%- liquid
@@ -777,6 +779,7 @@
                                                 <div class="productView-group">
                                                     <div class="productView-groupTop">
                                                         {%- if show_qty -%}
+                                                            {%- render 'ff-fitment-path', product: product -%}
                                                             {% render 'product-quantity',
                                                                 type: 'main-product',
                                                                 style: qty_style,

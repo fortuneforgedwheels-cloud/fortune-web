@@ -1,0 +1,38 @@
+{% comment %}
+  Full-set shipped price presentation for Monoblock / Two-Piece products.
+  Keeps .price-item nodes intact so theme.js variant money updates still work.
+  SHIPPED / FULL SET labels sit outside .price-item.
+{% endcomment %}
+{%- render 'ff-wheel-context', product: product -%}
+{%- if ff_is_fullset_priced -%}
+  {%- liquid
+    if use_variant
+      assign ff_target = product.selected_or_first_available_variant
+    else
+      assign ff_target = product
+    endif
+    assign ff_money = ff_target.price | money
+    if ff_target == product and product.price_varies and ff_price_varies_tiers
+      assign ff_from_mode = true
+      assign ff_money = product.price_min | money
+    else
+      assign ff_from_mode = false
+    endif
+  -%}
+  <div class="ff-fullset-price{% if price_class %} {{ price_class }}{% endif %}" data-ff-fullset data-ff-kind="{{ ff_wheel_kind }}">
+    {%- if ff_construction_label != blank and show_construction != false -%}
+      <p class="ff-fullset-price__construction">{{ ff_construction_label }}</p>
+    {%- endif -%}
+    {%- if ff_from_mode -%}
+      <p class="ff-fullset-price__from">Full sets from {{ ff_money }} shipped</p>
+    {%- else -%}
+      <div class="ff-fullset-price__row">
+        <span class="ff-fullset-price__badge">FULL SET</span>
+        <span class="ff-fullset-price__amount">
+          <span class="price-item price-item--regular" data-ff-fullset-money>{{ ff_money }}</span>
+          <span class="ff-fullset-price__shipped">SHIPPED</span>
+        </span>
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}

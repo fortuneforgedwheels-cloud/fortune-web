@@ -70,17 +70,37 @@
       if (assistNote) assistNote.hidden = !specialist;
       if (helpPreference) {
         helpPreference.value = specialist
-          ? 'Leave it to a fitment specialist — email or call back'
-          : 'I know my specs';
+          ? 'Have Fortune Forged build my fitment'
+          : 'I know my wheel specs';
       }
       if (submitBtn) {
-        submitBtn.textContent = specialist
-          ? 'Request specialist callback'
-          : 'Submit build request';
+        submitBtn.textContent = 'Get a custom quote';
       }
       root.querySelectorAll('.ff-quote__choice').forEach(function (label) {
         var radio = label.querySelector('[data-help-mode]');
         label.classList.toggle('is-selected', !!(radio && radio.checked));
+      });
+    }
+
+    function selectedRadio(name) {
+      var el = root.querySelector('input[name="' + name + '"]:checked');
+      return el ? el.value : '';
+    }
+
+    function syncQualify() {
+      var timeline = selectedRadio('ff_timeline');
+      var intentOk = !!(root.querySelector('[data-intent-check]') && root.querySelector('[data-intent-check]').checked);
+      var timelineValue = root.querySelector('[data-timeline-value]');
+      var intentValue = root.querySelector('[data-intent-value]');
+      if (timelineValue) timelineValue.value = timeline;
+      if (intentValue) {
+        intentValue.value = intentOk
+          ? 'Yes — serious buyer, understands full-set pricing'
+          : '';
+      }
+      root.querySelectorAll('[data-timeline-pick]').forEach(function (input) {
+        var label = input.closest('.ff-quote__pick');
+        if (label) label.classList.toggle('is-selected', !!input.checked);
       });
     }
 
@@ -113,6 +133,10 @@
       radio.addEventListener('change', function () {
         if (radio.checked) setHelpMode(radio.value);
       });
+    });
+
+    root.querySelectorAll('[data-timeline-pick], [data-intent-check]').forEach(function (input) {
+      input.addEventListener('change', syncQualify);
     });
 
     root.querySelectorAll('[data-next]').forEach(function (btn) {
@@ -152,7 +176,15 @@
     });
 
     if (quoteForm) {
-      quoteForm.addEventListener('submit', function () {
+      quoteForm.addEventListener('submit', function (event) {
+        syncQualify();
+        var timeline = selectedRadio('ff_timeline');
+        var intent = root.querySelector('[data-intent-check]');
+        if ((root.querySelectorAll('input[name="ff_timeline"]').length && !timeline) || (intent && !intent.checked)) {
+          event.preventDefault();
+          syncQualify();
+          return false;
+        }
         try {
           sessionStorage.setItem('ff_quote_submitted', '1');
         } catch (e) {}
@@ -177,8 +209,10 @@
     }
 
     setHelpMode(
-      (root.querySelector('[data-help-mode]:checked') || {}).value || 'specs'
+      (root.querySelector('[data-help-mode]:checked') || {}).value || 'specialist'
     );
+    syncVehicle();
+    syncQualify();
     syncVehicle();
   }
 
