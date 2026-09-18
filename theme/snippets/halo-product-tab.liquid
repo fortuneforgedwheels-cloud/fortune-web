@@ -3,7 +3,10 @@
 	{%- if tab_layout == 'horizontal' -%}
 		<ul class="tabs tabs-horizontal list-unstyled">
 			{%- for block in section.blocks -%}
-				{%- if block.type == 'description' or block.type == 'review' or block.type == 'custom' -%}
+				{%- if block.type == 'description' -%}
+					{%- continue -%}
+				{%- endif -%}
+				{%- if block.type == 'review' or block.type == 'custom' -%}
 					{%- liquid
 						assign title = block.settings.title
 					-%}
@@ -20,7 +23,11 @@
 	{%- endif -%}
 	<div class="tabs-contents tabs-contents-{{ tab_layout }} clearfix halo-text-format">
 		{%- for block in section.blocks -%}
-			{%- if block.type == 'description' or block.type == 'review' or block.type == 'custom' -%}
+			{%- if block.type == 'description' -%}
+				{%- comment -%} Description renders inline near the buy box (see main-product). Skip accordion duplicate. {%- endcomment -%}
+				{%- continue -%}
+			{%- endif -%}
+			{%- if block.type == 'review' or block.type == 'custom' -%}
 				{%- liquid
 					assign title = block.settings.title
 					if block.type == 'custom'

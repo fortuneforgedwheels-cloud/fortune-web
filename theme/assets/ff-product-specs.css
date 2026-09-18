@@ -1,0 +1,60 @@
+/* Featured-spec / product buy-box specs — always visible under price */
+.ff-product-specs {
+  margin: 0 0 1.1rem;
+  padding: 0.95rem 1rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f4f4f4;
+}
+
+.ff-product-specs__label {
+  margin: 0 0 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.ff-product-specs__body {
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: #f7f7f7;
+}
+
+.ff-product-specs__body p {
+  margin: 0 0 0.65rem;
+}
+
+.ff-product-specs__body p:last-child {
+  margin-bottom: 0;
+}
+
+.ff-product-specs__body ul {
+  margin: 0.35rem 0 0.65rem;
+  padding-left: 1.15rem;
+}
+
+.ff-product-specs__body li {
+  margin: 0.2rem 0;
+}
+
+.ff-product-specs__body strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.ff-product-specs__body em {
+  font-style: italic;
+}
+
+@media screen and (max-width: 767px) {
+  .ff-product-specs {
+    margin-bottom: 0.9rem;
+    padding: 0.85rem 0.9rem;
+  }
+
+  .ff-product-specs__body {
+    font-size: 0.94rem;
+  }
+}
