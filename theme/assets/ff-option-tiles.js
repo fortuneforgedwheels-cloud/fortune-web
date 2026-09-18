@@ -1,6 +1,6 @@
 /**
- * Convert product option <select>s (BCPO, VO, theme, certified color) into
- * Fortune Certified-style tile cards. Keeps the native select in sync for apps.
+ * Convert product option <select>s into Fortune Certified-style tile cards,
+ * wrapped in click-to-expand accordions. Keeps native selects synced for apps.
  */
 (function () {
   'use strict';
@@ -35,7 +35,6 @@
     if (name === 'vopo-id') return true;
     if (SKIP_NAME.test(name)) return true;
     if (SKIP_ID.test(id)) return true;
-    // Cart / localization only
     if (select.closest('.localization-form, .country-selector, .disclosure')) return true;
     return false;
   }
@@ -50,9 +49,91 @@
     });
   }
 
+  function findLabelText(select) {
+    var wrap =
+      select.closest('.selector-wrapper') ||
+      select.closest('.ff-826m-path__field') ||
+      select.closest('.product-form__input') ||
+      select.closest('[class*="bcpo"]') ||
+      select.parentElement;
+    if (!wrap) return 'Option';
+
+    var labeled = wrap.querySelector(
+      '.bcpo-title, .bcpo-front-dd-label, .bcpo-label, legend.form__label, label.form__label, .ff-826m-path__field > span'
+    );
+    if (labeled) {
+      var raw = String(labeled.textContent || '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .split(':')[0]
+        .trim();
+      if (raw) return raw;
+    }
+
+    var attr = select.getAttribute('data-ff-826m-color-select');
+    if (attr) return attr;
+
+    var name = select.getAttribute('name') || '';
+    var m = name.match(/properties\[([^\]]+)\]/i);
+    if (m) return m[1];
+    if (/center\s*cap/i.test(name)) return 'Center Cap';
+    return 'Option';
+  }
+
+  function selectedLabel(select) {
+    var opt = select.options[select.selectedIndex];
+    if (!opt) return '';
+    var text = String(opt.textContent || '').replace(/\s+/g, ' ').trim();
+    if (!opt.value && PLACEHOLDER.test(text)) return '';
+    if (HELPER.test(text)) return '';
+    return text;
+  }
+
+  function closeOthers(except) {
+    document.querySelectorAll('.ff-option-acc.is-open').forEach(function (acc) {
+      if (acc === except) return;
+      acc.classList.remove('is-open');
+      var btn = acc.querySelector('.ff-option-acc__trigger');
+      var panel = acc.querySelector('.ff-option-acc__panel');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+      if (panel) panel.hidden = true;
+    });
+  }
+
+  function setOpen(acc, open) {
+    var btn = acc.querySelector('.ff-option-acc__trigger');
+    var panel = acc.querySelector('.ff-option-acc__panel');
+    if (open) {
+      closeOthers(acc);
+      acc.classList.add('is-open');
+      if (btn) btn.setAttribute('aria-expanded', 'true');
+      if (panel) panel.hidden = false;
+    } else {
+      acc.classList.remove('is-open');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+      if (panel) panel.hidden = true;
+    }
+  }
+
+  function updateTriggerValue(acc, text) {
+    var valueEl = acc.querySelector('.ff-option-acc__value');
+    if (!valueEl) return;
+    if (text) {
+      valueEl.textContent = text;
+      valueEl.hidden = false;
+      acc.classList.add('has-value');
+    } else {
+      valueEl.textContent = 'Select';
+      valueEl.hidden = false;
+      acc.classList.remove('has-value');
+    }
+  }
+
   function removeTiles(select) {
     var next = select.nextElementSibling;
-    if (next && next.classList && next.classList.contains('ff-option-tiles')) {
+    if (next && next.classList && next.classList.contains('ff-option-acc')) {
+      next.remove();
+    } else if (next && next.classList && next.classList.contains('ff-option-tiles')) {
       next.remove();
     }
     select.classList.remove('ff-option-tiles__native');
@@ -67,14 +148,7 @@
     });
   }
 
-  function enhanceSelect(select) {
-    if (shouldSkip(select)) return;
-    var options = usableOptions(select);
-    if (!options.length) return;
-
-    removeTiles(select);
-
-    var groupName = 'ff-tiles-' + ++uid;
+  function buildTileGrid(select, options, groupName) {
     var root = document.createElement('div');
     root.className = 'ff-option-tiles';
     root.setAttribute('role', 'radiogroup');
@@ -92,12 +166,7 @@
       input.value = opt.value;
       input.disabled = !!opt.disabled;
       if (opt.selected || select.value === opt.value) input.checked = true;
-      // If nothing selected yet and first real option exists, don't auto-check
-      // unless the select already has this value.
-      if (!select.value && index === 0 && !opt.selected) {
-        // leave unchecked so user must pick (matches Choose one)
-        input.checked = false;
-      }
+      if (!select.value && index === 0 && !opt.selected) input.checked = false;
 
       var card = document.createElement('span');
       card.className = 'ff-option-tiles__card';
@@ -110,7 +179,6 @@
       input.addEventListener('change', function () {
         if (!input.checked) return;
         select.value = opt.value;
-        // BCPO listens for change/input
         select.dispatchEvent(new Event('input', { bubbles: true }));
         select.dispatchEvent(new Event('change', { bubbles: true }));
         try {
@@ -118,23 +186,144 @@
           evt.initEvent('change', true, false);
           select.dispatchEvent(evt);
         } catch (e) {}
+
+        var acc = root.closest('.ff-option-acc');
+        if (acc) {
+          updateTriggerValue(acc, text);
+          setOpen(acc, false);
+        }
       });
     });
 
-    // If select already has a value, ensure a tile is checked
     if (select.value) syncFromSelect(select, root);
+    return root;
+  }
+
+  function enhanceSelect(select) {
+    if (shouldSkip(select)) return;
+    var options = usableOptions(select);
+    if (!options.length) return;
+
+    removeTiles(select);
+
+    var groupName = 'ff-tiles-' + ++uid;
+    var labelText = findLabelText(select);
+    var current = selectedLabel(select);
+    var tiles = buildTileGrid(select, options, groupName);
+
+    var acc = document.createElement('div');
+    acc.className = 'ff-option-acc';
+    if (current) acc.classList.add('has-value');
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ff-option-acc__trigger';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML =
+      '<span class="ff-option-acc__label">' +
+      esc(labelText) +
+      '</span>' +
+      '<span class="ff-option-acc__value">' +
+      esc(current || 'Select') +
+      '</span>' +
+      '<span class="ff-option-acc__chevron" aria-hidden="true"></span>';
+
+    var panel = document.createElement('div');
+    panel.className = 'ff-option-acc__panel';
+    panel.hidden = true;
+    panel.appendChild(tiles);
+
+    btn.addEventListener('click', function () {
+      var open = !acc.classList.contains('is-open');
+      setOpen(acc, open);
+    });
+
+    acc.appendChild(btn);
+    acc.appendChild(panel);
 
     select.classList.add('ff-option-tiles__native');
     select.dataset.ffTiles = '1';
-    select.insertAdjacentElement('afterend', root);
+    select.insertAdjacentElement('afterend', acc);
 
     if (!select._ffTilesBound) {
       select._ffTilesBound = true;
       select.addEventListener('change', function () {
-        var tiles = select.nextElementSibling;
-        if (tiles && tiles.classList.contains('ff-option-tiles')) syncFromSelect(select, tiles);
+        var host = select.nextElementSibling;
+        if (!host || !host.classList.contains('ff-option-acc')) return;
+        var grid = host.querySelector('.ff-option-tiles');
+        syncFromSelect(select, grid);
+        updateTriggerValue(host, selectedLabel(select));
       });
     }
+  }
+
+  function enhanceNativeFieldset(fieldset) {
+    if (!fieldset || fieldset.dataset.ffAcc === '1') return;
+    if (fieldset.classList.contains('product-form__swatch')) return;
+    if (!fieldset.classList.contains('product-form__input')) return;
+
+    var legend = fieldset.querySelector('legend.form__label, .form__label');
+    var radios = fieldset.querySelectorAll('.product-form__radio');
+    var labels = fieldset.querySelectorAll('.product-form__label');
+    if (!radios.length || !labels.length) return;
+
+    fieldset.dataset.ffAcc = '1';
+    fieldset.classList.add('ff-option-acc', 'ff-option-acc--native');
+
+    var title = 'Option';
+    var current = '';
+    if (legend) {
+      var clone = legend.cloneNode(true);
+      var selectedSpan = clone.querySelector('[data-header-option]');
+      if (selectedSpan) {
+        current = String(selectedSpan.textContent || '').trim();
+        selectedSpan.remove();
+      }
+      title = String(clone.textContent || '')
+        .replace(/:/g, '')
+        .replace(/\s+/g, ' ')
+        .trim() || 'Option';
+    }
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ff-option-acc__trigger';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML =
+      '<span class="ff-option-acc__label">' +
+      esc(title) +
+      '</span>' +
+      '<span class="ff-option-acc__value">' +
+      esc(current || 'Select') +
+      '</span>' +
+      '<span class="ff-option-acc__chevron" aria-hidden="true"></span>';
+
+    var panel = document.createElement('div');
+    panel.className = 'ff-option-acc__panel ff-option-acc__panel--native';
+    panel.hidden = true;
+
+    // Move option labels into panel (keep radios + labels together)
+    Array.prototype.forEach.call(fieldset.querySelectorAll('.product-form__radio, .product-form__label'), function (el) {
+      panel.appendChild(el);
+    });
+
+    if (legend) legend.style.display = 'none';
+
+    btn.addEventListener('click', function () {
+      setOpen(fieldset, !fieldset.classList.contains('is-open'));
+    });
+
+    fieldset.insertBefore(btn, fieldset.firstChild);
+    fieldset.appendChild(panel);
+
+    fieldset.addEventListener('change', function (e) {
+      var t = e.target;
+      if (!t || t.type !== 'radio') return;
+      var lab = fieldset.querySelector('label[for="' + t.id + '"] .text') || fieldset.querySelector('label[for="' + t.id + '"]');
+      var text = lab ? String(lab.textContent || '').trim() : t.value;
+      updateTriggerValue(fieldset, text);
+      setOpen(fieldset, false);
+    });
   }
 
   function scan(root) {
@@ -154,49 +343,26 @@
         '[data-ff-sbv-hardware-select]',
         '.productView select',
         'form[action*="/cart/add"] select',
-        '.ff-build__input[name*="contact"]',
       ].join(',')
     );
     nodes.forEach(function (select) {
       if (select.tagName !== 'SELECT') return;
-      // Rebuild when option list changed (certified color refresh)
-      if (select.dataset.ffTiles === '1') {
-        var sig = Array.prototype.map
-          .call(select.options, function (o) {
-            return o.value + ':' + o.text;
-          })
-          .join('|');
-        if (select.dataset.ffTilesSig === sig) return;
-        select.dataset.ffTilesSig = sig;
-        enhanceSelect(select);
-        return;
-      }
-      var sig2 = Array.prototype.map
+      var sig = Array.prototype.map
         .call(select.options, function (o) {
           return o.value + ':' + o.text;
         })
         .join('|');
-      select.dataset.ffTilesSig = sig2;
+      if (select.dataset.ffTiles === '1' && select.dataset.ffTilesSig === sig) return;
+      select.dataset.ffTilesSig = sig;
       enhanceSelect(select);
     });
+
+    scope.querySelectorAll('variant-radios fieldset.product-form__input, fieldset.product-form__input').forEach(enhanceNativeFieldset);
   }
 
   function boot() {
     scan(document);
-    var obs = new MutationObserver(function (mutations) {
-      var needs = false;
-      for (var i = 0; i < mutations.length; i++) {
-        var m = mutations[i];
-        if (m.type === 'childList' && (m.addedNodes.length || m.removedNodes.length)) {
-          needs = true;
-          break;
-        }
-        if (m.type === 'attributes' && m.target && m.target.tagName === 'SELECT') {
-          needs = true;
-          break;
-        }
-      }
-      if (!needs) return;
+    var obs = new MutationObserver(function () {
       clearTimeout(boot._t);
       boot._t = setTimeout(function () {
         scan(document);
@@ -209,7 +375,6 @@
       attributeFilter: ['style', 'class', 'disabled'],
     });
 
-    // Certified path repopulates color <select> options
     document.addEventListener(
       'change',
       function (e) {
