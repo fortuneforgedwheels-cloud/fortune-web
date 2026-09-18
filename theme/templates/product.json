@@ -83,19 +83,6 @@
             "text_color": "#000000"
           }
         },
-        "0a9b5cbb-2238-4065-8944-6a7db2fcfc2a": {
-          "type": "inventory",
-          "disabled": true,
-          "settings": {
-            "stock": 10,
-            "progress_height": 3,
-            "bg_color": "#d2d5d9",
-            "color": "#2d2d2d",
-            "progress_bg_color": "linear-gradient(90deg, rgba(255, 129, 119, 1), rgba(255, 134, 122, 1) 10.5%, rgba(255, 140, 127, 1) 21%, rgba(249, 145, 133, 1) 52%, rgba(207, 85, 108, 1) 78%, rgba(177, 42, 91, 1) 100%)",
-            "padding_top": 0,
-            "padding_bottom": 18
-          }
-        },
         "62a82998-c0cf-4482-903c-1f4f85fd2528": {
           "type": "variant_picker",
           "settings": {
@@ -228,7 +215,6 @@
         "916f005d-51c0-4b1d-87a2-fe0912031e3b",
         "b3a1cd47-2a6d-4a0d-95e0-5e492300967b",
         "text_648cT9",
-        "0a9b5cbb-2238-4065-8944-6a7db2fcfc2a",
         "62a82998-c0cf-4482-903c-1f4f85fd2528",
         "vo_product_options_block_JTLxBc",
         "20d53e80-0a3f-4a35-baea-d5a9b24eec6d",
