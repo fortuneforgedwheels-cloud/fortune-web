@@ -27,11 +27,13 @@ Torrin edits text in the Shopify theme editor. Those values live in:
    ```
    Do **not** include `config/settings_data.json` or template JSON in a push unless you just synced from Shopify and are intentionally publishing structural template changes **while keeping pulled settings values**.
 
+3b. **Never push without `--nodelete`.** Incomplete branches previously deleted Featured Specs and the quote gate on live. `theme:push:code` / `with-env.sh` force `--nodelete` and assert protected files. If assert fails, restore files — do not push.
+
 4. **When you must edit a template JSON** (add a section, reorder, new block type):
-   - Sync first
-   - Change structure only (`type`, `block_order`, `order`, new empty blocks)
-   - Keep every existing `settings` string/image/video value from the synced file
-   - Use `node scripts/preserve-merchant-settings.mjs` if merging a structural patch onto synced copy
+ - Sync first
+ - Change structure only (`type`, `block_order`, `order`, new empty blocks)
+ - Keep every existing `settings` string/image/video value from the synced file
+ - Use `node scripts/preserve-merchant-settings.mjs` if merging a structural patch onto synced copy
 
 5. **Do not hardcode storefront copy in JS** that rewrites theme-editor text (no “replace this label with …” bootloaders). Routing/cache fixes are fine; text overrides are not.
 
