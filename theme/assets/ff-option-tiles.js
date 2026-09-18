@@ -10,8 +10,9 @@
 
   var SKIP_NAME = /^(id|quantity|country|province|address|utf8|form_type|checkout)$/i;
   var SKIP_ID = /^(Variants-|Address|Country|Province)/i;
-  var PLACEHOLDER = /^(choose one|select|please select|--|\s*)$/i;
+  var PLACEHOLDER = /^(choose one|select one|select|please select|--|\s*)$/i;
   var HELPER = /^\^\^/;
+  var SELECT_ONE = 'Select one';
   var uid = 0;
 
   function esc(text) {
@@ -122,10 +123,12 @@
       valueEl.textContent = text;
       valueEl.hidden = false;
       acc.classList.add('has-value');
+      acc.dataset.ffPicked = '1';
     } else {
-      valueEl.textContent = 'Select';
+      valueEl.textContent = SELECT_ONE;
       valueEl.hidden = false;
       acc.classList.remove('has-value');
+      delete acc.dataset.ffPicked;
     }
   }
 
@@ -165,8 +168,8 @@
       input.name = groupName;
       input.value = opt.value;
       input.disabled = !!opt.disabled;
-      if (opt.selected || select.value === opt.value) input.checked = true;
-      if (!select.value && index === 0 && !opt.selected) input.checked = false;
+      /* Start unchecked so the accordion shows "Select one" until the shopper picks. */
+      input.checked = false;
 
       var card = document.createElement('span');
       card.className = 'ff-option-tiles__card';
@@ -195,7 +198,6 @@
       });
     });
 
-    if (select.value) syncFromSelect(select, root);
     return root;
   }
 
@@ -208,12 +210,10 @@
 
     var groupName = 'ff-tiles-' + ++uid;
     var labelText = findLabelText(select);
-    var current = selectedLabel(select);
     var tiles = buildTileGrid(select, options, groupName);
 
     var acc = document.createElement('div');
     acc.className = 'ff-option-acc';
-    if (current) acc.classList.add('has-value');
 
     var btn = document.createElement('button');
     btn.type = 'button';
@@ -224,7 +224,7 @@
       esc(labelText) +
       '</span>' +
       '<span class="ff-option-acc__value">' +
-      esc(current || 'Select') +
+      esc(SELECT_ONE) +
       '</span>' +
       '<span class="ff-option-acc__chevron" aria-hidden="true"></span>';
 
@@ -250,6 +250,8 @@
       select.addEventListener('change', function () {
         var host = select.nextElementSibling;
         if (!host || !host.classList.contains('ff-option-acc')) return;
+        /* Only mirror native changes after the shopper has picked via tiles. */
+        if (host.dataset.ffPicked !== '1') return;
         var grid = host.querySelector('.ff-option-tiles');
         syncFromSelect(select, grid);
         updateTriggerValue(host, selectedLabel(select));
@@ -271,14 +273,10 @@
     fieldset.classList.add('ff-option-acc', 'ff-option-acc--native');
 
     var title = 'Option';
-    var current = '';
     if (legend) {
       var clone = legend.cloneNode(true);
       var selectedSpan = clone.querySelector('[data-header-option]');
-      if (selectedSpan) {
-        current = String(selectedSpan.textContent || '').trim();
-        selectedSpan.remove();
-      }
+      if (selectedSpan) selectedSpan.remove();
       title = String(clone.textContent || '')
         .replace(/:/g, '')
         .replace(/\s+/g, ' ')
@@ -294,7 +292,7 @@
       esc(title) +
       '</span>' +
       '<span class="ff-option-acc__value">' +
-      esc(current || 'Select') +
+      esc(SELECT_ONE) +
       '</span>' +
       '<span class="ff-option-acc__chevron" aria-hidden="true"></span>';
 
@@ -305,6 +303,11 @@
     // Move option labels into panel (keep radios + labels together)
     Array.prototype.forEach.call(fieldset.querySelectorAll('.product-form__radio, .product-form__label'), function (el) {
       panel.appendChild(el);
+    });
+
+    /* Clear auto-checked radios so each option starts as "Select one". */
+    Array.prototype.forEach.call(radios, function (radio) {
+      radio.checked = false;
     });
 
     if (legend) legend.style.display = 'none';

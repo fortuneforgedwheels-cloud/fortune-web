@@ -84,8 +84,16 @@ select.ff-option-tiles__native,
   letter-spacing: 0.01em;
 }
 
+.ff-option-acc:not(.has-value) > .ff-option-acc__trigger .ff-option-acc__value {
+  font-style: italic;
+  font-weight: 500;
+  color: #9a9892;
+  text-transform: none;
+}
+
 .ff-option-acc.has-value > .ff-option-acc__trigger .ff-option-acc__value {
   color: #f0f3f5;
+  font-style: normal;
 }
 
 .ff-option-acc__chevron {
