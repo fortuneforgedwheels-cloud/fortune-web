@@ -4,6 +4,10 @@
 {{ 'component-badge.css' | asset_url | stylesheet_tag }}
 {{ 'component-rte.css' | asset_url | stylesheet_tag }}
 {{ 'component-product-form.css' | asset_url | stylesheet_tag }}
+{{ 'ff-option-tiles.css' | asset_url | stylesheet_tag }}
+{{ 'ff-product-specs.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ff-option-tiles.js' | asset_url }}" defer></script>
+<script src="{{ 'ff-product-specs.js' | asset_url }}" defer></script>
 
 {%- liquid
   assign ff_hide_public_pdp = false
@@ -710,6 +714,26 @@
                                                 price_class: 'price--large'
                                             -%}
                                         </div>
+                                    {%- when 'description' -%}
+                                        {%- liquid
+                                          assign ff_desc = product.description
+                                          if product.selected_or_first_available_variant.metafields.c_f.variant_description != blank
+                                            assign ff_desc = product.selected_or_first_available_variant.metafields.c_f.variant_description
+                                          endif
+                                        -%}
+                                        {%- if ff_desc != blank -%}
+                                          <div
+                                            class="ff-product-specs element-spacing halo-text-format"
+                                            {{ block.shopify_attributes }}
+                                            data-ff-product-specs
+                                            data-product-description-{{ section.id }}-{{ product.id }}
+                                          >
+                                            <div class="ff-product-specs__label">{{ block.settings.title | default: 'Fitment & Specs' | escape }}</div>
+                                            <div class="ff-product-specs__body">
+                                              {{ ff_desc }}
+                                            </div>
+                                          </div>
+                                        {%- endif -%}
                                     {%- when 'promotion' -%}
                                         {%- liquid
                                             assign padding_top = block.settings.padding_top
@@ -1262,7 +1286,7 @@
                                             {%- liquid
                                                 assign padding_top = block.settings.padding_top
                                                 assign padding_bottom = block.settings.padding_bottom
-                                                assign picker_type = block.settings.picker_type
+                                                assign picker_type = 'button'
                                                 assign show_border_top = block.settings.show_border_top
                                                 if show_border_top
                                                     assign option_border_top = block.settings.option_border_top

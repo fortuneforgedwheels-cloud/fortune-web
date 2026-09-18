@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # Push Liquid/CSS/JS/assets only — never settings_data or template JSON.
-# Use this for layout/code deploys so theme-editor text is not overwritten.
+# ALWAYS uses --nodelete so remote-only live files are never wiped.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
+
+bash "${ROOT}/scripts/assert-protected-theme-files.sh"
 
 THEME_ID="${SHOPIFY_THEME_ID:-188578300179}"
 ALLOW_LIVE_FLAG=()
@@ -41,9 +43,10 @@ if [[ ! -x "${ROOT}/node_modules/.bin/shopify" ]]; then
 fi
 
 export PATH="${ROOT}/node_modules/.bin:${PATH}"
-echo "==> Pushing code-only files to theme ${THEME_ID} (no settings_data / templates)"
+echo "==> Pushing code-only files to theme ${THEME_ID} (no settings_data / templates; --nodelete REQUIRED)"
 bash scripts/with-env.sh shopify theme push \
   --path theme \
   --theme "$THEME_ID" \
+  --nodelete \
   "${ALLOW_LIVE_FLAG[@]}" \
   "${ONLY_ARGS[@]}"

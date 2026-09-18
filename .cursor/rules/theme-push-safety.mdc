@@ -1,0 +1,25 @@
+---
+description: Never delete live theme files on push; protect Featured Specs, quote gate, SBV
+alwaysApply: true
+---
+
+# Theme push safety — never wipe live again
+
+Live theme files have been deleted by pushes from incomplete branches. That must never happen again.
+
+## Hard rules
+
+1. **Every** `shopify theme push` MUST include `--nodelete`.
+2. Prefer `npm run theme:push:code` (already forces `--nodelete` + protected-file assert).
+3. Before any push, protected files must exist locally — run:
+   ```bash
+   npm run theme:assert-protected
+   ```
+4. Never call bare `shopify theme push` without going through `scripts/with-env.sh` (it injects `--nodelete` and asserts).
+5. Do **not** remove, rename, or “clean up” these without Torrin explicitly asking:
+   - `theme/sections/ff-featured-specs.liquid` (+ css/js)
+   - `theme/sections/ff-simple-build.liquid` BUILD MY QUOTE gate + `ff-quote-meta.js`
+   - `theme/snippets/ff-shop-by-vehicle-bar.liquid` / wheel grid / quote form
+6. After a live push, verify `/?page=1` does **not** contain `Failed to render section`.
+
+If a push would delete remote-only files or protected files are missing: **stop and restore**, do not push.

@@ -24,6 +24,15 @@ Torrin edits copy in the Shopify theme editor. Agents must **not** overwrite tho
 - Full `theme push` of the whole tree when only code changed
 - Reintroduce hardcoded hero CDN MP4/image fallbacks (Theme Editor media only)
 - Treat bare `/` as a reliable homepage URL on this shop
+- **Push without `--nodelete`** (wipes Featured Specs, quote gate, and other live-only files)
+
+### Theme push safety (permanent — never wipe live)
+
+- **Every** theme push must use `--nodelete`. `scripts/with-env.sh` forces it on `shopify theme push`.
+- `npm run theme:push:code` asserts protected files exist, then pushes with `--nodelete`.
+- Protected list: `scripts/protected-theme-files.txt` (Featured Specs, quote gate/meta, SBV bar, etc.).
+- Before/after live deploys: confirm `/?page=1` has no `Failed to render section`.
+- If protected files are missing on the branch: restore them first — never push an incomplete theme tree.
 
 ### Homepage / Theme Editor media (permanent)
 

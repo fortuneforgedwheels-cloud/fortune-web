@@ -1,0 +1,108 @@
+/* Featured-spec buy-box: only dotted list visible by default */
+.ff-product-specs {
+  margin: 0 0 1.1rem;
+  padding: 0.95rem 1rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f4f4f4;
+}
+
+.ff-product-specs__label {
+  margin: 0 0 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.ff-product-specs__body {
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: #f7f7f7;
+}
+
+.ff-product-specs__body > ul {
+  margin: 0;
+  padding-left: 1.15rem;
+  list-style: disc;
+}
+
+.ff-product-specs__body > ul li {
+  margin: 0.28rem 0;
+}
+
+.ff-product-specs__body strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.ff-product-specs__body em {
+  font-style: italic;
+}
+
+/* Collapsed extras (intro / center-cap note / other paragraphs) */
+.ff-product-specs__extra {
+  display: none;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.22);
+}
+
+.ff-product-specs.is-expanded .ff-product-specs__extra {
+  display: block;
+}
+
+.ff-product-specs__extra > *:first-child {
+  margin-top: 0;
+}
+
+.ff-product-specs__extra p {
+  margin: 0 0 0.65rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.ff-product-specs__extra p:last-child {
+  margin-bottom: 0;
+}
+
+.ff-product-specs__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.7rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.ff-product-specs__toggle:hover,
+.ff-product-specs__toggle:focus-visible {
+  opacity: 0.85;
+  outline: none;
+}
+
+.ff-product-specs__toggle[hidden] {
+  display: none !important;
+}
+
+@media screen and (max-width: 767px) {
+  .ff-product-specs {
+    margin-bottom: 0.9rem;
+    padding: 0.85rem 0.9rem;
+  }
+
+  .ff-product-specs__body {
+    font-size: 0.94rem;
+  }
+}

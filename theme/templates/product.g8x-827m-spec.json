@@ -55,7 +55,7 @@
           "type": "title",
           "settings": {
             "padding_top": 0,
-            "padding_bottom": 15,
+            "padding_bottom": 8,
             "font_family": "font_1",
             "font_size": 30,
             "font_weight": "400",
@@ -75,13 +75,14 @@
           "settings": {
             "text": "",
             "padding_top": 0,
-            "padding_bottom": 0,
+            "padding_bottom": 14,
             "font_family": "font_1",
-            "font_size": 16,
-            "font_weight": "400",
+            "font_size": 15,
+            "font_weight": "500",
             "text_transform": "none",
-            "text_color": "#000000"
-          }
+            "text_color": "#ffffff"
+          },
+          "disabled": true
         },
         "62a82998-c0cf-4482-903c-1f4f85fd2528": {
           "type": "variant_picker",
@@ -173,8 +174,8 @@
         "description_4UA6wE": {
           "type": "description",
           "settings": {
-            "title": "Description",
-            "show_readmore": true
+            "title": "Fitment & Specs",
+            "show_readmore": false
           }
         },
         "9a938cec-e189-4ea3-a9d8-ee8ec7b8db4b": {
@@ -214,6 +215,7 @@
       "block_order": [
         "916f005d-51c0-4b1d-87a2-fe0912031e3b",
         "b3a1cd47-2a6d-4a0d-95e0-5e492300967b",
+        "description_4UA6wE",
         "text_648cT9",
         "62a82998-c0cf-4482-903c-1f4f85fd2528",
         "vo_product_options_block_JTLxBc",
@@ -224,14 +226,16 @@
         "b4609e45-58ee-4ee6-869d-f5c400e360f4",
         "504f3753-334c-4e93-a59e-2bfa572089ed",
         "f2064602-6789-4117-9625-a026013c390b",
-        "description_4UA6wE",
         "9a938cec-e189-4ea3-a9d8-ee8ec7b8db4b",
         "94fc3b62-4c63-4483-9409-f26e88b685c2",
         "608e078e-7263-4ca0-ae83-7b903b839e35"
       ],
       "custom_css": [
         ".shopify-payment-button {display: none;}",
-        ".productView-quantity {max-width: 220px; justify-content: center;}"
+        ".productView-quantity {max-width: 220px; justify-content: center;}",
+        ".ff-fitment-native-hidden, [data-ff-fitment-native-hidden='true'] { display: none !important; }",
+        ".productView-variants .product-form__input:has(input[name*='fitment']) { display: none !important; }",
+        ".productView-variants .product-form__input--dropdown:has(select option[value='20/20']) { display: none !important; }"
       ],
       "settings": {
         "colors_bg": "",

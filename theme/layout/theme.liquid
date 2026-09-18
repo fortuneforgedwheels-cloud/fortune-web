@@ -410,6 +410,7 @@
             );
           })();
         </script>
+        <script src="{{ 'ff-never-soldout.js' | asset_url }}" defer></script>
         <script src="{{ 'ff-bcpo-chrome-surcharge.js' | asset_url }}" defer></script>
         <script>
           /* Immediate escape from sticky IndexController caches onto fresh autoplay homepage. */
@@ -567,6 +568,8 @@
         </div>
         {% render 'ff-offer-popup' %}
         {{ 'ff-storefront-fix.css' | asset_url | stylesheet_tag }}
+        {{ 'ff-option-tiles.css' | asset_url | stylesheet_tag }}
+        <script src="{{ 'ff-option-tiles.js' | asset_url }}" defer></script>
         <script src="{{ 'ff-about-route.js' | asset_url }}" defer></script>
         <script src="{{ 'ff-offer-boot-v2.js' | asset_url }}" defer></script>
         {{ 'rtl-section-header.css' | asset_url | stylesheet_tag }}
