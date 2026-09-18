@@ -30,10 +30,8 @@
         "slide_two": {
           "type": "slide",
           "settings": {
-            "video": "shopify://files/videos/G80 done 2.MP4",
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_6.58.56_PM.png",
-            "mobile_video": "shopify://files/videos/G80 done 2.MP4",
-            "mobile_image": "shopify://shop_images/IMG_0287_2.jpg",
+            "image": "shopify://shop_images/Mediabymarius-1275.jpg",
+            "mobile_image": "shopify://shop_images/Mediabymarius-1275.jpg",
             "title": "Two-Piece Forged",
             "title_size": 42,
             "title_align": "left",
@@ -46,7 +44,7 @@
           "type": "slide",
           "settings": {
             "video": "shopify://files/videos/fortune 1080 rev 1.MP4",
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM_c0f745e4-4f88-4373-8d62-148cfcbbe059.png",
+            "image": "shopify://shop_images/IMG_4094.jpg",
             "mobile_video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E.mov",
             "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
             "title": "Beadlock Forged",
@@ -73,6 +71,136 @@
         "content_offset_y": 0
       }
     },
+    "ff_simple_build_main": {
+      "type": "ff-simple-build",
+      "settings": {
+        "eyebrow": "Fortune Forged",
+        "eyebrow_size": 12,
+        "eyebrow_align": "left",
+        "title": "Request a quote for your next forged wheels",
+        "subtitle": "Three steps. Tell us your vehicle, choose a setup, request a build.",
+        "gate_label": "BUILD MY QUOTE",
+        "subtitle_size": 18,
+        "subtitle_align": "left",
+        "step1_label": "Vehicle",
+        "step2_label": "Style",
+        "step3_label": "Quote",
+        "step1_heading": "What do you drive?",
+        "step1_copy": "Enter your year, make, and model so we can size and fit the wheel correctly.",
+        "vehicle_placeholder": "e.g. 2024 BMW G80 M3",
+        "continue_label": "Continue",
+        "step2_heading": "Choose your setup",
+        "step2_copy": "Browse the hottest designs, pick Monoblock, 2-Piece, or Beadlock — or skip straight to a custom quote.",
+        "step2_hint": "Beadlock wheels are priced by the pair. Standard monoblock and two piece wheels are priced individually.",
+        "style_prompt": "Hover or tap a setup to browse every wheel — pick one, then continue",
+        "wheel_pick_hint": "Tap a wheel to select it for your quote.",
+        "continue_to_quote_label": "Continue — see my quote options",
+        "style_required_hint": "Pick a setup and a wheel above, then continue.",
+        "hottest_label": "Browse the hottest designs",
+        "hottest_desc": "See recent Fortune Forged builds and popular styles",
+        "hottest_link": "/#project-gallery",
+        "quote_cta": "Skip to custom quote",
+        "monoblock_link": "shopify://collections/monoblock-wheels",
+        "monoblock_desc": "Lightweight, single piece wheels · priced individually",
+        "monoblock_price": "Typically $2,300–$3,500+ for a set of 4",
+        "twopiece_link": "shopify://collections/two-piece-wheels",
+        "twopiece_desc": "Modular design & show ready · priced individually",
+        "twopiece_price": "Typically $4,000–$4,500+ for a set of 4",
+        "beadlock_link": "shopify://collections/beadlock-wheels",
+        "beadlock_desc": "Purpose built, drag racing beadlock wheels· Priced by the pair",
+        "beadlock_price": "Typically $1,999 per pair · most builds need 2 pairs",
+        "step3_heading": "Request your build",
+        "step3_copy": "Enter the custom details you already know — or leave fitment blank and a specialist will email or call you back to help.",
+        "budget_legend": "What’s your budget for a full set?",
+        "timeline_legend": "When do you want to order?",
+        "intent_label": "I understand Fortune Forged wheels are a premium forged product, I’ve seen the typical price range, and I’m requesting this quote because I’m seriously considering a purchase.",
+        "submit_label": "Submit my quote request",
+        "modal_eyebrow": "Quote received",
+        "modal_title": "You're on the list — one more thing",
+        "modal_lead": "Thanks for requesting a quote. Our team will follow up shortly with pricing, fitment, and next steps.",
+        "modal_offer_label": "Complimentary media day",
+        "modal_offer_copy": "When your new Fortune Forged wheels are installed, we'd love to host a complimentary media day for your build — fully covered by us. Professional content, your car, your new wheels.",
+        "modal_social_copy": "We're proud of every set we ship and would love the chance to show off your finished build across Fortune Forged socials.",
+        "modal_cta": "Yes — I'm interested",
+        "modal_dismiss": "Maybe later",
+        "modal_thanks": "Perfect. When we follow up on your quote, we'll include media day details and help coordinate after installation."
+      }
+    },
+    "ff_featured_specs_home": {
+      "type": "ff-featured-specs",
+      "blocks": {
+        "platform_c8": {
+          "type": "platform",
+          "settings": {
+            "label": "CS STYLED OEM+ G8X SPEC",
+            "image": "shopify://shop_images/Viewrecentphotos2.png",
+            "product": "827m-oem-g8x-spec",
+            "link": ""
+          }
+        },
+        "platform_g8x": {
+          "type": "platform",
+          "settings": {
+            "label": "F-05Sr F8X flush fit",
+            "image": "shopify://shop_images/View_recent_photos_4.png",
+            "product": "f-05sr-f8x-flush-fit",
+            "link": ""
+          }
+        },
+        "platform_g20": {
+          "type": "platform",
+          "settings": {
+            "label": "A90 SUPRA OEM+ BEADLOCK",
+            "image": "shopify://shop_images/IMG_6134.jpg",
+            "product": "a90-a91-mk5-supra-beadlocks-2020-edition",
+            "link": ""
+          }
+        },
+        "platform_btMRbV": {
+          "type": "platform",
+          "settings": {
+            "label": "F-11R 600LT Fitment",
+            "image": "shopify://shop_images/View_recent_photos_5.png",
+            "product": "f-11r-600lt-forged-monoblock-set",
+            "link": ""
+          }
+        },
+        "platform_DYKbpM": {
+          "type": "platform",
+          "settings": {
+            "label": "F-12R C8 Z06 FITMENT",
+            "image": "shopify://shop_images/DSC06098.jpg",
+            "product": "f-12r-c8-z06-forged-monoblock-set",
+            "link": ""
+          }
+        },
+        "platform_AexcTx": {
+          "type": "platform",
+          "settings": {
+            "label": "G20 FULL BEADLOCK SET",
+            "image": "shopify://shop_images/Screenshot_2026-09-14_at_11.32.00_PM.png",
+            "product": "g20-full-beadlock-set",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "platform_c8",
+        "platform_g8x",
+        "platform_g20",
+        "platform_btMRbV",
+        "platform_DYKbpM",
+        "platform_AexcTx"
+      ],
+      "settings": {
+        "show_section": true,
+        "heading": "Shop featured specs",
+        "subheading": "See a setup you like? Order. Install. Drive.",
+        "fallback_link": "/pages/shop-by-vehicle",
+        "padding_top": 28,
+        "padding_bottom": 36
+      }
+    },
     "ff_top_selling_monoblocks_home": {
       "type": "ff-top-selling-monoblocks",
       "settings": {
@@ -87,49 +215,6 @@
         "view_link": "shopify://collections/monoblock-wheels",
         "padding_top": 40,
         "padding_bottom": 64
-      }
-    },
-    "ff_simple_build_main": {
-      "type": "ff-simple-build",
-      "settings": {
-        "eyebrow": "Fortune Forged",
-        "eyebrow_size": 12,
-        "eyebrow_align": "left",
-        "title": "Request a quote for your next forged wheels",
-        "subtitle": "Three steps. Tell us your vehicle, choose a setup, request a build.",
-        "subtitle_size": 18,
-        "subtitle_align": "left",
-        "step1_label": "Vehicle",
-        "step2_label": "Style",
-        "step3_label": "Quote",
-        "step1_heading": "What do you drive?",
-        "step1_copy": "Enter your year, make, and model so we can size and fit the wheel correctly.",
-        "vehicle_placeholder": "e.g. 2024 BMW G80 M3",
-        "continue_label": "Continue",
-        "step2_heading": "Choose your setup",
-        "step2_copy": "Browse the hottest designs, pick Monoblock, 2-Piece, or Beadlock — or skip straight to a custom quote.",
-        "step2_hint": "Beadlock wheels are priced by the pair. Standard monoblock and two piece wheels are priced individually.",
-        "hottest_label": "Browse the hottest designs",
-        "hottest_desc": "See recent Fortune Forged builds and popular styles",
-        "hottest_link": "/#project-gallery",
-        "quote_cta": "Skip to custom quote",
-        "monoblock_link": "shopify://collections/monoblock-wheels",
-        "monoblock_desc": "One-piece forged strength · priced individually",
-        "twopiece_link": "shopify://collections/two-piece-wheels",
-        "twopiece_desc": "Modular fitment & finish · priced individually",
-        "beadlock_link": "shopify://collections/beadlock-wheels",
-        "beadlock_desc": "Off-road lock-ring builds · priced by the pair",
-        "step3_heading": "Request your build",
-        "step3_copy": "Enter the custom details you already know — or leave fitment blank and a specialist will email or call you back to help.",
-        "modal_eyebrow": "Quote received",
-        "modal_title": "You're on the list — one more thing",
-        "modal_lead": "Thanks for requesting a quote. Our team will follow up shortly with pricing, fitment, and next steps.",
-        "modal_offer_label": "Complimentary media day",
-        "modal_offer_copy": "When your new Fortune Forged wheels are installed, we'd love to host a complimentary media day for your build — fully covered by us. Professional content, your car, your new wheels.",
-        "modal_social_copy": "We're proud of every set we ship and would love the chance to show off your finished build across Fortune Forged socials.",
-        "modal_cta": "Yes — I'm interested",
-        "modal_dismiss": "Maybe later",
-        "modal_thanks": "Perfect. When we follow up on your quote, we'll include media day details and help coordinate after installation."
       }
     },
     "ff_fan_favorites_main": {
@@ -292,7 +377,7 @@
           "settings": {
             "title": "Bespoke",
             "image": "shopify://shop_images/DSC09942.jpg",
-            "text": "We offer a virtually limitless customization to complement your vehicle's aesthetic. Choose from hand brushed, polished, chrome, satin, gloss, or custom powder-coated finishes, paired with bespoke hardware, center caps, and accent options. Whether configured as a monoblock, two-piece, or a beadlock design, each set is crafted to reflect your vision.",
+            "text": "We offer a virtually limitless customization to complement your vehicle's aesthetic. Choose from hand brushed, polished, chrome, satin, gloss, or custom powder-coated finishes, paired with bespoke hardware, Fortune Forged center-cap options, and accents. Where noted, wheels are OEM Center Cap Compatible—manufactured to accept your existing compatible factory/OEM center caps. OEM center caps are not manufactured, sold, supplied, or included by Fortune Forged Wheels. Whether configured as a monoblock, two-piece, or a beadlock design, each set is crafted to reflect your vision.",
             "link_label": "CUSTOM FINISHES & ONE-OFF BUILDS",
             "link": "shopify://collections/beadlock-wheels"
           }
@@ -629,8 +714,9 @@
   },
   "order": [
     "ff_hero_editor_always_20260801c",
-    "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
+    "ff_featured_specs_home",
+    "ff_top_selling_monoblocks_home",
     "ff_fan_favorites_main",
     "ff_value_props_main",
     "ff_trust_badges_home",
