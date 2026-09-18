@@ -3,12 +3,12 @@
 /* ─── wrapper ─── */
 .ff-sbv {
   --ff-sbv-bg: #0a0a0a;
-  --ff-sbv-pad-y: 10px;
+  --ff-sbv-pad-y: 8px;
   --ff-sbv-gold: #e2d0a8;
   --ff-sbv-gold-rgb: 226, 208, 168;
   background: var(--ff-sbv-bg) !important;
   color: #fff;
-  padding: var(--ff-sbv-pad-y) 16px !important;
+  padding: var(--ff-sbv-pad-y) 16px 12px !important;
 }
 
 .ff-sbv__inner {

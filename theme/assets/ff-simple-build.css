@@ -8,7 +8,7 @@
     radial-gradient(120% 80% at 50% -10%, rgba(220, 225, 230, 0.18), transparent 55%),
     linear-gradient(180deg, #0b0b0b 0%, #111 100%);
   color: var(--ff-ink);
-  padding: 48px 20px 64px;
+  padding: 36px 20px 20px;
 }
 
 .ff-build__inner {
@@ -18,7 +18,8 @@
 
 .ff-build__gated {
   position: relative;
-  margin-top: 18px;
+  margin-top: 14px;
+  margin-bottom: 0;
 }
 
 .ff-build__gate {
@@ -107,7 +108,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  margin: 32px 0 28px;
+  margin: 22px 0 16px;
   padding: 0;
 }
 
@@ -149,7 +150,7 @@
 .ff-build__panel {
   background: var(--ff-panel);
   border: 1px solid var(--ff-line);
-  padding: 28px 24px;
+  padding: 22px 22px 18px;
 }
 
 .ff-build__panel-title {
@@ -784,4 +785,10 @@ html.ff-modal-open {
   background: rgba(220, 225, 230, 0.16);
   color: var(--ff-ink);
   line-height: 1.45;
+}
+
+/* Tighten gap under quote so Featured Specs / SBV arrive sooner */
+.shopify-section.section-ff-simple-build {
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
