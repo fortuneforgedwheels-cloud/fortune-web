@@ -1,0 +1,135 @@
+{% comment %}
+  Direct-purchase full-set configurator (PDP ATC only).
+  Does NOT touch the Fortune Forged Build Quote form.
+{% endcomment %}
+{%- render 'ff-wheel-context', product: product -%}
+{%- if ff_is_fullset_priced -%}
+  {%- liquid
+    assign ff_diams = ''
+    for option in product.options_with_values
+      assign oname = option.name | downcase
+      if oname contains 'diameter' or oname == 'size' or oname contains 'fitment'
+        for value in option.values
+          assign ff_diams = ff_diams | append: value | append: '||'
+        endfor
+      endif
+    endfor
+  -%}
+  <div
+    class="ff-pdp-config"
+    data-ff-pdp-config
+    data-ff-kind="{{ ff_wheel_kind }}"
+    data-ff-product-id="{{ product.id }}"
+    data-ff-diameters="{{ ff_diams | escape }}"
+    data-ff-section="{{ section.id }}"
+  >
+    <div class="ff-pdp-config__vehicle" data-ff-vehicle-block>
+      <p class="ff-pdp-config__eyebrow">Your vehicle</p>
+      <div class="ff-pdp-config__vehicle-display" data-ff-vehicle-display hidden>
+        <p class="ff-pdp-config__vehicle-label" data-ff-vehicle-label></p>
+        <button type="button" class="ff-pdp-config__link" data-ff-vehicle-change>Change vehicle</button>
+      </div>
+      <div class="ff-pdp-config__vehicle-form" data-ff-vehicle-form>
+        <div class="ff-pdp-config__grid">
+          <label class="ff-pdp-config__field">
+            <span>Year</span>
+            <input type="text" inputmode="numeric" autocomplete="off" placeholder="2025" data-ff-year>
+          </label>
+          <label class="ff-pdp-config__field">
+            <span>Make</span>
+            <input type="text" autocomplete="off" placeholder="BMW" data-ff-make>
+          </label>
+          <label class="ff-pdp-config__field">
+            <span>Model</span>
+            <input type="text" autocomplete="off" placeholder="M3" data-ff-model>
+          </label>
+          <label class="ff-pdp-config__field">
+            <span>Trim</span>
+            <input type="text" autocomplete="off" placeholder="Competition xDrive" data-ff-trim>
+          </label>
+        </div>
+        <button type="button" class="button button--secondary ff-pdp-config__save-vehicle" data-ff-vehicle-save>
+          Save vehicle
+        </button>
+        <p class="ff-pdp-config__error" data-ff-vehicle-error hidden>Select your vehicle so we can build the correct fitment.</p>
+      </div>
+    </div>
+
+    <div class="ff-pdp-config__section" data-ff-size-section>
+      <p class="ff-pdp-config__eyebrow">Choose your wheel size</p>
+      <p class="ff-pdp-config__helper">Front / Rear</p>
+      <div class="ff-pdp-config__packages" data-ff-size-packages role="list"></div>
+      <p class="ff-pdp-config__error" data-ff-size-error hidden>Choose a wheel size for your full set.</p>
+    </div>
+
+    <div class="ff-pdp-config__section">
+      <p class="ff-pdp-config__eyebrow">How do you want them to fit?</p>
+      <div class="ff-pdp-config__fitments" role="radiogroup" aria-label="Fitment style">
+        <label class="ff-pdp-config__fit">
+          <input type="radio" name="ff_pdp_fitment_ui" value="OEM+ / Conservative" data-ff-fitment-style>
+          <span>
+            <strong>OEM+ / Conservative</strong>
+            <em>Clean fitment with additional clearance in mind.</em>
+          </span>
+        </label>
+        <label class="ff-pdp-config__fit is-recommended">
+          <input type="radio" name="ff_pdp_fitment_ui" value="Flush" data-ff-fitment-style checked>
+          <span>
+            <strong>Flush <span class="ff-pdp-config__rec">Recommended</span></strong>
+            <em>Clean, flush-to-fender fitment. We'll determine the proper front and rear widths and offsets.</em>
+          </span>
+        </label>
+        <label class="ff-pdp-config__fit">
+          <input type="radio" name="ff_pdp_fitment_ui" value="Aggressive" data-ff-fitment-style>
+          <span>
+            <strong>Aggressive</strong>
+            <em>More aggressive stance and concavity where vehicle clearance allows.</em>
+          </span>
+        </label>
+      </div>
+      <p class="ff-pdp-config__reassure">
+        <strong>We handle the specs</strong>
+        Every set is built specifically for your vehicle. We'll determine the proper front and rear widths, offsets and brake clearance before production.
+      </p>
+    </div>
+
+    <details class="ff-pdp-config__advanced" data-ff-advanced>
+      <summary>I know my exact specs</summary>
+      <p class="ff-pdp-config__helper">For enthusiasts who already know their front/rear sizes. These become customer-requested specifications on your order.</p>
+      <div class="ff-pdp-config__grid">
+        <label class="ff-pdp-config__field">
+          <span>Front (e.g. 20x10 ET15)</span>
+          <input type="text" placeholder="20x10 ET15" data-ff-front-spec>
+        </label>
+        <label class="ff-pdp-config__field">
+          <span>Rear (e.g. 20x11 ET18)</span>
+          <input type="text" placeholder="20x11 ET18" data-ff-rear-spec>
+        </label>
+      </div>
+      <p class="ff-pdp-config__error" data-ff-advanced-error hidden>Enter both front and rear specs, or close this section to let Fortune Forged build the fitment.</p>
+    </details>
+
+    <div class="ff-pdp-config__section">
+      <p class="ff-pdp-config__eyebrow">Any fitment-related modifications?</p>
+      <div class="ff-pdp-config__mods">
+        <label class="ff-pdp-config__chip">
+          <input type="radio" name="ff_pdp_mods_ui" value="Stock / No" data-ff-mods-choice checked>
+          <span>Stock / No</span>
+        </label>
+        <label class="ff-pdp-config__chip">
+          <input type="radio" name="ff_pdp_mods_ui" value="Yes" data-ff-mods-choice>
+          <span>Yes</span>
+        </label>
+      </div>
+      <label class="ff-pdp-config__field" data-ff-mods-detail-wrap hidden>
+        <span>Tell us about suspension, widebody/fenders, aftermarket brakes or other fitment-related modifications.</span>
+        <textarea rows="2" data-ff-mods-detail placeholder="Optional details"></textarea>
+      </label>
+    </div>
+
+    <p class="ff-pdp-config__confidence">
+      <strong>Vehicle-specific fitment</strong>
+      Your set will be reviewed and built around the vehicle and fitment preference submitted with your order.
+    </p>
+  </div>
+{%- endif -%}

@@ -2,6 +2,7 @@
 {{ 'component-review.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'ff-fullset-price.css' | asset_url | stylesheet_tag }}
+{{ 'ff-pdp-configurator.css' | asset_url | stylesheet_tag }}
 {{ 'component-badge.css' | asset_url | stylesheet_tag }}
 {{ 'component-rte.css' | asset_url | stylesheet_tag }}
 {{ 'component-product-form.css' | asset_url | stylesheet_tag }}
@@ -475,6 +476,7 @@
                                                 price_class: 'price--large'
                                             -%}
                                             {%- render 'ff-pdp-confidence', product: product -%}
+                                            {%- render 'ff-pdp-configurator', product: product, section: section -%}
                                         </div>
                                     {%- when 'promotion' -%}
                                         {%- liquid
@@ -779,7 +781,22 @@
                                                 <div class="productView-group">
                                                     <div class="productView-groupTop">
                                                         {%- if show_qty -%}
-                                                            {%- render 'ff-fitment-path', product: product -%}
+                                                            {%- comment -%} PDP configurator UI renders near price; props only here inside the form {%- endcomment -%}
+                                                            {%- render 'ff-wheel-context', product: product -%}
+                                                            {%- if ff_is_fullset_priced -%}
+                                                              <div class="ff-pdp-config__props" data-ff-pdp-props hidden aria-hidden="true">
+                                                                <input type="hidden" name="properties[Order Type]" value="Full Set">
+                                                                <input type="hidden" name="properties[Vehicle]" value="" data-ff-prop-vehicle>
+                                                                <input type="hidden" name="properties[Wheel Size]" value="" data-ff-prop-wheel-size>
+                                                                <input type="hidden" name="properties[Front Diameter]" value="" data-ff-prop-front-diam>
+                                                                <input type="hidden" name="properties[Rear Diameter]" value="" data-ff-prop-rear-diam>
+                                                                <input type="hidden" name="properties[Fitment]" value="Flush" data-ff-prop-fitment>
+                                                                <input type="hidden" name="properties[Fitment Method]" value="Fortune Forged Spec" data-ff-prop-fitment-method>
+                                                                <input type="hidden" name="properties[Front Spec]" value="" data-ff-prop-front-spec>
+                                                                <input type="hidden" name="properties[Rear Spec]" value="" data-ff-prop-rear-spec>
+                                                                <input type="hidden" name="properties[Modifications]" value="Stock / No" data-ff-prop-mods>
+                                                              </div>
+                                                            {%- endif -%}
                                                             {% render 'product-quantity',
                                                                 type: 'main-product',
                                                                 style: qty_style,
