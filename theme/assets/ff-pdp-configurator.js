@@ -253,11 +253,14 @@
       if (state.advanced) {
         setWrapperHidden(opts.width, false);
         setWrapperHidden(opts.offset, false);
+        setWrapperHidden(opts.lug, false);
       } else {
         setSelectValue(opts.width, PLUG);
         setSelectValue(opts.offset, PLUG);
+        setSelectValue(opts.lug, PLUG);
         setWrapperHidden(opts.width, true);
         setWrapperHidden(opts.offset, true);
+        setWrapperHidden(opts.lug, true);
       }
     }
 
@@ -497,6 +500,7 @@
         var opts = findOptionSelects();
         setSelectValue(opts.width, PLUG);
         setSelectValue(opts.offset, PLUG);
+        setSelectValue(opts.lug, PLUG);
       }
       syncProps();
       return true;

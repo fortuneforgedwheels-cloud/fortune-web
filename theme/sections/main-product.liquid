@@ -4072,4 +4072,9 @@
 }
 {% endschema %}
 
+{%- render 'ff-wheel-context', product: product -%}
+{%- if ff_is_fullset_priced -%}
+  <script src="{{ 'ff-pdp-configurator.js' | asset_url }}" defer></script>
+{%- endif -%}
+
 <!-- bcpo done -->
