@@ -34,15 +34,35 @@
     String(raw || '')
       .split('||')
       .forEach(function (part) {
-        var m = String(part).match(/(1[5-9]|2[0-4])/);
-        if (m) {
-          var n = parseInt(m[1], 10);
+        var matches = String(part).match(/(1[5-9]|2[0-4])/g);
+        if (!matches) return;
+        matches.forEach(function (m) {
+          var n = parseInt(m, 10);
           if (out.indexOf(n) === -1) out.push(n);
-        }
+        });
       });
     out.sort(function (a, b) {
       return a - b;
     });
+    return out;
+  }
+
+  function parseExactPackages(raw) {
+    var out = [];
+    String(raw || '')
+      .split('||')
+      .forEach(function (part) {
+        var m = String(part).match(/(1[5-9]|2[0-4])\s*\/\s*(1[5-9]|2[0-4])/);
+        if (!m) return;
+        var front = parseInt(m[1], 10);
+        var rear = parseInt(m[2], 10);
+        out.push({
+          front: front,
+          rear: rear,
+          max: Math.max(front, rear),
+          exact: String(part).trim(),
+        });
+      });
     return out;
   }
 
@@ -145,12 +165,28 @@
     if (wrap) wrap.classList.toggle('ff-pdp-config-hidden-tech', !!hidden);
   }
 
-  function selectDiameterVariant(root, maxDiam) {
-    var label = diamLabel(maxDiam);
+  function selectDiameterVariant(root, maxDiam, exactValue) {
     var productView = root.closest('.productView') || document;
     var radios = qsa(productView, 'input.product-form__radio');
+    if (exactValue) {
+      var exactHit = radios.find(function (r) {
+        return String(r.value).replace(/\s/g, '') === String(exactValue).replace(/\s/g, '');
+      });
+      if (exactHit) {
+        if (!exactHit.checked) {
+          exactHit.checked = true;
+          exactHit.dispatchEvent(new Event('change', { bubbles: true }));
+          exactHit.click();
+        }
+        return true;
+      }
+    }
+    var label = diamLabel(maxDiam);
     var hit = radios.find(function (r) {
-      return String(r.value).replace(/\s/g, '') === label.replace(/\s/g, '') || String(r.value).indexOf(String(maxDiam)) === 0;
+      return (
+        String(r.value).replace(/\s/g, '') === label.replace(/\s/g, '') ||
+        String(r.value).indexOf(String(maxDiam)) === 0
+      );
     });
     if (hit && !hit.checked) {
       hit.checked = true;
@@ -167,7 +203,11 @@
       if (!/diameter|size|fitment/.test(t) && selects.length > 1) continue;
       for (var j = 0; j < sel.options.length; j++) {
         var opt = sel.options[j];
-        if (String(opt.value).indexOf(String(maxDiam)) !== -1 || String(opt.textContent).indexOf(String(maxDiam)) !== -1) {
+        var hay = String(opt.value) + ' ' + String(opt.textContent);
+        if (
+          (exactValue && hay.replace(/\s/g, '').indexOf(String(exactValue).replace(/\s/g, '')) !== -1) ||
+          hay.indexOf(String(maxDiam)) !== -1
+        ) {
           sel.value = opt.value;
           sel.dispatchEvent(new Event('change', { bubbles: true }));
           return true;
@@ -242,7 +282,8 @@
     };
 
     var available = parseDiameters(root.getAttribute('data-ff-diameters'));
-    var packages = buildPackages(available);
+    var exactPackages = parseExactPackages(root.getAttribute('data-ff-diameters'));
+    var packages = exactPackages.length ? exactPackages : buildPackages(available);
 
     function syncTechOptions() {
       var opts = findOptionSelects();
@@ -365,7 +406,7 @@
         el.classList.toggle('is-selected', el === btn);
       });
       if (sizeError) sizeError.hidden = true;
-      selectDiameterVariant(root, pkg.max);
+      selectDiameterVariant(root, pkg.max, pkg.exact || null);
       syncProps();
       syncTechOptions();
     }
