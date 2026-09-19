@@ -7,7 +7,7 @@
 }
 
 .ff-pdp-config__eyebrow {
-  margin: 0 0 0.45rem;
+  margin: 0.55rem 0 0.45rem;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -15,10 +15,15 @@
   opacity: 0.78;
 }
 
+.ff-pdp-config__eyebrow:first-child {
+  margin-top: 0;
+}
+
 .ff-pdp-config__helper {
   margin: 0 0 0.55rem;
   font-size: 0.82rem;
   opacity: 0.7;
+  line-height: 1.4;
 }
 
 .ff-pdp-config__section {
@@ -26,10 +31,84 @@
   gap: 0.45rem;
 }
 
+.ff-pdp-config__path-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+}
+
+.ff-pdp-config__path-btn {
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+  text-align: left;
+  margin: 0;
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.ff-pdp-config__path-btn:hover,
+.ff-pdp-config__path-btn.is-active {
+  border-color: rgba(212, 175, 55, 0.85);
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.ff-pdp-config__path-btn.is-recommended {
+  border-color: rgba(212, 175, 55, 0.45);
+}
+
+.ff-pdp-config__path-badge {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.7rem;
+  padding: 0.12rem 0.45rem;
+  border: 1px solid rgba(212, 175, 55, 0.75);
+  border-radius: 999px;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(212, 175, 55, 0.95);
+}
+
+.ff-pdp-config__path-btn strong {
+  display: block;
+  padding-right: 5.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.ff-pdp-config__path-btn:not(.is-recommended) strong {
+  padding-right: 0;
+}
+
+.ff-pdp-config__path-btn em {
+  display: block;
+  font-style: normal;
+  font-size: 0.82rem;
+  opacity: 0.72;
+  line-height: 1.4;
+}
+
+.ff-pdp-config__flow {
+  display: grid;
+  gap: 1rem;
+}
+
 .ff-pdp-config__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.55rem;
+}
+
+.ff-pdp-config__grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .ff-pdp-config__field {
@@ -44,7 +123,8 @@
 }
 
 .ff-pdp-config__field input,
-.ff-pdp-config__field textarea {
+.ff-pdp-config__field textarea,
+.ff-pdp-config__field select {
   width: 100%;
   box-sizing: border-box;
   background: rgba(0, 0, 0, 0.35);
@@ -55,16 +135,21 @@
   font: inherit;
 }
 
+.ff-pdp-config__field select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.55) 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55) 50%, transparent 50%);
+  background-position: calc(100% - 16px) calc(50% - 2px), calc(100% - 11px) calc(50% - 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 1.6rem;
+}
+
 .ff-pdp-config__vehicle-label {
   margin: 0 0 0.25rem;
   font-size: 1.05rem;
   font-weight: 700;
   line-height: 1.3;
-}
-
-.ff-pdp-config__link,
-.ff-pdp-config__save-vehicle {
-  margin-top: 0.35rem;
 }
 
 .ff-pdp-config__link {
@@ -76,46 +161,35 @@
   cursor: pointer;
   font: inherit;
   font-size: 0.86rem;
+  width: fit-content;
 }
 
-.ff-pdp-config__packages {
+.ff-pdp-config__diameters {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.5rem;
 }
 
-.ff-pdp-config__package {
-  display: grid;
-  gap: 0.15rem;
-  text-align: left;
+.ff-pdp-config__diam {
   margin: 0;
-  padding: 0.75rem 0.8rem;
+  padding: 0.8rem 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.03);
   color: inherit;
   cursor: pointer;
   font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: center;
 }
 
-.ff-pdp-config__package.is-selected {
+.ff-pdp-config__diam.is-selected {
   border-color: rgba(212, 175, 55, 0.85);
   background: rgba(212, 175, 55, 0.1);
 }
 
-.ff-pdp-config__package-size {
-  font-weight: 700;
-  font-size: 1rem;
-}
-
-.ff-pdp-config__package-sub {
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.65;
-}
-
-.ff-pdp-config__fitments {
+.ff-pdp-config__layout {
   display: grid;
   gap: 0.45rem;
 }
@@ -164,63 +238,21 @@
   vertical-align: middle;
 }
 
-.ff-pdp-config__reassure,
-.ff-pdp-config__confidence {
-  margin: 0.15rem 0 0;
-  padding: 0.7rem 0.75rem;
+.ff-pdp-config__reassure {
+  margin: 0.35rem 0 0;
+  padding: 0.75rem 0.8rem;
   border-left: 2px solid rgba(212, 175, 55, 0.7);
   background: rgba(255, 255, 255, 0.03);
   font-size: 0.84rem;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
-.ff-pdp-config__reassure strong,
-.ff-pdp-config__confidence strong {
+.ff-pdp-config__reassure strong {
   display: block;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   font-size: 0.72rem;
-}
-
-.ff-pdp-config__advanced {
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 6px;
-  padding: 0.55rem 0.75rem 0.75rem;
-}
-
-.ff-pdp-config__advanced summary {
-  cursor: pointer;
-  font-weight: 650;
-  letter-spacing: 0.04em;
-  list-style: none;
-}
-
-.ff-pdp-config__advanced summary::-webkit-details-marker {
-  display: none;
-}
-
-.ff-pdp-config__mods {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.ff-pdp-config__chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin: 0;
-  padding: 0.45rem 0.7rem;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 0.86rem;
-}
-
-.ff-pdp-config__chip:has(input:checked) {
-  border-color: rgba(212, 175, 55, 0.8);
-  background: rgba(212, 175, 55, 0.1);
 }
 
 .ff-pdp-config__error {
@@ -234,17 +266,31 @@ body.ff-pdp-config-active .ff-pdp-config-hidden-tech,
   display: none !important;
 }
 
-@media (max-width: 767px) {
-  .ff-pdp-config__grid {
-    grid-template-columns: 1fr;
-  }
-
-  .ff-pdp-config__packages {
+@media (min-width: 768px) {
+  .ff-pdp-config__path-grid {
     grid-template-columns: 1fr 1fr;
   }
 
-  .ff-pdp-config__package {
-    min-height: 3.4rem;
+  .ff-pdp-config__diameters {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .ff-pdp-config__grid,
+  .ff-pdp-config__grid--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .ff-pdp-config__path-btn strong {
+    padding-right: 0;
+    padding-top: 1.1rem;
+  }
+
+  .ff-pdp-config__path-badge {
+    top: 0.55rem;
+    left: 0.7rem;
+    right: auto;
   }
 }
 
