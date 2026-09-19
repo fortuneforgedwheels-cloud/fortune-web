@@ -81,8 +81,8 @@
         assign mono_collection = collections[mono_handle]
         assign two_collection = collections[two_handle]
         assign bead_collection = collections[bead_handle]
-        assign mono_price = section.settings.monoblock_price | default: 'Typically $2,300–$3,500+ for a set of 4'
-        assign two_price = section.settings.twopiece_price | default: 'Typically $4,000–$4,500+ for a set of 4'
+        assign mono_price = section.settings.monoblock_price | default: '17"–20" $2,890 SHIPPED / FULL SET · 21"–22" $3,100 SHIPPED / FULL SET'
+        assign two_price = section.settings.twopiece_price | default: '17"–20" $3,950 SHIPPED / FULL SET · 21"–22" $4,190 SHIPPED / FULL SET'
         assign bead_price = section.settings.beadlock_price | default: 'Typically $1,999 per pair · most builds need 2 pairs'
       -%}
 
@@ -342,7 +342,7 @@
       "type": "textarea",
       "id": "step2_hint",
       "label": "Pricing note",
-      "default": "Beadlock wheels are priced by the pair. Standard monoblock and two piece wheels are priced individually."
+      "default": "Beadlock wheels are priced by the pair. Monoblock and Two-Piece full sets are priced shipped."
     },
     {
       "type": "text",
@@ -401,30 +401,30 @@
       "type": "text",
       "id": "monoblock_desc",
       "label": "Monoblock description",
-      "default": "One-piece forged strength · priced individually"
+      "default": "Forged Monoblock · FULL SET from $2,890 shipped"
     },
     {
       "type": "text",
       "id": "monoblock_price",
       "label": "Monoblock typical price",
-      "default": "Typically $2,300–$3,500+ for a set of 4"
+      "default": "17\"–20\" $2,890 SHIPPED / FULL SET · 21\"–22\" $3,100 SHIPPED / FULL SET"
     },
     {
       "type": "url",
       "id": "twopiece_link",
-      "label": "2-Piece collection"
+      "label": "Two-Piece collection"
     },
     {
       "type": "text",
       "id": "twopiece_desc",
-      "label": "2-Piece description",
-      "default": "Modular fitment & finish · priced individually"
+      "label": "Two-Piece description",
+      "default": "Forged Two-Piece · FULL SET from $3,950 shipped"
     },
     {
       "type": "text",
       "id": "twopiece_price",
-      "label": "2-Piece typical price",
-      "default": "Typically $4,000–$4,500+ for a set of 4"
+      "label": "Two-Piece typical price",
+      "default": "17\"–20\" $3,950 SHIPPED / FULL SET · 21\"–22\" $4,190 SHIPPED / FULL SET"
     },
     {
       "type": "url",
