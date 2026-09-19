@@ -31,6 +31,16 @@
   gap: 0.45rem;
 }
 
+.ff-pdp-config [hidden],
+.ff-pdp-config__section[hidden],
+.ff-pdp-config__flow[hidden],
+.ff-pdp-config__path[hidden],
+.ff-pdp-config__vehicle-display[hidden],
+.ff-pdp-config__vehicle-form[hidden],
+.ff-pdp-config__error[hidden] {
+  display: none !important;
+}
+
 .ff-pdp-config__path-grid {
   display: grid;
   grid-template-columns: 1fr;

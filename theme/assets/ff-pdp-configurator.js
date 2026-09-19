@@ -301,6 +301,7 @@
       var opts = findOptionSelects();
       var pathChosen = !!state.path;
 
+      // Always hide native diameter fieldsets — we drive diameter from our UI
       opts.diameterNative.forEach(function (fs) {
         fs.classList.add('ff-pdp-config-hidden-tech');
         fs.hidden = true;
@@ -314,35 +315,87 @@
       setWrapperHidden(opts.offset, true);
       setWrapperHidden(opts.lug, true);
 
-      // Hide finish / center cap until a build path is chosen
+      // Finish / center cap visible only after a build path is chosen
       setWrapperHidden(opts.color, !pathChosen);
       setWrapperHidden(opts.centerCap, !pathChosen);
-      opts.finishBlocks.forEach(function (fs) {
-        if (pathChosen) {
-          fs.classList.remove('ff-pdp-config-hidden-tech');
-          fs.hidden = false;
-        } else {
+
+      // Hide BCPO / option-tile / variant wrappers by label
+      qsa(document, '.ff-option-acc, .selector-wrapper, [class*="bcpo"] fieldset, fieldset.product-form__input').forEach(
+        function (wrap) {
+          if (wrap.closest('[data-ff-pdp-config]')) return;
+          var lab = wrap.querySelector(
+            '.ff-option-acc__label, .bcpo-title, .bcpo-front-dd-label, legend, .form__label, label'
+          );
+          var text = lab ? String(lab.textContent || '').toLowerCase() : '';
+          if (!text) {
+            // Fall back to wrapper text start for BCPO blocks without a clear label node
+            text = String(wrap.textContent || '')
+              .toLowerCase()
+              .replace(/\s+/g, ' ')
+              .slice(0, 40);
+          }
+          var isFinish = /^(color|colour|finish|center\s*cap|centre\s*cap)/.test(text.trim()) ||
+            /color|colour|finish|center\s*cap|centre\s*cap/.test(text);
+          var isTech =
+            /width|offset|lug|bolt\s*pattern|diameter|size|fitment|year\s*\/\s*make|year\/make/.test(
+              text
+            );
+          // Prefer finish match only when not also a tech label
+          if (/color|colour|finish|center\s*cap|centre\s*cap/.test(text) && !/width|offset|diameter|lug/.test(text)) {
+            wrap.classList.toggle('ff-pdp-config-hidden-tech', !pathChosen);
+            wrap.hidden = !pathChosen;
+          } else if (isTech) {
+            wrap.classList.add('ff-pdp-config-hidden-tech');
+            wrap.hidden = true;
+          }
+        }
+      );
+
+      // Also hide BCPO / native diameter select hosts (not the whole .bcpo app root)
+      qsa(document, 'select[name="vopo-id"], select[name="name0"]').forEach(function (sel) {
+        if (sel.closest('[data-ff-pdp-config]')) return;
+        setWrapperHidden(sel, true);
+      });
+      qsa(document, 'fieldset.product-form__input').forEach(function (fs) {
+        if (fs.closest('[data-ff-pdp-config]')) return;
+        var legend = fs.querySelector('legend, .form__label');
+        var text = legend ? String(legend.textContent || '').toLowerCase() : '';
+        if (/diameter|size|fitment/.test(text)) {
           fs.classList.add('ff-pdp-config-hidden-tech');
           fs.hidden = true;
         }
       });
 
-      // Hide BCPO / option-tile accordions for tech options by trigger label
-      qsa(document, '.ff-option-acc').forEach(function (wrap) {
+      // Lead time stays available after path chosen (required BCPO)
+      qsa(document, '.selector-wrapper, .ff-option-acc').forEach(function (wrap) {
         if (wrap.closest('[data-ff-pdp-config]')) return;
-        var lab = wrap.querySelector('.ff-option-acc__label, .bcpo-title, legend, .form__label');
+        var lab = wrap.querySelector('.ff-option-acc__label, .bcpo-title, legend, .form__label, label');
         var text = lab ? String(lab.textContent || '').toLowerCase() : '';
-        if (!text) return;
-        var isFinish = /color|colour|finish|center\s*cap|centre\s*cap/.test(text);
-        var isTech = /width|offset|lug|bolt\s*pattern|diameter|size|fitment|lead\s*time/.test(text);
-        if (isFinish) {
+        if (/lead\s*time/.test(text)) {
           wrap.classList.toggle('ff-pdp-config-hidden-tech', !pathChosen);
           wrap.hidden = !pathChosen;
-        } else if (isTech) {
-          wrap.classList.add('ff-pdp-config-hidden-tech');
-          wrap.hidden = true;
         }
       });
+
+      // Hide legacy year/make/model BCPO text field
+      qsa(document, '.selector-wrapper, [class*="bcpo"] .bcpo-field, .line-item-property__field').forEach(
+        function (wrap) {
+          if (wrap.closest('[data-ff-pdp-config]')) return;
+          var text = String(wrap.textContent || '')
+            .toLowerCase()
+            .replace(/\s+/g, ' ')
+            .slice(0, 40);
+          if (/year\s*\/\s*make|year\/make|year.*make.*model/.test(text)) {
+            wrap.classList.add('ff-pdp-config-hidden-tech');
+            wrap.hidden = true;
+            var input = wrap.querySelector('input, textarea');
+            if (input) {
+              input.removeAttribute('required');
+              input.disabled = true;
+            }
+          }
+        }
+      );
     }
 
     function syncProps() {

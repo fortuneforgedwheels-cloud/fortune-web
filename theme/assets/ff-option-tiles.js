@@ -27,6 +27,7 @@
     if (!select || select.tagName !== 'SELECT') return true;
     if (select.closest('noscript')) return true;
     if (select.dataset.ffTilesSkip === '1') return true;
+    if (select.closest('[data-ff-pdp-config]')) return true;
     if (select.getAttribute('data-ff-sbv-year') != null) return true;
     if (select.getAttribute('data-ff-sbv-make') != null) return true;
     if (select.getAttribute('data-ff-sbv-model') != null) return true;
