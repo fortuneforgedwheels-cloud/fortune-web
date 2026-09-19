@@ -814,9 +814,21 @@
     });
     obs.observe(document.body, { childList: true, subtree: true });
 
-    function validateBeforeAdd(event) {
+    function prepareBcpoForAdd() {
       syncVehicleFromInputs(false);
       syncProps();
+      var opts = findOptionSelects();
+      setSelectValue(opts.width, PLUG);
+      setSelectValue(opts.offset, PLUG);
+      setSelectValue(opts.lug, PLUG);
+      syncFinishToNative();
+      ensureLeadTimeSelected();
+      syncBcpoVehicleField(formatVehicle(state.vehicle));
+    }
+
+    function validateBeforeAdd(event) {
+      // Must run before BCPO's own capture handlers read required fields
+      prepareBcpoForAdd();
       var ok = true;
 
       if (!state.path) {
@@ -874,19 +886,12 @@
         return false;
       }
 
-      // Required BCPO fields must be filled or the app silently blocks ATC
-      var opts = findOptionSelects();
-      setSelectValue(opts.width, PLUG);
-      setSelectValue(opts.offset, PLUG);
-      setSelectValue(opts.lug, PLUG);
-      syncFinishToNative();
-      ensureLeadTimeSelected();
-      syncBcpoVehicleField(formatVehicle(state.vehicle));
-      syncProps();
+      prepareBcpoForAdd();
       return true;
     }
 
-    document.addEventListener(
+    // window + capture so we sync BCPO required fields before the app's handlers
+    window.addEventListener(
       'click',
       function (event) {
         var btn = event.target && event.target.closest('[data-btn-addtocart], [name="add"]');
