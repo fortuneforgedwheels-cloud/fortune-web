@@ -1,18 +1,19 @@
 .ff-pdp-config {
   display: grid;
-  gap: 1rem;
+  gap: 1.15rem;
   margin: 0.75rem 0 1.1rem;
   padding: 0.9rem 0 0.2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 1rem;
 }
 
 .ff-pdp-config__eyebrow {
-  margin: 0.55rem 0 0.45rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  margin: 0.65rem 0 0.5rem;
+  font-size: 0.84rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 700;
-  opacity: 0.78;
+  opacity: 0.85;
 }
 
 .ff-pdp-config__eyebrow:first-child {
@@ -20,15 +21,15 @@
 }
 
 .ff-pdp-config__helper {
-  margin: 0 0 0.55rem;
-  font-size: 0.82rem;
-  opacity: 0.7;
-  line-height: 1.4;
+  margin: 0 0 0.6rem;
+  font-size: 0.95rem;
+  opacity: 0.78;
+  line-height: 1.45;
 }
 
 .ff-pdp-config__section {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.5rem;
 }
 
 .ff-pdp-config [hidden],
@@ -44,16 +45,16 @@
 .ff-pdp-config__path-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.55rem;
+  gap: 0.65rem;
 }
 
 .ff-pdp-config__path-btn {
   position: relative;
   display: grid;
-  gap: 0.35rem;
+  gap: 0.4rem;
   text-align: left;
   margin: 0;
-  padding: 0.95rem 1rem;
+  padding: 1.05rem 1.05rem;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.03);
@@ -75,12 +76,12 @@
 
 .ff-pdp-config__path-badge {
   position: absolute;
-  top: 0.65rem;
-  right: 0.7rem;
-  padding: 0.12rem 0.45rem;
+  top: 0.7rem;
+  right: 0.75rem;
+  padding: 0.15rem 0.5rem;
   border: 1px solid rgba(212, 175, 55, 0.75);
   border-radius: 999px;
-  font-size: 0.6rem;
+  font-size: 0.68rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(212, 175, 55, 0.95);
@@ -88,10 +89,10 @@
 
 .ff-pdp-config__path-btn strong {
   display: block;
-  padding-right: 5.5rem;
-  font-size: 1rem;
+  padding-right: 6rem;
+  font-size: 1.12rem;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .ff-pdp-config__path-btn:not(.is-recommended) strong {
@@ -101,20 +102,24 @@
 .ff-pdp-config__path-btn em {
   display: block;
   font-style: normal;
-  font-size: 0.82rem;
-  opacity: 0.72;
-  line-height: 1.4;
+  font-size: 0.95rem;
+  opacity: 0.78;
+  line-height: 1.45;
 }
 
 .ff-pdp-config__flow {
   display: grid;
-  gap: 1rem;
+  gap: 1.15rem;
 }
 
 .ff-pdp-config__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.55rem;
+  gap: 0.65rem;
+}
+
+.ff-pdp-config__grid--2 {
+  grid-template-columns: 1fr 1fr;
 }
 
 .ff-pdp-config__grid--3 {
@@ -123,13 +128,14 @@
 
 .ff-pdp-config__field {
   display: grid;
-  gap: 0.3rem;
+  gap: 0.35rem;
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 0.92rem;
 }
 
 .ff-pdp-config__field span {
-  opacity: 0.75;
+  opacity: 0.82;
+  font-weight: 600;
 }
 
 .ff-pdp-config__field input,
@@ -141,8 +147,10 @@
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: inherit;
   border-radius: 4px;
-  padding: 0.65rem 0.7rem;
+  padding: 0.78rem 0.8rem;
   font: inherit;
+  font-size: 1rem;
+  min-height: 2.85rem;
 }
 
 .ff-pdp-config__field select {
@@ -152,12 +160,12 @@
   background-position: calc(100% - 16px) calc(50% - 2px), calc(100% - 11px) calc(50% - 2px);
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
-  padding-right: 1.6rem;
+  padding-right: 1.7rem;
 }
 
 .ff-pdp-config__vehicle-label {
   margin: 0 0 0.25rem;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 700;
   line-height: 1.3;
 }
@@ -170,26 +178,26 @@
   text-decoration: underline;
   cursor: pointer;
   font: inherit;
-  font-size: 0.86rem;
+  font-size: 0.95rem;
   width: fit-content;
 }
 
 .ff-pdp-config__diameters {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.5rem;
+  gap: 0.55rem;
 }
 
 .ff-pdp-config__diam {
   margin: 0;
-  padding: 0.8rem 0.5rem;
+  padding: 0.9rem 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.03);
   color: inherit;
   cursor: pointer;
   font: inherit;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 700;
   text-align: center;
 }
@@ -201,16 +209,16 @@
 
 .ff-pdp-config__layout {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.55rem;
 }
 
 .ff-pdp-config__fit {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 0.6rem;
+  gap: 0.65rem;
   align-items: start;
   margin: 0;
-  padding: 0.7rem 0.75rem;
+  padding: 0.85rem 0.9rem;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 6px;
   cursor: pointer;
@@ -224,51 +232,51 @@
 
 .ff-pdp-config__fit strong {
   display: block;
-  font-size: 0.92rem;
+  font-size: 1.05rem;
 }
 
 .ff-pdp-config__fit em {
   display: block;
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
   font-style: normal;
-  font-size: 0.8rem;
-  opacity: 0.72;
-  line-height: 1.35;
+  font-size: 0.92rem;
+  opacity: 0.78;
+  line-height: 1.4;
 }
 
 .ff-pdp-config__rec {
   display: inline-block;
   margin-left: 0.35rem;
-  padding: 0.1rem 0.4rem;
+  padding: 0.12rem 0.45rem;
   border: 1px solid rgba(212, 175, 55, 0.7);
   border-radius: 999px;
-  font-size: 0.62rem;
+  font-size: 0.68rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   vertical-align: middle;
 }
 
 .ff-pdp-config__reassure {
-  margin: 0.35rem 0 0;
-  padding: 0.75rem 0.8rem;
+  margin: 0.4rem 0 0;
+  padding: 0.85rem 0.9rem;
   border-left: 2px solid rgba(212, 175, 55, 0.7);
   background: rgba(255, 255, 255, 0.03);
-  font-size: 0.84rem;
-  line-height: 1.45;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .ff-pdp-config__reassure strong {
   display: block;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.3rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
 }
 
 .ff-pdp-config__error {
-  margin: 0.25rem 0 0;
+  margin: 0.3rem 0 0;
   color: #ffb4b4;
-  font-size: 0.82rem;
+  font-size: 0.92rem;
 }
 
 body.ff-pdp-config-active .ff-pdp-config-hidden-tech,
@@ -288,13 +296,14 @@ body.ff-pdp-config-active .ff-pdp-config-hidden-tech,
 
 @media (max-width: 767px) {
   .ff-pdp-config__grid,
+  .ff-pdp-config__grid--2,
   .ff-pdp-config__grid--3 {
     grid-template-columns: 1fr;
   }
 
   .ff-pdp-config__path-btn strong {
     padding-right: 0;
-    padding-top: 1.1rem;
+    padding-top: 1.15rem;
   }
 
   .ff-pdp-config__path-badge {

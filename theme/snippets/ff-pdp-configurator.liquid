@@ -128,11 +128,15 @@
           </label>
           <label class="ff-pdp-config__field">
             <span>Width*</span>
-            <input type="text" placeholder='e.g. 10"' data-ff-front-width>
+            <select data-ff-front-width data-ff-tiles-skip="1">
+              <option value="">Select</option>
+            </select>
           </label>
           <label class="ff-pdp-config__field">
             <span>Offset (ET)*</span>
-            <input type="text" placeholder="e.g. +15" data-ff-front-offset>
+            <select data-ff-front-offset data-ff-tiles-skip="1">
+              <option value="">Select</option>
+            </select>
           </label>
         </div>
 
@@ -146,20 +150,41 @@
           </label>
           <label class="ff-pdp-config__field">
             <span>Width*</span>
-            <input type="text" placeholder='e.g. 11"' data-ff-rear-width>
+            <select data-ff-rear-width data-ff-tiles-skip="1">
+              <option value="">Select</option>
+            </select>
           </label>
           <label class="ff-pdp-config__field">
             <span>Offset (ET)*</span>
-            <input type="text" placeholder="e.g. +18" data-ff-rear-offset>
+            <select data-ff-rear-offset data-ff-tiles-skip="1">
+              <option value="">Select</option>
+            </select>
           </label>
         </div>
-        <p class="ff-pdp-config__error" data-ff-custom-error hidden>Enter complete front and rear diameter, width, and offset.</p>
+        <p class="ff-pdp-config__error" data-ff-custom-error hidden>Select complete front and rear diameter, width, and offset.</p>
         <p class="ff-pdp-config__helper">These are customer-requested specifications and will be reviewed before production.</p>
       </div>
 
-      <p class="ff-pdp-config__helper" data-ff-finish-hint>
-        Next: choose your <strong>finish</strong> and <strong>center cap</strong> below, then add your full set to cart.
-      </p>
+      {%- comment -%} SHARED: finish + center cap (in-flow, not buried below) {%- endcomment -%}
+      <div class="ff-pdp-config__section" data-ff-finish-panel>
+        <p class="ff-pdp-config__eyebrow">Finish &amp; center cap</p>
+        <p class="ff-pdp-config__helper">Choose your finish and center cap for this full set.</p>
+        <div class="ff-pdp-config__grid ff-pdp-config__grid--2">
+          <label class="ff-pdp-config__field">
+            <span>Finish*</span>
+            <select data-ff-finish data-ff-tiles-skip="1">
+              <option value="">Select finish</option>
+            </select>
+          </label>
+          <label class="ff-pdp-config__field">
+            <span>Center cap*</span>
+            <select data-ff-center-cap data-ff-tiles-skip="1">
+              <option value="">Select center cap</option>
+            </select>
+          </label>
+        </div>
+        <p class="ff-pdp-config__error" data-ff-finish-error hidden>Select a finish and center cap.</p>
+      </div>
     </div>
   </div>
 {%- endif -%}

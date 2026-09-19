@@ -10,12 +10,83 @@
 
   var PLUG = "PLUG N' PLAY || KEEP OEM SPECS";
   var DEFAULT_DIAMS = [17, 18, 19, 20, 21, 22];
+  var DEFAULT_WIDTHS = [
+    '8"',
+    '8.5"',
+    '9"',
+    '9.5"',
+    '10"',
+    '10.5"',
+    '11"',
+    '11.5"',
+    '12"',
+    '12.5"',
+    '13"',
+    '13.5"',
+    '14"',
+  ];
+  var DEFAULT_OFFSETS = [
+    '+5',
+    '+8',
+    '+10',
+    '+12',
+    '+15',
+    '+20',
+    '+22',
+    '+25',
+    '+30',
+    '+32',
+    '+35',
+    '+38',
+    '+40',
+    '+45',
+    '+50',
+  ];
 
   function qs(root, sel) {
     return root.querySelector(sel);
   }
   function qsa(root, sel) {
     return Array.prototype.slice.call(root.querySelectorAll(sel));
+  }
+
+  function usableBcpoOptions(select) {
+    if (!select || !select.options) return [];
+    var out = [];
+    Array.prototype.forEach.call(select.options, function (opt) {
+      var text = String(opt.textContent || '')
+        .replace(/\s+/g, ' ')
+        .trim();
+      var val = String(opt.value || '').trim();
+      if (!val && !text) return;
+      if (/^choose one|^select/i.test(text)) return;
+      if (/^\^\^/.test(text) || /^\^\^/.test(val)) return;
+      if (/plug\s*n/i.test(text) || /keep oem/i.test(text)) return;
+      out.push({ value: val || text, label: text || val });
+    });
+    return out;
+  }
+
+  function fillSelect(select, items, placeholder) {
+    if (!select) return;
+    var current = select.value;
+    select.innerHTML = '';
+    var blank = document.createElement('option');
+    blank.value = '';
+    blank.textContent = placeholder || 'Select';
+    select.appendChild(blank);
+    (items || []).forEach(function (item) {
+      var opt = document.createElement('option');
+      if (typeof item === 'string') {
+        opt.value = item;
+        opt.textContent = item;
+      } else {
+        opt.value = item.value;
+        opt.textContent = item.label;
+      }
+      select.appendChild(opt);
+    });
+    if (current) select.value = current;
   }
 
   function parseDiameters(raw) {
@@ -87,11 +158,12 @@
       }
       label += ' ' + (select.getAttribute('name') || '') + ' ' + (select.id || '');
       label = label.toLowerCase();
+      var nameAttr = String(select.getAttribute('name') || '').toLowerCase();
       if (/width/.test(label) && !width) width = select;
       else if (/offset|et\b/.test(label) && !offset) offset = select;
       else if (/lug|bolt\s*pattern|pcd/.test(label) && !lug) lug = select;
-      else if (/center\s*cap|centre\s*cap/.test(label) && !centerCap) centerCap = select;
-      else if (/color|colour|finish/.test(label) && !color) color = select;
+      else if ((/center\s*cap|centre\s*cap/.test(label) || nameAttr === 'name1') && !centerCap) centerCap = select;
+      else if ((/color|colour|finish/.test(label) || nameAttr.indexOf('color') !== -1) && !color) color = select;
     }
 
     qsa(document, 'select').forEach(classify);
@@ -226,9 +298,18 @@
     var vehicleError = qs(root, '[data-ff-vehicle-error]');
     var diamError = qs(root, '[data-ff-diam-error]');
     var customError = qs(root, '[data-ff-custom-error]');
+    var finishError = qs(root, '[data-ff-finish-error]');
     var diametersEl = qs(root, '[data-ff-diameters]');
     var frontDiamSel = qs(root, '[data-ff-front-diam]');
     var rearDiamSel = qs(root, '[data-ff-rear-diam]');
+    var frontWidthSel = qs(root, '[data-ff-front-width]');
+    var rearWidthSel = qs(root, '[data-ff-rear-width]');
+    var frontOffsetSel = qs(root, '[data-ff-front-offset]');
+    var rearOffsetSel = qs(root, '[data-ff-rear-offset]');
+    var finishSel = qs(root, '[data-ff-finish]');
+    var centerCapSel = qs(root, '[data-ff-center-cap]');
+    var finishPopulated = false;
+    var widthOffsetPopulated = false;
 
     var state = {
       path: null,
@@ -315,9 +396,9 @@
       setWrapperHidden(opts.offset, true);
       setWrapperHidden(opts.lug, true);
 
-      // Finish / center cap visible only after a build path is chosen
-      setWrapperHidden(opts.color, !pathChosen);
-      setWrapperHidden(opts.centerCap, !pathChosen);
+      // Native finish / center cap always hidden — we mirror them in-flow
+      setWrapperHidden(opts.color, true);
+      setWrapperHidden(opts.centerCap, true);
 
       // Hide BCPO / option-tile / variant wrappers by label
       qsa(document, '.ff-option-acc, .selector-wrapper, [class*="bcpo"] fieldset, fieldset.product-form__input').forEach(
@@ -328,23 +409,17 @@
           );
           var text = lab ? String(lab.textContent || '').toLowerCase() : '';
           if (!text) {
-            // Fall back to wrapper text start for BCPO blocks without a clear label node
             text = String(wrap.textContent || '')
               .toLowerCase()
               .replace(/\s+/g, ' ')
               .slice(0, 40);
           }
-          var isFinish = /^(color|colour|finish|center\s*cap|centre\s*cap)/.test(text.trim()) ||
-            /color|colour|finish|center\s*cap|centre\s*cap/.test(text);
-          var isTech =
-            /width|offset|lug|bolt\s*pattern|diameter|size|fitment|year\s*\/\s*make|year\/make/.test(
-              text
-            );
-          // Prefer finish match only when not also a tech label
           if (/color|colour|finish|center\s*cap|centre\s*cap/.test(text) && !/width|offset|diameter|lug/.test(text)) {
-            wrap.classList.toggle('ff-pdp-config-hidden-tech', !pathChosen);
-            wrap.hidden = !pathChosen;
-          } else if (isTech) {
+            wrap.classList.add('ff-pdp-config-hidden-tech');
+            wrap.hidden = true;
+          } else if (
+            /width|offset|lug|bolt\s*pattern|diameter|size|fitment|year\s*\/\s*make|year\/make/.test(text)
+          ) {
             wrap.classList.add('ff-pdp-config-hidden-tech');
             wrap.hidden = true;
           }
@@ -501,6 +576,38 @@
       });
     }
 
+    function populateWidthOffsetSelects() {
+      var opts = findOptionSelects();
+      var widths = usableBcpoOptions(opts.width);
+      var offsets = usableBcpoOptions(opts.offset);
+      if (!widths.length) widths = DEFAULT_WIDTHS.map(function (w) { return { value: w, label: w }; });
+      if (!offsets.length) offsets = DEFAULT_OFFSETS.map(function (o) { return { value: o, label: o }; });
+      fillSelect(frontWidthSel, widths, 'Select');
+      fillSelect(rearWidthSel, widths, 'Select');
+      fillSelect(frontOffsetSel, offsets, 'Select');
+      fillSelect(rearOffsetSel, offsets, 'Select');
+      widthOffsetPopulated = true;
+    }
+
+    function populateFinishSelects() {
+      var opts = findOptionSelects();
+      var colors = usableBcpoOptions(opts.color);
+      var caps = usableBcpoOptions(opts.centerCap);
+      if (colors.length) fillSelect(finishSel, colors, 'Select finish');
+      if (caps.length) fillSelect(centerCapSel, caps, 'Select center cap');
+      if (colors.length || caps.length) finishPopulated = true;
+      // Re-apply current UI values onto native selects
+      syncFinishToNative();
+    }
+
+    function syncFinishToNative() {
+      var opts = findOptionSelects();
+      var finishVal = finishSel ? String(finishSel.value || '').trim() : '';
+      var capVal = centerCapSel ? String(centerCapSel.value || '').trim() : '';
+      if (finishVal && opts.color) setSelectValue(opts.color, finishVal);
+      if (capVal && opts.centerCap) setSelectValue(opts.centerCap, capVal);
+    }
+
     function selectDiameter(d, btn) {
       state.diameter = d;
       if (diametersEl) {
@@ -530,7 +637,9 @@
       }
       if (path === 'custom') {
         populateCustomDiamSelects();
+        if (!widthOffsetPopulated) populateWidthOffsetSelects();
       }
+      if (!finishPopulated) populateFinishSelects();
 
       syncTechOptions();
       syncProps();
@@ -591,12 +700,19 @@
     if (rearDiamSel) rearDiamSel.addEventListener('change', onCustomChange);
     qsa(root, '[data-ff-front-width], [data-ff-front-offset], [data-ff-rear-width], [data-ff-rear-offset]').forEach(
       function (input) {
-        input.addEventListener('input', function () {
+        input.addEventListener('change', function () {
           if (customError) customError.hidden = true;
           syncProps();
         });
       }
     );
+
+    function onFinishChange() {
+      if (finishError) finishError.hidden = true;
+      syncFinishToNative();
+    }
+    if (finishSel) finishSel.addEventListener('change', onFinishChange);
+    if (centerCapSel) centerCapSel.addEventListener('change', onFinishChange);
 
     // Vehicle bootstrap
     var stored = readStoredVehicle();
@@ -631,6 +747,8 @@
 
     renderDiameters();
     populateCustomDiamSelects();
+    populateWidthOffsetSelects();
+    populateFinishSelects();
     syncTechOptions();
     syncProps();
 
@@ -641,7 +759,15 @@
       syncScheduled = true;
       requestAnimationFrame(function () {
         syncScheduled = false;
+        var opts = findOptionSelects();
+        if (!finishPopulated && (usableBcpoOptions(opts.color).length || usableBcpoOptions(opts.centerCap).length)) {
+          populateFinishSelects();
+        }
+        if (!widthOffsetPopulated && (usableBcpoOptions(opts.width).length || usableBcpoOptions(opts.offset).length)) {
+          populateWidthOffsetSelects();
+        }
         syncTechOptions();
+        syncFinishToNative();
       });
     });
     obs.observe(document.body, { childList: true, subtree: true });
@@ -688,6 +814,13 @@
         }
       }
 
+      var finishVal = finishSel ? String(finishSel.value || '').trim() : '';
+      var capVal = centerCapSel ? String(centerCapSel.value || '').trim() : '';
+      if (state.path && (!finishVal || !capVal)) {
+        ok = false;
+        if (finishError) finishError.hidden = false;
+      }
+
       if (!ok) {
         event.preventDefault();
         event.stopPropagation();
@@ -700,6 +833,7 @@
       setSelectValue(opts.width, PLUG);
       setSelectValue(opts.offset, PLUG);
       setSelectValue(opts.lug, PLUG);
+      syncFinishToNative();
       syncProps();
       return true;
     }
