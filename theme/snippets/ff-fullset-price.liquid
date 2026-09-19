@@ -37,15 +37,14 @@
   {%- liquid
     if use_variant
       assign ff_target = product.selected_or_first_available_variant
-    else
-      assign ff_target = product
-    endif
-    assign ff_money = ff_target.price | money
-    if ff_target == product and product.price_varies and ff_price_varies_tiers
+      assign ff_from_mode = false
+      assign ff_money = ff_target.price | money
+    elsif ff_price_varies_tiers
       assign ff_from_mode = true
       assign ff_money = product.price_min | money
     else
       assign ff_from_mode = false
+      assign ff_money = product.price_min | money
     endif
   -%}
   <div class="ff-fullset-price{% if price_class %} {{ price_class }}{% endif %}" data-ff-fullset data-ff-kind="{{ ff_wheel_kind }}">

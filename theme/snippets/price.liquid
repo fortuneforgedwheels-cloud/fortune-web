@@ -55,11 +55,14 @@
 -%}
 {%- if ff_is_fullset_priced -%}
   {%- liquid
-    if use_variant == false and ff_price_varies_tiers
+    if use_variant
+      assign ff_from_mode = false
+    elsif ff_price_varies_tiers
       assign ff_from_mode = true
       assign money_price = product.price_min | money
     else
       assign ff_from_mode = false
+      assign money_price = product.price_min | money
     endif
   -%}
   <div class="price ff-price--fullset
