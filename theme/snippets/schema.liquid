@@ -9,6 +9,20 @@
         else
             assign seo_media = product.featured_media
         endif
+
+        assign ff_seo_fullset = false
+        assign ff_seo_tags = product.tags | join: ',' | upcase
+        assign ff_seo_type = product.type | upcase
+        assign ff_seo_handle = product.handle | upcase
+        unless ff_seo_tags contains 'BEADLOCK' or ff_seo_handle contains 'BEADLOCK' or ff_seo_type contains 'BEADLOCK'
+          unless product.tags contains 'FEATURED-SPEC'
+            if ff_seo_tags contains 'MONOBLOCK' or ff_seo_type contains 'MONOBLOCK' or ff_seo_handle contains 'MONOBLOCK'
+              assign ff_seo_fullset = true
+            elsif ff_seo_tags contains 'TWO PIECE' or ff_seo_tags contains 'TWO-PIECE' or ff_seo_tags contains '2-PIECE' or ff_seo_tags contains '2 PIECE' or ff_seo_type contains 'TWO' or ff_seo_handle contains 'TWO-PIECE'
+              assign ff_seo_fullset = true
+            endif
+          endunless
+        endunless
     -%}
     <script type="application/ld+json">
     {
@@ -42,12 +56,47 @@
             "@type": "Brand",
             "name": {{ product.vendor | json }}
         },
+        {%- if ff_seo_fullset -%}
+        "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": {{ cart.currency.iso_code | json }},
+            "lowPrice": {{ product.price_min | money_without_currency | strip_html | remove: ',' | json }},
+            "highPrice": {{ product.price_max | money_without_currency | strip_html | remove: ',' | json }},
+            "offerCount": {{ product.variants.size | json }},
+            "availability": "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+            "url": {{ request.origin | append: product.url | json }},
+            "priceValidUntil": "{{ 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' }}",
+            "offers": [
+                {%- for variant in product.variants -%}
+                    {
+                        "@type": "Offer",
+                        "priceCurrency": {{ cart.currency.iso_code | json }},
+                        "price": {{ variant.price | money_without_currency | strip_html | remove: ',' | json }},
+                        "itemCondition": "http://schema.org/NewCondition",
+                        "availability": "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+                        "url": {{ request.origin | append: variant.url | json }},
+                        {%- if variant.title != 'Default Title' -%}
+                            "name": {{ product.title | append: ' - Full Set - ' | append: variant.title | json }},
+                        {%- else -%}
+                            "name": {{ product.title | append: ' - Full Set' | json }},
+                        {%- endif -%}
+                        {%- if variant.sku != blank -%}
+                            "sku": {{ variant.sku | json }},
+                        {%- else -%}
+                            "sku": {{ variant.id | json }},
+                        {%- endif -%}
+                        "priceValidUntil": "{{ 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' }}"
+                    }{% unless forloop.last %},{% endunless %}
+                {%- endfor -%}
+            ]
+        }
+        {%- else -%}
         "offers": [
             {%- for variant in product.variants -%}
                 {
                     "@type": "Offer",
                     "priceCurrency": {{ cart.currency.iso_code | json }},
-                    "price": {{ variant.price | money_without_currency  | strip_html | remove: ',' | json }},
+                    "price": {{ variant.price | money_without_currency | strip_html | remove: ',' | json }},
                     "itemCondition": "http://schema.org/NewCondition",
                     "availability": "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
                     "url": {{ request.origin | append: variant.url | json }},
@@ -83,6 +132,7 @@
                 }{% unless forloop.last %},{% endunless %}
             {%- endfor -%}
         ]
+        {%- endif -%}
         {%- if product.metafields.reviews -%}
             {%- liquid
                 assign rating = product.metafields.reviews.rating.value

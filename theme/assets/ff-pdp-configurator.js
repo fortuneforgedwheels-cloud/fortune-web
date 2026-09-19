@@ -139,6 +139,10 @@
     var lug = null;
     var diameterNative = [];
     var color = null;
+    var faceColor = null;
+    var lipColor = null;
+    var hardwareColor = null;
+    var hardwareInput = null;
     var centerCap = null;
     var finishBlocks = [];
 
@@ -157,23 +161,48 @@
         if (lab) label = String(lab.textContent || '');
       }
       label += ' ' + (select.getAttribute('name') || '') + ' ' + (select.id || '');
-      label = label.toLowerCase();
+      var labelLow = label.toLowerCase();
       var nameAttr = String(select.getAttribute('name') || '').toLowerCase();
-      if (/width/.test(label) && !width) width = select;
-      else if (/offset|et\b/.test(label) && !offset) offset = select;
-      else if (/lug|bolt\s*pattern|pcd/.test(label) && !lug) lug = select;
-      else if ((/center\s*cap|centre\s*cap/.test(label) || nameAttr === 'name1') && !centerCap) centerCap = select;
-      else if ((/color|colour|finish/.test(label) || nameAttr.indexOf('color') !== -1) && !color) color = select;
+      if (/width/.test(labelLow) && !width) width = select;
+      else if (/offset|et\b/.test(labelLow) && !offset) offset = select;
+      else if (/lug|bolt\s*pattern|pcd/.test(labelLow) && !lug) lug = select;
+      else if ((/center\s*cap|centre\s*cap/.test(labelLow) || nameAttr === 'name1') && !centerCap) centerCap = select;
+      else if (/face\s*color|face\s*finish|properties\[face/.test(labelLow) && !faceColor) faceColor = select;
+      else if (/lip\s*\/?\s*barrel|lip\s*color|lip\s*finish|barrel\s*color|barrel\s*finish|ring\s*color/.test(labelLow) && !lipColor)
+        lipColor = select;
+      else if (/hardware/.test(labelLow) && !hardwareColor) hardwareColor = select;
+      else if (
+        !color &&
+        !/face|lip|barrel|ring|hardware/.test(labelLow) &&
+        (/color|colour|finish/.test(labelLow) || nameAttr.indexOf('color') !== -1)
+      )
+        color = select;
     }
 
     qsa(document, 'select').forEach(classify);
+
+    // HARDWARE COLOR is often a BCPO text input, not a select
+    qsa(document, 'input[type="text"], input:not([type]), textarea').forEach(function (input) {
+      if (hardwareInput) return;
+      var name = String(input.getAttribute('name') || '').toLowerCase();
+      var wrap =
+        input.closest('.selector-wrapper') ||
+        input.closest('[class*="bcpo"]') ||
+        input.closest('.line-item-property__field') ||
+        input.parentElement;
+      var lab = wrap && wrap.querySelector('.bcpo-title, .bcpo-front-dd-label, .bcpo-label, label, .form__label');
+      var label = ((lab && lab.textContent) || '') + ' ' + name;
+      if (/hardware/.test(label.toLowerCase()) || name.indexOf('hardware') !== -1) {
+        hardwareInput = input;
+      }
+    });
 
     qsa(document, 'fieldset.product-form__input, variant-radios fieldset, .productView-variants fieldset').forEach(
       function (fs) {
         var legend = fs.querySelector('legend, .form__label');
         var text = legend ? String(legend.textContent || '').toLowerCase() : '';
         if (/diameter|size|fitment/.test(text)) diameterNative.push(fs);
-        if (/color|colour|finish|center\s*cap|centre\s*cap/.test(text)) finishBlocks.push(fs);
+        if (/color|colour|finish|center\s*cap|centre\s*cap|hardware|lip|face/.test(text)) finishBlocks.push(fs);
       }
     );
 
@@ -183,6 +212,10 @@
       lug: lug,
       diameterNative: diameterNative,
       color: color,
+      faceColor: faceColor,
+      lipColor: lipColor,
+      hardwareColor: hardwareColor,
+      hardwareInput: hardwareInput,
       centerCap: centerCap,
       finishBlocks: finishBlocks,
     };
@@ -286,8 +319,13 @@
       method: qs(document, '[data-ff-prop-fitment-method]'),
       frontSpec: qs(document, '[data-ff-prop-front-spec]'),
       rearSpec: qs(document, '[data-ff-prop-rear-spec]'),
+      faceFinish: qs(document, '[data-ff-prop-face-finish]'),
+      lipFinish: qs(document, '[data-ff-prop-lip-finish]'),
+      hardwareFinish: qs(document, '[data-ff-prop-hardware-finish]'),
+      finish: qs(document, '[data-ff-prop-finish]'),
     };
 
+    var isTwoPiece = root.getAttribute('data-ff-kind') === 'two-piece';
     var pathChooser = qs(root, '[data-ff-path-chooser]');
     var flow = qs(root, '[data-ff-flow]');
     var proPanel = qs(root, '[data-ff-pro-panel]');
@@ -307,6 +345,9 @@
     var frontOffsetSel = qs(root, '[data-ff-front-offset]');
     var rearOffsetSel = qs(root, '[data-ff-rear-offset]');
     var finishSel = qs(root, '[data-ff-finish]');
+    var faceFinishSel = qs(root, '[data-ff-face-finish]');
+    var lipFinishSel = qs(root, '[data-ff-lip-finish]');
+    var hardwareFinishSel = qs(root, '[data-ff-hardware-finish]');
     var centerCapSel = qs(root, '[data-ff-center-cap]');
     var finishPopulated = false;
     var widthOffsetPopulated = false;
@@ -398,6 +439,10 @@
 
       // Native finish / center cap always hidden — we mirror them in-flow
       setWrapperHidden(opts.color, true);
+      setWrapperHidden(opts.faceColor, true);
+      setWrapperHidden(opts.lipColor, true);
+      setWrapperHidden(opts.hardwareColor, true);
+      setWrapperHidden(opts.hardwareInput, true);
       setWrapperHidden(opts.centerCap, true);
 
       // Hide BCPO / option-tile / variant wrappers by label
@@ -414,7 +459,10 @@
               .replace(/\s+/g, ' ')
               .slice(0, 40);
           }
-          if (/color|colour|finish|center\s*cap|centre\s*cap/.test(text) && !/width|offset|diameter|lug/.test(text)) {
+          if (
+            /color|colour|finish|center\s*cap|centre\s*cap|hardware|lip|face|barrel/.test(text) &&
+            !/width|offset|diameter|lug/.test(text)
+          ) {
             wrap.classList.add('ff-pdp-config-hidden-tech');
             wrap.hidden = true;
           } else if (
@@ -584,6 +632,28 @@
       }
 
       if (prop.layout && state.path === 'pro') prop.layout.disabled = false;
+
+      // Finish cart properties (customer-facing)
+      var faceVal = faceFinishSel ? String(faceFinishSel.value || '').trim() : '';
+      var lipVal = lipFinishSel ? String(lipFinishSel.value || '').trim() : '';
+      var hwVal = hardwareFinishSel ? String(hardwareFinishSel.value || '').trim() : '';
+      var monoFinishVal = finishSel ? String(finishSel.value || '').trim() : '';
+      if (prop.faceFinish) {
+        prop.faceFinish.value = isTwoPiece ? faceVal : '';
+        prop.faceFinish.disabled = !(isTwoPiece && faceVal);
+      }
+      if (prop.lipFinish) {
+        prop.lipFinish.value = isTwoPiece ? lipVal : '';
+        prop.lipFinish.disabled = !(isTwoPiece && lipVal);
+      }
+      if (prop.hardwareFinish) {
+        prop.hardwareFinish.value = isTwoPiece ? hwVal : '';
+        prop.hardwareFinish.disabled = !(isTwoPiece && hwVal);
+      }
+      if (prop.finish) {
+        prop.finish.value = isTwoPiece ? '' : monoFinishVal;
+        prop.finish.disabled = isTwoPiece || !monoFinishVal;
+      }
     }
 
     function renderDiameters() {
@@ -633,21 +703,55 @@
 
     function populateFinishSelects() {
       var opts = findOptionSelects();
-      var colors = usableBcpoOptions(opts.color);
       var caps = usableBcpoOptions(opts.centerCap);
-      if (colors.length) fillSelect(finishSel, colors, 'Select finish');
-      if (caps.length) fillSelect(centerCapSel, caps, 'Select center cap');
-      if (colors.length || caps.length) finishPopulated = true;
-      // Re-apply current UI values onto native selects
+
+      if (isTwoPiece) {
+        var faces = usableBcpoOptions(opts.faceColor);
+        var lips = usableBcpoOptions(opts.lipColor);
+        if (faces.length && faceFinishSel) fillSelect(faceFinishSel, faces, 'Select face finish');
+        if (lips.length && lipFinishSel) fillSelect(lipFinishSel, lips, 'Select lip finish');
+        // Hardware is a BCPO text field — keep existing Silver/Black/Hidden options
+        if (caps.length) fillSelect(centerCapSel, caps, 'Select center cap');
+        if (faces.length || lips.length || caps.length) finishPopulated = true;
+      } else {
+        var colors = usableBcpoOptions(opts.color);
+        if (colors.length) fillSelect(finishSel, colors, 'Select finish');
+        if (caps.length) fillSelect(centerCapSel, caps, 'Select center cap');
+        if (colors.length || caps.length) finishPopulated = true;
+      }
       syncFinishToNative();
     }
 
     function syncFinishToNative() {
       var opts = findOptionSelects();
-      var finishVal = finishSel ? String(finishSel.value || '').trim() : '';
+      if (isTwoPiece) {
+        var faceVal = faceFinishSel ? String(faceFinishSel.value || '').trim() : '';
+        var lipVal = lipFinishSel ? String(lipFinishSel.value || '').trim() : '';
+        var hwVal = hardwareFinishSel ? String(hardwareFinishSel.value || '').trim() : '';
+        if (faceVal && opts.faceColor) setSelectValue(opts.faceColor, faceVal);
+        if (lipVal && opts.lipColor) setSelectValue(opts.lipColor, lipVal);
+        if (hwVal) {
+          if (opts.hardwareColor && opts.hardwareColor.tagName === 'SELECT') {
+            setSelectValue(opts.hardwareColor, hwVal);
+          }
+          if (opts.hardwareInput) {
+            opts.hardwareInput.disabled = false;
+            opts.hardwareInput.removeAttribute('disabled');
+            opts.hardwareInput.removeAttribute('required');
+            if (opts.hardwareInput.value !== hwVal) {
+              opts.hardwareInput.value = hwVal;
+              opts.hardwareInput.dispatchEvent(new Event('input', { bubbles: true }));
+              opts.hardwareInput.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+          }
+        }
+      } else {
+        var finishVal = finishSel ? String(finishSel.value || '').trim() : '';
+        if (finishVal && opts.color) setSelectValue(opts.color, finishVal);
+      }
       var capVal = centerCapSel ? String(centerCapSel.value || '').trim() : '';
-      if (finishVal && opts.color) setSelectValue(opts.color, finishVal);
       if (capVal && opts.centerCap) setSelectValue(opts.centerCap, capVal);
+      syncProps();
     }
 
     function selectDiameter(d, btn) {
@@ -754,6 +858,9 @@
       syncFinishToNative();
     }
     if (finishSel) finishSel.addEventListener('change', onFinishChange);
+    if (faceFinishSel) faceFinishSel.addEventListener('change', onFinishChange);
+    if (lipFinishSel) lipFinishSel.addEventListener('change', onFinishChange);
+    if (hardwareFinishSel) hardwareFinishSel.addEventListener('change', onFinishChange);
     if (centerCapSel) centerCapSel.addEventListener('change', onFinishChange);
 
     // Vehicle bootstrap
@@ -802,8 +909,13 @@
       requestAnimationFrame(function () {
         syncScheduled = false;
         var opts = findOptionSelects();
-        if (!finishPopulated && (usableBcpoOptions(opts.color).length || usableBcpoOptions(opts.centerCap).length)) {
-          populateFinishSelects();
+        if (!finishPopulated) {
+          var ready = isTwoPiece
+            ? usableBcpoOptions(opts.faceColor).length ||
+              usableBcpoOptions(opts.lipColor).length ||
+              usableBcpoOptions(opts.centerCap).length
+            : usableBcpoOptions(opts.color).length || usableBcpoOptions(opts.centerCap).length;
+          if (ready) populateFinishSelects();
         }
         if (!widthOffsetPopulated && (usableBcpoOptions(opts.width).length || usableBcpoOptions(opts.offset).length)) {
           populateWidthOffsetSelects();
@@ -871,9 +983,18 @@
         }
       }
 
-      var finishVal = finishSel ? String(finishSel.value || '').trim() : '';
+      var finishOk = false;
       var capVal = centerCapSel ? String(centerCapSel.value || '').trim() : '';
-      if (state.path && (!finishVal || !capVal)) {
+      if (isTwoPiece) {
+        var faceVal = faceFinishSel ? String(faceFinishSel.value || '').trim() : '';
+        var lipVal = lipFinishSel ? String(lipFinishSel.value || '').trim() : '';
+        var hwVal = hardwareFinishSel ? String(hardwareFinishSel.value || '').trim() : '';
+        finishOk = !!(faceVal && lipVal && hwVal && capVal);
+      } else {
+        var finishVal = finishSel ? String(finishSel.value || '').trim() : '';
+        finishOk = !!(finishVal && capVal);
+      }
+      if (state.path && !finishOk) {
         ok = false;
         if (finishError) finishError.hidden = false;
       }

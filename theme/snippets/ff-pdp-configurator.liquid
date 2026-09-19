@@ -167,25 +167,60 @@
         <p class="ff-pdp-config__helper">These are customer-requested specifications and will be reviewed before production.</p>
       </div>
 
-      {%- comment -%} SHARED: finish + center cap (in-flow, not buried below) {%- endcomment -%}
+      {%- comment -%} SHARED: finish + center cap (in-flow). Two-piece gets Face / Lip / Hardware. {%- endcomment -%}
       <div class="ff-pdp-config__section" data-ff-finish-panel>
-        <p class="ff-pdp-config__eyebrow">Finish &amp; center cap</p>
-        <p class="ff-pdp-config__helper">Choose your finish and center cap for this full set.</p>
-        <div class="ff-pdp-config__grid ff-pdp-config__grid--2">
-          <label class="ff-pdp-config__field">
-            <span>Finish*</span>
-            <select data-ff-finish data-ff-tiles-skip="1">
-              <option value="">Select finish</option>
-            </select>
-          </label>
-          <label class="ff-pdp-config__field">
-            <span>Center cap*</span>
-            <select data-ff-center-cap data-ff-tiles-skip="1">
-              <option value="">Select center cap</option>
-            </select>
-          </label>
-        </div>
-        <p class="ff-pdp-config__error" data-ff-finish-error hidden>Select a finish and center cap.</p>
+        {%- if ff_wheel_kind == 'two-piece' -%}
+          <p class="ff-pdp-config__eyebrow">Face, lip &amp; hardware</p>
+          <p class="ff-pdp-config__helper">Choose face finish, lip finish, hardware, and center cap for this full set.</p>
+          <div class="ff-pdp-config__grid ff-pdp-config__grid--2" data-ff-finish-twopiece>
+            <label class="ff-pdp-config__field">
+              <span>Face finish*</span>
+              <select data-ff-face-finish data-ff-tiles-skip="1">
+                <option value="">Select face finish</option>
+              </select>
+            </label>
+            <label class="ff-pdp-config__field">
+              <span>Lip finish*</span>
+              <select data-ff-lip-finish data-ff-tiles-skip="1">
+                <option value="">Select lip finish</option>
+              </select>
+            </label>
+            <label class="ff-pdp-config__field">
+              <span>Hardware finish*</span>
+              <select data-ff-hardware-finish data-ff-tiles-skip="1">
+                <option value="">Select hardware</option>
+                <option value="Silver">Silver</option>
+                <option value="Black">Black</option>
+                <option value="Hidden">Hidden</option>
+              </select>
+            </label>
+            <label class="ff-pdp-config__field">
+              <span>Center cap*</span>
+              <select data-ff-center-cap data-ff-tiles-skip="1">
+                <option value="">Select center cap</option>
+              </select>
+            </label>
+          </div>
+          <p class="ff-pdp-config__error" data-ff-finish-error hidden>Select face, lip, hardware, and center cap.</p>
+        {%- else -%}
+          <p class="ff-pdp-config__eyebrow">Finish &amp; center cap</p>
+          <p class="ff-pdp-config__helper">Choose your finish and center cap for this full set.</p>
+          <div class="ff-pdp-config__grid ff-pdp-config__grid--2" data-ff-finish-mono>
+            <label class="ff-pdp-config__field">
+              <span>Finish*</span>
+              <select data-ff-finish data-ff-tiles-skip="1">
+                <option value="">Select finish</option>
+              </select>
+            </label>
+            <label class="ff-pdp-config__field">
+              <span>Center cap*</span>
+              <select data-ff-center-cap data-ff-tiles-skip="1">
+                <option value="">Select center cap</option>
+              </select>
+            </label>
+          </div>
+          <p class="ff-pdp-config__error" data-ff-finish-error hidden>Select a finish and center cap.</p>
+        {%- endif -%}
       </div>
     </div>
   </div>
