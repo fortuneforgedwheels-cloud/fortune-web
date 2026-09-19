@@ -7,7 +7,7 @@ cd "$ROOT"
 
 bash "${ROOT}/scripts/assert-protected-theme-files.sh"
 
-THEME_ID="${SHOPIFY_THEME_ID:-188578300179}"
+THEME_ID="${SHOPIFY_THEME_ID:-188656091411}"
 ALLOW_LIVE_FLAG=()
 if [[ "${1:-}" == "--allow-live" ]]; then
   ALLOW_LIVE_FLAG=(--allow-live)
