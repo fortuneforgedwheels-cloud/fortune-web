@@ -2,7 +2,21 @@
   Recommended vs advanced fitment preference (cart property only).
   Does not remove existing width/offset option UIs — those stay available for advanced customers.
 {% endcomment %}
-{%- include 'ff-wheel-context' -%}
+{%- liquid
+  assign ff_is_fullset_priced = false
+  if product != blank
+    assign ff_tags_up = product.tags | join: ',' | upcase
+    assign ff_type_up = product.type | upcase
+    assign ff_handle_up = product.handle | upcase
+    unless ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+      if ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+        assign ff_is_fullset_priced = true
+      elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+        assign ff_is_fullset_priced = true
+      endif
+    endunless
+  endif
+-%}
 {%- if ff_is_fullset_priced -%}
   <div class="ff-fitment-path" data-ff-fitment-path>
     <p class="ff-fitment-path__title">Fitment preference</p>

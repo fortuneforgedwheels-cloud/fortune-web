@@ -3,7 +3,24 @@
   Two paths: Leave it to a professional | Customize my specs
   Does NOT touch the Fortune Forged Build Quote form.
 {% endcomment %}
-{%- include 'ff-wheel-context' -%}
+{%- liquid
+  assign ff_wheel_kind = 'other'
+  assign ff_is_fullset_priced = false
+  if product != blank
+    assign ff_tags_up = product.tags | join: ',' | upcase
+    assign ff_type_up = product.type | upcase
+    assign ff_handle_up = product.handle | upcase
+    if ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+      assign ff_wheel_kind = 'beadlock'
+    elsif ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+      assign ff_wheel_kind = 'monoblock'
+      assign ff_is_fullset_priced = true
+    elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+      assign ff_wheel_kind = 'two-piece'
+      assign ff_is_fullset_priced = true
+    endif
+  endif
+-%}
 {%- if ff_is_fullset_priced -%}
   {%- liquid
     assign ff_diams = ''

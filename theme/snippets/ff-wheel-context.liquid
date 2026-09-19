@@ -1,7 +1,11 @@
 {% comment %}
   Fortune Forged wheel classification + full-set pricing helpers.
 
-  Sets (when product is present):
+  NOTE: Shopify `render` cannot export assigns to the parent, and `include`
+  is blocked inside rendered snippets. Prefer inlining this liquid block in
+  callers, or {% capture x %}{% render 'ff-is-fullset', product: product %}{% endcapture %}.
+
+  Sets (when product is present / inlined):
   - ff_wheel_kind: 'monoblock' | 'two-piece' | 'beadlock' | 'other'
   - ff_is_fullset_priced: true when Monoblock or Two-Piece (not beadlock/other)
   - ff_construction_label: customer-facing construction string

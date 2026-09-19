@@ -23,7 +23,34 @@
     assign available = target.available | default: false
     assign money_price = price | money
 -%}
-{%- include 'ff-wheel-context' -%}
+{%- liquid
+  assign ff_wheel_kind = 'other'
+  assign ff_is_fullset_priced = false
+  assign ff_construction_label = ''
+  assign ff_price_varies_tiers = false
+  if product != blank
+    assign ff_tags_up = product.tags | join: ',' | upcase
+    assign ff_type_up = product.type | upcase
+    assign ff_handle_up = product.handle | upcase
+    if ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+      assign ff_wheel_kind = 'beadlock'
+    elsif ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+      assign ff_wheel_kind = 'monoblock'
+      assign ff_is_fullset_priced = true
+      assign ff_construction_label = 'Forged Monoblock'
+    elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+      assign ff_wheel_kind = 'two-piece'
+      assign ff_is_fullset_priced = true
+      assign ff_construction_label = 'Forged Two-Piece'
+    endif
+    if ff_is_fullset_priced and product.price_varies
+      assign ff_span = product.price_max | minus: product.price_min
+      if ff_span >= 15000
+        assign ff_price_varies_tiers = true
+      endif
+    endif
+  endif
+-%}
 {%- if ff_is_fullset_priced -%}
   {%- liquid
     if use_variant == false and ff_price_varies_tiers
