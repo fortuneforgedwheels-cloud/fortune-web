@@ -25,13 +25,14 @@
 }
 
 .ff-fullset-price__badge {
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  padding: 0.2rem 0.45rem;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 2px;
-  color: rgba(255, 255, 255, 0.9);
+  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 3px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 700;
 }
 
 .ff-fullset-price__amount {

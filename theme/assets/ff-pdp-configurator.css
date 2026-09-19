@@ -66,12 +66,12 @@
 
 .ff-pdp-config__path-btn:hover,
 .ff-pdp-config__path-btn.is-active {
-  border-color: rgba(212, 175, 55, 0.85);
-  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .ff-pdp-config__path-btn.is-recommended {
-  border-color: rgba(212, 175, 55, 0.45);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 .ff-pdp-config__path-badge {
@@ -79,12 +79,12 @@
   top: 0.7rem;
   right: 0.75rem;
   padding: 0.15rem 0.5rem;
-  border: 1px solid rgba(212, 175, 55, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: 999px;
   font-size: 0.68rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(212, 175, 55, 0.95);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .ff-pdp-config__path-btn strong {
@@ -174,12 +174,16 @@
   background: none;
   border: 0;
   padding: 0;
-  color: rgba(212, 175, 55, 0.95);
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: underline;
   cursor: pointer;
   font: inherit;
   font-size: 0.95rem;
   width: fit-content;
+}
+
+.ff-pdp-config__link--accent {
+  color: rgba(212, 175, 55, 0.95);
 }
 
 .ff-pdp-config__diameters {
@@ -203,8 +207,8 @@
 }
 
 .ff-pdp-config__diam.is-selected {
-  border-color: rgba(212, 175, 55, 0.85);
-  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .ff-pdp-config__layout {
@@ -226,8 +230,8 @@
 
 .ff-pdp-config__fit:has(input:checked),
 .ff-pdp-config__fit.is-recommended:has(input:checked) {
-  border-color: rgba(212, 175, 55, 0.8);
-  background: rgba(212, 175, 55, 0.08);
+  border-color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .ff-pdp-config__fit strong {
@@ -248,7 +252,7 @@
   display: inline-block;
   margin-left: 0.35rem;
   padding: 0.12rem 0.45rem;
-  border: 1px solid rgba(212, 175, 55, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: 999px;
   font-size: 0.68rem;
   letter-spacing: 0.08em;
@@ -259,7 +263,7 @@
 .ff-pdp-config__reassure {
   margin: 0.4rem 0 0;
   padding: 0.85rem 0.9rem;
-  border-left: 2px solid rgba(212, 175, 55, 0.7);
+  border-left: 2px solid rgba(255, 255, 255, 0.45);
   background: rgba(255, 255, 255, 0.03);
   font-size: 0.95rem;
   line-height: 1.5;
