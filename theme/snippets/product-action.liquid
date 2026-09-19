@@ -1,4 +1,23 @@
 {%- assign button_id = 'product-add-to-cart' | prepend: prefix -%}
+{%- liquid
+  assign ff_is_fullset_priced = false
+  if product != blank
+    assign ff_tags_up = product.tags | join: ',' | upcase
+    assign ff_type_up = product.type | upcase
+    assign ff_handle_up = product.handle | upcase
+    unless ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+      if ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+        assign ff_is_fullset_priced = true
+      elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+        assign ff_is_fullset_priced = true
+      endif
+    endunless
+  endif
+  assign ff_atc_label = 'products.product.add_to_cart' | t
+  if ff_is_fullset_priced
+    assign ff_atc_label = 'ADD FULL SET TO CART'
+  endif
+-%}
 <div class="productView-action{% unless settings.show_wishlist %} productView-action-2{% endunless %}">
     <input type="hidden" name="id" value="{{ current_variant.id }}">
     <div class="product-form__buttons">
@@ -17,10 +36,10 @@
                                 {{ 'products.product.sub_total' | t : value : '' }}
                                 {{ subtotal | money }}
                             {%- else -%}
-                                {{ 'products.product.add_to_cart' | t}}
+                                {{ ff_atc_label }}
                             {%- endif -%}
                         {%- else -%}
-                            {{ 'products.product.add_to_cart' | t}}
+                            {{ ff_atc_label }}
                         {%- endif -%}
                     {%- else -%}
                         {%- if show_subtotal_text -%}
@@ -48,10 +67,10 @@
                             {{ 'products.product.sub_total' | t : value : '' }}
                             {{ subtotal | money }}
                         {%- else -%}
-                            {{ 'products.product.add_to_cart' | t}}
+                            {{ ff_atc_label }}
                         {%- endif -%}
                     {%- else -%}
-                        {{ 'products.product.add_to_cart' | t}}
+                        {{ ff_atc_label }}
                     {%- endif -%}
                 </button>
             {%- endif -%}

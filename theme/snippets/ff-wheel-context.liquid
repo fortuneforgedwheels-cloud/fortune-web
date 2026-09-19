@@ -1,0 +1,44 @@
+{% comment %}
+  Fortune Forged wheel classification + full-set pricing helpers.
+
+  NOTE: Shopify `render` cannot export assigns to the parent, and `include`
+  is blocked inside rendered snippets. Prefer inlining this liquid block in
+  callers, or {% capture x %}{% render 'ff-is-fullset', product: product %}{% endcapture %}.
+
+  Sets (when product is present / inlined):
+  - ff_wheel_kind: 'monoblock' | 'two-piece' | 'beadlock' | 'other'
+  - ff_is_fullset_priced: true when Monoblock or Two-Piece (not beadlock/other)
+  - ff_construction_label: customer-facing construction string
+  - ff_price_varies_tiers: true when min/max span both diameter price tiers
+{% endcomment %}
+{%- liquid
+  assign ff_wheel_kind = 'other'
+  assign ff_is_fullset_priced = false
+  assign ff_construction_label = ''
+  assign ff_price_varies_tiers = false
+
+  if product != blank
+    assign ff_tags_up = product.tags | join: ',' | upcase
+    assign ff_type_up = product.type | upcase
+    assign ff_handle_up = product.handle | upcase
+
+    if ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+      assign ff_wheel_kind = 'beadlock'
+    elsif ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+      assign ff_wheel_kind = 'monoblock'
+      assign ff_is_fullset_priced = true
+      assign ff_construction_label = 'Forged Monoblock'
+    elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+      assign ff_wheel_kind = 'two-piece'
+      assign ff_is_fullset_priced = true
+      assign ff_construction_label = 'Forged Two-Piece'
+    endif
+
+    if ff_is_fullset_priced and product.price_varies
+      assign ff_span = product.price_max | minus: product.price_min
+      if ff_span >= 15000
+        assign ff_price_varies_tiers = true
+      endif
+    endif
+  endif
+-%}

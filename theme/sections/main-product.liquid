@@ -1,6 +1,8 @@
 {{ 'component-product.css' | asset_url | stylesheet_tag }}
 {{ 'component-review.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'ff-fullset-price.css' | asset_url | stylesheet_tag }}
+{{ 'ff-pdp-configurator.css' | asset_url | stylesheet_tag }}
 {{ 'component-badge.css' | asset_url | stylesheet_tag }}
 {{ 'component-rte.css' | asset_url | stylesheet_tag }}
 {{ 'component-product-form.css' | asset_url | stylesheet_tag }}
@@ -473,6 +475,8 @@
                                                 use_variant: true,
                                                 price_class: 'price--large'
                                             -%}
+                                            {%- render 'ff-pdp-confidence', product: product -%}
+                                            {%- render 'ff-pdp-configurator', product: product, section: section -%}
                                         </div>
                                     {%- when 'promotion' -%}
                                         {%- liquid
@@ -630,6 +634,16 @@
                                         >
                                             {{ product.title | escape }}
                                         </h1>
+                                        {%- if product.tags contains 'FEATURED-SPEC' -%}
+                                            {%- assign ff_spec_parts = product.description | split: '</p>' -%}
+                                            <div class="productView-specSummary">
+                                                {%- for part in ff_spec_parts limit: 3 -%}
+                                                    {%- if part contains '<p' -%}
+                                                        {{ part }}</p>
+                                                    {%- endif -%}
+                                                {%- endfor -%}
+                                            </div>
+                                        {%- endif -%}
                                     {%- when 'vendor' -%}
                                         {%- liquid
                                             assign padding_top = block.settings.padding_top
@@ -777,6 +791,38 @@
                                                 <div class="productView-group">
                                                     <div class="productView-groupTop">
                                                         {%- if show_qty -%}
+                                                            {%- comment -%} PDP configurator UI renders near price; props only here inside the form {%- endcomment -%}
+                                                            {%- liquid
+                                                              assign ff_is_fullset_priced = false
+                                                              if product != blank
+                                                                unless product.tags contains 'FEATURED-SPEC'
+                                                                  assign ff_tags_up = product.tags | join: ',' | upcase
+                                                                  assign ff_type_up = product.type | upcase
+                                                                  assign ff_handle_up = product.handle | upcase
+                                                                  unless ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+                                                                    if ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+                                                                      assign ff_is_fullset_priced = true
+                                                                    elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+                                                                      assign ff_is_fullset_priced = true
+                                                                    endif
+                                                                  endunless
+                                                                endunless
+                                                              endif
+                                                            -%}
+                                                            {%- if ff_is_fullset_priced -%}
+                                                              <div class="ff-pdp-config__props" data-ff-pdp-props hidden aria-hidden="true">
+                                                                <input type="hidden" name="properties[Order Type]" value="Full Set">
+                                                                <input type="hidden" name="properties[Build Path]" value="" data-ff-prop-build-path>
+                                                                <input type="hidden" name="properties[Vehicle]" value="" data-ff-prop-vehicle>
+                                                                <input type="hidden" name="properties[Wheel Size]" value="" data-ff-prop-wheel-size>
+                                                                <input type="hidden" name="properties[Front Diameter]" value="" data-ff-prop-front-diam>
+                                                                <input type="hidden" name="properties[Rear Diameter]" value="" data-ff-prop-rear-diam>
+                                                                <input type="hidden" name="properties[Layout]" value="" data-ff-prop-layout>
+                                                                <input type="hidden" name="properties[Fitment Method]" value="" data-ff-prop-fitment-method>
+                                                                <input type="hidden" name="properties[Front Spec]" value="" data-ff-prop-front-spec>
+                                                                <input type="hidden" name="properties[Rear Spec]" value="" data-ff-prop-rear-spec>
+                                                              </div>
+                                                            {%- endif -%}
                                                             {% render 'product-quantity',
                                                                 type: 'main-product',
                                                                 style: qty_style,
@@ -1020,6 +1066,8 @@
                                               ymm_make_placeholder: ff_certified_make_ph,
                                               ymm_model_placeholder: ff_certified_model_ph
                                             %}
+                                        {%- elsif product.tags contains 'FEATURED-SPEC' -%}
+                                            {% render 'ff-featured-fitment-boxes', product: product, section: section %}
                                         {%- endif -%}
                                         {%- if variantCount > 0 and product.has_only_default_variant != true -%}
                                             {%- liquid
@@ -4051,5 +4099,26 @@
     }]
 }
 {% endschema %}
+
+{%- liquid
+  assign ff_is_fullset_priced = false
+  if product != blank
+    unless product.tags contains 'FEATURED-SPEC'
+      assign ff_tags_up = product.tags | join: ',' | upcase
+      assign ff_type_up = product.type | upcase
+      assign ff_handle_up = product.handle | upcase
+      unless ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+        if ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+          assign ff_is_fullset_priced = true
+        elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+          assign ff_is_fullset_priced = true
+        endif
+      endunless
+    endunless
+  endif
+-%}
+{%- if ff_is_fullset_priced -%}
+  <script src="{{ 'ff-pdp-configurator.js' | asset_url }}" defer></script>
+{%- endif -%}
 
 <!-- bcpo done -->

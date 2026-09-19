@@ -304,8 +304,7 @@
                       </div>
                       {%- if design_default_product != blank and b.show_price_estimate -%}
                         <p class="ff-fan__price" data-ff-fan-price="full">
-                          {{ design_default_product.price | money }} {{ section.settings.price_each_label | escape }} &middot; est.
-                          {{ design_default_product.price | times: 4 | money }} {{ section.settings.price_full_set_label | escape }}
+                          {{ design_default_product.price | money }} SHIPPED — {{ section.settings.price_full_set_label | escape }}
                         </p>
                       {%- endif -%}
                     </div>
@@ -544,7 +543,7 @@
       "type": "text",
       "id": "price_full_set_label",
       "label": "Price full-set estimate label",
-      "default": "for a full set of 4"
+      "default": "FULL SET"
     },
     {
       "type": "text",
@@ -556,7 +555,7 @@
       "type": "text",
       "id": "add_to_cart_label",
       "label": "Add to cart button label",
-      "default": "Add My Setup to Cart"
+      "default": "Add Full Set to Cart"
     },
     {
       "type": "text",

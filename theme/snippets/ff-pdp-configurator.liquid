@@ -1,0 +1,192 @@
+{% comment %}
+  Direct-purchase full-set configurator (PDP ATC only).
+  Two paths: Leave it to a professional | Customize my specs
+  Does NOT touch the Fortune Forged Build Quote form.
+{% endcomment %}
+{%- liquid
+  assign ff_wheel_kind = 'other'
+  assign ff_is_fullset_priced = false
+  if product != blank
+    assign ff_tags_up = product.tags | join: ',' | upcase
+    assign ff_type_up = product.type | upcase
+    assign ff_handle_up = product.handle | upcase
+    if product.tags contains 'FEATURED-SPEC'
+      assign ff_wheel_kind = 'featured-spec'
+    elsif ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+      assign ff_wheel_kind = 'beadlock'
+    elsif ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+      assign ff_wheel_kind = 'monoblock'
+      assign ff_is_fullset_priced = true
+    elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+      assign ff_wheel_kind = 'two-piece'
+      assign ff_is_fullset_priced = true
+    endif
+  endif
+-%}
+{%- if ff_is_fullset_priced -%}
+  {%- liquid
+    assign ff_diams = ''
+    for option in product.options_with_values
+      assign oname = option.name | downcase
+      if oname contains 'diameter' or oname == 'size' or oname contains 'fitment'
+        for value in option.values
+          assign ff_diams = ff_diams | append: value | append: '||'
+        endfor
+      endif
+    endfor
+  -%}
+  <div
+    class="ff-pdp-config"
+    data-ff-pdp-config
+    data-ff-kind="{{ ff_wheel_kind }}"
+    data-ff-product-id="{{ product.id }}"
+    data-ff-diameters="{{ ff_diams | escape }}"
+    data-ff-section="{{ section.id }}"
+  >
+    <div class="ff-pdp-config__path" data-ff-path-chooser>
+      <p class="ff-pdp-config__eyebrow">How do you want to build this set?</p>
+      <div class="ff-pdp-config__path-grid">
+        <button type="button" class="ff-pdp-config__path-btn is-recommended" data-ff-path="pro">
+          <span class="ff-pdp-config__path-badge">Recommended</span>
+          <strong>Leave it to a professional</strong>
+          <em>Pick diameter, square or staggered, finish, and your vehicle. A fitment specialist dials in widths &amp; offsets for your build.</em>
+        </button>
+        <button type="button" class="ff-pdp-config__path-btn" data-ff-path="custom">
+          <strong>Customize my specs</strong>
+          <em>Enter your own front and rear diameter, width, and offset if you already know exact specs.</em>
+        </button>
+      </div>
+    </div>
+
+    <div class="ff-pdp-config__flow" data-ff-flow hidden>
+      <button type="button" class="ff-pdp-config__link" data-ff-path-reset>← Change build path</button>
+
+      {%- comment -%} SHARED: vehicle {%- endcomment -%}
+      <div class="ff-pdp-config__section" data-ff-vehicle-block>
+        <p class="ff-pdp-config__eyebrow">Your vehicle</p>
+        <div class="ff-pdp-config__vehicle-display" data-ff-vehicle-display hidden>
+          <p class="ff-pdp-config__vehicle-label" data-ff-vehicle-label></p>
+          <button type="button" class="ff-pdp-config__link ff-pdp-config__link--accent" data-ff-vehicle-change>Change vehicle</button>
+        </div>
+        <div class="ff-pdp-config__vehicle-form" data-ff-vehicle-form>
+          <div class="ff-pdp-config__grid ff-pdp-config__grid--3">
+            <label class="ff-pdp-config__field">
+              <span>Year*</span>
+              <input type="text" inputmode="numeric" autocomplete="off" placeholder="2025" data-ff-year>
+            </label>
+            <label class="ff-pdp-config__field">
+              <span>Make*</span>
+              <input type="text" autocomplete="off" placeholder="BMW" data-ff-make>
+            </label>
+            <label class="ff-pdp-config__field">
+              <span>Model*</span>
+              <input type="text" autocomplete="off" placeholder="M3" data-ff-model>
+            </label>
+          </div>
+          <p class="ff-pdp-config__error" data-ff-vehicle-error hidden>Enter year, make, and model so we can build the correct fitment.</p>
+        </div>
+      </div>
+
+      {%- comment -%} PRO PATH {%- endcomment -%}
+      <div class="ff-pdp-config__section" data-ff-pro-panel hidden>
+        <p class="ff-pdp-config__eyebrow">Choose your diameter</p>
+        <p class="ff-pdp-config__helper">One diameter for the full set. We’ll size front/rear widths &amp; offsets to your vehicle.</p>
+        <div class="ff-pdp-config__diameters" data-ff-diameters role="list"></div>
+        <p class="ff-pdp-config__error" data-ff-diam-error hidden>Select a diameter.</p>
+
+        <p class="ff-pdp-config__eyebrow">Square or staggered?</p>
+        <div class="ff-pdp-config__layout" role="radiogroup" aria-label="Width layout">
+          <label class="ff-pdp-config__fit is-recommended">
+            <input type="radio" name="ff_pdp_layout_ui" value="Staggered" data-ff-layout checked>
+            <span>
+              <strong>Staggered <span class="ff-pdp-config__rec">Popular</span></strong>
+              <em>Wider rear than front — classic staggered setup.</em>
+            </span>
+          </label>
+          <label class="ff-pdp-config__fit">
+            <input type="radio" name="ff_pdp_layout_ui" value="Square" data-ff-layout>
+            <span>
+              <strong>Square</strong>
+              <em>Same width front and rear.</em>
+            </span>
+          </label>
+        </div>
+
+        <div class="ff-pdp-config__reassure">
+          <strong>A specialist dials in your build</strong>
+          After you order, you’ll get an email or call from a Fortune Forged fitment specialist to confirm the exact front/rear widths and offsets for your vehicle before production.
+        </div>
+      </div>
+
+      {%- comment -%} CUSTOM PATH {%- endcomment -%}
+      <div class="ff-pdp-config__section" data-ff-custom-panel hidden>
+        <p class="ff-pdp-config__eyebrow">Front wheels</p>
+        <div class="ff-pdp-config__grid ff-pdp-config__grid--3">
+          <label class="ff-pdp-config__field">
+            <span>Diameter*</span>
+            <select data-ff-front-diam data-ff-tiles-skip="1">
+              <option value="">Select</option>
+            </select>
+          </label>
+          <label class="ff-pdp-config__field">
+            <span>Width*</span>
+            <select data-ff-front-width data-ff-tiles-skip="1">
+              <option value="">Select</option>
+            </select>
+          </label>
+          <label class="ff-pdp-config__field">
+            <span>Offset (ET)*</span>
+            <select data-ff-front-offset data-ff-tiles-skip="1">
+              <option value="">Select</option>
+            </select>
+          </label>
+        </div>
+
+        <p class="ff-pdp-config__eyebrow">Rear wheels</p>
+        <div class="ff-pdp-config__grid ff-pdp-config__grid--3">
+          <label class="ff-pdp-config__field">
+            <span>Diameter*</span>
+            <select data-ff-rear-diam data-ff-tiles-skip="1">
+              <option value="">Select</option>
+            </select>
+          </label>
+          <label class="ff-pdp-config__field">
+            <span>Width*</span>
+            <select data-ff-rear-width data-ff-tiles-skip="1">
+              <option value="">Select</option>
+            </select>
+          </label>
+          <label class="ff-pdp-config__field">
+            <span>Offset (ET)*</span>
+            <select data-ff-rear-offset data-ff-tiles-skip="1">
+              <option value="">Select</option>
+            </select>
+          </label>
+        </div>
+        <p class="ff-pdp-config__error" data-ff-custom-error hidden>Select complete front and rear diameter, width, and offset.</p>
+        <p class="ff-pdp-config__helper">These are customer-requested specifications and will be reviewed before production.</p>
+      </div>
+
+      {%- comment -%} SHARED: finish + center cap (in-flow, not buried below) {%- endcomment -%}
+      <div class="ff-pdp-config__section" data-ff-finish-panel>
+        <p class="ff-pdp-config__eyebrow">Finish &amp; center cap</p>
+        <p class="ff-pdp-config__helper">Choose your finish and center cap for this full set.</p>
+        <div class="ff-pdp-config__grid ff-pdp-config__grid--2">
+          <label class="ff-pdp-config__field">
+            <span>Finish*</span>
+            <select data-ff-finish data-ff-tiles-skip="1">
+              <option value="">Select finish</option>
+            </select>
+          </label>
+          <label class="ff-pdp-config__field">
+            <span>Center cap*</span>
+            <select data-ff-center-cap data-ff-tiles-skip="1">
+              <option value="">Select center cap</option>
+            </select>
+          </label>
+        </div>
+        <p class="ff-pdp-config__error" data-ff-finish-error hidden>Select a finish and center cap.</p>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

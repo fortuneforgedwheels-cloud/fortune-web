@@ -171,8 +171,11 @@ main-cart-items{
 }
 
 .cart-item-properties{
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 0.35em;
+    row-gap: 4px;
+    align-items: baseline;
     margin: 5px 0 0 0;
 }
 
@@ -184,11 +187,17 @@ main-cart-items{
     letter-spacing: var(--letter-spacing);
     line-height: var(--line-height);
     margin: 0;
-    padding: 13px 0;
+    padding: 4px 0;
+}
+
+.cart-item-properties .definitionList-key{
+    white-space: nowrap;
 }
 
 .cart-item-properties .definitionList-value{
-    margin-left: 5px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .cart-item-allocation{

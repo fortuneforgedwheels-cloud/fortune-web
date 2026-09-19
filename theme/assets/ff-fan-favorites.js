@@ -202,28 +202,19 @@
             }
             return;
           }
+          // Full-set checkout pricing — one line item at qty 1.
           items.push({
             id: Number(design.variantId),
-            quantity: 2,
+            quantity: 1,
             properties: {
+              'Order Type': 'Full Set',
               'Vehicle': vehicle,
               'Wheel Design': design.title,
               'Finish': finish,
-              'Position': frontLabel(),
-              'Size': specText(frontLabel(), 'full'),
-              'Fitment': noteText('full')
-            }
-          });
-          items.push({
-            id: Number(design.variantId),
-            quantity: 2,
-            properties: {
-              'Vehicle': vehicle,
-              'Wheel Design': design.title,
-              'Finish': finish,
-              'Position': rearLabel(),
-              'Size': specText(rearLabel(), 'full'),
-              'Fitment': noteText('full')
+              'Position': 'Front & Rear',
+              'Size': [specText(frontLabel(), 'full'), specText(rearLabel(), 'full')].filter(Boolean).join(' / '),
+              'Fitment': noteText('full'),
+              'Fitment Method': 'Have Fortune Forged build my fitment'
             }
           });
         } else {

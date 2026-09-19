@@ -1,0 +1,64 @@
+{% comment %}
+  Full-set shipped price presentation for Monoblock / Two-Piece products.
+  Keeps .price-item nodes intact so theme.js variant money updates still work.
+  SHIPPED / FULL SET labels sit outside .price-item.
+{% endcomment %}
+{%- liquid
+  assign ff_wheel_kind = 'other'
+  assign ff_is_fullset_priced = false
+  assign ff_construction_label = ''
+  assign ff_price_varies_tiers = false
+  if product != blank
+    assign ff_tags_up = product.tags | join: ',' | upcase
+    assign ff_type_up = product.type | upcase
+    assign ff_handle_up = product.handle | upcase
+    if product.tags contains 'FEATURED-SPEC'
+      assign ff_wheel_kind = 'featured-spec'
+    elsif ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+      assign ff_wheel_kind = 'beadlock'
+    elsif ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+      assign ff_wheel_kind = 'monoblock'
+      assign ff_is_fullset_priced = true
+      assign ff_construction_label = 'Forged Monoblock'
+    elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+      assign ff_wheel_kind = 'two-piece'
+      assign ff_is_fullset_priced = true
+      assign ff_construction_label = 'Forged Two-Piece'
+    endif
+    if ff_is_fullset_priced and product.price_varies
+      assign ff_span = product.price_max | minus: product.price_min
+      if ff_span >= 15000
+        assign ff_price_varies_tiers = true
+      endif
+    endif
+  endif
+-%}
+{%- if ff_is_fullset_priced -%}
+  {%- liquid
+    if use_variant
+      assign ff_target = product.selected_or_first_available_variant
+    else
+      assign ff_target = product
+    endif
+    assign ff_money = ff_target.price | money
+    if ff_target == product and product.price_varies and ff_price_varies_tiers
+      assign ff_from_mode = true
+      assign ff_money = product.price_min | money
+    else
+      assign ff_from_mode = false
+    endif
+  -%}
+  <div class="ff-fullset-price{% if price_class %} {{ price_class }}{% endif %}" data-ff-fullset data-ff-kind="{{ ff_wheel_kind }}">
+    {%- if ff_from_mode -%}
+      <p class="ff-fullset-price__from">Full sets from {{ ff_money }} shipped</p>
+    {%- else -%}
+      <div class="ff-fullset-price__row">
+        <span class="ff-fullset-price__badge">FULL SET</span>
+        <span class="ff-fullset-price__amount">
+          <span class="price-item price-item--regular" data-ff-fullset-money>{{ ff_money }}</span>
+          <span class="ff-fullset-price__shipped">SHIPPED</span>
+        </span>
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}
