@@ -1,5 +1,5 @@
 {%- assign button_id = 'product-add-to-cart' | prepend: prefix -%}
-{%- render 'ff-wheel-context', product: product -%}
+{%- include 'ff-wheel-context' -%}
 {%- liquid
   assign ff_atc_label = 'products.product.add_to_cart' | t
   if ff_is_fullset_priced

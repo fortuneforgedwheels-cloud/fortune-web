@@ -782,7 +782,7 @@
                                                     <div class="productView-groupTop">
                                                         {%- if show_qty -%}
                                                             {%- comment -%} PDP configurator UI renders near price; props only here inside the form {%- endcomment -%}
-                                                            {%- render 'ff-wheel-context', product: product -%}
+                                                            {%- include 'ff-wheel-context' -%}
                                                             {%- if ff_is_fullset_priced -%}
                                                               <div class="ff-pdp-config__props" data-ff-pdp-props hidden aria-hidden="true">
                                                                 <input type="hidden" name="properties[Order Type]" value="Full Set">
@@ -4072,7 +4072,7 @@
 }
 {% endschema %}
 
-{%- render 'ff-wheel-context', product: product -%}
+{%- include 'ff-wheel-context' -%}
 {%- if ff_is_fullset_priced -%}
   <script src="{{ 'ff-pdp-configurator.js' | asset_url }}" defer></script>
 {%- endif -%}

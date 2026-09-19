@@ -2,7 +2,7 @@
   Recommended vs advanced fitment preference (cart property only).
   Does not remove existing width/offset option UIs — those stay available for advanced customers.
 {% endcomment %}
-{%- render 'ff-wheel-context', product: product -%}
+{%- include 'ff-wheel-context' -%}
 {%- if ff_is_fullset_priced -%}
   <div class="ff-fitment-path" data-ff-fitment-path>
     <p class="ff-fitment-path__title">Fitment preference</p>

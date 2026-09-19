@@ -3,7 +3,7 @@
   Two paths: Leave it to a professional | Customize my specs
   Does NOT touch the Fortune Forged Build Quote form.
 {% endcomment %}
-{%- render 'ff-wheel-context', product: product -%}
+{%- include 'ff-wheel-context' -%}
 {%- if ff_is_fullset_priced -%}
   {%- liquid
     assign ff_diams = ''

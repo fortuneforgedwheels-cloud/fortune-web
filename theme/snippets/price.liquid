@@ -23,7 +23,7 @@
     assign available = target.available | default: false
     assign money_price = price | money
 -%}
-{%- render 'ff-wheel-context', product: product -%}
+{%- include 'ff-wheel-context' -%}
 {%- if ff_is_fullset_priced -%}
   {%- liquid
     if use_variant == false and ff_price_varies_tiers

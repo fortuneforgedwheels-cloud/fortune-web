@@ -1,5 +1,5 @@
 {% comment %} Concise PDP confidence signals for full-set forged wheels. {% endcomment %}
-{%- render 'ff-wheel-context', product: product -%}
+{%- include 'ff-wheel-context' -%}
 {%- if ff_is_fullset_priced -%}
   <ul class="ff-pdp-confidence" data-ff-pdp-confidence>
     <li>Custom vehicle-specific fitment verified before production</li>

@@ -3,7 +3,7 @@
   Keeps .price-item nodes intact so theme.js variant money updates still work.
   SHIPPED / FULL SET labels sit outside .price-item.
 {% endcomment %}
-{%- render 'ff-wheel-context', product: product -%}
+{%- include 'ff-wheel-context' -%}
 {%- if ff_is_fullset_priced -%}
   {%- liquid
     if use_variant
