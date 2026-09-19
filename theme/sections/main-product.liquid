@@ -634,6 +634,16 @@
                                         >
                                             {{ product.title | escape }}
                                         </h1>
+                                        {%- if product.tags contains 'FEATURED-SPEC' -%}
+                                            {%- assign ff_spec_parts = product.description | split: '</p>' -%}
+                                            <div class="productView-specSummary">
+                                                {%- for part in ff_spec_parts limit: 3 -%}
+                                                    {%- if part contains '<p' -%}
+                                                        {{ part }}</p>
+                                                    {%- endif -%}
+                                                {%- endfor -%}
+                                            </div>
+                                        {%- endif -%}
                                     {%- when 'vendor' -%}
                                         {%- liquid
                                             assign padding_top = block.settings.padding_top
@@ -785,15 +795,17 @@
                                                             {%- liquid
                                                               assign ff_is_fullset_priced = false
                                                               if product != blank
-                                                                assign ff_tags_up = product.tags | join: ',' | upcase
-                                                                assign ff_type_up = product.type | upcase
-                                                                assign ff_handle_up = product.handle | upcase
-                                                                unless ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
-                                                                  if ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
-                                                                    assign ff_is_fullset_priced = true
-                                                                  elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
-                                                                    assign ff_is_fullset_priced = true
-                                                                  endif
+                                                                unless product.tags contains 'FEATURED-SPEC'
+                                                                  assign ff_tags_up = product.tags | join: ',' | upcase
+                                                                  assign ff_type_up = product.type | upcase
+                                                                  assign ff_handle_up = product.handle | upcase
+                                                                  unless ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+                                                                    if ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+                                                                      assign ff_is_fullset_priced = true
+                                                                    elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+                                                                      assign ff_is_fullset_priced = true
+                                                                    endif
+                                                                  endunless
                                                                 endunless
                                                               endif
                                                             -%}
@@ -1054,6 +1066,8 @@
                                               ymm_make_placeholder: ff_certified_make_ph,
                                               ymm_model_placeholder: ff_certified_model_ph
                                             %}
+                                        {%- elsif product.tags contains 'FEATURED-SPEC' -%}
+                                            {% render 'ff-featured-fitment-boxes', product: product, section: section %}
                                         {%- endif -%}
                                         {%- if variantCount > 0 and product.has_only_default_variant != true -%}
                                             {%- liquid
@@ -4089,15 +4103,17 @@
 {%- liquid
   assign ff_is_fullset_priced = false
   if product != blank
-    assign ff_tags_up = product.tags | join: ',' | upcase
-    assign ff_type_up = product.type | upcase
-    assign ff_handle_up = product.handle | upcase
-    unless ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
-      if ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
-        assign ff_is_fullset_priced = true
-      elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
-        assign ff_is_fullset_priced = true
-      endif
+    unless product.tags contains 'FEATURED-SPEC'
+      assign ff_tags_up = product.tags | join: ',' | upcase
+      assign ff_type_up = product.type | upcase
+      assign ff_handle_up = product.handle | upcase
+      unless ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+        if ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+          assign ff_is_fullset_priced = true
+        elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+          assign ff_is_fullset_priced = true
+        endif
+      endunless
     endunless
   endif
 -%}

@@ -2,15 +2,17 @@
 {%- liquid
   assign ff_is_fullset_priced = false
   if product != blank
-    assign ff_tags_up = product.tags | join: ',' | upcase
-    assign ff_type_up = product.type | upcase
-    assign ff_handle_up = product.handle | upcase
-    unless ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
-      if ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
-        assign ff_is_fullset_priced = true
-      elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
-        assign ff_is_fullset_priced = true
-      endif
+    unless product.tags contains 'FEATURED-SPEC'
+      assign ff_tags_up = product.tags | join: ',' | upcase
+      assign ff_type_up = product.type | upcase
+      assign ff_handle_up = product.handle | upcase
+      unless ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+        if ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+          assign ff_is_fullset_priced = true
+        elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+          assign ff_is_fullset_priced = true
+        endif
+      endunless
     endunless
   endif
 -%}

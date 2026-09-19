@@ -32,7 +32,9 @@
     assign ff_tags_up = product.tags | join: ',' | upcase
     assign ff_type_up = product.type | upcase
     assign ff_handle_up = product.handle | upcase
-    if ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+    if product.tags contains 'FEATURED-SPEC'
+      assign ff_wheel_kind = 'featured-spec'
+    elsif ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
       assign ff_wheel_kind = 'beadlock'
     elsif ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
       assign ff_wheel_kind = 'monoblock'

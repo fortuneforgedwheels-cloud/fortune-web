@@ -28,6 +28,15 @@
     if (select.closest('noscript')) return true;
     if (select.dataset.ffTilesSkip === '1') return true;
     if (select.closest('[data-ff-pdp-config]')) return true;
+    if (select.closest('[data-ff-featured-fitment]')) return true;
+    if (select.closest('.ff-fitment-native-hidden, [data-ff-fitment-native-hidden="true"]')) return true;
+    if (select.closest('[data-ff-826m-hide-certified][data-ff-826m-variant-hidden], [data-ff-826m-variant-hidden]')) {
+      return true;
+    }
+    if (document.body.classList.contains('is-ff-826m-certified')) {
+      var certifiedLabel = findLabelText(select).toUpperCase();
+      if (/^(SIZE|DIAMETER|WIDTH|OFFSET|LUG PATTERN)$/.test(certifiedLabel)) return true;
+    }
     if (select.getAttribute('data-ff-sbv-year') != null) return true;
     if (select.getAttribute('data-ff-sbv-make') != null) return true;
     if (select.getAttribute('data-ff-sbv-model') != null) return true;
