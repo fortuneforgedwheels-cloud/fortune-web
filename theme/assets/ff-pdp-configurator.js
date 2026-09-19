@@ -452,7 +452,7 @@
         }
       });
 
-      // Hide legacy year/make/model BCPO text field
+      // Hide legacy year/make/model BCPO UI, but keep the input enabled and synced
       qsa(document, '.selector-wrapper, [class*="bcpo"] .bcpo-field, .line-item-property__field').forEach(
         function (wrap) {
           if (wrap.closest('[data-ff-pdp-config]')) return;
@@ -463,19 +463,61 @@
           if (/year\s*\/\s*make|year\/make|year.*make.*model/.test(text)) {
             wrap.classList.add('ff-pdp-config-hidden-tech');
             wrap.hidden = true;
-            var input = wrap.querySelector('input, textarea');
-            if (input) {
-              input.removeAttribute('required');
-              input.disabled = true;
-            }
+          }
+        }
+      );
+      qsa(document, 'input[name="properties[year/make/model]"], input[name="properties[Year/Make/Model]"]').forEach(
+        function (input) {
+          input.disabled = false;
+          input.removeAttribute('disabled');
+          input.removeAttribute('required');
+          var wrap =
+            input.closest('.selector-wrapper') ||
+            input.closest('[class*="bcpo"]') ||
+            input.closest('.line-item-property__field') ||
+            input.parentElement;
+          if (wrap && !wrap.closest('[data-ff-pdp-config]')) {
+            wrap.classList.add('ff-pdp-config-hidden-tech');
+            wrap.hidden = true;
           }
         }
       );
     }
 
+    function syncBcpoVehicleField(vehicleText) {
+      var text = String(vehicleText || '').trim();
+      qsa(document, 'input[name="properties[year/make/model]"], input[name="properties[Year/Make/Model]"], textarea[name="properties[year/make/model]"]').forEach(
+        function (input) {
+          input.disabled = false;
+          input.removeAttribute('disabled');
+          input.value = text;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      );
+    }
+
+    function ensureLeadTimeSelected() {
+      var lead = document.querySelector('select[name="properties[LEAD TIME PREFERENCE]"]');
+      if (!lead) return;
+      if (String(lead.value || '').trim()) return;
+      for (var i = 0; i < lead.options.length; i++) {
+        var opt = lead.options[i];
+        var val = String(opt.value || '').trim();
+        var label = String(opt.textContent || '').trim();
+        if (!val) continue;
+        if (/^choose|^select/i.test(label)) continue;
+        lead.value = opt.value;
+        lead.dispatchEvent(new Event('change', { bubbles: true }));
+        lead.dispatchEvent(new Event('input', { bubbles: true }));
+        break;
+      }
+    }
+
     function syncProps() {
       var vehicleText = formatVehicle(state.vehicle);
       if (prop.vehicle) prop.vehicle.value = vehicleText;
+      syncBcpoVehicleField(vehicleText);
 
       if (state.path === 'pro') {
         if (prop.buildPath) prop.buildPath.value = 'Leave it to a professional';
@@ -779,7 +821,10 @@
 
       if (!state.path) {
         ok = false;
-        if (pathChooser) pathChooser.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (pathChooser) {
+          pathChooser.hidden = false;
+          pathChooser.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       }
 
       if (!formatVehicle(state.vehicle)) {
@@ -829,11 +874,14 @@
         return false;
       }
 
+      // Required BCPO fields must be filled or the app silently blocks ATC
       var opts = findOptionSelects();
       setSelectValue(opts.width, PLUG);
       setSelectValue(opts.offset, PLUG);
       setSelectValue(opts.lug, PLUG);
       syncFinishToNative();
+      ensureLeadTimeSelected();
+      syncBcpoVehicleField(formatVehicle(state.vehicle));
       syncProps();
       return true;
     }
@@ -866,7 +914,8 @@
 
     document.body.classList.add('ff-pdp-config-active');
 
-    // Hide legacy theme YMM customization field (vehicle lives in configurator)
+    // Hide legacy theme YMM customization field UI (vehicle lives in configurator)
+    // Keep the input enabled so BCPO required validation + cart properties still work.
     qsa(document, '.line-item-property__field').forEach(function (field) {
       var label = field.querySelector('label');
       var text = label ? String(label.textContent || '').toLowerCase() : '';
@@ -876,9 +925,13 @@
         var input = field.querySelector('input, textarea');
         if (input) {
           input.removeAttribute('required');
-          input.disabled = true;
+          input.disabled = false;
         }
       }
+    });
+    qsa(document, 'input[name="properties[year/make/model]"]').forEach(function (input) {
+      input.disabled = false;
+      input.removeAttribute('disabled');
     });
   }
 
