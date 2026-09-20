@@ -267,12 +267,13 @@
                   .replace(/\s+/g, ' ')
                   .trim()
                   .toUpperCase();
-                if (title !== 'FACE COLOR' && title !== 'RING COLOR') continue;
+                if (title !== 'FACE COLOR' && title !== 'RING COLOR' && title !== 'COLOR') continue;
                 var values = (vo && vo.values) || [];
                 for (var j = 0; j < values.length; j++) {
                   var value = values[j];
                   if (!value || typeof value !== 'object') continue;
-                  if (String(value.key || '').toLowerCase() !== 'chrome') continue;
+                  var keyClean = String(value.key || '').replace(/\s*\(\+\$?\d+.*?\)\s*$/i, '').trim().toLowerCase();
+                  if (!/\bchrome\b/.test(keyClean)) continue;
                   value.price = PRICE;
                 }
               }
@@ -297,10 +298,11 @@
             }
 
             function isChrome(val) {
-              return String(val || '')
+              var cleaned = String(val || '')
                 .replace(/\s*\(\+\$?\d+.*?\)\s*$/i, '')
                 .trim()
-                .toLowerCase() === 'chrome';
+                .toLowerCase();
+              return /\bchrome\b/.test(cleaned);
             }
 
             function readColor(title) {
@@ -332,6 +334,16 @@
                 var field = wrap.querySelector('select');
                 if (field) return field.value || (field.options[field.selectedIndex] && field.options[field.selectedIndex].text);
               }
+              var props = document.querySelectorAll(
+                '[name="properties[' + title + ']"], [name="properties[' + wanted + ']"]'
+              );
+              for (var p = 0; p < props.length; p++) {
+                if (props[p].value) return props[p].value;
+              }
+              if (wanted === 'COLOR' || wanted === 'FINISH') {
+                var finishSel = document.querySelector('[data-ff-finish], [data-ff-prop-finish]');
+                if (finishSel && finishSel.value) return finishSel.value;
+              }
               return '';
             }
 
@@ -339,6 +351,8 @@
               var n = 0;
               if (isChrome(readColor('FACE COLOR'))) n += 1;
               if (isChrome(readColor('RING COLOR'))) n += 1;
+              if (isChrome(readColor('COLOR'))) n += 1;
+              if (isChrome(readColor('FINISH'))) n += 1;
               return n;
             }
 
