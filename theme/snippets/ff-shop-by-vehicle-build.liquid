@@ -1,4 +1,5 @@
 {{ 'ff-shop-by-vehicle.css' | asset_url | stylesheet_tag }}
+{%- assign ff_chrome_addon = all_products['chrome-finish-surcharge'] -%}
 
 <section
   class="ff-sbv ff-sbv--page"
@@ -12,7 +13,15 @@
   data-collection-two="/collections/two-piece-wheels"
   data-collection-bead="/collections/beadlock-wheels"
   data-home-url="/"
+  data-chrome-surcharge-variant="{{ ff_chrome_addon.selected_or_first_available_variant.id | default: 54535047840019 }}"
 >
+  <script>
+    window.FF_CHROME_SURCHARGE = Object.assign({}, window.FF_CHROME_SURCHARGE || {}, {
+      variantId: {{ ff_chrome_addon.selected_or_first_available_variant.id | default: 54535047840019 | json }},
+      handle: {{ ff_chrome_addon.handle | default: 'chrome-finish-surcharge' | json }},
+      amount: 250
+    });
+  </script>
   <div class="ff-sbv__page-wrap">
     <header class="ff-sbv__page-head">
       <a class="ff-sbv__back" href="/">&larr; Back to home</a>
@@ -88,6 +97,7 @@
       </div>
 
       <div class="ff-sbv__builder-actions">
+        <p class="ff-sbv__chrome-note" data-ff-sbv-chrome-note hidden>+$250 Chrome finish surcharge will be added at checkout</p>
         <button type="button" class="ff-sbv__add-cart" data-ff-sbv-add-cart disabled>Add to cart</button>
         <p class="ff-sbv__error" data-ff-sbv-error hidden></p>
       </div>
