@@ -16,28 +16,204 @@
 -%}
 <html class="no-js" lang="{{ request.locale.iso_code }}" {% if settings.select_layout and enable_iso_rtl %} dir="rtl" {% endif %}>
     <head>
-  <script>
-    /* FF_HOME_FORCE_VIEW */
-    (function () {
-      try {
-        if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
-        var path = location.pathname || '/';
-        if (path === '/' || path === '') {
-          var params = location.search || '';
-          if (/[?&]view=vehicle(?:&|$)/.test(params) || !/[?&]view=home(?:&|$)/.test(params)) {
-            location.replace('/?view=home' + (location.hash || ''));
-          }
-        }
-      } catch (e) {}
-    })();
-  </script>
-
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta name="theme-color" content="">
-        <link rel="canonical" href="{{ canonical_url }}">
-        <link canonical-shop-url="{{ shop.url }}/">
+        <script>
+          /* TikTok / Instagram / FB in-app browsers hijack <video> into native fullscreen.
+             Detect early, freeze autoplay to posters, and keep the page usable. */
+          (function () {
+            try {
+              var ua = navigator.userAgent || '';
+              var isTikTok = /tiktok|musical_ly|bytedancewebview|ttwebview|bytes?dance/i.test(ua);
+              var isInApp = isTikTok || /FBAN|FBAV|Instagram|Line\/|MicroMessenger|Snapchat|Pinterest|Twitter/i.test(ua);
+              if (!isInApp) return;
+              var root = document.documentElement;
+              root.classList.add('ff-inapp');
+              if (isTikTok) root.classList.add('ff-tiktok');
+              window.__ffInAppBrowser = true;
+              window.__ffTikTokBrowser = isTikTok;
+
+              function hardenAttrs(video) {
+                video.controls = false;
+                video.removeAttribute('controls');
+                video.muted = true;
+                video.defaultMuted = true;
+                video.playsInline = true;
+                video.setAttribute('muted', '');
+                video.setAttribute('playsinline', 'true');
+                video.setAttribute('webkit-playsinline', 'true');
+                video.setAttribute('x5-playsinline', 'true');
+                video.setAttribute('x5-video-player-type', 'h5');
+                video.setAttribute('x5-video-player-fullscreen', 'false');
+                video.setAttribute('disablepictureinpicture', '');
+                video.disablePictureInPicture = true;
+              }
+
+              function freezeVideo(video) {
+                if (!video || video.nodeName !== 'VIDEO' || video.dataset.ffInappFrozen === '1') return;
+                video.dataset.ffInappFrozen = '1';
+                try { video.pause(); } catch (e0) {}
+                video.autoplay = false;
+                video.removeAttribute('autoplay');
+                video.setAttribute('preload', 'none');
+                try { video.preload = 'none'; } catch (e1) {}
+                hardenAttrs(video);
+
+                var poster = video.getAttribute('poster') || '';
+                if (!poster) {
+                  /* Stop network playback attempts that trigger native fullscreen. */
+                  try {
+                    video.removeAttribute('src');
+                    video.querySelectorAll('source').forEach(function (s) { s.remove(); });
+                    video.load();
+                  } catch (e2) {}
+                  return;
+                }
+
+                var img = document.createElement('img');
+                img.className = ((video.className || '') + ' ff-inapp-poster').trim();
+                img.src = poster;
+                img.alt = video.getAttribute('alt') || '';
+                img.setAttribute('decoding', 'async');
+                img.setAttribute('data-ff-inapp-poster', '1');
+                if (video.parentNode) {
+                  video.parentNode.insertBefore(img, video);
+                }
+                video.setAttribute('hidden', '');
+                video.style.display = 'none';
+                try {
+                  video.removeAttribute('src');
+                  video.querySelectorAll('source').forEach(function (s) { s.remove(); });
+                  video.load();
+                } catch (e3) {}
+              }
+
+              function scan(rootNode) {
+                var scope = rootNode && rootNode.querySelectorAll ? rootNode : document;
+                scope.querySelectorAll('video').forEach(freezeVideo);
+                if (rootNode && rootNode.nodeName === 'VIDEO') freezeVideo(rootNode);
+              }
+
+              scan(document);
+              var mo = new MutationObserver(function (mutations) {
+                mutations.forEach(function (m) {
+                  if (m.type === 'childList') {
+                    m.addedNodes.forEach(function (node) {
+                      if (node.nodeType !== 1) return;
+                      scan(node);
+                    });
+                  } else if (m.type === 'attributes' && m.target && m.target.nodeName === 'VIDEO') {
+                    freezeVideo(m.target);
+                  }
+                });
+              });
+              function observe() {
+                if (!document.documentElement) return;
+                mo.observe(document.documentElement, {
+                  childList: true,
+                  subtree: true,
+                  attributes: true,
+                  attributeFilter: ['autoplay', 'src']
+                });
+                scan(document);
+              }
+              if (document.documentElement) observe();
+              else document.addEventListener('DOMContentLoaded', observe, { once: true });
+
+              ['webkitbeginfullscreen', 'fullscreenchange', 'webkitfullscreenchange'].forEach(function (evt) {
+                document.addEventListener(evt, function () {
+                  document.querySelectorAll('video').forEach(function (video) {
+                    try { video.pause(); } catch (e) {}
+                    if (document.fullscreenElement === video || document.webkitFullscreenElement === video) {
+                      try {
+                        if (document.exitFullscreen) document.exitFullscreen();
+                        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                      } catch (e4) {}
+                    }
+                  });
+                }, true);
+              });
+            } catch (e) {}
+          })();
+        </script>
+        <style>
+          html.ff-inapp video[data-ff-inapp-frozen='1'],
+          html.ff-inapp video[hidden][data-ff-inapp-frozen='1'] {
+            display: none !important;
+          }
+          html.ff-inapp .ff-inapp-poster {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            pointer-events: none;
+          }
+        </style>
+        {%- comment -%}
+          CRITICAL: Shopify IndexController caches bare / as a frozen HTML snapshot
+          (even after theme publish/delete). Using `now` opts homepage Liquid out of
+          that cache. The working storefront path is /?page=1 (same Theme Editor
+          index.json) — never trust bare / alone.
+        {%- endcomment -%}
+        {%- if request.page_type == 'index' -%}
+          <meta name="ff-home-rendered-at" content="{{ 'now' | date: '%s%N' }}">
+        {%- endif -%}
+        <script>
+          (function () {
+            try {
+              if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
+              var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
+              var qs = location.search || '';
+              var hash = location.hash || '';
+              function toLiveHome(search, hashPart) {
+                var params = new URLSearchParams(search || '');
+                params.delete('view');
+                params.set('page', '1');
+                var q = params.toString();
+                return '/?' + q + (hashPart || '');
+              }
+              // Legacy vehicle view → live homepage.
+              if (path === '/' && /[?&]view=vehicle(?:&|$)/.test(qs)) {
+                location.replace(toLiveHome('', hash));
+                return;
+              }
+              // Bare / without page=1 is IndexController-poisoned — force live home.
+              if (path === '/' && !/[?&]page=1(?:&|$)/.test(qs)) {
+                location.replace(toLiveHome(qs, hash));
+                return;
+              }
+              // Menus/logo still point at / — send them to the live homepage.
+              document.addEventListener(
+                'click',
+                function (e) {
+                  var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+                  if (!a) return;
+                  var href = a.getAttribute('href');
+                  if (!href || href.charAt(0) === '#') return;
+                  try {
+                    var u = new URL(href, location.origin);
+                    if (u.origin !== location.origin) return;
+                    var p = (u.pathname || '/').replace(/\/+$/, '') || '/';
+                    if (p !== '/') return;
+                    if (/[?&]page=1(?:&|$)/.test(u.search || '')) return;
+                    e.preventDefault();
+                    location.assign(toLiveHome(u.search, u.hash));
+                  } catch (err) {}
+                },
+                true
+              );
+            } catch (e) {}
+          })();
+        </script>
+        {%- if request.page_type == 'index' -%}
+          <link rel="canonical" href="{{ shop.url }}/?page=1">
+        {%- else -%}
+          <link rel="canonical" href="{{ canonical_url }}">
+        {%- endif -%}
+        <link canonical-shop-url="{{ shop.url }}/?page=1">
         {%- if settings.favicon != blank -%}
             <link rel="icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">
         {%- endif -%}
@@ -63,7 +239,202 @@
         {% endif %}
 
         {% render 'meta-tags' %}
+        {%- if request.page_type == '404' and request.path contains 'the-forging-process' -%}
+          <meta http-equiv="refresh" content="0;url=/pages/faq?view=forgeflow">
+          <script>location.replace('/pages/faq?view=forgeflow');</script>
+        {%- endif -%}
         {{ content_for_header }}
+        {%- assign ff_chrome_addon_global = all_products['chrome-finish-surcharge'] -%}
+        <script>
+          window.FF_CHROME_SURCHARGE = Object.assign({}, window.FF_CHROME_SURCHARGE || {}, {
+            variantId: {{ ff_chrome_addon_global.selected_or_first_available_variant.id | default: 54535047840019 | json }},
+            handle: {{ ff_chrome_addon_global.handle | default: 'chrome-finish-surcharge' | json }},
+            amount: 250
+          });
+          /* ffChromeChargeV2: patch display prices + add real $250 checkout line items. */
+          (function () {
+            if (window.__ffChromeChargeV2) return;
+            window.__ffChromeChargeV2 = true;
+            var PRICE = '250';
+            var pending = 0;
+            var adding = false;
+
+            function patch(data) {
+              if (!data || !Array.isArray(data.virtual_options)) return data;
+              for (var i = 0; i < data.virtual_options.length; i++) {
+                var vo = data.virtual_options[i];
+                var title = String((vo && vo.title) || '')
+                  .replace(/\s+/g, ' ')
+                  .trim()
+                  .toUpperCase();
+                if (title !== 'FACE COLOR' && title !== 'RING COLOR') continue;
+                var values = (vo && vo.values) || [];
+                for (var j = 0; j < values.length; j++) {
+                  var value = values[j];
+                  if (!value || typeof value !== 'object') continue;
+                  if (String(value.key || '').toLowerCase() !== 'chrome') continue;
+                  value.price = PRICE;
+                }
+              }
+              return data;
+            }
+
+            var current = window.bcpo_data;
+            try {
+              Object.defineProperty(window, 'bcpo_data', {
+                configurable: true,
+                enumerable: true,
+                get: function () {
+                  return current;
+                },
+                set: function (value) {
+                  current = patch(value);
+                },
+              });
+              if (current) patch(current);
+            } catch (e) {
+              if (window.bcpo_data) patch(window.bcpo_data);
+            }
+
+            function isChrome(val) {
+              return String(val || '')
+                .replace(/\s*\(\+\$?\d+.*?\)\s*$/i, '')
+                .trim()
+                .toLowerCase() === 'chrome';
+            }
+
+            function readColor(title) {
+              var wanted = String(title || '')
+                .replace(/\s+/g, ' ')
+                .trim()
+                .toUpperCase();
+              var root = document.querySelector('[data-ff-826m-path]');
+              if (root) {
+                var mode = root.querySelector('input[type="radio"][name^="ff_826m_path_"]:checked');
+                var certified = mode && mode.value === 'certified';
+                var select = root.querySelector('[data-ff-826m-color-select="' + title + '"]');
+                if (certified && select && select.value) return select.value;
+              }
+              var labels = document.querySelectorAll('.bcpo-title, .bcpo-front-dd-label, .bcpo-label');
+              for (var i = 0; i < labels.length; i++) {
+                var label = String(labels[i].textContent || '')
+                  .replace(/\s+/g, ' ')
+                  .trim()
+                  .toUpperCase()
+                  .split(':')[0]
+                  .trim();
+                if (label !== wanted) continue;
+                var wrap =
+                  labels[i].closest('.selector-wrapper') ||
+                  labels[i].closest('[class*="bcpo"]') ||
+                  labels[i].parentElement;
+                if (!wrap) continue;
+                var field = wrap.querySelector('select');
+                if (field) return field.value || (field.options[field.selectedIndex] && field.options[field.selectedIndex].text);
+              }
+              return '';
+            }
+
+            function chromeCount() {
+              var n = 0;
+              if (isChrome(readColor('FACE COLOR'))) n += 1;
+              if (isChrome(readColor('RING COLOR'))) n += 1;
+              return n;
+            }
+
+            function addAddon(qty) {
+              var variantId = window.FF_CHROME_SURCHARGE && window.FF_CHROME_SURCHARGE.variantId;
+              if (!variantId || !qty) return Promise.resolve();
+              adding = true;
+              return fetch('/cart/add.js', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({
+                  items: [
+                    {
+                      id: Number(variantId),
+                      quantity: qty,
+                      properties: {
+                        _Surcharge: 'Chrome finish',
+                        'Chrome selections': String(qty),
+                        Note: qty > 1 ? 'Face + Ring Chrome (+$250 each)' : 'Chrome finish (+$250)',
+                      },
+                    },
+                  ],
+                }),
+              })
+                .catch(function () {})
+                .finally(function () {
+                  adding = false;
+                });
+            }
+
+            function remember() {
+              pending = chromeCount();
+              return pending;
+            }
+
+            function flush() {
+              var qty = pending;
+              pending = 0;
+              return addAddon(qty);
+            }
+
+            if (typeof window.fetch === 'function') {
+              var originalFetch = window.fetch.bind(window);
+              window.fetch = function (input, init) {
+                var url = typeof input === 'string' ? input : input && input.url;
+                var isAdd = String(url || '').indexOf('/cart/add') !== -1 && !adding;
+                if (isAdd) remember();
+                return originalFetch(input, init).then(function (response) {
+                  if (!isAdd || !response || !response.ok) return response;
+                  return flush().then(function () {
+                    return response;
+                  });
+                });
+              };
+            }
+
+            document.addEventListener(
+              'submit',
+              function (event) {
+                var form = event.target;
+                if (!form || !form.getAttribute) return;
+                var action = form.getAttribute('action') || '';
+                var type = form.getAttribute('data-type') || '';
+                if (action.indexOf('/cart/add') === -1 && type !== 'add-to-cart-form') return;
+                remember();
+              },
+              true
+            );
+          })();
+        </script>
+        <script src="{{ 'ff-bcpo-chrome-surcharge.js' | asset_url }}" defer></script>
+        <script>
+          /* Immediate escape from sticky IndexController caches onto fresh autoplay homepage. */
+          (function () {
+            try {
+              if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
+              var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
+              var qs = location.search || '';
+              /* Sticky forging pages → fresh step-layout view */
+              if (
+                /\/pages\/faq\/?$/.test(path) &&
+                /[?&]view=(?:the-forging-process|forging|forgesteps)(?:&|$)/.test(qs)
+              ) {
+                location.replace('/pages/faq?view=forgeflow' + (location.hash || ''));
+                return;
+              }
+              var onHome = path === '/' || path === '/?page=1';
+              if (!onHome) return;
+              /* Legacy sticky alternate views → real Theme Editor homepage (/). */
+              if (/[?&]view=(?:vehicle|fflive|ffgo|ffnow|ffmplay|ffautoplay)(?:&|$)/.test(qs)) {
+                location.replace('/' + (location.hash || ''));
+              }
+            } catch (e) {}
+          })();
+        </script>
 
         <style type="text/css" media="screen">
             {% render 'variable' %}
@@ -112,21 +483,15 @@
     </head>
     {%- liquid
         assign page_type = request.page_type | replace: 'customers/', ''
-        if settings.show_dark_mode
-            assign default_dark_mode = settings.default_dark_mode
-        endif
     -%}
     {%- assign ff_page_cache_bust = "now" | date: "%s%N" -%}
-    <body data-ff-bust="{{ ff_page_cache_bust }}" class="body-full template-{{ page_type }} skin-{{ settings.layout }}{% if settings.select_layout and enable_iso_rtl %} rtl{% endif %}{% if default_dark_mode %} dark-mode{% endif %}">
-        {%- if settings.show_dark_mode -%}
-            <script>
-                {%- if default_dark_mode -%}
-                    localStorage.getItem('theme') === 'light' ? document.body.classList.remove('dark-mode') : document.body.classList.add('dark-mode');
-                {%- else -%}
-                    localStorage.getItem('theme') === 'dark' ? document.body.classList.add('dark-mode') : document.body.classList.remove('dark-mode');
-                {%- endif -%}
-            </script>
-        {%- endif -%}
+    <body data-ff-bust="{{ ff_page_cache_bust }}" class="body-full template-{{ page_type }} skin-{{ settings.layout }}{% if settings.select_layout and enable_iso_rtl %} rtl{% endif %} dark-mode">
+        <script>
+            try {
+                if (localStorage.getItem('theme') === 'light') localStorage.removeItem('theme');
+            } catch (e) {}
+            document.body.classList.add('dark-mode');
+        </script>
         <a class="skip-to-content-link visually-hidden" href="#MainContent">
             {{ "accessibility.skip_to_text" | t }}
         </a>
@@ -177,6 +542,23 @@
               {% section 'ff-beadlock-packages' %}
             {%- else -%}
               {{ content_for_layout }}
+
+        <script data-ff-home-heal="1">
+        (function () {
+          try {
+            if (window.Shopify && (Shopify.designMode || Shopify.editorAssets)) return;
+            var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
+            var qs = location.search || '';
+            if (path === '/' && !/[?&]page=1(?:&|$)/.test(qs)) {
+              var params = new URLSearchParams(qs);
+              params.delete('view');
+              params.set('page', '1');
+              location.replace('/?' + params.toString() + (location.hash || ''));
+            }
+          } catch (e) {}
+        })();
+        </script>
+
             {%- endif -%}
         </main>
         <div class="wrapper-footer">
@@ -186,8 +568,7 @@
         {% render 'ff-offer-popup' %}
         {{ 'ff-storefront-fix.css' | asset_url | stylesheet_tag }}
         <script src="{{ 'ff-about-route.js' | asset_url }}" defer></script>
-        <script src="{{ 'ff-offer-boot.js' | asset_url }}" defer></script>
-        {% section 'halo-toolbar-mobile' %}
+        <script src="{{ 'ff-offer-boot-v2.js' | asset_url }}" defer></script>
         {{ 'rtl-section-header.css' | asset_url | stylesheet_tag }}
         {{ 'rtl-section-footer.css' | asset_url | stylesheet_tag }}
         {% render 'halo-popup' %}
@@ -206,5 +587,18 @@
         {% render 'theme-demo-notification' %}
         <script src="{{ 'halo-quick-search.js' | asset_url }}" defer="defer"></script>
         {% render 'ff-affiliate-trust-link' %}
+        <script>
+          (function () {
+            function renameShopByStyle() {
+              document.querySelectorAll('.menu-lv-1 .text, .menu-lv-2.nav-title-mobile .text, .menu-lv-2.nav-all-mobile .text').forEach(function (el) {
+                var t = (el.textContent || '').replace(/\s+/g, ' ').trim();
+                if (/^shop by style$/i.test(t)) el.textContent = 'WHEELS';
+                else if (/^go to shop by style$/i.test(t)) el.textContent = 'Go to WHEELS';
+              });
+            }
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renameShopByStyle);
+            else renameShopByStyle();
+          })();
+        </script>
     </body>
 </html>
