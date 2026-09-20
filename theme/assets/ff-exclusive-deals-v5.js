@@ -344,7 +344,7 @@
           'Finish': finish,
           'Vehicle': ymm ? String(ymm.value || '').trim() : '',
           'Fitment path': helpPreference ? helpPreference.value : '',
-          'Invasion Bonus Entries': '5'
+          'Invasion Bonus Entries': '3'
         };
 
         if (mode === 'specs' && specs) {
