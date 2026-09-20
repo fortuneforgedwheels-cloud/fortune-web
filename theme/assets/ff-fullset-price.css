@@ -143,6 +143,23 @@
   opacity: 0.72;
 }
 
+.ff-g8x-guide-link {
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  opacity: 0.9;
+}
+
+.ff-g8x-guide-link a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.ff-g8x-guide-link a:hover {
+  opacity: 1;
+}
+
 @media (max-width: 767px) {
   .ff-fullset-price__amount {
     font-size: 1.05em;
