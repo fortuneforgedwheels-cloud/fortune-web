@@ -1,0 +1,48 @@
+# Files that MUST exist locally before any Shopify theme push.
+# Missing any of these aborts the push so live cannot wipe critical features.
+# Add new critical files here when shipping important live updates.
+# To intentionally retire a protected file, remove its line from this list first.
+
+# Featured Specs (homepage)
+theme/sections/ff-featured-specs.liquid
+theme/assets/ff-featured-specs.css
+theme/assets/ff-featured-specs.js
+
+# PDP Professional / Customize path
+theme/snippets/ff-pdp-configurator.liquid
+theme/snippets/ff-pdp-confidence.liquid
+theme/assets/ff-pdp-configurator.js
+theme/assets/ff-pdp-configurator.css
+
+# Custom option tiles (site-wide button UI)
+theme/assets/ff-option-tiles.js
+theme/assets/ff-option-tiles.css
+
+# Chrome finish surcharge ($250)
+theme/assets/ff-bcpo-chrome-surcharge.js
+
+# Shop by Vehicle (YMM / build)
+theme/assets/ff-shop-by-vehicle-v3.js
+theme/assets/ff-shop-by-vehicle.css
+theme/snippets/ff-shop-by-vehicle-bar.liquid
+theme/snippets/ff-shop-by-vehicle-build.liquid
+theme/sections/ff-shop-by-vehicle.liquid
+
+# Quote / build section
+theme/sections/ff-simple-build.liquid
+theme/assets/ff-simple-build.js
+theme/assets/ff-simple-build.css
+theme/snippets/ff-quote-form.liquid
+
+# Fitment boxes
+theme/assets/ff-featured-fitment-boxes.css
+theme/assets/ff-featured-fitment-boxes.js
+theme/snippets/ff-featured-fitment-boxes.liquid
+
+# Full-set pricing display
+theme/snippets/ff-fullset-price.liquid
+theme/assets/ff-fullset-price.css
+
+# Layout / PDP wiring hosts (chrome + tiles + configurator)
+theme/layout/theme.liquid
+theme/sections/main-product.liquid

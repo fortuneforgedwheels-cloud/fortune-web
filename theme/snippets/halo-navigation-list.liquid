@@ -244,6 +244,8 @@
                 product_per_row: product_per_row,
                 load: load
             %}
+        {%- elsif title == 'shop-by-style' -%}
+            {% render 'ff-wheels-megamenu' %}
         {%- else -%}
             {% render 'halo-dropdownmenu'
                 link: link,
