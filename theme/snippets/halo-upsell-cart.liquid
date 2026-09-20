@@ -102,7 +102,7 @@
 			                                {%- for property in item.properties -%}
 			                                    {%- assign property_first_char = property.first | slice: 0 -%}
 			                                    {%- if property.last != blank and property_first_char != '_' -%}
-			                                        <dt class="definitionList-key">{{ property.first }}:</dt>
+			                                        <dt class="definitionList-key">{{ property.first }}: </dt>
 			                                        <dd class="definitionList-value">
 			                                            {%- if property.last contains '/uploads/' -%}
 			                                                <a href="{{ property.last }}" target="_blank">
