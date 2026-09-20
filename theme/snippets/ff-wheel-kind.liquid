@@ -1,0 +1,20 @@
+{% comment %}
+  Outputs wheel kind: monoblock | two-piece | beadlock | other
+  {% capture ff_kind %}{% render 'ff-wheel-kind', product: product %}{% endcapture %}
+{% endcomment %}
+{%- liquid
+  assign ff_kind_out = 'other'
+  if product != blank
+    assign ff_tags_up = product.tags | join: ',' | upcase
+    assign ff_type_up = product.type | upcase
+    assign ff_handle_up = product.handle | upcase
+    if ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+      assign ff_kind_out = 'beadlock'
+    elsif ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+      assign ff_kind_out = 'monoblock'
+    elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+      assign ff_kind_out = 'two-piece'
+    endif
+  endif
+-%}
+{{- ff_kind_out -}}

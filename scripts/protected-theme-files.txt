@@ -1,0 +1,15 @@
+# Files that MUST exist locally before any Shopify theme push.
+# Missing any of these aborts the push so live homepage sections cannot be deleted.
+theme/sections/ff-featured-specs.liquid
+theme/assets/ff-featured-specs.css
+theme/assets/ff-featured-specs.js
+theme/sections/ff-simple-build.liquid
+theme/assets/ff-simple-build.js
+theme/assets/ff-simple-build.css
+theme/assets/ff-quote-meta.js
+theme/snippets/ff-quote-form.liquid
+theme/snippets/ff-build-wheel-grid.liquid
+theme/snippets/ff-shop-by-vehicle-bar.liquid
+theme/assets/ff-featured-fitment-boxes.css
+theme/assets/ff-featured-fitment-boxes.js
+theme/snippets/ff-featured-fitment-boxes.liquid
