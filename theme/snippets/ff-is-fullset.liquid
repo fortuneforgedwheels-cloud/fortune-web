@@ -1,0 +1,23 @@
+{% comment %}
+  Outputs "1" when product is Monoblock or Two-Piece full-set priced, else empty.
+  Use with capture — Shopify render cannot export assigns to the parent.
+
+  {% capture ff_fullset %}{% render 'ff-is-fullset', product: product %}{% endcapture %}
+  {% if ff_fullset == '1' %}
+{% endcomment %}
+{%- liquid
+  assign ff_ok = false
+  if product != blank
+    assign ff_tags_up = product.tags | join: ',' | upcase
+    assign ff_type_up = product.type | upcase
+    assign ff_handle_up = product.handle | upcase
+    if ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+      assign ff_ok = false
+    elsif ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+      assign ff_ok = true
+    elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+      assign ff_ok = true
+    endif
+  endif
+-%}
+{%- if ff_ok -%}1{%- endif -%}

@@ -45,7 +45,7 @@
                                     {%- for property in item.properties -%}
                                         {%- assign property_first_char = property.first | slice: 0 -%}
                                         {%- if property.last != blank and property_first_char != '_' -%}
-                                            <dt class="definitionList-key" data-property-item data-property-name="{{ property.first }}" data-property-value="{% if property.last contains '/uploads/' %}{{ property.last | split: '/' | last }}{% else %}{{ property.last }}{% endif %}">{{ property.first }}:</dt>
+                                            <dt class="definitionList-key" data-property-item data-property-name="{{ property.first }}" data-property-value="{% if property.last contains '/uploads/' %}{{ property.last | split: '/' | last }}{% else %}{{ property.last }}{% endif %}">{{ property.first }}: </dt>
                                             <dd class="definitionList-value">
                                                 {%- if property.last contains '/uploads/' -%}
                                                     <a href="{{ property.last }}" target="_blank">
