@@ -14,7 +14,9 @@
       "disabled": true,
       "settings": {
         "show_breadcrumb": false,
+        "breadcrumb_alignment": "left",
         "show_page_title": false,
+        "page_title_alignment": "center",
         "container": "1370",
         "padding_top": 0,
         "padding_bottom": 0,
@@ -24,49 +26,257 @@
         "padding_bottom_mobile": 0
       }
     },
-    "ff_finish_guide_main": {
-      "type": "ff-finish-guide",
+    "ff_finish_options": {
+      "type": "ff-finish-options",
       "blocks": {
-        "category_standard": {
-          "type": "category",
+        "standard": {
+          "type": "color_group",
           "settings": {
-            "tab_label": "Standard Finishes",
-            "heading": "Standard Finishes",
-            "subheading": "Gloss & Satin",
-            "description": "Included as standard options with every Fortune Forged wheel set — a clean, durable finish for daily driving with no upcharge.",
-            "finish_1_name": "Gloss",
-            "finish_2_name": "Satin"
+            "heading": "STANDARD COLOR",
+            "description": "<p>Our standard opaque color finishes include gloss/satin Black, White, Gunmetal Grey, Champagne, Bronze, and Silver. All of our finishes are constructed of a solid color layer and a high-strength clear powder coat. Resulting in a finish that is stunning and guarantees quality.</p>"
           }
         },
-        "category_premium": {
-          "type": "category",
+        "std_black": {
+          "type": "swatch",
           "settings": {
-            "tab_label": "Premium Finishes",
-            "heading": "Premium Finishes",
-            "subheading": "Brushed, Polished & Chrome",
-            "description": "Elevated finishing options for a bespoke, show-ready look — hand-finished for a deeper, more dimensional appearance.",
-            "finish_1_name": "Brushed",
-            "finish_2_name": "Polished",
-            "finish_3_name": "Chrome"
+            "name": "Black",
+            "color": "#111111"
+          }
+        },
+        "std_white": {
+          "type": "swatch",
+          "settings": {
+            "name": "White",
+            "color": "#ede8df"
+          }
+        },
+        "std_silver": {
+          "type": "swatch",
+          "settings": {
+            "name": "Silver",
+            "color": "#c5c8cc"
+          }
+        },
+        "std_gunmetal": {
+          "type": "swatch",
+          "settings": {
+            "name": "Gunmetal Grey",
+            "color": "#4b4f55"
+          }
+        },
+        "std_champagne": {
+          "type": "swatch",
+          "settings": {
+            "name": "Champagne",
+            "color": "#c4b08a"
+          }
+        },
+        "std_bronze": {
+          "type": "swatch",
+          "settings": {
+            "name": "Bronze",
+            "color": "#8a5a2b"
+          }
+        },
+        "special": {
+          "type": "color_group",
+          "settings": {
+            "heading": "SPECIAL COLOR",
+            "description": "<p>Upgrade your wheel aesthetics with our exclusive Special Color Finishes, a premium selection that offers a wide variety of color choices beyond our standard palette. These showcase an array of both metallic and flat colors to give your vehicle a unique and personal edge.</p>"
+          }
+        },
+        "sp_pearl": {
+          "type": "swatch",
+          "settings": {
+            "name": "Pearl White",
+            "color": "#efe6d8"
+          }
+        },
+        "sp_gold": {
+          "type": "swatch",
+          "settings": {
+            "name": "24K Gold",
+            "color": "#c6a24a"
+          }
+        },
+        "sp_candy": {
+          "type": "swatch",
+          "settings": {
+            "name": "Candy Red",
+            "color": "#9b1c1c"
+          }
+        },
+        "sp_indigo": {
+          "type": "swatch",
+          "settings": {
+            "name": "Indigo Blue",
+            "color": "#3a4f7a"
+          }
+        },
+        "sp_amber": {
+          "type": "swatch",
+          "settings": {
+            "name": "Ambergold",
+            "color": "#8a6a2f"
+          }
+        },
+        "sp_rose": {
+          "type": "swatch",
+          "settings": {
+            "name": "Rose Gold",
+            "color": "#c9a7a0"
+          }
+        },
+        "sp_olive": {
+          "type": "swatch",
+          "settings": {
+            "name": "Olive",
+            "color": "#6b6b3a"
+          }
+        },
+        "sp_dusty": {
+          "type": "swatch",
+          "settings": {
+            "name": "Dusty Blue",
+            "color": "#6f8599"
+          }
+        },
+        "sp_navy": {
+          "type": "swatch",
+          "settings": {
+            "name": "Navy",
+            "color": "#1c2a44"
+          }
+        },
+        "sp_orange": {
+          "type": "swatch",
+          "settings": {
+            "name": "Burnt Orange",
+            "color": "#c45a1a"
+          }
+        },
+        "sp_lime": {
+          "type": "swatch",
+          "settings": {
+            "name": "Lime",
+            "color": "#a8c23a"
+          }
+        },
+        "sp_gloss": {
+          "type": "swatch",
+          "settings": {
+            "name": "Gloss Black",
+            "color": "#0a0a0a"
+          }
+        },
+        "premium": {
+          "type": "premium_intro",
+          "settings": {
+            "image_alt": "",
+            "heading": "PREMIUM FINISH",
+            "subheading": "BRUSHED / POLISH",
+            "copy": "<p>Step into the realm of sophistication with our Premium Finish. Either brushed or polished, each with a transparent top coat to provide protection and complete the look.</p><p>Brushed finish offers timeless, premium, hand-crafted aesthetics done by the most skilled technicians.</p><p>Polished finish provides an immaculate, mirror-like shine that reflects a clean and high-class aesthetic.</p>"
+          }
+        },
+        "brushed": {
+          "type": "color_group",
+          "settings": {
+            "heading": "BRUSHED / POLISH",
+            "description": "<p>Step into the realm of sophistication with our Premium Finish. Either brushed or polished, each with a transparent top coat to provide protection and complete the look.</p><p>Brushed finish offers timeless, premium, hand-crafted aesthetics done by the most skilled technicians.</p><p>Polished finish provides an immaculate, mirror-like shine that reflects a clean and high-class aesthetic.</p>"
+          }
+        },
+        "br_polish": {
+          "type": "swatch",
+          "settings": {
+            "name": "Polish Clear",
+            "color": "#d7dadf"
+          }
+        },
+        "br_brushed": {
+          "type": "swatch",
+          "settings": {
+            "name": "Brushed Clear",
+            "color": "#b8bdc4"
+          }
+        },
+        "br_satin": {
+          "type": "swatch",
+          "settings": {
+            "name": "Satin Clear",
+            "color": "#8e949b"
+          }
+        },
+        "br_dark": {
+          "type": "swatch",
+          "settings": {
+            "name": "Dark Clear",
+            "color": "#3a3d42"
+          }
+        },
+        "br_blue": {
+          "type": "swatch",
+          "settings": {
+            "name": "Blue Clear",
+            "color": "#2f4d7a"
+          }
+        },
+        "br_bronze": {
+          "type": "swatch",
+          "settings": {
+            "name": "Bronze Clear",
+            "color": "#7a5530"
+          }
+        },
+        "closing": {
+          "type": "closing",
+          "settings": {
+            "image_alt": "Forged Club finish samples",
+            "caption": "This is Fortune Forged"
           }
         }
       },
       "block_order": [
-        "category_standard",
-        "category_premium"
+        "standard",
+        "std_black",
+        "std_white",
+        "std_silver",
+        "std_gunmetal",
+        "std_champagne",
+        "std_bronze",
+        "special",
+        "sp_pearl",
+        "sp_gold",
+        "sp_candy",
+        "sp_indigo",
+        "sp_amber",
+        "sp_rose",
+        "sp_olive",
+        "sp_dusty",
+        "sp_navy",
+        "sp_orange",
+        "sp_lime",
+        "sp_gloss",
+        "premium",
+        "brushed",
+        "br_polish",
+        "br_brushed",
+        "br_satin",
+        "br_dark",
+        "br_blue",
+        "br_bronze",
+        "closing"
       ],
       "settings": {
         "show_section": true,
-        "eyebrow": "Fortune Forged",
-        "heading": "Finish Options",
-        "intro": "Every Fortune Forged wheel is available in a range of finishes. Select a category below to explore your options. ",
-        "quote_label": "REQUEST QUOTE",
-        "quote_link": "/#order"
+        "hero_image": "shopify://shop_images/DSC07956.jpg",
+        "hero_title": "Finish Options",
+        "hero_logo_alt": "Forged Club",
+        "hero_brand": "Select from 100+ options"
       }
     }
   },
   "order": [
     "main",
-    "ff_finish_guide_main"
+    "ff_finish_options"
   ]
 }

@@ -19,6 +19,47 @@
     var modalThanks = root.querySelector('[data-ff-modal-thanks]');
     var modalActions = root.querySelector('.ff-media-modal__actions');
     var previousFocus = null;
+    var gate = root.querySelector('[data-ff-build-gate]');
+    var unlockBtn = root.querySelector('[data-ff-build-unlock]');
+
+    function fireQuoteStarted() {
+      var payload = {
+        form_name: 'Fortune Forged Build Quote',
+        content_name: 'Custom Forged Wheel Quote',
+        value: 1,
+        currency: 'USD'
+      };
+      try {
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', 'QuoteStarted', payload);
+        }
+      } catch (e) {}
+      try {
+        if (
+          window.Shopify &&
+          window.Shopify.analytics &&
+          typeof window.Shopify.analytics.publish === 'function'
+        ) {
+          window.Shopify.analytics.publish('QuoteStarted', {
+            form_name: payload.form_name
+          });
+        }
+      } catch (e) {}
+    }
+
+    function unlockGate() {
+      if (!gate) return;
+      var wasLocked = gate.classList.contains('is-locked');
+      gate.classList.remove('is-locked');
+      if (wasLocked) fireQuoteStarted();
+      if (manual) {
+        try { manual.focus(); } catch (e) {}
+      }
+    }
+
+    if (unlockBtn) {
+      unlockBtn.addEventListener('click', unlockGate);
+    }
 
     function setStep(n) {
       root.querySelectorAll('[data-step]').forEach(function (el) {
