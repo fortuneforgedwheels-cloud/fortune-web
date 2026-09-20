@@ -37,6 +37,49 @@
     },
   ];
 
+  function isChromeFinish(name) {
+    return /\bchrome\b/i.test(String(name || ''));
+  }
+
+  function chromeAddonVariantId() {
+    var cfg = window.FF_CHROME_SURCHARGE || {};
+    if (cfg.variantId) return String(cfg.variantId);
+    var root = document.querySelector('[data-ff-sbv]');
+    var fromData = root && root.getAttribute('data-chrome-surcharge-variant');
+    return fromData ? String(fromData) : '';
+  }
+
+  function chromeSurchargeCount(state) {
+    if (!state) return 0;
+    if (state.wheelStyle === 'two') {
+      var n = 0;
+      if (isChromeFinish(state.faceFinish)) n += 1;
+      if (isChromeFinish(state.barrelFinish)) n += 1;
+      return n;
+    }
+    return isChromeFinish(state.selectedFinish) ? 1 : 0;
+  }
+
+  function appendChromeSurcharge(items, state) {
+    var qty = chromeSurchargeCount(state);
+    if (!qty) return items;
+    var variantId = chromeAddonVariantId();
+    if (!variantId) return items;
+    items.push({
+      id: Number(variantId),
+      quantity: qty,
+      properties: {
+        _Surcharge: 'Chrome finish',
+        'Chrome selections': String(qty),
+        Note: qty > 1 ? 'Chrome finishes (+$250 each)' : 'Chrome finish (+$250)',
+        Vehicle: state.vehicleLabel || '',
+        'Wheel Design': (state.selectedDesign && state.selectedDesign.title) || '',
+        Source: 'Shop by Vehicle',
+      },
+    });
+    return items;
+  }
+
   function populateFinishSelect(select, placeholder) {
     if (!select) return;
     select.innerHTML = '';
@@ -50,7 +93,7 @@
       group.options.forEach(function (name) {
         var opt = document.createElement('option');
         opt.value = name;
-        opt.textContent = name;
+        opt.textContent = isChromeFinish(name) ? (name + ' (+$250)') : name;
         og.appendChild(opt);
       });
       select.appendChild(og);
@@ -426,7 +469,7 @@
     var tireNote = fit.tirePick ? ('Tires: ' + fit.tirePick) : '';
     var fitmentNote = [note, tireNote].filter(Boolean).join(' · ');
     var construction = state.wheelStyle === 'mono' ? 'Monoblock'
-      : (state.wheelStyle === 'two' ? '2-Piece' : 'Beadlock');
+      : (state.wheelStyle === 'two' ? 'Two-Piece' : 'Beadlock');
 
     var baseProps = {
       'Vehicle': vehicle,
@@ -461,47 +504,24 @@
           'Fitment': fitmentNote,
         }),
       });
-      return items;
+      return appendChromeSurcharge(items, state);
     }
 
-    if (isSquare(fit.front, fit.rear)) {
-      items.push({
-        id: Number(design.variantId),
-        quantity: 4,
-        properties: Object.assign({}, baseProps, {
-          'Position': 'Front & Rear (square)',
-          'Size': fit.front,
-          'Front Size': fit.front,
-          'Rear Size': fit.rear,
-          'Fitment': fitmentNote,
-        }),
-      });
-      return items;
-    }
-
+    // Monoblock / Two-Piece checkout prices are FULL SET amounts — add qty 1.
     items.push({
       id: Number(design.variantId),
-      quantity: 2,
+      quantity: 1,
       properties: Object.assign({}, baseProps, {
-        'Position': 'Front',
-        'Size': fit.front,
+        'Order Type': 'Full Set',
+        'Position': isSquare(fit.front, fit.rear) ? 'Front & Rear (square)' : 'Front & Rear (staggered)',
+        'Size': isSquare(fit.front, fit.rear) ? fit.front : (fit.front + ' / ' + fit.rear),
         'Front Size': fit.front,
         'Rear Size': fit.rear,
         'Fitment': fitmentNote,
+        'Fitment Method': 'Have Fortune Forged build my fitment',
       }),
     });
-    items.push({
-      id: Number(design.variantId),
-      quantity: 2,
-      properties: Object.assign({}, baseProps, {
-        'Position': 'Rear',
-        'Size': fit.rear,
-        'Front Size': fit.front,
-        'Rear Size': fit.rear,
-        'Fitment': fitmentNote,
-      }),
-    });
-    return items;
+    return appendChromeSurcharge(items, state);
   }
 
   function findChassisOption(cat, year, make, model, chassisLabel) {
@@ -513,18 +533,42 @@
     return null;
   }
 
-  function getVehicleFromQuery() {
-    var params = new URLSearchParams(window.location.search);
-    return {
-      year: params.get('year') || '',
-      make: params.get('make') || '',
-      model: params.get('model') || '',
-      chassis: params.get('chassis') || '',
-      slug: params.get('slug') || '',
-      boltPattern: params.get('bolt') || '',
-      centerBore: params.get('bore') || '',
-    };
-  }
+    function getStoredVehicle() {
+      try {
+        var raw = sessionStorage.getItem('ffVehicleSelection');
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function getVehicleFromQuery() {
+      var params = new URLSearchParams(window.location.search);
+      var fromQuery = {
+        year: params.get('year') || '',
+        make: params.get('make') || '',
+        model: params.get('model') || '',
+        chassis: params.get('chassis') || '',
+        slug: params.get('slug') || '',
+        boltPattern: params.get('bolt') || '',
+        centerBore: params.get('bore') || '',
+      };
+      if (fromQuery.year && fromQuery.make && fromQuery.model) return fromQuery;
+      var stored = getStoredVehicle();
+      if (stored && stored.year && stored.make && stored.model) {
+        return {
+          year: stored.year || '',
+          make: stored.make || '',
+          model: stored.model || '',
+          chassis: stored.chassis || '',
+          slug: stored.slug || '',
+          boltPattern: stored.boltPattern || stored.bolt || '',
+          centerBore: stored.centerBore || stored.bore || '',
+        };
+      }
+      return fromQuery;
+    }
 
   /* ── main init ── */
   function init(root) {
@@ -565,6 +609,7 @@
     var hardwarePanel = root.querySelector('[data-ff-sbv-hardware-panel]');
     var hardwareSelect = root.querySelector('[data-ff-sbv-hardware-select]');
     var addCartBtn   = root.querySelector('[data-ff-sbv-add-cart]');
+    var chromeNoteEl = root.querySelector('[data-ff-sbv-chrome-note]');
     var errorEl      = root.querySelector('[data-ff-sbv-error]');
     var pageVehicleEl = root.querySelector('[data-ff-sbv-page-vehicle]');
 
@@ -609,7 +654,7 @@
 
     function updatePageVehicle() {
       if (pageVehicleEl && state.vehicleLabel) {
-        pageVehicleEl.textContent = state.vehicleLabel;
+        pageVehicleEl.textContent = 'Showing wheels available for your ' + state.vehicleLabel + '.';
       }
     }
 
@@ -776,6 +821,17 @@
     function updateAddCartState() {
       if (!addCartBtn) return;
       addCartBtn.disabled = !(state.selectedDesign && state.selectedDesign.variantId && finishesValid());
+      if (chromeNoteEl) {
+        var qty = finishesValid() ? chromeSurchargeCount(state) : 0;
+        if (qty > 0) {
+          chromeNoteEl.hidden = false;
+          chromeNoteEl.textContent = qty > 1
+            ? ('+$' + (250 * qty) + ' Chrome finish surcharge will be added at checkout (' + qty + ' × $250)')
+            : '+$250 Chrome finish surcharge will be added at checkout';
+        } else {
+          chromeNoteEl.hidden = true;
+        }
+      }
     }
 
     function setFinishMode(style) {
