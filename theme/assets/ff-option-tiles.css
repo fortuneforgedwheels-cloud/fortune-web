@@ -1,0 +1,284 @@
+/* Shared option tiles + click-to-expand accordions */
+
+:root {
+  --ff-tile-ink: #f5f5f5;
+  --ff-tile-muted: #b0aea8;
+  --ff-tile-line: #2e2e2e;
+  --ff-tile-bg: #141414;
+  /* Match Fortune Certified path tiles (white selected border). */
+  --ff-tile-active: #ffffff;
+  --ff-tile-active-bg: rgba(255, 255, 255, 0.08);
+}
+
+.ff-option-acc:not(.has-value) > .ff-option-acc__trigger .ff-option-acc__value {
+  font-style: italic;
+  font-weight: 500;
+  color: #9a9892;
+  text-transform: none;
+}
+
+/* Hide native selects once tiled (keep in DOM for BCPO / form sync) */
+select.ff-option-tiles__native,
+.ff-option-tiles-host > select.ff-option-tiles__native,
+.selector-wrapper > select.ff-option-tiles__native,
+.ff-826m-path__field > select.ff-option-tiles__native,
+.product-form__input--dropdown select.ff-option-tiles__native,
+.form__select select.ff-option-tiles__native {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Accordion shell */
+.ff-option-acc {
+  width: 100%;
+  margin: 0 0 12px;
+}
+
+.ff-option-acc__trigger {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 14px 16px;
+  border: 1px solid var(--ff-tile-line);
+  border-radius: 0;
+  background: var(--ff-tile-bg);
+  color: var(--ff-tile-ink);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ff-option-acc__trigger:hover {
+  border-color: #4a4a4a;
+}
+
+.ff-option-acc.is-open > .ff-option-acc__trigger,
+.ff-option-acc.has-value > .ff-option-acc__trigger {
+  border-color: var(--ff-tile-active);
+  background: var(--ff-tile-active-bg);
+  box-shadow: inset 0 0 0 1px var(--ff-tile-active), 0 0 0 1px var(--ff-tile-active);
+}
+
+.ff-option-acc__label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ff-tile-ink);
+}
+
+.ff-option-acc__value {
+  justify-self: end;
+  max-width: 14rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ff-tile-muted);
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+.ff-option-acc.has-value > .ff-option-acc__trigger .ff-option-acc__value {
+  color: #f0f3f5;
+}
+
+.ff-option-acc__chevron {
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--ff-tile-muted);
+  border-bottom: 2px solid var(--ff-tile-muted);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  margin-top: -4px;
+}
+
+.ff-option-acc.is-open > .ff-option-acc__trigger .ff-option-acc__chevron {
+  transform: rotate(225deg);
+  margin-top: 4px;
+}
+
+.ff-option-acc__panel {
+  margin-top: 10px;
+}
+
+.ff-option-acc__panel[hidden] {
+  display: none !important;
+}
+
+/* Option tile grid (inside expanded panel) */
+.ff-option-tiles {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+  width: 100%;
+  margin: 0;
+}
+
+@media (min-width: 560px) {
+  .ff-option-tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ff-option-tiles[data-count="1"] {
+    grid-template-columns: 1fr;
+  }
+
+  .ff-option-tiles[data-dense="true"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .ff-option-tiles[data-dense="true"] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.ff-option-tiles__choice {
+  display: block;
+  cursor: pointer;
+  margin: 0;
+}
+
+.ff-option-tiles__choice input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ff-option-tiles__card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--ff-tile-line);
+  background: var(--ff-tile-bg);
+  border-radius: 0;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.ff-option-tiles__choice input:checked + .ff-option-tiles__card {
+  border-color: var(--ff-tile-active);
+  background: var(--ff-tile-active-bg);
+  box-shadow: inset 0 0 0 1px var(--ff-tile-active), 0 0 0 1px var(--ff-tile-active);
+}
+
+.ff-option-tiles__choice input:focus-visible + .ff-option-tiles__card {
+  outline: 2px solid var(--ff-tile-active);
+  outline-offset: 2px;
+}
+
+.ff-option-tiles__choice input:disabled + .ff-option-tiles__card {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ff-option-tiles__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ff-tile-ink);
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+.ff-option-tiles__choice input:checked + .ff-option-tiles__card .ff-option-tiles__title {
+  color: #f0f3f5;
+}
+
+/* Native Shopify variant fieldsets as accordions */
+fieldset.product-form__input.ff-option-acc--native:not(.product-form__swatch) {
+  display: block !important;
+  margin: 0 0 12px;
+  padding: 0;
+  border: 0;
+  font-size: inherit;
+}
+
+fieldset.product-form__input.ff-option-acc--native > legend.form__label {
+  display: none !important;
+}
+
+.ff-option-acc__panel--native {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 560px) {
+  .ff-option-acc__panel--native {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+fieldset.product-form__input.ff-option-acc--native .product-form__label {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+fieldset.product-form__input.ff-option-acc--native .product-form__label .text {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  padding: 14px 16px;
+  border: 1px solid var(--ff-tile-line);
+  border-radius: 0;
+  background: var(--ff-tile-bg);
+  color: var(--ff-tile-ink);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: left;
+  text-transform: none;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+fieldset.product-form__input.ff-option-acc--native .product-form__radio:checked + .product-form__label .text {
+  border-color: var(--ff-tile-active);
+  background: var(--ff-tile-active-bg);
+  box-shadow: inset 0 0 0 1px var(--ff-tile-active), 0 0 0 1px var(--ff-tile-active);
+  color: #f0f3f5;
+}
+
+/* Hide original BCPO titles — accordion trigger owns the label */
+.selector-wrapper:has(> .ff-option-acc) > .bcpo-title,
+.selector-wrapper:has(> .ff-option-acc) > .bcpo-front-dd-label,
+.selector-wrapper:has(> .ff-option-acc) > .bcpo-label,
+.ff-826m-path__field:has(> .ff-option-acc) > span {
+  display: none;
+}
+
+.selector-wrapper.bcpo-default,
+.selector-wrapper.bcpo-simple,
+.selector-wrapper.bcpo-select1,
+.selector-wrapper.bcpo-xs,
+.ff-826m-path__field {
+  position: relative;
+}
+
+.productView .single-option-selector,
+.productView .selector-wrapper select,
+.product-form__input--dropdown .select__select {
+  border-radius: 0;
+  border: 1px solid var(--ff-tile-line);
+  background: #0f0f0f;
+  color: var(--ff-tile-ink);
+}

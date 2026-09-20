@@ -59,7 +59,7 @@
         "e62a8f20-083e-4097-ba1d-b55d7f348bcc": {
           "type": "variant_picker",
           "settings": {
-            "picker_type": "dropdown",
+            "picker_type": "button",
             "padding_top": 22,
             "padding_bottom": 0,
             "show_border_top": true,
