@@ -1,0 +1,129 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": false,
+        "breadcrumb_alignment": "left",
+        "show_page_title": false,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "ff_forging_flow_20260730i": {
+      "type": "ff-forging-process",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "kicker": "FROM BILLET TO BLANK",
+            "heading": "BILLET.",
+            "number": "1",
+            "text": "<p>Every Fortune Forged wheel begins with certified aerospace-grade 6061-T6 aluminum billet—selected for its exceptional strength-to-weight ratio, structural integrity, and superior finishing characteristics. Engineering starts with material selection, and every step that follows depends on getting that foundation right.</p>",
+            "media_style": "grid",
+            "flip": false,
+            "image_1": "shopify://shop_images/forza-manufacturing_7.webp",
+            "image_2": "shopify://shop_images/20326052-c100-4ed9-9217-0d2cdbe9a20c.jpg",
+            "image_3": "shopify://shop_images/Screenshot_2026-07-30_at_9.54.56_PM.png",
+            "image_4": "shopify://shop_images/Screenshot_2026-07-30_at_9.56.56_PM.png"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "kicker": "DENSE GRAIN STRUCTURE",
+            "heading": "FORGING.",
+            "number": "2",
+            "text": "<p>The heated 6061-T6 billet is forged under thousands of tons of pressure, compressing and aligning the aluminum's grain structure into a dense, directional grain flow. This process dramatically increases strength, fatigue resistance, and structural integrity, creating a forged blank that can be machined for maximum performance without compromising durability.</p>",
+            "media_style": "solo",
+            "flip": true,
+            "image_1": "shopify://shop_images/Screenshot_2026-07-30_at_10.02.53_PM.png"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "kicker": "WHERE DESIGN COMES TO LIFE",
+            "heading": "MILLING.",
+            "number": "3",
+            "text": "<p>Multi-axis CNC work sculpts the final design, spoke profile, and mounting geometry to exacting tolerances for fitment, balance, and brake clearance.</p><p>After machining, hand finishing stages — filing, deburring, and surface prep — bring every edge and face to a clean, consistent standard before coating.</p>",
+            "media_style": "grid",
+            "flip": false,
+            "image_1": "shopify://shop_images/IMG_2390.jpg",
+            "image_2": "shopify://shop_images/IMG_2355.jpg",
+            "image_3": "shopify://shop_images/PHOTO-2026-07-30-23-30-15.jpg",
+            "image_4": "shopify://shop_images/4844105b-8764-400a-877b-79710fe62fc1.jpg"
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "kicker": "AMERICAN-MADE PRECISION",
+            "heading": "HIGH SPEED MACHINING.",
+            "number": "4",
+            "text": "<p>We rely on modern CNC capacity to hold tight tolerances across complex spoke packages and deep concave profiles — the kind of geometry that only works when the machine work is exact.</p>",
+            "media_style": "solo",
+            "flip": false,
+            "image_1": "shopify://shop_images/Screenshot_2026-07-30_at_10.11.58_PM.png"
+          }
+        },
+        "step_5": {
+          "type": "step",
+          "settings": {
+            "kicker": "BUILT TO SHIP",
+            "heading": "FINISH.",
+            "number": "5",
+            "text": "<p>From brushed and polished to custom powder coats, each set is finished to spec, then inspected before it ships — ready for the street, strip, or circuit.</p><p>Every wheel leaves as a precision instrument, not a generic catalog part.</p>",
+            "media_style": "grid",
+            "flip": true,
+            "image_1": "shopify://shop_images/IMG_2362.jpg",
+            "image_2": "shopify://shop_images/IMG_2364.jpg",
+            "image_3": "shopify://shop_images/IMG_2365.jpg",
+            "image_4": "shopify://shop_images/PHOTO-2026-07-30-23-22-17.jpg"
+          }
+        },
+        "cta_1": {
+          "type": "cta",
+          "settings": {
+            "text": "Ready to build your set?",
+            "button_label": "Get quote",
+            "button_link": "/#order"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4",
+        "step_5",
+        "cta_1"
+      ],
+      "settings": {
+        "eyebrow": "Manufacturing",
+        "heading": "The Forging Process",
+        "intro": "Every Fortune Forged wheel starts as aerospace-grade billet and leaves as a precision instrument for the street and track. Here’s how we get there."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ff_forging_flow_20260730i"
+  ]
+}
