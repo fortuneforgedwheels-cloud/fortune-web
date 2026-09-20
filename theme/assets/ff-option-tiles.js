@@ -10,8 +10,9 @@
 
   var SKIP_NAME = /^(id|quantity|country|province|address|utf8|form_type|checkout)$/i;
   var SKIP_ID = /^(Variants-|Address|Country|Province)/i;
-  var PLACEHOLDER = /^(choose one|select|please select|--|\s*)$/i;
+  var PLACEHOLDER = /^(choose one|select one|select|please select|--|\s*)$/i;
   var HELPER = /^\^\^/;
+  var SELECT_ONE = 'Select one';
   var uid = 0;
 
   function esc(text) {
@@ -122,10 +123,12 @@
       valueEl.textContent = text;
       valueEl.hidden = false;
       acc.classList.add('has-value');
+      acc.dataset.ffPicked = '1';
     } else {
-      valueEl.textContent = 'Select';
+      valueEl.textContent = SELECT_ONE;
       valueEl.hidden = false;
       acc.classList.remove('has-value');
+      delete acc.dataset.ffPicked;
     }
   }
 
@@ -224,7 +227,7 @@
       esc(labelText) +
       '</span>' +
       '<span class="ff-option-acc__value">' +
-      esc(current || 'Select') +
+      esc(current || SELECT_ONE) +
       '</span>' +
       '<span class="ff-option-acc__chevron" aria-hidden="true"></span>';
 
@@ -250,6 +253,7 @@
       select.addEventListener('change', function () {
         var host = select.nextElementSibling;
         if (!host || !host.classList.contains('ff-option-acc')) return;
+        if (host.dataset.ffPicked !== '1' && !selectedLabel(select)) return;
         var grid = host.querySelector('.ff-option-tiles');
         syncFromSelect(select, grid);
         updateTriggerValue(host, selectedLabel(select));
@@ -294,7 +298,7 @@
       esc(title) +
       '</span>' +
       '<span class="ff-option-acc__value">' +
-      esc(current || 'Select') +
+      esc(SELECT_ONE) +
       '</span>' +
       '<span class="ff-option-acc__chevron" aria-hidden="true"></span>';
 
@@ -305,6 +309,11 @@
     // Move option labels into panel (keep radios + labels together)
     Array.prototype.forEach.call(fieldset.querySelectorAll('.product-form__radio, .product-form__label'), function (el) {
       panel.appendChild(el);
+    });
+
+    // Require an explicit click — don't treat the theme's pre-checked radio as chosen.
+    Array.prototype.forEach.call(radios, function (radio) {
+      radio.checked = false;
     });
 
     if (legend) legend.style.display = 'none';

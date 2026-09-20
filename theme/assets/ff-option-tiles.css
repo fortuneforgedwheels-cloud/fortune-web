@@ -5,8 +5,16 @@
   --ff-tile-muted: #b0aea8;
   --ff-tile-line: #2e2e2e;
   --ff-tile-bg: #141414;
-  --ff-tile-active: #dce1e6;
-  --ff-tile-active-bg: rgba(220, 225, 230, 0.14);
+  /* Match Fortune Certified path tiles (white selected border). */
+  --ff-tile-active: #ffffff;
+  --ff-tile-active-bg: rgba(255, 255, 255, 0.08);
+}
+
+.ff-option-acc:not(.has-value) > .ff-option-acc__trigger .ff-option-acc__value {
+  font-style: italic;
+  font-weight: 500;
+  color: #9a9892;
+  text-transform: none;
 }
 
 /* Hide native selects once tiled (keep in DOM for BCPO / form sync) */
