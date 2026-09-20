@@ -185,7 +185,7 @@
         "@type": "CollectionPage",
         "name": "{{ collection.title }}",
         "url": "{{ canonical_url }}",
-        "description": "{{ collection.description | split: '[lang2]' | first | strip_html }}"
+        "description": {{ collection.description | split: '[lang2]' | first | strip_html | json }}
     }
     </script>
     <script type="application/ld+json">
