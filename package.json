@@ -25,7 +25,8 @@
     "theme:pull-vehicles": "node scripts/pull-apex-vehicles.mjs",
     "theme:build-ff-fitments": "node scripts/build-ff-fitments.mjs",
     "test:e36-entries": "node scripts/e36-giveaway-entry-audit.mjs --self-test",
-    "audit:e36-entries": "node scripts/e36-giveaway-entry-audit.mjs --csv"
+    "audit:e36-entries": "node scripts/e36-giveaway-entry-audit.mjs --csv",
+    "audit:fullset-catalog": "node scripts/assert-fullset-catalog-prices.mjs"
   },
   "engines": {
     "node": ">=20"
