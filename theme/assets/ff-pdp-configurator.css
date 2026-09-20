@@ -1,0 +1,324 @@
+.ff-pdp-config {
+  display: grid;
+  gap: 1.15rem;
+  margin: 0.75rem 0 1.1rem;
+  padding: 0.9rem 0 0.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 1rem;
+}
+
+.ff-pdp-config__eyebrow {
+  margin: 0.65rem 0 0.5rem;
+  font-size: 0.84rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.ff-pdp-config__eyebrow:first-child {
+  margin-top: 0;
+}
+
+.ff-pdp-config__helper {
+  margin: 0 0 0.6rem;
+  font-size: 0.95rem;
+  opacity: 0.78;
+  line-height: 1.45;
+}
+
+.ff-pdp-config__section {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.ff-pdp-config [hidden],
+.ff-pdp-config__section[hidden],
+.ff-pdp-config__flow[hidden],
+.ff-pdp-config__path[hidden],
+.ff-pdp-config__vehicle-display[hidden],
+.ff-pdp-config__vehicle-form[hidden],
+.ff-pdp-config__error[hidden] {
+  display: none !important;
+}
+
+.ff-pdp-config__path-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+}
+
+.ff-pdp-config__path-btn {
+  position: relative;
+  display: grid;
+  gap: 0.4rem;
+  text-align: left;
+  margin: 0;
+  padding: 1.05rem 1.05rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.ff-pdp-config__path-btn:hover,
+.ff-pdp-config__path-btn.is-active {
+  border-color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ff-pdp-config__path-btn.is-recommended {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.ff-pdp-config__path-badge {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.ff-pdp-config__path-btn strong {
+  display: block;
+  padding-right: 6rem;
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.ff-pdp-config__path-btn:not(.is-recommended) strong {
+  padding-right: 0;
+}
+
+.ff-pdp-config__path-btn em {
+  display: block;
+  font-style: normal;
+  font-size: 0.95rem;
+  opacity: 0.78;
+  line-height: 1.45;
+}
+
+.ff-pdp-config__flow {
+  display: grid;
+  gap: 1.15rem;
+}
+
+.ff-pdp-config__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.ff-pdp-config__grid--2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.ff-pdp-config__grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ff-pdp-config__field {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.ff-pdp-config__field span {
+  opacity: 0.82;
+  font-weight: 600;
+}
+
+.ff-pdp-config__field input,
+.ff-pdp-config__field textarea,
+.ff-pdp-config__field select {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: inherit;
+  border-radius: 4px;
+  padding: 0.78rem 0.8rem;
+  font: inherit;
+  font-size: 1rem;
+  min-height: 2.85rem;
+}
+
+.ff-pdp-config__field select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.55) 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55) 50%, transparent 50%);
+  background-position: calc(100% - 16px) calc(50% - 2px), calc(100% - 11px) calc(50% - 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 1.7rem;
+}
+
+.ff-pdp-config__vehicle-label {
+  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.ff-pdp-config__link {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.95rem;
+  width: fit-content;
+}
+
+.ff-pdp-config__link--accent {
+  color: rgba(212, 175, 55, 0.95);
+}
+
+.ff-pdp-config__diameters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.ff-pdp-config__diam {
+  margin: 0;
+  padding: 0.9rem 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.ff-pdp-config__diam.is-selected {
+  border-color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ff-pdp-config__layout {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.ff-pdp-config__fit {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.65rem;
+  align-items: start;
+  margin: 0;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.ff-pdp-config__fit:has(input:checked),
+.ff-pdp-config__fit.is-recommended:has(input:checked) {
+  border-color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ff-pdp-config__fit strong {
+  display: block;
+  font-size: 1.05rem;
+}
+
+.ff-pdp-config__fit em {
+  display: block;
+  margin-top: 0.25rem;
+  font-style: normal;
+  font-size: 0.92rem;
+  opacity: 0.78;
+  line-height: 1.4;
+}
+
+.ff-pdp-config__rec {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.12rem 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.ff-pdp-config__reassure {
+  margin: 0.4rem 0 0;
+  padding: 0.85rem 0.9rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.ff-pdp-config__reassure strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.ff-pdp-config__error {
+  margin: 0.3rem 0 0;
+  color: #ffb4b4;
+  font-size: 0.92rem;
+}
+
+body.ff-pdp-config-active .ff-pdp-config-hidden-tech,
+.ff-pdp-config-hidden-tech {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .ff-pdp-config__path-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ff-pdp-config__diameters {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .ff-pdp-config__grid,
+  .ff-pdp-config__grid--2,
+  .ff-pdp-config__grid--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .ff-pdp-config__path-btn strong {
+    padding-right: 0;
+    padding-top: 1.15rem;
+  }
+
+  .ff-pdp-config__path-badge {
+    top: 0.55rem;
+    left: 0.7rem;
+    right: auto;
+  }
+}
+
+@supports not selector(:has(*)) {
+  .ff-pdp-config__fit input:checked + span {
+    outline: none;
+  }
+}
