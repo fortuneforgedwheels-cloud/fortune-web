@@ -9,7 +9,7 @@
 
   Ticket rules match theme snippet ff-giveaway-entry-tickets:
   - 1998-bmw-m3 (or tag giveaway-entry): 1 ticket per qty
-  - exclusive-deals-full-set (or invasion tags): +5 bonus tickets
+  - exclusive-deals-full-set (or invasion tags): +3 bonus tickets
 {%- endcomment -%}
 
 {%- comment -%} EMAIL_START {%- endcomment -%}
@@ -22,7 +22,7 @@
     {% assign paid_entries = paid_entries | plus: line_item.quantity %}
   {% endif %}
   {% if handle == 'exclusive-deals-full-set' or tags contains 'invasion-wheel-set' or tags contains 'bimmer-invasion' %}
-    {% assign bonus_entries = bonus_entries | plus: 5 %}
+    {% assign bonus_entries = bonus_entries | plus: 3 %}
   {% endif %}
 {% endfor %}
 {% assign total_entries = paid_entries | plus: bonus_entries %}
@@ -41,7 +41,7 @@
       </ol>
       {% if bonus_entries > 0 %}
       <p style="margin:14px 0 0;font-size:13px;line-height:1.45;color:#444;">
-        Includes 5 entries from your Invasion wheel set{% if paid_entries > 0 %}, plus {{ paid_entries }} purchased entry ticket(s){% endif %}.
+        Includes 3 bonus entries from your Invasion wheel set{% if paid_entries > 0 %}, plus {{ paid_entries }} purchased entry ticket(s){% endif %}.
       </p>
       {% endif %}
       <p style="margin:12px 0 0;font-size:12px;line-height:1.4;color:#666;">
@@ -63,7 +63,7 @@
     {% assign paid_entries = paid_entries | plus: line_item.quantity %}
   {% endif %}
   {% if handle == 'exclusive-deals-full-set' or tags contains 'invasion-wheel-set' or tags contains 'bimmer-invasion' %}
-    {% assign bonus_entries = bonus_entries | plus: 5 %}
+    {% assign bonus_entries = bonus_entries | plus: 3 %}
   {% endif %}
 {% endfor %}
 {% assign total_entries = paid_entries | plus: bonus_entries %}
@@ -77,7 +77,7 @@
     {% endfor %}
   </ol>
   {% if bonus_entries > 0 %}
-  <p style="margin:12px 0 0;opacity:.8;font-size:13px;">Includes 5 entries from your Invasion wheel set.</p>
+  <p style="margin:12px 0 0;opacity:.8;font-size:13px;">Includes 3 bonus entries from your Invasion wheel set.</p>
   {% endif %}
 </div>
 {% endif %}

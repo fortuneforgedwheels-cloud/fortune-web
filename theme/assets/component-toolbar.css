@@ -244,7 +244,8 @@ body.dark-mode .toolbar .toolbar-item .toolbar-icon {
         right: 0;
         padding: 10px 15px;
         background: var(--bg-white);
-        z-index: 100;
+        /* Stay under the sticky header (z-index 20) so the logo is never covered */
+        z-index: 15;
         box-shadow: 0 0 0 1px rgb(0, 0, 0, .06), 0 1px 2px 0 rgb(0, 0, 0, .1);
         animation-name: fadeInDown;
         animation-duration: .5s;

@@ -1,6 +1,5 @@
 {{ 'ff-hero-lifestyle.css' | asset_url | stylesheet_tag }}
-<!-- ff-hero-cache-bust: home-videos-v1 -->
-<script src="{{ 'ff-offer-boot.js' | asset_url }}" defer></script>
+<script src="{{ 'ff-offer-boot-v2.js' | asset_url }}" defer></script>
 
 {%- if section.settings.show_hero -%}
   {%- liquid
@@ -48,7 +47,7 @@
   <section
     class="ff-hero"
     id="ff-hero-{{ section.id }}"
-    data-ff-hero data-ff-hero-fix="arrows-v1"
+    data-ff-hero data-ff-fingerprint="HERO-EDITOR-ALWAYS-20260801C" data-ff-hero-fix="arrows-v1" data-ff-rendered-at="{{ 'now' | date: '%s%N' }}"
     style="
       --ff-hero-height: {{ section.settings.height }}vh;
       --ff-hero-height-mobile: {{ section.settings.height_mobile }}vh;
@@ -81,9 +80,15 @@
             {% unless forloop.first %}hidden{% endunless %}
           >
             <div class="ff-hero__media">
+              {%- comment -%}
+                Theme Editor media ONLY. No hardcoded CDN fallbacks — those made
+                uploads look like they "never saved" on the live site.
+                Priority: editor video → editor image → placeholder.
+              {%- endcomment -%}
               {%- liquid
                 assign slide_video = block.settings.video
                 assign slide_mobile_video = block.settings.mobile_video
+
                 assign has_desktop_media = false
                 if slide_video != blank or block.settings.image != blank
                   assign has_desktop_media = true
@@ -95,17 +100,14 @@
               -%}
               {%- if has_desktop_media or has_mobile_media -%}
                 <div class="ff-hero__media-desktop" data-ff-desktop-layer>
+                  {%- liquid
+                    assign desktop_autoplay_mode = 'off'
+                    if forloop.first
+                      assign desktop_autoplay_mode = 'on'
+                    endif
+                  -%}
                   {%- if slide_video != blank -%}
-                    {{
-                      slide_video
-                      | video_tag:
-                        class: 'ff-hero__video ff-hero__video--desktop',
-                        autoplay: true,
-                        loop: true,
-                        muted: true,
-                        controls: false,
-                        image_size: '2400x'
-                    }}
+                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--desktop', autoplay_mode: desktop_autoplay_mode %}
                   {%- elsif block.settings.image != blank -%}
                     <img
                       class="ff-hero__image"
@@ -129,17 +131,20 @@
                   {%- endif -%}
                 </div>
                 <div class="ff-hero__media-mobile" data-ff-mobile-layer>
+                  {%- comment -%}
+                    Only the first slide's mobile video gets HTML autoplay.
+                    iOS blocks autoplay when many videos compete; JS plays the rest.
+                  {%- endcomment -%}
+                  {%- liquid
+                    assign mobile_autoplay_mode = 'off'
+                    if forloop.first
+                      assign mobile_autoplay_mode = 'on'
+                    endif
+                  -%}
                   {%- if slide_mobile_video != blank -%}
-                    {{
-                      slide_mobile_video
-                      | video_tag:
-                        class: 'ff-hero__video ff-hero__video--mobile',
-                        autoplay: true,
-                        loop: true,
-                        muted: true,
-                        controls: false,
-                        image_size: '1200x'
-                    }}
+                    {% render 'ff-autoplay-video', video: slide_mobile_video, class: 'ff-hero__video ff-hero__video--mobile', autoplay_mode: mobile_autoplay_mode %}
+                  {%- elsif slide_video != blank -%}
+                    {% render 'ff-autoplay-video', video: slide_video, class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback', autoplay_mode: mobile_autoplay_mode %}
                   {%- elsif block.settings.mobile_image != blank -%}
                     <img
                       class="ff-hero__image"
@@ -156,17 +161,6 @@
                       height="1600"
                       data-ff-mobile-image
                     >
-                  {%- elsif slide_video != blank -%}
-                    {{
-                      slide_video
-                      | video_tag:
-                        class: 'ff-hero__video ff-hero__video--mobile ff-hero__video--fallback',
-                        autoplay: true,
-                        loop: true,
-                        muted: true,
-                        controls: false,
-                        image_size: '1200x'
-                    }}
                   {%- elsif block.settings.image != blank -%}
                     <img
                       class="ff-hero__image"
@@ -179,6 +173,23 @@
                     >
                   {%- else -%}
                     <div class="ff-hero__placeholder" aria-hidden="true"></div>
+                  {%- endif -%}
+                  {%- if forloop.first -%}
+                    <script>
+                      (function () {
+                        if (window.__ffInAppBrowser || document.documentElement.classList.contains('ff-inapp')) return;
+                        var layer = document.currentScript && document.currentScript.parentElement;
+                        var v = layer && layer.querySelector('video.ff-hero__video--mobile');
+                        if (!v) return;
+                        v.muted = true;
+                        v.defaultMuted = true;
+                        v.playsInline = true;
+                        v.autoplay = true;
+                        try { v.volume = 0; } catch (e) {}
+                        var p = v.play();
+                        if (p && typeof p.catch === 'function') p.catch(function () {});
+                      })();
+                    </script>
                   {%- endif -%}
                 </div>
               {%- else -%}
@@ -228,7 +239,41 @@
     {%- endif -%}
   </section>
   <script src="{{ 'ff-hero-lifestyle.js' | asset_url }}" defer></script>
-  <script src="{{ 'ff-hero-offer.js' | asset_url }}" defer></script>
+  <script>
+    /* Immediate nudge only — do not storm play()/pause() (that froze the first frame). */
+    (function () {
+      if (window.__ffInAppBrowser || document.documentElement.classList.contains('ff-inapp')) return;
+      var mq = window.matchMedia('(max-width: 749.98px)');
+      function playing(v) {
+        return v && !v.paused && !v.ended && v.readyState > 2;
+      }
+      function kick() {
+        if (window.__ffInAppBrowser || document.documentElement.classList.contains('ff-inapp')) return;
+        var isMobile = mq.matches;
+        var hero = document.querySelector('[data-ff-hero]');
+        if (!hero) return;
+        var active = hero.querySelector('[data-ff-hero-slide].is-active') || hero.querySelector('[data-ff-hero-slide]');
+        if (!active) return;
+        var sel = isMobile ? '.ff-hero__video--mobile' : '.ff-hero__video--desktop';
+        var v = active.querySelector(sel);
+        if (!v || playing(v)) return;
+        v.muted = true;
+        v.defaultMuted = true;
+        v.playsInline = true;
+        v.autoplay = true;
+        v.setAttribute('autoplay', '');
+        v.setAttribute('preload', 'auto');
+        try { v.preload = 'auto'; } catch (e0) {}
+        try { v.volume = 0; } catch (e) {}
+        var p = v.play();
+        if (p && typeof p.catch === 'function') p.catch(function () {});
+      }
+      kick();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', kick, { once: true });
+      }
+    })();
+  </script>
 {%- endif -%}
 
 {% render 'ff-shop-by-vehicle-bar' %}

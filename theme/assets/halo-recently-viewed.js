@@ -211,46 +211,13 @@ customElements.define('recently-viewed-popup', RecentlyViewed);
 class RecentlyDarkMode extends HTMLElement {
     constructor() {
         super();
-        this.darkMode = this.querySelector('.recently-dark-mode');
-
-        this.checkDarkMode();
-        this.darkMode.addEventListener('click', this.toggleEvent.bind(this));
-    }
-
-    toggleEvent(event){
-        event.preventDefault();
-        event.stopPropagation();
-
-        var $this = event.currentTarget;
-        if(!$this.classList.contains('default-dark-mode')){
-            if(!$this.classList.contains('active')){
-                $this.classList.add('active');
-                document.body.classList.add('dark-mode');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                $this.classList.remove('active');
-                document.body.classList.remove('dark-mode');
-                localStorage.removeItem('theme');
-            }
-        } else {
-            if($this.classList.contains('active')){
-                $this.classList.remove('active');
-                document.body.classList.remove('dark-mode');
-                localStorage.setItem('theme', 'light');
-            } else {
-                $this.classList.add('active');
-                document.body.classList.add('dark-mode');
-                localStorage.removeItem('theme');
-            }
-        }
-    }
-
-    checkDarkMode() {
-        if(!this.darkMode.classList.contains('default-dark-mode')){
-            localStorage.getItem('theme') === 'dark' ? this.darkMode.classList.add('active') : this.darkMode.classList.remove('active');
-        } else {
-            localStorage.getItem('theme') === 'light' ? this.darkMode.classList.remove('active') : this.darkMode.classList.add('active');
-        }
+        // Site is locked to dark mode — ignore any leftover toggle UI.
+        try {
+            if (localStorage.getItem('theme') === 'light') localStorage.removeItem('theme');
+        } catch (e) {}
+        document.body.classList.add('dark-mode');
+        this.hidden = true;
+        this.setAttribute('aria-hidden', 'true');
     }
 }
 
