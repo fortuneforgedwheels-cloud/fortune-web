@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 # Push Liquid/CSS/JS/assets only — never settings_data or template JSON.
-# Use this for layout/code deploys so theme-editor text is not overwritten.
+# ALWAYS uses --nodelete so remote-only live files are never wiped.
+# ALWAYS asserts protected files exist before any deploy.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-THEME_ID="${SHOPIFY_THEME_ID:-188605104403}"
+bash "${ROOT}/scripts/assert-protected-theme-files.sh"
+
+THEME_ID="${SHOPIFY_THEME_ID:-188656091411}"
 ALLOW_LIVE_FLAG=()
 if [[ "${1:-}" == "--allow-live" ]]; then
   ALLOW_LIVE_FLAG=(--allow-live)
@@ -28,6 +31,7 @@ for item in "${EXTRA[@]}"; do
     config/settings_data.json|templates/*|templates|config/settings_data.json)
       echo "Refusing to push merchant copy via theme:push:code: $item" >&2
       echo "Run npm run theme:sync-copy first, then use theme:push:templates intentionally." >&2
+      echo "WARNING: Never push a stale templates/index.json — it can wipe homepage hero videos." >&2
       exit 1
       ;;
   esac
@@ -40,9 +44,10 @@ if [[ ! -x "${ROOT}/node_modules/.bin/shopify" ]]; then
 fi
 
 export PATH="${ROOT}/node_modules/.bin:${PATH}"
-echo "==> Pushing code-only files to theme ${THEME_ID} (no settings_data / templates)"
+echo "==> Pushing code-only files to theme ${THEME_ID} (no settings_data / templates; --nodelete REQUIRED)"
 bash scripts/with-env.sh shopify theme push \
   --path theme \
   --theme "$THEME_ID" \
+  --nodelete \
   "${ALLOW_LIVE_FLAG[@]}" \
   "${ONLY_ARGS[@]}"

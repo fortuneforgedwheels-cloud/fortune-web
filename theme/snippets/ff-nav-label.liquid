@@ -1,0 +1,13 @@
+{%- comment -%}
+  Storefront display label for a Shopify navigation link title.
+  Remaps Admin "Shop by Style" → "WHEELS" while keeping the dropdown children.
+  Accepts: title
+{%- endcomment -%}
+{%- liquid
+  assign ff_nav_label = title | default: '' | strip
+  assign ff_nav_handle = ff_nav_label | downcase | handle
+  if ff_nav_handle == 'shop-by-style'
+    assign ff_nav_label = 'WHEELS'
+  endif
+-%}
+{{- ff_nav_label | escape -}}

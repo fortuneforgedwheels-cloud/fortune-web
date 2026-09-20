@@ -162,6 +162,29 @@
         <p class="ff-guide__footnote">{{ section.settings.footnote | escape }}</p>
       {%- endif -%}
 
+      {%- if section.settings.shop_heading != blank -%}
+        <div class="ff-guide__shop">
+          <h2 class="ff-guide__tier-title">{{ section.settings.shop_heading | escape }}</h2>
+          <nav class="ff-guide__jumplinks" aria-label="{{ section.settings.shop_heading | escape }}">
+            {%- if section.settings.shop_link_1_label != blank and section.settings.shop_link_1_url != blank -%}
+              <a href="{{ section.settings.shop_link_1_url }}">{{ section.settings.shop_link_1_label | escape }}</a>
+            {%- endif -%}
+            {%- if section.settings.shop_link_2_label != blank and section.settings.shop_link_2_url != blank -%}
+              <a href="{{ section.settings.shop_link_2_url }}">{{ section.settings.shop_link_2_label | escape }}</a>
+            {%- endif -%}
+            {%- if section.settings.shop_link_3_label != blank and section.settings.shop_link_3_url != blank -%}
+              <a href="{{ section.settings.shop_link_3_url }}">{{ section.settings.shop_link_3_label | escape }}</a>
+            {%- endif -%}
+            {%- if section.settings.shop_link_4_label != blank and section.settings.shop_link_4_url != blank -%}
+              <a href="{{ section.settings.shop_link_4_url }}">{{ section.settings.shop_link_4_label | escape }}</a>
+            {%- endif -%}
+            {%- if section.settings.shop_link_5_label != blank and section.settings.shop_link_5_url != blank -%}
+              <a href="{{ section.settings.shop_link_5_url }}">{{ section.settings.shop_link_5_label | escape }}</a>
+            {%- endif -%}
+          </nav>
+        </div>
+      {%- endif -%}
+
       {%- if section.settings.quote_link != blank -%}
         <div class="ff-guide__cta">
           <a class="button button--primary" href="{{ section.settings.quote_link }}">{{ section.settings.quote_label | escape }}</a>
@@ -259,6 +282,65 @@
       "id": "footnote",
       "label": "Footnote",
       "default": "Tire fitment notes are general guidance based on common setups. Final tire choice, spacers, and camber requirements are confirmed by our fitment specialists for your exact build."
+    },
+    {
+      "type": "header",
+      "content": "Shop links"
+    },
+    {
+      "type": "text",
+      "id": "shop_heading",
+      "label": "Shop heading"
+    },
+    {
+      "type": "text",
+      "id": "shop_link_1_label",
+      "label": "Shop link 1 label"
+    },
+    {
+      "type": "url",
+      "id": "shop_link_1_url",
+      "label": "Shop link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "shop_link_2_label",
+      "label": "Shop link 2 label"
+    },
+    {
+      "type": "url",
+      "id": "shop_link_2_url",
+      "label": "Shop link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "shop_link_3_label",
+      "label": "Shop link 3 label"
+    },
+    {
+      "type": "url",
+      "id": "shop_link_3_url",
+      "label": "Shop link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "shop_link_4_label",
+      "label": "Shop link 4 label"
+    },
+    {
+      "type": "url",
+      "id": "shop_link_4_url",
+      "label": "Shop link 4 URL"
+    },
+    {
+      "type": "text",
+      "id": "shop_link_5_label",
+      "label": "Shop link 5 label"
+    },
+    {
+      "type": "url",
+      "id": "shop_link_5_url",
+      "label": "Shop link 5 URL"
     },
     {
       "type": "text",
