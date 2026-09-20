@@ -67,6 +67,72 @@
     return out;
   }
 
+  function normalizeBcpoTitle(title) {
+    return String(title || '')
+      .toUpperCase()
+      .replace(/[^A-Z0-9]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function getBcpoVirtualOptions() {
+    if (window.bcpo_data && Array.isArray(window.bcpo_data.virtual_options)) {
+      return window.bcpo_data.virtual_options;
+    }
+    var scripts = document.querySelectorAll('script:not([src])');
+    for (var i = 0; i < scripts.length; i++) {
+      var text = scripts[i].textContent || '';
+      var marker = 'bcpo_data=';
+      var start = text.indexOf(marker);
+      if (start === -1) continue;
+      var jsonStart = text.indexOf('{', start);
+      if (jsonStart === -1) continue;
+      var depth = 0;
+      var end = -1;
+      for (var j = jsonStart; j < text.length; j++) {
+        var ch = text.charAt(j);
+        if (ch === '{') depth += 1;
+        if (ch === '}') {
+          depth -= 1;
+          if (depth === 0) {
+            end = j + 1;
+            break;
+          }
+        }
+      }
+      if (end === -1) continue;
+      try {
+        var data = JSON.parse(text.slice(jsonStart, end));
+        if (data && Array.isArray(data.virtual_options)) {
+          window.bcpo_data = data;
+          return data.virtual_options;
+        }
+      } catch (e) {}
+    }
+    return [];
+  }
+
+  function valuesFromBcpoTitle(title) {
+    var wanted = normalizeBcpoTitle(title);
+    var opt = getBcpoVirtualOptions().find(function (o) {
+      return normalizeBcpoTitle(o && o.title) === wanted;
+    });
+    if (!opt || !Array.isArray(opt.values)) return [];
+    var out = [];
+    opt.values.forEach(function (v) {
+      var key = v && typeof v === 'object' ? v.key : v;
+      var label = String(key || '')
+        .replace(/\s+/g, ' ')
+        .trim();
+      if (!label) return;
+      if (/^choose one|^select/i.test(label)) return;
+      if (/^\^\^/.test(label)) return;
+      if (/plug\s*n/i.test(label) || /keep oem/i.test(label)) return;
+      out.push({ value: label, label: label });
+    });
+    return out;
+  }
+
   function fillSelect(select, items, placeholder) {
     if (!select) return;
     var current = select.value;
@@ -708,13 +774,21 @@
       if (isTwoPiece) {
         var faces = usableBcpoOptions(opts.faceColor);
         var lips = usableBcpoOptions(opts.lipColor);
+        // Prefer live BCPO selects; fall back to bcpo_data so Face/Lip never stay empty
+        // when center-cap variants hydrate first (which used to short-circuit this fill).
+        if (!faces.length) faces = valuesFromBcpoTitle('FACE COLOR');
+        if (!lips.length) lips = valuesFromBcpoTitle('LIP/BARREL COLOR');
+        if (!lips.length) lips = valuesFromBcpoTitle('LIP COLOR');
         if (faces.length && faceFinishSel) fillSelect(faceFinishSel, faces, 'Select face finish');
         if (lips.length && lipFinishSel) fillSelect(lipFinishSel, lips, 'Select lip finish');
         // Hardware is a BCPO text field — keep existing Silver/Black/Hidden options
         if (caps.length) fillSelect(centerCapSel, caps, 'Select center cap');
-        if (faces.length || lips.length || caps.length) finishPopulated = true;
+        // Wait for face + lip (from select or bcpo_data) and center cap before locking
+        if (faces.length && lips.length && caps.length) finishPopulated = true;
       } else {
         var colors = usableBcpoOptions(opts.color);
+        if (!colors.length) colors = valuesFromBcpoTitle('COLOR');
+        if (!colors.length) colors = valuesFromBcpoTitle('FINISH');
         if (colors.length) fillSelect(finishSel, colors, 'Select finish');
         if (caps.length) fillSelect(centerCapSel, caps, 'Select center cap');
         if (colors.length || caps.length) finishPopulated = true;
@@ -910,12 +984,7 @@
         syncScheduled = false;
         var opts = findOptionSelects();
         if (!finishPopulated) {
-          var ready = isTwoPiece
-            ? usableBcpoOptions(opts.faceColor).length ||
-              usableBcpoOptions(opts.lipColor).length ||
-              usableBcpoOptions(opts.centerCap).length
-            : usableBcpoOptions(opts.color).length || usableBcpoOptions(opts.centerCap).length;
-          if (ready) populateFinishSelects();
+          populateFinishSelects();
         }
         if (!widthOffsetPopulated && (usableBcpoOptions(opts.width).length || usableBcpoOptions(opts.offset).length)) {
           populateWidthOffsetSelects();
