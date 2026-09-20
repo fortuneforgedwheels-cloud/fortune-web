@@ -542,6 +542,15 @@
 .ff-sbv__add-cart:hover:not(:disabled) { transform: translateY(-1px); }
 .ff-sbv__add-cart:disabled { opacity: 0.5; cursor: not-allowed; }
 
+.ff-sbv__chrome-note {
+  margin: 0 0 10px;
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ff-sbv-gold);
+  letter-spacing: 0.02em;
+}
+
 .ff-sbv__error {
   margin: 8px 0 0;
   font-size: 0.82rem;

@@ -1,9 +1,54 @@
 {{ 'component-product.css' | asset_url | stylesheet_tag }}
 {{ 'component-review.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'ff-fullset-price.css' | asset_url | stylesheet_tag }}
+{{ 'ff-pdp-configurator.css' | asset_url | stylesheet_tag }}
 {{ 'component-badge.css' | asset_url | stylesheet_tag }}
 {{ 'component-rte.css' | asset_url | stylesheet_tag }}
 {{ 'component-product-form.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign ff_hide_public_pdp = false
+  if product.tags contains 'ff-hide-catalog'
+    assign ff_hide_public_pdp = true
+  elsif product.handle == 'chrome-finish-surcharge' or product.handle == 'exclusive-deals-full-set' or product.handle == '1998-bmw-m3'
+    assign ff_hide_public_pdp = true
+  endif
+-%}
+{%- if ff_hide_public_pdp -%}
+  {%- liquid
+    assign ff_redirect = routes.root_url
+    if product.handle == 'exclusive-deals-full-set'
+      assign ff_redirect = pages['exclusive-deals'].url | default: '/pages/exclusive-deals'
+    elsif product.handle == '1998-bmw-m3'
+      assign ff_redirect = pages['e36-giveaway'].url | default: pages['giveaway'].url | default: routes.root_url
+    endif
+  -%}
+  <script>window.location.replace({{ ff_redirect | json }});</script>
+  <noscript><meta http-equiv="refresh" content="0;url={{ ff_redirect }}"></noscript>
+  <p class="visually-hidden">This product is not available in the public catalog.</p>
+{%- else -%}
+
+{%- liquid
+  assign ff_load_chrome_surcharge = false
+  if product.tags contains 'BEADLOCK' or product.tags contains 'beadlock'
+    assign ff_load_chrome_surcharge = true
+  endif
+  if product.metafields.bcpo.bcpo_data != blank
+    assign ff_load_chrome_surcharge = true
+  endif
+  assign ff_chrome_addon = all_products['chrome-finish-surcharge']
+-%}
+{%- if ff_load_chrome_surcharge -%}
+  <script>
+    window.FF_CHROME_SURCHARGE = Object.assign({}, window.FF_CHROME_SURCHARGE || {}, {
+      variantId: {{ ff_chrome_addon.selected_or_first_available_variant.id | default: 54535047840019 | json }},
+      handle: {{ ff_chrome_addon.handle | default: 'chrome-finish-surcharge' | json }},
+      amount: 250
+    });
+  </script>
+  <script src="{{ 'ff-bcpo-chrome-surcharge.js' | asset_url }}"></script>
+{%- endif -%}
 
 {%- liquid
     assign current_variant = product.selected_or_first_available_variant
@@ -16,6 +61,7 @@
     assign ff_certified_offset = '+15'
     assign ff_certified_make_ph = 'e.g. BMW'
     assign ff_certified_model_ph = 'e.g. M3'
+    assign ff_certified_extra_face_ring_colors = ''
     assign ff_product_title_up = product.title | upcase
     assign ff_product_handle = product.handle | downcase
     if ff_product_title_up contains '826M' and product.tags contains 'BEADLOCK'
@@ -39,6 +85,90 @@
       assign ff_certified_offset = '+15'
       assign ff_certified_make_ph = 'e.g. BMW'
       assign ff_certified_model_ph = 'e.g. M3'
+    elsif ff_product_handle == 'g87-beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '930M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET15'
+      assign ff_certified_offset = '+15'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. G87 M2'
+    elsif ff_product_title_up contains '930M' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '930M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET15'
+      assign ff_certified_offset = '+15'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. G87 M2'
+    elsif ff_product_title_up contains '930M' and product.tags contains 'beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '930M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET15'
+      assign ff_certified_offset = '+15'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. G87 M2'
+    elsif ff_product_handle == 'a90-a91-mk5-supra-beadlocks-2020-edition'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'Supra Beadlock checkout'
+      assign ff_certified_fitment = '17x10 ET35'
+      assign ff_certified_size = '17X10'
+      assign ff_certified_width = '10"'
+      assign ff_certified_offset = '+35'
+      assign ff_certified_make_ph = 'e.g. Toyota'
+      assign ff_certified_model_ph = 'e.g. A90 Supra'
+    elsif ff_product_title_up contains 'SUPRA' and ff_product_title_up contains '2020' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'Supra Beadlock checkout'
+      assign ff_certified_fitment = '17x10 ET35'
+      assign ff_certified_size = '17X10'
+      assign ff_certified_width = '10"'
+      assign ff_certified_offset = '+35'
+      assign ff_certified_make_ph = 'e.g. Toyota'
+      assign ff_certified_model_ph = 'e.g. A90 Supra'
+    elsif ff_product_handle == 'a90-supra-beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'Supra Beadlock checkout'
+      assign ff_certified_fitment = '17x10 ET35'
+      assign ff_certified_size = '17X10'
+      assign ff_certified_width = '10"'
+      assign ff_certified_offset = '+35'
+      assign ff_certified_make_ph = 'e.g. Toyota'
+      assign ff_certified_model_ph = 'e.g. A90 Supra'
+    elsif ff_product_title_up contains 'SUPRA' and ff_product_title_up contains '2023' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'Supra Beadlock checkout'
+      assign ff_certified_fitment = '17x10 ET35'
+      assign ff_certified_size = '17X10'
+      assign ff_certified_width = '10"'
+      assign ff_certified_offset = '+35'
+      assign ff_certified_make_ph = 'e.g. Toyota'
+      assign ff_certified_model_ph = 'e.g. A90 Supra'
+    elsif ff_product_title_up contains 'SUPRA' and ff_product_title_up contains '2023' and product.tags contains 'beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'Supra Beadlock checkout'
+      assign ff_certified_fitment = '17x10 ET35'
+      assign ff_certified_size = '17X10'
+      assign ff_certified_width = '10"'
+      assign ff_certified_offset = '+35'
+      assign ff_certified_make_ph = 'e.g. Toyota'
+      assign ff_certified_model_ph = 'e.g. A90 Supra'
+    elsif ff_product_handle == 'c7-z06-beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'C6 / C7 Z06 Beadlock checkout'
+      assign ff_certified_fitment = '18x12.5 ET52'
+      assign ff_certified_size = '18x12.5'
+      assign ff_certified_width = '12.5"'
+      assign ff_certified_offset = '+52'
+      assign ff_certified_make_ph = 'e.g. Chevrolet'
+      assign ff_certified_model_ph = 'e.g. C7 Z06'
+    elsif ff_product_title_up contains 'Z06' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'C6 / C7 Z06 Beadlock checkout'
+      assign ff_certified_fitment = '18x12.5 ET52'
+      assign ff_certified_size = '18x12.5'
+      assign ff_certified_width = '12.5"'
+      assign ff_certified_offset = '+52'
+      assign ff_certified_make_ph = 'e.g. Chevrolet'
+      assign ff_certified_model_ph = 'e.g. C7 Z06'
     elsif ff_product_handle == 'cadillac-ct5-v-blackwing-oem-beadlock'
       assign ff_certified_beadlock = true
       assign ff_certified_path_label = 'CT5-V Beadlock checkout'
@@ -60,6 +190,114 @@
       assign ff_certified_offset = '+40'
       assign ff_certified_make_ph = 'e.g. Cadillac'
       assign ff_certified_model_ph = 'e.g. CT5-V Blackwing'
+    elsif ff_product_handle == 's650-mustang-gt-oem-styled-beadlock-pair'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'S650 Mustang Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET50'
+      assign ff_certified_offset = '+50'
+      assign ff_certified_make_ph = 'e.g. Ford'
+      assign ff_certified_model_ph = 'e.g. S650 Mustang GT'
+      assign ff_certified_extra_face_ring_colors = 'Match OEM gloss gray|Match OEM satin black'
+    elsif ff_product_title_up contains 'S650' and ff_product_title_up contains 'MUSTANG' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'S650 Mustang Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET50'
+      assign ff_certified_offset = '+50'
+      assign ff_certified_make_ph = 'e.g. Ford'
+      assign ff_certified_model_ph = 'e.g. S650 Mustang GT'
+      assign ff_certified_extra_face_ring_colors = 'Match OEM gloss gray|Match OEM satin black'
+    elsif ff_product_title_up contains 'S650' and ff_product_title_up contains 'MUSTANG' and product.tags contains 'beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = 'S650 Mustang Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET50'
+      assign ff_certified_offset = '+50'
+      assign ff_certified_make_ph = 'e.g. Ford'
+      assign ff_certified_model_ph = 'e.g. S650 Mustang GT'
+      assign ff_certified_extra_face_ring_colors = 'Match OEM gloss gray|Match OEM satin black'
+    elsif ff_product_handle == '513m-beadlocks'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '513M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_title_up contains '513M' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '513M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_title_up contains '513M' and product.tags contains 'beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '513M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_handle == '437m-style-beadlocks'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '437M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_title_up contains '437M' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '437M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_title_up contains '437M' and product.tags contains 'beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '437M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_handle == '666m-style-beadlocks-f80-f82-m3-m4'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '666M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_title_up contains '666M' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '666M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_title_up contains '666M' and product.tags contains 'beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '666M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET40'
+      assign ff_certified_offset = '+40'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. F80 M3'
+    elsif ff_product_handle == 'g8x-827-cs-style-beadlocks'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '827M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET15'
+      assign ff_certified_offset = '+15'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. G80 M3'
+    elsif ff_product_title_up contains '827M' and product.tags contains 'BEADLOCK'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '827M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET15'
+      assign ff_certified_offset = '+15'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. G80 M3'
+    elsif ff_product_title_up contains '827M' and product.tags contains 'beadlock'
+      assign ff_certified_beadlock = true
+      assign ff_certified_path_label = '827M Beadlock checkout'
+      assign ff_certified_fitment = '18x11 ET15'
+      assign ff_certified_offset = '+15'
+      assign ff_certified_make_ph = 'e.g. BMW'
+      assign ff_certified_model_ph = 'e.g. G80 M3'
     endif
     assign ff_826m_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
     assign colors_bg = section.settings.colors_bg
@@ -473,6 +711,8 @@
                                                 use_variant: true,
                                                 price_class: 'price--large'
                                             -%}
+                                            {%- render 'ff-pdp-confidence', product: product -%}
+                                            {%- render 'ff-pdp-configurator', product: product, section: section -%}
                                         </div>
                                     {%- when 'promotion' -%}
                                         {%- liquid
@@ -1016,6 +1256,7 @@
                                               certified_fitment: ff_certified_fitment,
                                               certified_size: ff_certified_size,
                                               certified_width: ff_certified_width,
+                                              extra_face_ring_colors: ff_certified_extra_face_ring_colors,
                                               certified_offset: ff_certified_offset,
                                               ymm_make_placeholder: ff_certified_make_ph,
                                               ymm_model_placeholder: ff_certified_model_ph
@@ -1299,6 +1540,8 @@
 {% render 'schema',
     product: product
 %}
+
+{%- endif -%}
 
 {% schema %}
 {
@@ -4051,5 +4294,26 @@
     }]
 }
 {% endschema %}
+
+{%- liquid
+  assign ff_is_fullset_priced = false
+  if product != blank
+    unless product.tags contains 'FEATURED-SPEC'
+      assign ff_tags_up = product.tags | join: ',' | upcase
+      assign ff_type_up = product.type | upcase
+      assign ff_handle_up = product.handle | upcase
+      unless ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+        if ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+          assign ff_is_fullset_priced = true
+        elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+          assign ff_is_fullset_priced = true
+        endif
+      endunless
+    endunless
+  endif
+-%}
+{%- if ff_is_fullset_priced -%}
+  <script src="{{ 'ff-pdp-configurator.js' | asset_url }}" defer></script>
+{%- endif -%}
 
 <!-- bcpo done -->

@@ -15,10 +15,6 @@
     endif
 
     assign btn_top = settings.show_recently_viewed_top
-    assign show_dark_mode = settings.show_dark_mode
-    if show_dark_mode
-        assign default_dark_mode = settings.default_dark_mode
-    endif
 -%}
 <recently-viewed-popup class="halo-popup halo-recently-viewed-popup" id="halo-recently-viewed-popup" data-product-to-show="{{ limit }}" data-expire-day="{{ expire_day }}">
     {%- if settings.show_recently_viewed_popup -%}
@@ -184,14 +180,6 @@
         {%- endif -%}
     {%- endif -%}
     <div class="halo-recently-viewed recently-viewed-wrap" id="halo-recently-viewed-wrap">
-        {%- if show_dark_mode -%}
-            <dark-mode class="recently-viewed-icon main-dark-mode" tabindex="0" role="button">
-                <div class="recently-dark-mode recently-viewed-icon{% if default_dark_mode %} default-dark-mode active{% endif %}">
-                    <span class="visually-hidden">{{ 'recently_viewed.general.icon_4' | t }}</span>
-                    {% render 'icon-dark-mode' %}
-                </div>
-            </dark-mode>
-        {%- endif -%}
         {%- if settings.show_recently_viewed_popup -%}
             <div class="recently-viewed-icon open-popup" data-target="halo-recently-viewed-list" tabindex="0" role="button">
                 <span class="visually-hidden">{{ 'recently_viewed.general.icon_1' | t }}</span>

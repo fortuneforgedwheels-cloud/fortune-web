@@ -7,8 +7,9 @@
   assign certified_width = certified_width | default: '11"'
   assign certified_offset = certified_offset | default: '+15'
   assign certified_lug = certified_lug | default: "PLUG N' PLAY || KEEP OEM SPECS"
-  assign ymm_make_placeholder = ymm_make_placeholder | default: 'e.g. BMW'
-  assign ymm_model_placeholder = ymm_model_placeholder | default: 'e.g. M3'
+  assign ymm_make_placeholder = ymm_make_placeholder | default: 'BMW'
+  assign ymm_model_placeholder = ymm_model_placeholder | default: 'M3'
+  assign ymm_placeholder = 'e.g. 2023 ' | append: ymm_make_placeholder | append: ' ' | append: ymm_model_placeholder
 
   assign certified_size_key = certified_size | upcase | replace: ' ', ''
   assign certified_variant_id = blank
@@ -31,18 +32,19 @@
   data-certified-width="{{ certified_width | escape }}"
   data-certified-offset="{{ certified_offset | escape }}"
   data-certified-lug="{{ certified_lug | escape }}"
+  {% if extra_face_ring_colors != blank %}data-extra-face-ring-colors="{{ extra_face_ring_colors | escape }}"{% endif %}
 >
   <p class="ff-826m-path__eyebrow">{{ path_label | escape }}</p>
   <h2 class="ff-826m-path__heading">How do you want to spec this pair?</h2>
-  <p class="ff-826m-path__intro">Choose Fortune Certified Specs for a dialed-in {{ certified_fitment | escape }} package, or select your own size, width, offset, and lug pattern.</p>
 
   <div class="ff-826m-path__choices" role="radiogroup" aria-label="Spec path">
     <label class="ff-826m-path__choice">
       <input type="radio" name="ff_826m_path_{{ product.id }}" value="certified" checked>
       <span class="ff-826m-path__choice-card">
         <span class="ff-826m-path__choice-title">Fortune Certified Specs</span>
-        <span class="ff-826m-path__choice-meta">Fixed fitment: <strong>{{ certified_fitment | escape }}</strong></span>
-        <span class="ff-826m-path__choice-meta">You only enter vehicle year / make / model and ring, face, and bolt colors.</span>
+        <span class="ff-826m-path__choice-meta">
+          Sizing: {{ certified_fitment | escape }}, fits flush to fender. Just pick a color scheme.
+        </span>
       </span>
     </label>
     <label class="ff-826m-path__choice">
@@ -62,20 +64,39 @@
 
     <div class="ff-826m-path__ymm">
       <label class="ff-826m-path__field">
-        <span>Year</span>
-        <input type="text" name="properties[Year]" form="{{ form_id }}" autocomplete="off" placeholder="e.g. 2023" data-ff-826m-required-certified>
-      </label>
-      <label class="ff-826m-path__field">
-        <span>Make</span>
-        <input type="text" name="properties[Make]" form="{{ form_id }}" autocomplete="off" placeholder="{{ ymm_make_placeholder | escape }}" data-ff-826m-required-certified>
-      </label>
-      <label class="ff-826m-path__field">
-        <span>Model</span>
-        <input type="text" name="properties[Model]" form="{{ form_id }}" autocomplete="off" placeholder="{{ ymm_model_placeholder | escape }}" data-ff-826m-required-certified>
+        <span>Year / Make / Model</span>
+        <input
+          type="text"
+          name="properties[Year / Make / Model]"
+          form="{{ form_id }}"
+          autocomplete="off"
+          placeholder="{{ ymm_placeholder | escape }}"
+          data-ff-826m-required-certified
+        >
       </label>
     </div>
 
-    <p class="ff-826m-path__hint">Next, choose ring color, face color, and bolt color below. Size, width, offset, and lug pattern are set automatically.</p>
+    <div class="ff-826m-path__colors" data-ff-826m-color-slot>
+      <p class="ff-826m-path__hint">Choose face, ring, and bolt color:</p>
+      <label class="ff-826m-path__field" data-ff-826m-color-field="FACE COLOR">
+        <span>Face color</span>
+        <select class="ff-826m-path__select" data-ff-826m-color-select="FACE COLOR" required>
+          <option value="">Choose one</option>
+        </select>
+      </label>
+      <label class="ff-826m-path__field" data-ff-826m-color-field="RING COLOR">
+        <span>Ring color</span>
+        <select class="ff-826m-path__select" data-ff-826m-color-select="RING COLOR" required>
+          <option value="">Choose one</option>
+        </select>
+      </label>
+      <label class="ff-826m-path__field" data-ff-826m-color-field="BOLT COLOR">
+        <span>Bolt color</span>
+        <select class="ff-826m-path__select" data-ff-826m-color-select="BOLT COLOR" required>
+          <option value="">Choose one</option>
+        </select>
+      </label>
+    </div>
 
     <input type="hidden" name="properties[Spec Path]" value="Fortune Certified Specs" form="{{ form_id }}" data-ff-826m-certified-prop>
     <input type="hidden" name="properties[Certified Fitment]" value="{{ certified_fitment | escape }}" form="{{ form_id }}" data-ff-826m-certified-prop>
@@ -87,4 +108,4 @@
   </div>
 </div>
 
-<script src="{{ 'ff-826m-certified.js' | asset_url }}" defer></script>
+<script src="{{ 'ff-826m-certified-v2.js' | asset_url }}" defer></script>
