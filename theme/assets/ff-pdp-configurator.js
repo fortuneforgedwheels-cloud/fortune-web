@@ -42,6 +42,27 @@
     '+45',
     '+50',
   ];
+  // Existing store center-cap variant options (do not invent new ones)
+  var APPROVED_CENTER_CAPS = ['RE-USE MY FACTORY CAPS', 'FORTUNE FORGED LOGO CAP'];
+  // Existing Two-Piece FACE/LIP finishes already offered on live Two-Piece PDPs
+  var APPROVED_TWO_PIECE_FINISHES = [
+    'Polished',
+    'Chrome',
+    'Gloss black',
+    'Brushed silver',
+    'Satin black',
+    'Brushed Champagne',
+    'Brushed bronze',
+    'Light brushed gold',
+    'Matte bronze',
+    'Gloss bronze',
+    'Matte black',
+    'Motorsport gold',
+    'Brushed gunmetal',
+    'Brushed light gold',
+    'Satin Gunmetal',
+    'Gloss white',
+  ];
 
   function qs(root, sel) {
     return root.querySelector(sel);
@@ -131,6 +152,111 @@
       out.push({ value: label, label: label });
     });
     return out;
+  }
+
+  function getShopifyOptionValues(optionName) {
+    var wanted = normalizeBcpoTitle(optionName);
+    var lists = [];
+    if (window.bcpo_product && Array.isArray(window.bcpo_product.options_with_values)) {
+      lists.push(window.bcpo_product.options_with_values);
+    }
+    if (window.bcpo_product && Array.isArray(window.bcpo_product.options)) {
+      // options may be string names only; values live on options_with_values
+    }
+    var scripts = document.querySelectorAll('script:not([src])');
+    for (var i = 0; i < scripts.length; i++) {
+      var text = scripts[i].textContent || '';
+      if (text.indexOf('bcpo_product.options_with_values') === -1) continue;
+      var marker = 'bcpo_product.options_with_values = ';
+      var start = text.indexOf(marker);
+      if (start === -1) continue;
+      var jsonStart = text.indexOf('[', start);
+      if (jsonStart === -1) continue;
+      var depth = 0;
+      var end = -1;
+      for (var j = jsonStart; j < text.length; j++) {
+        var ch = text.charAt(j);
+        if (ch === '[') depth += 1;
+        if (ch === ']') {
+          depth -= 1;
+          if (depth === 0) {
+            end = j + 1;
+            break;
+          }
+        }
+      }
+      if (end === -1) continue;
+      try {
+        var parsed = JSON.parse(text.slice(jsonStart, end));
+        if (Array.isArray(parsed)) lists.push(parsed);
+      } catch (e) {}
+    }
+    for (var li = 0; li < lists.length; li++) {
+      var opts = lists[li];
+      for (var oi = 0; oi < opts.length; oi++) {
+        var opt = opts[oi];
+        if (!opt || normalizeBcpoTitle(opt.name) !== wanted) continue;
+        var values = opt.values || [];
+        var out = [];
+        values.forEach(function (v) {
+          var label = String(v || '')
+            .replace(/\s+/g, ' ')
+            .trim();
+          if (!label) return;
+          out.push({ value: label, label: label });
+        });
+        if (out.length) return out;
+      }
+    }
+    return [];
+  }
+
+  function centerCapOptions() {
+    var fromShopify = getShopifyOptionValues('Center Cap');
+    if (fromShopify.length) return fromShopify;
+    return APPROVED_CENTER_CAPS.map(function (c) {
+      return { value: c, label: c };
+    });
+  }
+
+  function findCenterCapRadios() {
+    var radios = [];
+    qsa(document, 'fieldset.product-form__input, variant-radios fieldset, .productView-variants fieldset').forEach(
+      function (fs) {
+        var legend = fs.querySelector('legend, .form__label');
+        var text = legend ? String(legend.textContent || '').toLowerCase() : '';
+        if (!/center\s*cap|centre\s*cap/.test(text)) return;
+        qsa(fs, 'input.product-form__radio, input[type="radio"]').forEach(function (r) {
+          radios.push(r);
+        });
+      }
+    );
+    return radios;
+  }
+
+  function setCenterCapNative(value) {
+    if (!value) return false;
+    var preferred = String(value).trim();
+    var selects = findOptionSelects();
+    if (selects.centerCap && setSelectValue(selects.centerCap, preferred)) return true;
+    var radios = findCenterCapRadios();
+    var match = radios.find(function (r) {
+      return String(r.value || '').trim() === preferred;
+    });
+    if (!match) {
+      match = radios.find(function (r) {
+        var lab = r.labels && r.labels[0] ? String(r.labels[0].textContent || '') : '';
+        return lab.indexOf(preferred) !== -1 || preferred.indexOf(String(r.value || '').trim()) !== -1;
+      });
+    }
+    if (!match) return false;
+    if (!match.checked) {
+      match.checked = true;
+      match.dispatchEvent(new Event('change', { bubbles: true }));
+      match.dispatchEvent(new Event('input', { bubbles: true }));
+      if (typeof match.click === 'function') match.click();
+    }
+    return true;
   }
 
   function fillSelect(select, items, placeholder) {
@@ -770,6 +896,7 @@
     function populateFinishSelects() {
       var opts = findOptionSelects();
       var caps = usableBcpoOptions(opts.centerCap);
+      if (!caps.length) caps = centerCapOptions();
 
       if (isTwoPiece) {
         var faces = usableBcpoOptions(opts.faceColor);
@@ -779,19 +906,31 @@
         if (!faces.length) faces = valuesFromBcpoTitle('FACE COLOR');
         if (!lips.length) lips = valuesFromBcpoTitle('LIP/BARREL COLOR');
         if (!lips.length) lips = valuesFromBcpoTitle('LIP COLOR');
+        // Last resort: approved finishes already used on other live Two-Piece products
+        if (!faces.length) {
+          faces = APPROVED_TWO_PIECE_FINISHES.map(function (f) {
+            return { value: f, label: f };
+          });
+        }
+        if (!lips.length) {
+          lips = APPROVED_TWO_PIECE_FINISHES.map(function (f) {
+            return { value: f, label: f };
+          });
+        }
         if (faces.length && faceFinishSel) fillSelect(faceFinishSel, faces, 'Select face finish');
         if (lips.length && lipFinishSel) fillSelect(lipFinishSel, lips, 'Select lip finish');
         // Hardware is a BCPO text field — keep existing Silver/Black/Hidden options
-        if (caps.length) fillSelect(centerCapSel, caps, 'Select center cap');
-        // Wait for face + lip (from select or bcpo_data) and center cap before locking
+        if (caps.length && centerCapSel) fillSelect(centerCapSel, caps, 'Select center cap');
+        // Wait for face + lip + center cap before locking
         if (faces.length && lips.length && caps.length) finishPopulated = true;
       } else {
         var colors = usableBcpoOptions(opts.color);
         if (!colors.length) colors = valuesFromBcpoTitle('COLOR');
         if (!colors.length) colors = valuesFromBcpoTitle('FINISH');
-        if (colors.length) fillSelect(finishSel, colors, 'Select finish');
-        if (caps.length) fillSelect(centerCapSel, caps, 'Select center cap');
-        if (colors.length || caps.length) finishPopulated = true;
+        if (colors.length && finishSel) fillSelect(finishSel, colors, 'Select finish');
+        if (caps.length && centerCapSel) fillSelect(centerCapSel, caps, 'Select center cap');
+        // Require both finish and center cap so neither selector stays empty
+        if (colors.length && caps.length) finishPopulated = true;
       }
       syncFinishToNative();
     }
@@ -824,7 +963,7 @@
         if (finishVal && opts.color) setSelectValue(opts.color, finishVal);
       }
       var capVal = centerCapSel ? String(centerCapSel.value || '').trim() : '';
-      if (capVal && opts.centerCap) setSelectValue(opts.centerCap, capVal);
+      if (capVal) setCenterCapNative(capVal);
       syncProps();
     }
 
