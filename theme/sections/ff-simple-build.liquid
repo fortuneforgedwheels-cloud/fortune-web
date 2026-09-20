@@ -25,6 +25,13 @@
       </li>
     </ol>
 
+    <div class="ff-build__gated is-locked" data-ff-build-gate>
+      <div class="ff-build__gate" data-ff-build-gate-overlay>
+        <button type="button" class="ff-build__gate-btn" data-ff-build-unlock>
+          {{ section.settings.gate_label | default: 'BUILD MY QUOTE' | escape }}
+        </button>
+      </div>
+
     <div class="ff-build__panel is-active" data-panel="1">
       <h2 class="ff-build__panel-title">{{ section.settings.step1_heading | escape }}</h2>
       <p class="ff-build__panel-copy">{{ section.settings.step1_copy | escape }}</p>
@@ -95,6 +102,7 @@
       <p class="ff-build__panel-copy">{{ section.settings.step3_copy | escape }}</p>
       {% render 'ff-quote-form', section: section %}
       <button type="button" class="ff-build__back" data-back="2">Back</button>
+    </div>
     </div>
   </div>
 
@@ -187,6 +195,12 @@
       "id": "subtitle",
       "label": "Subtitle",
       "default": "Three steps. Tell us your vehicle, choose a setup, request a build."
+    },
+    {
+      "type": "text",
+      "id": "gate_label",
+      "label": "Quote gate button label",
+      "default": "BUILD MY QUOTE"
     },
     {
       "type": "range",
