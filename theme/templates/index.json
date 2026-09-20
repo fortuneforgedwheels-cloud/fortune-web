@@ -9,12 +9,79 @@
  */
 {
   "sections": {
+    "ff_hero_editor_always_20260801c": {
+      "type": "ff-hero-lifestyle",
+      "blocks": {
+        "slide_mono": {
+          "type": "slide",
+          "settings": {
+            "video": "shopify://files/videos/Video Apr 27 2026, 9 57 19 PM.mov",
+            "image": "shopify://shop_images/IMG_2176.jpg",
+            "mobile_video": "shopify://files/videos/medeeee3_1_prob4.MP4",
+            "mobile_image": "shopify://shop_images/BMW_F80_25MP_HighQuality.jpg",
+            "title": "Monoblock Forged",
+            "title_size": 42,
+            "title_align": "left",
+            "button_label": "Browse Selection",
+            "button_size": 12,
+            "button_link": "shopify://collections/monoblock-wheels"
+          }
+        },
+        "slide_two": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Mediabymarius-1275.jpg",
+            "mobile_image": "shopify://shop_images/Mediabymarius-1275.jpg",
+            "title": "Two-Piece Forged",
+            "title_size": 42,
+            "title_align": "left",
+            "button_label": "Browse Selection",
+            "button_size": 12,
+            "button_link": "shopify://collections/two-piece-wheels"
+          }
+        },
+        "slide_bead": {
+          "type": "slide",
+          "settings": {
+            "video": "shopify://files/videos/fortune 1080 rev 1.MP4",
+            "image": "shopify://shop_images/IMG_4094.jpg",
+            "mobile_video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E.mov",
+            "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
+            "title": "Beadlock Forged",
+            "title_size": 42,
+            "title_align": "left",
+            "button_label": "Browse Selection",
+            "button_size": 12,
+            "button_link": "shopify://collections/beadlock-wheels"
+          }
+        }
+      },
+      "block_order": [
+        "slide_mono",
+        "slide_two",
+        "slide_bead"
+      ],
+      "settings": {
+        "show_hero": true,
+        "height": 90,
+        "height_mobile": 75,
+        "content_h_align": "left",
+        "content_v_align": "bottom",
+        "content_offset_x": 0,
+        "content_offset_y": 0
+      }
+    },
     "ff_simple_build_main": {
       "type": "ff-simple-build",
       "settings": {
         "eyebrow": "Fortune Forged",
+        "eyebrow_size": 12,
+        "eyebrow_align": "left",
         "title": "Request a quote for your next forged wheels",
         "subtitle": "Three steps. Tell us your vehicle, choose a setup, request a build.",
+        "gate_label": "BUILD MY QUOTE",
+        "subtitle_size": 18,
+        "subtitle_align": "left",
         "step1_label": "Vehicle",
         "step2_label": "Style",
         "step3_label": "Quote",
@@ -23,29 +90,141 @@
         "vehicle_placeholder": "e.g. 2024 BMW G80 M3",
         "continue_label": "Continue",
         "step2_heading": "Choose your setup",
-        "step2_copy": "Browse the hottest designs, pick Monoblock, 2-Piece, or Beadlock \u2014 or skip straight to a custom quote.",
-        "step2_hint": "Beadlock wheels are priced by the pair. Standard monoblock and two piece wheels are priced individually.",
+        "step2_copy": "Browse the hottest designs, pick Monoblock, 2-Piece, or Beadlock — or skip straight to a custom quote.",
+        "step2_hint": "Monoblock 17–20\" full sets start at $2,890 shipped. Two-Piece 17–20\" full sets start at $3,950 shipped. Beadlocks start at $1,999/pair.",
+        "style_prompt": "Hover or tap a setup to browse every wheel — pick one, then continue",
+        "wheel_pick_hint": "Tap a wheel to select it for your quote.",
+        "continue_to_quote_label": "Continue — see my quote options",
+        "style_required_hint": "Pick a setup and a wheel above, then continue.",
         "hottest_label": "Browse the hottest designs",
         "hottest_desc": "See recent Fortune Forged builds and popular styles",
         "hottest_link": "/#project-gallery",
         "quote_cta": "Skip to custom quote",
         "monoblock_link": "shopify://collections/monoblock-wheels",
-        "monoblock_desc": "One-piece forged strength \u00b7 priced individually",
+        "monoblock_desc": "Full sets from $2,890 shipped.",
+        "monoblock_price": "Full sets from $2,890 shipped.",
         "twopiece_link": "shopify://collections/two-piece-wheels",
-        "twopiece_desc": "Modular fitment & finish \u00b7 priced individually",
+        "twopiece_desc": "Full sets from $3,950 shipped.",
+        "twopiece_price": "Full sets from $3,950 shipped.",
         "beadlock_link": "shopify://collections/beadlock-wheels",
-        "beadlock_desc": "Off-road lock-ring builds \u00b7 priced by the pair",
+        "beadlock_desc": "Starting at $1,999 per pair.",
+        "beadlock_price": "Starting at $1,999 per pair.",
         "step3_heading": "Request your build",
-        "step3_copy": "Enter the custom details you already know \u2014 or leave fitment blank and a specialist will email or call you back to help.",
+        "step3_copy": "Enter the custom details you already know — or leave fitment blank and a specialist will email or call you back to help.",
+        "budget_legend": "What’s your budget for a full set?",
+        "timeline_legend": "When do you want to order?",
+        "intent_label": "I understand Fortune Forged wheels are a premium forged product, I’ve seen the typical price range, and I’m requesting this quote because I’m seriously considering a purchase.",
+        "submit_label": "Submit my quote request",
         "modal_eyebrow": "Quote received",
-        "modal_title": "You're on the list \u2014 one more thing",
+        "modal_title": "You're on the list — one more thing",
         "modal_lead": "Thanks for requesting a quote. Our team will follow up shortly with pricing, fitment, and next steps.",
         "modal_offer_label": "Complimentary media day",
-        "modal_offer_copy": "When your new Fortune Forged wheels are installed, we'd love to host a complimentary media day for your build \u2014 fully covered by us. Professional content, your car, your new wheels.",
+        "modal_offer_copy": "When your new Fortune Forged wheels are installed, we'd love to host a complimentary media day for your build — fully covered by us. Professional content, your car, your new wheels.",
         "modal_social_copy": "We're proud of every set we ship and would love the chance to show off your finished build across Fortune Forged socials.",
-        "modal_cta": "Yes \u2014 I'm interested",
+        "modal_cta": "Yes — I'm interested",
         "modal_dismiss": "Maybe later",
         "modal_thanks": "Perfect. When we follow up on your quote, we'll include media day details and help coordinate after installation."
+      }
+    },
+    "ff_featured_specs_home": {
+      "type": "ff-featured-specs",
+      "blocks": {
+        "platform_c8": {
+          "type": "platform",
+          "settings": {
+            "label": "CS STYLED OEM+ G8X SPEC",
+            "image": "shopify://shop_images/Viewrecentphotos2.png",
+            "product": "827m-oem-g8x-spec",
+            "link": ""
+          }
+        },
+        "platform_g8x": {
+          "type": "platform",
+          "settings": {
+            "label": "F-05Sr F8X flush fit",
+            "image": "shopify://shop_images/View_recent_photos_4.png",
+            "product": "f-05sr-f8x-flush-fit",
+            "link": ""
+          }
+        },
+        "platform_g87m2": {
+          "type": "platform",
+          "settings": {
+            "label": "F-05SR G87 M2 Flush Fit",
+            "image": "shopify://shop_images/IMG_6462.jpg",
+            "product": "f-05sr-g87-m2-flush-fit",
+            "link": ""
+          }
+        },
+        "platform_g20": {
+          "type": "platform",
+          "settings": {
+            "label": "A90 SUPRA OEM+ BEADLOCK",
+            "image": "shopify://shop_images/IMG_6134.jpg",
+            "product": "a90-a91-mk5-supra-beadlocks-2020-edition",
+            "link": ""
+          }
+        },
+        "platform_btMRbV": {
+          "type": "platform",
+          "settings": {
+            "label": "F-11R 600LT Fitment",
+            "image": "shopify://shop_images/View_recent_photos_5.png",
+            "product": "f-11r-600lt-forged-monoblock-set",
+            "link": ""
+          }
+        },
+        "platform_DYKbpM": {
+          "type": "platform",
+          "settings": {
+            "label": "F-12R C8 Z06 FITMENT",
+            "image": "shopify://shop_images/DSC06098.jpg",
+            "product": "f-12r-c8-z06-forged-monoblock-set",
+            "link": ""
+          }
+        },
+        "platform_AexcTx": {
+          "type": "platform",
+          "settings": {
+            "label": "G20 FULL BEADLOCK SET",
+            "image": "shopify://shop_images/Screenshot_2026-09-14_at_11.32.00_PM.png",
+            "product": "g20-full-beadlock-set",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "platform_c8",
+        "platform_g8x",
+        "platform_g87m2",
+        "platform_g20",
+        "platform_btMRbV",
+        "platform_DYKbpM",
+        "platform_AexcTx"
+      ],
+      "settings": {
+        "show_section": true,
+        "heading": "Shop featured specs",
+        "subheading": "See a setup you like? Order. Install. Drive.",
+        "fallback_link": "/pages/shop-by-vehicle",
+        "padding_top": 28,
+        "padding_bottom": 36
+      }
+    },
+    "ff_top_selling_monoblocks_home": {
+      "type": "ff-top-selling-monoblocks",
+      "settings": {
+        "show_section": true,
+        "heading": "Top selling monoblocks",
+        "collection": "monoblock-wheels",
+        "left_collection": "monoblock-wheels",
+        "product_limit": 8,
+        "buy_label": "Buy Now",
+        "empty_text": "Add monoblock products to this collection",
+        "view_label": "Shop all monoblocks",
+        "view_link": "shopify://collections/monoblock-wheels",
+        "padding_top": 40,
+        "padding_bottom": 64
       }
     },
     "ff_fan_favorites_main": {
@@ -65,7 +244,7 @@
             "full_set_note": "True flush fitment",
             "beadlock_design": "",
             "beadlock_spec": "20x11 ET15",
-            "beadlock_note": "True flush fitment \u00b7 Clears steel & CCB brakes",
+            "beadlock_note": "True flush fitment · Clears steel & CCB brakes",
             "finish_options": "Brushed Clear,Polished,Gloss Black,Satin Black,Brushed Gunmetal",
             "show_price_estimate": false
           }
@@ -149,8 +328,12 @@
       "settings": {
         "show_section": true,
         "eyebrow": "Fortune Forged",
+        "eyebrow_size": 12,
+        "eyebrow_align": "center",
         "heading": "Track tested favorites",
-        "subheading": "Our most requested wheel and fitment combinations \u2014 sizing already dialed in for these platforms. Pick your finish and we'll build the rest.",
+        "subheading": "Our most requested wheel and fitment combinations — sizing already dialed in for these platforms. Pick your finish and we'll build the rest.",
+        "subheading_size": 18,
+        "subheading_align": "center",
         "card_cta": "Build this setup",
         "footnote": "Exact fitment, pricing, and any modifications are confirmed by our team before your order ships.",
         "badge_label": "Track Tested Favorite",
@@ -166,7 +349,7 @@
         "price_full_set_label": "for a full set of 4",
         "price_pair_label": "for the pair",
         "add_to_cart_label": "Add My Setup to Cart",
-        "adding_label": "Adding\u2026",
+        "adding_label": "Adding…",
         "error_missing_design": "Please choose a wheel design before adding to cart.",
         "error_cart_failed": "Something went wrong adding this to your cart. Please try again.",
         "no_fitment_copy": "We're dialing in the exact fitment for this platform. Get a custom quote and a fitment specialist will confirm your perfect spec.",
@@ -184,7 +367,7 @@
           "settings": {
             "title": "FEA ANALYZED",
             "image": "shopify://shop_images/Screenshot_2026-07-27_at_11.35.47_PM.png",
-            "text": "Every Fortune Forged wheel is engineered from the ground up using advanced Finite Element Analysis (FEA) to optimize strength, rigidity, and weight before production ever begins. Each design is digitally tested to simulate real-world cornering, braking, impact, and load forces, allowing us to remove unnecessary material while reinforcing high-stress areas. The result is a forged wheel that delivers maximum performance, uncompromising safety, and exceptional durability\u2014custom-built for your vehicle rather than adapted from a generic off-the-shelf design.",
+            "text": "Every Fortune Forged wheel is engineered from the ground up using advanced Finite Element Analysis (FEA) to optimize strength, rigidity, and weight before production ever begins. Each design is digitally tested to simulate real-world cornering, braking, impact, and load forces, allowing us to remove unnecessary material while reinforcing high-stress areas. The result is a forged wheel that delivers maximum performance, uncompromising safety, and exceptional durability—custom-built for your vehicle rather than adapted from a generic off-the-shelf design.",
             "link_label": "VIRTUALLY TESTED. REAL-WORLD PROVEN.",
             "link": "shopify://collections/monoblock-wheels"
           }
@@ -194,7 +377,7 @@
           "settings": {
             "title": "LIGHTER",
             "image": "shopify://shop_images/IMG_2128.jpg",
-            "text": "Each wheel is machined from true aerospace grade 6061-T6 forged aluminum. Not cast or flow-formed construction. The forging process produces a denser, stronger grain structure, allowing our engineers to remove unnecessary material while maintaining exceptional structural integrity. The result is a wheel that is up to 25\u201330% lighter than a comparable cast wheel, reducing unsprung and rotational mass to improve acceleration, braking, steering response, and overall driving performance without compromising strength or durability.",
+            "text": "Each wheel is machined from true aerospace grade 6061-T6 forged aluminum. Not cast or flow-formed construction. The forging process produces a denser, stronger grain structure, allowing our engineers to remove unnecessary material while maintaining exceptional structural integrity. The result is a wheel that is up to 25–30% lighter than a comparable cast wheel, reducing unsprung and rotational mass to improve acceleration, braking, steering response, and overall driving performance without compromising strength or durability.",
             "link_label": "FORGED STRENGTH WITHOUT EXCESS WEIGHT",
             "link": "shopify://collections/two-piece-wheels"
           }
@@ -203,8 +386,8 @@
           "type": "value",
           "settings": {
             "title": "Bespoke",
-            "image": "shopify://shop_images/IMG_2125.jpg",
-            "text": "We offer a virtually limitless customization to complement your vehicle's aesthetic. Choose from hand brushed, polished, chrome, satin, gloss, or custom powder-coated finishes, paired with bespoke hardware, center caps, and accent options. Whether configured as a monoblock, two-piece, or a beadlock design, each set is crafted to reflect your vision.",
+            "image": "shopify://shop_images/DSC09942.jpg",
+            "text": "We offer a virtually limitless customization to complement your vehicle's aesthetic. Choose from hand brushed, polished, chrome, satin, gloss, or custom powder-coated finishes, paired with bespoke hardware, Fortune Forged center-cap options, and accents. Where noted, wheels are OEM Center Cap Compatible—manufactured to accept your existing compatible factory/OEM center caps. OEM center caps are not manufactured, sold, supplied, or included by Fortune Forged Wheels. Whether configured as a monoblock, two-piece, or a beadlock design, each set is crafted to reflect your vision.",
             "link_label": "CUSTOM FINISHES & ONE-OFF BUILDS",
             "link": "shopify://collections/beadlock-wheels"
           }
@@ -219,6 +402,8 @@
         "show_section": true,
         "heading": "THE FORTUNE FORGED EXPERIENCE",
         "subheading": "",
+        "subheading_size": 18,
+        "subheading_align": "center",
         "show_feature_media": true,
         "video": "shopify://files/videos/414fa15f69387a7d69ecb48a51a58017_raw.MP4",
         "youtube_id": "",
@@ -234,7 +419,8 @@
           "type": "badge",
           "settings": {
             "icon": "lock",
-            "heading": "Fitment Guaranteed or money back",
+            "heading": "Guaranteed fit",
+            "heading_link": "",
             "description": "Engineered specifically for your vehicle. Professional installation recommended. Perfect fitment, guaranteed.",
             "show_email": false,
             "contact_email": ""
@@ -245,6 +431,7 @@
           "settings": {
             "icon": "race_car",
             "heading": "Enthusiast owned & operated",
+            "heading_link": "",
             "description": "Questions? Speak directly with a Fortune Forged Fitment Specialist. Same-day responses, backed by real enthusiasts.",
             "show_email": true,
             "contact_email": ""
@@ -490,7 +677,7 @@
             "finish": "Custom finish",
             "hardware": "Gold titanium",
             "location": "Built to order",
-            "writeup": "<p>Fortune Forged Feature built on Fortune Forged forged custom wheels. Fitment was measured around brake clearance, suspension setup, and target stance \u2014 then finished to match the car.</p><p>Swap this text in the theme editor with the real build story, owner details, and any supporting mods.</p>",
+            "writeup": "<p>Fortune Forged Feature built on Fortune Forged forged custom wheels. Fitment was measured around brake clearance, suspension setup, and target stance — then finished to match the car.</p><p>Swap this text in the theme editor with the real build story, owner details, and any supporting mods.</p>",
             "shop_label": "Shop this style",
             "shop_link": "shopify://collections/monoblock-wheels"
           }
@@ -511,8 +698,12 @@
       "settings": {
         "show_section": true,
         "eyebrow": "Fortune Forged",
+        "eyebrow_size": 12,
+        "eyebrow_align": "center",
         "heading": "PROJECT GALLERY",
-        "subheading": "Explore real world Fortune Forged builds. Browse complete vehicle specifications, custom fitment, premium finishes, and full photo galleries\u2014engineered to inspire your next build.",
+        "subheading": "Explore real world Fortune Forged builds. Browse complete vehicle specifications, custom fitment, premium finishes, and full photo galleries—engineered to inspire your next build.",
+        "subheading_size": 18,
+        "subheading_align": "left",
         "card_cta": "View build",
         "quote_label": "Request a similar build",
         "quote_link": "/#order",
@@ -529,88 +720,13 @@
       "settings": {
         "custom_liquid": ""
       }
-    },
-    "ff_top_selling_monoblocks_home": {
-      "type": "ff-top-selling-monoblocks",
-      "settings": {
-        "show_section": true,
-        "heading": "Top selling monoblocks",
-        "collection": "monoblock-wheels",
-        "left_collection": "monoblock-wheels",
-        "product_limit": 8,
-        "buy_label": "Buy Now",
-        "empty_text": "Add monoblock products to this collection",
-        "view_label": "Shop all monoblocks",
-        "view_link": "shopify://collections/monoblock-wheels",
-        "padding_top": 40,
-        "padding_bottom": 64
-      }
-    },
-    "ff_hero_lifestyle_video": {
-      "type": "ff-hero-lifestyle",
-      "blocks": {
-        "slide_mono": {
-          "type": "slide",
-          "settings": {
-            "video": "shopify://files/videos/Video Apr 27 2026, 9 57 19 PM.mov",
-            "image": "shopify://shop_images/IMG_2176.jpg",
-            "mobile_video": "shopify://files/videos/Video Oct 07 2025, 6 39 14 PM.MP4",
-            "mobile_image": "",
-            "title": "Monoblock Forged",
-            "title_size": 42,
-            "title_align": "left",
-            "button_label": "Browse Selection",
-            "button_size": 12,
-            "button_link": "shopify://collections/monoblock-wheels"
-          }
-        },
-        "slide_two": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_6.58.56_PM.png",
-            "mobile_image": "shopify://shop_images/IMG_0287_2.jpg",
-            "title": "Two-Piece Forged",
-            "title_size": 42,
-            "title_align": "left",
-            "button_label": "Browse Selection",
-            "button_size": 12,
-            "button_link": "shopify://collections/two-piece-wheels"
-          }
-        },
-        "slide_bead": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM_c0f745e4-4f88-4373-8d62-148cfcbbe059.png",
-            "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
-            "title": "Beadlock Forged",
-            "title_size": 42,
-            "title_align": "left",
-            "button_label": "Browse Selection",
-            "button_size": 12,
-            "button_link": "shopify://collections/beadlock-wheels"
-          }
-        }
-      },
-      "block_order": [
-        "slide_mono",
-        "slide_two",
-        "slide_bead"
-      ],
-      "settings": {
-        "show_hero": true,
-        "height": 90,
-        "height_mobile": 75,
-        "content_h_align": "left",
-        "content_v_align": "bottom",
-        "content_offset_x": 0,
-        "content_offset_y": 0
-      }
     }
   },
   "order": [
-    "ff_hero_lifestyle_video",
-    "ff_top_selling_monoblocks_home",
+    "ff_hero_editor_always_20260801c",
     "ff_simple_build_main",
+    "ff_featured_specs_home",
+    "ff_top_selling_monoblocks_home",
     "ff_fan_favorites_main",
     "ff_value_props_main",
     "ff_trust_badges_home",
