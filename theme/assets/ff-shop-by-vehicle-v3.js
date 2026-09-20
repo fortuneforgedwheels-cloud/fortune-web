@@ -37,6 +37,49 @@
     },
   ];
 
+  function isChromeFinish(name) {
+    return /\bchrome\b/i.test(String(name || ''));
+  }
+
+  function chromeAddonVariantId() {
+    var cfg = window.FF_CHROME_SURCHARGE || {};
+    if (cfg.variantId) return String(cfg.variantId);
+    var root = document.querySelector('[data-ff-sbv]');
+    var fromData = root && root.getAttribute('data-chrome-surcharge-variant');
+    return fromData ? String(fromData) : '';
+  }
+
+  function chromeSurchargeCount(state) {
+    if (!state) return 0;
+    if (state.wheelStyle === 'two') {
+      var n = 0;
+      if (isChromeFinish(state.faceFinish)) n += 1;
+      if (isChromeFinish(state.barrelFinish)) n += 1;
+      return n;
+    }
+    return isChromeFinish(state.selectedFinish) ? 1 : 0;
+  }
+
+  function appendChromeSurcharge(items, state) {
+    var qty = chromeSurchargeCount(state);
+    if (!qty) return items;
+    var variantId = chromeAddonVariantId();
+    if (!variantId) return items;
+    items.push({
+      id: Number(variantId),
+      quantity: qty,
+      properties: cleanLineProps({
+        _Surcharge: 'Chrome finish',
+        'Chrome selections': String(qty),
+        Note: qty > 1 ? 'Chrome finishes (+$250 each)' : 'Chrome finish (+$250)',
+        Vehicle: state.vehicleLabel || '',
+        'Wheel Design': (state.selectedDesign && state.selectedDesign.title) || '',
+        Source: 'Shop by Vehicle',
+      }),
+    });
+    return items;
+  }
+
   function populateFinishSelect(select, placeholder) {
     if (!select) return;
     select.innerHTML = '';
@@ -50,7 +93,7 @@
       group.options.forEach(function (name) {
         var opt = document.createElement('option');
         opt.value = name;
-        opt.textContent = name;
+        opt.textContent = isChromeFinish(name) ? (name + ' (+$250)') : name;
         og.appendChild(opt);
       });
       select.appendChild(og);
@@ -505,6 +548,18 @@
   }
 
   /* ── cart builder ── */
+  function pickFullSetVariantId(design, fit) {
+    var frontId = resolveVariantId(design, fit.front);
+    var rearId = resolveVariantId(design, fit.rear);
+    var frontParsed = parseFitmentSize(fit.front);
+    var rearParsed = parseFitmentSize(fit.rear);
+    // Prefer the larger diameter so 21–22" sets land on the correct price tier.
+    if (frontParsed && rearParsed && rearParsed.diameter > frontParsed.diameter) {
+      return rearId || frontId;
+    }
+    return frontId || rearId;
+  }
+
   function buildCartItems(state) {
     var items = [];
     var design = state.selectedDesign;
@@ -522,6 +577,7 @@
       'Vehicle': vehicle,
       'Bolt Pattern': state.boltPattern || '',
       'Center Bore': state.centerBore || '',
+      'Wheel Design': design.title || '',
     };
 
     if (state.wheelStyle === 'two') {
@@ -535,6 +591,7 @@
 
     baseProps = cleanLineProps(baseProps);
 
+    // Beadlocks remain pair-priced.
     if (state.wheelStyle === 'bead') {
       items.push({
         id: Number(rearVariantId || frontVariantId),
@@ -547,45 +604,25 @@
           'Tires': fit.tirePick || '',
         })),
       });
-      return items;
+      return appendChromeSurcharge(items, state);
     }
 
-    if (isSquare(fit.front, fit.rear)) {
-      items.push({
-        id: Number(frontVariantId || rearVariantId),
-        quantity: 4,
-        properties: Object.assign({}, baseProps, cleanLineProps({
-          'Position': 'Front & Rear',
-          'Size': fit.front,
-          'Tires': fit.tirePick || '',
-        })),
-      });
-      return items;
-    }
-
+    // Monoblock / Two-Piece Shopify prices are FULL SET amounts — always qty 1.
+    var setVariantId = pickFullSetVariantId(design, fit);
+    var square = isSquare(fit.front, fit.rear);
     items.push({
-      id: Number(frontVariantId || rearVariantId),
-      quantity: 2,
+      id: Number(setVariantId),
+      quantity: 1,
       properties: Object.assign({}, baseProps, cleanLineProps({
-        'Position': 'Front',
-        'Size': fit.front,
+        'Order Type': 'Full Set',
+        'Position': square ? 'Front & Rear (square)' : 'Front & Rear (staggered)',
+        'Size': square ? fit.front : (fit.front + ' / ' + fit.rear),
         'Front': fit.front,
         'Rear': fit.rear,
         'Tires': fit.tirePick || '',
       })),
     });
-    items.push({
-      id: Number(rearVariantId || frontVariantId),
-      quantity: 2,
-      properties: Object.assign({}, baseProps, cleanLineProps({
-        'Position': 'Rear',
-        'Size': fit.rear,
-        'Front': fit.front,
-        'Rear': fit.rear,
-        'Tires': fit.tirePick || '',
-      })),
-    });
-    return items;
+    return appendChromeSurcharge(items, state);
   }
 
   function findChassisOption(cat, year, make, model, chassisLabel) {
@@ -649,6 +686,7 @@
     var hardwarePanel = root.querySelector('[data-ff-sbv-hardware-panel]');
     var hardwareSelect = root.querySelector('[data-ff-sbv-hardware-select]');
     var addCartBtn   = root.querySelector('[data-ff-sbv-add-cart]');
+    var chromeNoteEl = root.querySelector('[data-ff-sbv-chrome-note]');
     var errorEl      = root.querySelector('[data-ff-sbv-error]');
     var pageVehicleEl = root.querySelector('[data-ff-sbv-page-vehicle]');
 
@@ -860,6 +898,17 @@
     function updateAddCartState() {
       if (!addCartBtn) return;
       addCartBtn.disabled = !(state.selectedDesign && state.selectedDesign.variantId && finishesValid());
+      if (chromeNoteEl) {
+        var qty = finishesValid() ? chromeSurchargeCount(state) : 0;
+        if (qty > 0) {
+          chromeNoteEl.hidden = false;
+          chromeNoteEl.textContent = qty > 1
+            ? ('+$' + (250 * qty) + ' Chrome finish surcharge will be added at checkout (' + qty + ' × $250)')
+            : '+$250 Chrome finish surcharge will be added at checkout';
+        } else {
+          chromeNoteEl.hidden = true;
+        }
+      }
     }
 
     function setFinishMode(style) {
