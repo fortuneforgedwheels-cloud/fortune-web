@@ -767,10 +767,11 @@
     .rtl .cart-item-properties .definitionList-key,
     .rtl .cart-item-properties .definitionList-value {
         margin: 0;
+        text-align: right;
     }
 
     .rtl .cart-item-properties .definitionList-value{
-        margin-right: 5px;
+        margin-right: 0;
     }
 
     .rtl .cart-gift .icon {
@@ -1157,7 +1158,7 @@
 
     .rtl .previewCartItem-properties .definitionList-value {
         margin-left: 0;
-        margin-right: 5px;
+        margin-right: 0;
     }
 
     .rtl .previewCartItem-remove {
@@ -1225,7 +1226,7 @@
 
     .rtl .quickCartWrap .card-properties .definitionList-value {
         margin-left: 0;
-        margin-right: 5px;
+        margin-right: 0;
     }
 
     .rtl .quickCartWrap .card-action .quantity {
