@@ -3,22 +3,70 @@
     if (!root || root.dataset.ffReady === '1') return;
     root.dataset.ffReady = '1';
 
-    var state = { style: '' };
+    var state = { style: '', design: '' };
     var manual = root.querySelector('[name="ff_vehicle_manual"]');
     var ymm = root.querySelector('[name="contact[vehicle]"]');
     var hiddenVehicle = root.querySelector('[id^="ff-selected-vehicle-"]');
     var hiddenStyle = root.querySelector('[id^="ff-selected-style-"]');
-    var helpPreference = root.querySelector('[id^="ff-help-preference-"]');
+    var designInput = root.querySelector('[name="contact[design]"]');
+    var customRefHidden = root.querySelector('[name="contact[custom_design_reference]"]');
+    var customRefPanel = root.querySelector('[data-custom-design-ref]');
+    var customRefVisible = root.querySelector('[data-custom-design-ref-input]');
+    var customRefError = root.querySelector('[data-custom-design-ref-error]');
     var continueBtn = root.querySelector('[data-panel="1"] [data-next="2"]');
-    var browseWrap = root.querySelector('[data-browse-links]');
-    var assistNote = root.querySelector('[data-assist-note]');
-    var submitBtn = root.querySelector('[data-submit-label]');
+    var continueQuoteBtn = root.querySelector('[data-continue-quote]');
+    var designPicker = root.querySelector('[data-design-picker]');
+    var catalogViewport = root.querySelector('.ff-build__catalog-viewport');
     var quoteForm = root.querySelector('form.ff-quote');
+    var summaryVehicle = root.querySelector('[data-summary-vehicle]');
+    var summaryStyle = root.querySelector('[data-summary-style]');
+    var summaryDesign = root.querySelector('[data-summary-design]');
     var modal = root.querySelector('[data-ff-media-modal]');
     var modalDialog = root.querySelector('[data-ff-modal-dialog]');
     var modalThanks = root.querySelector('[data-ff-modal-thanks]');
     var modalActions = root.querySelector('.ff-media-modal__actions');
     var previousFocus = null;
+    var gate = root.querySelector('[data-ff-build-gate]');
+    var unlockBtn = root.querySelector('[data-ff-build-unlock]');
+
+    function fireQuoteStarted() {
+      var payload = {
+        form_name: 'Fortune Forged Build Quote',
+        content_name: 'Custom Forged Wheel Quote',
+        value: 1,
+        currency: 'USD'
+      };
+      try {
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', 'QuoteStarted', payload);
+        }
+      } catch (e) {}
+      try {
+        if (
+          window.Shopify &&
+          window.Shopify.analytics &&
+          typeof window.Shopify.analytics.publish === 'function'
+        ) {
+          window.Shopify.analytics.publish('QuoteStarted', {
+            form_name: payload.form_name
+          });
+        }
+      } catch (e) {}
+    }
+
+    function unlockGate() {
+      if (!gate) return;
+      var wasLocked = gate.classList.contains('is-locked');
+      gate.classList.remove('is-locked');
+      if (wasLocked) fireQuoteStarted();
+      if (manual) {
+        try { manual.focus(); } catch (e) {}
+      }
+    }
+
+    if (unlockBtn) {
+      unlockBtn.addEventListener('click', unlockGate);
+    }
 
     function setStep(n) {
       root.querySelectorAll('[data-step]').forEach(function (el) {
@@ -33,55 +81,139 @@
       });
     }
 
+    function updateBuildSummary() {
+      var vehicleValue =
+        (hiddenVehicle && hiddenVehicle.value) ||
+        (manual && manual.value.trim()) ||
+        '';
+      var styleValue = state.style || (hiddenStyle && hiddenStyle.value) || '';
+      var designValue = state.design || (designInput && designInput.value) || '';
+      if (summaryVehicle) summaryVehicle.textContent = vehicleValue || '—';
+      if (summaryStyle) summaryStyle.textContent = styleValue || '—';
+      if (summaryDesign) summaryDesign.textContent = designValue || '—';
+    }
+
     function syncVehicle() {
       var value = (manual && manual.value.trim()) || '';
       if (continueBtn) continueBtn.disabled = !value;
       if (hiddenVehicle) hiddenVehicle.value = value;
-      if (ymm && value) ymm.value = value;
+      if (ymm) ymm.value = value;
+      updateBuildSummary();
+    }
+
+    function syncQuoteCarryForward() {
+      syncVehicle();
+      if (hiddenStyle) hiddenStyle.value = state.style || '';
+      if (designInput) designInput.value = state.design || '';
+      syncCustomDesignReference();
+      updateBuildSummary();
+    }
+
+    function syncContinueQuote() {
+      if (continueQuoteBtn) {
+        continueQuoteBtn.disabled = !(state.style && state.design && isCustomRefAcceptable());
+      }
+    }
+
+    function isHttpUrl(value) {
+      try {
+        var parsed = new URL(value);
+        return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function syncCustomDesignReference() {
+      var raw = customRefVisible ? customRefVisible.value.trim() : '';
+      if (customRefVisible && customRefVisible.value !== raw) {
+        customRefVisible.value = raw;
+      }
+      if (customRefHidden) {
+        customRefHidden.value = state.design === 'Custom Design' ? raw : '';
+      }
+      var invalid = state.design === 'Custom Design' && raw !== '' && (!isHttpUrl(raw) || raw.length > 2048);
+      if (customRefError) customRefError.hidden = !invalid;
+      if (customRefVisible) {
+        customRefVisible.setAttribute('aria-invalid', invalid ? 'true' : 'false');
+      }
+      return !invalid;
+    }
+
+    function isCustomRefAcceptable() {
+      return syncCustomDesignReference();
+    }
+
+    function clearCustomDesignReference() {
+      if (customRefVisible) customRefVisible.value = '';
+      if (customRefHidden) customRefHidden.value = '';
+      if (customRefError) customRefError.hidden = true;
+      if (customRefVisible) customRefVisible.setAttribute('aria-invalid', 'false');
+    }
+
+    function updateCustomDesignRefPanel() {
+      var isCustom = state.design === 'Custom Design';
+      if (customRefPanel) {
+        customRefPanel.hidden = !isCustom;
+        if (isCustom) {
+          try {
+            customRefPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } catch (e) {}
+        }
+      }
+      if (!isCustom) clearCustomDesignReference();
+      else syncCustomDesignReference();
+    }
+
+    function clearDesignSelection() {
+      state.design = '';
+      if (designInput) designInput.value = '';
+      root.querySelectorAll('[data-design-select]').forEach(function (btn) {
+        btn.classList.remove('is-selected');
+      });
+      updateCustomDesignRefPanel();
+      updateBuildSummary();
+      syncContinueQuote();
+    }
+
+    function setDesign(title, selectedBtn) {
+      state.design = title || '';
+      if (designInput) designInput.value = state.design;
+      root.querySelectorAll('[data-design-select]').forEach(function (btn) {
+        btn.classList.toggle('is-selected', btn === selectedBtn);
+      });
+      updateCustomDesignRefPanel();
+      updateBuildSummary();
+      syncContinueQuote();
+      try {
+        sessionStorage.setItem('ff_build_design', state.design);
+      } catch (e) {}
     }
 
     function setStyle(style) {
-      state.style = style || '';
+      var nextStyle = style || '';
+      var styleChanged = nextStyle !== state.style;
+      state.style = nextStyle;
       if (hiddenStyle) hiddenStyle.value = state.style;
       root.querySelectorAll('[data-style-select]').forEach(function (btn) {
         btn.classList.toggle('is-selected', btn.getAttribute('data-style') === state.style);
       });
-      if (browseWrap) {
-        var show = !!state.style;
-        browseWrap.hidden = !show;
-        browseWrap.querySelectorAll('[data-browse-for]').forEach(function (link) {
-          link.hidden = link.getAttribute('data-browse-for') !== state.style;
-        });
+      if (designPicker) {
+        designPicker.hidden = !state.style;
+      }
+      root.querySelectorAll('[data-catalog]').forEach(function (catalog) {
+        catalog.hidden = catalog.getAttribute('data-catalog') !== state.style;
+      });
+      if (catalogViewport) catalogViewport.scrollTop = 0;
+      if (styleChanged) clearDesignSelection();
+      else {
+        updateBuildSummary();
+        syncContinueQuote();
       }
       try {
         sessionStorage.setItem('ff_build_vehicle', hiddenVehicle ? hiddenVehicle.value : '');
         sessionStorage.setItem('ff_build_style', state.style);
       } catch (e) {}
-    }
-
-    function setHelpMode(mode) {
-      var specialist = mode === 'specialist';
-      root.querySelectorAll('.ff-quote__specs').forEach(function (field) {
-        field.hidden = specialist;
-      });
-      root.querySelectorAll('[data-spec-field]').forEach(function (input) {
-        if (specialist) input.value = '';
-      });
-      if (assistNote) assistNote.hidden = !specialist;
-      if (helpPreference) {
-        helpPreference.value = specialist
-          ? 'Leave it to a fitment specialist — email or call back'
-          : 'I know my specs';
-      }
-      if (submitBtn) {
-        submitBtn.textContent = specialist
-          ? 'Request specialist callback'
-          : 'Submit build request';
-      }
-      root.querySelectorAll('.ff-quote__choice').forEach(function (label) {
-        var radio = label.querySelector('[data-help-mode]');
-        label.classList.toggle('is-selected', !!(radio && radio.checked));
-      });
     }
 
     function openModal() {
@@ -109,19 +241,36 @@
       });
     });
 
-    root.querySelectorAll('[data-help-mode]').forEach(function (radio) {
-      radio.addEventListener('change', function () {
-        if (radio.checked) setHelpMode(radio.value);
+    root.querySelectorAll('[data-design-select]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setDesign(btn.getAttribute('data-design-title') || '', btn);
       });
     });
+
+    if (customRefVisible) {
+      customRefVisible.addEventListener('input', function () {
+        syncCustomDesignReference();
+        syncContinueQuote();
+      });
+      customRefVisible.addEventListener('blur', function () {
+        syncCustomDesignReference();
+        syncContinueQuote();
+      });
+    }
 
     root.querySelectorAll('[data-next]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var next = Number(btn.getAttribute('data-next'));
         syncVehicle();
         if (next === 2 && continueBtn && continueBtn.disabled) return;
-        if (ymm && hiddenVehicle && hiddenVehicle.value) ymm.value = hiddenVehicle.value;
-        if (btn.hasAttribute('data-skip-quote')) setStyle(state.style || 'Custom quote');
+        if (
+          next === 3 &&
+          btn.hasAttribute('data-continue-quote') &&
+          !(state.style && state.design && isCustomRefAcceptable())
+        ) {
+          return;
+        }
+        syncQuoteCarryForward();
         setStep(next);
       });
     });
@@ -152,7 +301,16 @@
     });
 
     if (quoteForm) {
-      quoteForm.addEventListener('submit', function () {
+      quoteForm.addEventListener('submit', function (event) {
+        syncQuoteCarryForward();
+        if (state.design === 'Custom Design' && !isCustomRefAcceptable()) {
+          event.preventDefault();
+          return;
+        }
+        if (!ymm || !ymm.value) {
+          event.preventDefault();
+          return;
+        }
         try {
           sessionStorage.setItem('ff_quote_submitted', '1');
         } catch (e) {}
@@ -176,10 +334,8 @@
       }
     }
 
-    setHelpMode(
-      (root.querySelector('[data-help-mode]:checked') || {}).value || 'specs'
-    );
     syncVehicle();
+    updateBuildSummary();
   }
 
   document.querySelectorAll('[data-ff-build]').forEach(init);
