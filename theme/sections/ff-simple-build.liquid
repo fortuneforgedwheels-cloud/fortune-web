@@ -81,6 +81,7 @@
       <div class="ff-build__designs" data-design-picker hidden>
         <h3 class="ff-build__designs-title">Choose your design</h3>
 
+        <div class="ff-build__catalog-viewport">
         <div class="ff-build__catalog" data-catalog="Monoblock" hidden>
           {%- if mono_collection != blank -%}
             {%- for product in mono_collection.products -%}
@@ -191,6 +192,9 @@
             {%- endfor -%}
           {%- endif -%}
         </div>
+        </div>
+
+        <p class="ff-build__catalog-hint">Scroll to view more designs</p>
 
         <div class="ff-build__design-alt">
           <button type="button" class="ff-build__design-alt-btn" data-design-select data-design-title="Custom Design">

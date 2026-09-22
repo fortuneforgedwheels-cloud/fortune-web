@@ -13,6 +13,7 @@
     var continueBtn = root.querySelector('[data-panel="1"] [data-next="2"]');
     var continueQuoteBtn = root.querySelector('[data-continue-quote]');
     var designPicker = root.querySelector('[data-design-picker]');
+    var catalogViewport = root.querySelector('.ff-build__catalog-viewport');
     var assistNote = root.querySelector('[data-assist-note]');
     var submitBtn = root.querySelector('[data-submit-label]');
     var quoteForm = root.querySelector('form.ff-quote');
