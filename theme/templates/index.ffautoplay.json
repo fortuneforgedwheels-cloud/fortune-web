@@ -24,17 +24,20 @@
         "continue_label": "Continue",
         "step2_heading": "Choose your setup",
         "step2_copy": "Browse the hottest designs, pick Monoblock, 2-Piece, or Beadlock \u2014 or skip straight to a custom quote.",
-        "step2_hint": "Beadlock wheels are priced by the pair. Standard monoblock and two piece wheels are priced individually.",
+        "step2_hint": "Monoblock 17\u201320\" full sets start at $2,890 shipped. Two-Piece 17\u201320\" full sets start at $3,950 shipped. Beadlocks start at $1,999/pair.",
         "hottest_label": "Browse the hottest designs",
         "hottest_desc": "See recent Fortune Forged builds and popular styles",
         "hottest_link": "/#project-gallery",
         "quote_cta": "Skip to custom quote",
         "monoblock_link": "shopify://collections/monoblock-wheels",
-        "monoblock_desc": "One-piece forged strength \u00b7 priced individually",
+        "monoblock_desc": "Full sets from $2,890 shipped.",
+        "monoblock_price": "Full sets from $2,890 shipped.",
         "twopiece_link": "shopify://collections/two-piece-wheels",
-        "twopiece_desc": "Modular fitment & finish \u00b7 priced individually",
+        "twopiece_desc": "Full sets from $3,950 shipped.",
+        "twopiece_price": "Full sets from $3,950 shipped.",
         "beadlock_link": "shopify://collections/beadlock-wheels",
-        "beadlock_desc": "Off-road lock-ring builds \u00b7 priced by the pair",
+        "beadlock_desc": "Starting at $1,999 per pair.",
+        "beadlock_price": "Starting at $1,999 per pair.",
         "step3_heading": "Request your build",
         "step3_copy": "Enter the custom details you already know \u2014 or leave fitment blank and a specialist will email or call you back to help.",
         "modal_eyebrow": "Quote received",
@@ -546,7 +549,7 @@
         "padding_bottom": 64
       }
     },
-    "ff_hero_lifestyle_video": {
+    "ff_hero_editor_always_20260801c": {
       "type": "ff-hero-lifestyle",
       "blocks": {
         "slide_mono": {
@@ -554,30 +557,43 @@
           "settings": {
             "video": "shopify://files/videos/Video Apr 27 2026, 9 57 19 PM.mov",
             "image": "shopify://shop_images/IMG_2176.jpg",
-            "mobile_image": "",
+            "mobile_video": "shopify://files/videos/medeeee3_1_prob4.MP4",
+            "mobile_image": "shopify://shop_images/BMW_F80_25MP_HighQuality.jpg",
             "title": "Monoblock Forged",
+            "title_size": 42,
+            "title_align": "left",
             "button_label": "Browse Selection",
-            "button_link": "shopify://collections/monoblock-wheels",
-            "mobile_video": "shopify://files/videos/Video Oct 07 2025, 6 39 14 PM.MP4"
+            "button_size": 12,
+            "button_link": "shopify://collections/monoblock-wheels"
           }
         },
         "slide_two": {
           "type": "slide",
           "settings": {
+            "video": "shopify://files/videos/G80 done 2.MP4",
             "image": "shopify://shop_images/Screenshot_2026-07-27_at_6.58.56_PM.png",
+            "mobile_video": "shopify://files/videos/G80 done 2.MP4",
             "mobile_image": "shopify://shop_images/IMG_0287_2.jpg",
             "title": "Two-Piece Forged",
+            "title_size": 42,
+            "title_align": "left",
             "button_label": "Browse Selection",
+            "button_size": 12,
             "button_link": "shopify://collections/two-piece-wheels"
           }
         },
         "slide_bead": {
           "type": "slide",
           "settings": {
+            "video": "shopify://files/videos/fortune 1080 rev 1.MP4",
             "image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM_c0f745e4-4f88-4373-8d62-148cfcbbe059.png",
+            "mobile_video": "shopify://files/videos/copy_5ED02CAD-3D35-4DDC-ABCB-C0799394C55E.mov",
             "mobile_image": "shopify://shop_images/Screenshot_2026-07-27_at_7.01.52_PM.png",
             "title": "Beadlock Forged",
+            "title_size": 42,
+            "title_align": "left",
             "button_label": "Browse Selection",
+            "button_size": 12,
             "button_link": "shopify://collections/beadlock-wheels"
           }
         }
@@ -590,12 +606,16 @@
       "settings": {
         "show_hero": true,
         "height": 90,
-        "height_mobile": 75
+        "height_mobile": 75,
+        "content_h_align": "left",
+        "content_v_align": "bottom",
+        "content_offset_x": 0,
+        "content_offset_y": 0
       }
     }
   },
   "order": [
-    "ff_hero_lifestyle_video",
+    "ff_hero_editor_always_20260801c",
     "ff_top_selling_monoblocks_home",
     "ff_simple_build_main",
     "ff_fan_favorites_main",

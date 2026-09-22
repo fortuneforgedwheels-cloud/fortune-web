@@ -1,7 +1,14 @@
+{%- liquid
+  assign ff_link_label = link.title
+  assign ff_link_handle = link.title | downcase | handle
+  if ff_link_handle == 'shop-by-style'
+    assign ff_link_label = 'WHEELS'
+  endif
+-%}
 <li class="menu-lv-item menu-lv-1 text-left has-megamenu{% if link.links != blank %} dropdown{% endif %}{% if sale_item_lv1 contains title %} menu-sale{% endif %}" id="megamenu-{{ link.handle }}">
     {%- if link.links != blank -%}
-        <a class="menu-lv-1__action list-menu__item link focus-inset" href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-copy{% else %}{{ link.url }}{% endif %}" role="button">
-            <span class="text">{{ link.title | escape }}</span>
+        <a class="menu-lv-1__action list-menu__item link focus-inset" href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-copy{% else %}{{ link.url }}{% endif %}" role="button"{% if link.links != blank %} aria-haspopup="true"{% endif %}>
+            <span class="text">{{ ff_link_label | escape }}</span>
             {%- if sale_item_lv1 contains title -%}
                 {% render 'icon-flashy' %}
             {%- endif -%}
@@ -44,14 +51,14 @@
                                     </span>
                                     <a class="menu-lv-2__action link focus-inset" href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-copy{% else %}{{ link.url }}{% endif %}" role="button">
                                         <span class="text">
-                                            {{ link.title | escape }}
+                                            {{ ff_link_label | escape }}
                                         </span>
                                     </a>
                                 </div>
                                 <div class="menu-lv-item menu-lv-2 nav-all-mobile text-left">
                                     <a href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-copy{% else %}{{ link.url }}{% endif %}" class="menu-lv-2__action list-menu__item list-menu__item--end link focus-inset"{% if childlink.current %} aria-current="page"{% endif %} role="button">
                                         <span class="text">
-                                            {{ 'general.navigation.go_to' | t : name : link.title | escape }}
+                                            {{ 'general.navigation.go_to' | t : name : ff_link_label | escape }}
                                         </span>
                                     </a>
                                 </div>
@@ -459,7 +466,7 @@
         {%- endif -%}
     {%- else -%}
         <a href="{% if link.url contains '/pages/about' %}/pages/about?view=ff-about-copy{% else %}{{ link.url }}{% endif %}" class="menu-lv-1__action list-menu__item list-menu__item--end link focus-inset"{% if link.current %} aria-current="page"{% endif %}>
-            <span class="text">{{ link.title | escape }}</span>
+            <span class="text">{{ ff_link_label | escape }}</span>
             {%- if sale_item_lv1 contains title -%}
                 {% render 'icon-flashy' %}
             {%- endif -%}
