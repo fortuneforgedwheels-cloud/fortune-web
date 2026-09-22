@@ -54,6 +54,40 @@
       } catch (e) {}
     }
 
+    var ffDiagFired = {};
+    var ffDiagRetry = {};
+    var FF_DIAG_RETRY_MS = 250;
+    var FF_DIAG_RETRY_MAX = 40;
+
+    function fireDiagEvent(key, name, payload) {
+      if (ffDiagFired[key]) return;
+      try {
+        if (sessionStorage.getItem(key) === '1') {
+          ffDiagFired[key] = true;
+          return;
+        }
+      } catch (e) {}
+      if (typeof window.fbq !== 'function') {
+        var tries = ffDiagRetry[key] || 0;
+        if (tries < FF_DIAG_RETRY_MAX) {
+          ffDiagRetry[key] = tries + 1;
+          window.setTimeout(function () {
+            fireDiagEvent(key, name, payload);
+          }, FF_DIAG_RETRY_MS);
+        }
+        return;
+      }
+      try {
+        window.fbq('track', name, payload);
+      } catch (e) {
+        return;
+      }
+      ffDiagFired[key] = true;
+      try {
+        sessionStorage.setItem(key, '1');
+      } catch (e) {}
+    }
+
     function unlockGate() {
       if (!gate) return;
       var wasLocked = gate.classList.contains('is-locked');
@@ -272,6 +306,26 @@
         }
         syncQuoteCarryForward();
         setStep(next);
+        if (next === 2) {
+          fireDiagEvent('ff_quote_step1_done_v1', 'QuoteStep1Completed', {
+            form_name: 'Fortune Forged Build Quote',
+            content_name: 'Custom Forged Wheel Quote',
+            funnel_step: 'step_1_complete'
+          });
+        } else if (next === 3 && btn.hasAttribute('data-continue-quote')) {
+          fireDiagEvent('ff_quote_step2_done_v1', 'QuoteStep2Completed', {
+            form_name: 'Fortune Forged Build Quote',
+            content_name: 'Custom Forged Wheel Quote',
+            funnel_step: 'step_2_complete',
+            wheel_type: state.style,
+            design: state.design
+          });
+          fireDiagEvent('ff_quote_step3_viewed_v1', 'QuoteStep3Viewed', {
+            form_name: 'Fortune Forged Build Quote',
+            content_name: 'Custom Forged Wheel Quote',
+            funnel_step: 'step_3_viewed'
+          });
+        }
       });
     });
 
@@ -327,6 +381,11 @@
     if (success || justSubmitted) {
       setStep(3);
       openModal();
+      fireDiagEvent('ff_quote_step3_viewed_v1', 'QuoteStep3Viewed', {
+        form_name: 'Fortune Forged Build Quote',
+        content_name: 'Custom Forged Wheel Quote',
+        funnel_step: 'step_3_viewed'
+      });
       if (root.id) {
         try {
           root.scrollIntoView({ behavior: 'smooth', block: 'start' });
