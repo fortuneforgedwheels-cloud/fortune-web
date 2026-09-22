@@ -2,7 +2,8 @@
  * Fortune Forged Build Quote → QuoteSubmitted (Meta custom event)
  *
  * Stages a per-submission eventId only when a valid quote POST is proceeding.
- * Fires trackCustom QuoteSubmitted ONLY after Shopify renders [data-ff-quote-success].
+ * Fires fbq('track', 'QuoteSubmitted', ...) ONLY after Shopify renders [data-ff-quote-success]
+ * and only marks fired once browser Meta fbq succeeds (Shopify.analytics.publish is best-effort).
  *
  * Does NOT touch QuoteStarted / gate unlock.
  * Does NOT init Meta Pixel (uses existing window.fbq).
@@ -166,20 +167,9 @@
 
   function fireFbq(eventId, payload) {
     if (typeof window.fbq !== 'function') return false;
-    window.fbq('trackCustom', 'QuoteSubmitted', payload, { eventID: eventId });
+    // Mirror QuoteStarted: track() + custom event name (not trackCustom).
+    window.fbq('track', 'QuoteSubmitted', payload, { eventID: eventId });
     return true;
-  }
-
-  function fireQuoteSubmitted(eventId) {
-    var payload = buildPayload();
-    var published = publishShopify(eventId, payload);
-    var tracked = false;
-    try {
-      tracked = fireFbq(eventId, payload);
-    } catch (e) {
-      tracked = false;
-    }
-    return published || tracked;
   }
 
   function tryFireFromServerSuccess() {
@@ -194,27 +184,47 @@
       return;
     }
 
-    if (wasFired(pending.eventId)) {
+    var eventId = pending.eventId;
+    if (wasFired(eventId)) {
       safeRemove(PENDING_KEY);
       return;
     }
 
     var attempts = 0;
+    var publishedOnce = false;
     function attempt() {
       attempts += 1;
       try {
-        if (wasFired(pending.eventId)) {
+        if (wasFired(eventId)) {
           safeRemove(PENDING_KEY);
           return;
         }
         // Success node remains mandatory; only fbq may be late.
         if (!getServerConfirmedQuoteForm()) return;
-        if (fireQuoteSubmitted(pending.eventId)) {
-          markFired(pending.eventId);
+
+        var payload = buildPayload();
+        if (!publishedOnce) {
+          try {
+            publishedOnce = !!publishShopify(eventId, payload);
+          } catch (e) {
+            publishedOnce = false;
+          }
+        }
+
+        var tracked = false;
+        try {
+          tracked = fireFbq(eventId, payload);
+        } catch (e) {
+          tracked = false;
+        }
+
+        // Only consume pending after browser Meta fbq succeeds.
+        if (tracked) {
+          markFired(eventId);
           return;
         }
       } catch (e) {
-        return;
+        // Keep pending; retry while fbq may still be loading.
       }
       if (attempts < FBQ_RETRY_MAX) {
         window.setTimeout(attempt, FBQ_RETRY_MS);
