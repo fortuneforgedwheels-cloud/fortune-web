@@ -1,0 +1,142 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumb": false,
+        "breadcrumb_alignment": "left",
+        "show_page_title": false,
+        "page_title_alignment": "center",
+        "container": "1370",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_tablet": 0,
+        "padding_bottom_tablet": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "ff_exclusive_deals": {
+      "type": "ff-exclusive-deals",
+      "blocks": {
+        "deal_1": {
+          "type": "deal",
+          "settings": {
+            "product": "f-05sr",
+            "badge": "",
+            "title": "",
+            "blurb": ""
+          }
+        },
+        "deal_2": {
+          "type": "deal",
+          "settings": {
+            "product": "f-05x",
+            "badge": "",
+            "title": "",
+            "blurb": ""
+          }
+        },
+        "deal_3": {
+          "type": "deal",
+          "settings": {
+            "product": "ff-s10r",
+            "badge": "",
+            "title": "",
+            "blurb": ""
+          }
+        },
+        "deal_4": {
+          "type": "deal",
+          "settings": {
+            "product": "876m-cs-style",
+            "badge": "",
+            "title": "",
+            "blurb": ""
+          }
+        },
+        "deal_5": {
+          "type": "deal",
+          "settings": {
+            "product": "forged-g8x-oem-style",
+            "badge": "",
+            "title": "",
+            "blurb": ""
+          }
+        },
+        "deal_6": {
+          "type": "deal",
+          "settings": {
+            "product": "ff-s10",
+            "badge": "",
+            "title": "",
+            "blurb": ""
+          }
+        },
+        "deal_7": {
+          "type": "deal",
+          "settings": {
+            "product": "ff-rs",
+            "badge": "",
+            "title": "",
+            "blurb": ""
+          }
+        }
+      },
+      "block_order": [
+        "deal_1",
+        "deal_2",
+        "deal_3",
+        "deal_4",
+        "deal_5",
+        "deal_6",
+        "deal_7"
+      ],
+      "settings": {
+        "hero_video": "shopify://files/videos/SnapInsta.to_AQNvCRzwLiDg38uN_FghCCYcMLzCkHjBoAtrKlZyHA8lXj6YBmV0XVU9BakZAfHEYpMDv_03DwrCeeyDzywpFpmNvkMnsxposkWd17c.mp4",
+        "eyebrow": "",
+        "heading": "YOUR NEXT SET. 40% OFF.",
+        "description": "<p>SELECT MONOBLOCK STYLES ONLY</p>",
+        "compare_at_price": 3379,
+        "deal_price": 2050,
+        "today_price_label": "Today’s price",
+        "full_set_label": "Full set",
+        "checkout_product": "exclusive-deals-full-set",
+        "deals_eyebrow": "",
+        "deals_heading": "",
+        "deals_copy": "Each design is the same exclusive full-set price. One add to cart = the complete set.",
+        "card_cta": "Select design",
+        "missing_product_message": "Deal unavailable.",
+        "modal_eyebrow": "price includes all four wheels shipped",
+        "modal_lead": "One add-to-cart = the full set. Same exclusive price on every design. Choose finish + fitment path, then checkout.",
+        "path_specialist_title": "Let a specialist handle it",
+        "path_specialist_copy": "Pick a finish and your vehicle — we’ll follow up after checkout to sort proper fitment.",
+        "path_specs_title": "I know my specs",
+        "path_specs_copy": "Pick a finish, enter your sizes, and your year / make / model.",
+        "finish_label": "Wheel finish",
+        "specs_label": "Wheel specs",
+        "specs_example": "Front: 20x10 ET10 / Rear 20x11 ET12",
+        "ymm_label": "Year / Make / Model",
+        "ymm_placeholder": "e.g. 2024 BMW G80 M3",
+        "notes_placeholder": "Anything else about your build (optional).",
+        "specialist_note": "Adds 1 full set to cart at today’s exclusive price. A specialist will follow up after checkout to confirm fitment.",
+        "submit_specialist_label": "Add full set to cart",
+        "submit_specs_label": "Add full set to cart"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ff_exclusive_deals"
+  ]
+}

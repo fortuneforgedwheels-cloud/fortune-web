@@ -1,0 +1,38 @@
+{% comment %} Concise PDP confidence signals for full-set forged wheels. {% endcomment %}
+{%- liquid
+  assign ff_is_fullset_priced = false
+  if product != blank
+    unless product.tags contains 'FEATURED-SPEC'
+      assign ff_tags_up = product.tags | join: ',' | upcase
+      assign ff_type_up = product.type | upcase
+      assign ff_handle_up = product.handle | upcase
+      unless ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK'
+        if ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+          assign ff_is_fullset_priced = true
+        elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE'
+          assign ff_is_fullset_priced = true
+        endif
+      endunless
+    endunless
+  endif
+-%}
+{%- if ff_is_fullset_priced -%}
+  <ul class="ff-pdp-confidence" data-ff-pdp-confidence>
+    <li>Custom vehicle-specific fitment verified before production</li>
+    <li>Custom widths &amp; offsets built for your car</li>
+    <li>Factory brake clearance checked for your setup</li>
+    <li>Direct bolt-on configuration</li>
+    <li>Built to order — FULL SET pricing includes shipping</li>
+  </ul>
+  <p class="ff-oem-cap-note">
+    OEM center caps shown for fitment/compatibility demonstration only and are not included unless explicitly stated.
+    Designed for compatibility with the customer’s OEM center caps where specified. Fortune Forged is not affiliated with vehicle manufacturers.
+  </p>
+{%- endif -%}
+{%- if product.handle == 'forged-g8x-oem-style' or product.handle == '876m-cs-style' or product.handle == 'g8x-m2-m3-m4-traction-package' -%}
+  <p class="ff-g8x-guide-link">
+    Need help choosing your setup?
+    <a href="/pages/shop-by-vehicle-bmw">View our BMW G8X Forged Wheels &amp; Fitment Guide</a>
+    for G80 M3, G82/G83 M4, and G87 M2 applications.
+  </p>
+{%- endif -%}

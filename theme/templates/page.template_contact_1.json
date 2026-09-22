@@ -1,9 +1,19 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-contact-1-page",
       "settings": {
-        "eyebrow": "Contact",
+        "eyebrow": "Fortune Forged",
+        "page_heading": "",
         "page_intro": "Premium forged wheels, built to order. Reach out for fitment help, custom quotes, or order support.",
         "contact_form_title": "Send us a message",
         "contact_form_text": "Questions about fitment, finishes, lead times, or an existing order? Fill out the form and our team will get back to you.",

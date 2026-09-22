@@ -3,14 +3,16 @@
     if (!root || root.dataset.ffReady === '1') return;
     root.dataset.ffReady = '1';
 
-    var state = { style: '' };
+    var state = { style: '', design: '' };
     var manual = root.querySelector('[name="ff_vehicle_manual"]');
     var ymm = root.querySelector('[name="contact[vehicle]"]');
     var hiddenVehicle = root.querySelector('[id^="ff-selected-vehicle-"]');
     var hiddenStyle = root.querySelector('[id^="ff-selected-style-"]');
+    var designInput = root.querySelector('[name="contact[design]"]');
     var helpPreference = root.querySelector('[id^="ff-help-preference-"]');
     var continueBtn = root.querySelector('[data-panel="1"] [data-next="2"]');
-    var browseWrap = root.querySelector('[data-browse-links]');
+    var continueQuoteBtn = root.querySelector('[data-continue-quote]');
+    var designPicker = root.querySelector('[data-design-picker]');
     var assistNote = root.querySelector('[data-assist-note]');
     var submitBtn = root.querySelector('[data-submit-label]');
     var quoteForm = root.querySelector('form.ff-quote');
@@ -19,6 +21,47 @@
     var modalThanks = root.querySelector('[data-ff-modal-thanks]');
     var modalActions = root.querySelector('.ff-media-modal__actions');
     var previousFocus = null;
+    var gate = root.querySelector('[data-ff-build-gate]');
+    var unlockBtn = root.querySelector('[data-ff-build-unlock]');
+
+    function fireQuoteStarted() {
+      var payload = {
+        form_name: 'Fortune Forged Build Quote',
+        content_name: 'Custom Forged Wheel Quote',
+        value: 1,
+        currency: 'USD'
+      };
+      try {
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', 'QuoteStarted', payload);
+        }
+      } catch (e) {}
+      try {
+        if (
+          window.Shopify &&
+          window.Shopify.analytics &&
+          typeof window.Shopify.analytics.publish === 'function'
+        ) {
+          window.Shopify.analytics.publish('QuoteStarted', {
+            form_name: payload.form_name
+          });
+        }
+      } catch (e) {}
+    }
+
+    function unlockGate() {
+      if (!gate) return;
+      var wasLocked = gate.classList.contains('is-locked');
+      gate.classList.remove('is-locked');
+      if (wasLocked) fireQuoteStarted();
+      if (manual) {
+        try { manual.focus(); } catch (e) {}
+      }
+    }
+
+    if (unlockBtn) {
+      unlockBtn.addEventListener('click', unlockGate);
+    }
 
     function setStep(n) {
       root.querySelectorAll('[data-step]').forEach(function (el) {
@@ -40,19 +83,49 @@
       if (ymm && value) ymm.value = value;
     }
 
+    function syncContinueQuote() {
+      if (continueQuoteBtn) {
+        continueQuoteBtn.disabled = !(state.style && state.design);
+      }
+    }
+
+    function clearDesignSelection() {
+      state.design = '';
+      if (designInput) designInput.value = '';
+      root.querySelectorAll('[data-design-select]').forEach(function (btn) {
+        btn.classList.remove('is-selected');
+      });
+      syncContinueQuote();
+    }
+
+    function setDesign(title, selectedBtn) {
+      state.design = title || '';
+      if (designInput) designInput.value = state.design;
+      root.querySelectorAll('[data-design-select]').forEach(function (btn) {
+        btn.classList.toggle('is-selected', btn === selectedBtn);
+      });
+      syncContinueQuote();
+      try {
+        sessionStorage.setItem('ff_build_design', state.design);
+      } catch (e) {}
+    }
+
     function setStyle(style) {
-      state.style = style || '';
+      var nextStyle = style || '';
+      var styleChanged = nextStyle !== state.style;
+      state.style = nextStyle;
       if (hiddenStyle) hiddenStyle.value = state.style;
       root.querySelectorAll('[data-style-select]').forEach(function (btn) {
         btn.classList.toggle('is-selected', btn.getAttribute('data-style') === state.style);
       });
-      if (browseWrap) {
-        var show = !!state.style;
-        browseWrap.hidden = !show;
-        browseWrap.querySelectorAll('[data-browse-for]').forEach(function (link) {
-          link.hidden = link.getAttribute('data-browse-for') !== state.style;
-        });
+      if (designPicker) {
+        designPicker.hidden = !state.style;
       }
+      root.querySelectorAll('[data-catalog]').forEach(function (catalog) {
+        catalog.hidden = catalog.getAttribute('data-catalog') !== state.style;
+      });
+      if (styleChanged) clearDesignSelection();
+      else syncContinueQuote();
       try {
         sessionStorage.setItem('ff_build_vehicle', hiddenVehicle ? hiddenVehicle.value : '');
         sessionStorage.setItem('ff_build_style', state.style);
@@ -109,6 +182,12 @@
       });
     });
 
+    root.querySelectorAll('[data-design-select]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setDesign(btn.getAttribute('data-design-title') || '', btn);
+      });
+    });
+
     root.querySelectorAll('[data-help-mode]').forEach(function (radio) {
       radio.addEventListener('change', function () {
         if (radio.checked) setHelpMode(radio.value);
@@ -120,8 +199,15 @@
         var next = Number(btn.getAttribute('data-next'));
         syncVehicle();
         if (next === 2 && continueBtn && continueBtn.disabled) return;
+        if (
+          next === 3 &&
+          btn.hasAttribute('data-continue-quote') &&
+          !(state.style && state.design)
+        ) {
+          return;
+        }
         if (ymm && hiddenVehicle && hiddenVehicle.value) ymm.value = hiddenVehicle.value;
-        if (btn.hasAttribute('data-skip-quote')) setStyle(state.style || 'Custom quote');
+        if (designInput && state.design) designInput.value = state.design;
         setStep(next);
       });
     });

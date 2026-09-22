@@ -1,0 +1,74 @@
+{%- comment -%}
+  Autoplay-friendly MP4 video. No controls, no nested poster <img>.
+  Params: video, src, poster, class, autoplay_mode ('on' default, 'off' to disable).
+  NOTE: Shopify drops boolean `false` on render — never pass autoplay: false.
+{%- endcomment -%}
+{%- liquid
+  assign video = video | default: blank
+  assign class_name = class | default: ''
+  assign poster_url = poster | default: blank
+  assign mp4_url = src | default: blank
+  assign from_editor = false
+  if video != blank
+    assign from_editor = true
+  endif
+  assign mode = autoplay_mode | default: 'on'
+  assign do_autoplay = true
+  if mode == 'off' or mode == 'false' or mode == '0'
+    assign do_autoplay = false
+  endif
+
+  if mp4_url == blank and video != blank
+    if poster_url == blank and video.preview_image != blank
+      assign poster_url = video.preview_image | image_url: width: 2400
+    endif
+    assign mp4_sources = video.sources | where: 'format', 'mp4'
+    if mp4_sources.size > 0
+      assign mp4_url = mp4_sources.last.url
+    else
+      for source in video.sources
+        assign source_url_l = source.url | downcase
+        assign source_fmt_l = source.format | downcase
+        if source_fmt_l == 'mp4' or source_url_l contains '.mp4'
+          assign mp4_url = source.url
+        endif
+      endfor
+    endif
+    if mp4_url == blank and video.sources.size > 0
+      assign mp4_url = video.sources.last.url
+    endif
+  endif
+-%}
+{%- if mp4_url != blank -%}
+<video
+  class="{{ class_name }}"
+  data-ff-autoplay-v="mp4-only-1"
+  {% if from_editor %}data-ff-from-editor="1"{% endif %}
+  {% if poster_url != blank %}poster="{{ poster_url | escape }}"{% endif %}
+  src="{{ mp4_url }}"
+  {% if do_autoplay %}autoplay{% endif %}
+  muted
+  defaultmuted
+  loop
+  playsinline
+  webkit-playsinline
+  x5-playsinline="true"
+  x5-video-player-type="h5"
+  x5-video-player-fullscreen="false"
+  preload="{% if do_autoplay %}auto{% else %}none{% endif %}"
+  disablepictureinpicture
+  disableRemotePlayback
+  x-webkit-airplay="deny"
+></video>
+{%- elsif video != blank -%}
+  {{
+    video
+    | video_tag:
+      class: class_name,
+      autoplay: do_autoplay,
+      loop: true,
+      muted: true,
+      controls: false,
+      image_size: '2400x'
+  }}
+{%- endif -%}
