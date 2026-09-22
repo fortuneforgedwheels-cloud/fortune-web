@@ -432,6 +432,65 @@
   margin: 4px 0 0;
 }
 
+.ff-quote__timeline {
+  border: 0;
+  margin: 0 0 14px;
+  padding: 0;
+}
+
+.ff-quote__timeline legend {
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.ff-quote__timeline-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.ff-quote__timeline-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  margin: 0;
+  padding: 10px 8px;
+  border: 1px solid var(--ff-line);
+  background: #0a0a0a;
+  color: var(--ff-ink);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.ff-quote__timeline-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ff-quote__timeline-option span {
+  font-size: 0.92rem;
+  line-height: 1.25;
+}
+
+.ff-quote__timeline-option:hover {
+  border-color: rgba(220, 225, 230, 0.55);
+}
+
+.ff-quote__timeline-option:has(input:checked) {
+  border-color: var(--ff-gold);
+  background: rgba(220, 225, 230, 0.14);
+  color: var(--ff-gold);
+  box-shadow: inset 0 0 0 1px rgba(220, 225, 230, 0.45);
+}
+
+.ff-quote__timeline-option:focus-within {
+  outline: 1px solid var(--ff-gold);
+  outline-offset: 1px;
+}
+
 .ff-quote__field--stack {
   margin: 0 0 14px;
 }
@@ -538,6 +597,10 @@
   .ff-build__steps,
   .ff-build__styles,
   .ff-quote__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ff-quote__timeline-options {
     grid-template-columns: 1fr;
   }
 

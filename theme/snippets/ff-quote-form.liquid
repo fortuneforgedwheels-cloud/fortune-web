@@ -58,6 +58,24 @@
     </div>
   </div>
 
+  <fieldset class="ff-quote__timeline">
+    <legend class="ff-build__label">When are you looking to order? (optional)</legend>
+    <div class="ff-quote__timeline-options">
+      <label class="ff-quote__timeline-option">
+        <input type="radio" name="contact[purchase_timeline]" value="Ready now">
+        <span>Ready now</span>
+      </label>
+      <label class="ff-quote__timeline-option">
+        <input type="radio" name="contact[purchase_timeline]" value="Within 1–2 weeks">
+        <span>Within 1–2 weeks</span>
+      </label>
+      <label class="ff-quote__timeline-option">
+        <input type="radio" name="contact[purchase_timeline]" value="A few months out">
+        <span>A few months out</span>
+      </label>
+    </div>
+  </fieldset>
+
   <div class="ff-quote__field ff-quote__field--stack">
     <label class="ff-build__label" for="ff-finish-{{ section.id }}">Finish (optional)</label>
     <input class="ff-build__input" id="ff-finish-{{ section.id }}" type="text" name="contact[finish]"
