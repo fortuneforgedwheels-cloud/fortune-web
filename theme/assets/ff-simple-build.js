@@ -3,14 +3,16 @@
     if (!root || root.dataset.ffReady === '1') return;
     root.dataset.ffReady = '1';
 
-    var state = { style: '' };
+    var state = { style: '', design: '' };
     var manual = root.querySelector('[name="ff_vehicle_manual"]');
     var ymm = root.querySelector('[name="contact[vehicle]"]');
     var hiddenVehicle = root.querySelector('[id^="ff-selected-vehicle-"]');
     var hiddenStyle = root.querySelector('[id^="ff-selected-style-"]');
+    var designInput = root.querySelector('[name="contact[design]"]');
     var helpPreference = root.querySelector('[id^="ff-help-preference-"]');
     var continueBtn = root.querySelector('[data-panel="1"] [data-next="2"]');
     var continueQuoteBtn = root.querySelector('[data-continue-quote]');
+    var designPicker = root.querySelector('[data-design-picker]');
     var assistNote = root.querySelector('[data-assist-note]');
     var submitBtn = root.querySelector('[data-submit-label]');
     var quoteForm = root.querySelector('form.ff-quote');
@@ -81,13 +83,49 @@
       if (ymm && value) ymm.value = value;
     }
 
+    function syncContinueQuote() {
+      if (continueQuoteBtn) {
+        continueQuoteBtn.disabled = !(state.style && state.design);
+      }
+    }
+
+    function clearDesignSelection() {
+      state.design = '';
+      if (designInput) designInput.value = '';
+      root.querySelectorAll('[data-design-select]').forEach(function (btn) {
+        btn.classList.remove('is-selected');
+      });
+      syncContinueQuote();
+    }
+
+    function setDesign(title, selectedBtn) {
+      state.design = title || '';
+      if (designInput) designInput.value = state.design;
+      root.querySelectorAll('[data-design-select]').forEach(function (btn) {
+        btn.classList.toggle('is-selected', btn === selectedBtn);
+      });
+      syncContinueQuote();
+      try {
+        sessionStorage.setItem('ff_build_design', state.design);
+      } catch (e) {}
+    }
+
     function setStyle(style) {
-      state.style = style || '';
+      var nextStyle = style || '';
+      var styleChanged = nextStyle !== state.style;
+      state.style = nextStyle;
       if (hiddenStyle) hiddenStyle.value = state.style;
       root.querySelectorAll('[data-style-select]').forEach(function (btn) {
         btn.classList.toggle('is-selected', btn.getAttribute('data-style') === state.style);
       });
-      if (continueQuoteBtn) continueQuoteBtn.disabled = !state.style;
+      if (designPicker) {
+        designPicker.hidden = !state.style;
+      }
+      root.querySelectorAll('[data-catalog]').forEach(function (catalog) {
+        catalog.hidden = catalog.getAttribute('data-catalog') !== state.style;
+      });
+      if (styleChanged) clearDesignSelection();
+      else syncContinueQuote();
       try {
         sessionStorage.setItem('ff_build_vehicle', hiddenVehicle ? hiddenVehicle.value : '');
         sessionStorage.setItem('ff_build_style', state.style);
@@ -144,6 +182,12 @@
       });
     });
 
+    root.querySelectorAll('[data-design-select]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setDesign(btn.getAttribute('data-design-title') || '', btn);
+      });
+    });
+
     root.querySelectorAll('[data-help-mode]').forEach(function (radio) {
       radio.addEventListener('change', function () {
         if (radio.checked) setHelpMode(radio.value);
@@ -155,8 +199,15 @@
         var next = Number(btn.getAttribute('data-next'));
         syncVehicle();
         if (next === 2 && continueBtn && continueBtn.disabled) return;
-        if (next === 3 && btn.hasAttribute('data-continue-quote') && !state.style) return;
+        if (
+          next === 3 &&
+          btn.hasAttribute('data-continue-quote') &&
+          !(state.style && state.design)
+        ) {
+          return;
+        }
         if (ymm && hiddenVehicle && hiddenVehicle.value) ymm.value = hiddenVehicle.value;
+        if (designInput && state.design) designInput.value = state.design;
         setStep(next);
       });
     });

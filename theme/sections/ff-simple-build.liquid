@@ -53,13 +53,8 @@
     </div>
 
     <div class="ff-build__panel" data-panel="2" hidden>
-      <div class="ff-build__panel-head">
-        <div class="ff-build__panel-head-text">
-          <h2 class="ff-build__panel-title">{{ section.settings.step2_heading | escape }}</h2>
-          <p class="ff-build__panel-copy">{{ section.settings.step2_copy | escape }}</p>
-        </div>
-        <a class="ff-build__view-all" href="/collections/all">VIEW ALL WHEELS ↗</a>
-      </div>
+      <h2 class="ff-build__panel-title">{{ section.settings.step2_heading | escape }}</h2>
+      <p class="ff-build__panel-copy">{{ section.settings.step2_copy | escape }}</p>
 
       <div class="ff-build__styles">
         <button type="button" class="ff-build__style" data-style="Monoblock" data-style-select>
@@ -74,6 +69,137 @@
           <span class="ff-build__style-name">Beadlock</span>
           <span class="ff-build__style-desc">{{ section.settings.beadlock_desc | escape }}</span>
         </button>
+      </div>
+
+      {%- liquid
+        assign ff_design_excludes = 'f-05sr-g87-m2-flush-fit,f-05sr-f8x-flush-fit,f-11r-600lt-forged-monoblock-set,f-12r-c8-z06-forged-monoblock-set,827m-oem-g8x-spec,g20-full-beadlock-set,rpf-1-inspired-dragpack,826m-style-beadlocks-complete-set-of-4' | split: ','
+        assign mono_collection = collections['monoblock-wheels']
+        assign twopiece_collection = collections['two-piece-wheels']
+        assign beadlock_collection = collections['beadlock-wheels']
+      -%}
+
+      <div class="ff-build__designs" data-design-picker hidden>
+        <h3 class="ff-build__designs-title">Choose your design</h3>
+
+        <div class="ff-build__catalog" data-catalog="Monoblock" hidden>
+          {%- if mono_collection != blank -%}
+            {%- for product in mono_collection.products -%}
+              {%- unless ff_design_excludes contains product.handle -%}
+                {%- liquid
+                  assign card_image = product.featured_media
+                  if card_image == blank
+                    assign card_image = product.featured_image
+                  endif
+                -%}
+                <button
+                  type="button"
+                  class="ff-build__design"
+                  data-design-select
+                  data-design-title="{{ product.title | escape }}"
+                  data-design-handle="{{ product.handle | escape }}"
+                >
+                  <span class="ff-build__design-media">
+                    {%- if card_image != blank -%}
+                      {{
+                        card_image
+                        | image_url: width: 640
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '160, 240, 320, 480, 640',
+                          sizes: '(max-width: 749px) 45vw, 160px',
+                          alt: product.title
+                      }}
+                    {%- endif -%}
+                  </span>
+                  <span class="ff-build__design-name">{{ product.title | escape }}</span>
+                </button>
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+        <div class="ff-build__catalog" data-catalog="2-Piece" hidden>
+          {%- if twopiece_collection != blank -%}
+            {%- for product in twopiece_collection.products -%}
+              {%- unless ff_design_excludes contains product.handle -%}
+                {%- liquid
+                  assign card_image = product.featured_media
+                  if card_image == blank
+                    assign card_image = product.featured_image
+                  endif
+                -%}
+                <button
+                  type="button"
+                  class="ff-build__design"
+                  data-design-select
+                  data-design-title="{{ product.title | escape }}"
+                  data-design-handle="{{ product.handle | escape }}"
+                >
+                  <span class="ff-build__design-media">
+                    {%- if card_image != blank -%}
+                      {{
+                        card_image
+                        | image_url: width: 640
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '160, 240, 320, 480, 640',
+                          sizes: '(max-width: 749px) 45vw, 160px',
+                          alt: product.title
+                      }}
+                    {%- endif -%}
+                  </span>
+                  <span class="ff-build__design-name">{{ product.title | escape }}</span>
+                </button>
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+        <div class="ff-build__catalog" data-catalog="Beadlock" hidden>
+          {%- if beadlock_collection != blank -%}
+            {%- for product in beadlock_collection.products -%}
+              {%- unless ff_design_excludes contains product.handle -%}
+                {%- liquid
+                  assign card_image = product.featured_media
+                  if card_image == blank
+                    assign card_image = product.featured_image
+                  endif
+                -%}
+                <button
+                  type="button"
+                  class="ff-build__design"
+                  data-design-select
+                  data-design-title="{{ product.title | escape }}"
+                  data-design-handle="{{ product.handle | escape }}"
+                >
+                  <span class="ff-build__design-media">
+                    {%- if card_image != blank -%}
+                      {{
+                        card_image
+                        | image_url: width: 640
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '160, 240, 320, 480, 640',
+                          sizes: '(max-width: 749px) 45vw, 160px',
+                          alt: product.title
+                      }}
+                    {%- endif -%}
+                  </span>
+                  <span class="ff-build__design-name">{{ product.title | escape }}</span>
+                </button>
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+        <div class="ff-build__design-alt">
+          <button type="button" class="ff-build__design-alt-btn" data-design-select data-design-title="Custom Design">
+            REQUEST A CUSTOM DESIGN
+          </button>
+          <button type="button" class="ff-build__design-alt-btn" data-design-select data-design-title="Help Me Choose">
+            HELP ME CHOOSE
+          </button>
+        </div>
       </div>
 
       <div class="ff-build__nav-row ff-build__nav-row--split">
