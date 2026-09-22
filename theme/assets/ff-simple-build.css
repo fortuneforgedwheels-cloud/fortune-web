@@ -307,7 +307,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-  margin: 0 0 14px;
+  margin-top: 14px;
 }
 
 .ff-build__design-alt-btn {
@@ -334,7 +334,7 @@
 }
 
 .ff-build__custom-ref {
-  margin: 0 0 16px;
+  margin-top: 14px;
   padding: 14px;
   border: 1px solid var(--ff-line);
   background: rgba(0, 0, 0, 0.22);
@@ -342,10 +342,6 @@
 
 .ff-build__custom-ref[hidden] {
   display: none !important;
-}
-
-.ff-build__custom-ref:not([hidden]) {
-  display: block !important;
 }
 
 .ff-build__custom-ref-title {

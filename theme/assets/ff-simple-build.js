@@ -132,14 +132,7 @@
 
     function updateCustomDesignRefPanel() {
       var isCustom = state.design === 'Custom Design';
-      if (customRefPanel) {
-        customRefPanel.hidden = !isCustom;
-        if (isCustom) {
-          try {
-            customRefPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          } catch (e) {}
-        }
-      }
+      if (customRefPanel) customRefPanel.hidden = !isCustom;
       if (!isCustom) clearCustomDesignReference();
       else syncCustomDesignReference();
     }
