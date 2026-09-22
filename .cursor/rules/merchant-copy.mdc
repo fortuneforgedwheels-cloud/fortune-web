@@ -17,7 +17,7 @@ Torrin edits text in the Shopify theme editor. Those values live in:
    ```bash
    npm run theme:sync-copy
    ```
-   That pulls the current Fortune-Cursor-Rebuild theme copy from Shopify into `theme/`.
+   That pulls the current live theme copy from Shopify into `theme/`.
 
 2. **Never invent or “improve” merchant text** (headlines, ledes, mission lines, point titles, CTAs, close text, etc.) unless Torrin explicitly asks to change that specific copy.
 
@@ -26,6 +26,7 @@ Torrin edits text in the Shopify theme editor. Those values live in:
    npm run theme:push:code
    ```
    Do **not** include `config/settings_data.json` or template JSON in a push unless you just synced from Shopify and are intentionally publishing structural template changes **while keeping pulled settings values**.
+   All npm push scripts force `--nodelete` and run `scripts/assert-protected-theme-files.sh` so a deploy cannot wipe other live files.
 
 4. **When you must edit a template JSON** (add a section, reorder, new block type):
    - Sync first

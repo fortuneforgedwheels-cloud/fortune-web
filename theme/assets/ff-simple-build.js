@@ -10,7 +10,7 @@
     var hiddenStyle = root.querySelector('[id^="ff-selected-style-"]');
     var helpPreference = root.querySelector('[id^="ff-help-preference-"]');
     var continueBtn = root.querySelector('[data-panel="1"] [data-next="2"]');
-    var browseWrap = root.querySelector('[data-browse-links]');
+    var continueQuoteBtn = root.querySelector('[data-continue-quote]');
     var assistNote = root.querySelector('[data-assist-note]');
     var submitBtn = root.querySelector('[data-submit-label]');
     var quoteForm = root.querySelector('form.ff-quote');
@@ -19,6 +19,47 @@
     var modalThanks = root.querySelector('[data-ff-modal-thanks]');
     var modalActions = root.querySelector('.ff-media-modal__actions');
     var previousFocus = null;
+    var gate = root.querySelector('[data-ff-build-gate]');
+    var unlockBtn = root.querySelector('[data-ff-build-unlock]');
+
+    function fireQuoteStarted() {
+      var payload = {
+        form_name: 'Fortune Forged Build Quote',
+        content_name: 'Custom Forged Wheel Quote',
+        value: 1,
+        currency: 'USD'
+      };
+      try {
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', 'QuoteStarted', payload);
+        }
+      } catch (e) {}
+      try {
+        if (
+          window.Shopify &&
+          window.Shopify.analytics &&
+          typeof window.Shopify.analytics.publish === 'function'
+        ) {
+          window.Shopify.analytics.publish('QuoteStarted', {
+            form_name: payload.form_name
+          });
+        }
+      } catch (e) {}
+    }
+
+    function unlockGate() {
+      if (!gate) return;
+      var wasLocked = gate.classList.contains('is-locked');
+      gate.classList.remove('is-locked');
+      if (wasLocked) fireQuoteStarted();
+      if (manual) {
+        try { manual.focus(); } catch (e) {}
+      }
+    }
+
+    if (unlockBtn) {
+      unlockBtn.addEventListener('click', unlockGate);
+    }
 
     function setStep(n) {
       root.querySelectorAll('[data-step]').forEach(function (el) {
@@ -46,13 +87,7 @@
       root.querySelectorAll('[data-style-select]').forEach(function (btn) {
         btn.classList.toggle('is-selected', btn.getAttribute('data-style') === state.style);
       });
-      if (browseWrap) {
-        var show = !!state.style;
-        browseWrap.hidden = !show;
-        browseWrap.querySelectorAll('[data-browse-for]').forEach(function (link) {
-          link.hidden = link.getAttribute('data-browse-for') !== state.style;
-        });
-      }
+      if (continueQuoteBtn) continueQuoteBtn.disabled = !state.style;
       try {
         sessionStorage.setItem('ff_build_vehicle', hiddenVehicle ? hiddenVehicle.value : '');
         sessionStorage.setItem('ff_build_style', state.style);
@@ -120,8 +155,8 @@
         var next = Number(btn.getAttribute('data-next'));
         syncVehicle();
         if (next === 2 && continueBtn && continueBtn.disabled) return;
+        if (next === 3 && btn.hasAttribute('data-continue-quote') && !state.style) return;
         if (ymm && hiddenVehicle && hiddenVehicle.value) ymm.value = hiddenVehicle.value;
-        if (btn.hasAttribute('data-skip-quote')) setStyle(state.style || 'Custom quote');
         setStep(next);
       });
     });
