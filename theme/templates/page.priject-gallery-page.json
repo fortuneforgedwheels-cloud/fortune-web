@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "ff_project_gallery_page": {
@@ -92,7 +101,7 @@
         "project_jFgBcX": {
           "type": "project",
           "settings": {
-            "vehicle": "Ferarri SF90",
+            "vehicle": "Ferrari SF90",
             "subtitle": "Track-focused street build",
             "cover_image": "shopify://shop_images/IMG_2143.jpg",
             "cover_image_mobile": "shopify://shop_images/IMG_2143.jpg",
@@ -153,6 +162,28 @@
             "shop_link": ""
           }
         },
+        "project_Ga6trY": {
+          "type": "project",
+          "settings": {
+            "vehicle": "FERRARI SF90",
+            "subtitle": "",
+            "cover_image": "shopify://shop_images/IMG_2423.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2423.jpg",
+            "gallery_1": "shopify://shop_images/IMG_2427.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2422.jpg",
+            "gallery_3": "shopify://shop_images/IMG_2428.jpg",
+            "gallery_4": "shopify://shop_images/IMG_2426.jpg",
+            "wheel_style": "",
+            "construction": "Forged monoblock",
+            "sizes": "20x9.5 et30 / 21x12 et50",
+            "finish": "Gloss Black",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>This lowered Ferrari SF90 is equipped with a custom Fortune Forged monoblock setup engineered specifically for the platform. Wheel widths, offsets, brake clearance, and tire specifications were developed to achieve a flush fitment while preserving the drivability and performance expected from the chassis.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": ""
+          }
+        },
         "project_9EPqEJ": {
           "type": "project",
           "settings": {
@@ -178,21 +209,131 @@
         "project_pTarbX": {
           "type": "project",
           "settings": {
-            "vehicle": "Mclaren 600LT",
-            "subtitle": "Custom 1 off designed",
-            "cover_image": "shopify://shop_images/IMG_2152.jpg",
-            "cover_image_mobile": "shopify://shop_images/IMG_2152.jpg",
-            "gallery_1": "shopify://shop_images/IMG_2125_2.jpg",
-            "gallery_2": "shopify://shop_images/IMG_2153.jpg",
-            "gallery_3": "shopify://shop_images/IMG_2154.jpg",
-            "gallery_4": "shopify://shop_images/IMG_2152.jpg",
+            "vehicle": "Lamborghini huracan",
+            "subtitle": "",
+            "cover_image": "shopify://shop_images/IMG_2447.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2419.jpg",
+            "gallery_1": "shopify://shop_images/IMG_2418.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2417.jpg",
+            "gallery_3": "shopify://shop_images/IMG_2447.jpg",
+            "gallery_4": "shopify://shop_images/IMG_2419.jpg",
             "wheel_style": "",
             "construction": "Forged monoblock",
-            "sizes": "20x9 et33 / 21x12 et38",
+            "sizes": "20x8.5 et30 / 20x12 et44",
+            "finish": "Gloss black",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>F-05S Built for a twin-turbo Lamborghini Huracán LP610, this custom 20-inch Fortune Forged monoblock setup was engineered around the demands of a high-horsepower street car. Wheel widths, offsets, brake clearance, and tire fitment were developed specifically for the platform to maximize traction, maintain proper clearances, and achieve a flush fitment. The result is a lightweight forged wheel package that complements the performance of the chassis without sacrificing functionality or reliability.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": ""
+          }
+        },
+        "project_fPTkjR": {
+          "type": "project",
+          "settings": {
+            "vehicle": "C6 CORVETTE ZR-1",
+            "subtitle": "",
+            "cover_image": "shopify://shop_images/IMG_2429.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2429.jpg",
+            "gallery_1": "shopify://shop_images/IMG_2431.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2433.jpg",
+            "gallery_3": "shopify://shop_images/IMG_2430.jpg",
+            "gallery_4": "shopify://shop_images/IMG_2432.jpg",
+            "wheel_style": "",
+            "construction": "Forged monoblock + beadlock",
+            "sizes": "19X10.5 ET35 / 18X12.5 ET55",
+            "finish": "Polished clear",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>Developed for a C6 Corvette ZR1 built for drag racing, this 18/19-inch RT-1 drag package pairs polished monoblock fronts with polished RT-1 beadlock rears to maximize traction without compromising strength. Every specification—from wheel width and offset to brake clearance and tire fitment—was engineered specifically for the platform, providing the clearance required for large rear drag radials while maintaining a lightweight forged construction. Built to handle high-horsepower launches, this package delivers the fitment and durability demanded at the track.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": ""
+          }
+        },
+        "project_yHqR3B": {
+          "type": "project",
+          "settings": {
+            "vehicle": "MERCEDES C63S AMG",
+            "subtitle": "",
+            "cover_image": "shopify://shop_images/IMG_2434.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2434.jpg",
+            "gallery_1": "shopify://shop_images/IMG_2436.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2435.jpg",
+            "gallery_3": "shopify://shop_images/IMG_2434.jpg",
+            "gallery_4": "shopify://shop_images/IMG_2437.jpg",
+            "wheel_style": "",
+            "construction": "Two-piece forged",
+            "sizes": "19x9 et25 / 19x10.5 et45",
+            "finish": "Triple chrome",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>Built for the Mercedes-AMG C63 S, this 19-inch Fortune Forged F12 EVO R two-piece setup is finished in triple chrome for a timeless, high-reflection appearance that complements the platform's aggressive styling. Every specification—including wheel width, offset, brake clearance, and tire fitment—was engineered specifically for the C63 S to achieve a flush fitment without compromising drivability. The two-piece forged construction provides the flexibility to tailor every detail while delivering the strength, precision, and craftsmanship expected from a custom-built wheel.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": "shopify://products/f12-evo-r"
+          }
+        },
+        "project_3xd7fX": {
+          "type": "project",
+          "settings": {
+            "vehicle": "widebody NISSAN r35 SKYLINE GTR",
+            "subtitle": "Custom 1 off designed",
+            "cover_image": "shopify://shop_images/IMG_2438.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2438.jpg",
+            "gallery_1": "shopify://shop_images/IMG_2441.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2440.jpg",
+            "gallery_3": "shopify://shop_images/IMG_2438.jpg",
+            "gallery_4": "shopify://shop_images/IMG_2439.jpg",
+            "wheel_style": "",
+            "construction": "Forged monoblock",
+            "sizes": "20x10.5 et5 / 20x12-0",
             "finish": "Brushed clear",
             "hardware": "",
             "location": "Built to order",
-            "writeup": "<p>Jake Schnatter's McLaren 600LT rides on our custom forged wheels in a true bolt-on flush fitment, perfectly complementing the car's lightweight, track-focused character. Built to the owner's exact specifications, this setup delivers an exotic aesthetic with the precision, performance, and craftsmanship expected from Fortune Forged.</p>",
+            "writeup": "<p>Designed as a one-off commission for a widebody Nissan GT-R R35, this deep-dish six-spoke monoblock was engineered from a clean sheet around the vehicle's bodywork, suspension, and performance requirements. Every dimension—from wheel width and offset to lip depth, brake clearance, and tire fitment—was developed specifically for this build, allowing the design to maximize the available space without compromise. The result is a bespoke forged wheel that combines timeless motorsport styling with platform-specific engineering for one of the most iconic performance cars on the road.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": ""
+          }
+        },
+        "project_Nx3VDY": {
+          "type": "project",
+          "settings": {
+            "vehicle": "c8 corvette stingray",
+            "subtitle": "",
+            "cover_image": "shopify://shop_images/IMG_2442.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2442.jpg",
+            "gallery_1": "shopify://shop_images/IMG_2443.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2442.jpg",
+            "gallery_3": "shopify://shop_images/IMG_2444.jpg",
+            "gallery_4": "shopify://shop_images/IMG_2446.jpg",
+            "wheel_style": "",
+            "construction": "Forged monoblock",
+            "sizes": "20x9 et33 / 21x12 et38",
+            "finish": "Satin deep blue",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>Designed specifically for the Chevrolet C8 Stingray, this one-off two-piece forged configuration was engineered to deliver an aggressive, platform-specific fitment without compromising function. Wheel widths, offsets, brake clearance, and lip configuration were developed around the chassis to maximize concavity and achieve a flush, purposeful stance. The modular two-piece construction provides complete design flexibility, resulting in a bespoke forged wheel that balances performance, precision, and a distinctly aggressive presence.</p>",
+            "shop_label": "Shop this style",
+            "shop_link": ""
+          }
+        },
+        "project_9gyKq9": {
+          "type": "project",
+          "settings": {
+            "vehicle": "audi r8",
+            "subtitle": "",
+            "cover_image": "shopify://shop_images/IMG_2448.jpg",
+            "cover_image_mobile": "shopify://shop_images/IMG_2448.jpg",
+            "gallery_1": "shopify://shop_images/IMG_2451.jpg",
+            "gallery_2": "shopify://shop_images/IMG_2448.jpg",
+            "gallery_3": "shopify://shop_images/IMG_2450.jpg",
+            "gallery_4": "shopify://shop_images/IMG_2449.jpg",
+            "wheel_style": "",
+            "construction": "Forged monoblock",
+            "sizes": "20x9 et30 / 21x11 et26",
+            "finish": "polished",
+            "hardware": "",
+            "location": "Built to order",
+            "writeup": "<p>Built around a fully lowered Audi R8, this 20/21-inch Fortune Forged F05SR setup was engineered to achieve a true flush fitment while maintaining the clearances required for real-world drivability. Every specification—including wheel widths, offsets, brake clearance, and tire fitment—was developed specifically for the chassis, ensuring the wheels sit precisely with the bodywork without relying on spacers or compromise. The result is a platform-specific forged package that complements the R8's proportions while delivering the strength and precision of a custom-built monoblock wheel.</p>",
             "shop_label": "Shop this style",
             "shop_link": ""
           }
@@ -213,7 +354,7 @@
             "finish": "Custom finish",
             "hardware": "Gold titanium",
             "location": "Built to order",
-            "writeup": "<p>Fortune Forged Feature built on Fortune Forged forged custom wheels. Fitment was measured around brake clearance, suspension setup, and target stance \u2014 then finished to match the car.</p><p>Swap this text in the theme editor with the real build story, owner details, and any supporting mods.</p>",
+            "writeup": "<p>Fortune Forged Feature built on Fortune Forged forged custom wheels. Fitment was measured around brake clearance, suspension setup, and target stance — then finished to match the car.</p><p>Swap this text in the theme editor with the real build story, owner details, and any supporting mods.</p>",
             "shop_label": "Shop this style",
             "shop_link": "shopify://collections/monoblock-wheels"
           }
@@ -227,15 +368,25 @@
         "project_jFgBcX",
         "project_wpGyHq",
         "project_4",
+        "project_Ga6trY",
         "project_9EPqEJ",
         "project_pTarbX",
+        "project_fPTkjR",
+        "project_yHqR3B",
+        "project_3xd7fX",
+        "project_Nx3VDY",
+        "project_9gyKq9",
         "project_YazVee"
       ],
       "settings": {
         "show_section": true,
         "eyebrow": "Fortune Forged",
+        "eyebrow_size": 12,
+        "eyebrow_align": "center",
         "heading": "PROJECT GALLERY",
-        "subheading": "Explore real world Fortune Forged builds. Browse complete vehicle specifications, custom fitment, premium finishes, and full photo galleries\u2014engineered to inspire your next build.",
+        "subheading": "Explore real world Fortune Forged builds. Browse complete vehicle specifications, custom fitment, premium finishes, and full photo galleries—engineered to inspire your next build.",
+        "subheading_size": 18,
+        "subheading_align": "left",
         "card_cta": "View build",
         "quote_label": "Request a similar build",
         "quote_link": "/#order",

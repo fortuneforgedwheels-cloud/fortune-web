@@ -1,0 +1,62 @@
+{{ 'ff-826m-certified.css' | asset_url | stylesheet_tag }}
+{{ 'ff-featured-fitment-boxes.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign fitment_option = blank
+  for option in product.options_with_values
+    assign option_name_down = option.name | downcase
+    if option_name_down == 'fitment'
+      assign fitment_option = option
+      break
+    endif
+  endfor
+-%}
+
+{%- if fitment_option != blank -%}
+  {%- assign selected_fitment = fitment_option.selected_value | default: fitment_option.values.first -%}
+  <div
+    class="ff-826m-path ff-featured-fitment"
+    data-ff-featured-fitment
+    data-product-id="{{ product.id }}"
+    data-section-id="{{ section.id }}"
+    data-option-name="Fitment"
+  >
+    <p class="ff-826m-path__eyebrow">G80 M3 / G8X flush set</p>
+    <h2 class="ff-826m-path__heading">Choose your fitment</h2>
+    <p class="ff-826m-path__intro">Quantity 1 = full set of 4. Pick 19/20 or 20/20, then finish and center cap.</p>
+
+    <div class="ff-826m-path__choices" role="radiogroup" aria-label="Fitment">
+      {%- for value in fitment_option.values -%}
+        {%- liquid
+          assign value_key = value | upcase | replace: ' ', ''
+          assign meta = 'Flush, bolt-on, ready to install on G80 M3.'
+          if value_key == '20/20'
+            assign meta = 'Square 20" flush set. Direct bolt-on for G80 M3.'
+          elsif value_key == '19/20'
+            assign meta = '19" front / 20" rear flush set. Direct bolt-on for G80 M3.'
+          endif
+        -%}
+        <label class="ff-826m-path__choice">
+          <input
+            type="radio"
+            name="ff_featured_fitment_{{ product.id }}"
+            value="{{ value | escape }}"
+            data-ff-fitment-value="{{ value | escape }}"
+            {% if value == selected_fitment %}checked{% endif %}
+          >
+          <span class="ff-826m-path__choice-card">
+            <span class="ff-826m-path__choice-title">{{ value | escape }} inch fitment</span>
+            <span class="ff-826m-path__choice-meta">{{ meta | escape }}</span>
+          </span>
+        </label>
+      {%- endfor -%}
+    </div>
+
+    <div class="ff-826m-path__badge" data-ff-fitment-badge>
+      <span>Fitment selected</span>
+      <strong data-ff-fitment-badge-value>{{ selected_fitment | escape }}</strong>
+    </div>
+  </div>
+
+  <script src="{{ 'ff-featured-fitment-boxes.js' | asset_url }}" defer></script>
+{%- endif -%}
