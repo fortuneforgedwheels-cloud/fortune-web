@@ -53,16 +53,13 @@
     </div>
 
     <div class="ff-build__panel" data-panel="2" hidden>
-      <h2 class="ff-build__panel-title">{{ section.settings.step2_heading | escape }}</h2>
-      <p class="ff-build__panel-copy">{{ section.settings.step2_copy | escape }}</p>
-      <p class="ff-build__pricing-note">{{ section.settings.step2_hint | escape }}</p>
-
-      {% if section.settings.hottest_link != blank %}
-        <a class="ff-build__hottest" href="{{ section.settings.hottest_link }}" data-style="Hottest designs">
-          <span class="ff-build__style-name">{{ section.settings.hottest_label | escape }}</span>
-          <span class="ff-build__style-desc">{{ section.settings.hottest_desc | escape }}</span>
-        </a>
-      {% endif %}
+      <div class="ff-build__panel-head">
+        <div class="ff-build__panel-head-text">
+          <h2 class="ff-build__panel-title">{{ section.settings.step2_heading | escape }}</h2>
+          <p class="ff-build__panel-copy">{{ section.settings.step2_copy | escape }}</p>
+        </div>
+        <a class="ff-build__view-all" href="/collections/all">VIEW ALL WHEELS ↗</a>
+      </div>
 
       <div class="ff-build__styles">
         <button type="button" class="ff-build__style" data-style="Monoblock" data-style-select>
@@ -79,20 +76,10 @@
         </button>
       </div>
 
-      <div class="ff-build__browse-links" hidden data-browse-links>
-        <p class="ff-build__panel-copy">Browse that setup, or continue to quote with it selected.</p>
-        <div class="ff-build__nav-row">
-          <a class="ff-build__browse button button--primary" href="{{ section.settings.monoblock_link }}" data-browse-for="Monoblock">Browse Monoblock</a>
-          <a class="ff-build__browse button button--primary" href="{{ section.settings.twopiece_link }}" data-browse-for="2-Piece" hidden>Browse 2-Piece</a>
-          <a class="ff-build__browse button button--primary" href="{{ section.settings.beadlock_link }}" data-browse-for="Beadlock" hidden>Browse Beadlock</a>
-          <button type="button" class="ff-build__next button button--secondary" data-next="3">Continue to quote</button>
-        </div>
-      </div>
-
       <div class="ff-build__nav-row ff-build__nav-row--split">
         <button type="button" class="ff-build__back" data-back="1">Back</button>
-        <button type="button" class="ff-build__next button button--primary" data-next="3" data-skip-quote>
-          {{ section.settings.quote_cta | escape }}
+        <button type="button" class="ff-build__next button button--primary" data-next="3" data-continue-quote disabled>
+          CONTINUE TO QUOTE
         </button>
       </div>
     </div>

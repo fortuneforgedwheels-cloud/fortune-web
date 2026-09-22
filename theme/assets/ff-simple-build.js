@@ -10,7 +10,7 @@
     var hiddenStyle = root.querySelector('[id^="ff-selected-style-"]');
     var helpPreference = root.querySelector('[id^="ff-help-preference-"]');
     var continueBtn = root.querySelector('[data-panel="1"] [data-next="2"]');
-    var browseWrap = root.querySelector('[data-browse-links]');
+    var continueQuoteBtn = root.querySelector('[data-continue-quote]');
     var assistNote = root.querySelector('[data-assist-note]');
     var submitBtn = root.querySelector('[data-submit-label]');
     var quoteForm = root.querySelector('form.ff-quote');
@@ -87,13 +87,7 @@
       root.querySelectorAll('[data-style-select]').forEach(function (btn) {
         btn.classList.toggle('is-selected', btn.getAttribute('data-style') === state.style);
       });
-      if (browseWrap) {
-        var show = !!state.style;
-        browseWrap.hidden = !show;
-        browseWrap.querySelectorAll('[data-browse-for]').forEach(function (link) {
-          link.hidden = link.getAttribute('data-browse-for') !== state.style;
-        });
-      }
+      if (continueQuoteBtn) continueQuoteBtn.disabled = !state.style;
       try {
         sessionStorage.setItem('ff_build_vehicle', hiddenVehicle ? hiddenVehicle.value : '');
         sessionStorage.setItem('ff_build_style', state.style);
@@ -161,8 +155,8 @@
         var next = Number(btn.getAttribute('data-next'));
         syncVehicle();
         if (next === 2 && continueBtn && continueBtn.disabled) return;
+        if (next === 3 && btn.hasAttribute('data-continue-quote') && !state.style) return;
         if (ymm && hiddenVehicle && hiddenVehicle.value) ymm.value = hiddenVehicle.value;
-        if (btn.hasAttribute('data-skip-quote')) setStyle(state.style || 'Custom quote');
         setStep(next);
       });
     });
