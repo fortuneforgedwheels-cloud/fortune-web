@@ -25,6 +25,13 @@
       </li>
     </ol>
 
+    <div class="ff-build__gated is-locked" data-ff-build-gate>
+      <div class="ff-build__gate" data-ff-build-gate-overlay>
+        <button type="button" class="ff-build__gate-btn" data-ff-build-unlock>
+          {{ section.settings.gate_label | default: 'BUILD MY QUOTE' | escape }}
+        </button>
+      </div>
+
     <div class="ff-build__panel is-active" data-panel="1">
       <h2 class="ff-build__panel-title">{{ section.settings.step1_heading | escape }}</h2>
       <p class="ff-build__panel-copy">{{ section.settings.step1_copy | escape }}</p>
@@ -48,14 +55,6 @@
     <div class="ff-build__panel" data-panel="2" hidden>
       <h2 class="ff-build__panel-title">{{ section.settings.step2_heading | escape }}</h2>
       <p class="ff-build__panel-copy">{{ section.settings.step2_copy | escape }}</p>
-      <p class="ff-build__pricing-note">{{ section.settings.step2_hint | escape }}</p>
-
-      {% if section.settings.hottest_link != blank %}
-        <a class="ff-build__hottest" href="{{ section.settings.hottest_link }}" data-style="Hottest designs">
-          <span class="ff-build__style-name">{{ section.settings.hottest_label | escape }}</span>
-          <span class="ff-build__style-desc">{{ section.settings.hottest_desc | escape }}</span>
-        </a>
-      {% endif %}
 
       <div class="ff-build__styles">
         <button type="button" class="ff-build__style" data-style="Monoblock" data-style-select>
@@ -72,20 +71,165 @@
         </button>
       </div>
 
-      <div class="ff-build__browse-links" hidden data-browse-links>
-        <p class="ff-build__panel-copy">Browse that setup, or continue to quote with it selected.</p>
-        <div class="ff-build__nav-row">
-          <a class="ff-build__browse button button--primary" href="{{ section.settings.monoblock_link }}" data-browse-for="Monoblock">Browse Monoblock</a>
-          <a class="ff-build__browse button button--primary" href="{{ section.settings.twopiece_link }}" data-browse-for="2-Piece" hidden>Browse 2-Piece</a>
-          <a class="ff-build__browse button button--primary" href="{{ section.settings.beadlock_link }}" data-browse-for="Beadlock" hidden>Browse Beadlock</a>
-          <button type="button" class="ff-build__next button button--secondary" data-next="3">Continue to quote</button>
+      {%- liquid
+        assign ff_design_excludes = 'f-05sr-g87-m2-flush-fit,f-05sr-f8x-flush-fit,f-11r-600lt-forged-monoblock-set,f-12r-c8-z06-forged-monoblock-set,827m-oem-g8x-spec,g20-full-beadlock-set,rpf-1-inspired-dragpack,826m-style-beadlocks-complete-set-of-4' | split: ','
+        assign mono_collection = collections['monoblock-wheels']
+        assign twopiece_collection = collections['two-piece-wheels']
+        assign beadlock_collection = collections['beadlock-wheels']
+      -%}
+
+      <div class="ff-build__designs" data-design-picker hidden>
+        <h3 class="ff-build__designs-title">Choose your design</h3>
+
+        <div class="ff-build__catalog-viewport">
+        <div class="ff-build__catalog" data-catalog="Monoblock" hidden>
+          {%- if mono_collection != blank -%}
+            {%- for product in mono_collection.products -%}
+              {%- unless ff_design_excludes contains product.handle -%}
+                {%- liquid
+                  assign card_image = product.featured_media
+                  if card_image == blank
+                    assign card_image = product.featured_image
+                  endif
+                -%}
+                <button
+                  type="button"
+                  class="ff-build__design"
+                  data-design-select
+                  data-design-title="{{ product.title | escape }}"
+                  data-design-handle="{{ product.handle | escape }}"
+                >
+                  <span class="ff-build__design-media">
+                    {%- if card_image != blank -%}
+                      {{
+                        card_image
+                        | image_url: width: 640
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '160, 240, 320, 480, 640',
+                          sizes: '(max-width: 749px) 45vw, 160px',
+                          alt: product.title
+                      }}
+                    {%- endif -%}
+                  </span>
+                  <span class="ff-build__design-name">{{ product.title | escape }}</span>
+                </button>
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+        <div class="ff-build__catalog" data-catalog="2-Piece" hidden>
+          {%- if twopiece_collection != blank -%}
+            {%- for product in twopiece_collection.products -%}
+              {%- unless ff_design_excludes contains product.handle -%}
+                {%- liquid
+                  assign card_image = product.featured_media
+                  if card_image == blank
+                    assign card_image = product.featured_image
+                  endif
+                -%}
+                <button
+                  type="button"
+                  class="ff-build__design"
+                  data-design-select
+                  data-design-title="{{ product.title | escape }}"
+                  data-design-handle="{{ product.handle | escape }}"
+                >
+                  <span class="ff-build__design-media">
+                    {%- if card_image != blank -%}
+                      {{
+                        card_image
+                        | image_url: width: 640
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '160, 240, 320, 480, 640',
+                          sizes: '(max-width: 749px) 45vw, 160px',
+                          alt: product.title
+                      }}
+                    {%- endif -%}
+                  </span>
+                  <span class="ff-build__design-name">{{ product.title | escape }}</span>
+                </button>
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+        <div class="ff-build__catalog" data-catalog="Beadlock" hidden>
+          {%- if beadlock_collection != blank -%}
+            {%- for product in beadlock_collection.products -%}
+              {%- unless ff_design_excludes contains product.handle -%}
+                {%- liquid
+                  assign card_image = product.featured_media
+                  if card_image == blank
+                    assign card_image = product.featured_image
+                  endif
+                -%}
+                <button
+                  type="button"
+                  class="ff-build__design"
+                  data-design-select
+                  data-design-title="{{ product.title | escape }}"
+                  data-design-handle="{{ product.handle | escape }}"
+                >
+                  <span class="ff-build__design-media">
+                    {%- if card_image != blank -%}
+                      {{
+                        card_image
+                        | image_url: width: 640
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '160, 240, 320, 480, 640',
+                          sizes: '(max-width: 749px) 45vw, 160px',
+                          alt: product.title
+                      }}
+                    {%- endif -%}
+                  </span>
+                  <span class="ff-build__design-name">{{ product.title | escape }}</span>
+                </button>
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+        </div>
+
+        <p class="ff-build__catalog-hint">Scroll to view more designs</p>
+
+        <div class="ff-build__design-alt">
+          <button type="button" class="ff-build__design-alt-btn" data-design-select data-design-title="Custom Design">
+            REQUEST A CUSTOM DESIGN
+          </button>
+          <button type="button" class="ff-build__design-alt-btn" data-design-select data-design-title="Help Me Choose">
+            HELP ME CHOOSE
+          </button>
+        </div>
+
+        <div class="ff-build__custom-ref" data-custom-design-ref hidden>
+          <h4 class="ff-build__custom-ref-title">HAVE A CUSTOM DESIGN IN MIND?</h4>
+          <p class="ff-build__custom-ref-copy">
+            Paste a link to a wheel, photo, or design you’d like us to use as inspiration.
+          </p>
+          <label class="ff-build__label" for="ff-custom-design-ref-visible-{{ section.id }}">REFERENCE LINK (OPTIONAL)</label>
+          <input
+            class="ff-build__input"
+            id="ff-custom-design-ref-visible-{{ section.id }}"
+            type="url"
+            inputmode="url"
+            autocomplete="url"
+            maxlength="2048"
+            placeholder="https://..."
+            data-custom-design-ref-input
+          >
+          <p class="ff-build__custom-ref-help">Instagram, Pinterest, product pages, images, or any other reference link.</p>
+          <p class="ff-build__custom-ref-error" data-custom-design-ref-error hidden>Enter a valid http:// or https:// link, or leave this blank.</p>
         </div>
       </div>
 
       <div class="ff-build__nav-row ff-build__nav-row--split">
         <button type="button" class="ff-build__back" data-back="1">Back</button>
-        <button type="button" class="ff-build__next button button--primary" data-next="3" data-skip-quote>
-          {{ section.settings.quote_cta | escape }}
+        <button type="button" class="ff-build__next button button--primary" data-next="3" data-continue-quote disabled>
+          CONTINUE TO QUOTE
         </button>
       </div>
     </div>
@@ -95,6 +239,7 @@
       <p class="ff-build__panel-copy">{{ section.settings.step3_copy | escape }}</p>
       {% render 'ff-quote-form', section: section %}
       <button type="button" class="ff-build__back" data-back="2">Back</button>
+    </div>
     </div>
   </div>
 
@@ -187,6 +332,12 @@
       "id": "subtitle",
       "label": "Subtitle",
       "default": "Three steps. Tell us your vehicle, choose a setup, request a build."
+    },
+    {
+      "type": "text",
+      "id": "gate_label",
+      "label": "Quote gate button label",
+      "default": "BUILD MY QUOTE"
     },
     {
       "type": "range",

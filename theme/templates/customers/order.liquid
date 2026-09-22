@@ -83,7 +83,8 @@
                                                             {%- if property_size != 0 -%}
                                                                 {%- for property in line_item.properties -%}
                                                                     {% assign property_first_char = property.first | slice: 0 %}
-                                                                    {%- if property.last != blank and property_first_char != '_' -%}
+                                                                    {%- capture ff_prop_visible -%}{% render 'ff-cart-property-visible', key: property.first, value: property.last %}{%- endcapture -%}
+                                                                    {%- if property.last != blank and property_first_char != '_' and ff_prop_visible != blank -%}
                                                                         <span class="text">
                                                                             {{ property.first }}:&nbsp;
                                                                             {%- if property.last contains '/uploads/' -%}

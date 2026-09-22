@@ -4024,7 +4024,10 @@
 
                 var $target = $(event.currentTarget),
                     productId = $target.attr('data-cart-remove-id'),
-                    productLine = $target.data('line');
+                    /* Prefer attr over .data() so line keys with ":" are not mistyped */
+                    productLine = $target.attr('data-line') || $target.data('line');
+
+                if (!productLine) return;
 
                 Shopify.removeItem(productLine, (cart) => {
                     if($body.hasClass('template-cart')){

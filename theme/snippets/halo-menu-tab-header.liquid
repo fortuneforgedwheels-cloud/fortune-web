@@ -23,7 +23,7 @@
                 if multi_page_url != blank
                     assign url = multi_page_url
                 else
-                    assign url = routes.root_url
+                    assign url = '/index'
                 endif
             -%}
             <li class="{{ class }} {{ page_handle }}" data-load-page="{{ multi_page_handle }}" role="menuitem">
@@ -59,7 +59,7 @@
                                         if multi_page_url != blank
                                             assign url = multi_page_url
                                         else
-                                            assign url = routes.root_url
+                                            assign url = '/index'
                                         endif
                                     -%}
                                     <li class="{{ class }}" data-load-page="{{ multi_page_handle }}">
