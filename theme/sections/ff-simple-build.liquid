@@ -81,6 +81,35 @@
       <div class="ff-build__designs" data-design-picker hidden>
         <h3 class="ff-build__designs-title">Choose your design</h3>
 
+        <div class="ff-build__design-alt">
+          <button type="button" class="ff-build__design-alt-btn" data-design-select data-design-title="Custom Design">
+            REQUEST A CUSTOM DESIGN
+          </button>
+          <button type="button" class="ff-build__design-alt-btn" data-design-select data-design-title="Help Me Choose">
+            HELP ME CHOOSE
+          </button>
+        </div>
+
+        <div class="ff-build__custom-ref" data-custom-design-ref hidden>
+          <h4 class="ff-build__custom-ref-title">HAVE A CUSTOM DESIGN IN MIND?</h4>
+          <p class="ff-build__custom-ref-copy">
+            Paste a link to a wheel, photo, or design you’d like us to use as inspiration.
+          </p>
+          <label class="ff-build__label" for="ff-custom-design-ref-visible-{{ section.id }}">REFERENCE LINK (OPTIONAL)</label>
+          <input
+            class="ff-build__input"
+            id="ff-custom-design-ref-visible-{{ section.id }}"
+            type="url"
+            inputmode="url"
+            autocomplete="url"
+            maxlength="2048"
+            placeholder="https://..."
+            data-custom-design-ref-input
+          >
+          <p class="ff-build__custom-ref-help">Instagram, Pinterest, product pages, images, or any other reference link.</p>
+          <p class="ff-build__custom-ref-error" data-custom-design-ref-error hidden>Enter a valid http:// or https:// link, or leave this blank.</p>
+        </div>
+
         <div class="ff-build__catalog-viewport">
         <div class="ff-build__catalog" data-catalog="Monoblock" hidden>
           {%- if mono_collection != blank -%}
@@ -195,35 +224,6 @@
         </div>
 
         <p class="ff-build__catalog-hint">Scroll to view more designs</p>
-
-        <div class="ff-build__design-alt">
-          <button type="button" class="ff-build__design-alt-btn" data-design-select data-design-title="Custom Design">
-            REQUEST A CUSTOM DESIGN
-          </button>
-          <button type="button" class="ff-build__design-alt-btn" data-design-select data-design-title="Help Me Choose">
-            HELP ME CHOOSE
-          </button>
-        </div>
-
-        <div class="ff-build__custom-ref" data-custom-design-ref hidden>
-          <h4 class="ff-build__custom-ref-title">HAVE A CUSTOM DESIGN IN MIND?</h4>
-          <p class="ff-build__custom-ref-copy">
-            Paste a link to a wheel, photo, or design you’d like us to use as inspiration.
-          </p>
-          <label class="ff-build__label" for="ff-custom-design-ref-visible-{{ section.id }}">REFERENCE LINK (OPTIONAL)</label>
-          <input
-            class="ff-build__input"
-            id="ff-custom-design-ref-visible-{{ section.id }}"
-            type="url"
-            inputmode="url"
-            autocomplete="url"
-            maxlength="2048"
-            placeholder="https://..."
-            data-custom-design-ref-input
-          >
-          <p class="ff-build__custom-ref-help">Instagram, Pinterest, product pages, images, or any other reference link.</p>
-          <p class="ff-build__custom-ref-error" data-custom-design-ref-error hidden>Enter a valid http:// or https:// link, or leave this blank.</p>
-        </div>
       </div>
 
       <div class="ff-build__nav-row ff-build__nav-row--split">
