@@ -333,6 +333,45 @@
   border-color: var(--ff-gold);
 }
 
+.ff-build__custom-ref {
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid var(--ff-line);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.ff-build__custom-ref[hidden] {
+  display: none !important;
+}
+
+.ff-build__custom-ref-title {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.ff-build__custom-ref-copy {
+  margin: 8px 0 12px;
+  color: var(--ff-muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.ff-build__custom-ref-help {
+  margin: 8px 0 0;
+  color: var(--ff-muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.ff-build__custom-ref-error {
+  margin: 8px 0 0;
+  color: #f0a0a0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
 .ff-build__manual {
   margin: 22px 0 18px;
 }
