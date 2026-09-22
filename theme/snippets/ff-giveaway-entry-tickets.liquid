@@ -5,7 +5,7 @@
   - Paid E36 giveaway product (handle 1998-bmw-m3, or tag giveaway-entry):
     1 ticket per quantity
   - Invasion exclusive wheel set (handle exclusive-deals-full-set, or tag invasion-wheel-set):
-    +5 bonus tickets automatically
+    +3 bonus tickets automatically
 
   Ticket format uses the Shopify order name (e.g. FF001-1, FF001-2, FF001-3).
 
@@ -39,7 +39,7 @@
       endif
 
       if handle == 'exclusive-deals-full-set' or tags contains 'invasion-wheel-set' or tags contains 'bimmer-invasion'
-        assign bonus_entries = bonus_entries | plus: 5
+        assign bonus_entries = bonus_entries | plus: 3
         assign has_wheel_set = true
       endif
     endfor
@@ -65,7 +65,7 @@
           </ol>
               {%- if has_wheel_set -%}
             <p style="margin:14px 0 0;font-size:13px;line-height:1.45;color:#444;">
-              Includes 5 entries from your Invasion wheel set
+              Includes 3 bonus entries from your Invasion wheel set
               {%- if paid_entries > 0 -%}
                 , plus {{ paid_entries }} purchased
                 {%- if paid_entries == 1 %} entry{% else %} entries{% endif -%}
@@ -95,7 +95,7 @@
       </ol>
           {%- if has_wheel_set -%}
             <p class="ff-entry-tickets__note">
-              Includes 5 entries from your Invasion wheel set
+              Includes 3 bonus entries from your Invasion wheel set
               {%- if paid_entries > 0 -%}
                 , plus {{ paid_entries }} purchased
                 {%- if paid_entries == 1 %} entry{% else %} entries{% endif -%}
