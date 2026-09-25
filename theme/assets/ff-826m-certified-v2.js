@@ -225,6 +225,9 @@
           return;
         }
 
+        // Keep the open dropdown stable if the shopper is mid-selection.
+        if (document.activeElement === select) return;
+
         select.innerHTML = '';
         const placeholder = document.createElement('option');
         placeholder.value = '';
@@ -694,8 +697,14 @@
         tries += 1;
         try {
           patchBcpoChromePrices();
+          // Only refresh option lists — do NOT call full setMode here.
+          // Re-running setMode every 250ms rebuilds <select>s and wipes in-progress choices.
           populateColorSelects(root);
-          setMode(root, currentMode(root));
+          if (currentMode(root) === 'certified') {
+            hideBcpoFields(true);
+            ensureHiddenPropertyInputs(root, true);
+            relaxHiddenBcpoRequirements(true);
+          }
         } catch (e) {}
 
         const hasValues = COLOR_TITLES.every((title) => valuesForColor(root, title).length > 0);
@@ -704,7 +713,14 @@
           window.clearInterval(timer);
           try {
             patchBcpoChromePrices();
-            setMode(root, currentMode(root));
+            populateColorSelects(root);
+            if (currentMode(root) === 'certified') {
+              applyCertifiedOptions(root);
+              hideBcpoFields(true);
+              ensureHiddenPropertyInputs(root, true);
+              syncAllColors(root);
+              relaxHiddenBcpoRequirements(true);
+            }
           } catch (e) {}
         }
       }, 250);
