@@ -260,15 +260,35 @@
       return wrapper.querySelector('select, .bcpo-dd, .bcpo-select');
     }
 
+    function ensureSelectOption(field, value) {
+      if (!field || field.tagName !== 'SELECT' || value == null) return null;
+      const wanted = String(value).trim();
+      if (!wanted) return null;
+
+      const options = Array.from(field.options);
+      const match =
+        options.find((opt) => opt.value === wanted || opt.text.trim() === wanted) ||
+        options.find(
+          (opt) =>
+            (opt.value && opt.value.includes(wanted)) ||
+            (opt.text && opt.text.includes(wanted))
+        );
+      if (match) return match;
+
+      // S650 Match OEM extras (and any other certified-only values) may not exist in BCPO yet.
+      const created = document.createElement('option');
+      created.value = wanted;
+      created.textContent = wanted;
+      field.appendChild(created);
+      return created;
+    }
+
     function syncColorToBcpo(title, value) {
       const field = findBcpoSelectByTitle(title);
       if (!field || !value) return false;
 
       if (field.tagName === 'SELECT') {
-        const options = Array.from(field.options);
-        const match =
-          options.find((opt) => opt.value === value || opt.text.trim() === value) ||
-          options.find((opt) => opt.value.includes(value) || opt.text.includes(value));
+        const match = ensureSelectOption(field, value);
         if (!match) return false;
         if (field.value !== match.value) {
           field.value = match.value;
@@ -289,14 +309,7 @@
         const select = root.querySelector('[data-ff-826m-color-select="' + title + '"]');
         const name = 'properties[' + title + ']';
         let hidden = form.querySelector('input[data-ff-826m-color-hidden="' + title + '"]');
-
-        // If BCPO field exists, prefer it and remove our hidden fallback
         const bcpoField = findBcpoSelectByTitle(title);
-        if (bcpoField) {
-          if (hidden) hidden.remove();
-          if (select) select.removeAttribute('name');
-          return;
-        }
 
         if (!certified) {
           if (hidden) hidden.remove();
@@ -304,6 +317,8 @@
           return;
         }
 
+        // Always mirror certified colors into line-item properties so ATC works even when
+        // BCPO sync lags or Match OEM values are missing from the app option list.
         if (!hidden) {
           hidden = document.createElement('input');
           hidden.type = 'hidden';
@@ -313,25 +328,82 @@
         }
         hidden.value = select ? select.value : '';
         if (select) select.removeAttribute('name');
+
+        if (bcpoField && select && select.value) {
+          syncColorToBcpo(title, select.value);
+        }
       });
     }
 
     function setFieldValue(field, desired) {
       if (!field || desired == null) return false;
       const wanted = String(desired).trim();
+      if (!wanted) return false;
 
       if (field.tagName === 'SELECT') {
-        const options = Array.from(field.options);
-        const match =
-          options.find((opt) => opt.value === wanted || opt.text.trim() === wanted) ||
-          options.find((opt) => opt.value.includes(wanted) || opt.text.includes(wanted));
-        if (!match || field.value === match.value) return Boolean(match);
+        const match = ensureSelectOption(field, wanted);
+        if (!match) return false;
+        if (field.value === match.value) return true;
         field.value = match.value;
         field.dispatchEvent(new Event('change', { bubbles: true }));
         return true;
       }
 
       return false;
+    }
+
+    function ensureHiddenSpecProperty(form, title, value) {
+      if (!form || !title) return;
+      const name = 'properties[' + title + ']';
+      let hidden = form.querySelector('input[data-ff-826m-spec-hidden="' + title + '"]');
+      if (value == null || String(value).trim() === '') {
+        if (hidden) hidden.remove();
+        return;
+      }
+      if (!hidden) {
+        hidden = document.createElement('input');
+        hidden.type = 'hidden';
+        hidden.setAttribute('data-ff-826m-spec-hidden', title);
+        hidden.name = name;
+        form.appendChild(hidden);
+      }
+      hidden.value = String(value).trim();
+    }
+
+    function relaxHiddenBcpoRequirements(certified) {
+      const titles = document.querySelectorAll('.bcpo-title, .bcpo-front-dd-label, .bcpo-label');
+      titles.forEach((titleEl) => {
+        const key = optionKeyFromLabel(titleEl.textContent);
+        const wrapper =
+          titleEl.closest('.selector-wrapper') ||
+          titleEl.closest('[class*="bcpo-simple"]') ||
+          titleEl.closest('[class*="bcpo"]') ||
+          titleEl.parentElement;
+        if (!wrapper || wrapper.closest('[data-ff-826m-path]')) return;
+
+        const field = wrapper.querySelector('select, textarea, input');
+        if (!field) return;
+
+        const shouldRelax =
+          certified &&
+          (HIDE_ALWAYS_IN_CERTIFIED.indexOf(key) !== -1 ||
+            wrapper.getAttribute('data-ff-826m-spec-field') === '1' ||
+            wrapper.getAttribute('aria-hidden') === 'true' ||
+            wrapper.style.display === 'none' ||
+            window.getComputedStyle(wrapper).display === 'none');
+
+        if (shouldRelax) {
+          if (!field.hasAttribute('data-ff-826m-was-required')) {
+            field.setAttribute('data-ff-826m-was-required', field.required ? '1' : '0');
+          }
+          field.required = false;
+          field.setCustomValidity('');
+        } else if (field.hasAttribute('data-ff-826m-was-required')) {
+          field.required = field.getAttribute('data-ff-826m-was-required') === '1';
+          field.removeAttribute('data-ff-826m-was-required');
+          field.setCustomValidity('');
+        }
+      });
     }
 
     function forceCertifiedVariantId(root) {
@@ -391,23 +463,26 @@
         OFFSET: root.getAttribute('data-certified-offset'),
         'LUG PATTERN': root.getAttribute('data-certified-lug'),
       };
+      const form = getForm(root);
 
       Object.keys(map).forEach((name) => {
         propertyFields(name).forEach((field) => setFieldValue(field, map[name]));
         const bcpo = findBcpoSelectByTitle(name);
         if (bcpo) setFieldValue(bcpo, map[name]);
+        if (form) ensureHiddenSpecProperty(form, name, map[name]);
       });
 
       selectCertifiedSize(root);
     }
 
     function hideBcpoFields(certified) {
-      const titles = document.querySelectorAll('.bcpo-title, .bcpo-front-dd-label');
+      const titles = document.querySelectorAll('.bcpo-title, .bcpo-front-dd-label, .bcpo-label');
       titles.forEach((titleEl) => {
         const key = optionKeyFromLabel(titleEl.textContent);
         const wrapper =
           titleEl.closest('.selector-wrapper') ||
           titleEl.closest('[class*="bcpo-simple"]') ||
+          titleEl.closest('[class*="bcpo"]') ||
           titleEl.parentElement;
         if (!wrapper || wrapper.closest('[data-ff-826m-path]')) return;
 
@@ -426,6 +501,7 @@
           wrapper.setAttribute('data-ff-826m-spec-field', '1');
         }
       });
+      relaxHiddenBcpoRequirements(certified);
     }
 
     function syncAllColors(root) {
@@ -435,6 +511,15 @@
         syncColorToBcpo(title, select.value);
       });
       ensureHiddenPropertyInputs(root, currentMode(root) === 'certified');
+    }
+
+    function prepareCertifiedForAtc(root) {
+      populateColorSelects(root);
+      applyCertifiedOptions(root);
+      syncAllColors(root);
+      hideBcpoFields(true);
+      relaxHiddenBcpoRequirements(true);
+      forceCertifiedVariantId(root);
     }
 
     function setMode(root, mode) {
@@ -472,6 +557,15 @@
       hideBcpoFields(certified);
       ensureHiddenPropertyInputs(root, certified);
       if (certified) syncAllColors(root);
+      if (!certified) {
+        const form = getForm(root);
+        if (form) {
+          ['WIDTH', 'OFFSET', 'LUG PATTERN'].forEach((title) => {
+            const hidden = form.querySelector('input[data-ff-826m-spec-hidden="' + title + '"]');
+            if (hidden) hidden.remove();
+          });
+        }
+      }
     }
 
     function currentMode(root) {
@@ -480,7 +574,7 @@
     }
 
     function validateCertified(root, event) {
-      if (currentMode(root) !== 'certified') return;
+      if (currentMode(root) !== 'certified') return true;
 
       const ymmMissing = Array.from(root.querySelectorAll('[data-ff-826m-required-certified]')).filter(
         (input) => !input.disabled && !String(input.value || '').trim()
@@ -489,9 +583,12 @@
         ymmMissing[0].focus();
         ymmMissing[0].setCustomValidity('Please enter your vehicle year, make, and model.');
         ymmMissing[0].reportValidity();
-        event.preventDefault();
-        event.stopPropagation();
-        return;
+        if (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+        }
+        return false;
       }
 
       for (let i = 0; i < COLOR_TITLES.length; i++) {
@@ -500,14 +597,17 @@
           select.focus();
           select.setCustomValidity('Please choose a ' + COLOR_TITLES[i].toLowerCase() + '.');
           select.reportValidity();
-          event.preventDefault();
-          event.stopPropagation();
-          return;
+          if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+          }
+          return false;
         }
       }
 
-      syncAllColors(root);
-      applyCertifiedOptions(root);
+      prepareCertifiedForAtc(root);
+      return true;
     }
 
     function bind(root) {
@@ -532,6 +632,7 @@
           const title = select.getAttribute('data-ff-826m-color-select');
           syncColorToBcpo(title, select.value);
           ensureHiddenPropertyInputs(root, currentMode(root) === 'certified');
+          relaxHiddenBcpoRequirements(currentMode(root) === 'certified');
         });
       });
 
@@ -548,18 +649,42 @@
         );
       }
 
-      // Theme ATC uses button click + FormData (not form submit). Force size/id first.
+      // Theme + BCPO both listen on ATC click. Capture-phase prep must run first so
+      // hidden required BCPO selects are filled / relaxed before BCPO checkValidity.
       const productView = getProductView(root);
       productView.addEventListener(
         'click',
         function (event) {
           if (currentMode(root) !== 'certified') return;
-          const btn = event.target && event.target.closest
-            ? event.target.closest('[data-btn-addtocart], button[name="add"], .product-form__submit, [data-add-to-cart]')
-            : null;
+          const btn =
+            event.target && event.target.closest
+              ? event.target.closest(
+                  '[data-btn-addtocart], button[name="add"], .product-form__submit, [data-add-to-cart]'
+                )
+              : null;
           if (!btn) return;
-          applyCertifiedOptions(root);
-          forceCertifiedVariantId(root);
+          if (!validateCertified(root, event)) return;
+          prepareCertifiedForAtc(root);
+        },
+        true
+      );
+
+      document.addEventListener(
+        'click',
+        function (event) {
+          if (currentMode(root) !== 'certified') return;
+          const btn =
+            event.target && event.target.closest
+              ? event.target.closest(
+                  '[data-btn-addtocart], button[name="add"], .product-form__submit, [data-add-to-cart]'
+                )
+              : null;
+          if (!btn) return;
+          // Sticky ATC can live outside .productView; still prepare before BCPO validates.
+          if (!productView.contains(btn)) {
+            if (!validateCertified(root, event)) return;
+            prepareCertifiedForAtc(root);
+          }
         },
         true
       );
