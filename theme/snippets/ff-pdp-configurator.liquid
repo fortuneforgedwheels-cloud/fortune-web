@@ -25,6 +25,8 @@
   endif
 -%}
 {%- if ff_is_fullset_priced -%}
+  {%- comment -%} NEW monoblock-only button layout. Delete the next line to reverse site-wide. {%- endcomment -%}
+  {%- if ff_wheel_kind == 'monoblock' -%}{{ 'ff-monoblock-config-layout.css' | asset_url | stylesheet_tag }}{%- endif -%}
   {%- liquid
     assign ff_diams = ''
     for option in product.options_with_values
