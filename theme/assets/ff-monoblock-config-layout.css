@@ -1,0 +1,139 @@
+/* ============================================================================
+   FF Monoblock configurator — NEW button layout (MONOBLOCK PRODUCTS ONLY)
+   ----------------------------------------------------------------------------
+   Everything here is scoped to .ff-pdp-config[data-ff-kind="monoblock"], so it
+   ONLY restyles monoblock product pages. Two-piece / beadlock are untouched.
+
+   TO REVERSE SITE-WIDE: remove the single stylesheet include for
+   'ff-monoblock-config-layout.css' in snippets/ff-pdp-configurator.liquid
+   (and optionally delete this file). Nothing else references it.
+   ============================================================================ */
+
+.ff-pdp-config[data-ff-kind="monoblock"] {
+  --ffm-gold: #c2a76b;
+  --ffm-gold-strong: #d8bd82;
+  --ffm-gold-soft: rgba(194, 167, 107, 0.16);
+  --ffm-radius: 14px;
+}
+
+/* ---- Build-path cards ---- */
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__path-grid {
+  gap: 0.8rem;
+}
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__path-btn {
+  border-width: 1.5px;
+  border-radius: var(--ffm-radius);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__path-btn:hover,
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__path-btn.is-active {
+  transform: translateY(-2px);
+  border-color: var(--ffm-gold);
+  background: var(--ffm-gold-soft);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
+}
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__path-btn.is-recommended {
+  border-color: rgba(194, 167, 107, 0.6);
+}
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__path-badge {
+  border-color: var(--ffm-gold);
+  color: var(--ffm-gold-strong);
+}
+
+/* ---- Diameter chips ---- */
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__diameters {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__diam {
+  position: relative;
+  padding: 1.15rem 0.5rem;
+  border-width: 1.5px;
+  border-radius: var(--ffm-radius);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  font-size: 1.28rem;
+  letter-spacing: 0.01em;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__diam:hover {
+  transform: translateY(-2px);
+  border-color: var(--ffm-gold);
+}
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__diam.is-selected {
+  border-color: var(--ffm-gold);
+  background: var(--ffm-gold-soft);
+  box-shadow: 0 8px 22px rgba(194, 167, 107, 0.25), inset 0 0 0 1px var(--ffm-gold);
+  color: #fff;
+}
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__diam.is-selected::after {
+  content: "\2713"; /* check */
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  font-size: 0.78rem;
+  line-height: 1;
+  color: var(--ffm-gold-strong);
+}
+
+/* ---- Square / Staggered as side-by-side cards ---- */
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__layout {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__fit {
+  grid-template-columns: 1fr;
+  text-align: left;
+  border-width: 1.5px;
+  border-radius: var(--ffm-radius);
+  padding: 1rem 1.05rem;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__fit:hover {
+  transform: translateY(-2px);
+  border-color: rgba(194, 167, 107, 0.65);
+}
+/* hide native radio dot; selection is shown by the card state */
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__fit input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__fit:has(input:checked) {
+  border-color: var(--ffm-gold);
+  background: var(--ffm-gold-soft);
+  box-shadow: 0 8px 22px rgba(194, 167, 107, 0.22);
+}
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__rec {
+  border-color: var(--ffm-gold);
+  color: var(--ffm-gold-strong);
+}
+
+/* ---- Finish / center-cap / vehicle fields: gold focus ---- */
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__field select,
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__field input {
+  border-radius: 10px;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__field select:focus,
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__field input:focus {
+  outline: none;
+  border-color: var(--ffm-gold);
+  box-shadow: 0 0 0 2px rgba(194, 167, 107, 0.28);
+}
+
+/* ---- Specialist reassurance: gold accent rail ---- */
+.ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__reassure {
+  border-left-color: var(--ffm-gold);
+  border-radius: 0 10px 10px 0;
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 767px) {
+  .ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__diameters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ff-pdp-config[data-ff-kind="monoblock"] .ff-pdp-config__layout {
+    grid-template-columns: 1fr;
+  }
+}
