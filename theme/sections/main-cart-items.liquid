@@ -18,7 +18,8 @@
     endif
     assign media_size = section.settings.image_ratio
     assign portrait_aspect_ratio = section.settings.portrait_aspect_ratio | append: '%'
-    assign show_shipping_rate_calculator = section.settings.show_shipping_rate_calculator
+    assign show_shipping_rate_calculator = false
+    # FF: cart shipping estimator removed per owner (customers enter shipping at checkout). To restore, revert to: assign show_shipping_rate_calculator = section.settings.show_shipping_rate_calculator
     if show_shipping_rate_calculator
         assign shipping_rate_calculator_default_country = section.settings.shipping_rate_calculator_default_country
     endif

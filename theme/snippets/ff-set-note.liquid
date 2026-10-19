@@ -1,0 +1,29 @@
+{% comment %}
+  FF set-size note shown under the product price.
+  Monoblock / Two-Piece -> complete set of 4 wheels.
+  Beadlock -> pair of 2 wheels.
+  Mirrors the wheel-kind detection used in ff-fullset-price / ff-pdp-configurator.
+{% endcomment %}
+{%- liquid
+  assign ff_kind = 'other'
+  if product != blank
+    assign ff_tags_up = product.tags | join: ',' | upcase
+    assign ff_type_up = product.type | upcase
+    assign ff_handle_up = product.handle | upcase
+    assign ff_title_up = product.title | upcase
+    if product.tags contains 'FEATURED-SPEC'
+      assign ff_kind = 'featured-spec'
+    elsif ff_tags_up contains 'BEADLOCK' or ff_handle_up contains 'BEADLOCK' or ff_type_up contains 'BEADLOCK' or ff_title_up contains 'BEADLOCK'
+      assign ff_kind = 'beadlock'
+    elsif ff_tags_up contains 'MONOBLOCK' or ff_type_up contains 'MONOBLOCK' or ff_handle_up contains 'MONOBLOCK'
+      assign ff_kind = 'monoblock'
+    elsif ff_tags_up contains 'TWO PIECE' or ff_tags_up contains 'TWO-PIECE' or ff_tags_up contains '2-PIECE' or ff_tags_up contains '2 PIECE' or ff_type_up contains 'TWO' or ff_handle_up contains 'TWO-PIECE' or ff_handle_up contains 'TWO_PIECE' or ff_title_up contains 'TWO-PIECE' or ff_title_up contains 'TWO PIECE' or ff_title_up contains '2-PIECE'
+      assign ff_kind = 'two-piece'
+    endif
+  endif
+-%}
+{%- if ff_kind == 'monoblock' or ff_kind == 'two-piece' -%}
+  <p class="ff-set-note" style="margin:0.5rem 0 0;font-size:1.12rem;line-height:1.5;opacity:0.9;">Price reflects a complete set of 4 wheels.</p>
+{%- elsif ff_kind == 'beadlock' -%}
+  <p class="ff-set-note" style="margin:0.5rem 0 0;font-size:1.12rem;line-height:1.5;opacity:0.9;">Price reflects a pair of 2 wheels.</p>
+{%- endif -%}

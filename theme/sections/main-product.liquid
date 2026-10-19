@@ -711,6 +711,7 @@
                                                 use_variant: true,
                                                 price_class: 'price--large'
                                             -%}
+                                            {%- render 'ff-set-note', product: product -%}
                                             {%- render 'ff-pdp-confidence', product: product -%}
                                             {%- render 'ff-pdp-configurator', product: product, section: section -%}
                                         </div>
@@ -940,7 +941,8 @@
                                                 assign customization_option_2 = settings.customization_option_2
                                             endif
                                             if show_dynamic_checkout
-                                                assign show_global_checkbox = settings.show_global_checkbox
+                                                # FF: TOS agree checkbox removed from product pages per owner (replaced by ff-set-note). To restore, revert to: settings.show_global_checkbox
+                                                assign show_global_checkbox = false
                                                 if show_global_checkbox
                                                     assign has_global_checkbox = false
                                                     assign global_checkbox_show = settings.global_checkbox_show

@@ -322,3 +322,33 @@ body.ff-pdp-config-active .ff-pdp-config-hidden-tech,
     outline: none;
   }
 }
+
+/* FF: enlarge configurator text for readability (owner request). Revert this block to restore. */
+.ff-pdp-config {
+  font-size: 1.12rem;
+}
+.ff-pdp-config__eyebrow {
+  font-size: 1.02rem;
+}
+.ff-pdp-config__helper {
+  font-size: 1.12rem;
+}
+.ff-pdp-config__path-btn strong {
+  font-size: 1.32rem;
+}
+.ff-pdp-config__path-btn em {
+  font-size: 1.12rem;
+}
+.ff-pdp-config__fit strong {
+  font-size: 1.2rem;
+}
+.ff-pdp-config__fit em {
+  font-size: 1.1rem;
+}
+.ff-pdp-config__reassure {
+  font-size: 1.12rem;
+}
+.ff-pdp-config__field,
+.ff-pdp-config__field span {
+  font-size: 1.06rem;
+}
