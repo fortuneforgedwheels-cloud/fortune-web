@@ -4,6 +4,8 @@
 {{ 'component-badge.css' | asset_url | stylesheet_tag }}
 {{ 'component-rte.css' | asset_url | stylesheet_tag }}
 {{ 'component-product-form.css' | asset_url | stylesheet_tag }}
+{{ 'ff-option-tiles.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ff-option-tiles.js' | asset_url }}" defer></script>
 
 {%- liquid
     assign current_variant = product.selected_or_first_available_variant
@@ -928,7 +930,7 @@
                                             {%- liquid
                                                 assign padding_top = block.settings.padding_top
                                                 assign padding_bottom = block.settings.padding_bottom
-                                                assign picker_type = block.settings.picker_type
+                                                assign picker_type = 'button'
                                                 assign show_border_top = block.settings.show_border_top
                                                 if show_border_top
                                                     assign option_border_top = block.settings.option_border_top
