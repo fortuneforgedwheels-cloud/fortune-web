@@ -9,7 +9,7 @@
   assign ff_hide_public_pdp = false
   if product.tags contains 'ff-hide-catalog'
     assign ff_hide_public_pdp = true
-  elsif product.handle == 'chrome-finish-surcharge' or product.handle == 'exclusive-deals-full-set' or product.handle == '1998-bmw-m3'
+  elsif product.handle == 'chrome-finish-surcharge' or product.handle == 'chrome-finish-surcharge-mono' or product.handle == 'exclusive-deals-full-set' or product.handle == '1998-bmw-m3'
     assign ff_hide_public_pdp = true
   endif
 -%}
@@ -36,13 +36,17 @@
     assign ff_load_chrome_surcharge = true
   endif
   assign ff_chrome_addon = all_products['chrome-finish-surcharge']
+  assign ff_chrome_addon_mono = all_products['chrome-finish-surcharge-mono']
 -%}
 {%- if ff_load_chrome_surcharge -%}
   <script>
     window.FF_CHROME_SURCHARGE = Object.assign({}, window.FF_CHROME_SURCHARGE || {}, {
       variantId: {{ ff_chrome_addon.selected_or_first_available_variant.id | default: 54535047840019 | json }},
       handle: {{ ff_chrome_addon.handle | default: 'chrome-finish-surcharge' | json }},
-      amount: 250
+      amount: 250,
+      monoVariantId: {{ ff_chrome_addon_mono.selected_or_first_available_variant.id | default: 68016585736467 | json }},
+      monoHandle: {{ ff_chrome_addon_mono.handle | default: 'chrome-finish-surcharge-mono' | json }},
+      monoAmount: 220
     });
   </script>
   <script src="{{ 'ff-bcpo-chrome-surcharge.js' | asset_url }}"></script>

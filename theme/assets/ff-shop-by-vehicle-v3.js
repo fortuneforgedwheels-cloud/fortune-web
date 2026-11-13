@@ -37,6 +37,10 @@
     },
   ];
 
+  function isChromeFinishName(name) {
+    return /\bchrome\b/i.test(String(name || ''));
+  }
+
   function populateFinishSelect(select, placeholder) {
     if (!select) return;
     select.innerHTML = '';
@@ -50,7 +54,8 @@
       group.options.forEach(function (name) {
         var opt = document.createElement('option');
         opt.value = name;
-        opt.textContent = name;
+        // Monoblock chrome finishes are +$220/wheel ($880 per set of 4).
+        opt.textContent = isChromeFinishName(name) ? name + ' (+$220/wheel)' : name;
         og.appendChild(opt);
       });
       select.appendChild(og);

@@ -245,19 +245,32 @@
         {%- endif -%}
         {{ content_for_header }}
         {%- assign ff_chrome_addon_global = all_products['chrome-finish-surcharge'] -%}
+        {%- assign ff_chrome_addon_mono_global = all_products['chrome-finish-surcharge-mono'] -%}
         <script>
           window.FF_CHROME_SURCHARGE = Object.assign({}, window.FF_CHROME_SURCHARGE || {}, {
             variantId: {{ ff_chrome_addon_global.selected_or_first_available_variant.id | default: 54535047840019 | json }},
             handle: {{ ff_chrome_addon_global.handle | default: 'chrome-finish-surcharge' | json }},
-            amount: 250
+            amount: 250,
+            monoVariantId: {{ ff_chrome_addon_mono_global.selected_or_first_available_variant.id | default: 68016585736467 | json }},
+            monoHandle: {{ ff_chrome_addon_mono_global.handle | default: 'chrome-finish-surcharge-mono' | json }},
+            monoAmount: 220
           });
-          /* ffChromeChargeV2: patch display prices + add real $250 checkout line items. */
+          /* ffChromeChargeV2: beadlock Chrome $250/selection; monoblock chrome $220/wheel (qty 1 → set of 4 = $880). */
           (function () {
             if (window.__ffChromeChargeV2) return;
             window.__ffChromeChargeV2 = true;
-            var PRICE = '250';
-            var pending = 0;
+            var BEADLOCK_PRICE = '250';
+            var MONO_PRICE = '220';
+            var pending = { beadlock: 0, mono: 0 };
             var adding = false;
+
+            function isChrome(val) {
+              var cleaned = String(val || '')
+                .replace(/\s*\(\+\$?\d+.*?\)\s*$/i, '')
+                .trim()
+                .toLowerCase();
+              return /\bchrome\b/.test(cleaned);
+            }
 
             function patch(data) {
               if (!data || !Array.isArray(data.virtual_options)) return data;
@@ -267,13 +280,18 @@
                   .replace(/\s+/g, ' ')
                   .trim()
                   .toUpperCase();
-                if (title !== 'FACE COLOR' && title !== 'RING COLOR') continue;
+                var isBeadlock = title === 'FACE COLOR' || title === 'RING COLOR';
+                var isMono = title === 'COLOR' || title === 'FINISH';
+                if (!isBeadlock && !isMono) continue;
                 var values = (vo && vo.values) || [];
                 for (var j = 0; j < values.length; j++) {
                   var value = values[j];
                   if (!value || typeof value !== 'object') continue;
-                  if (String(value.key || '').toLowerCase() !== 'chrome') continue;
-                  value.price = PRICE;
+                  if (!isChrome(value.key)) continue;
+                  // Beadlock: BCPO display $250 (addon still charges).
+                  // Monoblock: force BCPO price 0 so Bold does not add $220 once —
+                  // real money is chrome-finish-surcharge-mono at $220 × wheels.
+                  value.price = isMono ? '0' : BEADLOCK_PRICE;
                 }
               }
               return data;
@@ -294,13 +312,6 @@
               if (current) patch(current);
             } catch (e) {
               if (window.bcpo_data) patch(window.bcpo_data);
-            }
-
-            function isChrome(val) {
-              return String(val || '')
-                .replace(/\s*\(\+\$?\d+.*?\)\s*$/i, '')
-                .trim()
-                .toLowerCase() === 'chrome';
             }
 
             function readColor(title) {
@@ -332,18 +343,75 @@
                 var field = wrap.querySelector('select');
                 if (field) return field.value || (field.options[field.selectedIndex] && field.options[field.selectedIndex].text);
               }
+              if (wanted === 'FINISH' || wanted === 'COLOR') {
+                var sbv = document.querySelector('[data-ff-sbv-finish-select], [data-ff-finish]');
+                if (sbv && sbv.value) return sbv.value;
+              }
               return '';
             }
 
-            function chromeCount() {
-              var n = 0;
-              if (isChrome(readColor('FACE COLOR'))) n += 1;
-              if (isChrome(readColor('RING COLOR'))) n += 1;
-              return n;
+            function readDomQuantity() {
+              var input =
+                document.querySelector('form[action*="/cart/add"] [name="quantity"]') ||
+                document.querySelector('[data-type="add-to-cart-form"] [name="quantity"]') ||
+                document.querySelector('input.quantity__input[name="quantity"]');
+              var n = input ? parseInt(input.value, 10) : NaN;
+              return Number.isFinite(n) && n > 0 ? n : 1;
             }
 
-            function addAddon(qty) {
-              var variantId = window.FF_CHROME_SURCHARGE && window.FF_CHROME_SURCHARGE.variantId;
+            function parseQuantityFromAddBody(init) {
+              try {
+                if (!init || init.body == null) return null;
+                if (typeof FormData !== 'undefined' && init.body instanceof FormData) {
+                  var q = parseInt(String(init.body.get('quantity') || ''), 10);
+                  return Number.isFinite(q) && q > 0 ? q : null;
+                }
+                if (typeof init.body === 'string') {
+                  var trimmed = init.body.trim();
+                  if (trimmed.charAt(0) === '{') {
+                    var json = JSON.parse(trimmed);
+                    if (json && Array.isArray(json.items) && json.items.length) {
+                      var sum = 0;
+                      for (var i = 0; i < json.items.length; i++) {
+                        var itemQty = parseInt(String((json.items[i] && json.items[i].quantity) || ''), 10);
+                        if (Number.isFinite(itemQty) && itemQty > 0) sum += itemQty;
+                      }
+                      if (sum > 0) return sum;
+                    }
+                    var topQty = parseInt(String(json.quantity || ''), 10);
+                    if (Number.isFinite(topQty) && topQty > 0) return topQty;
+                  }
+                  var match = /(?:^|&)quantity=(\d+)/i.exec(trimmed);
+                  if (match) {
+                    var formQty = parseInt(match[1], 10);
+                    if (Number.isFinite(formQty) && formQty > 0) return formQty;
+                  }
+                }
+              } catch (err) {}
+              return null;
+            }
+
+            function monoWheelCount(atcQty) {
+              var q = Number(atcQty);
+              if (!Number.isFinite(q) || q < 1) q = readDomQuantity();
+              // PDP default qty 1 = full set of 4 wheels → $880 chrome.
+              if (q === 1) return 4;
+              return q;
+            }
+
+            function remember(atcQty) {
+              var beadlock = 0;
+              if (isChrome(readColor('FACE COLOR'))) beadlock += 1;
+              if (isChrome(readColor('RING COLOR'))) beadlock += 1;
+              var monoChrome =
+                isChrome(readColor('COLOR')) ||
+                isChrome(readColor('FINISH'));
+              pending.beadlock = beadlock;
+              pending.mono = beadlock === 0 && monoChrome ? monoWheelCount(atcQty) : 0;
+              return pending;
+            }
+
+            function addLines(variantId, qty, props) {
               if (!variantId || !qty) return Promise.resolve();
               adding = true;
               return fetch('/cart/add.js', {
@@ -355,11 +423,7 @@
                     {
                       id: Number(variantId),
                       quantity: qty,
-                      properties: {
-                        _Surcharge: 'Chrome finish',
-                        'Chrome selections': String(qty),
-                        Note: qty > 1 ? 'Face + Ring Chrome (+$250 each)' : 'Chrome finish (+$250)',
-                      },
+                      properties: props,
                     },
                   ],
                 }),
@@ -370,15 +434,73 @@
                 });
             }
 
-            function remember() {
-              pending = chromeCount();
-              return pending;
+            function existingAddonQty(items, variantId) {
+              var qty = 0;
+              var id = String(variantId || '');
+              if (!id) return 0;
+              (items || []).forEach(function (item) {
+                if (!item) return;
+                if (String(item.id || '') === id || String(item.variant_id || '') === id) {
+                  qty += item.quantity || 0;
+                }
+              });
+              return qty;
             }
 
             function flush() {
-              var qty = pending;
-              pending = 0;
-              return addAddon(qty);
+              var beadlockQty = pending.beadlock;
+              var monoQty = pending.mono;
+              pending = { beadlock: 0, mono: 0 };
+              if (!beadlockQty && !monoQty) return Promise.resolve();
+              var cfg = window.FF_CHROME_SURCHARGE || {};
+              // Reconcile against live cart so a second cart/add in the same ATC
+              // flow cannot stack another full chrome surcharge.
+              return fetch('/cart.js', {
+                credentials: 'same-origin',
+                headers: { Accept: 'application/json' },
+              })
+                .then(function (r) {
+                  return r.json().catch(function () {
+                    return null;
+                  });
+                })
+                .catch(function () {
+                  return null;
+                })
+                .then(function (cart) {
+                  var items = (cart && cart.items) || [];
+                  var missingBeadlock = Math.max(
+                    0,
+                    beadlockQty - existingAddonQty(items, cfg.variantId)
+                  );
+                  var missingMono = Math.max(0, monoQty - existingAddonQty(items, cfg.monoVariantId));
+                  var chain = Promise.resolve();
+                  if (missingBeadlock) {
+                    chain = chain.then(function () {
+                      return addLines(cfg.variantId, missingBeadlock, {
+                        _Surcharge: 'Chrome finish',
+                        'Chrome selections': String(missingBeadlock),
+                        Note:
+                          missingBeadlock > 1
+                            ? 'Face + Ring Chrome (+$250 each)'
+                            : 'Chrome finish (+$250)',
+                      });
+                    });
+                  }
+                  if (missingMono) {
+                    chain = chain.then(function () {
+                      return addLines(cfg.monoVariantId, missingMono, {
+                        _Surcharge: 'Monoblock chrome finish',
+                        Wheels: String(missingMono),
+                        Note:
+                          missingMono === 4
+                            ? 'Monoblock chrome (+$220/wheel × 4 = $880)'
+                            : 'Monoblock chrome (+$220/wheel × ' + missingMono + ')',
+                      });
+                    });
+                  }
+                  return chain;
+                });
             }
 
             if (typeof window.fetch === 'function') {
@@ -386,7 +508,10 @@
               window.fetch = function (input, init) {
                 var url = typeof input === 'string' ? input : input && input.url;
                 var isAdd = String(url || '').indexOf('/cart/add') !== -1 && !adding;
-                if (isAdd) remember();
+                if (isAdd) {
+                  var parsedQty = parseQuantityFromAddBody(init);
+                  remember(parsedQty != null ? parsedQty : readDomQuantity());
+                }
                 return originalFetch(input, init).then(function (response) {
                   if (!isAdd || !response || !response.ok) return response;
                   return flush().then(function () {
@@ -404,7 +529,9 @@
                 var action = form.getAttribute('action') || '';
                 var type = form.getAttribute('data-type') || '';
                 if (action.indexOf('/cart/add') === -1 && type !== 'add-to-cart-form') return;
-                remember();
+                var qtyInput = form.querySelector('[name="quantity"]');
+                var q = qtyInput ? parseInt(qtyInput.value, 10) : NaN;
+                remember(Number.isFinite(q) && q > 0 ? q : readDomQuantity());
               },
               true
             );
